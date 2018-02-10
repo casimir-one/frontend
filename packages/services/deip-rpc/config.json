@@ -1,0 +1,10 @@
+{
+  "transport": "http",
+  "websocket": "wss://gtg.deip.house:8090",
+  "uri": "https://api.deip.com",
+  "url": "",
+  "dev_uri": "https://api.deipdev.com",
+  "stage_uri": "https://api.deipstage.com",
+  "address_prefix": "DEIP",
+  "chain_id": "0000000000000000000000000000000000000000000000000000000000000000"
+}

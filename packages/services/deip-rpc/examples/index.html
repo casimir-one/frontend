@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deip</title>
+</head>
+<body>
+
+<script src="../dist/deip.min.js"></script>
+<script>
+deip.api.getConfig(function(err, response){
+  console.log(err, response);
+});
+deip.api.getAccounts(['ned', 'dan'], function(err, response){
+  console.log(err, response);
+});
+deip.api.getAccountCount(function(err, response){
+  console.log(err, response);
+});
+</script>
+
+</body>
+</html>
