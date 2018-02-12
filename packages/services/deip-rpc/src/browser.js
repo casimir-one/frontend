@@ -5,7 +5,7 @@ const config = require("./config");
 const formatter = require("./formatter")(api);
 const utils = require("./utils");
 
-const deip = {
+const deipRpc = {
   api,
   auth,
   broadcast,
@@ -15,11 +15,11 @@ const deip = {
 };
 
 if (typeof window !== "undefined") {
-  window.deip = deip;
+  window.deipRpc = deipRpc;
 }
 
 if (typeof global !== "undefined") {
-  global.deip = deip;
+  global.deipRpc = deipRpc;
 }
 
-exports = module.exports = deip;
+exports = module.exports = deipRpc;
