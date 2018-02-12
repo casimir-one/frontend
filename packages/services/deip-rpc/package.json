@@ -1,12 +1,12 @@
 {
-  "name": "deip-connector",
+  "name": "deip-rpc",
   "version": "0.0.1",
-  "description": "JavaScript lib for connectig to blockchain",
-  "main": "lib/index.js",
+  "description": "JavaScript lib for connectig to deip blockchain",
   "scripts": {
+    "build-prod": "cross-env NODE_ENV=production webpack",
+    "build-dev": "cross-env NODE_ENV=development webpack",
     "test": "eslint --quiet src test; mocha -t 40000 --require babel-polyfill --require babel-register",
-    "build-deip": "cross-env NODE_ENV=production webpack",
-    "build": "npm run build-browser && npm run build-node",
+    "build-lib": "npm run build-browser && npm run build-node",
     "build-browser": "rm -rf dist && NODE_ENV=production node ./node_modules/webpack/bin/webpack.js && gzip -k -f ./dist/*.js && du -h ./dist/*",
     "build-node": "mkdir -p ./lib && cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib"
   },
@@ -14,22 +14,13 @@
     "ws": false,
     "crypto": false
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/"
-  },
   "keywords": [
     "deip",
-    "deip-connector",
-    "blockchain",
-    "deipjs"
+    "deip-rpc",
+    "blockchain"
   ],
   "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/"
-  },
-  "homepage": "https://github.com/",
+  "homepage": "https://gitlab.com/DEIP/deip-rpc",
   "dependencies": {
     "bigi": "^1.4.2",
     "bluebird": "^3.4.6",
@@ -67,6 +58,5 @@
     "should": "^11.1.0",
     "webpack": "^1.13.2",
     "webpack-visualizer-plugin": "^0.1.5"
-  },
-  "contributors": []
+  }
 }

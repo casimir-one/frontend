@@ -20,17 +20,17 @@ function makePlugins(options) {
 
   if (!isDevelopment) {
     plugins = plugins.concat([
-      // new webpack.optimize.DedupePlugin(),
-      // new webpack.optimize.UglifyJsPlugin({
-      //   output: {
-      //     comments: false,
-      //   },
-      //   minimize: true,
-      //   compress: {
-      //     warnings: false,
-      //   }
-      // }),
-      // new webpack.optimize.AggressiveMergingPlugin(),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.UglifyJsPlugin({
+        output: {
+          comments: false,
+        },
+        minimize: true,
+        compress: {
+          warnings: false,
+        }
+      }),
+      new webpack.optimize.AggressiveMergingPlugin(),
     ]);
   }
 
