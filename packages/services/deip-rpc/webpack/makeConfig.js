@@ -37,32 +37,6 @@ function makePlugins(options) {
   return plugins;
 }
 
-function makeStyleLoaders(options) {
-  if (options.isDevelopment) {
-    return [
-      {
-        test: /\.s[ac]ss$/,
-        loaders: [
-          'style',
-          'css?sourceMap',
-          'autoprefixer-loader?browsers=last 2 version',
-          'sass?sourceMap&sourceMapContents',
-        ],
-      },
-    ];
-  }
-
-  return [
-    {
-      test: /\.s[ac]ss$/,
-      loader: ExtractTextPlugin.extract(
-        'style-loader',
-        'css!autoprefixer-loader?browsers=last 2 version!sass'
-      ),
-    },
-  ];
-}
-
 function makeConfig(options) {
   if (!options) options = {};
   _.defaults(options, DEFAULTS);
