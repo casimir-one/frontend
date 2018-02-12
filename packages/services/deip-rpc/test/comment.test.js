@@ -1,12 +1,12 @@
 import Promise from 'bluebird';
 import should from 'should';
-import deip from '../src';
+import deipRpc from '../src';
 import pkg from '../package.json';
 
 const username = process.env.DEIP_USERNAME || 'guest123';
 const password = process.env.DEIP_PASSWORD;
 const postingWif = password
-  ? deip.auth.toWif(username, password, 'posting')
+  ? deipRpc.auth.toWif(username, password, 'posting')
   : '5JRaypasxMx1L97ZUX7YuC5Psb5EAbF821kkAGtBj7xCJFQcbLg';
 
 describe('deip.broadcast:', () => {
@@ -17,7 +17,7 @@ describe('deip.broadcast:', () => {
     });
 
     it('works', async () => {
-      const permlink = deip.formatter.commentPermlink('siol', 'test');
+      const permlink = deipRpc.formatter.commentPermlink('siol', 'test');
       const operations = [
         ['comment',
           {
@@ -51,7 +51,7 @@ describe('deip.broadcast:', () => {
         }]
       ];
 
-      const tx = await deip.broadcast.sendAsync(
+      const tx = await deipRpc.broadcast.sendAsync(
         { operations, extensions: [] },
         { posting: postingWif }
       );

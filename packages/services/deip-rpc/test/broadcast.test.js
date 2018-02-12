@@ -1,38 +1,38 @@
 import Promise from 'bluebird';
 import should from 'should';
-import deip from '../src';
+import deipRpc from '../src';
 
 const username = process.env.DEIP_USERNAME || 'guest123';
 const password = process.env.DEIP_PASSWORD;
 const postingWif = password
-  ? deip.auth.toWif(username, password, 'posting')
+  ? deipRpc.auth.toWif(username, password, 'posting')
   : '5JRaypasxMx1L97ZUX7YuC5Psb5EAbF821kkAGtBj7xCJFQcbLg';
 
 describe('deip.broadcast:', () => {
   it('exists', () => {
-    should.exist(deip.broadcast);
+    should.exist(deipRpc.broadcast);
   });
 
   it('has generated methods', () => {
-    should.exist(deip.broadcast.vote);
-    should.exist(deip.broadcast.voteWith);
-    should.exist(deip.broadcast.comment);
-    should.exist(deip.broadcast.transfer);
+    should.exist(deipRpc.broadcast.vote);
+    should.exist(deipRpc.broadcast.voteWith);
+    should.exist(deipRpc.broadcast.comment);
+    should.exist(deipRpc.broadcast.transfer);
   });
 
   it('has backing methods', () => {
-    should.exist(deip.broadcast.send);
+    should.exist(deipRpc.broadcast.send);
   });
 
   it('has promise methods', () => {
-    should.exist(deip.broadcast.sendAsync);
-    should.exist(deip.broadcast.voteAsync);
-    should.exist(deip.broadcast.transferAsync);
+    should.exist(deipRpc.broadcast.sendAsync);
+    should.exist(deipRpc.broadcast.voteAsync);
+    should.exist(deipRpc.broadcast.transferAsync);
   });
 
   describe('patching transaction with default global properties', () => {
     it('works', async () => {
-      const tx = await deip.broadcast._prepareTransaction({
+      const tx = await deipRpc.broadcast._prepareTransaction({
         extensions: [],
         operations: [['vote', {
           voter: 'yamadapc',
@@ -53,7 +53,7 @@ describe('deip.broadcast:', () => {
 
   describe('downvoting', () => {
     it('works', async () => {
-      const tx = await deip.broadcast.voteAsync(
+      const tx = await deipRpc.broadcast.voteAsync(
         postingWif,
         username,
         'yamadapc',
@@ -77,7 +77,7 @@ describe('deip.broadcast:', () => {
     });
 
     it('works', async () => {
-      const tx = await deip.broadcast.voteAsync(
+      const tx = await deipRpc.broadcast.voteAsync(
         postingWif,
         username,
         'yamadapc',
@@ -96,7 +96,7 @@ describe('deip.broadcast:', () => {
     });
 
     it('works with callbacks', (done) => {
-      deip.broadcast.vote(
+      deipRpc.broadcast.vote(
         postingWif,
         username,
         'yamadapc',
@@ -124,7 +124,7 @@ describe('deip.broadcast:', () => {
     });
 
     it('works', async () => {
-      const tx = await deip.broadcast.customJsonAsync(
+      const tx = await deipRpc.broadcast.customJsonAsync(
         postingWif,
         [],
         [username],
@@ -152,8 +152,8 @@ describe('deip.broadcast:', () => {
   
   describe('writeOperations', () => {
     it('receives a properly formatted error response', () => {
-      const wif = deip.auth.toWif('username', 'password', 'posting');
-      return deip.broadcast.voteAsync(wif, 'voter', 'author', 'permlink', 0).
+      const wif = deipRpc.auth.toWif('username', 'password', 'posting');
+      return deipRpc.broadcast.voteAsync(wif, 'voter', 'author', 'permlink', 0).
       then(() => {
         throw new Error('writeOperation should have failed but it didn\'t');
       }, (e) => {

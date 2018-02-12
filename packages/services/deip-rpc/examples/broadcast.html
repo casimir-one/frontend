@@ -13,7 +13,7 @@
   var postingWif = '5JRaypasxMx1L97ZUX7YuC5Psb5EAbF821kkAGtBj7xCJFQcbLg';
 
   /** Broadcast a vote */
-  deip.broadcast.vote(
+  deipRpc.broadcast.vote(
     postingWif,
     username, // Voter
     'firepower', // Author
@@ -27,7 +27,7 @@
   /** Broadcast a comment */
   var permlink = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
 
-  deip.broadcast.comment(
+  deipRpc.broadcast.comment(
     postingWif,
     'siol', // Parent Author
     'test', // Parent Permlink
@@ -44,7 +44,7 @@
   /** Broadcast a post */
   var permlink = new Date().toISOString().replace(/[^a-zA-Z0-9]+/g, '').toLowerCase();
 
-  deip.broadcast.comment(
+  deipRpc.broadcast.comment(
     postingWif,
     '', // Leave parent author empty
     'photography', // Main tag
@@ -70,7 +70,7 @@
     }]
   );
 
-  deip.broadcast.customJson(
+  deipRpc.broadcast.customJson(
     postingWif,
     [], // Required_auths
     [follower], // Required Posting Auths
@@ -90,7 +90,7 @@
     }]
   );
 
-  deip.broadcast.customJson(
+  deipRpc.broadcast.customJson(
     postingWif,
     [], // Required_auths
     [follower], // Required Posting Auths

@@ -8,7 +8,7 @@
 
 <script src="../dist/deip.min.js"></script>
 <script>
-deip.api.streamOperations(function (err, operations) {
+deipRpc.api.streamOperations(function (err, operations) {
   operations.forEach(function (operation) {
     console.log(operation);
   });

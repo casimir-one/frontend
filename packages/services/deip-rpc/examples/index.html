@@ -8,13 +8,13 @@
 
 <script src="../dist/deip.min.js"></script>
 <script>
-deip.api.getConfig(function(err, response){
+deipRpc.api.getConfig(function(err, response){
   console.log(err, response);
 });
-deip.api.getAccounts(['ned', 'dan'], function(err, response){
+deipRpc.api.getAccounts(['ned', 'dan'], function(err, response){
   console.log(err, response);
 });
-deip.api.getAccountCount(function(err, response){
+deipRpc.api.getAccountCount(function(err, response){
   console.log(err, response);
 });
 </script>

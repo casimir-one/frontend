@@ -1,9 +1,9 @@
-const deip = require('../lib');
+const deipRpc = require('../lib');
 
 const privWif1 = '5K2LA2ucS8b1GuFvVgZK6itKNE6fFMbDMX4GDtNHiczJESLGRd8';
 const privWif2 = '5JRaypasxMx1L97ZUX7YuC5Psb5EAbF821kkAGtBj7xCJFQcbLg';
 
-deip.broadcast.send({
+deipRpc.broadcast.send({
   extensions: [],
   operations: [
     ['vote', {
