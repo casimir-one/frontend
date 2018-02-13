@@ -492,11 +492,26 @@ export default [
       "method": "get_market_history_buckets",
       "params": []
     },
+
     {
       "api": "database_api",
       "method": "get_research_group_by_permlink",
       "params": [
         "permlink"
+      ]
+    },
+    {
+      "api": "database_api",
+      "method": "get_research_group_by_id",
+      "params": [
+        "id"
+      ]
+    },
+    {
+      "api": "database_api",
+      "method": "get_proposals_by_research_group_id",
+      "params": [
+        "id"
       ]
     },
     {
