@@ -525,8 +525,8 @@ var make_research_review = new Serializer("make_research_review", {
     author: string,
     research_id: uint32,
     content: string,
-    research_references: array(uint32),
-    research_external_references: array(string)
+    research_references: set(uint32),
+    research_external_references: set(string)
 });
 
 // virtual operations
