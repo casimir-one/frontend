@@ -1,4 +1,3 @@
-
 // This file is merge updated from steemd's js_operation_serializer program.
 /*
 
@@ -37,10 +36,19 @@ import SerializerImpl from "./serializer"
 const {
     //id_type,
     //varint32, uint8, int64, fixed_array, object_id_type, vote_id, address,
-    uint16, uint32, int16, uint64,
-    string, string_binary, bytes, bool, array,
+    uint16,
+    uint32,
+    int16,
+    uint64,
+    string,
+    string_binary,
+    bytes,
+    bool,
+    array,
     // protocol_id_type,
-    static_variant, map, set,
+    static_variant,
+    map,
+    set,
     public_key,
     time_point_sec,
     optional,
@@ -64,12 +72,12 @@ const Serializer = function(operation_name, serilization_types_object) {
 }
 
 const beneficiaries = new Serializer("beneficiaries", {
-  account: string,
-  weight: uint16
+    account: string,
+    weight: uint16
 });
 
 const comment_payout_beneficiaries = new Serializer(0, {
-  beneficiaries: set(beneficiaries)
+    beneficiaries: set(beneficiaries)
 });
 
 // Custom-types after Generated code
@@ -111,8 +119,8 @@ let signed_block = new Serializer("signed_block", {
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ])),
     witness_signature: bytes(65),
@@ -125,8 +133,8 @@ let block_header = new Serializer("block_header", {
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ]))
 });
@@ -137,8 +145,8 @@ let signed_block_header = new Serializer("signed_block_header", {
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ])),
     witness_signature: bytes(65)
@@ -267,11 +275,6 @@ let pow = new Serializer("pow", {
     work: bytes(32)
 });
 
-let custom = new Serializer("custom", {
-    required_auths: set(string),
-    id: uint16,
-    data: bytes()
-});
 
 let report_over_production = new Serializer("report_over_production", {
     reporter: string,
@@ -282,13 +285,6 @@ let report_over_production = new Serializer("report_over_production", {
 let delete_comment = new Serializer("delete_comment", {
     author: string,
     permlink: string
-});
-
-let custom_json = new Serializer("custom_json", {
-    required_auths: set(string),
-    required_posting_auths: set(string),
-    id: string,
-    json: string
 });
 
 let comment_options = new Serializer("comment_options", {
@@ -436,14 +432,6 @@ let cancel_transfer_from_savings = new Serializer("cancel_transfer_from_savings"
     request_id: uint32
 });
 
-let custom_binary = new Serializer("custom_binary", {
-    required_owner_auths: set(string),
-    required_active_auths: set(string),
-    required_posting_auths: set(string),
-    required_auths: array(authority),
-    id: string,
-    data: bytes()
-});
 
 let decline_voting_rights = new Serializer("decline_voting_rights", {
     account: string,
@@ -633,10 +621,7 @@ operation.st_operations = [
     account_witness_vote,
     account_witness_proxy,
 
-    custom,
-
     delete_comment,
-    custom_json,
     comment_options,
     set_withdraw_vesting_route,
 
@@ -651,7 +636,6 @@ operation.st_operations = [
     escrow_release,
     escrow_approve,
 
-    custom_binary,
     decline_voting_rights,
     delegate_vesting_shares,
     account_create_with_delegation,
@@ -675,14 +659,14 @@ operation.st_operations = [
     comment_benefactor_reward
 ];
 
-let transaction = new Serializer( 
+let transaction = new Serializer(
     "transaction", {
-    ref_block_num: uint16,
-    ref_block_prefix: uint32,
-    expiration: time_point_sec,
-    operations: array(operation),
-    extensions: set(future_extensions)
-}
+        ref_block_num: uint16,
+        ref_block_prefix: uint32,
+        expiration: time_point_sec,
+        operations: array(operation),
+        extensions: set(future_extensions)
+    }
 );
 
 //# -------------------------------
