@@ -251,7 +251,6 @@ module.exports = [{
             "creator",
             "permlink",
             "desciption",
-            "funds",
             "quorum_percent",
             "tokens_amount"
         ]

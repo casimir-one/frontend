@@ -490,7 +490,6 @@ var create_research_group = new Serializer("create_research_group", {
     creator: string,
     permlink: string,
     desciption: string,
-    funds: uint64,
     quorum_percent: uint32,
     tokens_amount: uint32
 });
