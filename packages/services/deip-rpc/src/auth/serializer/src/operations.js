@@ -35,10 +35,11 @@ import SerializerImpl from "./serializer"
 
 const {
     //id_type,
-    //varint32, uint8, int64, fixed_array, object_id_type, vote_id, address,
+    //varint32, uint8, fixed_array, object_id_type, vote_id, address,
+    int16,
+    int64,
     uint16,
     uint32,
-    int16,
     uint64,
     string,
     string_binary,
@@ -154,9 +155,10 @@ let signed_block_header = new Serializer("signed_block_header", {
 
 let vote = new Serializer("vote", {
     voter: string,
-    author: string,
-    permlink: string,
-    weight: int16
+    discipline_id: int64,
+    weight: int16,
+    research_id: int64,
+    research_content_id: int64
 });
 
 let comment = new Serializer("comment", {
@@ -496,7 +498,7 @@ var create_research_group = new Serializer("create_research_group", {
 
 var create_proposal = new Serializer("create_proposal", {
     creator: string,
-    research_group_id: uint32,
+    research_group_id: int64,
     data: string,
     action: uint16,
     expiration_time: time_point_sec
@@ -504,16 +506,32 @@ var create_proposal = new Serializer("create_proposal", {
 
 var vote_proposal = new Serializer("vote_proposal", {
     voter: string,
-    proposal_id: uint32,
-    research_group_id: uint32
+    proposal_id: int64,
+    research_group_id: int64
 });
 
 var make_research_review = new Serializer("make_research_review", {
     author: string,
-    research_id: uint32,
+    research_id: int64,
     content: string,
-    research_references: set(uint32),
+    research_references: set(int64),
     research_external_references: set(string)
+});
+
+var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
+    research_token_sale_id: int64,
+    owner: string,
+    amount: uint32
+});
+
+var approve_research_group_invite = new Serializer("approve_research_group_invite", {
+    "research_group_invite_id": int64,
+    "owner": string
+});
+
+var reject_research_group_invite = new Serializer("reject_research_group_invite", {
+    "research_group_invite_id": int64,
+    "owner": string
 });
 
 // virtual operations
@@ -645,6 +663,9 @@ operation.st_operations = [
     create_proposal,
     vote_proposal,
     make_research_review,
+    contribute_to_token_sale,
+    approve_research_group_invite,
+    reject_research_group_invite,
 
     // virtual operations
     author_reward,

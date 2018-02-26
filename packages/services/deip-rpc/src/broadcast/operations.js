@@ -3,9 +3,10 @@ module.exports = [{
         "operation": "vote",
         "params": [
             "voter",
-            "author",
-            "permlink",
-            "weight"
+            "discipline_id",
+            "weight",
+            "research_id",
+            "research_content_id"
         ]
     }, {
         "roles": ["posting", "active", "owner"],
@@ -281,6 +282,28 @@ module.exports = [{
             "content",
             "research_references",
             "research_external_references"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "contribute_to_token_sale",
+        "params": [
+            "research_token_sale_id",
+            "owner",
+            "amount"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "approve_research_group_invite",
+        "params": [
+            "research_group_invite_id",
+            "owner"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_research_group_invite",
+        "params": [
+            "research_group_invite_id",
+            "owner"
         ]
     },
     // virtual operations
