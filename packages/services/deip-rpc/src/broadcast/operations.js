@@ -9,17 +9,6 @@ module.exports = [{
             "research_content_id"
         ]
     }, {
-        "roles": ["posting", "active", "owner"],
-        "operation": "comment",
-        "params": [
-            "parent_author",
-            "parent_permlink",
-            "author", "permlink",
-            "title",
-            "body",
-            "json_metadata"
-        ]
-    }, {
         "roles": ["active", "owner"],
         "operation": "transfer",
         "params": [
@@ -91,26 +80,6 @@ module.exports = [{
         "params": [
             "account",
             "proxy"
-        ]
-    },
-    {
-        "roles": ["posting", "active", "owner"],
-        "operation": "delete_comment",
-        "params": [
-            "author",
-            "permlink"
-        ]
-    }, {
-        "roles": ["posting", "active", "owner"],
-        "operation": "comment_options",
-        "params": [
-            "author",
-            "permlink",
-            "max_accepted_payout",
-            "percent_steem_dollars",
-            "allow_votes",
-            "allow_curation_rewards",
-            "extensions"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -308,14 +277,6 @@ module.exports = [{
     },
     // virtual operations
     {
-        "roles": ["posting", "active", "owner"],
-        "operation": "comment_reward",
-        "params": [
-            "author",
-            "permlink",
-            "payout"
-        ]
-    }, {
         "roles": ["active", "owner"],
         "operation": "fill_vesting_withdraw",
         "params": [

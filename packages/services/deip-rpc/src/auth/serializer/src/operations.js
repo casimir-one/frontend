@@ -161,16 +161,6 @@ let vote = new Serializer("vote", {
     research_content_id: int64
 });
 
-let comment = new Serializer("comment", {
-    parent_author: string,
-    parent_permlink: string,
-    author: string,
-    permlink: string,
-    title: string,
-    body: string,
-    json_metadata: string
-});
-
 let transfer = new Serializer("transfer", {
     from: string,
     to: string,
@@ -277,28 +267,10 @@ let pow = new Serializer("pow", {
     work: bytes(32)
 });
 
-
 let report_over_production = new Serializer("report_over_production", {
     reporter: string,
     first_block: signed_block_header,
     second_block: signed_block_header
-});
-
-let delete_comment = new Serializer("delete_comment", {
-    author: string,
-    permlink: string
-});
-
-let comment_options = new Serializer("comment_options", {
-    author: string,
-    permlink: string,
-    max_accepted_payout: asset,
-    percent_steem_dollars: uint16,
-    allow_votes: bool,
-    allow_curation_rewards: bool,
-    extensions: set(static_variant([
-        comment_payout_beneficiaries
-    ]))
 });
 
 let set_withdraw_vesting_route = new Serializer("set_withdraw_vesting_route", {
@@ -558,12 +530,6 @@ let curation_reward = new Serializer("curation_reward", {
     comment_permlink: string
 });
 
-let comment_reward = new Serializer("comment_reward", {
-    author: string,
-    permlink: string,
-    payout: asset
-});
-
 let liquidity_reward = new Serializer("liquidity_reward", {
     owner: string,
     payout: asset
@@ -606,26 +572,13 @@ let hardfork = new Serializer("hardfork", {
     hardfork_id: uint32
 });
 
-let comment_payout_update = new Serializer("comment_payout_update", {
-    author: string,
-    permlink: string
-});
-
 let return_vesting_delegation = new Serializer("return_vesting_delegation", {
     account: string,
     vesting_shares: asset
 });
 
-let comment_benefactor_reward = new Serializer("comment_benefactor_reward", {
-    benefactor: string,
-    author: string,
-    permlink: string,
-    reward: asset
-});
-
 operation.st_operations = [
     vote,
-    comment,
 
     transfer,
     transfer_to_vesting,
@@ -638,8 +591,6 @@ operation.st_operations = [
     account_witness_vote,
     account_witness_proxy,
 
-    delete_comment,
-    comment_options,
     set_withdraw_vesting_route,
 
     prove_authority,
@@ -670,13 +621,10 @@ operation.st_operations = [
     // virtual operations
     author_reward,
     curation_reward,
-    comment_reward,
     fill_vesting_withdraw,
     shutdown_witness,
     hardfork,
-    comment_payout_update,
-    return_vesting_delegation,
-    comment_benefactor_reward
+    return_vesting_delegation
 ];
 
 let transaction = new Serializer(
