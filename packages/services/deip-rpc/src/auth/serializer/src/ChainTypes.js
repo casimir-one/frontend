@@ -24,38 +24,36 @@ ChainTypes.operations = {
 
     set_withdraw_vesting_route: 9,
 
-    prove_authority: 10,
+    request_account_recovery: 10,
+    recover_account: 11,
+    change_recovery_account: 12,
 
-    request_account_recovery: 11,
-    recover_account: 12,
-    change_recovery_account: 13,
+    escrow_transfer: 13,
+    escrow_dispute: 14,
+    escrow_release: 15,
+    escrow_approve: 16,
 
-    escrow_transfer: 14,
-    escrow_dispute: 15,
-    escrow_release: 16,
-    escrow_approve: 17,
-
-    decline_voting_rights: 18,
-    delegate_vesting_shares: 19,
-    account_create_with_delegation: 20,
+    decline_voting_rights: 17,
+    delegate_vesting_shares: 18,
+    account_create_with_delegation: 19,
 
     // DEIP native operations
-    create_budget: 21,
-    create_research_group: 22,
-    create_proposal: 23,
-    vote_proposal: 24,
-    make_research_review: 25,
-    contribute_to_token_sale: 26,
-    approve_research_group_invite: 27,
-    reject_research_group_invite: 28,
+    create_grant: 20,
+    create_research_group: 21,
+    create_proposal: 22,
+    vote_proposal: 23,
+    make_research_review: 24,
+    contribute_to_token_sale: 25,
+    approve_research_group_invite: 26,
+    reject_research_group_invite: 27,
 
     // virtual operations
-    author_reward: 29,
-    curation_reward: 30,
-    fill_vesting_withdraw: 31,
-    shutdown_witness: 32,
-    hardfork: 33,
-    return_vesting_delegation: 34
+    author_reward: 28,
+    curation_reward: 29,
+    fill_vesting_withdraw: 30,
+    shutdown_witness: 31,
+    hardfork: 32,
+    return_vesting_delegation: 33
 };
 
 //types.hpp

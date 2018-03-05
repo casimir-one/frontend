@@ -92,13 +92,6 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "prove_authority",
-        "params": [
-            "challenged",
-            "require_owner"
-        ]
-    }, {
-        "roles": ["active", "owner"],
         "operation": "request_account_recovery",
         "params": [
             "recovery_account",
@@ -206,7 +199,7 @@ module.exports = [{
     // DEIP native operations
     {
         "roles": ["active", "owner"],
-        "operation": "create_budget",
+        "operation": "create_grant",
         "params": [
             "owner",
             "balance",

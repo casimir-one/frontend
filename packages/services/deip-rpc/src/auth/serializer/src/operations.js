@@ -295,11 +295,6 @@ let challenge_authority = new Serializer("challenge_authority", {
     require_owner: bool
 });
 
-let prove_authority = new Serializer("prove_authority", {
-    challenged: string,
-    require_owner: bool
-});
-
 let request_account_recovery = new Serializer("request_account_recovery", {
     recovery_account: string,
     account_to_recover: string,
@@ -452,7 +447,7 @@ let account_create_with_delegation = new Serializer("account_create_with_delegat
 
 // DEIP native operations
 
-var create_budget = new Serializer("create_budget", {
+var create_grant = new Serializer("create_grant", {
     owner: string,
     balance: asset,
     target_discipline: string,
@@ -593,8 +588,6 @@ operation.st_operations = [
 
     set_withdraw_vesting_route,
 
-    prove_authority,
-
     request_account_recovery,
     recover_account,
     change_recovery_account,
@@ -609,7 +602,7 @@ operation.st_operations = [
     account_create_with_delegation,
 
     // DEIP native operations
-    create_budget,
+    create_grant,
     create_research_group,
     create_proposal,
     vote_proposal,
