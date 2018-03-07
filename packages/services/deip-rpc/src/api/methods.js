@@ -532,5 +532,19 @@ export default [{
         "params": [
             "research_id"
         ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_group_invites_by_account_name",
+        "params": [
+            "account_name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_group_invites_by_research_group_id",
+        "params": [
+            "research_group_id"
+        ]
     }
 ];
