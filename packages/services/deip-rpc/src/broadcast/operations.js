@@ -118,62 +118,6 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "escrow_transfer",
-        "params": [
-            "from",
-            "to",
-            "agent",
-            "escrow_id",
-            "sbd_amount",
-            "steem_amount",
-            "fee",
-            "ratification_deadline",
-            "escrow_expiration",
-            "json_meta"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "escrow_dispute",
-        "params": [
-            "from",
-            "to",
-            "agent",
-            "who",
-            "escrow_id"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "escrow_release",
-        "params": [
-            "from",
-            "to",
-            "agent",
-            "who",
-            "receiver",
-            "escrow_id",
-            "sbd_amount",
-            "steem_amount"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "escrow_approve",
-        "params": [
-            "from",
-            "to",
-            "agent",
-            "who",
-            "escrow_id",
-            "approve"
-        ]
-    }, {
-        "roles": ["owner"],
-        "operation": "decline_voting_rights",
-        "params": [
-            "account",
-            "decline"
-        ]
-    }, {
-        "roles": ["active", "owner"],
         "operation": "delegate_vesting_shares",
         "params": [
             "delegator",

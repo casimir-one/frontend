@@ -315,38 +315,6 @@ let change_recovery_account = new Serializer("change_recovery_account", {
     extensions: set(future_extensions)
 });
 
-let escrow_transfer = new Serializer("escrow_transfer", {
-    from: string,
-    to: string,
-    sbd_amount: asset,
-    steem_amount: asset,
-    escrow_id: uint32,
-    agent: string,
-    fee: asset,
-    json_meta: string,
-    ratification_deadline: time_point_sec,
-    escrow_expiration: time_point_sec
-});
-
-let escrow_dispute = new Serializer("escrow_dispute", {
-    from: string,
-    to: string,
-    agent: string,
-    who: string,
-    escrow_id: uint32
-});
-
-let escrow_release = new Serializer("escrow_release", {
-    from: string,
-    to: string,
-    agent: string,
-    who: string,
-    receiver: string,
-    escrow_id: uint32,
-    sbd_amount: asset,
-    steem_amount: asset
-});
-
 let pow2_input = new Serializer("pow2_input", {
     worker_account: string,
     prev_block: bytes(20),
@@ -372,15 +340,6 @@ let equihash_pow = new Serializer("equihash_pow", {
     pow_summary: uint32
 });
 
-let escrow_approve = new Serializer("escrow_approve", {
-    from: string,
-    to: string,
-    agent: string,
-    who: string,
-    escrow_id: uint32,
-    approve: bool
-});
-
 let transfer_to_savings = new Serializer("transfer_to_savings", {
     from: string,
     to: string,
@@ -401,11 +360,6 @@ let cancel_transfer_from_savings = new Serializer("cancel_transfer_from_savings"
     request_id: uint32
 });
 
-
-let decline_voting_rights = new Serializer("decline_voting_rights", {
-    account: string,
-    decline: bool
-});
 
 let reset_account = new Serializer("reset_account", {
     reset_account: string,
@@ -592,12 +546,6 @@ operation.st_operations = [
     recover_account,
     change_recovery_account,
 
-    escrow_transfer,
-    escrow_dispute,
-    escrow_release,
-    escrow_approve,
-
-    decline_voting_rights,
     delegate_vesting_shares,
     account_create_with_delegation,
 
