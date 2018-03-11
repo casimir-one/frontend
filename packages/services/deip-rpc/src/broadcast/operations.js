@@ -202,14 +202,16 @@ module.exports = [{
         "operation": "approve_research_group_invite",
         "params": [
             "research_group_invite_id",
-            "owner"
+            "owner",
+            "research_tokens_conversion_percent"
         ]
     }, {
         "roles": ["active", "owner"],
         "operation": "reject_research_group_invite",
         "params": [
             "research_group_invite_id",
-            "owner"
+            "owner",
+            "research_tokens_conversion_percent"
         ]
     },
     // virtual operations

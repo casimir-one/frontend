@@ -447,12 +447,14 @@ var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
 
 var approve_research_group_invite = new Serializer("approve_research_group_invite", {
     "research_group_invite_id": int64,
-    "owner": string
+    "owner": string,
+    "research_tokens_conversion_percent": uint16
 });
 
 var reject_research_group_invite = new Serializer("reject_research_group_invite", {
     "research_group_invite_id": int64,
-    "owner": string
+    "owner": string,
+    "research_tokens_conversion_percent": uint16
 });
 
 // virtual operations
