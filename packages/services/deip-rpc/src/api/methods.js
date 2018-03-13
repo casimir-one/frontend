@@ -546,5 +546,214 @@ export default [{
         "params": [
             "research_group_id"
         ]
-    }
+    },
+
+
+
+    {
+        "api": "database_api",
+        "method": "get_schema"
+    },
+    {
+        "api": "database_api",
+        "method": "get_grants",
+        "params": [
+            "account_names"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "lookup_grant_owners",
+        "params": [
+            "lower_bound_name",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expiring_vesting_delegations",
+        "params": [
+            "account",
+            "from",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_all_disciplines"
+    },
+    {
+        "api": "database_api",
+        "method": "get_discipline",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_discipline_by_name",
+        "params": [
+            "name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_disciplines_by_parent_id",
+        "params": [
+            "parent_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_by_id",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_by_permlink",
+        "params": [
+            "permlink"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_researches",
+        "params": [
+            "from",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_content_by_id",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_content_by_type",
+        "params": [
+            "research_id",
+            "type"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expert_token",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expert_tokens_by_account_name",
+        "params": [
+            "account_name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expert_tokens_by_discipline_id",
+        "params": [
+            "discipline_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_proposal",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_group_token_by_account_and_research_group_id",
+        "params": [
+            "account",
+            "research_group_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_by_id",
+        "params": [
+            "research_token_sale_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_by_research_id",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_by_end_time",
+        "params": [
+            "end_time"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_contribution_by_id",
+        "params": [
+            "research_token_sale_contribution_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_contributions_by_research_token_sale_id",
+        "params": [
+            "research_token_sale_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_sale_contribution_by_account_name_and_research_token_sale_id",
+        "params": [
+            "owner",
+            "research_token_sale_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_disciplines_by_research",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_group_invite_by_id",
+        "params": [
+            "research_group_invite_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_group_invite_by_account_name_and_research_group_id",
+        "params": [
+            "account_name",
+            "research_group_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "on_api_startup"
+    },
+
+
+    {
+        "api": "database_api",
+        "method": "",
+        "params": [
+            "",
+            "",
+            ""
+        ]
+    },
 ];
