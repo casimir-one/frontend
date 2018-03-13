@@ -547,9 +547,6 @@ export default [{
             "research_group_id"
         ]
     },
-
-
-
     {
         "api": "database_api",
         "method": "get_schema"
@@ -740,20 +737,5 @@ export default [{
             "account_name",
             "research_group_id"
         ]
-    },
-    {
-        "api": "database_api",
-        "method": "on_api_startup"
-    },
-
-
-    {
-        "api": "database_api",
-        "method": "",
-        "params": [
-            "",
-            "",
-            ""
-        ]
-    },
+    }
 ];
