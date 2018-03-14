@@ -466,21 +466,6 @@ let fill_convert_request = new Serializer("fill_convert_request", {
     amount_out: asset
 });
 
-let author_reward = new Serializer("author_reward", {
-    author: string,
-    permlink: string,
-    sbd_payout: asset,
-    steem_payout: asset,
-    vesting_payout: asset
-});
-
-let curation_reward = new Serializer("curation_reward", {
-    curator: string,
-    reward: asset,
-    comment_author: string,
-    comment_permlink: string
-});
-
 let liquidity_reward = new Serializer("liquidity_reward", {
     owner: string,
     payout: asset
@@ -562,8 +547,6 @@ operation.st_operations = [
     reject_research_group_invite,
 
     // virtual operations
-    author_reward,
-    curation_reward,
     fill_vesting_withdraw,
     shutdown_witness,
     hardfork,

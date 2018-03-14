@@ -42,12 +42,10 @@ ChainTypes.operations = {
     reject_research_group_invite: 22,
 
     // virtual operations
-    author_reward: 23,
-    curation_reward: 24,
-    fill_vesting_withdraw: 25,
-    shutdown_witness: 26,
-    hardfork: 27,
-    return_vesting_delegation: 28
+    fill_vesting_withdraw: 23,
+    shutdown_witness: 24,
+    hardfork: 25,
+    return_vesting_delegation: 26
 };
 
 //types.hpp
