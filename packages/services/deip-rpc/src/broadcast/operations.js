@@ -156,8 +156,9 @@ module.exports = [{
         "operation": "create_research_group",
         "params": [
             "creator",
+            "name",
             "permlink",
-            "desciption",
+            "description",
             "quorum_percent",
             "tokens_amount"
         ]
@@ -185,9 +186,10 @@ module.exports = [{
         "params": [
             "author",
             "research_id",
+            "title",
             "content",
-            "research_references",
-            "research_external_references"
+            "references",
+            "external_references"
         ]
     }, {
         "roles": ["active", "owner"],

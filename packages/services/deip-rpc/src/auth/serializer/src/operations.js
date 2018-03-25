@@ -411,8 +411,9 @@ var create_grant = new Serializer("create_grant", {
 
 var create_research_group = new Serializer("create_research_group", {
     creator: string,
+    name: string,
     permlink: string,
-    desciption: string,
+    description: string,
     quorum_percent: uint32,
     tokens_amount: uint32
 });
