@@ -40,12 +40,15 @@ ChainTypes.operations = {
     contribute_to_token_sale: 20,
     approve_research_group_invite: 21,
     reject_research_group_invite: 22,
+    create_research_group_join_request: 23,
+    reject_research_group_join_request: 24,
+
 
     // virtual operations
-    fill_vesting_withdraw: 23,
-    shutdown_witness: 24,
-    hardfork: 25,
-    return_vesting_delegation: 26
+    fill_vesting_withdraw: 25,
+    shutdown_witness: 26,
+    hardfork: 27,
+    return_vesting_delegation: 28
 };
 
 //types.hpp

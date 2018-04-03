@@ -454,8 +454,18 @@ var approve_research_group_invite = new Serializer("approve_research_group_invit
 
 var reject_research_group_invite = new Serializer("reject_research_group_invite", {
     "research_group_invite_id": int64,
+    "owner": string
+});
+
+var create_research_group_join_request = new Serializer("create_research_group_join_request", {
     "owner": string,
-    "research_tokens_conversion_percent": uint16
+    "research_group_id": int64,
+    "motivation_letter": string
+});
+
+var reject_research_group_join_request = new Serializer("reject_research_group_join_request", {
+    "research_group_join_request_id": int64,
+    "owner": string
 });
 
 // virtual operations
@@ -546,6 +556,8 @@ operation.st_operations = [
     contribute_to_token_sale,
     approve_research_group_invite,
     reject_research_group_invite,
+    create_research_group_join_request,
+    reject_research_group_join_request,
 
     // virtual operations
     fill_vesting_withdraw,
