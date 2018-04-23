@@ -528,13 +528,6 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_all_research_content",
-        "params": [
-            "research_id"
-        ]
-    },
-    {
-        "api": "database_api",
         "method": "get_research_group_invites_by_account_name",
         "params": [
             "account_name"
@@ -620,6 +613,21 @@ export default [{
         "params": [
             "from",
             "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_listing",
+        "params": [
+            "from",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_all_research_content",
+        "params": [
+            "research_id",
         ]
     },
     {
