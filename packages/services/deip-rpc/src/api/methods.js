@@ -745,5 +745,24 @@ export default [{
             "account_name",
             "research_group_id"
         ]
+    },
+    {
+        "api": "database_api",
+        "method": "check_research_existence_by_permlink",
+        "params": [
+            "permlink"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "check_research_group_existence_by_permlink",
+        "params": [
+            "permlink"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_all_accounts",
+        "params": []
     }
 ];
