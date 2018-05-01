@@ -625,6 +625,14 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_all_researches_listing",
+        "params": [
+            "discipline_id",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_all_research_content",
         "params": [
             "research_id",
