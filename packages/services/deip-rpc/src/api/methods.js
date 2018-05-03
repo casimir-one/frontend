@@ -514,6 +514,13 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_research_group_tokens_by_research_group",
+        "params": [
+            "research_group_id"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_research_group_tokens_by_account",
         "params": [
             "account"
