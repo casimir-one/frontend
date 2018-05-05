@@ -790,4 +790,9 @@ export default [{
             "discipline_id"
         ]
     },
+    {
+        "api": "database_api",
+        "method": "get_all_accounts",
+        "params": []
+    }
 ];
