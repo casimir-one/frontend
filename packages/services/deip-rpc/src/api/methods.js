@@ -777,7 +777,17 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_all_accounts",
-        "params": []
-    }
+        "method": "get_total_votes_by_research",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_total_votes_by_research_and_discipline",
+        "params": [
+            "research_id",
+            "discipline_id"
+        ]
+    },
 ];
