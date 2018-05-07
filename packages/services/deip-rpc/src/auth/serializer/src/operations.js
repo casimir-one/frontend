@@ -414,8 +414,7 @@ var create_research_group = new Serializer("create_research_group", {
     name: string,
     permlink: string,
     description: string,
-    quorum_percent: uint32,
-    tokens_amount: uint32
+    quorum_percent: uint32
 });
 
 var create_proposal = new Serializer("create_proposal", {
