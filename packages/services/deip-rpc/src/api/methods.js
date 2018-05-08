@@ -799,7 +799,7 @@ export default [{
         "api": "database_api",
         "method": "get_reviews_by_content",
         "params": [
-            "content_id"
+            "research_content_id"
         ]
     },
     {
