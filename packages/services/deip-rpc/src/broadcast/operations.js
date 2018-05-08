@@ -181,11 +181,11 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "make_research_review",
+        "operation": "make_review",
         "params": [
             "author",
-            "research_id",
-            "title",
+            "research_content_id",
+            "is_positive",
             "content",
             "references",
             "external_references"

@@ -36,7 +36,7 @@ ChainTypes.operations = {
     create_research_group: 16,
     create_proposal: 17,
     vote_proposal: 18,
-    make_research_review: 19,
+    make_review: 19,
     contribute_to_token_sale: 20,
     approve_research_group_invite: 21,
     reject_research_group_invite: 22,

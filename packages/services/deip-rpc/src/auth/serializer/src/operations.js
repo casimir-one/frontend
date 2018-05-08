@@ -431,9 +431,10 @@ var vote_proposal = new Serializer("vote_proposal", {
     research_group_id: int64
 });
 
-var make_research_review = new Serializer("make_research_review", {
+var make_review = new Serializer("make_review", {
     author: string,
-    research_id: int64,
+    research_content_id: int64,
+    is_positive: bool,
     content: string,
     research_references: set(int64),
     research_external_references: set(string)
@@ -551,7 +552,7 @@ operation.st_operations = [
     create_research_group,
     create_proposal,
     vote_proposal,
-    make_research_review,
+    make_review,
     contribute_to_token_sale,
     approve_research_group_invite,
     reject_research_group_invite,
