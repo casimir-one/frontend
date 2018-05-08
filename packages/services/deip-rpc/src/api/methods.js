@@ -794,5 +794,19 @@ export default [{
         "api": "database_api",
         "method": "get_all_accounts",
         "params": []
+    },
+    {
+        "api": "database_api",
+        "method": "get_reviews_by_content",
+        "params": [
+            "content_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_reviews_by_research",
+        "params": [
+            "research_id"
+        ]
     }
 ];

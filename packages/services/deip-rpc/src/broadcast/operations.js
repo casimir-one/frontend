@@ -185,8 +185,8 @@ module.exports = [{
         "params": [
             "author",
             "research_content_id",
-            "is_positive",
             "content",
+            "is_positive",
             "references",
             "external_references"
         ]

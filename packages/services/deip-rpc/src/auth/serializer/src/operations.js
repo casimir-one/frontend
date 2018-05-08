@@ -434,10 +434,10 @@ var vote_proposal = new Serializer("vote_proposal", {
 var make_review = new Serializer("make_review", {
     author: string,
     research_content_id: int64,
-    is_positive: bool,
     content: string,
-    research_references: set(int64),
-    research_external_references: set(string)
+    is_positive: bool,
+    references: set(int64),
+    external_references: set(string)
 });
 
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
