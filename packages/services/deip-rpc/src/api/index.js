@@ -15,9 +15,6 @@ import {
 import {
     jsonRpc
 } from './transports/http';
-import {
-    sign as signRequest
-} from './rpc-auth';
 
 class Deip extends EventEmitter {
     constructor(options = {}) {
@@ -46,11 +43,10 @@ class Deip extends EventEmitter {
                 return this[`${methodName}With`](options, callback);
             };
 
-	        this[`${methodName}WithAsync`] = Promise.promisify(this[`${methodName}With`]);
+            this[`${methodName}WithAsync`] = Promise.promisify(this[`${methodName}With`]);
             this[`${methodName}Async`] = Promise.promisify(this[methodName]);
         });
         this.callAsync = Promise.promisify(this.call);
-        this.signedCallAsync = Promise.promisify(this.signedCall);
     }
 
     _setTransport(options) {
@@ -155,24 +151,7 @@ class Deip extends EventEmitter {
             return
         }
         const id = ++this.seqNo;
-        jsonRpc(this.options.uri, {method, params, id})
-            .then(res => { callback(null, res) }, err => { callback(err) });
-    }
-
-    signedCall(method, params, account, key, callback) {
-        if (this._transportType !== 'http') {
-            callback(new Error('RPC methods can only be called when using http transport'));
-            return;
-        }
-        const id = ++this.seqNo;
-        let request;
-        try {
-            request = signRequest({method, params, id}, account, [key]);
-        } catch (error) {
-            callback(error);
-            return;
-        }
-        jsonRpc(this.options.uri, request)
+        jsonRpc(this.options.uri, { method, params, id })
             .then(res => { callback(null, res) }, err => { callback(err) });
     }
 
@@ -314,30 +293,30 @@ class Deip extends EventEmitter {
     }
 
     broadcastTransactionSynchronousWith(options, callback) {
-    const trx = options.trx;
-    return this.send(
-        'network_broadcast_api', {
-            method: 'broadcast_transaction_synchronous',
-            params: [trx],
-        },
-        (err, result) => {
-            if (err) {
-                const {
-                    signed_transaction
-                } = ops;
-                // console.log('-- broadcastTransactionSynchronous -->', JSON.stringify(signed_transaction.toObject(trx), null, 2));
-                // toObject converts objects into serializable types
-                const trObject = signed_transaction.toObject(trx);
-                const buf = signed_transaction.toBuffer(trx);
-                err.digest = hash.sha256(buf).toString('hex');
-                err.transaction_id = buf.toString('hex');
-                err.transaction = JSON.stringify(trObject);
-                callback(err, '');
-            } else {
-                callback('', result);
-            }
-        },
-    );
+        const trx = options.trx;
+        return this.send(
+            'network_broadcast_api', {
+                method: 'broadcast_transaction_synchronous',
+                params: [trx],
+            },
+            (err, result) => {
+                if (err) {
+                    const {
+                        signed_transaction
+                    } = ops;
+                    // console.log('-- broadcastTransactionSynchronous -->', JSON.stringify(signed_transaction.toObject(trx), null, 2));
+                    // toObject converts objects into serializable types
+                    const trObject = signed_transaction.toObject(trx);
+                    const buf = signed_transaction.toBuffer(trx);
+                    err.digest = hash.sha256(buf).toString('hex');
+                    err.transaction_id = buf.toString('hex');
+                    err.transaction = JSON.stringify(trObject);
+                    callback(err, '');
+                } else {
+                    callback('', result);
+                }
+            },
+        );
 
     }
 }

@@ -6,20 +6,20 @@ const formatter = require("./formatter")(api);
 const utils = require("./utils");
 
 const deipRpc = {
-  api,
-  auth,
-  broadcast,
-  config,
-  formatter,
-  utils
+    api,
+    auth,
+    broadcast,
+    config,
+    formatter,
+    utils
 };
 
 if (typeof window !== "undefined") {
-  window.deipRpc = deipRpc;
+    window.deipRpc = deipRpc;
 }
 
 if (typeof global !== "undefined") {
-  global.deipRpc = deipRpc;
+    global.deipRpc = deipRpc;
 }
 
 exports = module.exports = deipRpc;

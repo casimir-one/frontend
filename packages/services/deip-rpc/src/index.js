@@ -7,11 +7,11 @@ const config = require('./config');
 const utils = require('./utils');
 
 module.exports = {
-  api,
-  auth,
-  broadcast,
-  formatter,
-  memo,
-  config,
-  utils,
+    api,
+    auth,
+    broadcast,
+    formatter,
+    memo,
+    config,
+    utils,
 };

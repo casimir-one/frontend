@@ -1,17 +1,17 @@
 import assert from 'assert'
-import {encode, decode} from '../src/auth/memo';
-import {PrivateKey} from '../src/auth/ecc';
+import { encode, decode } from '../src/auth/memo';
+import { PrivateKey } from '../src/auth/ecc';
 
 
 const private_key = PrivateKey.fromSeed("")
 const public_key = private_key.toPublicKey()
 
-describe('deip.auth: memo', ()=> {
+describe('deip.auth: memo', () => {
     it('plain text', () => {
-        const plaintext1 = encode(null/*private_key*/, null/*public_key*/, 'memo')
+        const plaintext1 = encode(null /*private_key*/ , null /*public_key*/ , 'memo')
         assert.equal(plaintext1, 'memo')
 
-        const plaintext2 = decode(null/*private_key*/, plaintext1)
+        const plaintext2 = decode(null /*private_key*/ , plaintext1)
         assert.equal(plaintext2, 'memo')
     })
     it('encryption obj params', () => {

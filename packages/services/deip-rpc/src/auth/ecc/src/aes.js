@@ -9,7 +9,6 @@ import hash from './hash';
 const Long = ByteBuffer.Long;
 
 /**
-    Spec: /@dantheman/how-to-encrypt-a-memo-when-transferring-
     @throws {Error|TypeError} - "Invalid Key, ..."
     @arg {PrivateKey} private_key - required and used for decryption
     @arg {PublicKey} public_key - required and used to calcualte the shared secret
@@ -25,7 +24,6 @@ export function encrypt(private_key, public_key, message, nonce = uniqueNonce())
 }
 
 /**
-    Spec: /@dantheman/how-to-encrypt-a-memo-when-transferring-
     @arg {PrivateKey} private_key - required and used for decryption
     @arg {PublicKey} public_key - required and used to calcualte the shared secret
     @arg {string} nonce - random or unique uint64, provides entropy when re-using the same private/public keys.
@@ -97,7 +95,7 @@ function crypt(private_key, public_key, nonce, message, checksum) {
     } else {
         message = cryptoJsEncrypt(message, key, iv)
     }
-    return {nonce, message, checksum: check}
+    return { nonce, message, checksum: check }
 }
 
 /** This method does not use a checksum, the returned data must be validated some other way.
@@ -108,7 +106,7 @@ function cryptoJsDecrypt(message, key, iv) {
     assert(message, "Missing cipher text")
     message = toBinaryBuffer(message)
     const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv)
-    // decipher.setAutoPadding(true)
+        // decipher.setAutoPadding(true)
     message = Buffer.concat([decipher.update(message), decipher.final()])
     return message
 }
@@ -121,30 +119,30 @@ function cryptoJsEncrypt(message, key, iv) {
     assert(message, "Missing plain text")
     message = toBinaryBuffer(message)
     const cipher = crypto.createCipheriv('aes-256-cbc', key, iv)
-    // cipher.setAutoPadding(true)
+        // cipher.setAutoPadding(true)
     message = Buffer.concat([cipher.update(message), cipher.final()])
     return message
 }
 
 /** @return {string} unique 64 bit unsigned number string.  Being time based, this is careful to never choose the same nonce twice.  This value could be recorded in the blockchain for a long time.
-*/
+ */
 function uniqueNonce() {
-    if(unique_nonce_entropy === null) {
+    if (unique_nonce_entropy === null) {
         const b = secureRandom.randomUint8Array(2)
         unique_nonce_entropy = parseInt(b[0] << 8 | b[1], 10)
     }
     let long = Long.fromNumber(Date.now())
     const entropy = ++unique_nonce_entropy % 0xFFFF
-    // console.log('uniqueNonce date\t', ByteBuffer.allocate(8).writeUint64(long).toHex(0))
-    // console.log('uniqueNonce entropy\t', ByteBuffer.allocate(8).writeUint64(Long.fromNumber(entropy)).toHex(0))
+        // console.log('uniqueNonce date\t', ByteBuffer.allocate(8).writeUint64(long).toHex(0))
+        // console.log('uniqueNonce entropy\t', ByteBuffer.allocate(8).writeUint64(Long.fromNumber(entropy)).toHex(0))
     long = long.shiftLeft(16).or(Long.fromNumber(entropy));
     // console.log('uniqueNonce final\t', ByteBuffer.allocate(8).writeUint64(long).toHex(0))
     return long.toString()
 }
 let unique_nonce_entropy = null
-// for(let i=1; i < 10; i++) key.uniqueNonce()
+    // for(let i=1; i < 10; i++) key.uniqueNonce()
 
-const toPrivateObj = o => (o ? o.d ? o : PrivateKey.fromWif(o) : o/*null or undefined*/)
-const toPublicObj = o => (o ? o.Q ? o : PublicKey.fromString(o) : o/*null or undefined*/)
+const toPrivateObj = o => (o ? o.d ? o : PrivateKey.fromWif(o) : o /*null or undefined*/ )
+const toPublicObj = o => (o ? o.Q ? o : PublicKey.fromString(o) : o /*null or undefined*/ )
 const toLongObj = o => (o ? Long.isLong(o) ? o : Long.fromString(o) : o)
 const toBinaryBuffer = o => (o ? Buffer.isBuffer(o) ? o : new Buffer(o, 'binary') : o)

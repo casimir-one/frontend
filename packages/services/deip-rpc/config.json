@@ -1,10 +1,10 @@
 {
     "transport": "http",
-    "websocket": "ws://206.189.175.10",
-    "uri": "https://api.deip.com",
+    "websocket": "wss://gtg.steem.house:8090",
+    "uri": "https://api.steemit.com",
     "url": "",
-    "dev_uri": "https://api.deipdev.com",
-    "stage_uri": "https://api.deipstage.com",
+    "dev_uri": "https://api.steemitdev.com",
+    "stage_uri": "https://api.steemitstage.com",
     "address_prefix": "DEIP",
     "chain_id": "0000000000000000000000000000000000000000000000000000000000000000"
 }
