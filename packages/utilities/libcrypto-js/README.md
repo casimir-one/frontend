@@ -2,7 +2,7 @@
 libcrypto
 =========
 
-DEIP libcrypto-js CLONE https://github.com/deip/libcrypto-js
+STEEM libcrypto-js CLONE https://github.com/steemit/libcrypto-js
 
 
 A small vendoring wrapper for [sjcl](http://bitwiseshiftleft.github.io/sjcl/) with support for
@@ -14,8 +14,8 @@ If you are using Webpack or Browserify, you must ensure that Node's built-in `cr
 is excluded from your builds. 
 
 Otherwise, just
-```sh
-$ yarn install deip-crypto
+```
+$ npm install @deip/libcrypto
 ```
 
 ## API
@@ -121,11 +121,3 @@ deip-crypto explicitly does not support the following environments:
 - Opera Mini
 - Android Browser (i.e., the non-Chromium versions)
 - Microsoft Internet Explorer versions <10
-
-## Contributing
-
-Contributions must conform to the following rules:
-- They must pass formatting and linting and the existing automated test suite must pass.
-- They must add test coverage for new code.
-- They must not introduce any new dependencies.
-- They must support the environments listed above without the use of polyfills.
