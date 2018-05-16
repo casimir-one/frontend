@@ -1,9 +1,8 @@
-
 import ByteBuffer from 'bytebuffer'
 import assert from 'assert'
 import base58 from 'bs58'
-import {Aes, PrivateKey, PublicKey} from './ecc'
-import {ops} from './serializer'
+import { Aes, PrivateKey, PublicKey } from './ecc'
+import { ops } from './serializer'
 
 const encMemo = ops.encrypted_memo
 
@@ -16,7 +15,7 @@ const encMemo = ops.encrypted_memo
 export function decode(private_key, memo) {
     assert(memo, 'memo is required')
     assert.equal(typeof memo, 'string', 'memo')
-    if(!/^#/.test(memo)) return memo
+    if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
 
     assert(private_key, 'private_key is required')
@@ -27,7 +26,7 @@ export function decode(private_key, memo) {
     memo = base58.decode(memo)
     memo = encMemo.fromBuffer(new Buffer(memo, 'binary'))
 
-    const {from, to, nonce, check, encrypted} = memo
+    const { from, to, nonce, check, encrypted } = memo
     const pubkey = private_key.toPublicKey().toString()
     const otherpub = pubkey === from.toString() ? to.toString() : from.toString()
     memo = Aes.decrypt(private_key, otherpub, nonce, encrypted, check)
@@ -37,9 +36,9 @@ export function decode(private_key, memo) {
     try {
         mbuf.mark()
         return '#' + mbuf.readVString()
-    } catch(e) {
+    } catch (e) {
         mbuf.reset()
-        // Sender did not length-prefix the memo
+            // Sender did not length-prefix the memo
         memo = new Buffer(mbuf.toString('binary'), 'binary').toString('utf-8')
         return '#' + memo
     }
@@ -56,7 +55,7 @@ export function decode(private_key, memo) {
 export function encode(private_key, public_key, memo, testNonce) {
     assert(memo, 'memo is required')
     assert.equal(typeof memo, 'string', 'memo')
-    if(!/^#/.test(memo)) return memo
+    if (!/^#/.test(memo)) return memo
     memo = memo.substring(1)
 
     assert(private_key, 'private_key is required')
@@ -70,15 +69,15 @@ export function encode(private_key, public_key, memo, testNonce) {
     mbuf.writeVString(memo)
     memo = new Buffer(mbuf.copy(0, mbuf.offset).toBinary(), 'binary')
 
-    const {nonce, message, checksum} = Aes.encrypt(private_key, public_key, memo, testNonce)
+    const { nonce, message, checksum } = Aes.encrypt(private_key, public_key, memo, testNonce)
     memo = encMemo.fromObject({
-        from: private_key.toPublicKey(),
-        to: public_key,
-        nonce,
-        check: checksum,
-        encrypted: message
-    })
-    // serialize
+            from: private_key.toPublicKey(),
+            to: public_key,
+            nonce,
+            check: checksum,
+            encrypted: message
+        })
+        // serialize
     memo = encMemo.toBuffer(memo)
     return '#' + base58.encode(new Buffer(memo, 'binary'))
 }
@@ -90,23 +89,23 @@ let encodeTest = undefined
   if a memo can't be encrypted and decrypted.
 */
 function checkEncryption() {
-  if(encodeTest === undefined) {
-    let plaintext;
-    encodeTest = true // prevent infinate looping
-    try {
-      const wif = '5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw'
-      const pubkey = 'STM8m5UgaFAAYQRuaNejYdS8FVLVp9Ss3K1qAVk5de6F8s3HnVbvA'
-      const cyphertext = encode(wif, pubkey, '#memo爱')
-      plaintext = decode(wif, cyphertext)
-    } catch(e) {
-      console.error(e);
-    } finally {
-      encodeTest = plaintext === '#memo爱'
+    if (encodeTest === undefined) {
+        let plaintext;
+        encodeTest = true // prevent infinate looping
+        try {
+            const wif = '5JdeC9P7Pbd1uGdFVEsJ41EkEnADbbHGq6p1BwFxm6txNBsQnsw'
+            const pubkey = 'DEIP8m5UgaFAAYQRuaNejYdS8FVLVp9Ss3K1qAVk5de6F8s3HnVbvA'
+            const cyphertext = encode(wif, pubkey, '#memo爱')
+            plaintext = decode(wif, cyphertext)
+        } catch (e) {
+            console.error(e);
+        } finally {
+            encodeTest = plaintext === '#memo爱'
+        }
     }
-  }
-  if(encodeTest === false)
-    throw new Error('This environment does not support encryption.')
+    if (encodeTest === false)
+        throw new Error('This environment does not support encryption.')
 }
 
-const toPrivateObj = o => (o ? o.d ? o : PrivateKey.fromWif(o) : o/*null or undefined*/)
-const toPublicObj = o => (o ? o.Q ? o : PublicKey.fromString(o) : o/*null or undefined*/)
+const toPrivateObj = o => (o ? o.d ? o : PrivateKey.fromWif(o) : o /*null or undefined*/ )
+const toPublicObj = o => (o ? o.Q ? o : PublicKey.fromString(o) : o /*null or undefined*/ )

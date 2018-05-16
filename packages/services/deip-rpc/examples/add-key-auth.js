@@ -7,12 +7,12 @@ const privActiveWif = deipRpc.auth.toWif(username, password, 'active');
 
 /** Add posting key auth */
 deipRpc.broadcast.addKeyAuth({
-    signingKey: privActiveWif,
-    username,
-    authorizedKey: 'STM88CPfhCmeEzCnvC1Cjc3DNd1DTjkMcmihih8SSxmm4LBqRq5Y9',
-    role: 'posting',
-  },
-  (err, result) => {
-    console.log(err, result);
-  }
+        signingKey: privActiveWif,
+        username,
+        authorizedKey: 'DEIP88CPfhCmeEzCnvC1Cjc3DNd1DTjkMcmihih8SSxmm4LBqRq5Y9',
+        role: 'posting',
+    },
+    (err, result) => {
+        console.log(err, result);
+    }
 );

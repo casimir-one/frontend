@@ -53,7 +53,7 @@ class PublicKey {
         {return} string
     */
     toPublicKeyString(address_prefix = config.get('address_prefix')) {
-        if(this.pubdata) return address_prefix + this.pubdata
+        if (this.pubdata) return address_prefix + this.pubdata
         const pub_buf = this.toBuffer();
         const checksum = hash.ripemd160(pub_buf);
         const addy = Buffer.concat([pub_buf, checksum.slice(0, 4)]);
@@ -62,8 +62,8 @@ class PublicKey {
     }
 
     /**
-        @arg {string} public_key - like STMXyz...
-        @arg {string} address_prefix - like STM
+        @arg {string} public_key - like DEIPXyz...
+        @arg {string} address_prefix - like DEIP
         @return PublicKey or `null` (if the public_key string is invalid)
         @deprecated fromPublicKeyString (use fromString instead)
     */
@@ -76,8 +76,8 @@ class PublicKey {
     }
 
     /**
-        @arg {string} public_key - like STMXyz...
-        @arg {string} address_prefix - like STM
+        @arg {string} public_key - like DEIPXyz...
+        @arg {string} address_prefix - like DEIP
         @throws {Error} if public key is invalid
         @return PublicKey
     */
@@ -86,7 +86,7 @@ class PublicKey {
         assert.equal(
             address_prefix, prefix,
             `Expecting key to begin with ${address_prefix}, instead got ${prefix}`);
-            public_key = public_key.slice(address_prefix.length);
+        public_key = public_key.slice(address_prefix.length);
 
         public_key = new Buffer(base58.decode(public_key), 'binary');
         var checksum = public_key.slice(-4);
@@ -119,15 +119,15 @@ class PublicKey {
         return base58.encode(addy);
     }
 
-    child( offset ) {
+    child(offset) {
 
         assert(Buffer.isBuffer(offset), "Buffer required: offset")
         assert.equal(offset.length, 32, "offset length")
 
-        offset = Buffer.concat([ this.toBuffer(), offset ])
-        offset = hash.sha256( offset )
+        offset = Buffer.concat([this.toBuffer(), offset])
+        offset = hash.sha256(offset)
 
-        let c = BigInteger.fromBuffer( offset )
+        let c = BigInteger.fromBuffer(offset)
 
         if (c.compareTo(n) >= 0)
             throw new Error("Child offset went out of bounds, try again")
@@ -136,7 +136,7 @@ class PublicKey {
         let cG = G.multiply(c)
         let Qprime = this.Q.add(cG)
 
-        if( secp256k1.isInfinity(Qprime) )
+        if (secp256k1.isInfinity(Qprime))
             throw new Error("Child offset derived to an invalid key, try again")
 
         return PublicKey.fromPoint(Qprime)
