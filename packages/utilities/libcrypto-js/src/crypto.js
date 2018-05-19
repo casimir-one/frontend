@@ -16,6 +16,7 @@
     exports.sha256 = sha256;
     exports.ripemd160 = ripemd160;
     exports.hexify = hexify;
+    exports.unhexify = unhexify;
 
     var sjcl = (function() {
         // SJCL is inserted here automatically by the build process.
@@ -117,6 +118,19 @@
             result += view[i].toString(16);
         }
         return result;
+    }
+
+    function unhexify(str) {
+        if (!str) {
+            return new Uint8Array();
+        }
+
+        var a = [];
+        for (var i = 0, len = str.length; i < len; i += 2) {
+            a.push(parseInt(str.substr(i, 2), 16));
+        }
+
+        return new Uint8Array(a);
     }
 
     function serializePair(k) {
