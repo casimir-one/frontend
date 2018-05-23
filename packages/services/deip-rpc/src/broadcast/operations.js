@@ -215,6 +215,15 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
+        "operation": "vote_for_review_operation",
+        "params": [
+            "voter",
+            "review_id",
+            "discipline_id",
+            "weight"
+        ]
+    }, {
+        "roles": ["active", "owner"],
         "operation": "create_research_group_join_request",
         "params": [
             "owner",
