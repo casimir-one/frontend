@@ -460,7 +460,7 @@ var reject_research_group_invite = new Serializer("reject_research_group_invite"
 var vote_for_review_operation = new Serializer("vote_for_review_operation", {
     "voter": string,
     "review_id": int64,
-    "discipline_id": int64_t,
+    "discipline_id": int64,
     "weight": int16,
 });
 
