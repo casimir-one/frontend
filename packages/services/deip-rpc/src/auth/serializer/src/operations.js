@@ -457,11 +457,11 @@ var reject_research_group_invite = new Serializer("reject_research_group_invite"
     "owner": string
 });
 
-var vote_for_review_operation = new Serializer("vote_for_review_operation", {
+var vote_for_review = new Serializer("vote_for_review", {
     "voter": string,
     "review_id": int64,
     "discipline_id": int64,
-    "weight": int16,
+    "weight": int16
 });
 
 var create_research_group_join_request = new Serializer("create_research_group_join_request", {
@@ -563,7 +563,7 @@ operation.st_operations = [
     contribute_to_token_sale,
     approve_research_group_invite,
     reject_research_group_invite,
-    vote_for_review_operation,
+    vote_for_review,
     create_research_group_join_request,
     reject_research_group_join_request,
 

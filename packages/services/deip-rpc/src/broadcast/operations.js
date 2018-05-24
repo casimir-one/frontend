@@ -215,7 +215,7 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "vote_for_review_operation",
+        "operation": "vote_for_review",
         "params": [
             "voter",
             "review_id",
