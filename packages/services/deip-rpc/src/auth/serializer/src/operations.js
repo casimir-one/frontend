@@ -435,9 +435,7 @@ var make_review = new Serializer("make_review", {
     author: string,
     research_content_id: int64,
     content: string,
-    is_positive: bool,
-    references: set(int64),
-    external_references: set(string)
+    is_positive: bool
 });
 
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
