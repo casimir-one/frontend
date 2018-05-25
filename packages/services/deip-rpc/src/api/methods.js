@@ -615,6 +615,15 @@ export default [{
             "permlink"
         ]
     },
+
+    {
+        "api": "database_api",
+        "method": "get_research_by_absolute_permlink",
+        "params": [
+            "research_group_permlink",
+            "research_permlink"
+        ]
+    },
     {
         "api": "database_api",
         "method": "get_researches",
@@ -667,6 +676,15 @@ export default [{
         "params": [
             "research_id",
             "permlink"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_content_by_absolute_permlink",
+        "params": [
+            "research_group_permlink",
+            "research_permlink",
+            "research_content_permlink"
         ]
     },
     {
