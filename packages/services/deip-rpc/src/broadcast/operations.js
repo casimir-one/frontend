@@ -186,9 +186,7 @@ module.exports = [{
             "author",
             "research_content_id",
             "content",
-            "is_positive",
-            "references",
-            "external_references"
+            "is_positive"
         ]
     }, {
         "roles": ["active", "owner"],
