@@ -739,6 +739,13 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "check_research_token_sale_existence_by_research_id",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_research_token_sale_by_end_time",
         "params": [
             "end_time"
