@@ -842,5 +842,34 @@ export default [{
         "params": [
             "research_id"
         ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_by_id",
+        "params": [
+            "research_token_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_tokens_by_account_name",
+        "params": [
+            "account_name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_tokens_by_research_id",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_research_token_by_account_name_and_research_id",
+        "params": [
+            "account_name",
+            "research_id"
+        ]
     }
 ];
