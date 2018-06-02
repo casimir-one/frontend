@@ -28,28 +28,25 @@ ChainTypes.operations = {
     recover_account: 11,
     change_recovery_account: 12,
 
-    delegate_vesting_shares: 13,
-    account_create_with_delegation: 14,
-
     // DEIP native operations
-    create_grant: 15,
-    create_research_group: 16,
-    create_proposal: 17,
-    vote_proposal: 18,
-    make_review: 19,
-    contribute_to_token_sale: 20,
-    approve_research_group_invite: 21,
-    reject_research_group_invite: 22,
-    vote_for_review: 23,
-    create_research_group_join_request: 24,
-    reject_research_group_join_request: 25,
+    create_grant: 13,
+    create_research_group: 14,
+    create_proposal: 15,
+    vote_proposal: 16,
+    make_review: 17,
+    contribute_to_token_sale: 18,
+    approve_research_group_invite: 19,
+    reject_research_group_invite: 20,
+    vote_for_review: 21,
+    create_research_group_join_request: 22,
+    reject_research_group_join_request: 23,
 
 
     // virtual operations
-    fill_vesting_withdraw: 26,
-    shutdown_witness: 27,
-    hardfork: 28,
-    return_vesting_delegation: 29
+    fill_vesting_withdraw: 24,
+    shutdown_witness: 25,
+    hardfork: 26,
+    return_vesting_delegation: 27
 };
 
 //types.hpp
