@@ -549,9 +549,6 @@ operation.st_operations = [
     recover_account,
     change_recovery_account,
 
-    delegate_vesting_shares,
-    account_create_with_delegation,
-
     // DEIP native operations
     create_grant,
     create_research_group,
