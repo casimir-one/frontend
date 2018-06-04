@@ -420,7 +420,7 @@ var create_research_group = new Serializer("create_research_group", {
     permlink: string,
     description: string,
     quorum_percent: uint32,
-    is_personal: boolean,
+    is_personal: bool,
     invitees: set(invitee)
 });
 
