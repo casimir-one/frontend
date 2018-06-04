@@ -72,11 +72,6 @@ const Serializer = function(operation_name, serilization_types_object) {
     return module.exports[operation_name] = s;
 }
 
-const beneficiaries = new Serializer("beneficiaries", {
-    account: string,
-    weight: uint16
-});
-
 const comment_payout_beneficiaries = new Serializer(0, {
     beneficiaries: set(beneficiaries)
 });
