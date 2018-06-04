@@ -421,7 +421,7 @@ var create_research_group = new Serializer("create_research_group", {
     description: string,
     quorum_percent: uint32,
     is_personal: bool,
-    invitees: array(invitee)
+    invitees: set(invitee)
 });
 
 var create_proposal = new Serializer("create_proposal", {
