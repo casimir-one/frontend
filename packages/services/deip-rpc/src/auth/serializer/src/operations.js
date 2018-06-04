@@ -83,7 +83,7 @@ const beneficiaries = new Serializer("beneficiaries", {
 
 const invitee = new Serializer("invitee", {
     account: string,
-    research_group_tokens_in_percent: uint16
+    research_group_tokens_in_percent: uint32
 });
 
 // Custom-types after Generated code
