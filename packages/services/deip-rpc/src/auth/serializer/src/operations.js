@@ -81,7 +81,7 @@ const beneficiaries = new Serializer("beneficiaries", {
     weight: uint16
 });
 
-const invitees = new Serializer("invitees", {
+const invitee = new Serializer("invitee", {
     account: string,
     research_group_tokens_in_percent: uint32
 });
@@ -421,7 +421,7 @@ var create_research_group = new Serializer("create_research_group", {
     description: string,
     quorum_percent: uint32,
     is_personal: bool,
-    invitees: set(invitees)
+    invitees: set(invitee)
 });
 
 var create_proposal = new Serializer("create_proposal", {
