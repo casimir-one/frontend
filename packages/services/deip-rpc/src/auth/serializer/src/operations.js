@@ -81,6 +81,16 @@ const comment_payout_beneficiaries = new Serializer(0, {
     beneficiaries: set(beneficiaries)
 });
 
+const beneficiaries = new Serializer("beneficiaries", {
+    account: string,
+    weight: uint16
+});
+
+const invitee = new Serializer("invitee", {
+    account: string,
+    research_group_tokens_in_percent: uint16
+});
+
 // Custom-types after Generated code
 
 // ##  Generated code follows
@@ -414,7 +424,9 @@ var create_research_group = new Serializer("create_research_group", {
     name: string,
     permlink: string,
     description: string,
-    quorum_percent: uint32
+    quorum_percent: uint32,
+    is_personal: boolean,
+    invitees: set(invitee)
 });
 
 var create_proposal = new Serializer("create_proposal", {

@@ -159,7 +159,9 @@ module.exports = [{
             "name",
             "permlink",
             "description",
-            "quorum_percent"
+            "quorum_percent",
+            "is_personal",
+            "invitees"
         ]
     }, {
         "roles": ["active", "owner"],
