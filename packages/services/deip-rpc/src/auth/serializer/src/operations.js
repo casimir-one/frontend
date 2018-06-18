@@ -173,6 +173,14 @@ let transfer = new Serializer("transfer", {
     memo: string
 });
 
+let transfer_research_tokens = new Serializer("transfer_research_tokens", {
+    research_token_id: int64,
+    research_id: int64,
+    sender: string,
+    receiver: string,
+    amount: uint32
+});
+
 let transfer_to_vesting = new Serializer("transfer_to_vesting", {
     from: string,
     to: string,
@@ -469,17 +477,6 @@ var vote_for_review = new Serializer("vote_for_review", {
     "weight": int16
 });
 
-var create_research_group_join_request = new Serializer("create_research_group_join_request", {
-    "owner": string,
-    "research_group_id": int64,
-    "motivation_letter": string
-});
-
-var reject_research_group_join_request = new Serializer("reject_research_group_join_request", {
-    "research_group_join_request_id": int64,
-    "owner": string
-});
-
 // virtual operations
 
 let fill_convert_request = new Serializer("fill_convert_request", {
@@ -566,8 +563,7 @@ operation.st_operations = [
     approve_research_group_invite,
     reject_research_group_invite,
     vote_for_review,
-    create_research_group_join_request,
-    reject_research_group_join_request,
+    transfer_research_tokens,
 
     // virtual operations
     fill_vesting_withdraw,

@@ -224,18 +224,13 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "create_research_group_join_request",
+        "operation": "transfer_research_tokens",
         "params": [
-            "owner",
-            "research_group_id",
-            "motivation_letter"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "reject_research_group_join_request",
-        "params": [
-            "research_group_join_request_id",
-            "owner"
+            "research_token_id",
+            "research_id",
+            "sender",
+            "receiver",
+            "amount"
         ]
     },
     // virtual operations

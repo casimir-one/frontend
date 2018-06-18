@@ -38,15 +38,18 @@ ChainTypes.operations = {
     approve_research_group_invite: 19,
     reject_research_group_invite: 20,
     vote_for_review: 21,
-    create_research_group_join_request: 22,
-    reject_research_group_join_request: 23,
-
+    transfer_research_tokens_to_research_group: 22,
+    add_expertise_tokens: 23,
+    research_update: 24,
+    deposit_to_vesting_contract: 25,
+    withdraw_from_vesting_contract: 26,
+    transfer_research_tokens: 27,
 
     // virtual operations
-    fill_vesting_withdraw: 24,
-    shutdown_witness: 25,
-    hardfork: 26,
-    return_vesting_delegation: 27
+    fill_vesting_withdraw: 28,
+    shutdown_witness: 29,
+    hardfork: 30,
+    producer_reward_operation: 31
 };
 
 //types.hpp
