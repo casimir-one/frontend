@@ -477,6 +477,17 @@ var vote_for_review = new Serializer("vote_for_review", {
     "weight": int16
 });
 
+var transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
+    "from": string,
+    "to": string,
+    "amount": asset
+});
+
+var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
+    "account": string,
+    "total_common_tokens_amount": int64
+});
+
 // virtual operations
 
 let fill_convert_request = new Serializer("fill_convert_request", {
@@ -537,8 +548,8 @@ operation.st_operations = [
     vote,
 
     transfer,
-    transfer_to_vesting,
-    withdraw_vesting,
+    transfer_to_common_tokens,
+    withdraw_common_tokens,
 
     account_create,
     account_update,

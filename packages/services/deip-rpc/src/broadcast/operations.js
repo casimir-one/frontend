@@ -232,6 +232,21 @@ module.exports = [{
             "receiver",
             "amount"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "transfer_to_common_tokens",
+        "params": [
+            "from",
+            "to",
+            "amount"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "withdraw_common_tokens",
+        "params": [
+            "account",
+            "total_common_tokens_amount"
+        ]
     },
     // virtual operations
     {

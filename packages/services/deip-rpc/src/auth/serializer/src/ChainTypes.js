@@ -12,8 +12,8 @@ ChainTypes.operations = {
     vote: 0,
 
     transfer: 1,
-    transfer_to_vesting: 2,
-    withdraw_vesting: 3,
+    transfer_to_common_tokens: 2,
+    withdraw_common_tokens: 3,
 
     account_create: 4,
     account_update: 5,
