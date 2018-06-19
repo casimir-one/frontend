@@ -46,7 +46,7 @@ ChainTypes.operations = {
     transfer_research_tokens: 27,
 
     // virtual operations
-    fill_vesting_withdraw: 28,
+    fill_common_tokens_withdraw: 28,
     shutdown_witness: 29,
     hardfork: 30,
     producer_reward_operation: 31

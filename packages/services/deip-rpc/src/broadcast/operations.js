@@ -224,6 +224,49 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
+        "operation": "transfer_research_tokens_to_research_group",
+        "params": [
+            "research_token_id",
+            "research_id",
+            "owner",
+            "amount" 
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "add_expertise_tokens",
+        "params": [
+
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "research_update",
+        "params": [
+            "research_id",
+            "title",
+            "abstract",
+            "permlink",
+            "owner"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "deposit_to_vesting_contract",
+        "params": [
+             "sender",
+             "receiver",
+             "balance",
+             "withdrawal_period",
+             "contract_duration"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "withdraw_from_vesting_contract",
+        "params": [
+            "sender",
+            "receiver",
+            "amount"
+        ]
+    }, {
+        "roles": ["active", "owner"],
         "operation": "transfer_research_tokens",
         "params": [
             "research_token_id",
@@ -251,7 +294,7 @@ module.exports = [{
     // virtual operations
     {
         "roles": ["active", "owner"],
-        "operation": "fill_vesting_withdraw",
+        "operation": "fill_common_tokens_withdraw",
         "params": [
             "from_account",
             "to_account",

@@ -173,14 +173,6 @@ let transfer = new Serializer("transfer", {
     memo: string
 });
 
-let transfer_research_tokens = new Serializer("transfer_research_tokens", {
-    research_token_id: int64,
-    research_id: int64,
-    sender: string,
-    receiver: string,
-    amount: uint32
-});
-
 let transfer_to_vesting = new Serializer("transfer_to_vesting", {
     from: string,
     to: string,
@@ -477,6 +469,47 @@ var vote_for_review = new Serializer("vote_for_review", {
     "weight": int16
 });
 
+var transfer_research_tokens_to_research_group = new Serializer("transfer_research_tokens_to_research_group", {
+    research_token_id: int64,
+    research_id: int64,
+    owner: string,
+    amount : uint32 
+})
+
+var add_expertise_tokens = new Serializer("add_expertise_tokens", {
+
+})
+
+var research_update = new Serializer("research_update", {
+     "research_id" : int64,
+     "title": string,
+     "abstract": string,
+     "permlink": string,
+     "owner": string
+})
+
+var deposit_to_vesting_contract = new Serializer("deposit_to_vesting_contract", {
+     "sender": string,
+     "receiver": string,
+     "balance": uint32,
+     "withdrawal_period": uint32,
+     "contract_duration": uint32
+})
+
+var withdraw_from_vesting_contract = new Serializer("withdraw_from_vesting_contract", {
+    "sender": string,
+    "receiver": string,
+    "amount": uint32
+})
+
+var transfer_research_tokens = new Serializer("transfer_research_tokens", {
+    research_token_id: int64,
+    research_id: int64,
+    sender: string,
+    receiver: string,
+    amount: uint32
+})
+
 var transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
     "from": string,
     "to": string,
@@ -507,7 +540,7 @@ let interest = new Serializer("interest", {
     interest: asset
 });
 
-let fill_vesting_withdraw = new Serializer("fill_vesting_withdraw", {
+let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
     from_account: string,
     to_account: string,
     withdrawn: asset,
@@ -558,7 +591,7 @@ operation.st_operations = [
     account_witness_vote,
     account_witness_proxy,
 
-    set_withdraw_vesting_route,
+    set_withdraw_vesting_route, //   <--
 
     request_account_recovery,
     recover_account,
@@ -574,10 +607,15 @@ operation.st_operations = [
     approve_research_group_invite,
     reject_research_group_invite,
     vote_for_review,
+    transfer_research_tokens_to_research_group,
+    add_expertise_tokens,
+    research_update,
+    deposit_to_vesting_contract,
+    withdraw_from_vesting_contract,
     transfer_research_tokens,
 
     // virtual operations
-    fill_vesting_withdraw,
+    fill_common_tokens_withdraw,
     shutdown_witness,
     hardfork,
     return_vesting_delegation
