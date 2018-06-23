@@ -203,8 +203,7 @@ module.exports = [{
         "operation": "approve_research_group_invite",
         "params": [
             "research_group_invite_id",
-            "owner",
-            "research_tokens_conversion_percent"
+            "owner"
         ]
     }, {
         "roles": ["active", "owner"],
