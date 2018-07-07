@@ -86,6 +86,11 @@ const invitee = new Serializer("invitee", {
     research_group_tokens_in_percent: uint32
 });
 
+const expertise_amount_pair_type = new Serializer("expertise_amount_pair_type", {
+    discipline_id: int64,
+    amount: int64
+});
+
 // Custom-types after Generated code
 
 // ##  Generated code follows
@@ -476,7 +481,9 @@ var transfer_research_tokens_to_research_group = new Serializer("transfer_resear
 })
 
 var add_expertise_tokens = new Serializer("add_expertise_tokens", {
-
+    owner: string,
+    account_name: string,
+    disciplines_to_add: set(expertise_amount_pair_type)
 })
 
 var research_update = new Serializer("research_update", {

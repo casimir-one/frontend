@@ -234,7 +234,9 @@ module.exports = [{
         "roles": ["active", "owner"],
         "operation": "add_expertise_tokens",
         "params": [
-
+            "owner",
+            "account_name",
+            "disciplines_to_add"
         ]
     }, {
         "roles": ["active", "owner"],
