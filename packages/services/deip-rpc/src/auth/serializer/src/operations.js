@@ -283,11 +283,11 @@ let report_over_production = new Serializer("report_over_production", {
     second_block: signed_block_header
 });
 
-let set_withdraw_vesting_route = new Serializer("set_withdraw_vesting_route", {
+let set_withdraw_common_tokens_route = new Serializer("set_withdraw_common_tokens_route", {
     from_account: string,
     to_account: string,
     percent: uint16,
-    auto_vest: bool
+    auto_common_token: bool
 });
 
 let limit_order_create2 = new Serializer("limit_order_create2", {
@@ -494,6 +494,18 @@ var research_update = new Serializer("research_update", {
      "owner": string
 })
 
+var delegate_expertise = new Serializer("delegate_expertise", {
+    "sender" : string,
+    "receiver": string,
+    "discipline_id": int64
+})
+
+var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", {
+    "sender" : string,
+    "receiver": string,
+    "discipline_id": int64
+})
+
 var deposit_to_vesting_contract = new Serializer("deposit_to_vesting_contract", {
      "sender": string,
      "receiver": string,
@@ -584,7 +596,7 @@ let return_vesting_delegation = new Serializer("return_vesting_delegation", {
 });
 
 operation.st_operations = [
-    vote,
+    vote_for_review,
 
     transfer,
     transfer_to_common_tokens,
@@ -596,8 +608,7 @@ operation.st_operations = [
     witness_update,
     account_witness_vote,
     account_witness_proxy,
-
-    set_withdraw_vesting_route, //   <--
+    set_withdraw_common_tokens_route,
 
     request_account_recovery,
     recover_account,
@@ -612,13 +623,16 @@ operation.st_operations = [
     contribute_to_token_sale,
     approve_research_group_invite,
     reject_research_group_invite,
-    vote_for_review,
+    //vote_for_review,
     transfer_research_tokens_to_research_group,
     add_expertise_tokens,
     research_update,
     deposit_to_vesting_contract,
     withdraw_from_vesting_contract,
     transfer_research_tokens,
+    delegate_expertise,
+    revoke_expertise_delegation,
+
 
     // virtual operations
     fill_common_tokens_withdraw,

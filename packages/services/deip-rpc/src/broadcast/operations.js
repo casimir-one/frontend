@@ -83,12 +83,12 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "set_withdraw_vesting_route",
+        "operation": "set_withdraw_common_tokens_route",
         "params": [
             "from_account",
             "to_account",
             "percent",
-            "auto_vest"
+            "auto_common_token"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -180,6 +180,22 @@ module.exports = [{
             "voter",
             "proposal_id",
             "research_group_id"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "delegate_expertise",
+        "params": [
+            "sender",
+            "receiver",
+            "discipline_id"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "revoke_expertise_delegation",
+        "params": [
+            "sender",
+            "receiver",
+            "discipline_id"
         ]
     }, {
         "roles": ["active", "owner"],

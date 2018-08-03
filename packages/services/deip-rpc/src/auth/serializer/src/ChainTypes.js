@@ -9,7 +9,7 @@ ChainTypes.reserved_spaces = {
 };
 
 ChainTypes.operations = {
-    vote: 0,
+    vote_for_review: 0,
 
     transfer: 1,
     transfer_to_common_tokens: 2,
@@ -22,7 +22,7 @@ ChainTypes.operations = {
     account_witness_vote: 7,
     account_witness_proxy: 8,
 
-    set_withdraw_vesting_route: 9,
+    set_withdraw_common_tokens_route: 9,
 
     request_account_recovery: 10,
     recover_account: 11,
@@ -37,19 +37,20 @@ ChainTypes.operations = {
     contribute_to_token_sale: 18,
     approve_research_group_invite: 19,
     reject_research_group_invite: 20,
-    vote_for_review: 21,
-    transfer_research_tokens_to_research_group: 22,
-    add_expertise_tokens: 23,
-    research_update: 24,
-    deposit_to_vesting_contract: 25,
-    withdraw_from_vesting_contract: 26,
-    transfer_research_tokens: 27,
-
+    transfer_research_tokens_to_research_group: 21,
+    add_expertise_tokens: 22,
+    research_update: 23,
+    deposit_to_vesting_contract: 24,
+    withdraw_from_vesting_contract: 25,
+    transfer_research_tokens: 26,
+    delegate_expertise: 27,
+    revoke_expertise_delegation: 28,
+    
     // virtual operations
-    fill_common_tokens_withdraw: 28,
-    shutdown_witness: 29,
-    hardfork: 30,
-    producer_reward_operation: 31
+    fill_common_tokens_withdraw: 29,
+    shutdown_witness: 30,
+    hardfork: 31,
+    producer_reward_operation: 32
 };
 
 //types.hpp
