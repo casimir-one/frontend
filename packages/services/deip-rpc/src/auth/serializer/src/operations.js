@@ -448,7 +448,8 @@ var make_review = new Serializer("make_review", {
     author: string,
     research_content_id: int64,
     content: string,
-    is_positive: bool
+    is_positive: bool,
+    weight: uint16
 });
 
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
