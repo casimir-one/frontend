@@ -38,7 +38,7 @@ ChainTypes.operations = {
     approve_research_group_invite: 19,
     reject_research_group_invite: 20,
     transfer_research_tokens_to_research_group: 21,
-    add_expertise_tokens: 22,
+    set_expertise_tokens: 22,
     research_update: 23,
     deposit_to_vesting_contract: 24,
     withdraw_from_vesting_contract: 25,

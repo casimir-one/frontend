@@ -482,7 +482,7 @@ var transfer_research_tokens_to_research_group = new Serializer("transfer_resear
     amount : uint32 
 })
 
-var add_expertise_tokens = new Serializer("add_expertise_tokens", {
+var set_expertise_tokens = new Serializer("set_expertise_tokens", {
     owner: string,
     account_name: string,
     disciplines_to_add: set(expertise_amount_pair_type)
@@ -625,9 +625,8 @@ operation.st_operations = [
     contribute_to_token_sale,
     approve_research_group_invite,
     reject_research_group_invite,
-    //vote_for_review,
     transfer_research_tokens_to_research_group,
-    add_expertise_tokens,
+    set_expertise_tokens,
     research_update,
     deposit_to_vesting_contract,
     withdraw_from_vesting_contract,

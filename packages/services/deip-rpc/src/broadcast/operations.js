@@ -249,7 +249,7 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "add_expertise_tokens",
+        "operation": "set_expertise_tokens",
         "params": [
             "owner",
             "account_name",
