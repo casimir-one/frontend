@@ -528,6 +528,20 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_review_votes_by_review_id",
+        "params": [
+            "review_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_review_votes_by_voter",
+        "params": [
+            "account"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_researches_by_research_group_id",
         "params": [
             "research_group_id"
