@@ -1,107 +1,8 @@
 export default [{
         "api": "database_api",
-        "method": "set_subscribe_callback",
-        "params": ["callback", "clearFilter"]
-    },
-    {
-        "api": "database_api",
-        "method": "set_pending_transaction_callback",
-        "params": ["cb"]
-    },
-    {
-        "api": "database_api",
         "method": "set_block_applied_callback",
         "params": ["cb"]
-    },
-    {
-        "api": "database_api",
-        "method": "cancel_all_subscriptions"
-    },
-    {
-        "api": "database_api",
-        "method": "get_trending_tags",
-        "params": ["afterTag", "limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_tags_used_by_author",
-        "params": ["author"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_post_discussions_by_payout",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_comment_discussions_by_payout",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_trending",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_trending30",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_created",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_active",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_cashout",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_payout",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_votes",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_children",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_hot",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_feed",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_blog",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_comments",
-        "params": ["query"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_promoted",
-        "params": ["query"]
-    },
+    },    
     {
         "api": "database_api",
         "method": "get_block_header",
@@ -121,27 +22,7 @@ export default [{
         "api": "database_api",
         "method": "get_state",
         "params": ["path"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_trending_categories",
-        "params": ["after", "limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_best_categories",
-        "params": ["after", "limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_active_categories",
-        "params": ["after", "limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_recent_categories",
-        "params": ["after", "limit"]
-    },
+    },    
     {
         "api": "database_api",
         "method": "get_config"
@@ -153,14 +34,6 @@ export default [{
     {
         "api": "database_api",
         "method": "get_chain_properties"
-    },
-    {
-        "api": "database_api",
-        "method": "get_feed_history"
-    },
-    {
-        "api": "database_api",
-        "method": "get_current_median_history_price"
     },
     {
         "api": "database_api",
@@ -205,11 +78,6 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_conversion_requests",
-        "params": ["accountName"]
-    },
-    {
-        "api": "database_api",
         "method": "get_account_history",
         "params": ["account", "from", "limit"]
     },
@@ -225,11 +93,6 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_escrow",
-        "params": ["from", "escrowId"]
-    },
-    {
-        "api": "database_api",
         "method": "get_withdraw_routes",
         "params": ["account", "withdrawRouteType"]
     },
@@ -237,31 +100,6 @@ export default [{
         "api": "database_api",
         "method": "get_account_bandwidth",
         "params": ["account", "bandwidthType"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_savings_withdraw_from",
-        "params": ["account"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_savings_withdraw_to",
-        "params": ["account"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_order_book",
-        "params": ["limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_open_orders",
-        "params": ["owner"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_liquidity_queue",
-        "params": ["startAccount", "limit"]
     },
     {
         "api": "database_api",
@@ -295,36 +133,6 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_active_votes",
-        "params": ["author", "permlink"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_account_votes",
-        "params": ["voter"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_content",
-        "params": ["author", "permlink"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_content_replies",
-        "params": ["author", "permlink"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_discussions_by_author_before_date",
-        "params": ["author", "startPermlink", "beforeDate", "limit"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_replies_by_last_update",
-        "params": ["startAuthor", "startPermlink", "limit"]
-    },
-    {
-        "api": "database_api",
         "method": "get_witnesses",
         "params": ["witnessIds"]
     },
@@ -353,17 +161,8 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_miner_queue"
-    },
-    {
-        "api": "database_api",
         "method": "get_reward_fund",
         "params": ["name"]
-    },
-    {
-        "api": "database_api",
-        "method": "get_vesting_delegations",
-        "params": ["account", "from", "limit"]
     },
     {
         "api": "login_api",
@@ -378,56 +177,6 @@ export default [{
     {
         "api": "login_api",
         "method": "get_version"
-    },
-    {
-        "api": "follow_api",
-        "method": "get_followers",
-        "params": ["following", "startFollower", "followType", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_following",
-        "params": ["follower", "startFollowing", "followType", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_follow_count",
-        "params": ["account"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_feed_entries",
-        "params": ["account", "entryId", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_feed",
-        "params": ["account", "entryId", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_blog_entries",
-        "params": ["account", "entryId", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_blog",
-        "params": ["account", "entryId", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_account_reputations",
-        "params": ["lowerBoundName", "limit"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_reblogged_by",
-        "params": ["author", "permlink"]
-    },
-    {
-        "api": "follow_api",
-        "method": "get_blog_authors",
-        "params": ["blogAccount"]
     },
     {
         "api": "network_broadcast_api",
@@ -454,43 +203,6 @@ export default [{
         "method": "set_max_block_age",
         "params": ["maxBlockAge"]
     },
-    {
-        "api": "market_history_api",
-        "method": "get_ticker",
-        "params": []
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_volume",
-        "params": []
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_order_book",
-        "method_name": "getMarketOrderBook",
-        "params": ["limit"]
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_trade_history",
-        "params": ["start", "end", "limit"]
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_recent_trades",
-        "params": ["limit"]
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_market_history",
-        "params": ["bucket_seconds", "start", "end"]
-    },
-    {
-        "api": "market_history_api",
-        "method": "get_market_history_buckets",
-        "params": []
-    },
-
     {
         "api": "database_api",
         "method": "get_research_group_by_permlink",
