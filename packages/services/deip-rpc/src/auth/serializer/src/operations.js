@@ -426,6 +426,7 @@ var create_research_group = new Serializer("create_research_group", {
     permlink: string,
     description: string,
     quorum_percent: uint32,
+    proposal_quorums: map((uint16), (uint32)),
     is_personal: bool,
     invitees: set(invitee)
 });

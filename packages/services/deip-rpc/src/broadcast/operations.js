@@ -160,6 +160,7 @@ module.exports = [{
             "permlink",
             "description",
             "quorum_percent",
+            "proposal_quorums",
             "is_personal",
             "invitees"
         ]
