@@ -1,14 +1,4 @@
 module.exports = [{
-        "roles": ["posting", "active", "owner"],
-        "operation": "vote",
-        "params": [
-            "voter",
-            "discipline_id",
-            "weight",
-            "research_id",
-            "research_content_id"
-        ]
-    }, {
         "roles": ["active", "owner"],
         "operation": "transfer",
         "params": [
@@ -16,14 +6,6 @@ module.exports = [{
             "to",
             "amount",
             "memo"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "transfer_to_vesting",
-        "params": [
-            "from",
-            "to",
-            "amount"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -115,14 +97,6 @@ module.exports = [{
             "account_to_recover",
             "new_recovery_account",
             "extensions"
-        ]
-    }, {
-        "roles": ["active", "owner"],
-        "operation": "delegate_vesting_shares",
-        "params": [
-            "delegator",
-            "delegatee",
-            "vesting_shares"
         ]
     }, {
         "roles": ["active", "owner"],

@@ -72,15 +72,6 @@ const Serializer = function(operation_name, serilization_types_object) {
     return module.exports[operation_name] = s;
 }
 
-const comment_payout_beneficiaries = new Serializer(0, {
-    beneficiaries: set(beneficiaries)
-});
-
-const beneficiaries = new Serializer("beneficiaries", {
-    account: string,
-    weight: uint16
-});
-
 const invitee = new Serializer("invitee", {
     account: string,
     research_group_tokens_in_percent: uint32,
@@ -164,60 +155,11 @@ let signed_block_header = new Serializer("signed_block_header", {
     witness_signature: bytes(65)
 });
 
-let vote = new Serializer("vote", {
-    voter: string,
-    discipline_id: int64,
-    weight: int16,
-    research_id: int64,
-    research_content_id: int64
-});
-
 let transfer = new Serializer("transfer", {
     from: string,
     to: string,
     amount: asset,
     memo: string
-});
-
-let transfer_to_vesting = new Serializer("transfer_to_vesting", {
-    from: string,
-    to: string,
-    amount: asset
-});
-
-let withdraw_vesting = new Serializer("withdraw_vesting", {
-    account: string,
-    vesting_shares: asset
-});
-
-let limit_order_create = new Serializer("limit_order_create", {
-    owner: string,
-    orderid: uint32,
-    amount_to_sell: asset,
-    min_to_receive: asset,
-    fill_or_kill: bool,
-    expiration: time_point_sec
-});
-
-let limit_order_cancel = new Serializer("limit_order_cancel", {
-    owner: string,
-    orderid: uint32
-});
-
-let price = new Serializer("price", {
-    base: asset,
-    quote: asset
-});
-
-let feed_publish = new Serializer("feed_publish", {
-    publisher: string,
-    exchange_rate: price
-});
-
-let convert = new Serializer("convert", {
-    owner: string,
-    requestid: uint32,
-    amount: asset
 });
 
 var authority = new Serializer("authority", {
@@ -278,26 +220,11 @@ let pow = new Serializer("pow", {
     work: bytes(32)
 });
 
-let report_over_production = new Serializer("report_over_production", {
-    reporter: string,
-    first_block: signed_block_header,
-    second_block: signed_block_header
-});
-
 let set_withdraw_common_tokens_route = new Serializer("set_withdraw_common_tokens_route", {
     from_account: string,
     to_account: string,
     percent: uint16,
     auto_common_token: bool
-});
-
-let limit_order_create2 = new Serializer("limit_order_create2", {
-    owner: string,
-    orderid: uint32,
-    amount_to_sell: asset,
-    exchange_rate: price,
-    fill_or_kill: bool,
-    expiration: time_point_sec
 });
 
 let challenge_authority = new Serializer("challenge_authority", {
@@ -323,90 +250,6 @@ let recover_account = new Serializer("recover_account", {
 let change_recovery_account = new Serializer("change_recovery_account", {
     account_to_recover: string,
     new_recovery_account: string,
-    extensions: set(future_extensions)
-});
-
-let pow2_input = new Serializer("pow2_input", {
-    worker_account: string,
-    prev_block: bytes(20),
-    nonce: uint64
-});
-
-let pow2 = new Serializer("pow2", {
-    input: pow2_input,
-    pow_summary: uint32
-});
-
-let equihash_proof = new Serializer("equihash_proof", {
-    n: uint32,
-    k: uint32,
-    seed: bytes(32),
-    inputs: array(uint32)
-});
-
-let equihash_pow = new Serializer("equihash_pow", {
-    input: pow2_input,
-    proof: equihash_proof,
-    prev_block: bytes(20),
-    pow_summary: uint32
-});
-
-let transfer_to_savings = new Serializer("transfer_to_savings", {
-    from: string,
-    to: string,
-    amount: asset,
-    memo: string
-});
-
-let transfer_from_savings = new Serializer("transfer_from_savings", {
-    from: string,
-    request_id: uint32,
-    to: string,
-    amount: asset,
-    memo: string
-});
-
-let cancel_transfer_from_savings = new Serializer("cancel_transfer_from_savings", {
-    from: string,
-    request_id: uint32
-});
-
-
-let reset_account = new Serializer("reset_account", {
-    reset_account: string,
-    account_to_reset: string,
-    new_owner_authority: authority
-});
-
-let set_reset_account = new Serializer("set_reset_account", {
-    account: string,
-    current_reset_account: string,
-    reset_account: string
-});
-
-let claim_reward_balance = new Serializer("claim_reward_balance", {
-    account: string,
-    reward_steem: asset,
-    reward_sbd: asset,
-    reward_vests: asset
-});
-
-let delegate_vesting_shares = new Serializer("delegate_vesting_shares", {
-    delegator: string,
-    delegatee: string,
-    vesting_shares: asset
-});
-
-let account_create_with_delegation = new Serializer("account_create_with_delegation", {
-    fee: asset,
-    delegation: asset,
-    creator: string,
-    new_account_name: string,
-    owner: authority,
-    active: authority,
-    posting: authority,
-    memo_key: public_key,
-    json_metadata: string,
     extensions: set(future_extensions)
 });
 
