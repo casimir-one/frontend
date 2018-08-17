@@ -299,7 +299,7 @@ var make_review = new Serializer("make_review", {
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
     research_token_sale_id: int64,
     owner: string,
-    amount: uint32
+    amount: asset
 });
 
 var approve_research_group_invite = new Serializer("approve_research_group_invite", {
