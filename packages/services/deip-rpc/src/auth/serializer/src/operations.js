@@ -367,7 +367,6 @@ var withdraw_from_vesting_contract = new Serializer("withdraw_from_vesting_contr
 })
 
 var transfer_research_tokens = new Serializer("transfer_research_tokens", {
-    research_token_id: int64,
     research_id: int64,
     sender: string,
     receiver: string,

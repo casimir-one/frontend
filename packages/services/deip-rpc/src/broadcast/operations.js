@@ -262,7 +262,6 @@ module.exports = [{
         "roles": ["active", "owner"],
         "operation": "transfer_research_tokens",
         "params": [
-            "research_token_id",
             "research_id",
             "sender",
             "receiver",
