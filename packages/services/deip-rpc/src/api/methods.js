@@ -106,8 +106,10 @@ export default [{
         "method": "get_transaction_hex",
         "params": ["trx"]
     },
+
+    // blockchain_history_api
     {
-        "api": "database_api",
+        "api": "blockchain_history_api",
         "method": "get_transaction",
         "params": ["trxId"]
     },
