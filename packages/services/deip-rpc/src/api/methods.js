@@ -544,6 +544,21 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "lookup_witness_accounts",
+        "params": [
+            "lower_bound_name",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_witness_by_account",
+        "params": [
+            "account_name"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_total_votes_by_research_and_discipline",
         "params": [
             "research_id",
