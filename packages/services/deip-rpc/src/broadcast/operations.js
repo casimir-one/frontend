@@ -140,6 +140,26 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
+        "operation": "expertise_allocation_proposal",
+        "params": [
+            "initiator",
+            "claimer",
+            "discipline_id",
+            "amount",
+            "description"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "vote_for_expertise_allocation_proposal",
+        "params": [
+            "initiator",
+            "claimer",
+            "discipline_id",
+            "voter",
+            "voting_power"
+        ]
+    }, {
+        "roles": ["active", "owner"],
         "operation": "create_proposal",
         "params": [
             "creator",

@@ -274,6 +274,22 @@ var create_research_group = new Serializer("create_research_group", {
     invitees: set(invitee)
 });
 
+var expertise_allocation_proposal = new Serializer("expertise_allocation_proposal", {
+    initiator: string,
+    claimer: string,
+    discipline_id: uint64,
+    amount: asset,
+    description: string
+});
+
+var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
+    initiator: string,
+    claimer: string,
+    discipline_id: uint64,
+    voter: string,
+    voting_power: uint32
+});
+
 var create_proposal = new Serializer("create_proposal", {
     creator: string,
     research_group_id: int64,
