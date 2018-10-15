@@ -282,6 +282,26 @@ module.exports = [{
             "account",
             "total_common_tokens_amount"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "expertise_allocation_proposal",
+        "params": [
+            "initiator",
+            "claimer",
+            "discipline_id",
+            "amount",
+            "description"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "vote_for_expertise_allocation_proposal",
+        "params": [
+            "initiator",
+            "claimer",
+            "discipline_id",
+            "voter",
+            "voting_power"
+        ]
     },
     // virtual operations
     {

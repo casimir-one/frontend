@@ -384,6 +384,27 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
+var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
+    "account": string,
+    "total_common_tokens_amount": int64
+});
+
+var expertise_allocation_proposal = new Serializer("expertise_allocation_proposal", {
+    "initiator": string,
+    "claimer": string,
+    "discipline_id": int64,
+    "amount": asset,
+    "description": string
+});
+
+var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
+    "initiator": string,
+    "claimer": string,
+    "discipline_id": int64,
+    "voter": string,
+    "voting_power": int16
+});
+
 // virtual operations
 
 let fill_convert_request = new Serializer("fill_convert_request", {
@@ -476,7 +497,8 @@ operation.st_operations = [
     transfer_research_tokens,
     delegate_expertise,
     revoke_expertise_delegation,
-
+    expertise_allocation_proposal,
+    vote_for_expertise_allocation_proposal,
 
     // virtual operations
     fill_common_tokens_withdraw,
