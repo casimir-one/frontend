@@ -277,7 +277,7 @@ var create_research_group = new Serializer("create_research_group", {
 var expertise_allocation_proposal = new Serializer("expertise_allocation_proposal", {
     initiator: string,
     claimer: string,
-    discipline_id: uint64,
+    discipline_id: int64,
     amount: asset,
     description: string
 });
@@ -285,7 +285,7 @@ var expertise_allocation_proposal = new Serializer("expertise_allocation_proposa
 var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
     initiator: string,
     claimer: string,
-    discipline_id: uint64,
+    discipline_id: int64,
     voter: string,
     voting_power: uint32
 });
@@ -409,7 +409,7 @@ var expertise_allocation_proposal = new Serializer("expertise_allocation_proposa
     "initiator": string,
     "claimer": string,
     "discipline_id": int64,
-    "amount": asset,
+    "amount": int64,
     "description": string
 });
 
@@ -418,7 +418,7 @@ var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_
     "claimer": string,
     "discipline_id": int64,
     "voter": string,
-    "voting_power": int16
+    "voting_power": int64
 });
 
 // virtual operations
