@@ -614,5 +614,42 @@ export default [{
             "account_name",
             "research_id"
         ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_vote_by_id",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_votes_by_expertise_allocation_proposal_id",
+        "params": [
+            "expertise_allocation_proposal_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_vote_by_voter_and_expertise_allocation_proposal_id",
+        "params": [
+            "voter",
+            "expertise_allocation_proposal_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_votes_by_voter_and_discipline_id",
+        "params": [
+            "voter",
+            "discipline_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_votes_by_voter",
+        "params": [
+            "voter"
+        ]
     }
 ];
