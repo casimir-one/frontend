@@ -617,6 +617,44 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_expertise_allocation_proposal_by_id",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposals_by_initiator",
+        "params": [
+            "initiator"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposals_by_claimer_and_discipline",
+        "params": [
+            "claimer",
+            "discipline_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposal_by_discipline_initiator_and_claimer",
+        "params": [
+            "discipline_id",
+            "initiator",
+            "claimer"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_expertise_allocation_proposals_by_discipline",
+        "params": [
+            "discipline_id"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_expertise_allocation_proposal_vote_by_id",
         "params": [
             "id"
