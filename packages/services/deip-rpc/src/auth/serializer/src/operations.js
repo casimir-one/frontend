@@ -274,7 +274,7 @@ var create_research_group = new Serializer("create_research_group", {
     invitees: set(invitee)
 });
 
-var expertise_allocation_proposal = new Serializer("expertise_allocation_proposal", {
+var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
     initiator: string,
     claimer: string,
     discipline_id: int64,
@@ -405,7 +405,7 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
-var expertise_allocation_proposal = new Serializer("expertise_allocation_proposal", {
+var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
     "initiator": string,
     "claimer": string,
     "discipline_id": int64,
@@ -513,7 +513,7 @@ operation.st_operations = [
     transfer_research_tokens,
     delegate_expertise,
     revoke_expertise_delegation,
-    expertise_allocation_proposal,
+    create_expertise_allocation_proposal,
     vote_for_expertise_allocation_proposal,
 
     // virtual operations

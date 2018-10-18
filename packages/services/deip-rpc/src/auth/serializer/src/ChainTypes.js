@@ -45,7 +45,7 @@ ChainTypes.operations = {
     transfer_research_tokens: 26,
     delegate_expertise: 27,
     revoke_expertise_delegation: 28,
-    expertise_allocation_proposal: 29,
+    create_expertise_allocation_proposal: 29,
     vote_for_expertise_allocation_proposal: 30,
     
     // virtual operations
