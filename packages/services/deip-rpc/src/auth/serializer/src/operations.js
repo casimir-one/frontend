@@ -260,7 +260,9 @@ var create_grant = new Serializer("create_grant", {
     balance: asset,
     target_discipline: string,
     start_block: uint32,
-    end_block: uint32
+    end_block: uint32,
+    is_extendable: bool,
+    content_hash: string
 });
 
 var create_research_group = new Serializer("create_research_group", {

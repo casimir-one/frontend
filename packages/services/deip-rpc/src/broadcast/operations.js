@@ -123,7 +123,9 @@ module.exports = [{
             "balance",
             "target_discipline",
             "start_block",
-            "end_block"
+            "end_block",
+            "is_extendable",
+            "content_hash"
         ]
     }, {
         "roles": ["active", "owner"],
