@@ -107,7 +107,7 @@ export default [{
         "params": ["trx"]
     },
     {
-        "api": "database_api",
+        "api": "blockchain_history_api",
         "method": "get_transaction",
         "params": ["trxId"]
     },
