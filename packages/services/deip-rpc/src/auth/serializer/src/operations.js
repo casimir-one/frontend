@@ -277,17 +277,13 @@ var create_research_group = new Serializer("create_research_group", {
 });
 
 var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
-    initiator: string,
     claimer: string,
     discipline_id: int64,
-    amount: asset,
     description: string
 });
 
 var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
-    initiator: string,
-    claimer: string,
-    discipline_id: int64,
+    proposal_id: int64,
     voter: string,
     voting_power: uint32
 });
@@ -405,22 +401,6 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
 var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "account": string,
     "total_common_tokens_amount": int64
-});
-
-var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
-    "initiator": string,
-    "claimer": string,
-    "discipline_id": int64,
-    "amount": int64,
-    "description": string
-});
-
-var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
-    "initiator": string,
-    "claimer": string,
-    "discipline_id": int64,
-    "voter": string,
-    "voting_power": int64
 });
 
 // virtual operations

@@ -574,6 +574,13 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_review_by_id",
+        "params": [
+            "review_id"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_reviews_by_content",
         "params": [
             "research_content_id"
