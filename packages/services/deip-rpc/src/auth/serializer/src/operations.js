@@ -354,6 +354,15 @@ var research_update = new Serializer("research_update", {
      "owner": string
 })
 
+var create_vesting_balance = new Serializer("create_vesting_balance", {
+    "creator": string,
+    "owner": string,
+    "balance": asset,
+    "vesting_duration_seconds": uint32,
+    "vesting_cliff_seconds": uint32,
+    "period_duration_seconds": uint32
+});
+
 var delegate_expertise = new Serializer("delegate_expertise", {
     "sender" : string,
     "receiver": string,
@@ -366,18 +375,10 @@ var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", 
     "discipline_id": int64
 })
 
-var deposit_to_vesting_contract = new Serializer("deposit_to_vesting_contract", {
-     "sender": string,
-     "receiver": string,
-     "balance": uint32,
-     "withdrawal_period": uint32,
-     "contract_duration": uint32
-})
-
-var withdraw_from_vesting_contract = new Serializer("withdraw_from_vesting_contract", {
-    "sender": string,
-    "receiver": string,
-    "amount": uint32
+var withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
+    "vesting_balance_id": int64,
+    "owner": string,
+    "amount": asset
 })
 
 var transfer_research_tokens = new Serializer("transfer_research_tokens", {
@@ -460,49 +461,50 @@ let return_vesting_delegation = new Serializer("return_vesting_delegation", {
 });
 
 operation.st_operations = [
-    vote_for_review,
+    vote_for_review, // 0
 
-    transfer,
-    transfer_to_common_tokens,
-    withdraw_common_tokens,
+    transfer, // 1
+    transfer_to_common_tokens, // 2
+    withdraw_common_tokens, // 3
 
-    account_create,
-    account_update,
+    account_create, // 4
+    account_update, // 5
 
-    witness_update,
-    account_witness_vote,
-    account_witness_proxy,
-    set_withdraw_common_tokens_route,
+    witness_update, // 6
+    account_witness_vote, // 7
+    account_witness_proxy, // 8
 
-    request_account_recovery,
-    recover_account,
-    change_recovery_account,
+    set_withdraw_common_tokens_route, // 9
+
+    request_account_recovery, // 10
+    recover_account, // 11
+    change_recovery_account, // 12
 
     // DEIP native operations
-    create_grant,
-    create_research_group,
-    create_proposal,
-    vote_proposal,
-    make_review,
-    contribute_to_token_sale,
-    approve_research_group_invite,
-    reject_research_group_invite,
-    transfer_research_tokens_to_research_group,
-    set_expertise_tokens,
-    research_update,
-    deposit_to_vesting_contract,
-    withdraw_from_vesting_contract,
-    transfer_research_tokens,
-    delegate_expertise,
-    revoke_expertise_delegation,
-    create_expertise_allocation_proposal,
-    vote_for_expertise_allocation_proposal,
+    create_grant, // 13
+    create_research_group, // 14
+    create_proposal, // 15
+    vote_proposal, // 16
+    make_review, // 17
+    contribute_to_token_sale, // 18
+    approve_research_group_invite,// 19
+    reject_research_group_invite, // 20
+    transfer_research_tokens_to_research_group, // 21
+    set_expertise_tokens, // 22
+    research_update, // 23
+    create_vesting_balance, // 24
+    withdraw_vesting_balance, // 25
+    transfer_research_tokens, // 26
+    delegate_expertise, // 27
+    revoke_expertise_delegation, // 28
+    create_expertise_allocation_proposal, // 29
+    vote_for_expertise_allocation_proposal, // 30
 
     // virtual operations
-    fill_common_tokens_withdraw,
-    shutdown_witness,
-    hardfork,
-    return_vesting_delegation
+    fill_common_tokens_withdraw, // 31
+    shutdown_witness, // 32
+    hardfork, // 33
+    return_vesting_delegation // 34
 ];
 
 let transaction = new Serializer(

@@ -244,20 +244,21 @@ module.exports = [{
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "deposit_to_vesting_contract",
+        "operation": "create_vesting_balance",
         "params": [
-             "sender",
-             "receiver",
-             "balance",
-             "withdrawal_period",
-             "contract_duration"
+            "creator",
+            "owner",
+            "balance",
+            "vesting_duration_seconds",
+            "vesting_cliff_seconds",
+            "period_duration_seconds"
         ]
     }, {
         "roles": ["active", "owner"],
-        "operation": "withdraw_from_vesting_contract",
+        "operation": "withdraw_vesting_balance",
         "params": [
-            "sender",
-            "receiver",
+            "vesting_balance_id",
+            "owner",
             "amount"
         ]
     }, {

@@ -40,8 +40,8 @@ ChainTypes.operations = {
     transfer_research_tokens_to_research_group: 21,
     set_expertise_tokens: 22,
     research_update: 23,
-    deposit_to_vesting_contract: 24,
-    withdraw_from_vesting_contract: 25,
+    create_vesting_balance: 24,
+    withdraw_vesting_balance: 25,
     transfer_research_tokens: 26,
     delegate_expertise: 27,
     revoke_expertise_delegation: 28,
@@ -52,7 +52,7 @@ ChainTypes.operations = {
     fill_common_tokens_withdraw: 31,
     shutdown_witness: 32,
     hardfork: 33,
-    producer_reward_operation: 34
+    producer_reward: 34
 };
 
 //types.hpp
