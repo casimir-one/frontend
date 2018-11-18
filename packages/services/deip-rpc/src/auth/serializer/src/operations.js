@@ -285,7 +285,17 @@ var create_expertise_allocation_proposal = new Serializer("create_expertise_allo
 var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
     proposal_id: int64,
     voter: string,
-    voting_power: uint32
+    voting_power: int64
+});
+
+var accept_research_token_offer = new Serializer("accept_research_token_offer", {
+    offer_research_tokens_id: int64,
+    buyer: string
+});
+
+var reject_research_token_offer = new Serializer("reject_research_token_offer", {
+    offer_research_tokens_id: int64,
+    buyer: string
 });
 
 var create_proposal = new Serializer("create_proposal", {
@@ -406,23 +416,6 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
 
 // virtual operations
 
-let fill_convert_request = new Serializer("fill_convert_request", {
-    owner: string,
-    requestid: uint32,
-    amount_in: asset,
-    amount_out: asset
-});
-
-let liquidity_reward = new Serializer("liquidity_reward", {
-    owner: string,
-    payout: asset
-});
-
-let interest = new Serializer("interest", {
-    owner: string,
-    interest: asset
-});
-
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
     from_account: string,
     to_account: string,
@@ -430,34 +423,17 @@ let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", 
     deposited: asset
 });
 
-let fill_order = new Serializer("fill_order", {
-    current_owner: string,
-    current_orderid: uint32,
-    current_pays: asset,
-    open_owner: string,
-    open_orderid: uint32,
-    open_pays: asset
-});
-
 let shutdown_witness = new Serializer("shutdown_witness", {
     owner: string
-});
-
-let fill_transfer_from_savings = new Serializer("fill_transfer_from_savings", {
-    from: string,
-    to: string,
-    amount: asset,
-    request_id: uint32,
-    memo: string
 });
 
 let hardfork = new Serializer("hardfork", {
     hardfork_id: uint32
 });
 
-let return_vesting_delegation = new Serializer("return_vesting_delegation", {
-    account: string,
-    vesting_shares: asset
+let producer_reward = new Serializer("producer_reward", {
+    producer: string,
+    common_tokens_amount: uint32
 });
 
 operation.st_operations = [
@@ -499,12 +475,14 @@ operation.st_operations = [
     revoke_expertise_delegation, // 28
     create_expertise_allocation_proposal, // 29
     vote_for_expertise_allocation_proposal, // 30
+    accept_research_token_offer, // 31
+    reject_research_token_offer, // 32
 
     // virtual operations
-    fill_common_tokens_withdraw, // 31
-    shutdown_witness, // 32
-    hardfork, // 33
-    return_vesting_delegation // 34
+    fill_common_tokens_withdraw, // 33
+    shutdown_witness, // 34
+    hardfork, // 35
+    producer_reward // 36
 ];
 
 let transaction = new Serializer(

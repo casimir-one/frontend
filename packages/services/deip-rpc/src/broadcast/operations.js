@@ -301,6 +301,20 @@ module.exports = [{
             "voter",
             "voting_power"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "accept_research_token_offer",
+        "params": [
+            "offer_research_tokens_id",
+            "buyer"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_research_token_offer",
+        "params": [
+            "offer_research_tokens_id",
+            "buyer"
+        ]
     },
     // virtual operations
     {

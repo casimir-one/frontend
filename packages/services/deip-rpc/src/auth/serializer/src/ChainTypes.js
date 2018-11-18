@@ -47,12 +47,14 @@ ChainTypes.operations = {
     revoke_expertise_delegation: 28,
     create_expertise_allocation_proposal: 29,
     vote_for_expertise_allocation_proposal: 30,
+    accept_research_token_offer: 31,
+    reject_research_token_offer: 32,
     
     // virtual operations
-    fill_common_tokens_withdraw: 31,
-    shutdown_witness: 32,
-    hardfork: 33,
-    producer_reward: 34
+    fill_common_tokens_withdraw: 33,
+    shutdown_witness: 34,
+    hardfork: 35,
+    producer_reward: 36
 };
 
 //types.hpp
