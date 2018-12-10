@@ -4,16 +4,19 @@ export default [{
         "params": ["cb"]
     },    
     {
+        // todo: move to blockchain_history_api
         "api": "database_api",
         "method": "get_block_header",
         "params": ["blockNum"]
     },
     {
+        // todo: move to blockchain_history_api
         "api": "database_api",
         "method": "get_block",
         "params": ["blockNum"]
     },
     {
+        // todo: move to blockchain_history_api
         "api": "database_api",
         "method": "get_ops_in_block",
         "params": ["blockNum", "onlyVirtual"]
@@ -106,13 +109,24 @@ export default [{
         "method": "get_transaction_hex",
         "params": ["trx"]
     },
+    
+    // blockchain_history_api
+    {
+        api: 'blockchain_history_api',
+        method: 'get_ops_history',
+        params: ['from', 'limit', 'opt']
+    },
     {
         "api": "blockchain_history_api",
         "method": "get_transaction",
         "params": ["trxId"]
     },
+    {
+        api: 'blockchain_history_api',
+        method: 'get_blocks_history',
+        params: ['from', 'limit']
+    },
 
-    // blockchain_history_api
     {
         "api": "database_api",
         "method": "get_required_signatures",
