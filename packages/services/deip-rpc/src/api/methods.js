@@ -2,26 +2,7 @@ export default [{
         "api": "database_api",
         "method": "set_block_applied_callback",
         "params": ["cb"]
-    },    
-    {
-        // todo: move to blockchain_history_api after updating test-net
-        "api": "database_api",
-        "method": "get_block_header",
-        "params": ["blockNum"]
-    },
-    {
-        // todo: move to blockchain_history_api after updating test-net
-        "api": "database_api",
-        "method": "get_block",
-        "params": ["blockNum"]
-    },
-    {
-        // todo: move to blockchain_history_api after updating test-net
-        "api": "database_api",
-        "method": "get_ops_in_block",
-        "params": ["blockNum", "onlyVirtual"]
-    },
-    {
+    }, {
         "api": "database_api",
         "method": "get_state",
         "params": ["path"]
@@ -110,6 +91,7 @@ export default [{
         "params": ["trx"]
     },
     
+    
     // blockchain_history_api
     {
         api: 'blockchain_history_api',
@@ -122,10 +104,29 @@ export default [{
         "params": ["trxId"]
     },
     {
-        api: 'blockchain_history_api',
+        // todo: move to blockchain_history_api after updating test-net
+        "api": "database_api",
+        "method": "get_block_header",
+        "params": ["blockNum"]
+    },
+    {
+        // todo: move to blockchain_history_api after updating test-net
+        "api": "database_api",
+        "method": "get_block",
+        "params": ["blockNum"]
+    },
+    {
+        // todo: move to blockchain_history_api after updating test-net
+        "api": "database_api",
+        "method": "get_ops_in_block",
+        "params": ["blockNum", "onlyVirtual"]
+    },
+    {  // todo: move to blockchain_history_api after updating test-net
+        api: 'database_api',
         method: 'get_blocks_history',
         params: ['from', 'limit']
     },
+
 
     {
         "api": "database_api",
