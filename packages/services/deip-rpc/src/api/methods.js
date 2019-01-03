@@ -720,5 +720,78 @@ export default [{
         "params": [
             "voter"
         ]
+    },
+    // Grants
+    {
+        "api": "database_api",
+        "method": "get_funding_opportunity",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_opportunities_by_target_discipline",
+        "params": [
+            "discipline_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_opportunities",
+        "params": [
+            "account_names"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "lookup_funding_opportunity_owners",
+        "params": [
+            "lower_bound_name",
+            "limit"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_opportunities_by_agency_name",
+        "params": [
+            "agency_name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_opportunities_by_opportunity_number",
+        "params": [
+            "funding_opportunity_number"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_all_funding_opportunity_listing",
+        "params": [
+            "limit"
+        ]
+    },
+    // Grant applications
+    {
+        "api": "database_api",
+        "method": "get_grant_application",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_applications_by_grant",
+        "params": [
+            "grant_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_applications_by_research_id",
+        "params": [
+            "research_id"
+        ]
     }
 ];

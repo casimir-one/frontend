@@ -315,6 +315,38 @@ module.exports = [{
             "offer_research_tokens_id",
             "buyer"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_funding_opportunity",
+        "params": [
+            "funding_opportunity_number",
+            "funding_opportunity_title",
+            "eligible_applicants",
+            "additional_info_of_eligibility",
+            "agency_name",
+            "description",
+            "link_to_additional_info",
+            "grantor_contact_info",
+            "target_discipline",
+            "amount",
+            "award_ceiling",
+            "award_floor",
+            "owner",
+            "min_number_of_positive_reviews",
+            "min_number_of_applications",
+            "expected_number_of_awards",
+            "open_date",
+            "close_date"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_grant_application",
+        "params": [
+            "grant_id",
+            "research_id",
+            "creator",
+            "application_hash"
+        ]
     },
     // virtual operations
     {

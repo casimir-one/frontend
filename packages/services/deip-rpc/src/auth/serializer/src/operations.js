@@ -414,6 +414,42 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
+var create_funding_opportunity = new Serializer("create_funding_opportunity", {
+    "funding_opportunity_number": string,
+    "funding_opportunity_title": string,
+
+    "eligible_applicants": string,
+    "additional_info_of_eligibility": string,
+
+    "agency_name": string,
+    "description": string,
+    "link_to_additional_info": string,
+    "grantor_contact_info": string,
+
+    "target_discipline": int64,
+
+    "amount": asset,
+    "award_ceiling": asset,
+    "award_floor": asset,
+
+    "owner": string,
+
+    "min_number_of_positive_reviews": int16,
+    "min_number_of_applications": int16,
+
+    "expected_number_of_awards": int16,
+
+    "open_date": time_point_sec,
+    "close_date": time_point_sec
+});
+
+var create_grant_application = new Serializer("create_grant_application", {
+    "grant_id": int64,
+    "research_id": int64,
+    "creator": string,
+    "application_hash": string
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -477,12 +513,14 @@ operation.st_operations = [
     vote_for_expertise_allocation_proposal, // 30
     accept_research_token_offer, // 31
     reject_research_token_offer, // 32
+    create_funding_opportunity, // 33
+    create_grant_application, // 34
 
     // virtual operations
-    fill_common_tokens_withdraw, // 33
-    shutdown_witness, // 34
-    hardfork, // 35
-    producer_reward // 36
+    fill_common_tokens_withdraw, // 35
+    shutdown_witness, // 36
+    hardfork, // 37
+    producer_reward // 38
 ];
 
 let transaction = new Serializer(
