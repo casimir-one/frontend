@@ -332,6 +332,7 @@ module.exports = [{
             "award_ceiling",
             "award_floor",
             "owner",
+            "officers",
             "min_number_of_positive_reviews",
             "min_number_of_applications",
             "expected_number_of_awards",

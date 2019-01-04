@@ -433,6 +433,7 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
     "award_floor": asset,
 
     "owner": string,
+    "officers": set(string),
 
     "min_number_of_positive_reviews": int16,
     "min_number_of_applications": int16,
