@@ -348,7 +348,32 @@ module.exports = [{
             "creator",
             "application_hash"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "make_review_for_application",
+        "params": [
+            "author",
+            "grant_application_id",
+            "is_positive",
+            "content",
+            "weight"        
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "approve_grant_application",
+        "params": [
+            "grant_application_id",
+            "grant_owner"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_grant_application",
+        "params": [
+            "grant_application_id",
+            "grant_owner"
+        ]
     },
+    
     // virtual operations
     {
         "roles": ["active", "owner"],

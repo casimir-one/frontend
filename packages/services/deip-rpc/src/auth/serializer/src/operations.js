@@ -451,6 +451,24 @@ var create_grant_application = new Serializer("create_grant_application", {
     "application_hash": string
 });
 
+var make_review_for_application = new Serializer("make_review_for_application", {
+    "author": string,
+    "grant_application_id": int64,
+    "is_positive": bool,
+    "content": string,
+    "weight": uint16
+});
+
+var approve_grant_application = new Serializer("approve_grant_application", {
+    "grant_application_id": int64,
+    "grant_owner": string 
+});
+
+var reject_grant_application = new Serializer("reject_grant_application", {
+    "grant_application_id": int64,
+    "grant_owner": string 
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -516,12 +534,15 @@ operation.st_operations = [
     reject_research_token_offer, // 32
     create_funding_opportunity, // 33
     create_grant_application, // 34
+    make_review_for_application, // 35
+    approve_grant_application, // 36
+    reject_grant_application, // 37
 
     // virtual operations
-    fill_common_tokens_withdraw, // 35
-    shutdown_witness, // 36
-    hardfork, // 37
-    producer_reward // 38
+    fill_common_tokens_withdraw, // 38
+    shutdown_witness, // 39
+    hardfork, // 40
+    producer_reward // 41
 ];
 
 let transaction = new Serializer(

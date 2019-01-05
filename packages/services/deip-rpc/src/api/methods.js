@@ -619,6 +619,13 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_reviews_by_grant_application",
+        "params": [
+            "grant_application_id"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_research_token_by_id",
         "params": [
             "research_token_id"
