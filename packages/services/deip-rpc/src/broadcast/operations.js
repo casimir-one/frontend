@@ -345,7 +345,9 @@ module.exports = [{
         "params": [
             "grant_id",
             "research_id",
+            "title",
             "creator",
+            "total_amount",
             "application_hash"
         ]
     }, {
