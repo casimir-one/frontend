@@ -447,7 +447,9 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
 var create_grant_application = new Serializer("create_grant_application", {
     "grant_id": int64,
     "research_id": int64,
+    "title": string,
     "creator": string,
+    "total_amount": asset,
     "application_hash": string
 });
 
