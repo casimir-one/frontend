@@ -455,8 +455,7 @@ var make_review_for_application = new Serializer("make_review_for_application", 
     "author": string,
     "grant_application_id": int64,
     "is_positive": bool,
-    "content": string,
-    "weight": uint16
+    "content": string
 });
 
 var approve_grant_application = new Serializer("approve_grant_application", {

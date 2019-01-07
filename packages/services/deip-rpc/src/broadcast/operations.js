@@ -355,8 +355,7 @@ module.exports = [{
             "author",
             "grant_application_id",
             "is_positive",
-            "content",
-            "weight"        
+            "content"
         ]
     }, {
         "roles": ["active", "owner"],

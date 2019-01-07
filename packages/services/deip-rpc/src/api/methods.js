@@ -619,13 +619,6 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_reviews_by_grant_application",
-        "params": [
-            "grant_application_id"
-        ]
-    },
-    {
-        "api": "database_api",
         "method": "get_research_token_by_id",
         "params": [
             "research_token_id"
@@ -800,5 +793,35 @@ export default [{
         "params": [
             "research_id"
         ]
-    }
+    },
+    // Grant applications reviews
+    {
+        "api": "database_api",
+        "method": "get_grant_application_review",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_grant_application_reviews_by_author",
+        "params": [
+            "author"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_grant_application_review_by_author_and_application",
+        "params": [
+            "author",
+            "grant_applicaiton_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_grant_application_reviews_by_grant_application",
+        "params": [
+            "grant_application_id"
+        ]
+    }    
 ];
