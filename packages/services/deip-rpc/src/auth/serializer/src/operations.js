@@ -441,7 +441,9 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
     "expected_number_of_awards": int16,
 
     "open_date": time_point_sec,
-    "close_date": time_point_sec
+    "close_date": time_point_sec,
+    
+    "review_committee_id": int64
 });
 
 var create_grant_application = new Serializer("create_grant_application", {

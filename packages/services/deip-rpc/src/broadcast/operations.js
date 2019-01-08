@@ -337,7 +337,8 @@ module.exports = [{
             "min_number_of_applications",
             "expected_number_of_awards",
             "open_date",
-            "close_date"
+            "close_date",
+            "review_committee_id"
         ]
     }, {
         "roles": ["active", "owner"],
