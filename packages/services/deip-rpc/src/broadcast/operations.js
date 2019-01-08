@@ -349,7 +349,8 @@ module.exports = [{
             "title",
             "creator",
             "total_amount",
-            "application_hash"
+            "application_hash",
+            "organisation"
         ]
     }, {
         "roles": ["active", "owner"],

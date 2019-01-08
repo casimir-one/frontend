@@ -236,6 +236,13 @@ export default [{
     },
     {
         "api": "database_api",
+        "method": "get_all_research_groups",
+        "params": [
+            "is_personal_need"
+        ]
+    },
+    {
+        "api": "database_api",
         "method": "get_proposals_by_research_group_id",
         "params": [
             "id"

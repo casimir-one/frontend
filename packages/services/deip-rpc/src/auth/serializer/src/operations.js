@@ -452,7 +452,8 @@ var create_grant_application = new Serializer("create_grant_application", {
     "title": string,
     "creator": string,
     "total_amount": asset,
-    "application_hash": string
+    "application_hash": string,
+    "organisation": string
 });
 
 var make_review_for_application = new Serializer("make_review_for_application", {
