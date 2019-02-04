@@ -465,12 +465,12 @@ var make_review_for_application = new Serializer("make_review_for_application", 
 
 var approve_grant_application = new Serializer("approve_grant_application", {
     "grant_application_id": int64,
-    "grant_owner": string 
+    "approver": string 
 });
 
 var reject_grant_application = new Serializer("reject_grant_application", {
     "grant_application_id": int64,
-    "grant_owner": string 
+    "rejecter": string 
 });
 
 // virtual operations

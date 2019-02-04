@@ -366,14 +366,14 @@ module.exports = [{
         "operation": "approve_grant_application",
         "params": [
             "grant_application_id",
-            "grant_owner"
+            "approver"
         ]
     }, {
         "roles": ["active", "owner"],
         "operation": "reject_grant_application",
         "params": [
             "grant_application_id",
-            "grant_owner"
+            "rejecter"
         ]
     },
     
