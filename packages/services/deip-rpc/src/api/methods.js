@@ -127,6 +127,12 @@ export default [{
         params: ['from', 'limit']
     },
 
+    // account_history_api
+    {
+        "api": "account_history_api",
+        "method": "get_account_deip_to_deip_transfers",
+        "params": ["account", "from", "limit"]
+    },
 
     {
         "api": "database_api",
