@@ -734,6 +734,13 @@ export default [{
             "voter"
         ]
     },
+    {
+        "api": "database_api",
+        "method": "get_eci_and_expertise_stats_by_discipline_id",
+        "params": [
+            "discipline_id"
+        ]
+    },
     // Grants
     {
         "api": "database_api",
