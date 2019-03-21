@@ -473,6 +473,44 @@ var reject_grant_application = new Serializer("reject_grant_application", {
     "rejecter": string 
 });
 
+var create_funding = new Serializer("create_funding", {
+    "creator": string,
+    "researcher": string,
+    "research_expenses": map((int64), map((uint16), (int64))),
+    "total_amount": asset
+});
+
+var approve_funding = new Serializer("approve_funding", {
+    "funding_id" : int64,
+    "approver": string
+});
+
+var reject_funding = new Serializer("reject_funding", {
+    "funding_id" : int64,
+    "rejecter": string
+});
+
+var create_funding_withdrawal_request = new Serializer("create_funding_withdrawal_request", {
+    "funding_research_relation_id": int64,
+    "research_group_id": int64,
+    "research_id": int64,
+    "organisation_id": int64,
+    "requester": string,
+    "purpose" : uint16,
+    "amount": int64,
+    "description": string
+});
+
+var approve_funding_withdrawal_request = new Serializer("approve_funding_withdrawal_request", {
+    "funding_withdrawal_request_id": int64,
+    "approver": string
+});
+
+var reject_funding_withdrawal_request = new Serializer("reject_funding_withdrawal_request", {
+    "funding_withdrawal_request_id": int64,
+    "rejecter": string
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -541,12 +579,18 @@ operation.st_operations = [
     make_review_for_application, // 35
     approve_grant_application, // 36
     reject_grant_application, // 37
+    create_funding, // 38
+    approve_funding, // 39
+    reject_funding, // 40
+    create_funding_withdrawal_request, // 41
+    approve_funding_withdrawal_request, // 42
+    reject_funding_withdrawal_request, // 43
 
     // virtual operations
-    fill_common_tokens_withdraw, // 38
-    shutdown_witness, // 39
-    hardfork, // 40
-    producer_reward // 41
+    fill_common_tokens_withdraw, // 44
+    shutdown_witness, // 45
+    hardfork, // 46
+    producer_reward // 47
 ];
 
 let transaction = new Serializer(

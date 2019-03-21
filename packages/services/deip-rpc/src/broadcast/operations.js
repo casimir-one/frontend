@@ -375,8 +375,58 @@ module.exports = [{
             "grant_application_id",
             "rejecter"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_funding",
+        "params": [
+            "creator",
+            "researcher",
+            "research_expenses",
+            "total_amount"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "approve_funding",
+        "params": [
+            "funding_id",
+            "approver"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_funding",
+        "params": [
+            "funding_id",
+            "rejecter"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_funding_withdrawal_request",
+        "params": [
+            "funding_research_relation_id",
+            "research_group_id",
+            "research_id",
+            "organisation_id",
+            "requester",
+            "purpose",
+            "amount",
+            "description"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "approve_funding_withdrawal_request",
+        "params": [
+            "funding_withdrawal_request_id",
+            "approver"
+        
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_funding_withdrawal_request",
+        "params": [
+            "funding_withdrawal_request_id",
+            "rejecter"
+        ]
     },
-    
     // virtual operations
     {
         "roles": ["active", "owner"],

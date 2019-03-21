@@ -54,12 +54,18 @@ ChainTypes.operations = {
     make_review_for_application: 35,
     approve_grant_application: 36,
     reject_grant_application: 37,
+    create_funding: 38,
+    approve_funding: 39,
+    reject_funding: 40,
+    create_funding_withdrawal_request: 41,
+    approve_funding_withdrawal_request: 42,
+    reject_funding_withdrawal_request: 43,
 
     // virtual operations
-    fill_common_tokens_withdraw: 38,
-    shutdown_witness: 39,
-    hardfork: 40,
-    producer_reward: 41
+    fill_common_tokens_withdraw: 44,
+    shutdown_witness: 45,
+    hardfork: 46,
+    producer_reward: 47
 };
 
 //types.hpp
