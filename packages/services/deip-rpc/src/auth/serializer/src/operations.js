@@ -83,6 +83,12 @@ const expertise_amount_pair_type = new Serializer("expertise_amount_pair_type", 
     amount: int64
 });
 
+const milestone_type = new Serializer("milestone_type", {
+    description: int64,
+    deadline: time_point_sec,
+    amount: int64
+});
+
 // Custom-types after Generated code
 
 // ##  Generated code follows
@@ -474,10 +480,13 @@ var reject_grant_application = new Serializer("reject_grant_application", {
 });
 
 var create_funding = new Serializer("create_funding", {
+    "funding_opportunity_id": int64,
     "creator": string,
     "researcher": string,
     "research_expenses": map((int64), map((uint16), (int64))),
-    "total_amount": asset
+    "university_overheads": map((int64), (int64)),
+    "total_amount": asset,
+    "milestones": map((int64), set(milestone_type))
 });
 
 var approve_funding = new Serializer("approve_funding", {
@@ -508,6 +517,16 @@ var approve_funding_withdrawal_request = new Serializer("approve_funding_withdra
 
 var reject_funding_withdrawal_request = new Serializer("reject_funding_withdrawal_request", {
     "funding_withdrawal_request_id": int64,
+    "rejecter": string
+});
+
+var approve_funding_milestone = new Serializer("approve_funding_milestone", {
+    "funding_milestone_id": int64,
+    "approver": string
+});
+
+var reject_funding_milestone = new Serializer("reject_funding_milestone", {
+    "funding_milestone_id": int64,
     "rejecter": string
 });
 
@@ -585,12 +604,14 @@ operation.st_operations = [
     create_funding_withdrawal_request, // 41
     approve_funding_withdrawal_request, // 42
     reject_funding_withdrawal_request, // 43
+    approve_funding_milestone, // 44
+    reject_funding_milestone, // 45
 
     // virtual operations
-    fill_common_tokens_withdraw, // 44
-    shutdown_witness, // 45
-    hardfork, // 46
-    producer_reward // 47
+    fill_common_tokens_withdraw, // 46
+    shutdown_witness, // 47
+    hardfork, // 48
+    producer_reward // 49
 ];
 
 let transaction = new Serializer(

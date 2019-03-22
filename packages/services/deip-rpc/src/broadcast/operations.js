@@ -379,10 +379,13 @@ module.exports = [{
         "roles": ["active", "owner"],
         "operation": "create_funding",
         "params": [
+            "funding_opportunity_id",
             "creator",
             "researcher",
+            "university_overheads",
             "research_expenses",
-            "total_amount"
+            "total_amount",
+            "milestones"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -424,6 +427,20 @@ module.exports = [{
         "operation": "reject_funding_withdrawal_request",
         "params": [
             "funding_withdrawal_request_id",
+            "rejecter"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "approve_funding_milestone",
+        "params": [
+            "funding_milestone_id",
+            "approver"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "reject_funding_milestone",
+        "params": [
+            "funding_milestone_id",
             "rejecter"
         ]
     },
