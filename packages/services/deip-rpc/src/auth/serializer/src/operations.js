@@ -84,7 +84,7 @@ const expertise_amount_pair_type = new Serializer("expertise_amount_pair_type", 
 });
 
 const milestone_type = new Serializer("milestone_type", {
-    description: int64,
+    description: string,
     deadline: time_point_sec,
     amount: int64
 });
