@@ -89,6 +89,15 @@ const milestone_type = new Serializer("milestone_type", {
     amount: int64
 });
 
+const funding_research_type = new Serializer("funding_research_type", {
+    researcher: string,
+    research_id: int64,
+    research_expenses: map(uint16, int64),
+    organisation_id: int64,
+    university_overhead: int64,
+    milestones: set(milestone_type)
+});
+
 // Custom-types after Generated code
 
 // ##  Generated code follows
@@ -482,11 +491,8 @@ var reject_grant_application = new Serializer("reject_grant_application", {
 var create_funding = new Serializer("create_funding", {
     "funding_opportunity_id": int64,
     "creator": string,
-    "researcher": string,
-    "research_expenses": map((int64), map((uint16), (int64))),
-    "university_overheads": map((int64), (int64)),
+    "researches": set(funding_research_type),
     "total_amount": asset,
-    "milestones": map((int64), set(milestone_type))
 });
 
 var approve_funding = new Serializer("approve_funding", {

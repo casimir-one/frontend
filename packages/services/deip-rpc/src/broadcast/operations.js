@@ -381,11 +381,8 @@ module.exports = [{
         "params": [
             "funding_opportunity_id",
             "creator",
-            "researcher",
-            "university_overheads",
-            "research_expenses",
-            "total_amount",
-            "milestones"
+            "researches",
+            "total_amount"
         ]
     }, {
         "roles": ["active", "owner"],
