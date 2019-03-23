@@ -843,5 +843,95 @@ export default [{
         "params": [
             "grant_application_id"
         ]
-    }    
+    },
+    // Funding Contracts
+    {
+        "api": "database_api",
+        "method": "get_funding",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_fundings",
+        "params": []
+    },
+    {
+        "api": "database_api",
+        "method": "get_fundings_by_granter",
+        "params": [
+            "granter"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_research_relation",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_research_relations_by_funding",
+        "params": [
+            "funding_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_research_relation_by_funding_and_research",
+        "params": [
+            "funding_id",
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_withdrawal_request",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_withdrawal_requests",
+        "params": []
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_withdrawal_requests_by_research",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_withdrawal_requests_by_organisation",
+        "params": [
+            "organisation_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_milestone",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_milestones_by_funding_research_relation_and_status",
+        "params": [
+            "funding_research_relation_id",
+            "status"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_milestones_by_research",
+        "params": [
+            "funding_research_relation_id"
+        ]
+    }
 ];
