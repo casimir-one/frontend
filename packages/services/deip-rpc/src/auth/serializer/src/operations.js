@@ -492,7 +492,7 @@ var create_funding = new Serializer("create_funding", {
     "funding_opportunity_id": int64,
     "creator": string,
     "researches": set(funding_research_type),
-    "total_amount": asset,
+    "total_amount": asset
 });
 
 var approve_funding = new Serializer("approve_funding", {
