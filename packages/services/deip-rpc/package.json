@@ -1,6 +1,6 @@
 {
     "name": "@deip/deip-rpc-client",
-    "version": "1.0.39",
+    "version": "1.0.40",
     "description": "deip-rpc the JavaScript API for Deip blockchain",
     "main": "lib/index.js",
     "scripts": {
