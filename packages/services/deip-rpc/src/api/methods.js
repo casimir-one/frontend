@@ -933,5 +933,66 @@ export default [{
         "params": [
             "funding_research_relation_id"
         ]
+    },
+
+    // Milestone Report
+    {
+        "api": "database_api",
+        "method": "get_milestone_reports_by_research",
+        "params": [
+            "research_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_milestone_reports_by_grantor",
+        "params": [
+            "grantor"
+        ]
+    },
+
+    // Organization
+    {
+        "api": "database_api",
+        "method": "get_organisation",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_by_name",
+        "params": [
+            "name"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_organisations",
+        "params": [
+        ]
+    },
+
+    // Funding Transactions
+    {
+        "api": "database_api",
+        "method": "get_funding_transaction",
+        "params": [
+            "id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_transactions_by_sender_organisation",
+        "params": [
+            "sender_organisation_id"
+        ]
+    },
+    {
+        "api": "database_api",
+        "method": "get_funding_transactions_by_receiver_organisation",
+        "params": [
+            "receiver_organisation_id"
+        ]
     }
 ];
