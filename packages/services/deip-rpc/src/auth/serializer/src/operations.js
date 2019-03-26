@@ -92,7 +92,7 @@ const milestone_type = new Serializer("milestone_type", {
 const funding_research_type = new Serializer("funding_research_type", {
     researcher: string,
     research_id: int64,
-    research_expenses: map(uint16, int64),
+    research_expenses: map(uint16, asset),
     organisation_id: int64,
     university_overhead: int64,
     milestones: set(milestone_type)
@@ -512,7 +512,7 @@ var create_funding_withdrawal_request = new Serializer("create_funding_withdrawa
     "organisation_id": int64,
     "requester": string,
     "purpose" : uint16,
-    "amount": int64,
+    "amount": asset,
     "description": string
 });
 
