@@ -409,7 +409,8 @@ module.exports = [{
             "requester",
             "purpose",
             "amount",
-            "description"
+            "description",
+            "attachment"
         ]
     }, {
         "roles": ["active", "owner"],

@@ -513,7 +513,8 @@ var create_funding_withdrawal_request = new Serializer("create_funding_withdrawa
     "requester": string,
     "purpose" : uint16,
     "amount": asset,
-    "description": string
+    "description": string,
+    "attachment": string
 });
 
 var approve_funding_withdrawal_request = new Serializer("approve_funding_withdrawal_request", {

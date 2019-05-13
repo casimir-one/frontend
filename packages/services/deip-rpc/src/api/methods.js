@@ -961,9 +961,9 @@ export default [{
     },
     {
         "api": "database_api",
-        "method": "get_organisation_by_name",
+        "method": "get_organisation_by_permlink",
         "params": [
-            "name"
+            "permlink"
         ]
     },
     {
