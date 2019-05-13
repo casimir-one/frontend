@@ -543,6 +543,11 @@ var create_organisation = new Serializer("create_organisation", {
     "permlink": string
 });
 
+var certify_funding_withdrawal_request = new Serializer("certify_funding_withdrawal_request", {
+    "certifier": string,
+    "funding_withdrawal_request_id": int64
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -620,12 +625,13 @@ operation.st_operations = [
     approve_funding_milestone, // 44
     reject_funding_milestone, // 45
     create_organisation, // 46
+    certify_funding_withdrawal_request, // 47
 
     // virtual operations
-    fill_common_tokens_withdraw, // 47
-    shutdown_witness, // 48
-    hardfork, // 49
-    producer_reward // 50
+    fill_common_tokens_withdraw, // 48
+    shutdown_witness, // 49
+    hardfork, // 50
+    producer_reward // 51
 ];
 
 let transaction = new Serializer(

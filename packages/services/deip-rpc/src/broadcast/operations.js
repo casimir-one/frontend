@@ -449,6 +449,13 @@ module.exports = [{
             "name",
             "permlink"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "certify_funding_withdrawal_request",
+        "params": [
+            "certifier",
+            "funding_withdrawal_request_id"
+        ]
     },
     // virtual operations
     {
