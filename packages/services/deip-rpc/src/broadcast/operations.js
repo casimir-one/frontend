@@ -441,6 +441,14 @@ module.exports = [{
             "funding_milestone_id",
             "rejecter"
         ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_organisation",
+        "params": [
+            "creator",
+            "name",
+            "permlink"
+        ]
     },
     // virtual operations
     {

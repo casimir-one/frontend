@@ -537,6 +537,12 @@ var reject_funding_milestone = new Serializer("reject_funding_milestone", {
     "rejecter": string
 });
 
+var create_organisation = new Serializer("create_organisation", {
+    "creator": string,
+    "name": string,
+    "permlink": string
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -613,12 +619,13 @@ operation.st_operations = [
     reject_funding_withdrawal_request, // 43
     approve_funding_milestone, // 44
     reject_funding_milestone, // 45
+    create_organisation, // 46
 
     // virtual operations
-    fill_common_tokens_withdraw, // 46
-    shutdown_witness, // 47
-    hardfork, // 48
-    producer_reward // 49
+    fill_common_tokens_withdraw, // 47
+    shutdown_witness, // 48
+    hardfork, // 49
+    producer_reward // 50
 ];
 
 let transaction = new Serializer(
