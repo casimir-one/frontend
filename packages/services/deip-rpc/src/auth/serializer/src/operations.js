@@ -173,7 +173,8 @@ let signed_block_header = new Serializer("signed_block_header", {
 let transfer = new Serializer("transfer", {
     from: string,
     to: string,
-    amount: asset,
+    amount: int64,
+    asset_symbol: string,
     memo: string
 });
 
@@ -184,7 +185,8 @@ var authority = new Serializer("authority", {
 });
 
 let account_create = new Serializer("account_create", {
-    fee: asset,
+    fee: int64,
+    asset_symbol: string,
     creator: string,
     new_account_name: string,
     owner: authority,
@@ -214,7 +216,8 @@ let witness_update = new Serializer("witness_update", {
     url: string,
     block_signing_key: public_key,
     props: chain_properties,
-    fee: asset
+    fee: int64,
+    asset_symbol: string
 });
 
 let account_witness_vote = new Serializer("account_witness_vote", {
@@ -270,9 +273,10 @@ let change_recovery_account = new Serializer("change_recovery_account", {
 
 // DEIP native operations
 
-var create_grant = new Serializer("create_grant", {
+var create_discipline_supply = new Serializer("create_discipline_supply", {
     owner: string,
-    balance: asset,
+    balance: int64,
+    asset_symbol: string,
     target_discipline: string,
     start_block: uint32,
     end_block: uint32,
@@ -338,7 +342,8 @@ var make_review = new Serializer("make_review", {
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
     research_token_sale_id: int64,
     owner: string,
-    amount: asset
+    amount: int64,
+    asset_symbol: string
 });
 
 var approve_research_group_invite = new Serializer("approve_research_group_invite", {
@@ -382,7 +387,8 @@ var research_update = new Serializer("research_update", {
 var create_vesting_balance = new Serializer("create_vesting_balance", {
     "creator": string,
     "owner": string,
-    "balance": asset,
+    "balance": int64,
+    "asset_symbol": string,
     "vesting_duration_seconds": uint32,
     "vesting_cliff_seconds": uint32,
     "period_duration_seconds": uint32
@@ -403,7 +409,8 @@ var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", 
 var withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
     "vesting_balance_id": int64,
     "owner": string,
-    "amount": asset
+    "amount": int64,
+    "asset_symbol": string
 })
 
 var transfer_research_tokens = new Serializer("transfer_research_tokens", {
@@ -416,7 +423,8 @@ var transfer_research_tokens = new Serializer("transfer_research_tokens", {
 var transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
     "from": string,
     "to": string,
-    "amount": asset
+    "amount": int64,
+    "asset_symbol": string
 });
 
 var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
@@ -443,9 +451,10 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
 
     "target_discipline": int64,
 
-    "amount": asset,
-    "award_ceiling": asset,
-    "award_floor": asset,
+    "amount": int64,
+    "award_ceiling": int64,
+    "award_floor": int64,
+    "asset_symbol": string,
 
     "owner": string,
     "officers": set(string),
@@ -492,7 +501,8 @@ var create_funding = new Serializer("create_funding", {
     "funding_opportunity_id": int64,
     "creator": string,
     "researches": set(funding_research_type),
-    "total_amount": asset
+    "amount": int64,
+    "asset_symbol": string
 });
 
 var approve_funding = new Serializer("approve_funding", {
@@ -512,7 +522,8 @@ var create_funding_withdrawal_request = new Serializer("create_funding_withdrawa
     "organisation_id": int64,
     "requester": string,
     "purpose" : uint16,
-    "amount": asset,
+    "amount": int64,
+    "asset_symbol": string,
     "description": string,
     "attachment": string
 });
@@ -546,6 +557,19 @@ var create_organisation = new Serializer("create_organisation", {
 var certify_funding_withdrawal_request = new Serializer("certify_funding_withdrawal_request", {
     "certifier": string,
     "funding_withdrawal_request_id": int64
+});
+
+var create_asset = new Serializer("create_asset", {
+    "issuer": string,
+    "asset_symbol": string,
+    "name": string,
+    "description": string
+});
+
+var issue_asset_backed_tokens = new Serializer("issue_asset_backed_tokens", {
+    "issuer": string,
+    "asset_id": int64,
+    "amount": int64
 });
 
 // virtual operations
@@ -591,7 +615,7 @@ operation.st_operations = [
     change_recovery_account, // 12
 
     // DEIP native operations
-    create_grant, // 13
+    create_discipline_supply, // 13
     create_research_group, // 14
     create_proposal, // 15
     vote_proposal, // 16
@@ -612,7 +636,7 @@ operation.st_operations = [
     accept_research_token_offer, // 31
     reject_research_token_offer, // 32
     create_funding_opportunity, // 33
-    create_grant_application, // 34
+    create_grant_application, // 34 <--- old asset
     make_review_for_application, // 35
     approve_grant_application, // 36
     reject_grant_application, // 37
@@ -626,12 +650,14 @@ operation.st_operations = [
     reject_funding_milestone, // 45
     create_organisation, // 46
     certify_funding_withdrawal_request, // 47
+    create_asset, // 48
+    issue_asset_backed_tokens, // 49
 
     // virtual operations
-    fill_common_tokens_withdraw, // 48
-    shutdown_witness, // 49
-    hardfork, // 50
-    producer_reward // 51
+    fill_common_tokens_withdraw, // 50
+    shutdown_witness, // 51
+    hardfork, // 52
+    producer_reward // 53
 ];
 
 let transaction = new Serializer(

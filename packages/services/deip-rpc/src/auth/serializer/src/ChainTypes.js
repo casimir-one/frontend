@@ -29,7 +29,7 @@ ChainTypes.operations = {
     change_recovery_account: 12,
 
     // DEIP native operations
-    create_grant: 13,
+    create_discipline_supply: 13,
     create_research_group: 14,
     create_proposal: 15,
     vote_proposal: 16,
@@ -64,12 +64,14 @@ ChainTypes.operations = {
     reject_funding_milestone: 45,
     create_organisation: 46,
     certify_funding_withdrawal_request: 47,
+    create_asset: 48,
+    issue_asset_backed_tokens: 49,
 
     // virtual operations
-    fill_common_tokens_withdraw: 48,
-    shutdown_witness: 49,
-    hardfork: 50,
-    producer_reward: 51
+    fill_common_tokens_withdraw: 50,
+    shutdown_witness: 51,
+    hardfork: 52,
+    producer_reward: 53
 };
 
 //types.hpp

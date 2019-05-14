@@ -5,6 +5,7 @@ module.exports = [{
             "from",
             "to",
             "amount",
+            "asset_symbol",
             "memo"
         ]
     }, {
@@ -19,6 +20,7 @@ module.exports = [{
         "operation": "account_create",
         "params": [
             "fee",
+            "asset_symbol",
             "creator",
             "new_account_name",
             "owner",
@@ -46,7 +48,8 @@ module.exports = [{
             "url",
             "block_signing_key",
             "props",
-            "fee"
+            "fee",
+            "asset_symbol"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -117,10 +120,11 @@ module.exports = [{
     // DEIP native operations
     {
         "roles": ["active", "owner"],
-        "operation": "create_grant",
+        "operation": "create_discipline_supply",
         "params": [
             "owner",
             "balance",
+            "asset_symbol",
             "target_discipline",
             "start_block",
             "end_block",
@@ -190,7 +194,8 @@ module.exports = [{
         "params": [
             "research_token_sale_id",
             "owner",
-            "amount"
+            "amount",
+            "asset_symbol"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -249,6 +254,7 @@ module.exports = [{
             "creator",
             "owner",
             "balance",
+            "asset_symbol",            
             "vesting_duration_seconds",
             "vesting_cliff_seconds",
             "period_duration_seconds"
@@ -259,7 +265,8 @@ module.exports = [{
         "params": [
             "vesting_balance_id",
             "owner",
-            "amount"
+            "amount",
+            "asset_symbol"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -276,7 +283,8 @@ module.exports = [{
         "params": [
             "from",
             "to",
-            "amount"
+            "amount",
+            "asset_symbol"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -331,6 +339,7 @@ module.exports = [{
             "amount",
             "award_ceiling",
             "award_floor",
+            "asset_symbol",
             "owner",
             "officers",
             "min_number_of_positive_reviews",
@@ -382,7 +391,8 @@ module.exports = [{
             "funding_opportunity_id",
             "creator",
             "researches",
-            "total_amount"
+            "amount",
+            "asset_symbol"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -409,6 +419,7 @@ module.exports = [{
             "requester",
             "purpose",
             "amount",
+            "asset_symbol",
             "description",
             "attachment"
         ]
@@ -455,6 +466,23 @@ module.exports = [{
         "params": [
             "certifier",
             "funding_withdrawal_request_id"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "create_asset",
+        "params": [
+            "issuer",
+            "asset_symbol",
+            "name",
+            "description"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "issue_asset_backed_tokens",
+        "params": [
+            "issuer",
+            "asset_id",
+            "amount"
         ]
     },
     // virtual operations
