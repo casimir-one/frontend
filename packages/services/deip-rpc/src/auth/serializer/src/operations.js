@@ -92,7 +92,7 @@ const milestone_type = new Serializer("milestone_type", {
 const funding_research_type = new Serializer("funding_research_type", {
     researcher: string,
     research_id: int64,
-    research_expenses: map(uint16, asset),
+    research_expenses: map(uint16, int64),
     organisation_id: int64,
     university_overhead: int64,
     milestones: set(milestone_type)
