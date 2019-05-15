@@ -432,11 +432,6 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
-var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
-    "account": string,
-    "total_common_tokens_amount": int64
-});
-
 var create_funding_opportunity = new Serializer("create_funding_opportunity", {
     "funding_opportunity_number": string,
     "funding_opportunity_title": string,
