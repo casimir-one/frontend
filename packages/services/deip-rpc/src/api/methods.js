@@ -994,5 +994,13 @@ export default [{
         "params": [
             "receiver_organisation_id"
         ]
+    },
+    // Funding Transactions
+    {
+        "api": "database_api",
+        "method": "get_asset_statistics",
+        "params": [
+            "symbol"
+        ]
     }
 ];
