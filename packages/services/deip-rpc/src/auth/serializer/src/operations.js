@@ -525,7 +525,8 @@ var create_funding_withdrawal_request = new Serializer("create_funding_withdrawa
 
 var approve_funding_withdrawal_request = new Serializer("approve_funding_withdrawal_request", {
     "funding_withdrawal_request_id": int64,
-    "approver": string
+    "approver": string,
+    "organisation_id": int64
 });
 
 var reject_funding_withdrawal_request = new Serializer("reject_funding_withdrawal_request", {
@@ -551,7 +552,8 @@ var create_organisation = new Serializer("create_organisation", {
 
 var certify_funding_withdrawal_request = new Serializer("certify_funding_withdrawal_request", {
     "certifier": string,
-    "funding_withdrawal_request_id": int64
+    "funding_withdrawal_request_id": int64,
+    "organisation_id": int64
 });
 
 var create_asset = new Serializer("create_asset", {
@@ -565,6 +567,12 @@ var issue_asset_backed_tokens = new Serializer("issue_asset_backed_tokens", {
     "issuer": string,
     "asset_id": int64,
     "amount": int64
+});
+
+var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_request", {
+    "approver": string,
+    "funding_withdrawal_request_id": int64,
+    "organisation_id": int64
 });
 
 // virtual operations
@@ -647,12 +655,13 @@ operation.st_operations = [
     certify_funding_withdrawal_request, // 47
     create_asset, // 48
     issue_asset_backed_tokens, // 49
+    pay_funding_withdrawal_request, // 50
 
     // virtual operations
-    fill_common_tokens_withdraw, // 50
-    shutdown_witness, // 51
-    hardfork, // 52
-    producer_reward // 53
+    fill_common_tokens_withdraw, // 51
+    shutdown_witness, // 52
+    hardfork, // 53
+    producer_reward // 54
 ];
 
 let transaction = new Serializer(

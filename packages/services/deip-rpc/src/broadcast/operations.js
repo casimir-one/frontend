@@ -428,8 +428,8 @@ module.exports = [{
         "operation": "approve_funding_withdrawal_request",
         "params": [
             "funding_withdrawal_request_id",
-            "approver"
-        
+            "approver",
+            "organisation_id"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -465,7 +465,8 @@ module.exports = [{
         "operation": "certify_funding_withdrawal_request",
         "params": [
             "certifier",
-            "funding_withdrawal_request_id"
+            "funding_withdrawal_request_id",
+            "organisation_id"
         ]
     }, {
         "roles": ["active", "owner"],
@@ -483,6 +484,14 @@ module.exports = [{
             "issuer",
             "asset_id",
             "amount"
+        ]
+    }, {
+        "roles": ["active", "owner"],
+        "operation": "pay_funding_withdrawal_request",
+        "params": [
+            "approver",
+            "funding_withdrawal_request_id",
+            "organisation_id"
         ]
     },
     // virtual operations

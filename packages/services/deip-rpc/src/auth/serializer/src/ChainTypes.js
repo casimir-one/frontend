@@ -66,12 +66,13 @@ ChainTypes.operations = {
     certify_funding_withdrawal_request: 47,
     create_asset: 48,
     issue_asset_backed_tokens: 49,
+    pay_funding_withdrawal_request: 50,
 
     // virtual operations
-    fill_common_tokens_withdraw: 50,
-    shutdown_witness: 51,
-    hardfork: 52,
-    producer_reward: 53
+    fill_common_tokens_withdraw: 51,
+    shutdown_witness: 52,
+    hardfork: 53,
+    producer_reward: 54
 };
 
 //types.hpp
