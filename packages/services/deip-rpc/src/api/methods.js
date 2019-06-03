@@ -995,12 +995,19 @@ export default [{
             "receiver_organisation_id"
         ]
     },
-    // Funding Transactions
     {
         "api": "database_api",
         "method": "get_asset_statistics",
         "params": [
             "symbol"
+        ]
+    },
+    // NSF History plugin
+    {
+        "api": "nsf_history_api",
+        "method": "get_organisation_history",
+        "params": [
+            "organisation_id"
         ]
     }
 ];
