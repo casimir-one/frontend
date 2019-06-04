@@ -570,8 +570,8 @@ var issue_asset_backed_tokens = new Serializer("issue_asset_backed_tokens", {
 });
 
 var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_request", {
-    "approver": string,
     "funding_withdrawal_request_id": int64,
+    "approver": string,
     "organisation_id": int64
 });
 

@@ -489,8 +489,8 @@ module.exports = [{
         "roles": ["active", "owner"],
         "operation": "pay_funding_withdrawal_request",
         "params": [
-            "approver",
             "funding_withdrawal_request_id",
+            "approver",
             "organisation_id"
         ]
     },
