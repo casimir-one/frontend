@@ -1006,7 +1006,7 @@ export default [{
     // Account Balances
     {
         "api": "database_api",
-        "method": "get_by_owner",
+        "method": "get_account_balances_by_owner",
         "params": [
             "owner"
         ]
