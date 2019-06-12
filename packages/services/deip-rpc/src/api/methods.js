@@ -1002,6 +1002,16 @@ export default [{
             "symbol"
         ]
     },
+    
+    // Account Balances
+    {
+        "api": "database_api",
+        "method": "get_by_owner",
+        "params": [
+            "owner"
+        ]
+    },
+
     // NSF History plugin
     {
         "api": "nsf_history_api",
