@@ -67,7 +67,7 @@ const operation = static_variant();
 module.exports.operation = operation;
 
 // For module.exports
-const Serializer = function(operation_name, serilization_types_object) {
+const Serializer = function (operation_name, serilization_types_object) {
     const s = new SerializerImpl(operation_name, serilization_types_object);
     return module.exports[operation_name] = s;
 }
@@ -185,8 +185,7 @@ var authority = new Serializer("authority", {
 });
 
 let account_create = new Serializer("account_create", {
-    fee: int64,
-    asset_symbol: string,
+    fee: asset,
     creator: string,
     new_account_name: string,
     owner: authority,
@@ -367,7 +366,7 @@ var transfer_research_tokens_to_research_group = new Serializer("transfer_resear
     research_token_id: int64,
     research_id: int64,
     owner: string,
-    amount : uint32 
+    amount: uint32
 })
 
 var set_expertise_tokens = new Serializer("set_expertise_tokens", {
@@ -377,11 +376,11 @@ var set_expertise_tokens = new Serializer("set_expertise_tokens", {
 })
 
 var research_update = new Serializer("research_update", {
-     "research_id" : int64,
-     "title": string,
-     "abstract": string,
-     "permlink": string,
-     "owner": string
+    "research_id": int64,
+    "title": string,
+    "abstract": string,
+    "permlink": string,
+    "owner": string
 })
 
 var create_vesting_balance = new Serializer("create_vesting_balance", {
@@ -395,13 +394,13 @@ var create_vesting_balance = new Serializer("create_vesting_balance", {
 });
 
 var delegate_expertise = new Serializer("delegate_expertise", {
-    "sender" : string,
+    "sender": string,
     "receiver": string,
     "discipline_id": int64
 })
 
 var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", {
-    "sender" : string,
+    "sender": string,
     "receiver": string,
     "discipline_id": int64
 })
@@ -461,7 +460,7 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
 
     "open_date": time_point_sec,
     "close_date": time_point_sec,
-    
+
     "review_committee_id": int64
 });
 
@@ -484,12 +483,12 @@ var make_review_for_application = new Serializer("make_review_for_application", 
 
 var approve_grant_application = new Serializer("approve_grant_application", {
     "grant_application_id": int64,
-    "approver": string 
+    "approver": string
 });
 
 var reject_grant_application = new Serializer("reject_grant_application", {
     "grant_application_id": int64,
-    "rejecter": string 
+    "rejecter": string
 });
 
 var create_funding = new Serializer("create_funding", {
@@ -501,12 +500,12 @@ var create_funding = new Serializer("create_funding", {
 });
 
 var approve_funding = new Serializer("approve_funding", {
-    "funding_id" : int64,
+    "funding_id": int64,
     "approver": string
 });
 
 var reject_funding = new Serializer("reject_funding", {
-    "funding_id" : int64,
+    "funding_id": int64,
     "rejecter": string
 });
 
@@ -516,7 +515,7 @@ var create_funding_withdrawal_request = new Serializer("create_funding_withdrawa
     "research_id": int64,
     "organisation_id": int64,
     "requester": string,
-    "purpose" : uint16,
+    "purpose": uint16,
     "amount": int64,
     "asset_symbol": string,
     "description": string,
