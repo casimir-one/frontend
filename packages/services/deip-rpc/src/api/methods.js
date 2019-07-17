@@ -1020,5 +1020,14 @@ export default [{
     "params": [
         "organisation_id"
     ]
+},
+
+// IP Protection Plugin
+{
+    "api": "ip_protection_history_api",
+    "method": "get_content_history",
+    "params": [
+        "content_hash"
+    ]
 }
 ];
