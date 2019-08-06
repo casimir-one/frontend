@@ -1025,7 +1025,7 @@ export default [{
 // IP Protection Plugin
 {
     "api": "ip_protection_history_api",
-    "method": "get_content_history",
+    "method": "get_content_history_by_hash",
     "params": [
         "content_hash"
     ]
