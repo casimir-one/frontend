@@ -1029,5 +1029,13 @@ export default [{
     "params": [
         "content_hash"
     ]
+},
+{
+    "api": "ip_protection_history_api",
+    "method": "get_content_history_by_research_and_hash",
+    "params": [
+        "research_id",
+        "content_hash"
+    ]
 }
 ];
