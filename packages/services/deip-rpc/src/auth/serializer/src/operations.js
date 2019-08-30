@@ -574,6 +574,24 @@ var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_requ
     "organisation_id": int64
 });
 
+var create_contract = new Serializer("create_contract", {
+  creator: string,
+  receiver: string,
+  contract_hash: string,
+  start_date: time_point_sec,
+  end_date: time_point_sec,
+});
+
+var sign_contract = new Serializer("sign_contract", {
+  contract_id: int64,
+  signee: string,
+});
+
+var decline_contract = new Serializer("decline_contract", {
+  contract_id: int64,
+  signee: string,
+});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {

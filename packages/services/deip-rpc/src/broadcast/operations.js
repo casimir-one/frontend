@@ -492,6 +492,30 @@ module.exports = [{
         "approver",
         "organisation_id"
     ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "create_contract",
+  "params": [
+      "creator",
+      "receiver",
+      "contract_hash",
+      "start_date",
+      "end_date"
+  ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "sign_contract",
+  "params": [
+      "contract_id",
+      "signee"
+  ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "decline_contract",
+  "params": [
+    "contract_id",
+    "signee"
+  ]
 },
 // virtual operations
 {
