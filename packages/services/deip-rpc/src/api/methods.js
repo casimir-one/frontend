@@ -1013,6 +1013,30 @@ export default [{
     ]
 },
 
+// Contracts
+{
+  "api": "database_api",
+  "method": "get_contract",
+  "params": [
+      "id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_contracts_by_creator",
+  "params": [
+      "creator"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_contracts_by_signee",
+  "params": [
+      "signee"
+  ]
+},
+
+
 // NSF History plugin
 {
     "api": "nsf_history_api",
