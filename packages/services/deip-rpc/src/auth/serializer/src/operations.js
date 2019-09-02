@@ -491,6 +491,8 @@ var reject_grant_application = new Serializer("reject_grant_application", {
     "rejecter": string
 });
 
+var create_grant = new Serializer("create_grant", {});
+
 var create_funding = new Serializer("create_funding", {
     "funding_opportunity_id": int64,
     "creator": string,
@@ -592,6 +594,9 @@ var decline_contract = new Serializer("decline_contract", {
   signee: string,
 });
 
+let add_member_to_research = new Serializer("add_member_to_research", {});
+let exclude_member_from_research = new Serializer("exclude_member_from_research", {});
+
 // virtual operations
 
 let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -655,24 +660,28 @@ operation.st_operations = [
     vote_for_expertise_allocation_proposal, // 30
     accept_research_token_offer, // 31
     reject_research_token_offer, // 32
-    create_funding_opportunity, // 33
+    create_grant, // 33
     create_grant_application, // 34 <--- old asset
-    make_review_for_application, // 35
-    approve_grant_application, // 36
-    reject_grant_application, // 37
-    create_funding, // 38
-    approve_funding, // 39
-    reject_funding, // 40
-    create_funding_withdrawal_request, // 41
-    approve_funding_withdrawal_request, // 42
-    reject_funding_withdrawal_request, // 43
-    approve_funding_milestone, // 44
-    reject_funding_milestone, // 45
-    create_organisation, // 46
-    certify_funding_withdrawal_request, // 47
-    create_asset, // 48
-    issue_asset_backed_tokens, // 49
-    pay_funding_withdrawal_request, // 50
+    
+    // make_review_for_application, // 35
+    // approve_grant_application, // 36
+    // reject_grant_application, // 37
+    // create_grant_operation, // 38
+    // approve_funding, // 39
+    // reject_funding, // 40
+    // create_funding_withdrawal_request, // 41
+    // approve_funding_withdrawal_request, // 42
+    // reject_funding_withdrawal_request, // 43
+    // approve_funding_milestone, // 44
+    // reject_funding_milestone, // 45
+    // create_organisation, // 46
+    // certify_funding_withdrawal_request, // 47
+    // create_asset, // 48
+    // issue_asset_backed_tokens, // 49
+    // pay_funding_withdrawal_request, // 50
+
+    add_member_to_research,
+    exclude_member_from_research,
     create_contract, // 51,
     sign_contract, // 52,
     decline_contract, // 53,
