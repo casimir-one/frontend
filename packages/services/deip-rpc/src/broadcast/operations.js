@@ -497,7 +497,9 @@ module.exports = [{
   "operation": "create_contract",
   "params": [
       "creator",
+      "creator_research_group_id",
       "receiver",
+      "receiver_research_group_id",
       "contract_hash",
       "start_date",
       "end_date"
