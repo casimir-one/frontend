@@ -589,11 +589,13 @@ var create_contract = new Serializer("create_contract", {
 var sign_contract = new Serializer("sign_contract", {
   contract_id: int64,
   signee: string,
+  signee_research_group_id: int64,
 });
 
 var decline_contract = new Serializer("decline_contract", {
   contract_id: int64,
   signee: string,
+  signee_research_group_id: int64,
 });
 
 let add_member_to_research = new Serializer("add_member_to_research", {});

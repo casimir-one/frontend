@@ -509,14 +509,16 @@ module.exports = [{
   "operation": "sign_contract",
   "params": [
       "contract_id",
-      "signee"
+      "signee",
+      "signee_research_group_id"
   ]
 }, {
   "roles": ["active", "owner"],
   "operation": "decline_contract",
   "params": [
     "contract_id",
-    "signee"
+    "signee",
+    "signee_research_group_id"
   ]
 },
 // virtual operations
