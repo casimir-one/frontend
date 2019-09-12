@@ -1013,52 +1013,52 @@ export default [{
     ]
 },
 
-// Contracts
+// NDA Contracts
 {
   "api": "database_api",
-  "method": "get_contract",
+  "method": "get_nda_contract",
   "params": [
       "id"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_contracts_by_creator",
+  "method": "get_nda_contracts_by_creator",
   "params": [
       "creator"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_contracts_by_signee",
+  "method": "get_nda_contracts_by_signee",
   "params": [
       "signee"
   ]
 },
 {
     "api": "database_api",
-    "method": "get_contracts_by_hash",
+    "method": "get_nda_contracts_by_hash",
     "params": [
         "hash"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_contracts_by_creator_research_group",
+    "method": "get_nda_contracts_by_creator_research_group",
     "params": [
         "research_group_id"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_contracts_by_signee_research_group",
+    "method": "get_nda_contracts_by_signee_research_group",
     "params": [
         "research_group_id"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_by_creator_research_group_and_contract_hash",
+    "method": "get_nda_contracts_by_creator_research_group_and_contract_hash",
     "params": [
         "research_group_id",
         "hash"
@@ -1066,7 +1066,7 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_by_signee_research_group_and_contract_hash",
+    "method": "get_nda_contracts_by_signee_research_group_and_contract_hash",
     "params": [
         "research_group_id",
         "hash"
@@ -1074,11 +1074,42 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_by_creator_research_group_and_signee_research_group_and_contract_hash",
+    "method": "get_nda_contracts_by_creator_research_group_and_signee_research_group",
+    "params": [
+        "creator_research_group_id",
+        "signee_research_group_id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_nda_contracts_by_creator_research_group_and_signee_research_group_and_contract_hash",
     "params": [
         "creator_research_group_id",
         "signee_research_group_id",
         "hash"
+    ]
+}, 
+
+// NDA Contracts requests
+{
+    "api": "database_api",
+    "method": "get_nda_contract_request",
+    "params": [
+        "id"
+    ]
+}, 
+{
+    "api": "database_api",
+    "method": "get_nda_contract_requests_by_contract_id",
+    "params": [
+        "contract_id"
+    ]
+}, 
+{
+    "api": "database_api",
+    "method": "get_nda_contract_requests_by_requester",
+    "params": [
+        "requester"
     ]
 }, 
 
