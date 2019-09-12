@@ -498,8 +498,9 @@ module.exports = [{
   "params": [
       "creator",
       "creator_research_group_id",
-      "receiver",
-      "receiver_research_group_id",
+      "signee",
+      "signee_research_group_id",
+      "title",
       "contract_hash",
       "start_date",
       "end_date"
@@ -509,17 +510,23 @@ module.exports = [{
   "operation": "sign_contract",
   "params": [
       "contract_id",
-      "signee",
-      "signee_research_group_id"
+      "contract_signer",
+      "signature"
   ]
 }, {
   "roles": ["active", "owner"],
   "operation": "decline_contract",
   "params": [
     "contract_id",
-    "signee",
-    "signee_research_group_id"
+    "signee"
   ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "close_contract",
+    "params": [
+        "contract_id",
+        "creator"
+    ]
 },
 // virtual operations
 {

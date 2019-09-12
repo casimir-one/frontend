@@ -1035,7 +1035,52 @@ export default [{
       "signee"
   ]
 },
-
+{
+    "api": "database_api",
+    "method": "get_contracts_by_hash",
+    "params": [
+        "hash"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_contracts_by_creator_research_group",
+    "params": [
+        "research_group_id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_contracts_by_signee_research_group",
+    "params": [
+        "research_group_id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_by_creator_research_group_and_contract_hash",
+    "params": [
+        "research_group_id",
+        "hash"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_by_signee_research_group_and_contract_hash",
+    "params": [
+        "research_group_id",
+        "hash"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_by_creator_research_group_and_signee_research_group_and_contract_hash",
+    "params": [
+        "creator_research_group_id",
+        "signee_research_group_id",
+        "hash"
+    ]
+}, 
 
 // NSF History plugin
 {

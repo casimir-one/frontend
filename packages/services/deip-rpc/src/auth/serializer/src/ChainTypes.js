@@ -74,12 +74,13 @@ ChainTypes.operations = {
     create_contract: 37,
     sign_contract: 38,
     decline_contract: 39,
+    close_contract: 40,
 
     // virtual operations
-    fill_common_tokens_withdraw: 40,
-    shutdown_witness: 41,
-    hardfork: 42,
-    producer_reward: 43
+    fill_common_tokens_withdraw: 41,
+    shutdown_witness: 42,
+    hardfork: 43,
+    producer_reward: 44
 };
 
 //types.hpp

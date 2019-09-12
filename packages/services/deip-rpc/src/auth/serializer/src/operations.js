@@ -579,23 +579,28 @@ var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_requ
 var create_contract = new Serializer("create_contract", {
   creator: string,
   creator_research_group_id: int64,
-  receiver: string,
-  receiver_research_group_id: int64,
+  signee: string,
+  signee_research_group_id: int64,
+  title: string,
   contract_hash: string,
   start_date: time_point_sec,
-  end_date: time_point_sec,
+  end_date: time_point_sec
 });
 
 var sign_contract = new Serializer("sign_contract", {
   contract_id: int64,
-  signee: string,
-  signee_research_group_id: int64,
+  contract_signer: string,
+  signature: string
 });
 
 var decline_contract = new Serializer("decline_contract", {
   contract_id: int64,
-  signee: string,
-  signee_research_group_id: int64,
+  signee: string
+});
+
+var close_contract = new Serializer("close_contract", {
+  contract_id: int64,
+  creator: string
 });
 
 let add_member_to_research = new Serializer("add_member_to_research", {});
@@ -689,12 +694,13 @@ operation.st_operations = [
     create_contract, // 51,
     sign_contract, // 52,
     decline_contract, // 53,
+    close_contract, // 54
 
     // virtual operations
-    fill_common_tokens_withdraw, // 54
-    shutdown_witness, // 55
-    hardfork, // 56
-    producer_reward // 57
+    fill_common_tokens_withdraw, // 55
+    shutdown_witness, // 56
+    hardfork, // 57
+    producer_reward // 58
 ];
 
 let transaction = new Serializer(
