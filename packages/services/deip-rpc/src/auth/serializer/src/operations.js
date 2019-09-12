@@ -579,8 +579,8 @@ var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_requ
 var create_contract = new Serializer("create_contract", {
   creator: string,
   creator_research_group_id: int64,
-  signee: string,
-  signee_research_group_id: int64,
+  receiver: string,
+  receiver_research_group_id: int64,
   title: string,
   contract_hash: string,
   start_date: time_point_sec,
