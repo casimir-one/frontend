@@ -498,8 +498,8 @@ module.exports = [{
   "params": [
       "creator",
       "creator_research_group_id",
-      "receiver",
-      "receiver_research_group_id",
+      "signee",
+      "signee_research_group_id",
       "title",
       "contract_hash",
       "start_date",
