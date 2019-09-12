@@ -527,6 +527,24 @@ module.exports = [{
         "contract_id",
         "creator"
     ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "create_request_by_nda_contract",
+  "params": [
+      "requester",
+      "encrypted_payload_hash",
+      "encrypted_payload_iv",
+      "contract_id"
+  ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "fulfil_request_by_nda_contract",
+  "params": [
+      "granter",
+      "encrypted_payload_encryption_key",
+      "proof_of_encrypted_payload_encryption_key",
+      "request_id"
+  ]
 },
 // virtual operations
 {

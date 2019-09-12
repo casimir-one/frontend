@@ -75,12 +75,14 @@ ChainTypes.operations = {
     sign_nda_contract: 38,
     decline_nda_contract: 39,
     close_nda_contract: 40,
+    create_request_by_nda_contract: 41,
+    fulfil_request_by_nda_contract: 42,
 
     // virtual operations
-    fill_common_tokens_withdraw: 41,
-    shutdown_witness: 42,
-    hardfork: 43,
-    producer_reward: 44
+    fill_common_tokens_withdraw: 43,
+    shutdown_witness: 44,
+    hardfork: 45,
+    producer_reward: 46
 };
 
 //types.hpp

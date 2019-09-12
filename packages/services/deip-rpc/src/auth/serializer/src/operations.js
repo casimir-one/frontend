@@ -603,6 +603,20 @@ var close_nda_contract = new Serializer("close_nda_contract", {
   creator: string
 });
 
+var create_request_by_nda_contract = new Serializer("create_request_by_nda_contract", {
+  requester: string,
+  encrypted_payload_hash: string,
+  encrypted_payload_iv: string,
+  contract_id: int64
+});
+
+var fulfil_request_by_nda_contract = new Serializer("fulfil_request_by_nda_contract", {
+  granter: string,
+  encrypted_payload_encryption_key: string,
+  proof_of_encrypted_payload_encryption_key: string,
+  request_id: int64
+});
+
 let add_member_to_research = new Serializer("add_member_to_research", {});
 let exclude_member_from_research = new Serializer("exclude_member_from_research", {});
 
@@ -695,12 +709,14 @@ operation.st_operations = [
     sign_nda_contract, // 52,
     decline_nda_contract, // 53,
     close_nda_contract, // 54
+    create_request_by_nda_contract, // 55
+    fulfil_request_by_nda_contract, // 56
 
     // virtual operations
-    fill_common_tokens_withdraw, // 55
-    shutdown_witness, // 56
-    hardfork, // 57
-    producer_reward // 58
+    fill_common_tokens_withdraw, // 57
+    shutdown_witness, // 58
+    hardfork, // 59
+    producer_reward // 60
 ];
 
 let transaction = new Serializer(
