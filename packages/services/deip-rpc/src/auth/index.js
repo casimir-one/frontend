@@ -119,4 +119,8 @@ Auth.signTransaction = function(trx, keys) {
     return signed_transaction.toObject(Object.assign(trx, { signatures: signatures }))
 };
 
+Auth.signString = function(string, privKey) {
+    return Signature.sign(string, privKey).toBuffer();
+};
+
 module.exports = Auth;
