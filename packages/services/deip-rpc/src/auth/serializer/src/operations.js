@@ -576,7 +576,7 @@ var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_requ
     "organisation_id": int64
 });
 
-var create_contract = new Serializer("create_contract", {
+var create_nda_contract = new Serializer("create_nda_contract", {
   creator: string,
   creator_research_group_id: int64,
   signee: string,
@@ -587,18 +587,18 @@ var create_contract = new Serializer("create_contract", {
   end_date: time_point_sec
 });
 
-var sign_contract = new Serializer("sign_contract", {
+var sign_nda_contract = new Serializer("sign_nda_contract", {
   contract_id: int64,
   contract_signer: string,
   signature: string
 });
 
-var decline_contract = new Serializer("decline_contract", {
+var decline_nda_contract = new Serializer("decline_nda_contract", {
   contract_id: int64,
   signee: string
 });
 
-var close_contract = new Serializer("close_contract", {
+var close_nda_contract = new Serializer("close_nda_contract", {
   contract_id: int64,
   creator: string
 });
@@ -691,10 +691,10 @@ operation.st_operations = [
 
     add_member_to_research,
     exclude_member_from_research,
-    create_contract, // 51,
-    sign_contract, // 52,
-    decline_contract, // 53,
-    close_contract, // 54
+    create_nda_contract, // 51,
+    sign_nda_contract, // 52,
+    decline_nda_contract, // 53,
+    close_nda_contract, // 54
 
     // virtual operations
     fill_common_tokens_withdraw, // 55

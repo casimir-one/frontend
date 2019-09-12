@@ -71,10 +71,10 @@ ChainTypes.operations = {
 
     add_member_to_research: 35,
     exclude_member_from_research: 36,
-    create_contract: 37,
-    sign_contract: 38,
-    decline_contract: 39,
-    close_contract: 40,
+    create_nda_contract: 37,
+    sign_nda_contract: 38,
+    decline_nda_contract: 39,
+    close_nda_contract: 40,
 
     // virtual operations
     fill_common_tokens_withdraw: 41,
