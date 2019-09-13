@@ -1112,6 +1112,14 @@ export default [{
         "requester"
     ]
 }, 
+{
+    "api": "database_api",
+    "method": "get_nda_contract_request_by_contract_id_and_hash",
+    "params": [
+        "contract_id",
+        "encrypted_payload_hash"
+    ]
+}, 
 
 // NSF History plugin
 {
