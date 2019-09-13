@@ -610,7 +610,7 @@ var create_request_by_nda_contract = new Serializer("create_request_by_nda_contr
   contract_id: int64
 });
 
-var fulfil_request_by_nda_contract = new Serializer("fulfil_request_by_nda_contract", {
+var fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_contract", {
   granter: string,
   encrypted_payload_encryption_key: string,
   proof_of_encrypted_payload_encryption_key: string,
@@ -710,7 +710,7 @@ operation.st_operations = [
     decline_nda_contract, // 53,
     close_nda_contract, // 54
     create_request_by_nda_contract, // 55
-    fulfil_request_by_nda_contract, // 56
+    fulfill_request_by_nda_contract, // 56
 
     // virtual operations
     fill_common_tokens_withdraw, // 57

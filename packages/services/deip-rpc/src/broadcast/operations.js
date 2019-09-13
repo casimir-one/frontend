@@ -538,7 +538,7 @@ module.exports = [{
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "fulfil_request_by_nda_contract",
+  "operation": "fulfill_request_by_nda_contract",
   "params": [
       "granter",
       "encrypted_payload_encryption_key",

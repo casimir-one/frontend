@@ -76,7 +76,7 @@ ChainTypes.operations = {
     decline_nda_contract: 39,
     close_nda_contract: 40,
     create_request_by_nda_contract: 41,
-    fulfil_request_by_nda_contract: 42,
+    fulfill_request_by_nda_contract: 42,
 
     // virtual operations
     fill_common_tokens_withdraw: 43,
