@@ -496,10 +496,12 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "create_nda_contract",
   "params": [
-      "creator",
-      "creator_research_group_id",
-      "signee",
-      "signee_research_group_id",
+      "contract_creator",
+      "party_a",
+      "party_a_research_group_id",
+      "party_b",
+      "party_b_research_group_id",
+      "disclosing_party",
       "title",
       "contract_hash",
       "start_date",
@@ -518,14 +520,14 @@ module.exports = [{
   "operation": "decline_nda_contract",
   "params": [
     "contract_id",
-    "signee"
+    "decliner"
   ]
 }, {
     "roles": ["active", "owner"],
     "operation": "close_nda_contract",
     "params": [
         "contract_id",
-        "creator"
+        "closer"
     ]
 }, {
   "roles": ["active", "owner"],

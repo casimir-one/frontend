@@ -577,10 +577,12 @@ var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_requ
 });
 
 var create_nda_contract = new Serializer("create_nda_contract", {
-  creator: string,
-  creator_research_group_id: int64,
-  signee: string,
-  signee_research_group_id: int64,
+  contract_creator: string,
+  party_a: string,
+  party_a_research_group_id: int64,
+  party_b: string,
+  party_b_research_group_id: int64,
+  disclosing_party: set(string),
   title: string,
   contract_hash: string,
   start_date: time_point_sec,
@@ -595,12 +597,12 @@ var sign_nda_contract = new Serializer("sign_nda_contract", {
 
 var decline_nda_contract = new Serializer("decline_nda_contract", {
   contract_id: int64,
-  signee: string
+  decliner: string
 });
 
 var close_nda_contract = new Serializer("close_nda_contract", {
   contract_id: int64,
-  creator: string
+  closer: string
 });
 
 var create_request_by_nda_contract = new Serializer("create_request_by_nda_contract", {
