@@ -585,7 +585,7 @@ var create_nda_contract = new Serializer("create_nda_contract", {
   disclosing_party: set(string),
   title: string,
   contract_hash: string,
-  start_date: time_point_sec,
+  start_date: optional(time_point_sec),
   end_date: time_point_sec
 });
 
