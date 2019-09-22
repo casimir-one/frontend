@@ -613,7 +613,7 @@ var create_request_by_nda_contract = new Serializer("create_request_by_nda_contr
 });
 
 var fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_contract", {
-  granter: string,
+  grantor: string,
   encrypted_payload_encryption_key: string,
   proof_of_encrypted_payload_encryption_key: string,
   request_id: int64
