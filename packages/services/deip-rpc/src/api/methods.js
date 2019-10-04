@@ -1121,6 +1121,29 @@ export default [{
     ]
 }, 
 
+// Subscription quota
+{
+    "api": "database_api",
+    "method": "get_subscription",
+    "params": [
+        "id"
+    ]
+}, 
+{
+    "api": "database_api",
+    "method": "get_subscription_by_research_group_id",
+    "params": [
+        "research_group_id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_subscriptions_by_owner",
+    "params": [
+        "owner"
+    ]
+},
+
 // NSF History plugin
 {
     "api": "nsf_history_api",
