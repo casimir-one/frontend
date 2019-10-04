@@ -547,6 +547,30 @@ module.exports = [{
       "proof_of_encrypted_payload_encryption_key",
       "request_id"
   ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "create_subscription",
+    "params": [
+        "owner",
+        "research_group_id",
+        "json_data"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "adjust_subscription_extra_quota",
+    "params": [
+        "owner",
+        "subscription_id",
+        "json_data"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "update_subscription",
+    "params": [
+        "owner",
+        "subscription_id",
+        "json_data"
+    ]
 },
 // virtual operations
 {

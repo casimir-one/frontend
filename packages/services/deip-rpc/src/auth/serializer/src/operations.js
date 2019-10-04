@@ -631,6 +631,24 @@ let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", 
     deposited: asset
 });
 
+let create_subscription = new Serializer("create_subscription", {
+    owner: string,
+    research_group_id: optional(int64),
+    json_data: string
+});
+
+let adjust_subscription_extra_quota = new Serializer("adjust_subscription_extra_quota", {
+    owner: string,
+    subscription_id: int64,
+    json_data: string
+});
+
+let update_subscription = new Serializer("update_subscription", {
+    owner: string,
+    subscription_id: int64,
+    json_data: string
+});
+
 let shutdown_witness = new Serializer("shutdown_witness", {
     owner: string
 });
@@ -713,6 +731,9 @@ operation.st_operations = [
     close_nda_contract, // 54
     create_request_by_nda_contract, // 55
     fulfill_request_by_nda_contract, // 56
+    create_subscription,
+    adjust_subscription_extra_quota,
+    update_subscription,
 
     // virtual operations
     fill_common_tokens_withdraw, // 57
