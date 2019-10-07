@@ -552,6 +552,7 @@ module.exports = [{
     "operation": "create_subscription",
     "params": [
         "owner",
+        "agent",
         "research_group_id",
         "json_data"
     ]
@@ -560,6 +561,7 @@ module.exports = [{
     "operation": "adjust_subscription_extra_quota",
     "params": [
         "owner",
+        "agent",
         "subscription_id",
         "json_data"
     ]
@@ -568,6 +570,7 @@ module.exports = [{
     "operation": "update_subscription",
     "params": [
         "owner",
+        "agent",
         "subscription_id",
         "json_data"
     ]

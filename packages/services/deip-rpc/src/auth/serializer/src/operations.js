@@ -633,18 +633,21 @@ let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", 
 
 let create_subscription = new Serializer("create_subscription", {
     owner: string,
+    agent: string,
     research_group_id: optional(int64),
     json_data: string
 });
 
 let adjust_subscription_extra_quota = new Serializer("adjust_subscription_extra_quota", {
     owner: string,
+    agent: string,
     subscription_id: int64,
     json_data: string
 });
 
 let update_subscription = new Serializer("update_subscription", {
     owner: string,
+    agent: string,
     subscription_id: int64,
     json_data: string
 });
