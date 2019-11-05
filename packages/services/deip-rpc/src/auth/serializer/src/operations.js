@@ -173,8 +173,7 @@ let signed_block_header = new Serializer("signed_block_header", {
 let transfer = new Serializer("transfer", {
     from: string,
     to: string,
-    amount: int64,
-    asset_symbol: string,
+    amount: asset,
     memo: string
 });
 
@@ -215,8 +214,7 @@ let witness_update = new Serializer("witness_update", {
     url: string,
     block_signing_key: public_key,
     props: chain_properties,
-    fee: int64,
-    asset_symbol: string
+    fee: asset
 });
 
 let account_witness_vote = new Serializer("account_witness_vote", {
@@ -274,8 +272,7 @@ let change_recovery_account = new Serializer("change_recovery_account", {
 
 var create_discipline_supply = new Serializer("create_discipline_supply", {
     owner: string,
-    balance: int64,
-    asset_symbol: string,
+    balance: asset,
     target_discipline: string,
     start_block: uint32,
     end_block: uint32,
@@ -341,8 +338,7 @@ var make_review = new Serializer("make_review", {
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
     research_token_sale_id: int64,
     owner: string,
-    amount: int64,
-    asset_symbol: string
+    amount: asset
 });
 
 var approve_research_group_invite = new Serializer("approve_research_group_invite", {
@@ -386,8 +382,7 @@ var research_update = new Serializer("research_update", {
 var create_vesting_balance = new Serializer("create_vesting_balance", {
     "creator": string,
     "owner": string,
-    "balance": int64,
-    "asset_symbol": string,
+    "balance": asset,
     "vesting_duration_seconds": uint32,
     "vesting_cliff_seconds": uint32,
     "period_duration_seconds": uint32
@@ -408,8 +403,7 @@ var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", 
 var withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
     "vesting_balance_id": int64,
     "owner": string,
-    "amount": int64,
-    "asset_symbol": string
+    "amount": asset
 })
 
 var transfer_research_tokens = new Serializer("transfer_research_tokens", {
@@ -422,8 +416,7 @@ var transfer_research_tokens = new Serializer("transfer_research_tokens", {
 var transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
     "from": string,
     "to": string,
-    "amount": int64,
-    "asset_symbol": string
+    "amount": asset
 });
 
 var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {

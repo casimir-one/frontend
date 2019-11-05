@@ -5,7 +5,6 @@ module.exports = [{
         "from",
         "to",
         "amount",
-        "asset_symbol",
         "memo"
     ]
 }, {
@@ -47,8 +46,7 @@ module.exports = [{
         "url",
         "block_signing_key",
         "props",
-        "fee",
-        "asset_symbol"
+        "fee"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -123,7 +121,6 @@ module.exports = [{
     "params": [
         "owner",
         "balance",
-        "asset_symbol",
         "target_discipline",
         "start_block",
         "end_block",
@@ -193,8 +190,7 @@ module.exports = [{
     "params": [
         "research_token_sale_id",
         "owner",
-        "amount",
-        "asset_symbol"
+        "amount"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -253,7 +249,6 @@ module.exports = [{
         "creator",
         "owner",
         "balance",
-        "asset_symbol",
         "vesting_duration_seconds",
         "vesting_cliff_seconds",
         "period_duration_seconds"
@@ -264,8 +259,7 @@ module.exports = [{
     "params": [
         "vesting_balance_id",
         "owner",
-        "amount",
-        "asset_symbol"
+        "amount"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -282,8 +276,7 @@ module.exports = [{
     "params": [
         "from",
         "to",
-        "amount",
-        "asset_symbol"
+        "amount"
     ]
 }, {
     "roles": ["active", "owner"],
