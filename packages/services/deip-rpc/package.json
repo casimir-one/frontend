@@ -1,7 +1,7 @@
 {
-    "name": "@deip/deip-rpc-client",
-    "version": "1.0.80",
-    "description": "deip-rpc the JavaScript API for Deip blockchain",
+    "name": "@deip/deip-oa-rpc-client",
+    "version": "1.0.3",
+    "description": "RPC lib for DEIP Open Access module",
     "main": "lib/index.js",
     "scripts": {
         "test": "eslint --quiet src test; mocha -t 40000 --require babel-polyfill --require babel-register",
@@ -17,11 +17,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://gitlab.com/DEIP/deip-rpc.git"
+        "url": "https://gitlab.com/DEIP/deip-rpc.git#open-access"
     },
     "keywords": [
         "deip",
         "deip-rpc",
+        "oa",
         "blockchain"
     ],
     "dependencies": {
