@@ -532,12 +532,19 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_research_token_sale_contribution_by_account_name_and_research_token_sale_id",
+    "method": "get_research_token_sale_contribution_by_contributor_and_research_token_sale_id",
     "params": [
         "owner",
         "research_token_sale_id"
     ]
 },
+{
+    "api": "database_api",
+    "method": "get_research_token_sale_contributions_by_contributor",
+    "params": [
+        "owner"
+    ]
+},    
 {
     "api": "database_api",
     "method": "get_disciplines_by_research",
