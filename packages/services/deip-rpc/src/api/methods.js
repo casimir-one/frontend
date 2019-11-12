@@ -1175,5 +1175,22 @@ export default [{
         "research_id",
         "content_hash"
     ]
+},
+
+// Token Sales Plugin
+{
+    "api": "tsc_history_api",
+    "method": "get_contributions_history_by_contributor",
+    "params": [
+        "contributor"
+    ]
+}, 
+{
+    "api": "tsc_history_api",
+    "method": "get_contributions_history_by_contributor_and_research",
+    "params": [
+        "contributor", 
+        "research_id"
+    ]
 }
 ];

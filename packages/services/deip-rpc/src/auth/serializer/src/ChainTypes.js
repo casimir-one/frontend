@@ -49,37 +49,48 @@ ChainTypes.operations = {
     vote_for_expertise_allocation_proposal: 30,
     accept_research_token_offer: 31,
     reject_research_token_offer: 32,
-    create_grant_operation: 33,
+    create_grant: 33,
     create_grant_application: 34,
 
-    // make_review_for_application: 35,
-    // approve_grant_application: 36,
-    // reject_grant_application: 37,
-    // create_funding: 38,
-    // approve_funding: 39,
-    // reject_funding: 40,
-    // create_funding_withdrawal_request: 41,
-    // approve_funding_withdrawal_request: 42,
-    // reject_funding_withdrawal_request: 43,
-    // approve_funding_milestone: 44,
-    // reject_funding_milestone: 45,
-    // create_organisation: 46,
-    // certify_funding_withdrawal_request: 47,
-    // create_asset: 48,
-    // issue_asset_backed_tokens: 49,
-    // pay_funding_withdrawal_request: 50,
+    adjust_account_balance: 35, // remove after the spb demo
+    request_review: 36, // remove after the spb demo
 
-    add_member_to_research: 35,
-    exclude_member_from_research: 36,
-    create_nda_contract: 37,
-    sign_nda_contract: 38,
-    decline_nda_contract: 39,
-    close_nda_contract: 40,
-    create_request_by_nda_contract: 41,
-    fulfill_request_by_nda_contract: 42,
-    create_subscription: 43,
-    adjust_subscription_extra_quota: 44,
-    update_subscription: 45,
+    /* === The 1st nsf demo ===
+    make_review_for_application,
+    approve_grant_application,
+    reject_grant_application,
+    */
+    
+    /* === The 2nd nsf demo  ===
+    create_funding_opportunity,
+    create_funding,
+    approve_funding,
+    reject_funding,
+    create_funding_withdrawal_request,
+    approve_funding_withdrawal_request,
+    reject_funding_withdrawal_request,
+    approve_funding_milestone,
+    reject_funding_milestone,
+    create_organisation,
+    certify_funding_withdrawal_request,
+    create_asset,
+    issue_asset_backed_tokens,
+    pay_funding_withdrawal_request,
+    */
+
+    /* === IP Ledger module ===
+    add_member_to_research,
+    exclude_member_from_research,
+    create_nda_contract,
+    sign_nda_contract,
+    decline_nda_contract,
+    close_nda_contract,
+    create_request_by_nda_contract,
+    fulfill_request_by_nda_contract,
+    create_subscription,
+    adjust_subscription_extra_quota,
+    update_subscription,
+    */
 
     // virtual operations
     fill_common_tokens_withdraw: 46,

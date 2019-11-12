@@ -341,7 +341,22 @@ module.exports = [{
         "close_date",
         "review_committee_id"
     ]
-}, {
+},
+{
+    "roles": ["active", "owner"],
+    "operation": "create_grant",
+    "params": [
+        "target_discipline",
+        "amount",
+        "min_number_of_positive_reviews",
+        "min_number_of_applications",
+        "researches_to_grant",
+        "start_time",
+        "end_time",
+        "owner"
+    ]
+},
+{
     "roles": ["active", "owner"],
     "operation": "create_grant_application",
     "params": [
@@ -352,6 +367,21 @@ module.exports = [{
         "total_amount",
         "application_hash",
         "organisation"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "adjust_account_balance",
+    "params": [
+        "account",
+        "delta"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "request_review",
+    "params": [
+        "research_id",
+        "accounts_list",
+        "requester"
     ]
 }, {
     "roles": ["active", "owner"],

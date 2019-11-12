@@ -424,6 +424,55 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
+var create_grant = new Serializer("create_grant", {
+    "target_discipline": int64,
+    "amount": asset,
+    "min_number_of_positive_reviews": int16,
+    "min_number_of_applications": int16,
+    "researches_to_grant": int16,
+    "start_time": time_point_sec,
+    "end_time": time_point_sec,
+    "owner": string
+});
+
+var create_grant_application = new Serializer("create_grant_application", {
+    "grant_id": int64,
+    "research_id": int64,
+    "title": string,
+    "creator": string,
+    "total_amount": asset,
+    "application_hash": string,
+    "organisation": string
+}); 
+
+var adjust_account_balance = new Serializer("adjust_account_balance", {
+    "account": string,
+    "delta": asset
+});
+
+var request_review = new Serializer("request_review", {
+    "research_id": int64,
+    "accounts_list": set(string),
+    "requester": string
+});
+
+var make_review_for_application = new Serializer("make_review_for_application", {
+    "author": string,
+    "grant_application_id": int64,
+    "is_positive": bool,
+    "content": string
+});
+
+var approve_grant_application = new Serializer("approve_grant_application", {
+    "grant_application_id": int64,
+    "approver": string
+});
+
+var reject_grant_application = new Serializer("reject_grant_application", {
+    "grant_application_id": int64,
+    "rejecter": string
+});
+
 var create_funding_opportunity = new Serializer("create_funding_opportunity", {
     "funding_opportunity_number": string,
     "funding_opportunity_title": string,
@@ -456,35 +505,6 @@ var create_funding_opportunity = new Serializer("create_funding_opportunity", {
 
     "review_committee_id": int64
 });
-
-var create_grant_application = new Serializer("create_grant_application", {
-    "grant_id": int64,
-    "research_id": int64,
-    "title": string,
-    "creator": string,
-    "total_amount": asset,
-    "application_hash": string,
-    "organisation": string
-});
-
-var make_review_for_application = new Serializer("make_review_for_application", {
-    "author": string,
-    "grant_application_id": int64,
-    "is_positive": bool,
-    "content": string
-});
-
-var approve_grant_application = new Serializer("approve_grant_application", {
-    "grant_application_id": int64,
-    "approver": string
-});
-
-var reject_grant_application = new Serializer("reject_grant_application", {
-    "grant_application_id": int64,
-    "rejecter": string
-});
-
-var create_grant = new Serializer("create_grant", {});
 
 var create_funding = new Serializer("create_funding", {
     "funding_opportunity_id": int64,
@@ -700,36 +720,50 @@ operation.st_operations = [
     accept_research_token_offer, // 31
     reject_research_token_offer, // 32
     create_grant, // 33
-    create_grant_application, // 34 <--- old asset
-    
-    // make_review_for_application, // 35
-    // approve_grant_application, // 36
-    // reject_grant_application, // 37
-    // create_grant_operation, // 38
-    // approve_funding, // 39
-    // reject_funding, // 40
-    // create_funding_withdrawal_request, // 41
-    // approve_funding_withdrawal_request, // 42
-    // reject_funding_withdrawal_request, // 43
-    // approve_funding_milestone, // 44
-    // reject_funding_milestone, // 45
-    // create_organisation, // 46
-    // certify_funding_withdrawal_request, // 47
-    // create_asset, // 48
-    // issue_asset_backed_tokens, // 49
-    // pay_funding_withdrawal_request, // 50
+    create_grant_application, // 34
 
+    adjust_account_balance, // 35 remove after the spb demo
+    request_review, // 36 remove after the spb demo
+    
+
+    /* === The 1st nsf demo ===
+    make_review_for_application,
+    approve_grant_application,
+    reject_grant_application,
+    */
+
+    
+    /* === The 2nd nsf demo ===
+    create_funding_opportunity,
+    create_funding,
+    approve_funding,
+    reject_funding,
+    create_funding_withdrawal_request,
+    approve_funding_withdrawal_request,
+    reject_funding_withdrawal_request,
+    approve_funding_milestone,
+    reject_funding_milestone,
+    create_organisation,
+    certify_funding_withdrawal_request,
+    create_asset,
+    issue_asset_backed_tokens,
+    pay_funding_withdrawal_request,
+    */
+
+
+    /* === IP Ledger module ===
     add_member_to_research,
     exclude_member_from_research,
-    create_nda_contract, // 51,
-    sign_nda_contract, // 52,
-    decline_nda_contract, // 53,
-    close_nda_contract, // 54
-    create_request_by_nda_contract, // 55
-    fulfill_request_by_nda_contract, // 56
+    create_nda_contract,
+    sign_nda_contract,
+    decline_nda_contract,
+    close_nda_contract,
+    create_request_by_nda_contract,
+    fulfill_request_by_nda_contract,
     create_subscription,
     adjust_subscription_extra_quota,
     update_subscription,
+    */
 
     // virtual operations
     fill_common_tokens_withdraw, // 57
