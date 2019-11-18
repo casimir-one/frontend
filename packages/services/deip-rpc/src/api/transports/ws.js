@@ -114,7 +114,8 @@ export default class WsTransport extends Transport {
 
         if (this.options.reconnectTimeout != null) {
             this.startPromise = null;
-            setTimeout(() => { this.start() }, parseInt(this.options.reconnectTimeout, 10));
+            console.log(`Web Socket connection has been closed, reconnecting in ${this.options.reconnectTimeout / 1000} seconds...`)
+            setTimeout(() => { this.start() }, this.options.reconnectTimeout);
         }
     }
 
