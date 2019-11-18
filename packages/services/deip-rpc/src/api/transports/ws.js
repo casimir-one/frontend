@@ -40,7 +40,12 @@ export default class WsTransport extends Transport {
                 this.isOpen = true;
                 this.ws.onerror = this.onError.bind(this);
                 this.ws.onmessage = this.onMessage.bind(this);
-                this.ws.onclose = this.onClose.bind(this);
+                this.ws.onclose = () => {
+                    this.onClose();
+                    this.startPromise = null;
+                    setTimeout(() => { this.start(this.options.websocket) }, 3000);
+                }
+
                 resolve();
             };
         });
