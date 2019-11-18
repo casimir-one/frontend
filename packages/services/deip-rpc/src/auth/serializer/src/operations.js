@@ -447,7 +447,7 @@ var create_grant_application = new Serializer("create_grant_application", {
 
 var adjust_account_balance = new Serializer("adjust_account_balance", {
     "account": string,
-    "delta": asset
+    "delta": int64
 });
 
 var request_review = new Serializer("request_review", {
