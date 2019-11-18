@@ -40,11 +40,7 @@ export default class WsTransport extends Transport {
                 this.isOpen = true;
                 this.ws.onerror = this.onError.bind(this);
                 this.ws.onmessage = this.onMessage.bind(this);
-                this.ws.onclose = () => {
-                    this.onClose();
-                    this.startPromise = null;
-                    setTimeout(() => { this.start(this.options.websocket) }, 3000);
-                }
+                this.ws.onclose = this.onClose.bind(this);
 
                 resolve();
             };
@@ -115,6 +111,11 @@ export default class WsTransport extends Transport {
             _request.deferral.reject(error);
         }
         this._requests.clear();
+
+        if (this.options.reconnectTimeout != null) {
+            this.startPromise = null;
+            setTimeout(() => { this.start() }, parseInt(this.options.reconnectTimeout, 10));
+        }
     }
 
     onMessage(websocketMessage) {

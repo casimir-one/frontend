@@ -59,6 +59,7 @@ class Deip extends EventEmitter {
         } else if (options.url && options.url.match('^((ws|wss)?:\/\/)')) {
             options.websocket = options.url;
             options.transport = 'ws';
+            options.reconnectTimeout = options.reconnectTimeout || null;
             this._transportType = options.transport;
             this.options = options;
             this.transport = new transports.ws(options);
