@@ -746,6 +746,22 @@ export default [{
         "discipline_id"
     ]
 },
+{
+    "api": "database_api",
+    "method": "get_accounts_by_expert_discipline",
+    "params": [
+        "discipline_id",
+        "from",
+        "limit"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_reviews_by_author",
+    "params": [
+        "author",
+    ]
+},
 // Grants
 {
     "api": "database_api",
