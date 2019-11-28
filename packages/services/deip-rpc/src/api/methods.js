@@ -104,25 +104,22 @@ export default [{
     "params": ["trxId"]
 },
 {
-    // todo: move to blockchain_history_api after updating test-net
-    "api": "database_api",
+    "api": "blockchain_history_api",
     "method": "get_block_header",
     "params": ["blockNum"]
 },
 {
-    // todo: move to blockchain_history_api after updating test-net
-    "api": "database_api",
+    "api": "blockchain_history_api",
     "method": "get_block",
     "params": ["blockNum"]
 },
 {
-    // todo: move to blockchain_history_api after updating test-net
-    "api": "database_api",
+    "api": "blockchain_history_api",
     "method": "get_ops_in_block",
     "params": ["blockNum", "onlyVirtual"]
 },
-{  // todo: move to blockchain_history_api after updating test-net
-    api: 'database_api',
+{
+    api: 'blockchain_history_api',
     method: 'get_blocks_history',
     params: ['from', 'limit']
 },
