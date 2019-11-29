@@ -94,6 +94,11 @@ export default [{
 
 // blockchain_history_api
 {
+    "api": "database_api", // TODO: Move to blockchain_history_api after refactoring delayed_node_plugin
+    "method": "get_block",
+    "params": ["blockNum"]
+},
+{
     api: 'blockchain_history_api',
     method: 'get_ops_history',
     params: ['from', 'limit', 'opt']
@@ -106,11 +111,6 @@ export default [{
 {
     "api": "blockchain_history_api",
     "method": "get_block_header",
-    "params": ["blockNum"]
-},
-{
-    "api": "blockchain_history_api",
-    "method": "get_block",
     "params": ["blockNum"]
 },
 {
