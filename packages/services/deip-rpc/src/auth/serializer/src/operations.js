@@ -287,7 +287,7 @@ var create_research_group = new Serializer("create_research_group", {
     description: string,
     quorum_percent: uint32,
     proposal_quorums: map((uint16), (uint32)),
-    is_personal: bool,
+    is_dao: bool,
     invitees: set(invitee)
 });
 

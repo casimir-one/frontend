@@ -137,7 +137,7 @@ module.exports = [{
         "description",
         "quorum_percent",
         "proposal_quorums",
-        "is_personal",
+        "is_dao",
         "invitees"
     ]
 }, {
