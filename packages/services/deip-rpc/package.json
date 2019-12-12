@@ -1,6 +1,6 @@
 {
     "name": "@deip/deip-oa-rpc-client",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "description": "RPC lib for DEIP Open Access module",
     "main": "lib/index.js",
     "scripts": {
