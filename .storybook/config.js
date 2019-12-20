@@ -1,5 +1,5 @@
-import { configure, addDecorator, addParameters } from '@storybook/vue';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import {configure, addDecorator, addParameters} from '@storybook/vue';
+import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
 
 import vuetifyConfig from './vuetify'
 import '@mdi/font/css/materialdesignicons.css'

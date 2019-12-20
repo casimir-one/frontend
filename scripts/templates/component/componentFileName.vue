@@ -1,5 +1,7 @@
 <template>
-  <div class="{{componentCssName}}">{{ text }}</div>
+  <div :class="$style.host">
+    <div :class="$style.constent"> {{ text }} </div>
+  </div>
 </template>
 
 <script>
@@ -13,6 +15,8 @@
   }
 </script>
 
-<style lang="scss">
-  .{{componentCssName}} { }
+<style lang="scss" module>
+  .host { }
+
+  .content { }
 </style>
