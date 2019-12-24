@@ -823,14 +823,14 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_applications_by_grant",
+    "method": "get_grant_applications_by_grant",
     "params": [
         "grant_id"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_applications_by_research_id",
+    "method": "get_grant_applications_by_research_id",
     "params": [
         "research_id"
     ]
