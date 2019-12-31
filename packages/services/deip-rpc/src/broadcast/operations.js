@@ -350,38 +350,20 @@ module.exports = [{
         "amount",
         "min_number_of_positive_reviews",
         "min_number_of_applications",
-        "researches_to_grant",
+        "max_number_of_researches_to_grant",
         "start_time",
         "end_time",
-        "owner"
+        "owner",
+        "officers"
     ]
-},
-{
+}, {
     "roles": ["active", "owner"],
     "operation": "create_grant_application",
     "params": [
         "grant_id",
         "research_id",
-        "title",
         "creator",
-        "total_amount",
-        "application_hash",
-        "organisation"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "adjust_account_balance",
-    "params": [
-        "account",
-        "delta"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "request_review",
-    "params": [
-        "research_id",
-        "accounts_list",
-        "requester"
+        "application_hash"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -390,7 +372,8 @@ module.exports = [{
         "author",
         "grant_application_id",
         "is_positive",
-        "content"
+        "content",
+        "weight"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -404,7 +387,14 @@ module.exports = [{
     "operation": "reject_grant_application",
     "params": [
         "grant_application_id",
-        "rejecter"
+        "rejector"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "adjust_account_balance",
+    "params": [
+        "account",
+        "delta"
     ]
 }, {
     "roles": ["active", "owner"],

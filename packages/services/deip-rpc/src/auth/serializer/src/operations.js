@@ -429,38 +429,26 @@ var create_grant = new Serializer("create_grant", {
     "amount": asset,
     "min_number_of_positive_reviews": int16,
     "min_number_of_applications": int16,
-    "researches_to_grant": int16,
+    "max_number_of_researches_to_grant": int16,
     "start_time": time_point_sec,
     "end_time": time_point_sec,
-    "owner": string
+    "owner": string,
+    "officers": set(string)
 });
 
 var create_grant_application = new Serializer("create_grant_application", {
     "grant_id": int64,
     "research_id": int64,
-    "title": string,
     "creator": string,
-    "total_amount": asset,
-    "application_hash": string,
-    "organisation": string
-}); 
-
-var adjust_account_balance = new Serializer("adjust_account_balance", {
-    "account": string,
-    "delta": int64
-});
-
-var request_review = new Serializer("request_review", {
-    "research_id": int64,
-    "accounts_list": set(string),
-    "requester": string
+    "application_hash": string
 });
 
 var make_review_for_application = new Serializer("make_review_for_application", {
     "author": string,
     "grant_application_id": int64,
     "is_positive": bool,
-    "content": string
+    "content": string,
+    "weight": uint16
 });
 
 var approve_grant_application = new Serializer("approve_grant_application", {
@@ -470,7 +458,12 @@ var approve_grant_application = new Serializer("approve_grant_application", {
 
 var reject_grant_application = new Serializer("reject_grant_application", {
     "grant_application_id": int64,
-    "rejecter": string
+    "rejector": string
+});
+
+var adjust_account_balance = new Serializer("adjust_account_balance", {
+    "account": string,
+    "delta": int64
 });
 
 var create_funding_opportunity = new Serializer("create_funding_opportunity", {
@@ -721,16 +714,11 @@ operation.st_operations = [
     reject_research_token_offer, // 32
     create_grant, // 33
     create_grant_application, // 34
-
-    adjust_account_balance, // 35 remove after the spb demo
-    request_review, // 36 remove after the spb demo
+    make_review_for_application, // 35
+    approve_grant_application, // 36
+    reject_grant_application, // 37
     
-
-    /* === The 1st nsf demo ===
-    make_review_for_application,
-    approve_grant_application,
-    reject_grant_application,
-    */
+    adjust_account_balance, // remove after asset backed tokens merge
 
     
     /* === The 2nd nsf demo ===

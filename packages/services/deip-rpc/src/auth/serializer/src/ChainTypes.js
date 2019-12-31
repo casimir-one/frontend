@@ -51,15 +51,12 @@ ChainTypes.operations = {
     reject_research_token_offer: 32,
     create_grant: 33,
     create_grant_application: 34,
+    make_review_for_application: 35,
+    approve_grant_application: 36,
+    reject_grant_application: 37,
 
-    adjust_account_balance: 35, // remove after the spb demo
-    request_review: 36, // remove after the spb demo
+    adjust_account_balance: 38, // remove after asset backed tokens merge
 
-    /* === The 1st nsf demo ===
-    make_review_for_application,
-    approve_grant_application,
-    reject_grant_application,
-    */
     
     /* === The 2nd nsf demo  ===
     create_funding_opportunity,
@@ -93,10 +90,10 @@ ChainTypes.operations = {
     */
 
     // virtual operations
-    fill_common_tokens_withdraw: 46,
-    shutdown_witness: 47,
-    hardfork: 48,
-    producer_reward: 49
+    fill_common_tokens_withdraw: 39,
+    shutdown_witness: 40,
+    hardfork: 41,
+    producer_reward: 42
 };
 
 //types.hpp
