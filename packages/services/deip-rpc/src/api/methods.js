@@ -1205,5 +1205,20 @@ export default [{
         "contributor", 
         "research_id"
     ]
+},
+// Research Content References Plugin
+{
+    "api": "cr_history_api",
+    "method": "get_content_references",
+    "params": [
+        "research_content_id"
+    ]
+},
+{
+    "api": "cr_history_api",
+    "method": "get_contents_refer_to_content",
+    "params": [
+        "research_content_id"
+    ]
 }
 ];
