@@ -1220,5 +1220,23 @@ export default [{
     "params": [
         "research_content_id"
     ]
+},
+// Account Expertise Plugin
+{
+  "api": "ae_history_api",
+  "method": "get_expertise_history_by_account_and_discipline",
+  "params": [
+    "account",
+    "discipline_id"
+  ]
+},
+// Research ECI Plugin
+{
+  "api": "research_eci_history_api",
+  "method": "get_eci_history_by_research_and_discipline",
+  "params": [
+    "research_id",
+    "discipline_id"
+  ]
 }
 ];
