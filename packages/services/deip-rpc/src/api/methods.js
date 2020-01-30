@@ -1241,7 +1241,7 @@ export default [{
 },
 // Research Content ECI Plugin
 {
-    "api": "research_eci_history_api",
+    "api": "rc_eci_history_api",
     "method": "get_eci_history_by_content_and_discipline",
     "params": [
         "research_id",
