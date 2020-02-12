@@ -1227,7 +1227,9 @@ export default [{
   "method": "get_expertise_history_by_account_and_discipline",
   "params": [
     "account",
-    "discipline_id"
+    "discipline_id",
+    "start_time",
+    "end_time"
   ]
 },
 // Research ECI Plugin
