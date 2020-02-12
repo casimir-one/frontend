@@ -1208,14 +1208,14 @@ export default [{
 },
 // Research Content References Plugin
 {
-    "api": "cr_history_api",
+    "api": "research_content_reference_history_api",
     "method": "get_content_references",
     "params": [
         "research_content_id"
     ]
 },
 {
-    "api": "cr_history_api",
+    "api": "research_content_reference_history_api",
     "method": "get_contents_refer_to_content",
     "params": [
         "research_content_id"
@@ -1241,7 +1241,7 @@ export default [{
 },
 // Research Content ECI Plugin
 {
-    "api": "rc_eci_history_api",
+    "api": "research_content_eci_history_api",
     "method": "get_eci_history_by_content_and_discipline",
     "params": [
         "research_id",
