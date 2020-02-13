@@ -1223,13 +1223,11 @@ export default [{
 },
 // Account ECI Plugin
 {
-  "api": "ae_history_api",
-  "method": "get_expertise_history_by_account_and_discipline",
+  "api": "account_eci_history_api",
+  "method": "get_eci_history_by_account_and_discipline",
   "params": [
     "account",
-    "discipline_id",
-    "start_time",
-    "end_time"
+    "discipline_id"
   ]
 },
 // Research ECI Plugin
