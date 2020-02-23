@@ -461,11 +461,6 @@ var reject_grant_application = new Serializer("reject_grant_application", {
     "rejector": string
 });
 
-var adjust_account_balance = new Serializer("adjust_account_balance", {
-    "account": string,
-    "delta": int64
-});
-
 var create_funding_opportunity = new Serializer("create_funding_opportunity", {
     "funding_opportunity_number": string,
     "funding_opportunity_title": string,
@@ -718,7 +713,6 @@ operation.st_operations = [
     approve_grant_application, // 36
     reject_grant_application, // 37
     
-    adjust_account_balance, // remove after asset backed tokens merge
 
     
     /* === The 2nd nsf demo ===

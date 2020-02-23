@@ -391,13 +391,6 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "adjust_account_balance",
-    "params": [
-        "account",
-        "delta"
-    ]
-}, {
-    "roles": ["active", "owner"],
     "operation": "create_funding",
     "params": [
         "funding_opportunity_id",

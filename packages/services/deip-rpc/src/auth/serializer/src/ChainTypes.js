@@ -55,8 +55,6 @@ ChainTypes.operations = {
     approve_grant_application: 36,
     reject_grant_application: 37,
 
-    adjust_account_balance: 38, // remove after asset backed tokens merge
-
     
     /* === The 2nd nsf demo  ===
     create_funding_opportunity,
