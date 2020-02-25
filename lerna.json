@@ -1,8 +1,9 @@
 {
   "packages": [
     "packages/components/*",
+    "packages/directives/*",
     "packages/services/*",
-    "packages/utils/*"
+    "packages/utilities/*"
   ],
   "version": "independent"
 }
