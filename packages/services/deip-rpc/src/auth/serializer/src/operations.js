@@ -36,6 +36,7 @@ import SerializerImpl from "./serializer"
 const {
     //id_type,
     //varint32, uint8, fixed_array, object_id_type, vote_id, address,
+    uint8,
     int16,
     int64,
     uint16,
@@ -560,15 +561,20 @@ var certify_funding_withdrawal_request = new Serializer("certify_funding_withdra
 
 var create_asset = new Serializer("create_asset", {
     "issuer": string,
-    "asset_symbol": string,
+    "symbol": string,
+    "precision": uint8,
     "name": string,
     "description": string
 });
 
-var issue_asset_backed_tokens = new Serializer("issue_asset_backed_tokens", {
+var issue_asset = new Serializer("issue_asset", {
     "issuer": string,
-    "asset_id": int64,
-    "amount": int64
+    "amount_to_issue": asset
+});
+
+var reserve_asset = new Serializer("reserve_asset", {
+    "balance_owner": string,
+    "amount_to_reserve": asset
 });
 
 var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_request", {
@@ -697,7 +703,7 @@ operation.st_operations = [
     reject_research_group_invite, // 20
     transfer_research_tokens_to_research_group, // 21
     set_expertise_tokens, // 22
-    research_update, // 23
+    research_update, // 23 /* legacy */
     create_vesting_balance, // 24
     withdraw_vesting_balance, // 25
     transfer_research_tokens, // 26
@@ -712,8 +718,10 @@ operation.st_operations = [
     make_review_for_application, // 35
     approve_grant_application, // 36
     reject_grant_application, // 37
-    
 
+    create_asset, // 38
+    issue_asset, // 39
+    reserve_asset, // 40
     
     /* === The 2nd nsf demo ===
     create_funding_opportunity,
@@ -727,8 +735,8 @@ operation.st_operations = [
     reject_funding_milestone,
     create_organisation,
     certify_funding_withdrawal_request,
-    create_asset,
-    issue_asset_backed_tokens,
+    legacy_create_asset,
+    legacy_issue_asset_backed_tokens,
     pay_funding_withdrawal_request,
     */
 
@@ -748,10 +756,10 @@ operation.st_operations = [
     */
 
     // virtual operations
-    fill_common_tokens_withdraw, // 57
-    shutdown_witness, // 58
-    hardfork, // 59
-    producer_reward // 60
+    fill_common_tokens_withdraw,
+    shutdown_witness,
+    hardfork,
+    producer_reward
 ];
 
 let transaction = new Serializer(

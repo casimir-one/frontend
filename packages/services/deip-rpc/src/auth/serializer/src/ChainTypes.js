@@ -54,7 +54,9 @@ ChainTypes.operations = {
     make_review_for_application: 35,
     approve_grant_application: 36,
     reject_grant_application: 37,
-
+    create_asset: 38,
+    issue_asset: 39,
+    reserve_asset: 40,
     
     /* === The 2nd nsf demo  ===
     create_funding_opportunity,
@@ -68,8 +70,8 @@ ChainTypes.operations = {
     reject_funding_milestone,
     create_organisation,
     certify_funding_withdrawal_request,
-    create_asset,
-    issue_asset_backed_tokens,
+    legacy_create_asset,
+    legacy_issue_asset_backed_tokens,
     pay_funding_withdrawal_request,
     */
 

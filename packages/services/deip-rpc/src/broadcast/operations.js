@@ -478,17 +478,24 @@ module.exports = [{
     "operation": "create_asset",
     "params": [
         "issuer",
-        "asset_symbol",
+        "symbol",
+        "precision",
         "name",
         "description"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "issue_asset_backed_tokens",
+    "operation": "issue_asset",
     "params": [
         "issuer",
-        "asset_id",
-        "amount"
+        "amount_to_issue"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "issue_asset",
+    "params": [
+        "balance_owner",
+        "amount_to_reserve"
     ]
 }, {
     "roles": ["active", "owner"],

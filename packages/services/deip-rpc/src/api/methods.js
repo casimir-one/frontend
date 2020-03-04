@@ -994,6 +994,22 @@ export default [{
     ]
 },
 
+// Assets
+{
+    "api": "database_api",
+    "method": "get_asset",
+    "params": [
+        "id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_asset_by_string_symbol",
+    "params": [
+        "string_symbol"
+    ]
+},
+
 // Funding Transactions
 {
     "api": "database_api",
