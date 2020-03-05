@@ -148,7 +148,7 @@ class ResearchGroupProposalVotingService extends Singleton {
       research_group_id: propData.groupId,
       data,
       action: PROPOSAL_TYPES.START_RESEARCH,
-      expiration_time: this.accessService._getProposalExpirationTime()
+      expiration_time: this._getProposalExpirationTime()
     };
 
     const operation = ['create_proposal', proposal];
