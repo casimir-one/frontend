@@ -24,7 +24,7 @@
     "@deip/app-config-service": "^1.0.0",
     "@deip/blockchain-service": "^1.0.0",
     "@deip/http-service": "^1.0.0",
-    "@deip/research-group-service": "^1.0.0",
+    "@deip/research-group-service": "^1.0.1",
     "@deip/toolbox": "^0.1.0"
   }
 }
