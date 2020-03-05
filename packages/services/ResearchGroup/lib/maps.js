@@ -1,6 +1,9 @@
 import { UsersService } from '@deip/users-service';
 import deipRpc from '@deip/deip-oa-rpc-client';
 import { PROPOSAL_TYPES } from './constants';
+import { ResearchContentService } from '@deip/research-content-service';
+
+const researchContentService = ResearchContentService.getInstance();
 
 
 const usersService = UsersService.getInstance();
@@ -18,7 +21,7 @@ const extenderMap = {
 
   [PROPOSAL_TYPES.CREATE_RESEARCH_MATERIAL]: {
     research: (proposal) => deipRpc.api.getResearchByIdAsync(proposal.data.research_id),
-    draftContent: (proposal) => /* refact */ researchContentSvc.getContentRefByHash(proposal.data.research_id, proposal.data.content.split(':')[1])
+    draftContent: (proposal) => /* refact */ researchContentService.getContentRefByHash(proposal.data.research_id, proposal.data.content.split(':')[1])
   }
 };
 

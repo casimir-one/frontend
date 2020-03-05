@@ -4,6 +4,10 @@ import { Singleton } from '@deip/toolbox';
 class ResearchGroupProposalVotingHttp extends Singleton {
   http = HttpService.getInstance();
 
+  sendVoteForProposal(tx) {
+    return this.http.post(`/api/proposals/vote`, tx);
+  }
+
   sendContentProposal(tx, type) {
     return this.http.post(`/api/proposals/content/${type}`, tx);
   }

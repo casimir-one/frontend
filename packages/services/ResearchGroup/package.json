@@ -25,6 +25,7 @@
     "@deip/blockchain-service": "^1.0.0",
     "@deip/deip-oa-rpc-client": "1.0.23",
     "@deip/http-service": "^1.0.0",
+    "@deip/research-content-service": "^1.0.0",
     "@deip/toolbox": "^0.1.0",
     "lodash": "^4.17.5"
   }
