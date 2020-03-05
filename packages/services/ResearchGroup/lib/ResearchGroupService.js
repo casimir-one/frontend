@@ -118,31 +118,31 @@ class ResearchGroupService extends Singleton {
   }
 
   createSendFundsProposal(data) {
-    this._proposalMethod().createSendFundsProposal(data);
+    return this._proposalMethod().createSendFundsProposal(data);
   }
 
   createResearchProposal(data) {
-    this._proposalMethod().createResearchProposal(data);
+    return this._proposalMethod().createResearchProposal(data);
   }
 
   createChangeQuorumProposal(data) {
-    this._proposalMethod().createChangeQuorumProposal(data);
+    return this._proposalMethod().createChangeQuorumProposal(data);
   }
 
   createChangeGroupNameAndDescriptionProposal(data) {
-    this._proposalMethod().createChangeGroupNameAndDescriptionProposal(data);
+    return this._proposalMethod().createChangeGroupNameAndDescriptionProposal(data);
   }
 
   createChangeResearchNameAndDescriptionProposal(data) {
-    this._proposalMethod().createChangeResearchNameAndDescriptionProposal(data);
+    return this._proposalMethod().createChangeResearchNameAndDescriptionProposal(data);
   }
 
   createContentProposal(data) {
-    this._proposalMethod().createContentProposal(data);
+    return this._proposalMethod().createContentProposal(data);
   }
 
   createTokenSaleProposal(data) {
-    this._proposalMethod().createTokenSaleProposal(data);
+    return this._proposalMethod().createTokenSaleProposal(data);
   }
 
   //-----------------
