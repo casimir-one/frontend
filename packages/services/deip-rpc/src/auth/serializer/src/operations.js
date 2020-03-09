@@ -569,12 +569,12 @@ var create_asset = new Serializer("create_asset", {
 
 var issue_asset = new Serializer("issue_asset", {
     "issuer": string,
-    "amount_to_issue": asset
+    "amount": asset
 });
 
 var reserve_asset = new Serializer("reserve_asset", {
-    "balance_owner": string,
-    "amount_to_reserve": asset
+    "owner": string,
+    "amount": asset
 });
 
 var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_request", {

@@ -1042,11 +1042,26 @@ export default [{
 
 // Account Balances
 {
+  "api": "database_api",
+  "method": "get_account_balance",
+  "params": [
+    "id"
+  ]
+},
+{
     "api": "database_api",
     "method": "get_account_balances_by_owner",
     "params": [
         "owner"
     ]
+},
+{
+  "api": "database_api",
+  "method": "get_account_balance_by_owner_and_asset_symbol",
+  "params": [
+    "owner",
+    "symbol"
+  ]
 },
 
 // NDA Contracts

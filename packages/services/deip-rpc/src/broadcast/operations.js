@@ -488,14 +488,14 @@ module.exports = [{
     "operation": "issue_asset",
     "params": [
         "issuer",
-        "amount_to_issue"
+        "amount"
     ]
 }, {
     "roles": ["active", "owner"],
     "operation": "issue_asset",
     "params": [
-        "balance_owner",
-        "amount_to_reserve"
+        "owner",
+        "amount"
     ]
 }, {
     "roles": ["active", "owner"],
