@@ -1,28 +1,47 @@
 import deipRpc from '@deip/deip-oa-rpc-client';
 import { Singleton } from '@deip/toolbox';
+import { AppConfigService } from '@deip/app-config-service';
 
 class BlockchainService extends Singleton {
+  _deipRpcInstance;
+
+  get deipRpc() {
+    if (!this._deipRpcInstance) {
+      const env = AppConfigService.getInstance().get('env');
+
+      this._deipRpcInstance = deipRpc;
+
+      this._deipRpcInstance.api.setOptions({
+        url: env.DEIP_FULL_NODE_URL,
+        reconnectTimeout: 3000
+      });
+
+      this._deipRpcInstance.config.set('chain_id', env.CHAIN_ID);
+    }
+    return this._deipRpcInstance;
+  }
 
   signOperation(operation, ownerKey) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getDynamicGlobalProperties(function (err, result) {
+      this.deipRpc.api.getDynamicGlobalProperties((err, result) => {
         if (!err) {
           const BlockNum = (result.last_irreversible_block_num - 1) & 0xFFFF;
-          deipRpc.api.getBlockHeader(result.last_irreversible_block_num, function (e, res) {
+          this.deipRpc.api.getBlockHeader(result.last_irreversible_block_num, (e, res) => {
+            // TODO: switch to Buffer.from()
             const BlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
             const now = new Date().getTime() + 3e6;
             const expire = new Date(now).toISOString().split('.')[0];
 
             const unsignedTX = {
-              'expiration': expire,
-              'extensions': [],
-              'operations': [operation],
-              'ref_block_num': BlockNum,
-              'ref_block_prefix': BlockPrefix
+              expiration: expire,
+              extensions: [],
+              operations: [operation],
+              ref_block_num: BlockNum,
+              ref_block_prefix: BlockPrefix
             };
 
             try {
-              const signedTX = deipRpc.auth.signTransaction(unsignedTX, {'owner': ownerKey});
+              const signedTX = this.deipRpc.auth.signTransaction(unsignedTX, { owner: ownerKey });
               resolve(signedTX);
             } catch (err) {
               reject(err);
@@ -30,114 +49,117 @@ class BlockchainService extends Singleton {
           });
         }
       });
-    })
+    });
   }
 
   async getTransaction(trxId) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getTransaction(trxId, function (err, result) {
+      this.deipRpc.api.getTransaction(trxId, (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getTransactionHex(trx) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getTransactionHex(trx, function (err, result) {
+      this.deipRpc.api.getTransactionHex(trx, (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getBlock(blockNum) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getBlock(blockNum, function (err, result) {
+      this.deipRpc.api.getBlock(blockNum, (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getBlockHeader(blockNum) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getBlockHeader(blockNum, function (err, result) {
+      this.deipRpc.api.getBlockHeader(blockNum, (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getDynamicGlobalProperties() {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getDynamicGlobalProperties(function (err, result) {
+      this.deipRpc.api.getDynamicGlobalProperties((err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getChainProperties() {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getChainProperties(function (err, result) {
+      this.deipRpc.api.getChainProperties((err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getWitnesses([ids]) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getWitnesses([ids], function (err, result) {
+      this.deipRpc.api.getWitnesses([ids], (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getWitnessByAccount(account) {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getWitnessByAccount(account, function (err, result) {
+      this.deipRpc.api.getWitnessByAccount(account, (err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async getConfig() {
     return new Promise((resolve, reject) => {
-      deipRpc.api.getConfig(function (err, result) {
+      this.deipRpc.api.getConfig((err, result) => {
         if (err) {
-          return reject(err)
+          return reject(err);
         }
         resolve(result);
       });
-    })
+    });
   }
 
   async findBlocksByRange(startTime, endTime) {
-
     const props = await this.getDynamicGlobalProperties();
 
-    let block, lastBlock, firstBlock;
-    let upperBound, lowerBound, midpoint;
+    let block;
+    let lastBlock;
+    let firstBlock;
+    let upperBound;
+    let lowerBound;
+    let midpoint;
     let probe;
 
     lastBlock = props.head_block_number;
@@ -151,10 +173,10 @@ class BlockchainService extends Singleton {
       block = await this.getBlockHeader(probe);
       // console.log("block", probe, block['timestamp'])
 
-      if (block['timestamp'] < startTime) {
-        lowerBound = probe
-      } else if (block['timestamp'] > endTime) {
-        upperBound = probe
+      if (block.timestamp < startTime) {
+        lowerBound = probe;
+      } else if (block.timestamp > endTime) {
+        upperBound = probe;
       } else {
         midpoint = probe;
         break;
@@ -165,37 +187,36 @@ class BlockchainService extends Singleton {
 
     while (lowerBound + 1 < tooLarge) {
       probe = Math.floor((lowerBound + tooLarge) / 2);
-      block = await this.getBlockHeader(probe)
+      block = await this.getBlockHeader(probe);
       // console.log("block", probe, block['timestamp'])
-      if (block['timestamp'] <= startTime) {
-        lowerBound = probe
+      if (block.timestamp <= startTime) {
+        lowerBound = probe;
       } else {
-        tooLarge = probe
+        tooLarge = probe;
       }
     }
 
-    var tooSmall = midpoint;
+    let tooSmall = midpoint;
 
     while (tooSmall + 1 < upperBound) {
       probe = Math.floor((tooSmall + upperBound) / 2);
-      block = await this.getBlockHeader(probe)
+      block = await this.getBlockHeader(probe);
       // console.log("block", probe, block['timestamp'])
 
-      if (block['timestamp'] <= endTime) {
-        tooSmall = probe
+      if (block.timestamp <= endTime) {
+        tooSmall = probe;
       } else {
-        upperBound = probe
+        upperBound = probe;
       }
     }
 
-    firstBlock = await this.getBlockHeader(lowerBound)
+    firstBlock = await this.getBlockHeader(lowerBound);
     lastBlock = await this.getBlockHeader(upperBound - 1);
 
     // console.log("First block:", lowerBound, firstBlock['timestamp'])
     // console.log("Last block:", upperBound - 1, lastBlock['timestamp'])
-    return {first: {num: lowerBound, block: firstBlock}, last: {num: upperBound - 1, block: lastBlock}};
+    return { first: { num: lowerBound, block: firstBlock }, last: { num: upperBound - 1, block: lastBlock } };
   }
-
 }
 
 export {

@@ -2,10 +2,8 @@ class Singleton {
   static instance;
 
   static getInstance(...params) {
-    return this.instance ? this.instance : this.instance = new this(...params)
+    return this.instance ? this.instance : this.instance = new this(...params);
   }
-
-  constructor(...params) { /* sss */}
 }
 
-export { Singleton }
+export { Singleton };

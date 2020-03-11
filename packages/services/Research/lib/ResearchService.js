@@ -2,6 +2,7 @@ import deipRpc from '@deip/deip-oa-rpc-client';
 import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
 import { Singleton } from '@deip/toolbox';
+import { AppConfigService } from '@deip/app-config-service';
 import { researchContentTypes } from './lists';
 import { ResearchHttp } from './ResearchHttp';
 
@@ -11,6 +12,24 @@ class ResearchService extends Singleton {
   usersService = UsersService.getInstance();
 
   researchContentService = ResearchContentService.getInstance();
+
+  _deipRpcInstance;
+
+  get deipRpc() {
+    if (!this._deipRpcInstance) {
+      const env = AppConfigService.getInstance().get('env');
+
+      this._deipRpcInstance = deipRpc;
+
+      this._deipRpcInstance.api.setOptions({
+        url: env.DEIP_FULL_NODE_URL,
+        reconnectTimeout: 3000
+      });
+
+      this._deipRpcInstance.config.set('chain_id', env.CHAIN_ID);
+    }
+    return this._deipRpcInstance;
+  }
 
   getResearchContentEciHistoryRecords(researchContentId, disciplineId) {
     const RESEARCH_CONTENT_ECI_SOURCES = {
@@ -37,7 +56,7 @@ class ResearchService extends Singleton {
       return record;
     }
 
-    return deipRpc.api.getEciHistoryByContentAndDisciplineAsync(researchContentId, disciplineId)
+    return this.deipRpc.api.getEciHistoryByContentAndDisciplineAsync(researchContentId, disciplineId)
       .then((history) => history.map(mapResearchContentEciHistoryRecord));
   }
 
@@ -66,12 +85,12 @@ class ResearchService extends Singleton {
       return record;
     }
 
-    return deipRpc.api.getEciHistoryByResearchAndDisciplineAsync(researchId, disciplineId)
+    return this.deipRpc.api.getEciHistoryByResearchAndDisciplineAsync(researchId, disciplineId)
       .then((history) => history.map(mapResearchEciHistoryRecord));
   }
 
   async getResearchContentOuterReferences(researchContent, acc) {
-    const outerReferences = await deipRpc.api.getContentsReferToContentAsync(researchContent.id);
+    const outerReferences = await this.deipRpc.api.getContentsReferToContentAsync(researchContent.id);
 
     for (let i = 0; i < outerReferences.length; i++) {
       const item = outerReferences[i];
@@ -86,9 +105,9 @@ class ResearchService extends Singleton {
         research_content_reference_id: referenceResearchContentId
       } = payload;
 
-      const outerRefResearch = await deipRpc.api.getResearchByIdAsync(researchId);
-      const outerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(outerRefResearch.research_group_id);
-      const outerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
+      const outerRefResearch = await this.deipRpc.api.getResearchByIdAsync(researchId);
+      const outerRefResearchGroup = await this.deipRpc.api.getResearchGroupByIdAsync(outerRefResearch.research_group_id);
+      const outerRefResearchContent = await this.deipRpc.api.getResearchContentByIdAsync(researchContentId);
 
       const hash = outerRefResearchContent.content.split(':')[1];
       const ref = await this.researchContentService.getContentRefByHash(outerRefResearch.id, hash);
@@ -111,7 +130,7 @@ class ResearchService extends Singleton {
   }
 
   async getResearchContentInnerReferences(researchContent, acc) {
-    const innerReferences = await deipRpc.api.getContentReferencesAsync(researchContent.id);
+    const innerReferences = await this.deipRpc.api.getContentReferencesAsync(researchContent.id);
 
     for (let i = 0; i < innerReferences.length; i++) {
       const item = innerReferences[i];
@@ -126,9 +145,9 @@ class ResearchService extends Singleton {
         research_content_reference_id: referenceResearchContentId
       } = payload;
 
-      const innerRefResearch = await deipRpc.api.getResearchByIdAsync(referenceResearchId);
-      const innerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(innerRefResearch.research_group_id);
-      const innerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(referenceResearchContentId);
+      const innerRefResearch = await this.deipRpc.api.getResearchByIdAsync(referenceResearchId);
+      const innerRefResearchGroup = await this.deipRpc.api.getResearchGroupByIdAsync(innerRefResearch.research_group_id);
+      const innerRefResearchContent = await this.deipRpc.api.getResearchContentByIdAsync(referenceResearchContentId);
 
       const hash = innerRefResearchContent.content.split(':')[1];
       const ref = await this.researchContentService.getContentRefByHash(innerRefResearch.id, hash);
@@ -150,9 +169,9 @@ class ResearchService extends Singleton {
   }
 
   async getResearchContentReferencesGraph(researchContentId) {
-    const researchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
-    const research = await deipRpc.api.getResearchByIdAsync(researchContent.research_id);
-    const researchGroup = await deipRpc.api.getResearchGroupByIdAsync(research.research_group_id);
+    const researchContent = await this.deipRpc.api.getResearchContentByIdAsync(researchContentId);
+    const research = await this.deipRpc.api.getResearchByIdAsync(researchContent.research_id);
+    const researchGroup = await this.deipRpc.api.getResearchGroupByIdAsync(research.research_group_id);
 
     const hash = researchContent.content.split(':')[1];
     const ref = await this.researchContentService.getContentRefByHash(research.id, hash);

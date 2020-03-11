@@ -4,16 +4,12 @@ import { Singleton } from '@deip/toolbox';
 class AuthHttp extends Singleton {
   http = HttpService.getInstance();
 
-  constructor() {
-    super();
-  }
-
   signIn(model) {
     return this.http.post('/auth/sign-in/', model);
   }
 
   preliminaryRegistration(model) {
-    return this.http.post('/preliminary-registration', model, {baseURL: `${registrationCommitteeUrl}/api`});
+    return this.http.post('/preliminary-registration', model, { baseURL: `${registrationCommitteeUrl}/api` });
   }
 
   signUp(model) {
@@ -23,4 +19,4 @@ class AuthHttp extends Singleton {
 
 export {
   AuthHttp
-}
+};

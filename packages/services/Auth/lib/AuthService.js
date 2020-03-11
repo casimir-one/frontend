@@ -1,14 +1,8 @@
-import { AuthHttp } from "./AuthHttp";
 import { Singleton } from '@deip/toolbox';
+import { AuthHttp } from './AuthHttp';
 
-class AuthService extends Singleton  {
+class AuthService extends Singleton {
   $http = AuthHttp.getInstance();
-
-  constructor() {
-    super();
-
-    console.log('Auth', 'constructed');
-  }
 
   signIn(model) {
     return this.$http.signIn(model);
@@ -25,4 +19,4 @@ class AuthService extends Singleton  {
 
 export {
   AuthService
-}
+};

@@ -22,5 +22,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/deip-oa-rpc-client": "1.0.23",
     "@deip/toolbox": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@deip/app-config-service": "^1.0.0"
   }
 }
