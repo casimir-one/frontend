@@ -5,5 +5,23 @@
     "packages/services/*",
     "packages/utilities/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "npmClient": "npm",
+  "command": {
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore: Publish",
+      "ignoreChanges": [
+        "**/__fixtures__/**",
+        "**/__tests__/**",
+        "**/*.md"
+      ],
+      "includeMergedTags": true,
+      "allowBranch": ["publish/*"]
+    },
+    "publish": { },
+    "bootstrap": {
+      "npmClientArgs": ["--no-package-lock"]
+    }
+  }
 }
