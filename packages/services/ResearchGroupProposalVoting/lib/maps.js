@@ -35,10 +35,10 @@ const schemasMap = {
     hard_cap: hardCap
   }),
 
-  [PROPOSAL_TYPES.CHANGE_QUORUM]: (researchGroupId, proposalType, quorumPercent) => ({
+  [PROPOSAL_TYPES.CHANGE_QUORUM]: (researchGroupId, action, quorum) => ({
     research_group_id: researchGroupId,
-    proposal_type: proposalType,
-    quorum_percent: quorumPercent
+    action: action,
+    quorum: quorum
   }),
 
   [PROPOSAL_TYPES.CREATE_RESEARCH_MATERIAL]: (researchId, type, title, permlink, content, authors, references, externalReferences) => ({

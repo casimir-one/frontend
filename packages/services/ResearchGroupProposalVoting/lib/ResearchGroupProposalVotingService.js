@@ -159,8 +159,8 @@ class ResearchGroupProposalVotingService extends Singleton {
   createChangeQuorumProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.CHANGE_QUORUM, [
       propData.groupId,
-      propData.proposalType,
-      propData.quorumPercent
+      propData.action,
+      propData.quorum
     ]);
 
     return deipRpc.broadcast.createProposalAsync(
