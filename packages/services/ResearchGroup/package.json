@@ -22,7 +22,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "^1.0.1",
     "@deip/blockchain-service": "^1.0.3",
-    "@deip/deip-oa-rpc-client": "1.0.23",
+    "@deip/deip-oa-rpc-client": "1.0.25",
     "@deip/http-service": "^1.0.1",
     "@deip/research-content-service": "^1.0.1",
     "@deip/toolbox": "^0.1.1",

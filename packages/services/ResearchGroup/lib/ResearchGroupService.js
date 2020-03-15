@@ -38,19 +38,19 @@ class ResearchGroupService extends Singleton {
 
   // /////////////////
 
-  createResearchGroup(name, permlink, description, quorumPercent, proposalQuorums, invitees) {
-    const group = {
+  createResearchGroup({ name, permlink, description, type, details, isCreatedByOrganization, invitees }) {
+    const researchGroupOpPayload = {
       creator: this.accessService.getDecodedToken().username,
       name,
       permlink,
       description,
-      quorum_percent: quorumPercent,
-      proposal_quorums: proposalQuorums,
-      is_dao: true,
+      type,
+      details,
+      is_created_by_organization: isCreatedByOrganization,
       invitees
     };
 
-    const operation = ['create_research_group', group];
+    const operation = ['create_research_group', researchGroupOpPayload];
     return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
       .then((signedTx) => this.researchGroupHttp.sendCreateGroup(signedTx));
   }
