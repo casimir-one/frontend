@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-group-proposal-voting-service",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -21,9 +21,9 @@
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "^1.0.1",
-    "@deip/blockchain-service": "^1.0.1",
+    "@deip/blockchain-service": "^1.0.3",
     "@deip/http-service": "^1.0.1",
-    "@deip/research-group-service": "^1.0.3",
+    "@deip/research-group-service": "^1.0.4",
     "@deip/toolbox": "^0.1.1"
   },
   "peerDependencies": {
