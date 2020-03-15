@@ -972,26 +972,36 @@ export default [{
     ]
 },
 
-// Organization
+// Organizational contracts
 {
     "api": "database_api",
-    "method": "get_organisation",
+    "method": "get_organizational_contract",
     "params": [
         "id"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_organisation_by_permlink",
+    "method": "get_organizational_contract_by_organization_and_research_group_and_type",
     "params": [
-        "permlink"
+        "organization_id",
+        "research_group_id",
+        "type"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_organisations",
+    "method": "get_organizational_contracts_by_research_group",
     "params": [
+      "research_group_id"
     ]
+},
+{
+  "api": "database_api",
+  "method": "get_organizational_contracts_by_organization",
+  "params": [
+    "organization_id"
+  ]
 },
 
 // Assets

@@ -135,9 +135,9 @@ module.exports = [{
         "name",
         "permlink",
         "description",
-        "quorum_percent",
-        "proposal_quorums",
-        "is_dao",
+        "type",
+        "details",
+        "is_created_by_organization",
         "invitees"
     ]
 }, {

@@ -74,9 +74,9 @@ const Serializer = function (operation_name, serilization_types_object) {
 }
 
 const invitee = new Serializer("invitee", {
-    account: string,
-    research_group_tokens_in_percent: uint32,
-    cover_letter: string
+  account: string,
+  rgt: uint32,
+  notes: string
 });
 
 const expertise_amount_pair_type = new Serializer("expertise_amount_pair_type", {
@@ -281,15 +281,57 @@ var create_discipline_supply = new Serializer("create_discipline_supply", {
     content_hash: string
 });
 
-var create_research_group = new Serializer("create_research_group", {
-    creator: string,
-    name: string,
-    permlink: string,
-    description: string,
-    quorum_percent: uint32,
-    proposal_quorums: map((uint16), (uint32)),
-    is_dao: bool,
-    invitees: set(invitee)
+const base_research_group_management_model = {
+  version: string
+}
+
+const dao_voting_research_group_management_model_v1_0_0 = new Serializer("dao_voting_research_group_management_model_v1_0_0",
+  Object.assign({}, base_research_group_management_model, {
+    default_quorum: uint32,
+    action_quorums: map((uint16), (uint32))
+  })
+);
+
+const dao_multisig_research_group_management_model_v1_0_0 = new Serializer("dao_multisig_research_group_management_model_v1_0_0",
+  Object.assign({}, base_research_group_management_model, {
+    default_threshold: uint32,
+    action_thresholds: map((uint16), (uint32))
+  })
+);
+
+const centralized_research_group_management_model_v1_0_0 = new Serializer("centralized_research_group_management_model_v1_0_0",
+  Object.assign({}, base_research_group_management_model, {
+    heads: set(string)
+  })
+);
+
+const base_organizational_contract = {
+  version: string
+}
+
+const organization_division_contract_v1_0_0 = new Serializer("organization_division_contract_v1_0_0",
+  Object.assign({}, base_organizational_contract, {
+    organization_id: int64,
+    unilateral_termination_allowed: bool,
+    organization_agents: set(invitee),
+    notes: string
+  })
+);
+
+const create_research_group = new Serializer("create_research_group", {
+  creator: string,
+  name: string,
+  permlink: string,
+  description: string,
+  type: uint32,
+  details: array(static_variant([
+    dao_voting_research_group_management_model_v1_0_0,
+    dao_multisig_research_group_management_model_v1_0_0,
+    centralized_research_group_management_model_v1_0_0,
+    organization_division_contract_v1_0_0
+  ])),
+  is_created_by_organization: bool,
+  invitees: set(invitee)
 });
 
 var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
