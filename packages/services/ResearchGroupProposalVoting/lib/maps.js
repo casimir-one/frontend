@@ -2,8 +2,7 @@ import { PROPOSAL_TYPES } from '@deip/research-group-service';
 
 const schemasMap = {
 
-  [PROPOSAL_TYPES.START_RESEARCH]: (researchGroupId, title, abstract, permlink, reviewShareInPercent, dropoutCompensationInPercent, disciplines, isPrivate) => ({
-    research_group_id: researchGroupId,
+  [PROPOSAL_TYPES.START_RESEARCH]: (title, abstract, permlink, reviewShareInPercent, dropoutCompensationInPercent, disciplines, isPrivate) => ({
     title,
     abstract,
     permlink,
@@ -13,15 +12,14 @@ const schemasMap = {
     is_private: isPrivate
   }),
 
-  [PROPOSAL_TYPES.INVITE_MEMBER]: (researchGroupId, name, researchGroupTokenAmount, coverLetter) => ({
-    research_group_id: researchGroupId,
+  [PROPOSAL_TYPES.INVITE_MEMBER]: (name, researchGroupTokenAmount, coverLetter, isHead) => ({
     name,
     research_group_token_amount_in_percent: researchGroupTokenAmount,
-    cover_letter: coverLetter
+    cover_letter: coverLetter,
+    is_head: isHead
   }),
 
-  [PROPOSAL_TYPES.SEND_FUNDS]: (researchGroupId, recipient, funds) => ({
-    research_group_id: researchGroupId,
+  [PROPOSAL_TYPES.SEND_FUNDS]: (recipient, funds) => ({
     recipient,
     funds
   }),
@@ -35,8 +33,7 @@ const schemasMap = {
     hard_cap: hardCap
   }),
 
-  [PROPOSAL_TYPES.CHANGE_QUORUM]: (researchGroupId, action, quorum) => ({
-    research_group_id: researchGroupId,
+  [PROPOSAL_TYPES.CHANGE_QUORUM]: (action, quorum) => ({
     action: action,
     quorum: quorum
   }),
@@ -52,8 +49,7 @@ const schemasMap = {
     external_references: externalReferences
   }),
 
-  [PROPOSAL_TYPES.CHANGE_RESEARCH_GROUP_META_DATA_TYPE]: (researchGroupId, newResearchGroupName, newResearchGroupDescription) => ({
-    research_group_id: researchGroupId,
+  [PROPOSAL_TYPES.CHANGE_RESEARCH_GROUP_META_DATA_TYPE]: (newResearchGroupName, newResearchGroupDescription) => ({
     research_group_name: newResearchGroupName,
     research_group_description: newResearchGroupDescription
   }),
