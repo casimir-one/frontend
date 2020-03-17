@@ -73,7 +73,10 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createInviteProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.INVITE_MEMBER, [
-      propData.groupId, propData.invitee, propData.rgtAmount, propData.coverLetter
+      propData.invitee, 
+      propData.rgtAmount, 
+      propData.coverLetter,
+      propData.isHead
     ]);
 
     const proposal = {
@@ -109,7 +112,6 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createSendFundsProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.SEND_FUNDS, [
-      propData.groupId,
       propData.recipient,
       propData.funds
     ]);
@@ -133,7 +135,6 @@ class ResearchGroupProposalVotingService extends Singleton {
     };
 
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.START_RESEARCH, [
-      propData.groupId,
       propData.title,
       propData.description,
       propData.permlink,
@@ -158,7 +159,6 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createChangeQuorumProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.CHANGE_QUORUM, [
-      propData.groupId,
       propData.action,
       propData.quorum
     ]);
@@ -175,7 +175,6 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createChangeGroupNameAndDescriptionProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.CHANGE_RESEARCH_GROUP_META_DATA_TYPE, [
-      propData.groupId,
       propData.newResearchGroupName,
       propData.newResearchGroupDescription
     ]);
@@ -192,7 +191,7 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createChangeResearchNameAndDescriptionProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.CHANGE_RESEARCH_META_DATA_TYPE, [
-      propData.researchIds.id,
+      propData.researchId,
       propData.newResearchTitle,
       propData.newResearchAbstract,
       propData.isPrivate
@@ -201,7 +200,7 @@ class ResearchGroupProposalVotingService extends Singleton {
     return deipRpc.broadcast.createProposalAsync(
       this.accessService.getOwnerWif(),
       this.accessService.getDecodedToken().username,
-      propData.researchIds.researchGroupId,
+      propData.researchGroupId,
       data,
       PROPOSAL_TYPES.CHANGE_RESEARCH_META_DATA_TYPE,
       this._getProposalExpirationTime()
