@@ -3,7 +3,7 @@ import { createEnum } from '@deip/toolbox';
 const PROPOSAL_TYPES = createEnum({
   START_RESEARCH: 1,
   INVITE_MEMBER: 2,
-  DROPOUT_MEMBER: 3,
+  EXCLUDE_MEMBER: 3,
   SEND_FUNDS: 4,
   START_RESEARCH_TOKEN_SALE: 5,
   REBALANCE_RESEARCH_GROUP_TOKENS: 6,
