@@ -1,4 +1,4 @@
-import deipRpc from '@deip/deip-oa-rpc-client';
+import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
 import { ACTIONS_MAP } from './constants';

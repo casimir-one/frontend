@@ -1,6 +1,6 @@
+import deipRpc from '@deip/rpc-client';
 import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
-import { ConfigMiddleware } from './ConfigMiddleware';
 import { PROPOSAL_TYPES } from './constants';
 
 const researchContentService = ResearchContentService.getInstance();
@@ -20,7 +20,7 @@ const extenderMap = {
   [PROPOSAL_TYPES.START_RESEARCH_TOKEN_SALE]: undefined,
 
   [PROPOSAL_TYPES.CREATE_RESEARCH_MATERIAL]: {
-    research: (proposal) => ConfigMiddleware.getInstance().deipRpc.api.getResearchByIdAsync(proposal.data.research_id),
+    research: (proposal) => deipRpc.api.getResearchByIdAsync(proposal.data.research_id),
     draftContent: (proposal) => /* refact */ researchContentService.getContentRefByHash(proposal.data.research_id, proposal.data.content.split(':')[1])
   }
 };

@@ -1,6 +1,6 @@
 {
   "name": "@deip/app-config-service",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,6 +20,6 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@deip/toolbox": "^0.1.1"
+    "@deip/toolbox": "1.0.0"
   }
 }
