@@ -92,8 +92,8 @@ class ResearchGroupProposalVotingService extends Singleton {
       .then((signedTx) => this.researchGroupProposalVotingHttp.sendInviteProposal(signedTx));
   }
 
-  createDropoutProposal(propData) {
-    const data = this._getStringifiedProposalData(PROPOSAL_TYPES.DROPOUT_MEMBER, [
+  createExcludeProposal(propData) {
+    const data = this._getStringifiedProposalData(PROPOSAL_TYPES.EXCLUDE_MEMBER, [
       propData.name
     ]);
 
@@ -101,13 +101,13 @@ class ResearchGroupProposalVotingService extends Singleton {
       creator: this.accessService.getDecodedToken().username,
       research_group_id: propData.groupId,
       data,
-      action: PROPOSAL_TYPES.DROPOUT_MEMBER,
+      action: PROPOSAL_TYPES.EXCLUDE_MEMBER,
       expiration_time: this._getProposalExpirationTime()
     };
 
     const operation = ['create_proposal', proposal];
     return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
-      .then((signedTx) => this.researchGroupProposalVotingHttp.sendInviteProposal(signedTx));
+      .then((signedTx) => this.researchGroupProposalVotingHttp.sendExcludeProposal(signedTx));
   }
 
   createSendFundsProposal(propData) {

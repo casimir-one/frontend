@@ -20,6 +20,10 @@ class ResearchGroupProposalVotingHttp extends Singleton {
     return this.http.post('/api/proposals/invite', tx);
   }
 
+  sendExcludeProposal(tx) {
+    return this.http.post('/api/proposals/exclude', tx);
+  }
+
   sendTokenSaleProposal(tx) {
     return this.http.post('/api/proposals/token-sale', tx);
   }

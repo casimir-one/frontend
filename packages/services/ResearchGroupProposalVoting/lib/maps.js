@@ -61,7 +61,7 @@ const schemasMap = {
     is_private: isPrivate
   }),
 
-  [PROPOSAL_TYPES.DROPOUT_MEMBER]: (name) => ({
+  [PROPOSAL_TYPES.EXCLUDE_MEMBER]: (name) => ({
     name
   })
 

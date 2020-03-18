@@ -119,8 +119,8 @@ class ResearchGroupService extends Singleton {
     return this._proposalMethod().createInviteProposal(data);
   }
 
-  createDropoutProposal(data) {
-    return this._proposalMethod().createDropoutProposal(data);
+  createExcludeProposal(data) {
+    return this._proposalMethod().createExcludeProposal(data);
   }
 
   createSendFundsProposal(data) {
