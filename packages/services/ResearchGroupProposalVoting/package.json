@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-group-proposal-voting-service",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,7 +23,7 @@
     "@deip/access-service": "^1.0.1",
     "@deip/blockchain-service": "^1.0.3",
     "@deip/http-service": "^1.0.1",
-    "@deip/research-group-service": "^1.0.5",
+    "@deip/research-group-service": "^1.0.6",
     "@deip/toolbox": "^0.1.1"
   },
   "peerDependencies": {
