@@ -22,9 +22,9 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "1.0.0",
     "@deip/blockchain-service": "1.0.0",
-    "@deip/rpc-client": "1.0.0",
     "@deip/http-service": "1.0.0",
     "@deip/research-content-service": "1.0.0",
+    "@deip/rpc-client": "1.0.0",
     "@deip/toolbox": "1.0.0",
     "@deip/users-service": "1.0.0",
     "lodash": "^4.17.5"
