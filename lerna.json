@@ -10,13 +10,14 @@
   "command": {
     "version": {
       "conventionalCommits": true,
-      "message": "chore: Publish",
+      "message": "chore: publish %s",
       "ignoreChanges": [
         "**/__fixtures__/**",
         "**/__tests__/**",
         "**/*.md"
       ],
-      "includeMergedTags": true
+      "includeMergedTags": true,
+      "allowBranch": ["publish/*"]
     },
     "publish": {},
     "bootstrap": {

@@ -59,7 +59,7 @@ Otherwise, it will take a lot of work to roll back.
     console.info(`${chalk.green.bold('✔')} Origin is clean. Continue...`);
 
     await execa.command(`git checkout -b ${publishBranch}`);
-    await execa.command('npx lerna version --no-push', { stdio: 'inherit', shell: true });
+    await execa.command('npx lerna version --no-push --exact', { stdio: 'inherit', shell: true });
     await execa.command('npx lerna publish from-git', { stdio: 'inherit', shell: true });
     await execa.command(`git push --tags origin ${publishBranch}`);
 
