@@ -1,11 +1,11 @@
 import _ from 'lodash';
+import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 
 import { ResearchGroupHttp } from './ResearchGroupHttp';
-import { ConfigMiddleware } from './ConfigMiddleware';
 
 import { extenderMap } from './maps';
 
@@ -16,13 +16,7 @@ class ResearchGroupService extends Singleton {
 
   blockchainService = BlockchainService.getInstance();
 
-  ConfigMiddleware = ConfigMiddleware.getInstance();
-
   _methods = {};
-
-  get deipRpc() {
-    return this.ConfigMiddleware.deipRpc;
-  }
 
   setMethods(methods) {
     this._methods = { ...this._methods, ...methods };
@@ -56,12 +50,12 @@ class ResearchGroupService extends Singleton {
   }
 
   getAllResearchGroups(withPersonal = false) {
-    return this.deipRpc.api.getAllResearchGroupsAsync(withPersonal)
+    return deipRpc.api.getAllResearchGroupsAsync(withPersonal)
       .then((groupsList) => groupsList.map(this._mapResearchGroup));
   }
 
   getResearchGroupById(groupId) {
-    return this.deipRpc.api.getResearchGroupByIdAsync(groupId)
+    return deipRpc.api.getResearchGroupByIdAsync(groupId)
       .then(this._mapResearchGroup);
   }
 

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import deipRpc from '@deip/deip-oa-rpc-client';
+import deipRpc from '@deip/rpc-client';
 
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
@@ -73,8 +73,8 @@ class ResearchGroupProposalVotingService extends Singleton {
 
   createInviteProposal(propData) {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.INVITE_MEMBER, [
-      propData.invitee, 
-      propData.rgtAmount, 
+      propData.invitee,
+      propData.rgtAmount,
       propData.coverLetter,
       propData.isHead
     ]);

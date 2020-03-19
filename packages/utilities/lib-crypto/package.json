@@ -1,0 +1,19 @@
+{
+    "name": "@deip/lib-crypto",
+    "version": "1.0.0",
+    "description": "Common javascript cryptographic utilities. Based on sjcl.",
+    "main": "lib/crypto.js",
+    "scripts": {
+        "prepublish": "./scripts/build.js",
+        "clean": "rm -Rf lib",
+        "fmt": "prettier --write '{src,scripts}/**/*.js' && eslint '{src,scripts}/**/*.js'",
+        "build": "./scripts/build.js",
+        "sjcl-test": "./scripts/test.js",
+        "test": "./scripts/build.js && ./scripts/test.js && ./scripts/test.js && tape 'test/*.test.js'"
+    },
+    "devDependencies": {
+        "eslint": "^4.10.0",
+        "prettier": "~1.8.2",
+        "tape": "^4.8.0"
+    }
+}

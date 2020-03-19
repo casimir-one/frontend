@@ -1,32 +1,14 @@
-import deipRpc from '@deip/deip-oa-rpc-client';
+import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
-import { AppConfigService } from '@deip/app-config-service';
 
 class BlockchainService extends Singleton {
-  _deipRpcInstance;
-
-  get deipRpc() {
-    if (!this._deipRpcInstance) {
-      const env = AppConfigService.getInstance().get('env');
-
-      this._deipRpcInstance = deipRpc;
-
-      this._deipRpcInstance.api.setOptions({
-        url: env.DEIP_FULL_NODE_URL,
-        reconnectTimeout: 3000
-      });
-
-      this._deipRpcInstance.config.set('chain_id', env.CHAIN_ID);
-    }
-    return this._deipRpcInstance;
-  }
 
   signOperation(operation, ownerKey) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getDynamicGlobalProperties((err, result) => {
+      deipRpc.api.getDynamicGlobalProperties((err, result) => {
         if (!err) {
           const BlockNum = (result.last_irreversible_block_num - 1) & 0xFFFF;
-          this.deipRpc.api.getBlockHeader(result.last_irreversible_block_num, (e, res) => {
+          deipRpc.api.getBlockHeader(result.last_irreversible_block_num, (e, res) => {
             // TODO: switch to Buffer.from()
             const BlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
             const now = new Date().getTime() + 3e6;
@@ -41,7 +23,7 @@ class BlockchainService extends Singleton {
             };
 
             try {
-              const signedTX = this.deipRpc.auth.signTransaction(unsignedTX, { owner: ownerKey });
+              const signedTX = deipRpc.auth.signTransaction(unsignedTX, { owner: ownerKey });
               resolve(signedTX);
             } catch (err) {
               reject(err);
@@ -54,7 +36,7 @@ class BlockchainService extends Singleton {
 
   async getTransaction(trxId) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getTransaction(trxId, (err, result) => {
+      deipRpc.api.getTransaction(trxId, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -65,7 +47,7 @@ class BlockchainService extends Singleton {
 
   async getTransactionHex(trx) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getTransactionHex(trx, (err, result) => {
+      deipRpc.api.getTransactionHex(trx, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -76,7 +58,7 @@ class BlockchainService extends Singleton {
 
   async getBlock(blockNum) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getBlock(blockNum, (err, result) => {
+      deipRpc.api.getBlock(blockNum, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -87,7 +69,7 @@ class BlockchainService extends Singleton {
 
   async getBlockHeader(blockNum) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getBlockHeader(blockNum, (err, result) => {
+      deipRpc.api.getBlockHeader(blockNum, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -98,7 +80,7 @@ class BlockchainService extends Singleton {
 
   async getDynamicGlobalProperties() {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getDynamicGlobalProperties((err, result) => {
+      deipRpc.api.getDynamicGlobalProperties((err, result) => {
         if (err) {
           return reject(err);
         }
@@ -109,7 +91,7 @@ class BlockchainService extends Singleton {
 
   async getChainProperties() {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getChainProperties((err, result) => {
+      deipRpc.api.getChainProperties((err, result) => {
         if (err) {
           return reject(err);
         }
@@ -120,7 +102,7 @@ class BlockchainService extends Singleton {
 
   async getWitnesses([ids]) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getWitnesses([ids], (err, result) => {
+      deipRpc.api.getWitnesses([ids], (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -131,7 +113,7 @@ class BlockchainService extends Singleton {
 
   async getWitnessByAccount(account) {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getWitnessByAccount(account, (err, result) => {
+      deipRpc.api.getWitnessByAccount(account, (err, result) => {
         if (err) {
           return reject(err);
         }
@@ -142,7 +124,7 @@ class BlockchainService extends Singleton {
 
   async getConfig() {
     return new Promise((resolve, reject) => {
-      this.deipRpc.api.getConfig((err, result) => {
+      deipRpc.api.getConfig((err, result) => {
         if (err) {
           return reject(err);
         }
