@@ -11,22 +11,39 @@ class ResearchContentReviewsService extends Singleton {
 
   researchContentReviewsHttp = ResearchContentReviewsHttp.getInstance();
 
-  getAssessmentCriteria(typeCode) {
+  getAssessmentCriteriasForResearchContent(typeCode) {
     return assessmentCriterias[typeCode] || assessmentCriterias.default;
   }
 
-  makeReview(researchContentId, isPositive, text) {
+  makeReview(author, researchContentId, text, weight, assessment, extensions) {
     const review = {
-      author: this.accessService.getDecodedToken().username,
+      author: author,
       research_content_id: researchContentId,
-      is_positive: isPositive,
       content: text,
-      weight: 10000
+      weight: weight,
+      assessment_model: assessment,
+      extensions: extensions
     };
 
     const operation = ['make_review', review];
     return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
       .then((signedTx) => this.researchContentReviewsHttp.sendMakeReviewOp(signedTx));
+  }
+ 
+  getReviewRequestsByExpert(username, status) {
+    return this.researchContentReviewsHttp.getReviewRequestsByExpert(username, status);
+  }
+
+  getReviewRequestsByRequestor(username, status) {
+    return this.researchContentReviewsHttp.getReviewRequestsByRequestor(username, status);
+  }
+
+  createReviewRequest(data) {
+    return this.researchContentReviewsHttp.createReviewRequest(data);
+  }
+
+  denyReviewRequest(id) {
+    return this.researchContentReviewsHttp.denyReviewRequest(id);
   }
 }
 

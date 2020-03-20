@@ -370,12 +370,32 @@ var vote_proposal = new Serializer("vote_proposal", {
     research_group_id: int64
 });
 
-var make_review = new Serializer("make_review", {
+const base_assessment_model = {
+  version: string
+}
+
+const binary_scoring_assessment_model_v1_0_0 = new Serializer("binary_scoring_assessment_model_v1_0_0",
+  Object.assign({}, base_assessment_model, {
+    is_positive: bool
+  })
+);
+
+const multicriteria_scoring_assessment_model_v1_0_0 = new Serializer("multicriteria_scoring_assessment_model_v1_0_0",
+  Object.assign({}, base_assessment_model, {
+    scores: map((uint16), (uint16))
+  })
+);
+
+const make_review = new Serializer("make_review", {
     author: string,
     research_content_id: int64,
     content: string,
-    is_positive: bool,
-    weight: uint16
+    weight: uint16,
+    assessment_model: static_variant([
+      binary_scoring_assessment_model_v1_0_0,
+      multicriteria_scoring_assessment_model_v1_0_0
+    ]),
+    extensions: set(future_extensions)
 });
 
 var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
