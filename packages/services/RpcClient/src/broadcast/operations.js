@@ -181,8 +181,9 @@ module.exports = [{
         "author",
         "research_content_id",
         "content",
-        "is_positive",
-        "weight"
+        "weight",
+        "assessment_model",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
