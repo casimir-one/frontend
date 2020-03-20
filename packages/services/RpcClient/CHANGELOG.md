@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 1.1.0 (2020-03-20)
+
+
+### Features
+
+* **@deip/research-content-reviews-service:** generic assessment model for review ([7e543e2](https://gitlab.com/DEIP/deip-rpc/commit/7e543e224f93ada160f2c91a133db0cba5c0f5b2))
+
+
+
+
+
 # 1.0.0 (2020-03-19)
 
 **Note:** Version bump only for package @deip/rpc-client
