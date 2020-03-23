@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.1.0...v1.2.0) (2020-03-23)
+
+
+### Features
+
+* **@deip/grants-service:** funding opportunity announcements ([be9a4dd](https://gitlab.com/DEIP/deip-client-modules/commit/be9a4dd54f738088f8bf9109532b3033923d15a6))
+
+
+
+
+
 # 1.1.0 (2020-03-20)
 
 
