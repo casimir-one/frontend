@@ -487,16 +487,45 @@ var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "total_common_tokens_amount": int64
 });
 
-var create_grant = new Serializer("create_grant", {
-    "target_discipline": int64,
+const base_grant_contract_model = {
+  version: string
+}
+
+const announced_application_window_contract_v1_0_0 = new Serializer("announced_application_window_contract_v1_0_0",
+  Object.assign({}, base_grant_contract_model, {
+    review_committee_id: int64,
+    min_number_of_positive_reviews: uint16,
+    min_number_of_applications: uint16,
+    max_number_of_research_to_grant: uint16,
+    start_date: time_point_sec,
+    end_date: time_point_sec
+  })
+);
+
+const funding_opportunity_announcement_contract_v1_0_0 = new Serializer("funding_opportunity_announcement_contract_v1_0_0",
+  Object.assign({}, base_grant_contract_model, {
+    organization_id: int64,
+    review_committee_id: int64,
+    funding_opportunity_number: string,
+    award_ceiling: asset,
+    award_floor: asset,
+    expected_number_of_awards: uint16,
+    open_date: time_point_sec,
+    close_date: time_point_sec,
+    officers: set(string),
+    additional_info: map((string), (string))
+  })
+);
+
+const create_grant = new Serializer("create_grant", {
+    "grantor": string,
     "amount": asset,
-    "min_number_of_positive_reviews": int16,
-    "min_number_of_applications": int16,
-    "max_number_of_researches_to_grant": int16,
-    "start_time": time_point_sec,
-    "end_time": time_point_sec,
-    "owner": string,
-    "officers": set(string)
+    "type": uint16,
+    "target_disciplines": set(int64),
+    "details": array(static_variant([
+      announced_application_window_contract_v1_0_0,
+      funding_opportunity_announcement_contract_v1_0_0
+    ]))
 });
 
 var create_grant_application = new Serializer("create_grant_application", {
@@ -522,39 +551,6 @@ var approve_grant_application = new Serializer("approve_grant_application", {
 var reject_grant_application = new Serializer("reject_grant_application", {
     "grant_application_id": int64,
     "rejector": string
-});
-
-var create_funding_opportunity = new Serializer("create_funding_opportunity", {
-    "funding_opportunity_number": string,
-    "funding_opportunity_title": string,
-
-    "eligible_applicants": string,
-    "additional_info_of_eligibility": string,
-
-    "agency_name": string,
-    "description": string,
-    "link_to_additional_info": string,
-    "grantor_contact_info": string,
-
-    "target_discipline": int64,
-
-    "amount": int64,
-    "award_ceiling": int64,
-    "award_floor": int64,
-    "asset_symbol": string,
-
-    "owner": string,
-    "officers": set(string),
-
-    "min_number_of_positive_reviews": int16,
-    "min_number_of_applications": int16,
-
-    "expected_number_of_awards": int16,
-
-    "open_date": time_point_sec,
-    "close_date": time_point_sec,
-
-    "review_committee_id": int64
 });
 
 var create_funding = new Serializer("create_funding", {

@@ -150,15 +150,6 @@ class ResearchGroupService extends Singleton {
   approveProposal(data) {
     return this._proposalMethod().approveProposal(data);
   }
-
-  // /////////////////
-
-  validateQuorumValue(value) {
-    const intValue = parseInt(value);
-    const isNumber = _.isFinite(intValue);
-
-    return !isNumber || (isNumber && (intValue > 100 || intValue < 5));
-  }
 }
 
 export {

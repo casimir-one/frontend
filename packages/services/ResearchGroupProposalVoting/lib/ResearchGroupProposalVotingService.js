@@ -211,7 +211,7 @@ class ResearchGroupProposalVotingService extends Singleton {
     const data = this._getStringifiedProposalData(PROPOSAL_TYPES.CREATE_RESEARCH_MATERIAL, [
       propData.contentRef.researchId, propData.contentType, propData.contentRef.title,
       propData.contentRef.title.replace(/ /g, '-').replace(/_/g, '-').toLowerCase(),
-      `${propData.contentRef.type}:${propData.contentRef.hash}`, propData.contentRef.authors, propData.contentRef.references, []
+      `${propData.contentRef.type}:${propData.contentRef.hash}`, propData.contentRef.authors, propData.contentRef.references, propData.contentRef.external_references
     ]);
 
     const proposal = {
