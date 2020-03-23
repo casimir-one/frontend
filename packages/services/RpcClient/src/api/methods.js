@@ -763,57 +763,60 @@ export default [{
     ]
 },
 // Grants
+
+/* FOA */
 {
-    "api": "database_api",
-    "method": "get_funding_opportunity",
-    "params": [
-        "id"
-    ]
+  "api": "database_api",
+  "method": "get_funding_opportunity_announcement",
+  "params": [
+    "id",
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_opportunities_by_target_discipline",
-    "params": [
-        "discipline_id"
-    ]
+  "api": "database_api",
+  "method": "get_funding_opportunity_announcement_by_number",
+  "params": [
+    "number",
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_opportunities",
-    "params": [
-        "account_names"
-    ]
+  "api": "database_api",
+  "method": "get_funding_opportunity_announcements_by_grantor",
+  "params": [
+    "names",
+  ]
 },
 {
-    "api": "database_api",
-    "method": "lookup_funding_opportunity_owners",
-    "params": [
-        "lower_bound_name",
-        "limit"
-    ]
+  "api": "database_api",
+  "method": "get_funding_opportunity_announcements_by_organization",
+  "params": [
+    "research_group_id",
+  ]
+},
+
+/* Grants with announced application window */
+{
+  "api": "database_api",
+  "method": "get_funding_opportunity_announcements_listing",
+  "params": [
+    "page",
+    "limit"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_opportunities_by_agency_name",
-    "params": [
-        "agency_name"
-    ]
+  "api": "database_api",
+  "method": "get_grant_with_announced_application_window",
+  "params": [
+    "id"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_opportunities_by_opportunity_number",
-    "params": [
-        "funding_opportunity_number"
-    ]
+  "api": "database_api",
+  "method": "get_grants_with_announced_application_window_by_grantor",
+  "params": [
+    "grantor"
+  ]
 },
-{
-    "api": "database_api",
-    "method": "get_all_funding_opportunity_listing",
-    "params": [
-        "limit"
-    ]
-},
-// Grant applications
 {
     "api": "database_api",
     "method": "get_grant_application",
