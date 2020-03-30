@@ -9,66 +9,7 @@ class ResearchService extends Singleton {
   researchHttp = ResearchHttp.getInstance();
 
   usersService = UsersService.getInstance();
-
   researchContentService = ResearchContentService.getInstance();
-
-  getResearchContentEciHistoryRecords(researchContentId, disciplineId) {
-    const RESEARCH_CONTENT_ECI_SOURCES = {
-      1: { type: 'review', text: 'Review added' },
-      2: { type: 'vote_for_review', text: 'Review supported' },
-      3: { type: 'init', text: 'Material uploaded' }
-    };
-
-    function mapResearchContentEciHistoryRecord(item) {
-      const source = item.op[1];
-      const record = {
-        researchContentId: source.research_content_id,
-        disciplineId: source.discipline_id,
-        newAmount: source.new_eci_amount,
-        delta: source.delta,
-        action: RESEARCH_CONTENT_ECI_SOURCES[source.action].type,
-        actionText: RESEARCH_CONTENT_ECI_SOURCES[source.action].text,
-        actionObjectId: source.action_object_id,
-        timestamp: source.timestamp * 1000
-      };
-      if (!record.action) {
-        throw new Error('Unsupported source found');
-      }
-      return record;
-    }
-
-    return deipRpc.api.getEciHistoryByContentAndDisciplineAsync(researchContentId, disciplineId)
-      .then((history) => history.map(mapResearchContentEciHistoryRecord));
-  }
-
-  getResearchEciHistoryRecords(researchId, disciplineId) {
-    const RESEARCH_ECI_SOURCES = {
-      1: { type: 'review', text: 'Review added' },
-      2: { type: 'vote_for_review', text: 'Review supported' },
-      3: { type: 'init', text: 'Material uploaded' }
-    };
-
-    function mapResearchEciHistoryRecord(item) {
-      const source = item.op[1];
-      const record = {
-        researchId: source.research_id,
-        disciplineId: source.discipline_id,
-        newAmount: source.new_eci_amount,
-        delta: source.delta,
-        action: RESEARCH_ECI_SOURCES[source.action].type,
-        actionText: RESEARCH_ECI_SOURCES[source.action].text,
-        actionObjectId: source.action_object_id,
-        timestamp: source.timestamp * 1000
-      };
-      if (!record.action) {
-        throw new Error('Unsupported source found');
-      }
-      return record;
-    }
-
-    return deipRpc.api.getEciHistoryByResearchAndDisciplineAsync(researchId, disciplineId)
-      .then((history) => history.map(mapResearchEciHistoryRecord));
-  }
 
   async getResearchContentOuterReferences(researchContent, acc) {
     const outerReferences = await deipRpc.api.getContentsReferToContentAsync(researchContent.id);

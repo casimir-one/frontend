@@ -1,7 +1,6 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
-import { ACTIONS_MAP } from './constants';
 
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
@@ -51,40 +50,6 @@ class UsersService extends Singleton {
         }
         return results;
       });
-  }
-
-  mapHistoryElement(elem) {
-    const source = elem.op[1];
-    const mappedElem = {
-      accountName: source.account_name,
-      disciplineId: source.discipline_id,
-      newAmount: source.new_eci_amount,
-      delta: source.delta,
-      action: ACTIONS_MAP[source.action],
-      actionText: ACTIONS_MAP[source.action] === 'init'
-        ? 'other'
-        : ACTIONS_MAP[source.action] === 'content'
-          ? 'research'
-          : ACTIONS_MAP[source.action],
-      actionObjectId: source.action_object_id,
-      timestamp: source.timestamp * 1000
-    };
-    if (!mappedElem.action) {
-      throw new Error('Unsupported action found');
-    }
-    return mappedElem;
-  }
-
-  getExpertiseHistory(username, disciplineId, from = 0, to = Date.now()) {
-    const _from = Math.round(from / 1000);
-    const _to = Math.ceil(to / 1000);
-
-    return deipRpc.api.getEciHistoryByAccountAndDisciplineAsync(username, disciplineId)
-      .then((history) => history.map(this.mapHistoryElement, this));
-  }
-
-  getEciPercentile(eciValue, username, disciplineId) {
-    return 10;
   }
 }
 
