@@ -580,11 +580,34 @@ export default [{
     ]
 },
 {
+  "api": "database_api",
+  "method": "get_expertise_contribution_by_research_content_and_discipline",
+  "params": [
+    "research_content_id",
+    "discipline_id"
+  ]
+},
+{
     "api": "database_api",
-    "method": "get_total_votes_by_research",
+    "method": "get_expertise_contributions_by_research",
     "params": [
         "research_id"
     ]
+},
+{
+  "api": "database_api",
+  "method": "get_expertise_contributions_by_research_and_discipline",
+  "params": [
+    "research_id",
+    "discipline_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_expertise_contributions_by_research_content",
+  "params": [
+    "research_content_id"  
+  ]
 },
 {
     "api": "database_api",
@@ -599,14 +622,6 @@ export default [{
     "method": "get_witness_by_account",
     "params": [
         "account_name"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_total_votes_by_research_and_discipline",
-    "params": [
-        "research_id",
-        "discipline_id"
     ]
 },
 {
@@ -737,13 +752,6 @@ export default [{
     "method": "get_expertise_allocation_proposal_votes_by_voter",
     "params": [
         "voter"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_eci_and_expertise_stats_by_discipline_id",
-    "params": [
-        "discipline_id"
     ]
 },
 {
@@ -1265,31 +1273,29 @@ export default [{
         "research_content_id"
     ]
 },
-// Account ECI Plugin
+// ECI History Plugin
 {
-  "api": "account_eci_history_api",
-  "method": "get_eci_history_by_account_and_discipline",
+  "api": "eci_history_api",
+  "method": "get_eci_history_by_research_content_and_discipline",
   "params": [
-    "account",
+    "research_content_id",
     "discipline_id"
   ]
 },
-// Research ECI Plugin
 {
-  "api": "research_eci_history_api",
+  "api": "eci_history_api",
   "method": "get_eci_history_by_research_and_discipline",
   "params": [
     "research_id",
     "discipline_id"
   ]
 },
-// Research Content ECI Plugin
 {
-    "api": "research_content_eci_history_api",
-    "method": "get_eci_history_by_content_and_discipline",
-    "params": [
-        "research_id",
-        "discipline_id"
-    ]
+  "api": "eci_history_api",
+  "method": "get_eci_history_by_account_and_discipline",
+  "params": [
+      "account",
+      "discipline_id"
+  ]
 }
 ];
