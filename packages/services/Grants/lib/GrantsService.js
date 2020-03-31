@@ -8,17 +8,33 @@ class GrantsService extends Singleton {
   createGrantContract(privKey, {
     grantor,
     amount,
-    type,
-    target_disciplines,
-    details
+    targetDisciplines,
+    distributionModel,
+    extensions
   }) {
     return deipRpc.broadcast.createGrantAsync(
       privKey, 
       grantor, 
       amount, 
-      type, 
-      target_disciplines,
-      details);
+      targetDisciplines,
+      distributionModel,
+      extensions);
+  }
+
+  createFundingOpportunityAward(privKey, {
+    fundingOpportunityId,
+    creator,
+    awardees,
+    award,
+    extensions
+  }) {
+    return deipRpc.broadcast.createAwardAsync(
+      privKey,
+      fundingOpportunityId,
+      creator,
+      awardees,
+      award,
+      extensions);
   }
 
   getFundingOpportunityAnnouncement(id) {
@@ -29,16 +45,36 @@ class GrantsService extends Singleton {
     return deipRpc.api.getFundingOpportunityAnnouncementByNumberAsync(number);
   }
 
-  getFundingOpportunityAnnouncementsByGrantor(names) {
-    return deipRpc.api.getFundingOpportunityAnnouncementsByGrantorAsync(names);
-  }
-
   getFundingOpportunityAnnouncementsByOrganization(researchGroupId) {
     return deipRpc.api.getFundingOpportunityAnnouncementsByOrganizationAsync(researchGroupId);
   }
 
   getFundingOpportunityAnnouncementsListing(page, limit) {
     return deipRpc.api.getFundingOpportunityAnnouncementsListingAsync(page, limit);
+  }
+
+  getAward(id) {
+    return deipRpc.api.getAwardAsync(id);
+  }
+
+  getAwardsByFundingOpportunity(foaNum) {
+    return deipRpc.api.getAwardsByFundingOpportunityAsync(foaNum);
+  }
+
+  getAwardRecipient(id) {
+    return deipRpc.api.getAwardRecipientAsync(id);
+  }
+
+  getAwardRecipientsByAward(awardId) {
+    return deipRpc.api.getAwardRecipientsByAwardAsync(awardId);
+  }
+
+  getAwardRecipientsByAccount(awardee) {
+    return deipRpc.api.getAwardRecipientsByAccountAsync(awardee);
+  }
+
+  getAwardRecipientsByFundingOpportunity(foaNum) {
+    return deipRpc.api.getAwardRecipientsByFundingOpportunityAsync(foaNum);
   }
 
   getGrantWithAnnouncedApplicationWindow(id) {

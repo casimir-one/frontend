@@ -789,13 +789,6 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_funding_opportunity_announcements_by_grantor",
-  "params": [
-    "names",
-  ]
-},
-{
-  "api": "database_api",
   "method": "get_funding_opportunity_announcements_by_organization",
   "params": [
     "research_group_id",
@@ -876,48 +869,52 @@ export default [{
         "grant_application_id"
     ]
 },
-// Funding Contracts
+
+// FOA awards
 {
-    "api": "database_api",
-    "method": "get_funding",
-    "params": [
-        "id"
-    ]
+  "api": "database_api",
+  "method": "get_award",
+  "params": [
+    "id"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_fundings",
-    "params": []
+  "api": "database_api",
+  "method": "get_awards_by_funding_opportunity",
+  "params": [
+    "number"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_fundings_by_granter",
-    "params": [
-        "granter"
-    ]
+  "api": "database_api",
+  "method": "get_award_recipient",
+  "params": [
+    "id"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_research_relation",
-    "params": [
-        "id"
-    ]
+  "api": "database_api",
+  "method": "get_award_recipients_by_award",
+  "params": [
+    "award_id"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_research_relations_by_funding",
-    "params": [
-        "funding_id"
-    ]
+  "api": "database_api",
+  "method": "get_award_recipients_by_account",
+  "params": [
+    "awardee"
+  ]
 },
 {
-    "api": "database_api",
-    "method": "get_funding_research_relation_by_funding_and_research",
-    "params": [
-        "funding_id",
-        "research_id"
-    ]
+  "api": "database_api",
+  "method": "get_award_recipients_by_funding_opportunity",
+  "params": [
+    "number"
+  ]
 },
+
+
 {
     "api": "database_api",
     "method": "get_funding_withdrawal_request",

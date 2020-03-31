@@ -114,20 +114,7 @@ module.exports = [{
         "extensions"
     ]
 },
-// DEIP native operations
-{
-    "roles": ["active", "owner"],
-    "operation": "create_discipline_supply",
-    "params": [
-        "owner",
-        "balance",
-        "target_discipline",
-        "start_block",
-        "end_block",
-        "is_extendable",
-        "content_hash"
-    ]
-}, {
+  {
     "roles": ["active", "owner"],
     "operation": "create_research_group",
     "params": [
@@ -227,14 +214,6 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "set_expertise_tokens",
-    "params": [
-        "owner",
-        "account_name",
-        "disciplines_to_add"
-    ]
-}, {
-    "roles": ["active", "owner"],
     "operation": "research_update",
     "params": [
         "research_id",
@@ -322,9 +301,9 @@ module.exports = [{
     "params": [
         "grantor",
         "amount",
-        "type",
         "target_disciplines",
-        "details"
+        "distribution_model",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -361,13 +340,13 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "create_funding",
+    "operation": "create_award",
     "params": [
         "funding_opportunity_id",
         "creator",
-        "researches",
-        "amount",
-        "asset_symbol"
+        "awardees",
+        "award",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],

@@ -29,7 +29,7 @@ ChainTypes.operations = {
     change_recovery_account: 12,
 
     // DEIP native operations
-    create_discipline_supply: 13,
+    placeholder1: 13,
     create_research_group: 14,
     create_proposal: 15,
     vote_proposal: 16,
@@ -38,7 +38,7 @@ ChainTypes.operations = {
     approve_research_group_invite: 19,
     reject_research_group_invite: 20,
     transfer_research_tokens_to_research_group: 21,
-    set_expertise_tokens: 22,
+    placeholder2: 22,
     research_update: 23,
     create_vesting_balance: 24,
     withdraw_vesting_balance: 25,
@@ -57,6 +57,7 @@ ChainTypes.operations = {
     create_asset: 38,
     issue_asset: 39,
     reserve_asset: 40,
+    create_award: 41,
     
     /* === The 2nd nsf demo  ===
     create_funding_opportunity,
@@ -90,10 +91,10 @@ ChainTypes.operations = {
     */
 
     // virtual operations
-    fill_common_tokens_withdraw: 39,
-    shutdown_witness: 40,
-    hardfork: 41,
-    producer_reward: 42
+    fill_common_tokens_withdraw: 42,
+    shutdown_witness: 43,
+    hardfork: 44,
+    producer_reward: 45
 };
 
 //types.hpp
