@@ -73,30 +73,22 @@ const Serializer = function (operation_name, serilization_types_object) {
     return module.exports[operation_name] = s;
 }
 
+const placeholder1 = new Serializer("placeholder1", {});
+const placeholder2 = new Serializer("placeholder2", {});
+
 const invitee = new Serializer("invitee", {
   account: string,
   rgt: uint32,
   notes: string
 });
 
-const expertise_amount_pair_type = new Serializer("expertise_amount_pair_type", {
-    discipline_id: int64,
-    amount: int64
-});
-
-const milestone_type = new Serializer("milestone_type", {
-    description: string,
-    deadline: time_point_sec,
-    amount: int64
-});
-
-const funding_research_type = new Serializer("funding_research_type", {
-    researcher: string,
-    research_id: int64,
-    research_expenses: map(uint16, int64),
-    organisation_id: int64,
-    university_overhead: int64,
-    milestones: set(milestone_type)
+const awardee = new Serializer("awardee", {
+  awardee: string,
+  research_id: int64,
+  university_id: int64,
+  university_overhead: int64,
+  award: asset,
+  source: optional(string)
 });
 
 // Custom-types after Generated code
@@ -271,15 +263,6 @@ let change_recovery_account = new Serializer("change_recovery_account", {
 
 // DEIP native operations
 
-var create_discipline_supply = new Serializer("create_discipline_supply", {
-    owner: string,
-    balance: asset,
-    target_discipline: string,
-    start_block: uint32,
-    end_block: uint32,
-    is_extendable: bool,
-    content_hash: string
-});
 
 const base_research_group_management_model = {
   version: string
@@ -428,12 +411,6 @@ var transfer_research_tokens_to_research_group = new Serializer("transfer_resear
     amount: uint32
 })
 
-var set_expertise_tokens = new Serializer("set_expertise_tokens", {
-    owner: string,
-    account_name: string,
-    disciplines_to_add: set(expertise_amount_pair_type)
-})
-
 var research_update = new Serializer("research_update", {
     "research_id": int64,
     "title": string,
@@ -498,7 +475,19 @@ const announced_application_window_contract_v1_0_0 = new Serializer("announced_a
     min_number_of_applications: uint16,
     max_number_of_research_to_grant: uint16,
     start_date: time_point_sec,
-    end_date: time_point_sec
+    end_date: time_point_sec,
+    additional_info: map((string), (string))
+  })
+);
+
+
+const discipline_supply_announcement_contract_v1_0_0 = new Serializer("discipline_supply_announcement_contract_v1_0_0",
+  Object.assign({}, base_grant_contract_model, {
+    start_time: time_point_sec,
+    end_time: time_point_sec,
+    is_extendable: bool,
+    content_hash: string,
+    additional_info: map((string), (string))
   })
 );
 
@@ -520,22 +509,23 @@ const funding_opportunity_announcement_contract_v1_0_0 = new Serializer("funding
 const create_grant = new Serializer("create_grant", {
     "grantor": string,
     "amount": asset,
-    "type": uint16,
     "target_disciplines": set(int64),
-    "details": array(static_variant([
+    "distribution_model": static_variant([
       announced_application_window_contract_v1_0_0,
-      funding_opportunity_announcement_contract_v1_0_0
-    ]))
+      funding_opportunity_announcement_contract_v1_0_0,
+      discipline_supply_announcement_contract_v1_0_0
+    ]),
+    "extensions": set(future_extensions)
 });
 
-var create_grant_application = new Serializer("create_grant_application", {
+const create_grant_application = new Serializer("create_grant_application", {
     "grant_id": int64,
     "research_id": int64,
     "creator": string,
     "application_hash": string
 });
 
-var make_review_for_application = new Serializer("make_review_for_application", {
+const make_review_for_application = new Serializer("make_review_for_application", {
     "author": string,
     "grant_application_id": int64,
     "is_positive": bool,
@@ -543,22 +533,22 @@ var make_review_for_application = new Serializer("make_review_for_application", 
     "weight": uint16
 });
 
-var approve_grant_application = new Serializer("approve_grant_application", {
+const approve_grant_application = new Serializer("approve_grant_application", {
     "grant_application_id": int64,
     "approver": string
 });
 
-var reject_grant_application = new Serializer("reject_grant_application", {
+const reject_grant_application = new Serializer("reject_grant_application", {
     "grant_application_id": int64,
     "rejector": string
 });
 
-var create_funding = new Serializer("create_funding", {
-    "funding_opportunity_id": int64,
-    "creator": string,
-    "researches": set(funding_research_type),
-    "amount": int64,
-    "asset_symbol": string
+const create_award = new Serializer("create_award", {
+  "funding_opportunity_id": int64,
+  "creator": string,
+  "awardees": array(awardee),
+  "award": asset,
+  "extensions": set(future_extensions)
 });
 
 var approve_funding = new Serializer("approve_funding", {
@@ -751,7 +741,7 @@ operation.st_operations = [
     change_recovery_account, // 12
 
     // DEIP native operations
-    create_discipline_supply, // 13
+    placeholder1, // 13
     create_research_group, // 14
     create_proposal, // 15
     vote_proposal, // 16
@@ -760,7 +750,7 @@ operation.st_operations = [
     approve_research_group_invite,// 19
     reject_research_group_invite, // 20
     transfer_research_tokens_to_research_group, // 21
-    set_expertise_tokens, // 22
+    placeholder2, // 22
     research_update, // 23 /* legacy */
     create_vesting_balance, // 24
     withdraw_vesting_balance, // 25
@@ -776,10 +766,10 @@ operation.st_operations = [
     make_review_for_application, // 35
     approve_grant_application, // 36
     reject_grant_application, // 37
-
     create_asset, // 38
     issue_asset, // 39
     reserve_asset, // 40
+    create_award, // 41
     
     /* === The 2nd nsf demo ===
     create_funding_opportunity,
