@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.3.0...v1.4.0) (2020-03-31)
+
+
+### Features
+
+* **@deip/grants-service:** Awardee and awards api ([814ac0a](https://gitlab.com/DEIP/deip-client-modules/commit/814ac0adc0615f6ef84332d1d6c7c350d0595542))
+
+
+
+
+
 # [1.2.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.1.0...v1.2.0) (2020-03-23)
 
 
