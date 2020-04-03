@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.4.0...v1.5.0) (2020-04-03)
+
+
+### Features
+
+* **@deip/grants-service:** Grants transparency operations ([bd882c7](https://gitlab.com/DEIP/deip-rpc/commit/bd882c7c3bcc823f3f46246def15efc3af9620cb))
+
+
+
+
+
 # [1.4.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.3.0...v1.4.0) (2020-03-31)
 
 
