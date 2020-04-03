@@ -58,24 +58,14 @@ ChainTypes.operations = {
     issue_asset: 39,
     reserve_asset: 40,
     create_award: 41,
+    approve_award: 42,
+    reject_award: 43,
+    create_award_withdrawal_request: 44,
+    certify_award_withdrawal_request: 45,
+    approve_award_withdrawal_request: 46,
+    reject_award_withdrawal_request: 47,
+    pay_award_withdrawal_request: 48,
     
-    /* === The 2nd nsf demo  ===
-    create_funding_opportunity,
-    create_funding,
-    approve_funding,
-    reject_funding,
-    create_funding_withdrawal_request,
-    approve_funding_withdrawal_request,
-    reject_funding_withdrawal_request,
-    approve_funding_milestone,
-    reject_funding_milestone,
-    create_organisation,
-    certify_funding_withdrawal_request,
-    legacy_create_asset,
-    legacy_issue_asset_backed_tokens,
-    pay_funding_withdrawal_request,
-    */
-
     /* === IP Ledger module ===
     add_member_to_research,
     exclude_member_from_research,

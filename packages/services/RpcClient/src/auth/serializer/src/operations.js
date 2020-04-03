@@ -77,18 +77,17 @@ const placeholder1 = new Serializer("placeholder1", {});
 const placeholder2 = new Serializer("placeholder2", {});
 
 const invitee = new Serializer("invitee", {
-  account: string,
-  rgt: uint32,
-  notes: string
+    account: string,
+    rgt: uint32,
+    notes: string
 });
 
-const awardee = new Serializer("awardee", {
-  awardee: string,
-  research_id: int64,
-  university_id: int64,
-  university_overhead: int64,
-  award: asset,
-  source: optional(string)
+const subawardee = new Serializer("subawardee", {
+    subaward_number: string,
+    subaward: asset,
+    subawardee: string,
+    source: string,
+    research_id: int64
 });
 
 // Custom-types after Generated code
@@ -115,7 +114,7 @@ let asset = new Serializer(
 Replace: authority.prototype.account_authority_map
 With: map((string), (uint16))
 */
-let signed_transaction = new Serializer("signed_transaction", {
+const signed_transaction = new Serializer("signed_transaction", {
     ref_block_num: uint16,
     ref_block_prefix: uint32,
     expiration: time_point_sec,
@@ -124,7 +123,7 @@ let signed_transaction = new Serializer("signed_transaction", {
     signatures: array(bytes(65))
 });
 
-let signed_block = new Serializer("signed_block", {
+const signed_block = new Serializer("signed_block", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
@@ -138,7 +137,7 @@ let signed_block = new Serializer("signed_block", {
     transactions: array(signed_transaction)
 });
 
-let block_header = new Serializer("block_header", {
+const block_header = new Serializer("block_header", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
@@ -150,7 +149,7 @@ let block_header = new Serializer("block_header", {
     ]))
 });
 
-let signed_block_header = new Serializer("signed_block_header", {
+const signed_block_header = new Serializer("signed_block_header", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
@@ -163,20 +162,20 @@ let signed_block_header = new Serializer("signed_block_header", {
     witness_signature: bytes(65)
 });
 
-let transfer = new Serializer("transfer", {
+const transfer = new Serializer("transfer", {
     from: string,
     to: string,
     amount: asset,
     memo: string
 });
 
-var authority = new Serializer("authority", {
+const authority = new Serializer("authority", {
     weight_threshold: uint32,
     account_auths: map((string), (uint16)),
     key_auths: map((public_key), (uint16))
 });
 
-let account_create = new Serializer("account_create", {
+const account_create = new Serializer("account_create", {
     fee: asset,
     creator: string,
     new_account_name: string,
@@ -187,7 +186,7 @@ let account_create = new Serializer("account_create", {
     json_metadata: string
 });
 
-let account_update = new Serializer("account_update", {
+const account_update = new Serializer("account_update", {
     account: string,
     owner: optional(authority),
     active: optional(authority),
@@ -196,13 +195,13 @@ let account_update = new Serializer("account_update", {
     json_metadata: string
 });
 
-let chain_properties = new Serializer("chain_properties", {
+const chain_properties = new Serializer("chain_properties", {
     account_creation_fee: asset,
     maximum_block_size: uint32,
     sbd_interest_rate: uint16
 });
 
-let witness_update = new Serializer("witness_update", {
+const witness_update = new Serializer("witness_update", {
     owner: string,
     url: string,
     block_signing_key: public_key,
@@ -210,52 +209,52 @@ let witness_update = new Serializer("witness_update", {
     fee: asset
 });
 
-let account_witness_vote = new Serializer("account_witness_vote", {
+const account_witness_vote = new Serializer("account_witness_vote", {
     account: string,
     witness: string,
     approve: bool
 });
 
-let account_witness_proxy = new Serializer("account_witness_proxy", {
+const account_witness_proxy = new Serializer("account_witness_proxy", {
     account: string,
     proxy: string
 });
 
-let pow = new Serializer("pow", {
+const pow = new Serializer("pow", {
     worker: public_key,
     input: bytes(32),
     signature: bytes(65),
     work: bytes(32)
 });
 
-let set_withdraw_common_tokens_route = new Serializer("set_withdraw_common_tokens_route", {
+const set_withdraw_common_tokens_route = new Serializer("set_withdraw_common_tokens_route", {
     from_account: string,
     to_account: string,
     percent: uint16,
     auto_common_token: bool
 });
 
-let challenge_authority = new Serializer("challenge_authority", {
+const challenge_authority = new Serializer("challenge_authority", {
     challenger: string,
     challenged: string,
     require_owner: bool
 });
 
-let request_account_recovery = new Serializer("request_account_recovery", {
+const request_account_recovery = new Serializer("request_account_recovery", {
     recovery_account: string,
     account_to_recover: string,
     new_owner_authority: authority,
     extensions: set(future_extensions)
 });
 
-let recover_account = new Serializer("recover_account", {
+const recover_account = new Serializer("recover_account", {
     account_to_recover: string,
     new_owner_authority: authority,
     recent_owner_authority: authority,
     extensions: set(future_extensions)
 });
 
-let change_recovery_account = new Serializer("change_recovery_account", {
+const change_recovery_account = new Serializer("change_recovery_account", {
     account_to_recover: string,
     new_recovery_account: string,
     extensions: set(future_extensions)
@@ -263,9 +262,8 @@ let change_recovery_account = new Serializer("change_recovery_account", {
 
 // DEIP native operations
 
-
 const base_research_group_management_model = {
-  version: string
+    version: string
 }
 
 const dao_voting_research_group_management_model_v1_0_0 = new Serializer("dao_voting_research_group_management_model_v1_0_0",
@@ -289,7 +287,7 @@ const centralized_research_group_management_model_v1_0_0 = new Serializer("centr
 );
 
 const base_organizational_contract = {
-  version: string
+    version: string
 }
 
 const organization_division_contract_v1_0_0 = new Serializer("organization_division_contract_v1_0_0",
@@ -302,44 +300,44 @@ const organization_division_contract_v1_0_0 = new Serializer("organization_divis
 );
 
 const create_research_group = new Serializer("create_research_group", {
-  creator: string,
-  name: string,
-  permlink: string,
-  description: string,
-  type: uint32,
-  details: array(static_variant([
-    dao_voting_research_group_management_model_v1_0_0,
-    dao_multisig_research_group_management_model_v1_0_0,
-    centralized_research_group_management_model_v1_0_0,
-    organization_division_contract_v1_0_0
-  ])),
-  is_created_by_organization: bool,
-  invitees: set(invitee)
+    creator: string,
+    name: string,
+    permlink: string,
+    description: string,
+    type: uint32,
+    details: array(static_variant([
+      dao_voting_research_group_management_model_v1_0_0,
+      dao_multisig_research_group_management_model_v1_0_0,
+      centralized_research_group_management_model_v1_0_0,
+      organization_division_contract_v1_0_0
+    ])),
+    is_created_by_organization: bool,
+    invitees: set(invitee)
 });
 
-var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
+const create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
     claimer: string,
     discipline_id: int64,
     description: string
 });
 
-var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
+const vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
     proposal_id: int64,
     voter: string,
     voting_power: int64
 });
 
-var accept_research_token_offer = new Serializer("accept_research_token_offer", {
+const accept_research_token_offer = new Serializer("accept_research_token_offer", {
     offer_research_tokens_id: int64,
     buyer: string
 });
 
-var reject_research_token_offer = new Serializer("reject_research_token_offer", {
+const reject_research_token_offer = new Serializer("reject_research_token_offer", {
     offer_research_tokens_id: int64,
     buyer: string
 });
 
-var create_proposal = new Serializer("create_proposal", {
+const create_proposal = new Serializer("create_proposal", {
     creator: string,
     research_group_id: int64,
     data: string,
@@ -347,7 +345,7 @@ var create_proposal = new Serializer("create_proposal", {
     expiration_time: time_point_sec
 });
 
-var vote_proposal = new Serializer("vote_proposal", {
+const vote_proposal = new Serializer("vote_proposal", {
     voter: string,
     proposal_id: int64,
     research_group_id: int64
@@ -381,37 +379,37 @@ const make_review = new Serializer("make_review", {
     extensions: set(future_extensions)
 });
 
-var contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
+const contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
     research_token_sale_id: int64,
     owner: string,
     amount: asset
 });
 
-var approve_research_group_invite = new Serializer("approve_research_group_invite", {
+const approve_research_group_invite = new Serializer("approve_research_group_invite", {
     "research_group_invite_id": int64,
     "owner": string
 });
 
-var reject_research_group_invite = new Serializer("reject_research_group_invite", {
+const reject_research_group_invite = new Serializer("reject_research_group_invite", {
     "research_group_invite_id": int64,
     "owner": string
 });
 
-var vote_for_review = new Serializer("vote_for_review", {
+const vote_for_review = new Serializer("vote_for_review", {
     "voter": string,
     "review_id": int64,
     "discipline_id": int64,
     "weight": int16
 });
 
-var transfer_research_tokens_to_research_group = new Serializer("transfer_research_tokens_to_research_group", {
+const transfer_research_tokens_to_research_group = new Serializer("transfer_research_tokens_to_research_group", {
     research_token_id: int64,
     research_id: int64,
     owner: string,
     amount: uint32
 })
 
-var research_update = new Serializer("research_update", {
+const research_update = new Serializer("research_update", {
     "research_id": int64,
     "title": string,
     "abstract": string,
@@ -419,7 +417,7 @@ var research_update = new Serializer("research_update", {
     "owner": string
 })
 
-var create_vesting_balance = new Serializer("create_vesting_balance", {
+const create_vesting_balance = new Serializer("create_vesting_balance", {
     "creator": string,
     "owner": string,
     "balance": asset,
@@ -428,38 +426,38 @@ var create_vesting_balance = new Serializer("create_vesting_balance", {
     "period_duration_seconds": uint32
 });
 
-var delegate_expertise = new Serializer("delegate_expertise", {
+const delegate_expertise = new Serializer("delegate_expertise", {
     "sender": string,
     "receiver": string,
     "discipline_id": int64
 })
 
-var revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", {
+const revoke_expertise_delegation = new Serializer("revoke_expertise_delegation", {
     "sender": string,
     "receiver": string,
     "discipline_id": int64
 })
 
-var withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
+const withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
     "vesting_balance_id": int64,
     "owner": string,
     "amount": asset
 })
 
-var transfer_research_tokens = new Serializer("transfer_research_tokens", {
+const transfer_research_tokens = new Serializer("transfer_research_tokens", {
     research_id: int64,
     sender: string,
     receiver: string,
     amount: uint32
 })
 
-var transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
+const transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
     "from": string,
     "to": string,
     "amount": asset
 });
 
-var withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
+const withdraw_common_tokens = new Serializer("withdraw_common_tokens", {
     "account": string,
     "total_common_tokens_amount": int64
 });
@@ -544,70 +542,67 @@ const reject_grant_application = new Serializer("reject_grant_application", {
 });
 
 const create_award = new Serializer("create_award", {
-  "funding_opportunity_id": int64,
-  "creator": string,
-  "awardees": array(awardee),
-  "award": asset,
-  "extensions": set(future_extensions)
+    "funding_opportunity_number": string,
+    "award_number": string,
+    "award": asset,
+    "awardee": string,
+    "research_id": int64,
+    "university_id": int64,
+    "university_overhead": uint32,
+    "subawardees": array(subawardee),
+    "creator": string,
+    "extensions": set(future_extensions)
 });
 
-var approve_funding = new Serializer("approve_funding", {
-    "funding_id": int64,
+const approve_award = new Serializer("approve_award", {
+    "award_number": string,
     "approver": string
 });
 
-var reject_funding = new Serializer("reject_funding", {
-    "funding_id": int64,
-    "rejecter": string
+const reject_award = new Serializer("reject_award", {
+    "award_number": string,
+    "rejector": string
 });
 
-var create_funding_withdrawal_request = new Serializer("create_funding_withdrawal_request", {
-    "funding_research_relation_id": int64,
-    "research_group_id": int64,
-    "research_id": int64,
-    "organisation_id": int64,
+const create_award_withdrawal_request = new Serializer("create_award_withdrawal_request", {
+    "payment_number": string,
+    "award_number": string,
+    "subaward_number": optional(string),
     "requester": string,
-    "purpose": uint16,
-    "amount": int64,
-    "asset_symbol": string,
+    "amount": asset,
     "description": string,
     "attachment": string
 });
 
-var approve_funding_withdrawal_request = new Serializer("approve_funding_withdrawal_request", {
-    "funding_withdrawal_request_id": int64,
-    "approver": string,
-    "organisation_id": int64
+const certify_award_withdrawal_request = new Serializer("certify_award_withdrawal_request", {
+    "payment_number": string,
+    "award_number": string,
+    "subaward_number": optional(string),
+    "certifier": string
 });
 
-var reject_funding_withdrawal_request = new Serializer("reject_funding_withdrawal_request", {
-    "funding_withdrawal_request_id": int64,
-    "rejecter": string
-});
-
-var approve_funding_milestone = new Serializer("approve_funding_milestone", {
-    "funding_milestone_id": int64,
+const approve_award_withdrawal_request = new Serializer("approve_award_withdrawal_request", {
+    "payment_number": string,
+    "award_number": string,
+    "subaward_number": optional(string),
     "approver": string
 });
 
-var reject_funding_milestone = new Serializer("reject_funding_milestone", {
-    "funding_milestone_id": int64,
-    "rejecter": string
+const reject_award_withdrawal_request = new Serializer("reject_award_withdrawal_request", {
+    "payment_number": string,
+    "award_number": string,
+    "subaward_number": optional(string),
+    "rejector": string
 });
 
-var create_organisation = new Serializer("create_organisation", {
-    "creator": string,
-    "name": string,
-    "permlink": string
+const pay_award_withdrawal_request = new Serializer("pay_award_withdrawal_request", {
+    "payment_number": string,
+    "award_number": string,
+    "subaward_number": optional(string),
+    "payer": string
 });
 
-var certify_funding_withdrawal_request = new Serializer("certify_funding_withdrawal_request", {
-    "certifier": string,
-    "funding_withdrawal_request_id": int64,
-    "organisation_id": int64
-});
-
-var create_asset = new Serializer("create_asset", {
+const create_asset = new Serializer("create_asset", {
     "issuer": string,
     "symbol": string,
     "precision": uint8,
@@ -615,23 +610,17 @@ var create_asset = new Serializer("create_asset", {
     "description": string
 });
 
-var issue_asset = new Serializer("issue_asset", {
+const issue_asset = new Serializer("issue_asset", {
     "issuer": string,
     "amount": asset
 });
 
-var reserve_asset = new Serializer("reserve_asset", {
+const reserve_asset = new Serializer("reserve_asset", {
     "owner": string,
     "amount": asset
 });
 
-var pay_funding_withdrawal_request = new Serializer("pay_funding_withdrawal_request", {
-    "funding_withdrawal_request_id": int64,
-    "approver": string,
-    "organisation_id": int64
-});
-
-var create_nda_contract = new Serializer("create_nda_contract", {
+const create_nda_contract = new Serializer("create_nda_contract", {
   contract_creator: string,
   party_a: string,
   party_a_research_group_id: int64,
@@ -644,78 +633,78 @@ var create_nda_contract = new Serializer("create_nda_contract", {
   end_date: time_point_sec
 });
 
-var sign_nda_contract = new Serializer("sign_nda_contract", {
+const sign_nda_contract = new Serializer("sign_nda_contract", {
   contract_id: int64,
   contract_signer: string,
   signature: string
 });
 
-var decline_nda_contract = new Serializer("decline_nda_contract", {
+const decline_nda_contract = new Serializer("decline_nda_contract", {
   contract_id: int64,
   decliner: string
 });
 
-var close_nda_contract = new Serializer("close_nda_contract", {
+const close_nda_contract = new Serializer("close_nda_contract", {
   contract_id: int64,
   closer: string
 });
 
-var create_request_by_nda_contract = new Serializer("create_request_by_nda_contract", {
+const create_request_by_nda_contract = new Serializer("create_request_by_nda_contract", {
   requester: string,
   encrypted_payload_hash: string,
   encrypted_payload_iv: string,
   contract_id: int64
 });
 
-var fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_contract", {
+const fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_contract", {
   grantor: string,
   encrypted_payload_encryption_key: string,
   proof_of_encrypted_payload_encryption_key: string,
   request_id: int64
 });
 
-let add_member_to_research = new Serializer("add_member_to_research", {});
-let exclude_member_from_research = new Serializer("exclude_member_from_research", {});
+const add_member_to_research = new Serializer("add_member_to_research", {});
+const exclude_member_from_research = new Serializer("exclude_member_from_research", {});
 
 // virtual operations
 
-let fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
+const fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
     from_account: string,
     to_account: string,
     withdrawn: asset,
     deposited: asset
 });
 
-let create_subscription = new Serializer("create_subscription", {
+const create_subscription = new Serializer("create_subscription", {
     owner: string,
     agent: string,
     research_group_id: optional(int64),
     json_data: string
 });
 
-let adjust_subscription_extra_quota = new Serializer("adjust_subscription_extra_quota", {
+const adjust_subscription_extra_quota = new Serializer("adjust_subscription_extra_quota", {
     owner: string,
     agent: string,
     subscription_id: int64,
     json_data: string
 });
 
-let update_subscription = new Serializer("update_subscription", {
+const update_subscription = new Serializer("update_subscription", {
     owner: string,
     agent: string,
     subscription_id: int64,
     json_data: string
 });
 
-let shutdown_witness = new Serializer("shutdown_witness", {
+const shutdown_witness = new Serializer("shutdown_witness", {
     owner: string
 });
 
-let hardfork = new Serializer("hardfork", {
+const hardfork = new Serializer("hardfork", {
     hardfork_id: uint32
 });
 
-let producer_reward = new Serializer("producer_reward", {
+const producer_reward = new Serializer("producer_reward", {
     producer: string,
     common_tokens_amount: uint32
 });
@@ -770,24 +759,13 @@ operation.st_operations = [
     issue_asset, // 39
     reserve_asset, // 40
     create_award, // 41
-    
-    /* === The 2nd nsf demo ===
-    create_funding_opportunity,
-    create_funding,
-    approve_funding,
-    reject_funding,
-    create_funding_withdrawal_request,
-    approve_funding_withdrawal_request,
-    reject_funding_withdrawal_request,
-    approve_funding_milestone,
-    reject_funding_milestone,
-    create_organisation,
-    certify_funding_withdrawal_request,
-    legacy_create_asset,
-    legacy_issue_asset_backed_tokens,
-    pay_funding_withdrawal_request,
-    */
-
+    approve_award, // 42
+    reject_award, // 43
+    create_award_withdrawal_request, // 44
+    certify_award_withdrawal_request, // 45
+    approve_award_withdrawal_request, // 46
+    reject_award_withdrawal_request, // 47
+    pay_award_withdrawal_request, // 48
 
     /* === IP Ledger module ===
     add_member_to_research,

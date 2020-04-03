@@ -342,85 +342,78 @@ module.exports = [{
     "roles": ["active", "owner"],
     "operation": "create_award",
     "params": [
-        "funding_opportunity_id",
-        "creator",
-        "awardees",
-        "award",
-        "extensions"
+      "funding_opportunity_number",
+      "award_number",
+      "award",
+      "awardee",
+      "research_id",
+      "university_id",
+      "university_overhead",
+      "subawardees",
+      "creator",
+      "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "approve_funding",
+    "operation": "approve_award",
     "params": [
-        "funding_id",
-        "approver"
+      "award_number",
+      "approver"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "reject_funding",
+    "operation": "reject_award",
     "params": [
-        "funding_id",
-        "rejecter"
+        "award_number",
+        "rejector"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "create_funding_withdrawal_request",
+    "operation": "create_award_withdrawal_request",
     "params": [
-        "funding_research_relation_id",
-        "research_group_id",
-        "research_id",
-        "organisation_id",
+        "payment_number",
+        "award_number",
+        "subaward_number",
         "requester",
-        "purpose",
         "amount",
-        "asset_symbol",
         "description",
         "attachment"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "approve_funding_withdrawal_request",
+    "operation": "certify_award_withdrawal_request",
     "params": [
-        "funding_withdrawal_request_id",
-        "approver",
-        "organisation_id"
+        "payment_number",
+        "award_number",
+        "subaward_number",
+        "certifier"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "reject_funding_withdrawal_request",
+    "operation": "approve_award_withdrawal_request",
     "params": [
-        "funding_withdrawal_request_id",
-        "rejecter"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "approve_funding_milestone",
-    "params": [
-        "funding_milestone_id",
+        "payment_number",
+        "award_number",
+        "subaward_number",
         "approver"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "reject_funding_milestone",
+    "operation": "reject_award_withdrawal_request",
     "params": [
-        "funding_milestone_id",
-        "rejecter"
+        "payment_number",
+        "award_number",
+        "subaward_number",
+        "rejector"
     ]
-}, {
+  }, {
     "roles": ["active", "owner"],
-    "operation": "create_organisation",
+    "operation": "pay_award_withdrawal_request",
     "params": [
-        "creator",
-        "name",
-        "permlink"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "certify_funding_withdrawal_request",
-    "params": [
-        "certifier",
-        "funding_withdrawal_request_id",
-        "organisation_id"
+        "payment_number",
+        "award_number",
+        "subaward_number",
+        "payer"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -448,16 +441,8 @@ module.exports = [{
     ]
   }, {
     "roles": ["active", "owner"],
-    "operation": "pay_funding_withdrawal_request",
+    "operation": "create_nda_contract",
     "params": [
-        "funding_withdrawal_request_id",
-        "approver",
-        "organisation_id"
-    ]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_nda_contract",
-  "params": [
       "contract_creator",
       "party_a",
       "party_a_research_group_id",
@@ -470,9 +455,9 @@ module.exports = [{
       "end_date"
   ]
 }, {
-  "roles": ["active", "owner"],
-  "operation": "sign_nda_contract",
-  "params": [
+    "roles": ["active", "owner"],
+    "operation": "sign_nda_contract",
+    "params": [
       "contract_id",
       "contract_signer",
       "signature"

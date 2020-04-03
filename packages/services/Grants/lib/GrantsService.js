@@ -23,20 +23,126 @@ class GrantsService extends Singleton {
 
   createFundingOpportunityAward(privKey, {
     fundingOpportunityId,
-    creator,
-    awardees,
+    awardNumber,
     award,
+    awardee,
+    researchId,
+    universityId,
+    universityOverhead,
+    subawardees,
+    creator,
     extensions
   }) {
     return deipRpc.broadcast.createAwardAsync(
       privKey,
       fundingOpportunityId,
-      creator,
-      awardees,
+      awardNumber,
       award,
+      awardee,
+      researchId,
+      universityId,
+      universityOverhead,
+      subawardees,
+      creator,
       extensions);
   }
 
+  approveFundingOpportunityAward(privKey, {
+    awardNumber,
+    approver
+  }) {
+    return deipRpc.broadcast.approveAwardAsync(
+      privKey,
+      awardNumber,
+      approver);
+  }
+
+  rejectFundingOpportunityAward(privKey, {
+    awardNumber,
+    rejector
+  }) {
+    return deipRpc.broadcast.rejectAwardAsync(
+      privKey,
+      awardNumber,
+      rejector);
+  }
+
+  createAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    requester,
+    amount,
+    description,
+    attachment
+  }) {
+    return deipRpc.broadcast.createAwardWithdrawalRequestAsync(
+      privKey,
+      paymentNumber,
+      awardNumber,
+      subawardNumber,
+      requester,
+      amount,
+      description,
+      attachment);
+  }
+
+  certifyAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    certifier
+  }) {
+    return deipRpc.broadcast.certifyAwardWithdrawalRequestAsync(
+      privKey,
+      paymentNumber,
+      awardNumber,
+      subawardNumber,
+      certifier);
+  }
+
+  approveAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    approver
+  }) {
+    return deipRpc.broadcast.approveAwardWithdrawalRequestAsync(
+      privKey,
+      paymentNumber,
+      awardNumber,
+      subawardNumber,
+      approver);
+  }
+
+  rejectAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    rejector
+  }) {
+    return deipRpc.broadcast.rejectAwardWithdrawalRequestAsync(
+      privKey,
+      paymentNumber,
+      awardNumber,
+      subawardNumber,
+      rejector);
+  }
+
+  payAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    payer
+  }) {
+    return deipRpc.broadcast.payAwardWithdrawalRequestAsync(
+      privKey,
+      paymentNumber,
+      awardNumber,
+      subawardNumber,
+      payer);
+  }
+  
   getFundingOpportunityAnnouncement(id) {
     return deipRpc.api.getFundingOpportunityAnnouncementAsync(id);
   }
@@ -75,6 +181,22 @@ class GrantsService extends Singleton {
 
   getAwardRecipientsByFundingOpportunity(foaNum) {
     return deipRpc.api.getAwardRecipientsByFundingOpportunityAsync(foaNum);
+  }
+
+  getAwardWithdrawalRequest(awardNumber, paymentNumber) {
+    return deipRpc.api.getAwardWithdrawalRequestAsync(awardNumber, paymentNumber);
+  }
+
+  getAwardWithdrawalRequestsByAward(awardNumber) {
+    return deipRpc.api.getAwardWithdrawalRequestsByAwardAsync(awardNumber);
+  }
+
+  getAwardWithdrawalRequestsByAwardAndSubaward(awardNumber, subawardNumber) {
+    return deipRpc.api.getAwardWithdrawalRequestsByAwardAndSubawardAsync(awardNumber, subawardNumber);
+  }
+
+  getAwardWithdrawalRequestsByAwardAndStatus(awardNumber, status) {
+    return deipRpc.api.getAwardWithdrawalRequestsByAwardAndStatusAsync(awardNumber, status);
   }
 
   getGrantWithAnnouncedApplicationWindow(id) {

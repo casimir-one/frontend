@@ -199,6 +199,16 @@ class BlockchainService extends Singleton {
     // console.log("Last block:", upperBound - 1, lastBlock['timestamp'])
     return { first: { num: lowerBound, block: firstBlock }, last: { num: upperBound - 1, block: lastBlock } };
   }
+
+  fromAssetsToFloat = (assets) => {
+    return parseFloat(assets.split(' ')[0]);
+  }
+
+  toAssetUnits = (amount, precision, asset) => {
+    let value = parseFloat(amount).toFixed(precision);
+    return `${value} ${asset}`;
+  }
+
 }
 
 export {
