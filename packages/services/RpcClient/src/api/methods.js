@@ -872,111 +872,76 @@ export default [{
 
 // FOA awards
 {
-  "api": "database_api",
-  "method": "get_award",
-  "params": [
-    "id"
-  ]
+    "api": "database_api",
+    "method": "get_award",
+    "params": [
+        "award_number"
+    ]
 },
-{
-  "api": "database_api",
-  "method": "get_awards_by_funding_opportunity",
-  "params": [
-    "number"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_award_recipient",
-  "params": [
-    "id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_award_recipients_by_award",
-  "params": [
-    "award_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_award_recipients_by_account",
-  "params": [
-    "awardee"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_award_recipients_by_funding_opportunity",
-  "params": [
-    "number"
-  ]
-},
-
-
 {
     "api": "database_api",
-    "method": "get_funding_withdrawal_request",
+    "method": "get_awards_by_funding_opportunity",
+    "params": [
+        "funding_opportunity_number"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_award_recipient",
     "params": [
         "id"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_funding_withdrawal_requests",
-    "params": []
-},
-{
-    "api": "database_api",
-    "method": "get_funding_withdrawal_requests_by_research",
+    "method": "get_award_recipients_by_award",
     "params": [
-        "research_id"
+        "award_number"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_funding_withdrawal_requests_by_organisation",
+    "method": "get_award_recipients_by_account",
     "params": [
-        "organisation_id"
+        "awardee"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_funding_milestone",
+    "method": "get_award_recipients_by_funding_opportunity",
     "params": [
-        "id"
+        "number"
     ]
 },
 {
     "api": "database_api",
-    "method": "get_funding_milestones_by_funding_research_relation_and_status",
+    "method": "get_award_withdrawal_request",
     "params": [
-        "funding_research_relation_id",
+        "award_number",
+        "payment_number"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_award_withdrawal_requests_by_award",
+    "params": [
+        "award_number"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_award_withdrawal_requests_by_award_and_subaward",
+    "params": [
+      "award_number",
+      "subaward_number"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_award_withdrawal_requests_by_award_and_status",
+    "params": [
+        "award_number",
         "status"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_funding_milestones_by_research",
-    "params": [
-        "funding_research_relation_id"
-    ]
-},
-
-// Milestone Report
-{
-    "api": "database_api",
-    "method": "get_milestone_reports_by_research",
-    "params": [
-        "research_id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_milestone_reports_by_grantor",
-    "params": [
-        "grantor"
     ]
 },
 
