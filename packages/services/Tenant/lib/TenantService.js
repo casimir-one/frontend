@@ -1,16 +1,16 @@
 import { Singleton } from '@deip/toolbox';
 import { TenantHttp } from './TenantHttp';
+import { ResearchGroupService } from '@deip/research-group-service';
 
 class TenantService extends Singleton {
   tenantHttp = TenantHttp.getInstance();
 
-  getTenantProfile(tenant) {
-    return this.tenantHttp.getTenantProfile(tenant);
+  researchGroupService = ResearchGroupService.getInstance();
+
+  getTenantByPermlink(permlink) {
+    return this.researchGroupService.getResearchGroupByPermlink(permlink);
   }
 
-  getTenantsProfiles() {
-    return this.tenantHttp.getTenantsProfiles();
-  }
 }
 
 export {

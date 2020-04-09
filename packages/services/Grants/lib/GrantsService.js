@@ -22,7 +22,7 @@ class GrantsService extends Singleton {
   }
 
   createFundingOpportunityAward(privKey, {
-    fundingOpportunityId,
+    fundingOpportunityNumber,
     awardNumber,
     award,
     awardee,
@@ -35,7 +35,7 @@ class GrantsService extends Singleton {
   }) {
     return deipRpc.broadcast.createAwardAsync(
       privKey,
-      fundingOpportunityId,
+      fundingOpportunityNumber,
       awardNumber,
       award,
       awardee,
@@ -147,8 +147,8 @@ class GrantsService extends Singleton {
     return deipRpc.api.getFundingOpportunityAnnouncementAsync(id);
   }
 
-  getFundingOpportunityAnnouncementByNumber(number) {
-    return deipRpc.api.getFundingOpportunityAnnouncementByNumberAsync(number);
+  getFundingOpportunityAnnouncementByNumber(foaNum) {
+    return deipRpc.api.getFundingOpportunityAnnouncementByNumberAsync(foaNum);
   }
 
   getFundingOpportunityAnnouncementsByOrganization(researchGroupId) {
@@ -159,8 +159,8 @@ class GrantsService extends Singleton {
     return deipRpc.api.getFundingOpportunityAnnouncementsListingAsync(page, limit);
   }
 
-  getAward(id) {
-    return deipRpc.api.getAwardAsync(id);
+  getAwardByNumber(awardNumber) {
+    return deipRpc.api.getAwardAsync(awardNumber);
   }
 
   getAwardsByFundingOpportunity(foaNum) {
@@ -187,6 +187,19 @@ class GrantsService extends Singleton {
     return deipRpc.api.getAwardWithdrawalRequestAsync(awardNumber, paymentNumber);
   }
 
+  getAwardWithdrawalRequestWithOffchain(awardNumber, paymentNumber) {
+    return Promise.all([
+      deipRpc.api.getAwardWithdrawalRequestAsync(awardNumber, paymentNumber),
+      this.grantsHttp.getAwardWithdrawalRequestPackageRef(awardNumber, paymentNumber)
+    ])
+      .then(([onchain, offchain]) => {
+        return {
+          ...onchain,
+          withdrawalRef: offchain
+        }
+      });
+  }
+
   getAwardWithdrawalRequestsByAward(awardNumber) {
     return deipRpc.api.getAwardWithdrawalRequestsByAwardAsync(awardNumber);
   }
@@ -197,6 +210,18 @@ class GrantsService extends Singleton {
 
   getAwardWithdrawalRequestsByAwardAndStatus(awardNumber, status) {
     return deipRpc.api.getAwardWithdrawalRequestsByAwardAndStatusAsync(awardNumber, status);
+  }
+
+  getWithdrawalRequestsHistoryByAwardNumber(awardNumber) {
+    return deipRpc.api.getWithdrawalRequestsHistoryByAwardNumberAsync(awardNumber);
+  }
+
+  getWithdrawalRequestHistoryByAwardAndPaymentNumber(awardNumber, paymentNumber) {
+    return deipRpc.api.getWithdrawalRequestHistoryByAwardAndPaymentNumberAsync(awardNumber, paymentNumber);
+  }
+
+  getWithdrawalRequestsHistoryByAwardAndSubawardNumber(awardNumber, subawardNumber) {
+    return deipRpc.api.getWithdrawalRequestsHistoryByAwardAndSubawardNumberAsync(awardNumber, subawardNumber);
   }
 
   getGrantWithAnnouncedApplicationWindow(id) {
@@ -225,6 +250,28 @@ class GrantsService extends Singleton {
 
   getApplicationsRefsByResearch(researchId) {
     return this.grantsHttp.getApplicationsRefsByResearch(researchId);
+  }
+
+  findAwardSubawardees(item, all) {
+    let descendants = all.filter(d => d.source == item.awardee && d.award_number == item.award_number);
+    for (let i = 0; i < descendants.length; i++) {
+      let sub_descendants = this.findAwardSubawardees(descendants[i], all);
+      let filtered = sub_descendants.filter(d => !descendants.some(sub_desc => sub_desc.award_number == d.award_number && sub_desc.subaward_number == d.subaward_number));
+      descendants.push(...filtered);
+    }
+    return descendants;
+  }
+
+  findParentAwardees(item, all) {
+    let ascendant = all.find(a => a.awardee == item.source && a.award_number == item.award_number);
+    if (!ascendant) {
+      return [];
+    }
+    let ascendants = [ascendant];
+    if (ascendant.source) {
+      ascendants.push(...this.findParentAwardees(ascendant, all));
+    }
+    return ascendants;
   }
 }
 

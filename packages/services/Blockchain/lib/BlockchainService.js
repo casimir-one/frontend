@@ -200,13 +200,21 @@ class BlockchainService extends Singleton {
     return { first: { num: lowerBound, block: firstBlock }, last: { num: upperBound - 1, block: lastBlock } };
   }
 
+  getAssetSymbol = (assets) => {
+    return assets.split(' ')[1];
+  }
+
+  getAssetPrecision = (assets) => {
+    return ((assets.split(' ')[0]).split('.')[1]).length;
+  }
+
   fromAssetsToFloat = (assets) => {
     return parseFloat(assets.split(' ')[0]);
   }
 
-  toAssetUnits = (amount, precision, asset) => {
+  toAssetUnits = (amount, precision, symbol) => {
     let value = parseFloat(amount).toFixed(precision);
-    return `${value} ${asset}`;
+    return `${value} ${symbol}`;
   }
 
 }

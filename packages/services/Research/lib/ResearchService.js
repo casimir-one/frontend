@@ -161,6 +161,19 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearch(researchId);
   }
 
+  getResearchWithOffchain(researchId) {
+    return Promise.all([
+      deipRpc.api.getResearchByIdAsync(researchId),
+      this.researchHttp.getResearch(researchId)
+    ])
+    .then(([onchain, offchain]) => {
+      return {
+        ...onchain,
+        researchRef: offchain
+      }
+    })
+  }
+
   updateResearch(researchId, milestones, videoSrc, partners, trl) {
     const update = {
       milestones,
