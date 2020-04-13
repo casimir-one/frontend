@@ -493,6 +493,7 @@ const funding_opportunity_announcement_contract_v1_0_0 = new Serializer("funding
   Object.assign({}, base_grant_contract_model, {
     organization_id: int64,
     review_committee_id: int64,
+    treasury_id: int64,
     funding_opportunity_number: string,
     award_ceiling: asset,
     award_floor: asset,

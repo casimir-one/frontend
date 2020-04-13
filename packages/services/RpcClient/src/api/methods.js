@@ -944,6 +944,29 @@ export default [{
         "status"
     ]
 },
+{
+  "api": "fo_history_api",
+  "method": "get_withdrawal_requests_history_by_award_number",
+  "params": [
+    "award_number"
+  ]
+},
+{
+  "api": "fo_history_api",
+  "method": "get_withdrawal_request_history_by_award_and_payment_number",
+  "params": [
+    "award_number",
+    "payment_number"
+  ]
+},
+{
+  "api": "fo_history_api",
+  "method": "get_withdrawal_requests_history_by_award_and_subaward_number",
+  "params": [
+    "award_number",
+    "subaward_number"
+  ]
+},
 
 // Organizational contracts
 {
