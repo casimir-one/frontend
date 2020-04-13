@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.5.0...v1.6.0) (2020-04-13)
+
+
+### Features
+
+* **@deip/grants-service:** Grant award withdrawal request api ([ea3e17c](https://gitlab.com/DEIP/deip-client-modules/commit/ea3e17c007b7df29ffdc001d73cd725c705c25ee))
+
+
+
+
+
 # [1.5.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.4.0...v1.5.0) (2020-04-03)
 
 **Note:** Version bump only for package @deip/research-service
