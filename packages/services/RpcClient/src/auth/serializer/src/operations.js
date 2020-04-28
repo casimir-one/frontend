@@ -55,6 +55,7 @@ const {
     time_point_sec,
     optional,
     asset,
+    percent
 } = types
 
 const future_extensions = types.void
@@ -68,19 +69,19 @@ const operation = static_variant();
 module.exports.operation = operation;
 
 // For module.exports
-const Serializer = function (operation_name, serilization_types_object) {
-    const s = new SerializerImpl(operation_name, serilization_types_object);
+const Serializer = function (operation_name, serilization_types_object, options = {}) {
+    const s = new SerializerImpl(operation_name, serilization_types_object, options);
     return module.exports[operation_name] = s;
 }
 
 const placeholder1 = new Serializer("placeholder1", {});
 const placeholder2 = new Serializer("placeholder2", {});
-
-const invitee = new Serializer("invitee", {
-    account: string,
-    rgt: uint32,
-    notes: string
-});
+const placeholder3 = new Serializer("placeholder3", {});
+const placeholder4 = new Serializer("placeholder4", {});
+const placeholder5 = new Serializer("placeholder5", {});
+const placeholder6 = new Serializer("placeholder6", {});
+const placeholder7 = new Serializer("placeholder7", {});
+const placeholder8 = new Serializer("placeholder8", {});
 
 const subawardee = new Serializer("subawardee", {
     subaward_number: string,
@@ -175,7 +176,20 @@ const authority = new Serializer("authority", {
     key_auths: map((public_key), (uint16))
 });
 
-const account_create = new Serializer("account_create", {
+const base_account_trait = {
+  _v: string
+}
+
+const research_group_v1_0_0 = new Serializer("research_group_v1_0_0",
+  Object.assign({}, base_account_trait, {
+    name: string,
+    permlink: string,
+    description: string,
+    threshold_overrides: map(uint16, authority)
+  })
+);
+
+const create_account = new Serializer("create_account", {
     fee: asset,
     creator: string,
     new_account_name: string,
@@ -183,16 +197,24 @@ const account_create = new Serializer("account_create", {
     active: authority,
     posting: authority,
     memo_key: public_key,
-    json_metadata: string
+    json_metadata: string,
+    traits: array(static_variant([
+      research_group_v1_0_0
+    ])),
+    extensions: set(future_extensions)
 });
 
-const account_update = new Serializer("account_update", {
+const update_account = new Serializer("update_account", {
     account: string,
     owner: optional(authority),
     active: optional(authority),
     posting: optional(authority),
-    memo_key: public_key,
-    json_metadata: string
+    memo_key: optional(public_key),
+    json_metadata: optional(string),
+    traits: optional(array(static_variant([
+      research_group_v1_0_0
+    ]))),
+    extensions: set(future_extensions)
 });
 
 const chain_properties = new Serializer("chain_properties", {
@@ -262,57 +284,72 @@ const change_recovery_account = new Serializer("change_recovery_account", {
 
 // DEIP native operations
 
-const base_research_group_management_model = {
-    version: string
-}
+const create_research = new Serializer("create_research", {
+  external_id: string,
+  research_group: string,
+  title: string,
+  abstract: string,
+  permlink: string,
+  disciplines: set(int64),
+  is_private:  bool,
+  review_share: percent,
+  compensation_share: optional(percent),
+  members: optional(set(string)),
+  extensions: set(future_extensions)
+});
 
-const dao_voting_research_group_management_model_v1_0_0 = new Serializer("dao_voting_research_group_management_model_v1_0_0",
-  Object.assign({}, base_research_group_management_model, {
-    default_quorum: uint32,
-    action_quorums: map((uint16), (uint32))
-  })
-);
+const create_research_content = new Serializer("create_research_content", {
+  external_id: string,
+  research_external_id: string,
+  research_group: string,
+  type: uint16,
+  title: string,
+  content: string,
+  permlink: string,
+  authors: set(string),
+  references: set(string),
+  foreign_references: set(string),
+  extensions: set(future_extensions)
+});
 
-const dao_multisig_research_group_management_model_v1_0_0 = new Serializer("dao_multisig_research_group_management_model_v1_0_0",
-  Object.assign({}, base_research_group_management_model, {
-    default_threshold: uint32,
-    action_thresholds: map((uint16), (uint32))
-  })
-);
+const create_research_token_sale = new Serializer("create_research_token_sale", {
+  research_group: string,
+  research_external_id: string,
+  start_time: time_point_sec,
+  end_time: time_point_sec,
+  share: percent,
+  soft_cap: asset,
+  hard_cap: asset,
+  extensions: set(future_extensions)
+});
 
-const centralized_research_group_management_model_v1_0_0 = new Serializer("centralized_research_group_management_model_v1_0_0",
-  Object.assign({}, base_research_group_management_model, {
-    heads: set(string)
-  })
-);
+const update_research = new Serializer("update_research", {
+  research_group: string,
+  external_id: string,
+  title: optional(string),
+  abstract: optional(string),
+  permlink: optional(string),
+  is_private: optional(bool),
+  review_share: optional(percent),
+  compensation_share: optional(percent),
+  members: optional(set(string)),
+  extensions: set(future_extensions)
+});
 
-const base_organizational_contract = {
-    version: string
-}
+const join_research_group_membership = new Serializer("join_research_group_membership", {
+  member: string,
+  research_group: string,
+  is_invitation: bool,
+  reward_share: percent,
+  researches: optional(set(string)),
+  extensions: set(future_extensions)
+});
 
-const organization_division_contract_v1_0_0 = new Serializer("organization_division_contract_v1_0_0",
-  Object.assign({}, base_organizational_contract, {
-    organization_id: int64,
-    unilateral_termination_allowed: bool,
-    organization_agents: set(invitee),
-    notes: string
-  })
-);
-
-const create_research_group = new Serializer("create_research_group", {
-    creator: string,
-    name: string,
-    permlink: string,
-    description: string,
-    type: uint32,
-    details: array(static_variant([
-      dao_voting_research_group_management_model_v1_0_0,
-      dao_multisig_research_group_management_model_v1_0_0,
-      centralized_research_group_management_model_v1_0_0,
-      organization_division_contract_v1_0_0
-    ])),
-    is_created_by_organization: bool,
-    invitees: set(invitee)
+const left_research_group_membership = new Serializer("left_research_group_membership", {
+  member: string,
+  research_group: string,
+  is_exclusion: bool,
+  extensions: set(future_extensions)
 });
 
 const create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
@@ -327,29 +364,6 @@ const vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertis
     voting_power: int64
 });
 
-const accept_research_token_offer = new Serializer("accept_research_token_offer", {
-    offer_research_tokens_id: int64,
-    buyer: string
-});
-
-const reject_research_token_offer = new Serializer("reject_research_token_offer", {
-    offer_research_tokens_id: int64,
-    buyer: string
-});
-
-const create_proposal = new Serializer("create_proposal", {
-    creator: string,
-    research_group_id: int64,
-    data: string,
-    action: uint16,
-    expiration_time: time_point_sec
-});
-
-const vote_proposal = new Serializer("vote_proposal", {
-    voter: string,
-    proposal_id: int64,
-    research_group_id: int64
-});
 
 const base_assessment_model = {
   version: string
@@ -380,19 +394,9 @@ const make_review = new Serializer("make_review", {
 });
 
 const contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
-    research_token_sale_id: int64,
-    owner: string,
+    research_external_id: string,
+    contributor: string,
     amount: asset
-});
-
-const approve_research_group_invite = new Serializer("approve_research_group_invite", {
-    "research_group_invite_id": int64,
-    "owner": string
-});
-
-const reject_research_group_invite = new Serializer("reject_research_group_invite", {
-    "research_group_invite_id": int64,
-    "owner": string
 });
 
 const vote_for_review = new Serializer("vote_for_review", {
@@ -407,14 +411,6 @@ const transfer_research_tokens_to_research_group = new Serializer("transfer_rese
     research_id: int64,
     owner: string,
     amount: uint32
-})
-
-const research_update = new Serializer("research_update", {
-    "research_id": int64,
-    "title": string,
-    "abstract": string,
-    "permlink": string,
-    "owner": string
 })
 
 const create_vesting_balance = new Serializer("create_vesting_balance", {
@@ -664,8 +660,6 @@ const fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_c
   request_id: int64
 });
 
-const add_member_to_research = new Serializer("add_member_to_research", {});
-const exclude_member_from_research = new Serializer("exclude_member_from_research", {});
 
 // virtual operations
 
@@ -710,6 +704,37 @@ const producer_reward = new Serializer("producer_reward", {
     common_tokens_amount: uint32
 });
 
+const op_wrapper = new Serializer("op_wrapper", { op: operation }, { nosort: true });
+
+const create_proposal = new Serializer("create_proposal", {
+  external_id: string,
+  creator: string,
+  proposed_ops: array(op_wrapper),
+  expiration_time: time_point_sec,
+  review_period_seconds: optional(uint32),
+  extensions: set(future_extensions)
+});
+
+const update_proposal = new Serializer("update_proposal", {
+  external_id: string,
+  posting_approvals_to_add: set(string),
+  posting_approvals_to_remove: set(string),
+  active_approvals_to_add: set(string),
+  active_approvals_to_remove: set(string),
+  owner_approvals_to_add: set(string),
+  owner_approvals_to_remove: set(string),
+  key_approvals_to_add: set(public_key),
+  key_approvals_to_remove: set(public_key),
+  extensions: set(future_extensions)
+});
+
+const delete_proposal = new Serializer("delete_proposal", {
+  external_id: string,
+  account: string,
+  authority: uint16,
+  extensions: set(future_extensions)
+});
+
 operation.st_operations = [
     vote_for_review, // 0
 
@@ -717,8 +742,8 @@ operation.st_operations = [
     transfer_to_common_tokens, // 2
     withdraw_common_tokens, // 3
 
-    account_create, // 4
-    account_update, // 5
+    create_account, // 4
+    update_account, // 5
 
     witness_update, // 6
     account_witness_vote, // 7
@@ -732,16 +757,16 @@ operation.st_operations = [
 
     // DEIP native operations
     placeholder1, // 13
-    create_research_group, // 14
+    delete_proposal, // 14
     create_proposal, // 15
-    vote_proposal, // 16
+    update_proposal, // 16
     make_review, // 17
     contribute_to_token_sale, // 18
-    approve_research_group_invite,// 19
-    reject_research_group_invite, // 20
+    placeholder2, // 19
+    placeholder3, // 20
     transfer_research_tokens_to_research_group, // 21
-    placeholder2, // 22
-    research_update, // 23 /* legacy */
+    placeholder4, // 22
+    placeholder5, // 23 /* legacy */
     create_vesting_balance, // 24
     withdraw_vesting_balance, // 25
     transfer_research_tokens, // 26
@@ -749,8 +774,8 @@ operation.st_operations = [
     revoke_expertise_delegation, // 28
     create_expertise_allocation_proposal, // 29
     vote_for_expertise_allocation_proposal, // 30
-    accept_research_token_offer, // 31
-    reject_research_token_offer, // 32
+    placeholder6, // 31
+    placeholder7, // 32
     create_grant, // 33
     create_grant_application, // 34
     make_review_for_application, // 35
@@ -767,20 +792,15 @@ operation.st_operations = [
     approve_award_withdrawal_request, // 46
     reject_award_withdrawal_request, // 47
     pay_award_withdrawal_request, // 48
+  
+    join_research_group_membership,
+    left_research_group_membership,
+    create_research,
+    create_research_content,
+    create_research_token_sale,
+    placeholder8,
+    update_research,
 
-    /* === IP Ledger module ===
-    add_member_to_research,
-    exclude_member_from_research,
-    create_nda_contract,
-    sign_nda_contract,
-    decline_nda_contract,
-    close_nda_contract,
-    create_request_by_nda_contract,
-    fulfill_request_by_nda_contract,
-    create_subscription,
-    adjust_subscription_extra_quota,
-    update_subscription,
-    */
 
     // virtual operations
     fill_common_tokens_withdraw,

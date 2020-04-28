@@ -225,6 +225,13 @@ export default [{
 },
 {
     "api": "database_api",
+    "method": "get_research_group",
+    "params": [
+      "account"
+    ]
+},
+{
+    "api": "database_api",
     "method": "get_research_group_by_permlink",
     "params": [
         "permlink"
@@ -242,13 +249,6 @@ export default [{
     "method": "get_all_research_groups",
     "params": [
         "is_personal_need"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_proposals_by_research_group_id",
-    "params": [
-        "id"
     ]
 },
 {
@@ -355,6 +355,13 @@ export default [{
 },
 {
     "api": "database_api",
+    "method": "get_research",
+    "params": [
+      "id"
+    ]
+},
+{
+    "api": "database_api",
     "method": "get_research_by_id",
     "params": [
         "id"
@@ -387,14 +394,6 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_research_listing",
-    "params": [
-        "from",
-        "limit"
-    ]
-},
-{
-    "api": "database_api",
     "method": "get_all_researches_listing",
     "params": [
         "discipline_id",
@@ -407,6 +406,13 @@ export default [{
     "params": [
         "research_id",
     ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_content",
+  "params": [
+    "id"
+  ]
 },
 {
     "api": "database_api",
@@ -466,6 +472,13 @@ export default [{
     "method": "get_proposal",
     "params": [
         "id"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_proposals_by_creator",
+    "params": [
+        "creator"
     ]
 },
 {

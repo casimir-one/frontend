@@ -8,8 +8,12 @@ class ResearchGroupHttp extends Singleton {
     super();
   }
 
-  sendCreateGroup(tx) {
-    return this.http.post('/api/groups', tx);
+  createResearchGroup({ tx, offchainMeta }) {
+    return this.http.post('/api/groups', { tx, offchainMeta });
+  }
+
+  updateResearchGroup({ tx, offchainMeta, isProposal}) {
+    return this.http.put('/api/groups', { tx, offchainMeta, isProposal });
   }
 
   getActivityLogsEntriesByResearchGroup(researchGroupId) {
@@ -26,6 +30,14 @@ class ResearchGroupHttp extends Singleton {
 
   createJoinRequest(data) {
     return this.http.post('/api/join-requests', data);
+  }
+
+  createResearchGroupInvite({ tx, offchainMeta, isProposal}) {
+    return this.http.post('/api/groups/invite', { tx, offchainMeta, isProposal });
+  }
+
+  leftResearchGroup({ tx, offchainMeta, isProposal }) {
+    return this.http.post('/api/groups/left', { tx, offchainMeta, isProposal });
   }
 
   updateJoinRequest(update) {

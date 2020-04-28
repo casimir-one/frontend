@@ -12,14 +12,6 @@ class UsersHttp extends Singleton {
     return this.http.get(`/api/user/profiles${this.http.buildQueryString(usernames, 'accounts')}`);
   }
 
-  createUserProfile(username, data) {
-    return this.http.post(`/api/user/profile/${username}`, data);
-  }
-
-  updateUserProfile(username, update) {
-    return this.http.put(`/api/user/profile/${username}`, update);
-  }
-
   searchUsersByName(name) {
     return this.http.get(`/users/search/${name}`);
   }

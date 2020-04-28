@@ -62,6 +62,40 @@ Types.asset = {
     }
 }
 
+
+Types.percent = {
+  fromByteBuffer(b) {
+    let amount = b.readInt64()
+    let precision = b.readUint8()
+    // "1.00 %" always written with full precision
+    let amount_string = fromImpliedDecimal(amount, precision)
+    return amount_string + " " + "%";
+  },
+  appendByteBuffer(b, object) {
+    object = object.trim()
+    if (!/^[0-9]+\.?[0-9]* [%]+$/.test(object))
+      throw new Error("Expecting amount like '50.00 %', instead got '" + object + "'")
+
+    let [amount, symbol] = object.split(" ")
+    if (symbol != "%")
+      throw new Error("Percent symbol % is not found")
+
+    b.writeInt64(v.to_long(amount.replace(".", "")))
+    let dot = amount.indexOf(".") // 0.00
+    let precision = dot === -1 ? 0 : amount.length - dot - 1
+    b.writeUint8(precision)
+    return
+  },
+  fromObject(object) {
+    return object
+  },
+  toObject(object, debug = {}) {
+    if (debug.use_default && object === undefined) { return "0.00 %"; }
+    return object
+  }
+}
+
+
 Types.uint8 = {
 
     fromByteBuffer(b) {

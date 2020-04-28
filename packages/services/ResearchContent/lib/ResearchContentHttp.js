@@ -8,20 +8,24 @@ class ResearchContentHttp extends Singleton {
     super();
   }
 
+  createResearchContent({ tx, offchainMeta, isProposal }) {
+    return this.http.post(`/content/publish`, { tx, offchainMeta, isProposal });
+  }
+
   getContentRefById(refId) {
     return this.http.get(`/content/refs/research/content-id/${refId}`);
   }
 
-  getContentRefByHash(researchId, hash) {
-    return this.http.get(`/content/refs/research/${researchId}/content-hash/${hash}`);
+  getContentRefByHash(researchExternalId, hash) {
+    return this.http.get(`/content/refs/research/${researchExternalId}/content-hash/${hash}`);
   }
 
-  getContentRefs({ researchId }) {
-    return this.http.get(`/content/refs/research/${researchId}`);
+  getContentRefs(researchExternalId) {
+    return this.http.get(`/content/refs/research/${researchExternalId}`);
   }
 
-  createDarContent(researchId) {
-    return this.http.post(`/content/dar/${researchId}`, {});
+  createDarContent(researchExternalId) {
+    return this.http.post(`/content/dar/${researchExternalId}`, {});
   }
 
   deleteContentDraft(refId) {

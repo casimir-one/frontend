@@ -3,7 +3,7 @@ import { Singleton } from '@deip/toolbox';
 
 class BlockchainService extends Singleton {
 
-  signOperation(operation, ownerKey) {
+  signOperations(operations, ownerKey) {
     return new Promise((resolve, reject) => {
       deipRpc.api.getDynamicGlobalProperties((err, result) => {
         if (!err) {
@@ -11,13 +11,13 @@ class BlockchainService extends Singleton {
           deipRpc.api.getBlockHeader(result.last_irreversible_block_num, (e, res) => {
             // TODO: switch to Buffer.from()
             const BlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
-            const now = new Date().getTime() + 3e6;
-            const expire = new Date(now).toISOString().split('.')[0];
+            const nowPlus1Hour = new Date().getTime() + 3e6;
+            const expire = new Date(nowPlus1Hour).toISOString().split('.')[0];
 
             const unsignedTX = {
               expiration: expire,
               extensions: [],
-              operations: [operation],
+              operations: operations,
               ref_block_num: BlockNum,
               ref_block_prefix: BlockPrefix
             };

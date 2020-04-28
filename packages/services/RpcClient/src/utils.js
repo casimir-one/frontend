@@ -16,7 +16,7 @@ export function validateAccountName(value) {
     if (length < 3) {
         return suffix + "be longer.";
     }
-    if (length > 16) {
+    if (length > 40) {
         return suffix + "be shorter.";
     }
     if (/\./.test(value)) {

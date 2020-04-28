@@ -1,15 +1,229 @@
 import deipRpc from '@deip/rpc-client';
+import crypto from '@deip/lib-crypto';
 import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
 import { Singleton } from '@deip/toolbox';
 import { researchContentTypes } from './lists';
 import { ResearchHttp } from './ResearchHttp';
+import { BlockchainService } from '@deip/blockchain-service';
+import { ProposalsService } from '@deip/proposals-service';
 
 class ResearchService extends Singleton {
   researchHttp = ResearchHttp.getInstance();
-
+  blockchainService = BlockchainService.getInstance();
   usersService = UsersService.getInstance();
   researchContentService = ResearchContentService.getInstance();
+  proposalsService = ProposalsService.getInstance();
+
+  createResearchViaOffchain(privKey, isProposal, {
+      researchGroup,
+      title,
+      abstract,
+      permlink,
+      disciplines,
+      isPrivate,
+      members,
+      reviewShare,
+      compensationShare,
+      extensions
+    }, {
+      videoSrc,
+      milestones,
+      partners,
+      trl
+    }
+  ) {
+
+    // TODO: move to buffer hash serializer
+    const encodeUint8Arr = (inputString) => new TextEncoder('utf-8').encode(inputString);
+    const externalId = crypto.hexify(crypto.ripemd160(encodeUint8Arr(`${researchGroup}${title}${abstract}${permlink}${new Date().getTime()}`).buffer));
+    
+    const op = {
+      external_id: externalId,
+      research_group: researchGroup,
+      title,
+      abstract,
+      permlink,
+      disciplines,
+      is_private: isPrivate,
+      members,
+      review_share: reviewShare,
+      compensation_share: compensationShare,
+      extensions
+    }
+
+    const offchainMeta = {
+      videoSrc,
+      milestones,
+      partners,
+      trl
+    };
+
+    const operation = ['create_research', op];
+
+    if (isProposal)
+    {
+      const proposal = {
+        creator: researchGroup,
+        proposedOps: [{ "op": operation }],
+        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+        reviewPeriodSeconds: undefined,
+        extensions: []
+      }
+
+      return this.proposalsService.createProposal(privKey, false, proposal)
+        .then(({ tx: signedProposalTx }) => {
+          return this.researchHttp.createResearch({ tx: signedProposalTx, offchainMeta, isProposal })
+        })
+
+    } else {
+
+      return this.blockchainService.signOperations([operation], privKey)
+        .then((signedTx) => {
+          return this.researchHttp.createResearch({ tx: signedTx, offchainMeta, isProposal })
+        })
+
+    }
+  }
+
+  createResearchTokenSaleViaOffchain(privKey, isProposal, {
+    researchGroup,
+    researchExternalId,
+    startTime,
+    endTime,
+    share,
+    softCap,
+    hardCap,
+    extensions
+  }) {
+
+    const op = {
+      research_group: researchGroup,
+      research_external_id: researchExternalId,
+      start_time: startTime,
+      end_time: endTime,
+      share,
+      soft_cap: softCap,
+      hard_cap: hardCap,
+      extensions
+    }
+
+    const offchainMeta = {};
+    const operation = ['create_research_token_sale', op];
+
+    if (isProposal) {
+
+      const proposal = {
+        creator: researchGroup,
+        proposedOps: [{ "op": operation }],
+        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+        reviewPeriodSeconds: undefined,
+        extensions: []
+      }
+
+      return this.proposalsService.createProposal(privKey, false, proposal)
+        .then(({ tx: signedProposalTx }) => {
+          return this.researchHttp.createResearchTokenSale({ tx: signedProposalTx, offchainMeta, isProposal })
+        })
+
+    } else {
+
+      return this.blockchainService.signOperations([operation], privKey)
+        .then((signedTx) => {
+          return this.researchHttp.createResearchTokenSale({ tx: signedTx, offchainMeta, isProposal })
+      });
+
+    }
+  }
+
+  updateResearchViaOffchain(privKey, isProposal, {
+    researchGroup,
+    externalId,
+    title,
+    abstract,
+    permlink,
+    isPrivate,
+    reviewShare,
+    compensationShare,
+    members,
+    extensions
+  }) {
+      
+    const op = {
+      research_group: researchGroup,
+      external_id: externalId,
+      title,
+      abstract,
+      permlink,
+      is_private: isPrivate,
+      review_share: reviewShare,
+      compensation_share: compensationShare,
+      members,
+      extensions
+    }
+
+    const operation = ['update_research', op];
+
+    if (isProposal) {
+
+      const proposal = {
+        creator: researchGroup,
+        proposedOps: [{ "op": operation }],
+        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+        reviewPeriodSeconds: undefined,
+        extensions: []
+      }
+
+      return this.proposalsService.createProposal(privKey, false, proposal)
+        .then(({ tx: signedProposalTx }) => {
+          return this.researchHttp.updateResearch({ tx: signedProposalTx, isProposal })
+        })
+
+    } else {
+
+      return this.blockchainService.signOperations([operation], privKey)
+        .then((signedTx) => {
+          return this.researchHttp.updateResearch({ tx: signedTx, isProposal })
+        });
+    }
+  }
+
+  updateResearchOffchainMeta({ 
+    researchExternalId, 
+    milestones, 
+    videoSrc, 
+    partners, 
+    trl
+  }) {
+
+    const update = {
+      milestones,
+      videoSrc,
+      partners,
+      trl
+    };
+
+    return this.researchHttp.updateResearchMeta(researchExternalId, update);
+  }
+
+  contributeToResearchTokenSaleViaOffchain(privKey, {
+    researchExternalId,
+    contributor,
+    amount
+  }) {
+
+    const op = {
+      research_external_id: researchExternalId,
+      contributor,
+      amount
+    }
+
+    const operation = ['contribute_to_token_sale', op];
+    return this.blockchainService.signOperations([operation], privKey)
+      .then((signedTx) => { 
+        return this.researchHttp.contributeResearchTokenSale({ tx: signedTx })
+      });
+  }
 
   async getResearchContentOuterReferences(researchContent, acc) {
     const outerReferences = await deipRpc.api.getContentsReferToContentAsync(researchContent.id);
@@ -31,8 +245,8 @@ class ResearchService extends Singleton {
       const outerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(outerRefResearch.research_group_id);
       const outerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
 
-      const hash = outerRefResearchContent.content.split(':')[1];
-      const ref = await this.researchContentService.getContentRefByHash(outerRefResearch.id, hash);
+      const hash = outerRefResearchContent.content;
+      const ref = await this.researchContentService.getContentRefByHash(outerRefResearch.external_id, hash);
 
       const authorsProfiles = await this.usersService.getEnrichedProfiles(outerRefResearchContent.authors);
 
@@ -71,8 +285,8 @@ class ResearchService extends Singleton {
       const innerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(innerRefResearch.research_group_id);
       const innerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(referenceResearchContentId);
 
-      const hash = innerRefResearchContent.content.split(':')[1];
-      const ref = await this.researchContentService.getContentRefByHash(innerRefResearch.id, hash);
+      const hash = innerRefResearchContent.content;
+      const ref = await this.researchContentService.getContentRefByHash(innerRefResearch.external_id, hash);
 
       const authorsProfiles = await this.usersService.getEnrichedProfiles(innerRefResearchContent.authors);
 
@@ -95,8 +309,8 @@ class ResearchService extends Singleton {
     const research = await deipRpc.api.getResearchByIdAsync(researchContent.research_id);
     const researchGroup = await deipRpc.api.getResearchGroupByIdAsync(research.research_group_id);
 
-    const hash = researchContent.content.split(':')[1];
-    const ref = await this.researchContentService.getContentRefByHash(research.id, hash);
+    const hash = researchContent.content;
+    const ref = await this.researchContentService.getContentRefByHash(research.external_id, hash);
 
     const authorsProfiles = await this.usersService.getEnrichedProfiles(researchContent.authors);
 
@@ -172,17 +386,6 @@ class ResearchService extends Singleton {
         researchRef: offchain
       }
     })
-  }
-
-  updateResearch(researchId, milestones, videoSrc, partners, trl) {
-    const update = {
-      milestones,
-      videoSrc,
-      partners,
-      trl
-    };
-
-    return this.researchHttp.updateResearch(researchId, update);
   }
 }
 

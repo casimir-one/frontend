@@ -4,6 +4,16 @@ import { Singleton } from '@deip/toolbox';
 class UserHttp extends Singleton {
   http = HttpService.getInstance();
 
+  // Settings
+
+  updateUserAccount(username, { tx }) {
+    return this.http.put(`/api/user/account/${username}`, { tx });
+  }
+
+  updateUserProfile(username, update) {
+    return this.http.put(`/api/user/profile/${username}`, update);
+  }
+
   // Notifications
 
   getNotificationsByUser(username) {

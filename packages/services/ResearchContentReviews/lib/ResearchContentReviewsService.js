@@ -26,7 +26,7 @@ class ResearchContentReviewsService extends Singleton {
     };
 
     const operation = ['make_review', review];
-    return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
+    return this.blockchainService.signOperations([operation], this.accessService.getOwnerWif())
       .then((signedTx) => this.researchContentReviewsHttp.sendMakeReviewOp(signedTx));
   }
  
