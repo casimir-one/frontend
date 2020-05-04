@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.6.0...v1.7.0) (2020-05-04)
+
+
+### Features
+
+* **@deip/proposals-service:** Multisignature proposals ([a63a9b9](https://gitlab.com/DEIP/deip-client-modules/commit/a63a9b90f275718ef0b2ef13390c1d9d1391d84c))
+
+
+
+
+
 # 1.1.0 (2020-03-20)
 
 
