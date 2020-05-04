@@ -1,9 +1,11 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
+import { BlockchainService } from '@deip/blockchain-service';
 
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
+  blockchainService = BlockchainService.getInstance();
 
   getUserProfile(username) {
     return this.usersHttp.getUserProfile(username);
@@ -11,14 +13,6 @@ class UsersService extends Singleton {
 
   getUsersProfiles(usernames) {
     return this.usersHttp.getUsersProfiles(usernames);
-  }
-
-  createUserProfile(username, data) {
-    return this.usersHttp.createUserProfile(username, data);
-  }
-
-  updateUserProfile(username, update) {
-    return this.usersHttp.updateUserProfile(username, update);
   }
 
   searchUsersByName(name) {

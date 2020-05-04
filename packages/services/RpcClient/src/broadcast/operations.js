@@ -16,7 +16,7 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "account_create",
+    "operation": "create_account",
     "params": [
         "fee",
         "creator",
@@ -25,18 +25,22 @@ module.exports = [{
         "active",
         "posting",
         "memo_key",
-        "json_metadata"
+        "json_metadata",
+        "traits",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "account_update",
+    "operation": "update_account",
     "params": [
         "account",
         "owner",
         "active",
         "posting",
         "memo_key",
-        "json_metadata"
+        "json_metadata",
+        "traits",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -116,36 +120,120 @@ module.exports = [{
 },
   {
     "roles": ["active", "owner"],
-    "operation": "create_research_group",
+    "operation": "delete_proposal",
     "params": [
-        "creator",
-        "name",
-        "permlink",
-        "description",
-        "type",
-        "details",
-        "is_created_by_organization",
-        "invitees"
+      "external_id",
+      "account",
+      "authority",
+      "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
     "operation": "create_proposal",
     "params": [
-        "creator",
-        "research_group_id",
-        "data",
-        "action",
-        "expiration_time"
+      "external_id",
+      "creator",
+      "proposed_ops",
+      "expiration_time",
+      "review_period_seconds",
+      "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "vote_proposal",
+    "operation": "update_proposal",
     "params": [
-        "voter",
-        "proposal_id",
-        "research_group_id"
+      "external_id",
+      "posting_approvals_to_add",
+      "posting_approvals_to_remove",
+      "active_approvals_to_add",
+      "active_approvals_to_remove",
+      "owner_approvals_to_add",
+      "owner_approvals_to_remove",
+      "key_approvals_to_add",
+      "key_approvals_to_remove",
+      "extensions"
     ]
-}, {
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "join_research_group_membership",
+    "params": [
+      "member",
+      "research_group",
+      "is_invitation",
+      "reward_share",
+      "researches",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "left_research_group_membership",
+    "params": [
+      "member",
+      "research_group",
+      "is_exclusion",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "create_research",
+    "params": [
+      "external_id",
+      "research_group",
+      "title",
+      "abstract",
+      "permlink",
+      "disciplines",
+      "is_private",
+      "review_share",
+      "compensation_share",
+      "members",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "create_research_content",
+    "params": [
+      "external_id",
+      "research_external_id",
+      "research_group",
+      "type",
+      "title",
+      "content",
+      "permlink",
+      "authors",
+      "references",
+      "foreign_references",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "create_research_token_sale",
+    "params": [
+      "research_group",
+      "research_external_id",
+      "start_time",
+      "end_time",
+      "share",
+      "soft_cap",
+      "hard_cap",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "update_research",
+    "params": [
+      "research_group",
+      "external_id",
+      "title",
+      "abstract",
+      "permlink",
+      "is_private",
+      "review_share",
+      "compensation_share",
+      "members",
+      "extensions"
+    ]
+  }, {
     "roles": ["active", "owner"],
     "operation": "delegate_expertise",
     "params": [
@@ -176,23 +264,9 @@ module.exports = [{
     "roles": ["active", "owner"],
     "operation": "contribute_to_token_sale",
     "params": [
-        "research_token_sale_id",
-        "owner",
+        "research_external_id",
+        "contributor",
         "amount"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "approve_research_group_invite",
-    "params": [
-        "research_group_invite_id",
-        "owner"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "reject_research_group_invite",
-    "params": [
-        "research_group_invite_id",
-        "owner"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -211,16 +285,6 @@ module.exports = [{
         "research_id",
         "owner",
         "amount"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "research_update",
-    "params": [
-        "research_id",
-        "title",
-        "abstract",
-        "permlink",
-        "owner"
     ]
 }, {
     "roles": ["active", "owner"],
@@ -280,20 +344,6 @@ module.exports = [{
         "proposal_id",
         "voter",
         "voting_power"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "accept_research_token_offer",
-    "params": [
-        "offer_research_tokens_id",
-        "buyer"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "reject_research_token_offer",
-    "params": [
-        "offer_research_tokens_id",
-        "buyer"
     ]
 }, {
     "roles": ["active", "owner"],

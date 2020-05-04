@@ -33,7 +33,7 @@ class DisciplinesService extends Singleton {
       description
     };
     const operation = ['create_expertise_allocation_proposal', claim];
-    return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
+    return this.blockchainService.signOperations([operation], this.accessService.getOwnerWif())
       .then((signedTx) => this.disciplinesHttp.createExpertiseClaim(signedTx, publications));
   }
 
@@ -45,7 +45,7 @@ class DisciplinesService extends Singleton {
     };
 
     const operation = ['vote_for_expertise_allocation_proposal', vote];
-    return this.blockchainService.signOperation(operation, this.accessService.getOwnerWif())
+    return this.blockchainService.signOperations([operation], this.accessService.getOwnerWif())
       .then((signedTx) => this.disciplinesHttp.voteForExpertiseClaim(signedTx));
   }
 }

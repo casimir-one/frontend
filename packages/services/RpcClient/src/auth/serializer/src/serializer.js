@@ -5,9 +5,10 @@ const HEX_DUMP = process.env.npm_config__graphene_serializer_hex_dump
 
 class Serializer {
     
-    constructor(operation_name, types) {
+    constructor(operation_name, types, { nosort = false }) {
         this.operation_name = operation_name
         this.types = types
+        this.nosort = nosort;
         if(this.types)
             this.keys = Object.keys(this.types)
         

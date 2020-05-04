@@ -1,9 +1,18 @@
 import get from "lodash/get";
 import { key_utils } from "./auth/ecc";
+import ChainTypes from "./auth/serializer/src/ChainTypes";
 
 module.exports = deipAPI => {
     function numberWithCommas(x) {
         return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function getOperationTag(op_name) {
+      return ChainTypes.operations[op_name];
+    }
+
+    function getOperationsEnum() {
+      return ChainTypes.operations;
     }
 
     function vestingDeip(account, gprops) {
@@ -192,6 +201,8 @@ module.exports = deipAPI => {
         numberWithCommas,
         vestingDeip,
         estimateAccountValue,
-        createSuggestedPassword
+        createSuggestedPassword,
+        getOperationTag,
+        getOperationsEnum
     };
 };
