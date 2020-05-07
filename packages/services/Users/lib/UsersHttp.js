@@ -12,8 +12,8 @@ class UsersHttp extends Singleton {
     return this.http.get(`/api/user/profiles${this.http.buildQueryString(usernames, 'accounts')}`);
   }
 
-  searchUsersByName(name) {
-    return this.http.get(`/users/search/${name}`);
+  getActiveUsersProfiles() {
+    return this.http.get(`/api/user/active`);
   }
 }
 

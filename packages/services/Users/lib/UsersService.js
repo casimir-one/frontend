@@ -11,12 +11,18 @@ class UsersService extends Singleton {
     return this.usersHttp.getUserProfile(username);
   }
 
-  getUsersProfiles(usernames) {
-    return this.usersHttp.getUsersProfiles(usernames);
-  }
-
-  searchUsersByName(name) {
-    return this.usersHttp.searchUsersByName(name);
+  getActiveUsers() {
+    const profiles = [];
+    return this.usersHttp.getActiveUsersProfiles()
+      .then((items) => {
+        profiles.push(...items);
+        return deipRpc.api.getAccountsAsync(profiles.map(p => p._id));
+      })
+      .then((accounts) => {
+        return profiles.reduce((acc, profile, i) => {
+          return [...acc, { account: accounts[i], profile }];
+        }, []);
+      });
   }
 
   getEnrichedProfiles(usernames) {
