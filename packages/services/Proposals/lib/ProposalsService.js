@@ -1,6 +1,4 @@
 import deipRpc from '@deip/rpc-client';
-import crypto from '@deip/lib-crypto';
-
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 
@@ -19,27 +17,30 @@ class ProposalsService extends Singleton {
     expirationTime,
     reviewPeriodSeconds,
     extensions
-  }) {
+  }, refBlock = {}) {
+    
+    const { refBlockNum, refBlockPrefix } = refBlock;
+    const refBlockPromise = refBlockNum && refBlockPrefix
+      ? Promise.resolve({ refBlockNum, refBlockPrefix })
+      : this.blockchainService.getRefBlockSummary();
 
-    // TODO: move to buffer hash serializer
-    const encodeUint8Arr = (inputString) => new TextEncoder('utf-8').encode(inputString);
-    const externalId = crypto.hexify(crypto.ripemd160(encodeUint8Arr(`${creator}${JSON.stringify(proposedOps)}${expirationTime}${reviewPeriodSeconds}${new Date().getTime()}`).buffer));
+    return refBlockPromise
+      .then((refBlock) => {
 
-    const op = {
-      external_id: externalId,
-      creator: creator,
-      proposed_ops: proposedOps,
-      expiration_time: expirationTime,
-      review_period_seconds: reviewPeriodSeconds,
-      extensions
-    }
+        const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
+          creator: creator,
+          proposed_ops: proposedOps,
+          expiration_time: expirationTime,
+          review_period_seconds: reviewPeriodSeconds,
+          extensions
+        }], refBlock);
 
-    const operation = ['create_proposal', op];
-    return this.blockchainService.signOperations([ operation ], privKey)
-      .then((signedTx) => {
-        return propagate 
-          ? this.proposalsHttp.createProposal({ tx: signedTx }) 
-          : Promise.resolve({ tx: signedTx });
+        return this.blockchainService.signOperations([create_proposal_op], privKey, refBlock)
+          .then((signedTx) => {
+            return propagate
+              ? this.proposalsHttp.createProposal({ tx: signedTx })
+              : Promise.resolve({ tx: signedTx });
+          })
       })
   }
 
@@ -110,7 +111,7 @@ class ProposalsService extends Singleton {
   getProposalDetails(proposal) {
     const { proposed_transaction: { operations: [ [ op_name, op_payload ], ...rest ] } } = proposal;
 
-    const op_tag = deipRpc.formatter.getOperationTag(op_name);
+    const op_tag = deipRpc.operations.getOperationTag(op_name);
     const extender = extenderMap[op_tag];
 
     if (!extender) {

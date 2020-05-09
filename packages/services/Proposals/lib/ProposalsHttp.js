@@ -13,7 +13,11 @@ class ProposalsHttp extends Singleton {
   }
 
   deleteProposal({ tx }) {
-    return this.http.delete(`/api/proposals`, { tx });
+    return this.http.put(`/api/proposals/delete`, { tx });
+  }
+
+  getUserProfile(username) {
+    return this.http.get(`/api/user/profiles${this.http.buildQueryString([username], 'accounts')}`);
   }
 }
 

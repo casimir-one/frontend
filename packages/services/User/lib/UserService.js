@@ -66,13 +66,9 @@ class UserService extends Singleton {
     return this.userHttp.removeResearchBookmark(username, bookmarkId);
   }
 
-  approveInvite(groupId, owner) {
-
-  }
-
-  rejectInvite(groupId, owner) {
-
-  }
+  getUserInvites(username) {
+    return this.userHttp.getInvitesByUser(username);
+  }  
 }
 
 export {

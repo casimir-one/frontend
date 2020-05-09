@@ -3,35 +3,46 @@ import { Singleton } from '@deip/toolbox';
 
 class BlockchainService extends Singleton {
 
-  signOperations(operations, ownerKey) {
-    return new Promise((resolve, reject) => {
-      deipRpc.api.getDynamicGlobalProperties((err, result) => {
-        if (!err) {
-          const BlockNum = (result.last_irreversible_block_num - 1) & 0xFFFF;
-          deipRpc.api.getBlockHeader(result.last_irreversible_block_num, (e, res) => {
-            // TODO: switch to Buffer.from()
-            const BlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
-            const nowPlus1Hour = new Date().getTime() + 3e6;
-            const expire = new Date(nowPlus1Hour).toISOString().split('.')[0];
+  getRefBlockSummary() {
+    let refBlockNum;
+    let refBlockPrefix;
 
-            const unsignedTX = {
-              expiration: expire,
-              extensions: [],
-              operations: operations,
-              ref_block_num: BlockNum,
-              ref_block_prefix: BlockPrefix
-            };
+    return deipRpc.api.getDynamicGlobalPropertiesAsync()
+      .then((res, err) => {
+        if (err) throw new Error(err);
+        refBlockNum = (res.last_irreversible_block_num - 1) & 0xFFFF;
+        return deipRpc.api.getBlockHeaderAsync(res.last_irreversible_block_num);
+      })
+      .then((res, err) => {
+        if (err) throw new Error(err);
+        refBlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
+        return { refBlockNum, refBlockPrefix};
+      })
+  }
 
-            try {
-              const signedTX = deipRpc.auth.signTransaction(unsignedTX, { owner: ownerKey });
-              resolve(signedTX);
-            } catch (err) {
-              reject(err);
-            }
-          });
-        }
+  signOperations(operations, privKey, refBlock = {}) {
+
+    const { refBlockNum, refBlockPrefix } = refBlock;
+    const refBlockPromise = refBlockNum && refBlockPrefix 
+      ? Promise.resolve({ refBlockNum, refBlockPrefix })
+      : this.getRefBlockSummary();
+    
+    return refBlockPromise
+      .then(({ refBlockNum, refBlockPrefix }) => {
+        const nowPlus1Hour = new Date().getTime() + 3e6;
+        const expire = new Date(nowPlus1Hour).toISOString().split('.')[0];
+
+        const unsignedTX = {
+          expiration: expire,
+          extensions: [],
+          operations: operations,
+          ref_block_num: refBlockNum,
+          ref_block_prefix: refBlockPrefix
+        };
+
+        const signedTX = deipRpc.auth.signTransaction(unsignedTX, { owner: privKey });
+        return signedTX;
       });
-    });
   }
 
   async getTransaction(trxId) {

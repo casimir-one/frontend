@@ -44,12 +44,8 @@ class UserHttp extends Singleton {
 
   // Invites
 
-  sendApproveInvite(tx) {
-    return this.http.post('/api/invites/approve', tx);
-  }
-
-  sendRejectInvite(tx) {
-    return this.http.post('/api/invites/reject', tx);
+  getInvitesByUser(username) {
+    return this.http.get(`/api/invites/${username}`);
   }
 }
 

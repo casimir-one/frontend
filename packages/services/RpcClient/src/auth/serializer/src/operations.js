@@ -202,7 +202,7 @@ const create_account = new Serializer("create_account", {
       research_group_v1_0_0
     ])),
     extensions: set(future_extensions)
-});
+}, { entity_external_id: "new_account_name" });
 
 const update_account = new Serializer("update_account", {
     account: string,
@@ -296,7 +296,8 @@ const create_research = new Serializer("create_research", {
   compensation_share: optional(percent),
   members: optional(set(string)),
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
+
 
 const create_research_content = new Serializer("create_research_content", {
   external_id: string,
@@ -310,7 +311,7 @@ const create_research_content = new Serializer("create_research_content", {
   references: set(string),
   foreign_references: set(string),
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 const create_research_token_sale = new Serializer("create_research_token_sale", {
   research_group: string,
@@ -339,7 +340,6 @@ const update_research = new Serializer("update_research", {
 const join_research_group_membership = new Serializer("join_research_group_membership", {
   member: string,
   research_group: string,
-  is_invitation: bool,
   reward_share: percent,
   researches: optional(set(string)),
   extensions: set(future_extensions)
@@ -713,7 +713,7 @@ const create_proposal = new Serializer("create_proposal", {
   expiration_time: time_point_sec,
   review_period_seconds: optional(uint32),
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 const update_proposal = new Serializer("update_proposal", {
   external_id: string,
