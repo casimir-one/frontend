@@ -29,7 +29,7 @@ class ResearchService extends Singleton {
       videoSrc,
       milestones,
       partners,
-      trl
+      tenantCriterias
     }
   ) {
 
@@ -53,7 +53,7 @@ class ResearchService extends Singleton {
           videoSrc,
           milestones,
           partners,
-          trl
+          tenantCriterias
         };
 
 
@@ -351,14 +351,14 @@ class ResearchService extends Singleton {
     milestones, 
     videoSrc, 
     partners, 
-    trl
+    tenantCriterias
   }) {
 
     const update = {
       milestones,
       videoSrc,
       partners,
-      trl
+      tenantCriterias
     };
 
     return this.researchHttp.updateResearchMeta(researchExternalId, update);
