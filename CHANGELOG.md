@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.10.0...v1.11.0) (2020-05-14)
+
+
+### Features
+
+* **@deip/research-service:** Tenant dynamic criterias; ([f5fbd6e](https://gitlab.com/DEIP/deip-client-modules/commit/f5fbd6e7a4e59df5700d6125595d7ac06fe0413a))
+
+
+
+
+
 # [1.10.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.9.0...v1.10.0) (2020-05-14)
 
 
