@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.9.0...v1.10.0) (2020-05-14)
+
+
+### Features
+
+* **@deip/proposals-service:** External id serializer; Services api params ([2c86e03](https://gitlab.com/DEIP/deip-rpc/commit/2c86e03882b048bc0f20a754008188007bf5d4ef))
+
+
+
+
+
 # [1.7.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.6.0...v1.7.0) (2020-05-04)
 
 
