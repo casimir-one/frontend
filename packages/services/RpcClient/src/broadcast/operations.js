@@ -159,7 +159,6 @@ module.exports = [{
     "params": [
       "member",
       "research_group",
-      "is_invitation",
       "reward_share",
       "researches",
       "extensions"

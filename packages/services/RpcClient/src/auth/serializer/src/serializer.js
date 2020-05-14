@@ -1,14 +1,17 @@
 var ByteBuffer = require('bytebuffer');
 var EC = require('./error_with_cause');
+var Types = require('./types');
+
 
 const HEX_DUMP = process.env.npm_config__graphene_serializer_hex_dump
 
 class Serializer {
-    
-    constructor(operation_name, types, { nosort = false }) {
+    constructor(operation_name, types, { nosort = false, entity_external_id = null}) {
         this.operation_name = operation_name
         this.types = types
         this.nosort = nosort;
+        this.entity_external_id = entity_external_id;
+
         if(this.types)
             this.keys = Object.keys(this.types)
         
@@ -188,9 +191,43 @@ class Serializer {
         return b.copy(0, b.offset);
     }
     
-    toBuffer(object){
+    toBuffer(object) {
         return new Buffer(this.toByteBuffer(object).toBinary(), 'binary');
     }
+
+    toEntityExternalIdByteBuffer(object, { refBlockNum, refBlockPrefix }) {
+      var b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
+
+      Types.uint16.appendByteBuffer(b, refBlockNum);
+      Types.uint32.appendByteBuffer(b, refBlockPrefix);
+
+      var field = null;
+      try {
+        var iterable = this.keys.filter(k => k != this.entity_external_id);
+        for (var i = 0, field; i < iterable.length; i++) {
+          field = iterable[i];
+          var type = this.types[field];
+          type.appendByteBuffer(b, object[field]);
+        }
+
+      } catch (error) {
+        try {
+          EC.throw(this.operation_name + '.' + field + " = " + JSON.stringify(object[field]), error);
+        } catch (e) { // circular ref
+          EC.throw(this.operation_name + '.' + field + " = " + object[field], error);
+        }
+      }
+
+      return b.copy(0, b.offset);
+    }
+
+    toEntityExternalIdBuffer(object, { refBlockNum, refBlockPrefix }) {
+      if (!refBlockNum || !refBlockPrefix) {
+        throw new Error("Reference summary is required for TaPoS");
+      }
+      return new Buffer(this.toEntityExternalIdByteBuffer(object, { refBlockNum, refBlockPrefix }).toBinary(), 'binary');
+    }
+
 }
 
 module.exports = Serializer

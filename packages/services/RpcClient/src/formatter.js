@@ -7,14 +7,6 @@ module.exports = deipAPI => {
         return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    function getOperationTag(op_name) {
-      return ChainTypes.operations[op_name];
-    }
-
-    function getOperationsEnum() {
-      return ChainTypes.operations;
-    }
-
     function vestingDeip(account, gprops) {
         const vests = parseFloat(account.vesting_shares.split(" ")[0]);
         const total_vests = parseFloat(gprops.total_vesting_shares.split(" ")[0]);
@@ -201,8 +193,6 @@ module.exports = deipAPI => {
         numberWithCommas,
         vestingDeip,
         estimateAccountValue,
-        createSuggestedPassword,
-        getOperationTag,
-        getOperationsEnum
+        createSuggestedPassword
     };
 };
