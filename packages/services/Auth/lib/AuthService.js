@@ -8,6 +8,10 @@ class AuthService extends Singleton {
     return this.$http.signIn(model);
   }
 
+  adminSignIn(model) {
+    return this.$http.adminSignIn(model);
+  }
+
   preliminaryRegistration(model) {
     return this.$http.preliminaryRegistration(model);
   }
