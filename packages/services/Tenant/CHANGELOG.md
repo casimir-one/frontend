@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.11.0...v1.12.0) (2020-05-15)
+
+
+### Features
+
+* **@deip/tenant-service:** Tenant sign-in; ([9c17a98](https://gitlab.com/DEIP/deip-client-modules/commit/9c17a98222fbe61e1bab86814e1714645674ce44))
+
+
+
+
+
 # [1.9.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.8.0...v1.9.0) (2020-05-07)
 
 
