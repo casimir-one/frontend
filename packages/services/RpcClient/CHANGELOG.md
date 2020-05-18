@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.12.0...v1.13.0) (2020-05-18)
+
+
+### Features
+
+* **@deip/rpc-client:** Research share transfer operation ([020f824](https://gitlab.com/DEIP/deip-rpc/commit/020f8243189f425915ac70cf8cb096a466798b74))
+
+
+
+
+
 # [1.10.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.9.0...v1.10.0) (2020-05-14)
 
 
