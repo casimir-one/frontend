@@ -82,6 +82,7 @@ const placeholder5 = new Serializer("placeholder5", {});
 const placeholder6 = new Serializer("placeholder6", {});
 const placeholder7 = new Serializer("placeholder7", {});
 const placeholder8 = new Serializer("placeholder8", {});
+const placeholder9 = new Serializer("placeholder9", {});
 
 const subawardee = new Serializer("subawardee", {
     subaward_number: string,
@@ -406,13 +407,6 @@ const vote_for_review = new Serializer("vote_for_review", {
     "weight": int16
 });
 
-const transfer_research_tokens_to_research_group = new Serializer("transfer_research_tokens_to_research_group", {
-    research_token_id: int64,
-    research_id: int64,
-    owner: string,
-    amount: uint32
-})
-
 const create_vesting_balance = new Serializer("create_vesting_balance", {
     "creator": string,
     "owner": string,
@@ -440,11 +434,12 @@ const withdraw_vesting_balance = new Serializer("withdraw_vesting_balance", {
     "amount": asset
 })
 
-const transfer_research_tokens = new Serializer("transfer_research_tokens", {
-    research_id: int64,
+const transfer_research_share = new Serializer("transfer_research_share", {
+    research_external_id: string,
     sender: string,
     receiver: string,
-    amount: uint32
+    share: percent,
+    extensions: set(future_extensions)
 })
 
 const transfer_to_common_tokens = new Serializer("transfer_to_common_tokens", {
@@ -764,12 +759,13 @@ operation.st_operations = [
     contribute_to_token_sale, // 18
     placeholder2, // 19
     placeholder3, // 20
-    transfer_research_tokens_to_research_group, // 21
+    placeholder9, // 21
     placeholder4, // 22
     placeholder5, // 23 /* legacy */
     create_vesting_balance, // 24
     withdraw_vesting_balance, // 25
-    transfer_research_tokens, // 26
+
+    transfer_research_share, // 26
     delegate_expertise, // 27
     revoke_expertise_delegation, // 28
     create_expertise_allocation_proposal, // 29

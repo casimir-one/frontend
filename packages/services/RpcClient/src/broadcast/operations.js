@@ -278,15 +278,6 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "transfer_research_tokens_to_research_group",
-    "params": [
-        "research_token_id",
-        "research_id",
-        "owner",
-        "amount"
-    ]
-}, {
-    "roles": ["active", "owner"],
     "operation": "create_vesting_balance",
     "params": [
         "creator",
@@ -306,12 +297,13 @@ module.exports = [{
     ]
 }, {
     "roles": ["active", "owner"],
-    "operation": "transfer_research_tokens",
+    "operation": "transfer_research_share",
     "params": [
-        "research_id",
+        "research_external_id",
         "sender",
         "receiver",
-        "amount"
+        "share",
+        "extensions"
     ]
 }, {
     "roles": ["active", "owner"],
