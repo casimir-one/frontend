@@ -3,6 +3,7 @@ import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
 import { Singleton } from '@deip/toolbox';
 import { researchContentTypes } from './lists';
+import { RESEARCH_APPLICATION_STATUS } from './constants';
 import { ResearchHttp } from './ResearchHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
@@ -134,26 +135,25 @@ class ResearchService extends Singleton {
   }
 
 
-  createResearchApplicationViaOffchain({
-    researcher,
-    researcherPubKey,
-    researcherPrivKey,
-    admin
-  }, {
-      fee,
-      researchGroupName,
-      researchGroupPermlink,
-      researchDescription,
+  createResearchApplicationViaOffchain(researcherPrivKey, formData) {
 
-      researchTitle,
-      researchAbstract,
-      researchPermlink,
-      researchDisciplines,
-      researchReviewShare,
-      researchIsPrivate,
+    const researcher = formData.get("researcher");
+    const admin = formData.get("admin");
+    const researcherPubKey = formData.get("researcherPubKey");
 
-      propoalExpirationTime
-  }) {
+    const fee = formData.get("researchGroupFee");
+    const researchGroupName = formData.get("researchGroupName");
+    const researchGroupDescription = formData.get("researchGroupDescription");
+    const researchGroupPermlink = formData.get("researchGroupPermlink");
+
+    const researchTitle = formData.get("researchTitle");
+    const researchAbstract = formData.get("researchAbstract");
+    const researchPermlink = formData.get("researchPermlink");
+    const researchDisciplines = JSON.parse(formData.get("researchDisciplines"));
+    const researchReviewShare = formData.get("researchReviewShare");
+    const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
+
+    const proposalExpirationTime = formData.get("proposalExpirationTime");
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
@@ -183,11 +183,11 @@ class ResearchService extends Singleton {
             traits: [[
               "research_group_v1_0_0",
               {
-                "_v": "1.0.0",
-                "name": researchGroupName,
-                "permlink": researchGroupPermlink,
-                "description": researchDescription,
-                "threshold_overrides": []
+                _v: "1.0.0",
+                name: researchGroupName,
+                permlink: researchGroupPermlink,
+                description: researchGroupDescription,
+                threshold_overrides: []
               }
             ]],
             extensions: []
@@ -196,16 +196,16 @@ class ResearchService extends Singleton {
 
         // proposed research that requires admin approval
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
-            research_group: research_group_external_id,
-            title: researchTitle,
-            abstract: researchAbstract,
-            permlink: researchPermlink,
-            disciplines: researchDisciplines,
-            is_private: researchIsPrivate,
-            review_share: researchReviewShare,
-            compensation_share: undefined,
-            members: undefined,
-            extensions: []
+          research_group: research_group_external_id,
+          title: researchTitle,
+          abstract: researchAbstract,
+          permlink: researchPermlink,
+          disciplines: researchDisciplines,
+          is_private: researchIsPrivate,
+          review_share: researchReviewShare,
+          compensation_share: undefined,
+          members: undefined,
+          extensions: []
         }], refBlock);
 
 
@@ -234,10 +234,10 @@ class ResearchService extends Singleton {
         const [nested_proposal_external_id, nested_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
           creator: researcher,
           proposed_ops: [
-            { "op": create_research_op },
-            { "op": update_account_op }
+            { op: create_research_op },
+            { op: update_account_op }
           ],
-          expiration_time: propoalExpirationTime,
+          expiration_time: proposalExpirationTime,
           review_period_seconds: undefined,
           extensions: []
         }], refBlock);
@@ -262,11 +262,11 @@ class ResearchService extends Singleton {
         const [main_proposal_external_id, main_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
           creator: researcher,
           proposed_ops: [
-            { "op": create_research_group_op },
-            { "op": nested_proposal_op },
-            { "op": update_nested_proposal_op }
+            { op: create_research_group_op },
+            { op: nested_proposal_op },
+            { op: update_nested_proposal_op }
           ],
-          expiration_time: propoalExpirationTime,
+          expiration_time: proposalExpirationTime,
           review_period_seconds: undefined,
           extensions: []
         }], refBlock);
@@ -286,11 +286,38 @@ class ResearchService extends Singleton {
           extensions: []
         }]
 
+
         return this.blockchainService.signOperations([main_proposal_op, update_main_proposal_op], researcherPrivKey, refBlock)
           .then((signedTx) => {
-            return this.researchHttp.createResearchApplication({ tx: signedTx })
+            formData.append('proposalId', main_proposal_external_id);
+            formData.append('tx', JSON.stringify(signedTx));
+            return this.researchHttp.createResearchApplication({ proposalId: main_proposal_external_id, formData })
           });
       });
+  }
+
+  getPendingResearchApplications() {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.PENDING });
+  }
+
+  getPendingResearchApplicationsByResearcher(researcher) {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.PENDING, researcher });
+  }
+
+  getApprovedResearchApplications() {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.APPROVED });
+  }
+
+  getApprovedResearchApplicationsByResearcher(researcher) {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.APPROVED, researcher });
+  }
+
+  getRejectedResearchApplications() {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.REJECTED });
+  }
+
+  getRejectedResearchApplicationsByResearcher(researcher) {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.REJECTED, researcher });
   }
 
 
