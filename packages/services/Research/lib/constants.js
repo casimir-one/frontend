@@ -23,6 +23,15 @@ const RESEARCH_TYPES = createEnum({
   MILESTONE_THESIS: 20
 });
 
+const RESEARCH_APPLICATION_STATUS = {
+  PENDING: "pending",
+  APPROVED: "approved",
+  REJECTED: "rejected"
+}
+
+export default RESEARCH_APPLICATION_STATUS;
+
 export {
-  RESEARCH_TYPES
+  RESEARCH_TYPES,
+  RESEARCH_APPLICATION_STATUS
 };
