@@ -138,7 +138,7 @@ class ResearchService extends Singleton {
   createResearchApplicationViaOffchain(researcherPrivKey, formData) {
 
     const researcher = formData.get("researcher");
-    const admin = formData.get("admin");
+    const tenant = formData.get("tenant");
     const researcherPubKey = formData.get("researcherPubKey");
 
     const fee = formData.get("researchGroupFee");
@@ -158,13 +158,13 @@ class ResearchService extends Singleton {
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
 
-        // research group that will be used for the research
+        // research group that will own the research
         const [research_group_external_id, create_research_group_op] = deipRpc.operations.createEntityOperation(['create_account',
           {
             fee: fee,
             creator: researcher,
             owner: {
-              account_auths: [[researcher, 1], [admin, 1]], // requires admin approval
+              account_auths: [[researcher, 1], [tenant, 1]], // requires tenant approval
               key_auths: [],
               weight_threshold: 2
             },
@@ -194,7 +194,7 @@ class ResearchService extends Singleton {
           }], refBlock);
 
 
-        // proposed research that requires admin approval
+        // proposed research that requires tenant approval
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
           research_group: research_group_external_id,
           title: researchTitle,
@@ -218,7 +218,7 @@ class ResearchService extends Singleton {
             weight_threshold: 1
           },
           active: {
-            account_auths: [[researcher, 1], [admin, 1]],
+            account_auths: [[researcher, 1], [tenant, 1]],
             key_auths: [],
             weight_threshold: 1
           },
@@ -243,14 +243,14 @@ class ResearchService extends Singleton {
         }], refBlock);
 
 
-        // request signatures from researcher and admin
+        // request signatures from researcher and tenant
         const update_nested_proposal_op = ['update_proposal', {
           external_id: nested_proposal_external_id,
           posting_approvals_to_add: [],
           posting_approvals_to_remove: [],
           active_approvals_to_add: [],
           active_approvals_to_remove: [],
-          owner_approvals_to_add: [admin, researcher],
+          owner_approvals_to_add: [tenant, researcher],
           owner_approvals_to_remove: [],
           key_approvals_to_add: [],
           key_approvals_to_remove: [],
@@ -258,7 +258,7 @@ class ResearchService extends Singleton {
         }];
 
 
-        // proposal contract that requires signatures from researcher and admin
+        // proposal contract that requires signatures from researcher and tenant
         const [main_proposal_external_id, main_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
           creator: researcher,
           proposed_ops: [
@@ -286,16 +286,59 @@ class ResearchService extends Singleton {
           extensions: []
         }]
 
-
+        formData.append('proposalId', main_proposal_external_id);
+        formData.append('researchExternalId', research_external_id);
+        
         return this.blockchainService.signOperations([main_proposal_op, update_main_proposal_op], researcherPrivKey, refBlock)
           .then((signedTx) => {
-            formData.append('proposalId', main_proposal_external_id);
             formData.append('tx', JSON.stringify(signedTx));
             return this.researchHttp.createResearchApplication({ proposalId: main_proposal_external_id, formData })
           });
       });
   }
 
+  approveResearchApplicationViaOffchain(privKey, {
+    proposalId,
+    tenant
+  }) {
+
+    const update_proposal_op = ['update_proposal', {
+      external_id: proposalId,
+      posting_approvals_to_add: [],
+      posting_approvals_to_remove: [],
+      active_approvals_to_add: [],
+      active_approvals_to_remove: [],
+      owner_approvals_to_add: [tenant],
+      owner_approvals_to_remove: [],
+      key_approvals_to_add: [],
+      key_approvals_to_remove: [],
+      extensions: []
+    }]
+
+    return this.blockchainService.signOperations([update_proposal_op], privKey)
+      .then((signedTx) => {
+        return this.researchHttp.approveResearchApplication({ tx: signedTx })
+      });
+  }
+
+  rejectResearchApplicationViaOffchain(privKey, {
+    proposalId,
+    tenant
+  }) {
+
+    const delete_proposal_op = ['delete_proposal', {
+      external_id: proposalId,
+      account: tenant,
+      authority : 1,
+      extensions: []
+    }]
+
+    return this.blockchainService.signOperations([delete_proposal_op], privKey)
+      .then((signedTx) => {
+        return this.researchHttp.rejectResearchApplication({ tx: signedTx })
+      });
+  }
+  
   getPendingResearchApplications() {
     return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.PENDING });
   }

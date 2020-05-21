@@ -17,10 +17,18 @@ class ResearchHttp extends Singleton {
     });
   }
 
+  approveResearchApplication({ tx }) {
+    return this.http.post('/api/research/application/approve', { tx });
+  }
+
+  rejectResearchApplication({ tx }) {
+    return this.http.post('/api/research/application/reject', { tx });
+  }
+
   getResearchApplications({ status, researcher }) {
     let query = status ? `?status=${status}` : '';
     query = researcher ? query ? `${query}&researcher=${researcher}` : `?researcher=${researcher}` : query;
-    return this.http.get(`/api/research/list/applications${query}`);
+    return this.http.get(`/api/research/application/list${query}`);
   }
   
   createResearchTokenSale({ tx, offchainMeta, isProposal }) {
