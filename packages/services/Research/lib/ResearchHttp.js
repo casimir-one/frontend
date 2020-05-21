@@ -17,6 +17,15 @@ class ResearchHttp extends Singleton {
     });
   }
 
+  editResearchApplication({ proposalId, formData }) {
+    return this.http.put(`/api/research/application/${proposalId}`, formData, {
+      headers: {
+        'Proposal-Id': proposalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
+
   approveResearchApplication({ tx }) {
     return this.http.post('/api/research/application/approve', { tx });
   }
