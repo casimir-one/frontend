@@ -144,11 +144,11 @@ class ResearchService extends Singleton {
     const fee = formData.get("researchGroupFee");
     const researchGroupName = formData.get("researchGroupName");
     const researchGroupDescription = formData.get("researchGroupDescription");
-    const researchGroupPermlink = formData.get("researchGroupPermlink");
+    const researchGroupPermlink = formData.get("researchGroupPermlink"); // TODO: remove
 
     const researchTitle = formData.get("researchTitle");
-    const researchAbstract = formData.get("researchAbstract");
-    const researchPermlink = formData.get("researchPermlink");
+    const researchAbstract = formData.get("description"); // TODO: set empty
+    const researchPermlink = formData.get("researchPermlink"); // TODO: remove
     const researchDisciplines = JSON.parse(formData.get("researchDisciplines"));
     const researchReviewShare = formData.get("researchReviewShare");
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
@@ -295,6 +295,10 @@ class ResearchService extends Singleton {
             return this.researchHttp.createResearchApplication({ proposalId: main_proposal_external_id, formData })
           });
       });
+  }
+
+  editResearchApplicationViaOffchain(proposalId, formData) {
+    return this.researchHttp.editResearchApplication({ proposalId, formData })
   }
 
   approveResearchApplicationViaOffchain(privKey, {
