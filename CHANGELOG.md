@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.14.0...v1.15.0) (2020-05-21)
+
+
+### Features
+
+* **@deip/research-service:** Research application approve/reject endpoints ([c9ed6ea](https://gitlab.com/DEIP/deip-client-modules/commit/c9ed6ea3d120f45015760cb4b398560e5e0a5a8d))
+
+
+
+
+
 # [1.14.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.13.0...v1.14.0) (2020-05-20)
 
 
