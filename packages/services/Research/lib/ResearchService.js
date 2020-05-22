@@ -19,7 +19,6 @@ class ResearchService extends Singleton {
       researchGroup,
       title,
       abstract,
-      permlink,
       disciplines,
       isPrivate,
       members,
@@ -41,7 +40,6 @@ class ResearchService extends Singleton {
           research_group: researchGroup,
           title,
           abstract,
-          permlink,
           disciplines,
           is_private: isPrivate,
           members,
@@ -144,11 +142,9 @@ class ResearchService extends Singleton {
     const fee = formData.get("researchGroupFee");
     const researchGroupName = formData.get("researchGroupName");
     const researchGroupDescription = formData.get("researchGroupDescription");
-    const researchGroupPermlink = formData.get("researchGroupPermlink"); // TODO: remove
 
     const researchTitle = formData.get("researchTitle");
-    const researchAbstract = formData.get("description"); // TODO: set empty
-    const researchPermlink = formData.get("researchPermlink"); // TODO: remove
+    const researchAbstract = formData.get("researchAbstract");
     const researchDisciplines = JSON.parse(formData.get("researchDisciplines"));
     const researchReviewShare = formData.get("researchReviewShare");
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
@@ -179,13 +175,12 @@ class ResearchService extends Singleton {
               weight_threshold: 0
             },
             memo_key: researcherPubKey,
-            json_metadata: "",
+            json_metadata: undefined,
             traits: [[
               "research_group_v1_0_0",
               {
                 _v: "1.0.0",
                 name: researchGroupName,
-                permlink: researchGroupPermlink,
                 description: researchGroupDescription,
                 threshold_overrides: []
               }
@@ -199,7 +194,6 @@ class ResearchService extends Singleton {
           research_group: research_group_external_id,
           title: researchTitle,
           abstract: researchAbstract,
-          permlink: researchPermlink,
           disciplines: researchDisciplines,
           is_private: researchIsPrivate,
           review_share: researchReviewShare,
@@ -373,7 +367,6 @@ class ResearchService extends Singleton {
     externalId,
     title,
     abstract,
-    permlink,
     isPrivate,
     reviewShare,
     compensationShare,
@@ -386,7 +379,6 @@ class ResearchService extends Singleton {
       external_id: externalId,
       title,
       abstract,
-      permlink,
       is_private: isPrivate,
       review_share: reviewShare,
       compensation_share: compensationShare,
@@ -607,7 +599,7 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchProfile(researchExternalId);
   }
 
-  getResearchWithOffchain(researchId) {
+  getResearchById(researchId) {
     let research;
     return deipRpc.api.getResearchByIdAsync(researchId)
       .then((item) => {

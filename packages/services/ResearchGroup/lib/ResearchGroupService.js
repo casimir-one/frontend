@@ -29,7 +29,6 @@ class ResearchGroupService extends Singleton {
       accountExtensions
   }, {
       researchGroupName,
-      researchGroupPermlink,
       researchGroupDescription,
       researchGroupThresholdOverrides
   }) {
@@ -48,11 +47,10 @@ class ResearchGroupService extends Singleton {
           traits: [[
             "research_group_v1_0_0",
             {
-              "_v": "1.0.0",
-              "name": researchGroupName,
-              "permlink": researchGroupPermlink,
-              "description": researchGroupDescription,
-              "threshold_overrides": researchGroupThresholdOverrides
+              _v: "1.0.0",
+              name: researchGroupName,
+              description: researchGroupDescription,
+              threshold_overrides: researchGroupThresholdOverrides
             }
           ]],
           extensions: accountExtensions
@@ -78,7 +76,6 @@ class ResearchGroupService extends Singleton {
     accountExtensions
   }, {
     researchGroupName,
-    researchGroupPermlink,
     researchGroupDescription,
     researchGroupThresholdOverrides
   }) {
@@ -86,11 +83,10 @@ class ResearchGroupService extends Singleton {
     let researchGroupTrait = [
       "research_group_v1_0_0",
       {
-        "_v": "1.0.0",
-        "name": researchGroupName,
-        "permlink": researchGroupPermlink,
-        "description": researchGroupDescription,
-        "threshold_overrides": researchGroupThresholdOverrides
+        _v: "1.0.0",
+        name: researchGroupName,
+        description: researchGroupDescription,
+        threshold_overrides: researchGroupThresholdOverrides
       }
     ];
 
