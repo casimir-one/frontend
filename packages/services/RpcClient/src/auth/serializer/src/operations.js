@@ -184,7 +184,6 @@ const base_account_trait = {
 const research_group_v1_0_0 = new Serializer("research_group_v1_0_0",
   Object.assign({}, base_account_trait, {
     name: string,
-    permlink: string,
     description: string,
     threshold_overrides: map(uint16, authority)
   })
@@ -198,7 +197,7 @@ const create_account = new Serializer("create_account", {
     active: authority,
     posting: authority,
     memo_key: public_key,
-    json_metadata: string,
+    json_metadata: optional(string),
     traits: array(static_variant([
       research_group_v1_0_0
     ])),
@@ -290,7 +289,6 @@ const create_research = new Serializer("create_research", {
   research_group: string,
   title: string,
   abstract: string,
-  permlink: string,
   disciplines: set(int64),
   is_private:  bool,
   review_share: percent,
@@ -307,7 +305,6 @@ const create_research_content = new Serializer("create_research_content", {
   type: uint16,
   title: string,
   content: string,
-  permlink: string,
   authors: set(string),
   references: set(string),
   foreign_references: set(string),
@@ -330,7 +327,6 @@ const update_research = new Serializer("update_research", {
   external_id: string,
   title: optional(string),
   abstract: optional(string),
-  permlink: optional(string),
   is_private: optional(bool),
   review_share: optional(percent),
   compensation_share: optional(percent),
