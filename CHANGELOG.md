@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.16.0...v1.17.0) (2020-05-22)
+
+
+### Features
+
+* **@deip/research-service:** Permlinks deprecated ([70f9b37](https://gitlab.com/DEIP/deip-client-modules/commit/70f9b37013a284e9ec1d2806952da6713b354cd4))
+
+
+
+
+
 # [1.16.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.15.0...v1.16.0) (2020-05-21)
 
 
