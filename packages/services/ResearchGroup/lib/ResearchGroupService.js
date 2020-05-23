@@ -321,16 +321,13 @@ class ResearchGroupService extends Singleton {
     return this.researchGroupHttp.getResearchGroupPendingInvites(researchGroupExternalId);
   }
 
-  getAllResearchGroups(withPersonal = false) {
-    return deipRpc.api.getAllResearchGroupsAsync(withPersonal)
-      .then((groupsList) => groupsList.map(this._mapResearchGroup));
-  }
-
+  /* [DEPRECATED] */
   getResearchGroupById(groupId) {
     return deipRpc.api.getResearchGroupByIdAsync(groupId)
       .then(this._mapResearchGroup);
   }
 
+  /* [DEPRECATED] */
   getResearchGroupByPermlink(permlink) {
     return deipRpc.api.getResearchGroupByPermlinkAsync(permlink)
       .then(this._mapResearchGroup);
@@ -341,7 +338,7 @@ class ResearchGroupService extends Singleton {
       .then(this._mapResearchGroup);
   }
 
-  // not used
+  /* [DEPRECATED] */
   getActivityLogsEntriesByResearchGroup(researchGroupExternalId) {
     return this.researchGroupHttp.getActivityLogsEntriesByResearchGroup(researchGroupExternalId);
   }

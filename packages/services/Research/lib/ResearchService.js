@@ -15,6 +15,23 @@ class ResearchService extends Singleton {
   researchContentService = ResearchContentService.getInstance();
   proposalsService = ProposalsService.getInstance();
 
+
+  getResearch(externalId) {
+    return this.researchHttp.getResearch(externalId);
+  }
+
+  getPublicResearchListing() {
+    return this.researchHttp.getPublicResearchListing();
+  }
+
+  getUserResearchListing(username) {
+    return this.researchHttp.getUserResearchListing(username);
+  }
+
+  getResearchGroupResearchListing(researchGroupExternalId) {
+    return this.researchHttp.getResearchGroupResearchListing(researchGroupExternalId);
+  }
+
   createResearchViaOffchain(privKey, isProposal, {
       researchGroup,
       title,
@@ -430,6 +447,7 @@ class ResearchService extends Singleton {
     return this.researchHttp.updateResearchMeta(researchExternalId, update);
   }
 
+  /* TODO: Move this to InvestmentsService */
   contributeToResearchTokenSaleViaOffchain(privKey, {
     researchExternalId,
     contributor,
@@ -449,6 +467,7 @@ class ResearchService extends Singleton {
       });
   }
 
+  /* TODO: Move this to ResearchContentService */
   async getResearchContentOuterReferences(researchContent, acc) {
     const outerReferences = await deipRpc.api.getContentsReferToContentAsync(researchContent.id);
 
@@ -489,6 +508,7 @@ class ResearchService extends Singleton {
     }
   }
 
+  /* TODO: Move this to ResearchContentService */
   async getResearchContentInnerReferences(researchContent, acc) {
     const innerReferences = await deipRpc.api.getContentReferencesAsync(researchContent.id);
 
@@ -528,6 +548,7 @@ class ResearchService extends Singleton {
     }
   }
 
+  /* TODO: Move this to ResearchContentService */
   async getResearchContentReferencesGraph(researchContentId) {
     const researchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
     const research = await deipRpc.api.getResearchByIdAsync(researchContent.research_id);
@@ -586,33 +607,26 @@ class ResearchService extends Singleton {
     return { nodes, links };
   }
 
+  /* TODO: Move this to ResearchContentService */
   getResearchContentType(type) {
     return researchContentTypes.find((t) => t.type === type);
   }
 
+  /* [DEPRECATED] */
   getTopResearchesIds() {
     // return [ 21, 14, 24, 7, 10, 5, 0, 6, 26, 28, 15, 23, 9, 25, 20, 12 ];
     return [];
   }
 
-  getResearchProfile(researchExternalId) {
-    return this.researchHttp.getResearchProfile(researchExternalId);
+  /* [DEPRECATED] */
+  getResearchById(researchId) {
+    return deipRpc.api.getResearchByIdAsync(researchId)
+      .then((research) => this.getResearch(research.external_id))
+      .then((research) => {
+        return research;
+      })
   }
 
-  getResearchById(researchId) {
-    let research;
-    return deipRpc.api.getResearchByIdAsync(researchId)
-      .then((item) => {
-        research = item;
-        return this.researchHttp.getResearchProfile(research.external_id)
-      })
-      .then((researchProfile) => {
-        return {
-          ...research,
-          researchRef: researchProfile
-        }
-      })
-  }
 }
 
 export {

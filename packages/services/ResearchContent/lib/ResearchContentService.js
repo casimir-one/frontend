@@ -74,8 +74,8 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getContentRefByHash(researchExternalId, hash);
   }
 
-  getContentRefs(researchExternalId) {
-    return this.researchContentHttp.getContentRefs(researchExternalId);
+  getResearchContentByResearch(researchExternalId) {
+    return this.researchContentHttp.getResearchContentByResearch(researchExternalId);
   }
 
   createDarContent(researchExternalId) {
