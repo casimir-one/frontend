@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.17.0...v1.18.0) (2020-05-24)
+
+
+### Features
+
+* **@deip/research-service:** Research listing endpoints ([bc07d52](https://gitlab.com/DEIP/deip-client-modules/commit/bc07d52960a3b88aab590dc4d5b74b956d800fb4))
+
+
+
+
+
 # [1.17.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.16.0...v1.17.0) (2020-05-22)
 
 
