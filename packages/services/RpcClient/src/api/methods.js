@@ -232,6 +232,28 @@ export default [{
 },
 {
     "api": "database_api",
+    "method": "lookup_research_groups",
+    "params": [
+      "lower_bound",
+      "limit"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_research_groups",
+    "params": [
+      "ids"
+    ]
+},
+{
+    "api": "database_api",
+    "method": "get_research_groups_by_member",
+    "params": [
+      "member"
+    ]
+},
+{
+    "api": "database_api",
     "method": "get_research_group_by_permlink",
     "params": [
         "permlink"
@@ -242,13 +264,6 @@ export default [{
     "method": "get_research_group_by_id",
     "params": [
         "id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_all_research_groups",
-    "params": [
-        "is_personal_need"
     ]
 },
 {
@@ -281,43 +296,14 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_researches_by_research_group_id",
+    "method": "get_researches_by_research_group",
     "params": [
-        "research_group_id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_research_group_invites_by_account_name",
-    "params": [
-        "account_name"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_research_group_invites_by_research_group_id",
-    "params": [
-        "research_group_id"
+        "external_id"
     ]
 },
 {
     "api": "database_api",
     "method": "get_schema"
-},
-{
-    "api": "database_api",
-    "method": "get_grants",
-    "params": [
-        "account_names"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "lookup_grant_owners",
-    "params": [
-        "lower_bound_name",
-        "limit"
-    ]
 },
 {
     "api": "database_api",
@@ -362,9 +348,17 @@ export default [{
 },
 {
     "api": "database_api",
+    "method": "lookup_researches",
+    "params": [
+      "lower_bound",
+      "limit"
+    ]
+},
+{
+    "api": "database_api",
     "method": "get_research_by_id",
     "params": [
-        "id"
+      "id"
     ]
 },
 {
@@ -388,30 +382,35 @@ export default [{
     "api": "database_api",
     "method": "get_researches",
     "params": [
-        "from",
-        "limit"
+      "ids"
     ]
 },
 {
-    "api": "database_api",
-    "method": "get_all_researches_listing",
-    "params": [
-        "discipline_id",
-        "limit"
-    ]
+  "api": "database_api",
+  "method": "get_researches_by_research_group_member",
+  "params": [
+    "member"
+  ]
 },
 {
     "api": "database_api",
-    "method": "get_all_research_content",
+    "method": "get_research_contents_by_research",
     "params": [
-        "research_id",
+        "external_id",
     ]
 },
 {
   "api": "database_api",
   "method": "get_research_content",
   "params": [
-    "id"
+    "external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_contents",
+  "params": [
+    "ids"
   ]
 },
 {
@@ -560,21 +559,6 @@ export default [{
     "method": "get_disciplines_by_research",
     "params": [
         "research_id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_research_group_invite_by_id",
-    "params": [
-        "research_group_invite_id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_research_group_invite_by_account_name_and_research_group_id",
-    "params": [
-        "account_name",
-        "research_group_id"
     ]
 },
 {
@@ -978,38 +962,6 @@ export default [{
   "params": [
     "award_number",
     "subaward_number"
-  ]
-},
-
-// Organizational contracts
-{
-    "api": "database_api",
-    "method": "get_organizational_contract",
-    "params": [
-        "id"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_organizational_contract_by_organization_and_research_group_and_type",
-    "params": [
-        "organization_id",
-        "research_group_id",
-        "type"
-    ]
-},
-{
-    "api": "database_api",
-    "method": "get_organizational_contracts_by_research_group",
-    "params": [
-      "research_group_id"
-    ]
-},
-{
-  "api": "database_api",
-  "method": "get_organizational_contracts_by_organization",
-  "params": [
-    "organization_id"
   ]
 },
 

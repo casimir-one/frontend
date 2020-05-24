@@ -4,6 +4,22 @@ import { Singleton } from '@deip/toolbox';
 class ResearchHttp extends Singleton {
   http = HttpService.getInstance();
 
+  getResearch(externalId) {
+    return this.http.get(`/api/research/${externalId}`);
+  }
+
+  getPublicResearchListing() {
+    return this.http.get(`/api/research/listing`);
+  }
+
+  getUserResearchListing(username) {
+    return this.http.get(`/api/research/user/listing/${username}`);
+  }
+
+  getResearchGroupResearchListing(researchGroupExternalId) {
+    return this.http.get(`/api/research/group/listing/${researchGroupExternalId}`);
+  }
+
   createResearch({ tx, offchainMeta, isProposal }) {
     return this.http.post('/api/research', { tx, offchainMeta, isProposal });
   }
@@ -48,10 +64,6 @@ class ResearchHttp extends Singleton {
     return this.http.post('/api/research/token-sale/contribution', { tx, isProposal });
   }
 
-  getResearchProfile(researchExternalId) {
-    return this.http.get(`/api/research/${researchExternalId}`);
-  }
-
   updateResearch({ tx, isProposal }) {
     return this.http.put(`/api/research`, { tx, isProposal });
   }
@@ -59,6 +71,7 @@ class ResearchHttp extends Singleton {
   updateResearchMeta(researchExternalId, update) {
     return this.http.put(`/api/research/meta/${researchExternalId}`, update);
   }
+
 }
 
 export {

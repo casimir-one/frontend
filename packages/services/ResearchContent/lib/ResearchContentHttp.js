@@ -20,8 +20,8 @@ class ResearchContentHttp extends Singleton {
     return this.http.get(`/content/refs/research/${researchExternalId}/content-hash/${hash}`);
   }
 
-  getContentRefs(researchExternalId) {
-    return this.http.get(`/content/refs/research/${researchExternalId}`);
+  getResearchContentByResearch(researchExternalId) {
+    return this.http.get(`/content/research/${researchExternalId}`);
   }
 
   createDarContent(researchExternalId) {
