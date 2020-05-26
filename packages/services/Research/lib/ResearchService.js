@@ -46,7 +46,8 @@ class ResearchService extends Singleton {
       videoSrc,
       milestones,
       partners,
-      tenantCriterias
+      tenantCriterias,
+      tenantCategory
     }
   ) {
 
@@ -69,7 +70,8 @@ class ResearchService extends Singleton {
           videoSrc,
           milestones,
           partners,
-          tenantCriterias
+          tenantCriterias,
+          tenantCategory
         };
 
 
@@ -434,17 +436,19 @@ class ResearchService extends Singleton {
     milestones, 
     videoSrc, 
     partners, 
-    tenantCriterias
+    tenantCriterias,
+    tenantCategory
   }) {
 
-    const update = {
+    const offchainMeta = {
       milestones,
       videoSrc,
       partners,
-      tenantCriterias
+      tenantCriterias,
+      tenantCategory
     };
 
-    return this.researchHttp.updateResearchMeta(researchExternalId, update);
+    return this.researchHttp.updateResearchMeta(researchExternalId, offchainMeta);
   }
 
   /* TODO: Move this to InvestmentsService */
