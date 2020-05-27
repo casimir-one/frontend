@@ -50,6 +50,10 @@ class ResearchHttp extends Singleton {
     return this.http.post('/api/research/application/reject', { tx });
   }
 
+  deleteResearchApplication({ tx }) {
+    return this.http.post('/api/research/application/delete', { tx });
+  }  
+
   getResearchApplications({ status, researcher }) {
     let query = status ? `?status=${status}` : '';
     query = researcher ? query ? `${query}&researcher=${researcher}` : `?researcher=${researcher}` : query;

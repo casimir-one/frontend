@@ -26,7 +26,8 @@ const RESEARCH_TYPES = createEnum({
 const RESEARCH_APPLICATION_STATUS = {
   PENDING: "pending",
   APPROVED: "approved",
-  REJECTED: "rejected"
+  REJECTED: "rejected",
+  DELETED: "deleted"
 }
 
 export default RESEARCH_APPLICATION_STATUS;
