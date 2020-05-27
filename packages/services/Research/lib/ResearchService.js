@@ -355,6 +355,24 @@ class ResearchService extends Singleton {
         return this.researchHttp.rejectResearchApplication({ tx: signedTx })
       });
   }
+
+  deleteResearchApplicationViaOffchain(privKey, {
+    proposalId,
+    researcher
+  }) {
+
+    const delete_proposal_op = ['delete_proposal', {
+      external_id: proposalId,
+      account: researcher,
+      authority: 1,
+      extensions: []
+    }]
+
+    return this.blockchainService.signOperations([delete_proposal_op], privKey)
+      .then((signedTx) => {
+        return this.researchHttp.deleteResearchApplication({ tx: signedTx })
+      });
+  }
   
   getPendingResearchApplications() {
     return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.PENDING });
@@ -380,6 +398,13 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.REJECTED, researcher });
   }
 
+  getDeletedResearchApplications() {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.DELETED });
+  }
+
+  getDeletedResearchApplicationsByResearcher(researcher) {
+    return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.DELETED, researcher });
+  }
 
   updateResearchViaOffchain(privKey, isProposal, {
     researchGroup,
