@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.19.0...v1.20.0) (2020-05-27)
+
+
+### Features
+
+* **@deip/research-service:** Research application delete ([722e0cc](https://gitlab.com/DEIP/deip-client-modules/commit/722e0ccb48e7ddf1a57c8ee8ee23a4d660760df2))
+
+
+
+
+
 # [1.19.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.18.0...v1.19.0) (2020-05-26)
 
 
