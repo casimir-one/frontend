@@ -61,11 +61,7 @@ class TenantService extends Singleton {
             key_auths: [],
             weight_threshold: 1
           },
-          posting: {
-            account_auths: [...tenantAccount.posting.account_auths, [adminToAdd, 1]],
-            key_auths: [],
-            weight_threshold: 1
-          },
+          active_overrides: undefined,
           memo_key: undefined,
           json_metadata: undefined,
           traits: undefined,
@@ -96,11 +92,7 @@ class TenantService extends Singleton {
             key_auths: [],
             weight_threshold: 1
           },
-          posting: {
-            account_auths: [...tenantAccount.posting.account_auths.filter(([name, threshold]) => name != adminToRemove)],
-            key_auths: [],
-            weight_threshold: 1
-          },
+          active_overrides: undefined,
           memo_key: undefined,
           json_metadata: undefined,
           traits: undefined,

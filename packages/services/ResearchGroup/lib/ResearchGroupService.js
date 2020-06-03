@@ -23,7 +23,6 @@ class ResearchGroupService extends Singleton {
       creator,
       accountOwnerAuth,
       accountActiveAuth,
-      accountPostingAuth,
       accountMemoPubKey,
       accountJsonMetadata,
       accountExtensions
@@ -41,16 +40,15 @@ class ResearchGroupService extends Singleton {
           creator,
           owner: accountOwnerAuth,
           active: accountActiveAuth,
-          posting: accountPostingAuth,
+          active_overrides: researchGroupThresholdOverrides,
           memo_key: accountMemoPubKey,
           json_metadata: accountJsonMetadata,
           traits: [[
-            "research_group_v1_0_0",
+            "research_group",
             {
-              _v: "1.0.0",
               name: researchGroupName,
               description: researchGroupDescription,
-              threshold_overrides: researchGroupThresholdOverrides
+              extensions: []
             }
           ]],
           extensions: accountExtensions
@@ -70,46 +68,41 @@ class ResearchGroupService extends Singleton {
     researchGroup,
     accountOwnerAuth,
     accountActiveAuth,
-    accountPostingAuth,
+    accountActiveAuthOverrides,
     accountMemoPubKey,
     accountJsonMetadata,
     accountExtensions
   }, {
     researchGroupName,
     researchGroupDescription,
-    researchGroupThresholdOverrides
   }) {
-
-    let researchGroupTrait = [
-      "research_group_v1_0_0",
-      {
-        _v: "1.0.0",
-        name: researchGroupName,
-        description: researchGroupDescription,
-        threshold_overrides: researchGroupThresholdOverrides
-      }
-    ];
-
-    const op = {
-      account: researchGroup,
-      owner: accountOwnerAuth,
-      active: accountActiveAuth,
-      posting: accountPostingAuth,
-      memo_key: accountMemoPubKey,
-      json_metadata: accountJsonMetadata,
-      traits: [researchGroupTrait],
-      extensions: accountExtensions
-    }
 
     const offchainMeta = {};
 
-    const operation = ['update_account', op];
+    const update_account_op = ['update_account', {
+      account: researchGroup,
+      owner: accountOwnerAuth,
+      active: accountActiveAuth,
+      active_overrides: accountActiveAuthOverrides,
+      memo_key: accountMemoPubKey,
+      json_metadata: accountJsonMetadata,
+      traits: [[
+        "research_group",
+        {
+          name: researchGroupName,
+          description: researchGroupDescription,
+          extensions: []
+        }
+      ]],
+      extensions: accountExtensions
+    }];
+
 
     if (isProposal) {
 
       const proposal = {
         creator: researchGroup,
-        proposedOps: [{ "op": operation }],
+        proposedOps: [{ "op": update_account_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
         extensions: []
@@ -122,7 +115,7 @@ class ResearchGroupService extends Singleton {
 
     } else {
 
-      return this.blockchainService.signOperations([operation], privKey)
+      return this.blockchainService.signOperations([update_account_op], privKey)
         .then((signedTx) => {
           return this.researchGroupHttp.updateResearchGroup({ tx: signedTx, offchainMeta, isProposal })
         })
@@ -167,7 +160,7 @@ class ResearchGroupService extends Singleton {
             key_auths: [],
             weight_threshold: 1
           },
-          posting: undefined,
+          active_overrides: undefined,
           memo_key: undefined,
           json_metadata: undefined,
           traits: undefined,
@@ -192,8 +185,6 @@ class ResearchGroupService extends Singleton {
 
           const update_proposal_op = ['update_proposal', {
             external_id: proposal_external_id,
-            posting_approvals_to_add: [],
-            posting_approvals_to_remove: [],
             active_approvals_to_add: [approver],
             active_approvals_to_remove: [],
             owner_approvals_to_add: [],
@@ -220,8 +211,6 @@ class ResearchGroupService extends Singleton {
     
     const update_proposal_op = ['update_proposal', {
       external_id: inviteId,
-      posting_approvals_to_add: [],
-      posting_approvals_to_remove: [],
       active_approvals_to_add: [account],
       active_approvals_to_remove: [],
       owner_approvals_to_add: [],
@@ -295,8 +284,6 @@ class ResearchGroupService extends Singleton {
 
           const update_proposal_op = ['update_proposal', {
             external_id: proposal_external_id,
-            posting_approvals_to_add: [],
-            posting_approvals_to_remove: [],
             active_approvals_to_add: [approver],
             active_approvals_to_remove: [],
             owner_approvals_to_add: [],
@@ -334,8 +321,7 @@ class ResearchGroupService extends Singleton {
   }
 
   getResearchGroup(externalId) {
-    return deipRpc.api.getResearchGroupAsync(externalId)
-      .then(this._mapResearchGroup);
+    return this.researchGroupHttp.getResearchGroup(externalId);
   }
 
   /* [DEPRECATED] */

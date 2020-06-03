@@ -1,6 +1,6 @@
 /* global sjcl */
 sjcl.codec.deip = {
-    ROLES: ['owner', 'memo', 'active', 'posting'],
+    ROLES: ['owner', 'memo', 'active'],
     MAINNET: {
         pubHeader: 0x0,
         privHeader: 0x80,

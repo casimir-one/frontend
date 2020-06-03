@@ -47,8 +47,6 @@ class ProposalsService extends Singleton {
 
   updateProposal(privKey, {
     externalId,
-    postingApprovalsToAdd,
-    postingApprovalsToRemove,
     activeApprovalsToAdd,
     activeApprovalsToRemove,
     ownerApprovalsToAdd,
@@ -60,8 +58,6 @@ class ProposalsService extends Singleton {
 
     const op = {
       external_id: externalId,
-      posting_approvals_to_add: postingApprovalsToAdd,
-      posting_approvals_to_remove: postingApprovalsToRemove,
       active_approvals_to_add: activeApprovalsToAdd,
       active_approvals_to_remove: activeApprovalsToRemove,
       owner_approvals_to_add: ownerApprovalsToAdd,

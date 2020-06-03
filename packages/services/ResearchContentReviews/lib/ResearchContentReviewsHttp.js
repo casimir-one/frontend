@@ -4,7 +4,7 @@ import { Singleton } from '@deip/toolbox';
 class ResearchContentReviewsHttp extends Singleton {
   http = HttpService.getInstance();
 
-  sendMakeReviewOp(tx) {
+  sendCreateReviewOp(tx) {
     return this.http.post('/api/reviews', tx);
   }
 

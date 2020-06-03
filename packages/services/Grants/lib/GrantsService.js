@@ -1,70 +1,100 @@
 import { Singleton } from '@deip/toolbox';
 import { GrantsHttp } from './GrantsHttp';
+import { BlockchainService } from '@deip/blockchain-service';
 import deipRpc from '@deip/rpc-client';
 
 class GrantsService extends Singleton {
   grantsHttp = GrantsHttp.getInstance();
+  blockchainService = BlockchainService.getInstance();
+
 
   createGrantContract(privKey, {
+    foaNumber,
     grantor,
     amount,
     targetDisciplines,
     distributionModel,
     extensions
   }) {
-    return deipRpc.broadcast.createGrantAsync(
-      privKey, 
-      grantor, 
-      amount, 
-      targetDisciplines,
-      distributionModel,
-      extensions);
+
+    return this.blockchainService.getRefBlockSummary()
+      .then((refBlock) => {
+
+        const create_grant_op = ['create_grant', {
+          "external_id": foaNumber, // replace with entitiy id
+          "grantor": grantor,
+          "amount": amount,
+          "target_disciplines": targetDisciplines,
+          "distribution_model": distributionModel,
+          "extensions": extensions
+        }];
+
+        return this.blockchainService.signOperations([create_grant_op], privKey)
+          .then((signedTx) => {
+            return this.blockchainService.sendTransactionAsync(signedTx)
+          })
+      })
   }
+ 
 
   createFundingOpportunityAward(privKey, {
-    fundingOpportunityNumber,
     awardNumber,
+    fundingOpportunityNumber,
     award,
     awardee,
-    researchId,
-    universityId,
+    researchExternalId,
+    universityExternalId,
     universityOverhead,
     subawardees,
     creator,
     extensions
   }) {
-    return deipRpc.broadcast.createAwardAsync(
-      privKey,
-      fundingOpportunityNumber,
-      awardNumber,
-      award,
-      awardee,
-      researchId,
-      universityId,
-      universityOverhead,
-      subawardees,
-      creator,
-      extensions);
+
+    return this.blockchainService.getRefBlockSummary()
+      .then((refBlock) => {
+
+        const create_award_op = ['create_award', {
+          award_number: awardNumber,
+          funding_opportunity_number: fundingOpportunityNumber,
+          award: award,
+          awardee: awardee,
+          research_external_id: researchExternalId,
+          university_external_id: universityExternalId,
+          university_overhead: universityOverhead,
+          subawardees: subawardees,
+          creator: creator,
+          extensions: extensions
+        }];
+
+        return this.blockchainService.signOperations([create_award_op], privKey)
+          .then((signedTx) => {
+            return this.blockchainService.sendTransactionAsync(signedTx)
+          })
+      })
   }
 
   approveFundingOpportunityAward(privKey, {
     awardNumber,
-    approver
+    approver,
+    extensions
   }) {
     return deipRpc.broadcast.approveAwardAsync(
       privKey,
       awardNumber,
-      approver);
+      approver,
+      extensions);
   }
 
   rejectFundingOpportunityAward(privKey, {
     awardNumber,
-    rejector
+    rejector,
+    extensions
   }) {
     return deipRpc.broadcast.rejectAwardAsync(
       privKey,
       awardNumber,
-      rejector);
+      rejector,
+      extensions);
   }
 
   createAwardWithdrawalRequest(privKey, {
@@ -74,7 +104,8 @@ class GrantsService extends Singleton {
     requester,
     amount,
     description,
-    attachment
+    attachment,
+    extensions
   }) {
     return deipRpc.broadcast.createAwardWithdrawalRequestAsync(
       privKey,
@@ -84,63 +115,72 @@ class GrantsService extends Singleton {
       requester,
       amount,
       description,
-      attachment);
+      attachment,
+      extensions);
   }
 
   certifyAwardWithdrawalRequest(privKey, {
     paymentNumber,
     awardNumber,
     subawardNumber,
-    certifier
+    certifier,
+    extensions
   }) {
     return deipRpc.broadcast.certifyAwardWithdrawalRequestAsync(
       privKey,
       paymentNumber,
       awardNumber,
       subawardNumber,
-      certifier);
+      certifier,
+      extensions);
   }
 
   approveAwardWithdrawalRequest(privKey, {
     paymentNumber,
     awardNumber,
     subawardNumber,
-    approver
+    approver,
+    extensions
   }) {
     return deipRpc.broadcast.approveAwardWithdrawalRequestAsync(
       privKey,
       paymentNumber,
       awardNumber,
       subawardNumber,
-      approver);
+      approver,
+      extensions);
   }
 
   rejectAwardWithdrawalRequest(privKey, {
     paymentNumber,
     awardNumber,
     subawardNumber,
-    rejector
+    rejector,
+    extensions
   }) {
     return deipRpc.broadcast.rejectAwardWithdrawalRequestAsync(
       privKey,
       paymentNumber,
       awardNumber,
       subawardNumber,
-      rejector);
+      rejector,
+      extensions);
   }
 
   payAwardWithdrawalRequest(privKey, {
     paymentNumber,
     awardNumber,
     subawardNumber,
-    payer
+    payer,
+    extensions
   }) {
     return deipRpc.broadcast.payAwardWithdrawalRequestAsync(
       privKey,
       paymentNumber,
       awardNumber,
       subawardNumber,
-      payer);
+      payer,
+      extensions);
   }
   
   getFundingOpportunityAnnouncement(id) {
@@ -184,10 +224,6 @@ class GrantsService extends Singleton {
   }
 
   getAwardWithdrawalRequest(awardNumber, paymentNumber) {
-    return deipRpc.api.getAwardWithdrawalRequestAsync(awardNumber, paymentNumber);
-  }
-
-  getAwardWithdrawalRequestWithOffchain(awardNumber, paymentNumber) {
     return Promise.all([
       deipRpc.api.getAwardWithdrawalRequestAsync(awardNumber, paymentNumber),
       this.grantsHttp.getAwardWithdrawalRequestPackageRef(awardNumber, paymentNumber)

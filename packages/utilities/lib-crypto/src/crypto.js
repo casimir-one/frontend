@@ -95,7 +95,6 @@
         return {
             owner: serializePair(keys.owner),
             memo: serializePair(keys.memo),
-            posting: serializePair(keys.posting),
             active: serializePair(keys.active)
         };
     }
