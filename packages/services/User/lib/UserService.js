@@ -14,25 +14,23 @@ class UserService extends Singleton {
     account,
     accountOwnerAuth,
     accountActiveAuth,
-    accountPostingAuth,
     accountMemoPubKey,
     accountJsonMetadata,
     accountExtensions
   }) {
 
-    const op = {
+    const update_account_op = ['update_account', {
       account,
       owner: accountOwnerAuth,
       active: accountActiveAuth,
-      posting: accountPostingAuth,
+      active_overrides: undefined,
       memo_key: accountMemoPubKey,
       json_metadata: accountJsonMetadata,
       traits: undefined,
       extensions: accountExtensions
-    }
-
-    const operation = ['update_account', op];
-    return this.blockchainService.signOperations([operation], privKey)
+    }];
+    
+    return this.blockchainService.signOperations([update_account_op], privKey)
       .then((signedTx) => {
         return this.userHttp.updateUserAccount(account, { tx: signedTx });
       })

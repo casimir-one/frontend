@@ -3,86 +3,86 @@ var ChainTypes;
 module.exports = ChainTypes = {};
 
 ChainTypes.reserved_spaces = {
-    relative_protocol_ids: 0,
-    protocol_ids: 1,
-    implementation_ids: 2
+  relative_protocol_ids: 0,
+  protocol_ids: 1,
+  implementation_ids: 2
 };
 
 ChainTypes.operations = {
-    vote_for_review: 0,
+  create_account: 0,
+  update_account: 1,
 
-    transfer: 1,
-    transfer_to_common_tokens: 2,
-    withdraw_common_tokens: 3,
+  transfer: 2,
+  transfer_to_common_tokens: 3,
+  withdraw_common_tokens: 4,
+  set_withdraw_common_tokens_route: 5,
 
-    create_account: 4,
-    update_account: 5,
+  witness_update: 6,
+  account_witness_vote: 7,
+  account_witness_proxy: 8,
 
-    witness_update: 6,
-    account_witness_vote: 7,
-    account_witness_proxy: 8,
+  request_account_recovery: 9,
+  recover_account: 10,
+  change_recovery_account: 11,
 
-    set_withdraw_common_tokens_route: 9,
+  join_research_group_membership: 12,
+  left_research_group_membership: 13,
+  create_research: 14,
+  update_research: 15,
+  create_research_content: 16,
 
-    request_account_recovery: 10,
-    recover_account: 11,
-    change_recovery_account: 12,
+  create_review: 17,
+  vote_for_review: 18,
 
-    // DEIP native operations
-    placeholder1: 13,
-    delete_proposal: 14,
-    create_proposal: 15,
-    update_proposal: 16,
-    make_review: 17,
-    contribute_to_token_sale: 18,
-    placeholder2: 19,
-    placeholder3: 20,
-    placeholder9: 21,
-    placeholder4: 22,
-    placeholder5: 23,
-    create_vesting_balance: 24,
-    withdraw_vesting_balance: 25,
-    transfer_research_share: 26,
-    delegate_expertise: 27,
-    revoke_expertise_delegation: 28,
-    create_expertise_allocation_proposal: 29,
-    vote_for_expertise_allocation_proposal: 30,
-    placeholder6: 31,
-    placeholder7: 32,
-    create_grant: 33,
-    create_grant_application: 34,
-    make_review_for_application: 35,
-    approve_grant_application: 36,
-    reject_grant_application: 37,
-    create_asset: 38,
-    issue_asset: 39,
-    reserve_asset: 40,
-    create_award: 41,
-    approve_award: 42,
-    reject_award: 43,
-    create_award_withdrawal_request: 44,
-    certify_award_withdrawal_request: 45,
-    approve_award_withdrawal_request: 46,
-    reject_award_withdrawal_request: 47,
-    pay_award_withdrawal_request: 48,
-    
-    join_research_group_membership: 49,
-    left_research_group_membership: 50,
-    create_research: 51,
-    create_research_content: 52,
-    create_research_token_sale: 53,
-    placeholder8: 54,
-    update_research: 55,
-  
-    // virtual operations
-    fill_common_tokens_withdraw: 42,
-    shutdown_witness: 43,
-    hardfork: 44,
-    producer_reward: 45
+  create_research_token_sale: 19,
+  contribute_to_token_sale: 20,
+  transfer_research_share: 21,
+
+  create_asset: 22,
+  issue_asset: 23,
+  reserve_asset: 24,
+
+  create_vesting_balance: 25,
+  withdraw_vesting_balance: 26,
+
+  create_proposal: 27,
+  update_proposal: 28,
+  delete_proposal: 29,
+
+  create_expertise_allocation_proposal: 30,
+  vote_for_expertise_allocation_proposal: 31,
+
+  create_grant: 32,
+  create_grant_application: 33,
+  create_review_for_application: 34,
+  approve_grant_application: 35,
+  reject_grant_application: 36,
+  create_award: 37,
+  approve_award: 38,
+  reject_award: 39,
+  create_award_withdrawal_request: 40,
+  certify_award_withdrawal_request: 41,
+  approve_award_withdrawal_request: 42,
+  reject_award_withdrawal_request: 43,
+  pay_award_withdrawal_request: 44,
+
+  create_nda_contract: 45,
+  sign_nda_contract: 46,
+  decline_nda_contract: 47,
+  close_nda_contract: 48,
+  create_request_by_nda_contract: 49,
+  fulfill_request_by_nda_contract: 50,
+
+
+  // virtual operations
+  fill_common_tokens_withdraw: 51,
+  shutdown_witness: 52,
+  hardfork: 53,
+  producer_reward: 54
 };
 
 //types.hpp
 ChainTypes.object_type = {
-    "null": 0,
-    base: 1,
+  "null": 0,
+  base: 1,
 };

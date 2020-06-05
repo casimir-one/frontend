@@ -16,6 +16,10 @@ class ResearchGroupHttp extends Singleton {
     return this.http.put('/api/groups', { tx, offchainMeta, isProposal });
   }
 
+  getResearchGroup(researchGroupExternalId) {
+    return this.http.get(`/api/groups/${researchGroupExternalId}`);
+  }
+
   getActivityLogsEntriesByResearchGroup(researchGroupExternalId) {
     return this.http.get(`/api/groups/activity-log/${researchGroupExternalId}`);
   }

@@ -86,7 +86,7 @@ random number generation.
 
 ### crypto.keysFromPassword(accountName, accountPassword)
 
-Given a Deip account name and password, regenerates the derived `owner`, `posting`,
+Given a Deip account name and password, regenerates the derived `owner`,
 `active`, and `memo` keys.
 ```
 > crypto.keysFromPassword('username', 'password')
@@ -96,9 +96,6 @@ Given a Deip account name and password, regenerates the derived `owner`, `postin
   memo:
    { private: '5JSmQQJXH5ZrSW3KJSTUPFJy7SuLeDiY3bW6vB1McamxzJQFhwD',
      public: 'DEIP5nwJgD9jmkAdTXuiz3jqrkw3om95gCapZo4e4Bcp3qzyiedwCn' },
-  posting:
-   { private: '5HsoxWiHRRyx6oSxKj32HDqDMzSGhs79zLZopDc7nMcjMbcPp5E',
-     public: 'DEIP6gZmazY23TEMkxmPpnmvbAgWFAzwtaSDbhSUdmpTXzoJJLPFH4' },
   active:
    { private: '5JamTPvZyQsHf8c2pbN92F1gUY3sJkpW3ZJFzdmfbAJPAXT5aw3',
      public: 'DEIP5SKxjN1YdrFLgoPcp9KteUmNVdgE8DpTPC9sF6jbjVqP9d2Utq' } }

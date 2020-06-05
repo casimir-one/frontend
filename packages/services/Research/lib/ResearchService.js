@@ -33,23 +33,16 @@ class ResearchService extends Singleton {
   }
 
   createResearchViaOffchain(privKey, isProposal, {
-      researchGroup,
-      title,
-      abstract,
-      disciplines,
-      isPrivate,
-      members,
-      reviewShare,
-      compensationShare,
-      extensions
-    }, {
-      videoSrc,
-      milestones,
-      partners,
-      tenantCriterias,
-      tenantCategory
-    }
-  ) {
+    researchGroup,
+    title,
+    abstract,
+    disciplines,
+    isPrivate,
+    members,
+    reviewShare,
+    compensationShare,
+    extensions
+  }, offchainMeta) {
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
@@ -65,15 +58,6 @@ class ResearchService extends Singleton {
           compensation_share: compensationShare,
           extensions
         }], refBlock)
-
-        const offchainMeta = {
-          videoSrc,
-          milestones,
-          partners,
-          tenantCriterias,
-          tenantCategory
-        };
-
 
         if (isProposal) {
 
@@ -188,20 +172,15 @@ class ResearchService extends Singleton {
               key_auths: [],
               weight_threshold: 0
             },
-            posting: {
-              account_auths: [],
-              key_auths: [],
-              weight_threshold: 0
-            },
+            active_overrides: [],
             memo_key: researcherPubKey,
             json_metadata: undefined,
             traits: [[
-              "research_group_v1_0_0",
+              "research_group",
               {
-                _v: "1.0.0",
                 name: researchGroupName,
                 description: researchGroupDescription,
-                threshold_overrides: []
+                extensions: []
               }
             ]],
             extensions: []
@@ -235,7 +214,7 @@ class ResearchService extends Singleton {
             key_auths: [],
             weight_threshold: 1
           },
-          posting: undefined,
+          active_overrides: undefined,
           memo_key: undefined,
           json_metadata: undefined,
           traits: undefined,
@@ -259,8 +238,6 @@ class ResearchService extends Singleton {
         // request signatures from researcher and tenant
         const update_nested_proposal_op = ['update_proposal', {
           external_id: nested_proposal_external_id,
-          posting_approvals_to_add: [],
-          posting_approvals_to_remove: [],
           active_approvals_to_add: [],
           active_approvals_to_remove: [],
           owner_approvals_to_add: [tenant, researcher],
@@ -288,8 +265,6 @@ class ResearchService extends Singleton {
         // researcher signs the contract by default
         const update_main_proposal_op = ['update_proposal', {
           external_id: main_proposal_external_id,
-          posting_approvals_to_add: [],
-          posting_approvals_to_remove: [],
           active_approvals_to_add: [],
           active_approvals_to_remove: [],
           owner_approvals_to_add: [researcher],
@@ -321,8 +296,6 @@ class ResearchService extends Singleton {
 
     const update_proposal_op = ['update_proposal', {
       external_id: proposalId,
-      posting_approvals_to_add: [],
-      posting_approvals_to_remove: [],
       active_approvals_to_add: [],
       active_approvals_to_remove: [],
       owner_approvals_to_add: [tenant],
@@ -418,7 +391,7 @@ class ResearchService extends Singleton {
     extensions
   }) {
       
-    const op = {
+    const update_research_op = ['update_research', {
       research_group: researchGroup,
       external_id: externalId,
       title,
@@ -428,15 +401,13 @@ class ResearchService extends Singleton {
       compensation_share: compensationShare,
       members,
       extensions
-    }
-
-    const operation = ['update_research', op];
+    }];
 
     if (isProposal) {
 
       const proposal = {
         creator: researchGroup,
-        proposedOps: [{ "op": operation }],
+        proposedOps: [{ "op": update_research_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
         extensions: []
@@ -449,30 +420,14 @@ class ResearchService extends Singleton {
 
     } else {
 
-      return this.blockchainService.signOperations([operation], privKey)
+      return this.blockchainService.signOperations([update_research_op], privKey)
         .then((signedTx) => {
           return this.researchHttp.updateResearch({ tx: signedTx, isProposal })
         });
     }
   }
 
-  updateResearchOffchainMeta({ 
-    researchExternalId, 
-    milestones, 
-    videoSrc, 
-    partners, 
-    tenantCriterias,
-    tenantCategory
-  }) {
-
-    const offchainMeta = {
-      milestones,
-      videoSrc,
-      partners,
-      tenantCriterias,
-      tenantCategory
-    };
-
+  updateResearchOffchainMeta(researchExternalId, offchainMeta) {
     return this.researchHttp.updateResearchMeta(researchExternalId, offchainMeta);
   }
 
@@ -480,17 +435,18 @@ class ResearchService extends Singleton {
   contributeToResearchTokenSaleViaOffchain(privKey, {
     researchExternalId,
     contributor,
-    amount
+    amount,
+    extensions
   }) {
 
-    const op = {
+    const contribute_to_token_sale_op = ['contribute_to_token_sale', {
       research_external_id: researchExternalId,
       contributor,
-      amount
-    }
+      amount,
+      extensions
+    }]
 
-    const operation = ['contribute_to_token_sale', op];
-    return this.blockchainService.signOperations([operation], privKey)
+    return this.blockchainService.signOperations([contribute_to_token_sale_op], privKey)
       .then((signedTx) => { 
         return this.researchHttp.contributeResearchTokenSale({ tx: signedTx })
       });

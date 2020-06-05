@@ -1,7 +1,7 @@
 import api from '../api';
 
 exports = module.exports = deipBroadcast => {
-    deipBroadcast.addAccountAuth = ({ signingKey, username, authorizedUsername, role = 'posting', weight }, cb) => {
+    deipBroadcast.addAccountAuth = ({ signingKey, username, authorizedUsername, role = 'active', weight }, cb) => {
         api.getAccounts([username], (err, [userAccount]) => {
             if (err) { return cb(new Error(err), null); }
             if (!userAccount) { return cb(new Error('Invalid account name'), null); }
@@ -20,7 +20,6 @@ exports = module.exports = deipBroadcast => {
             updatedAuthority.account_auths.push([authorizedUsername, weight]);
             const owner = role === 'owner' ? updatedAuthority : undefined;
             const active = role === 'active' ? updatedAuthority : undefined;
-            const posting = role === 'posting' ? updatedAuthority : undefined;
 
             /** Add authority on user account */
             deipBroadcast.accountUpdate(
@@ -28,7 +27,6 @@ exports = module.exports = deipBroadcast => {
                 userAccount.name,
                 owner,
                 active,
-                posting,
                 userAccount.memo_key,
                 userAccount.json_metadata,
                 cb
@@ -36,7 +34,7 @@ exports = module.exports = deipBroadcast => {
         });
     };
 
-    deipBroadcast.removeAccountAuth = ({ signingKey, username, authorizedUsername, role = 'posting' }, cb) => {
+    deipBroadcast.removeAccountAuth = ({ signingKey, username, authorizedUsername, role = 'active' }, cb) => {
         api.getAccounts([username], (err, [userAccount]) => {
             if (err) { return cb(new Error(err), null); }
             if (!userAccount) { return cb(new Error('Invalid account name'), null); }
@@ -58,14 +56,12 @@ exports = module.exports = deipBroadcast => {
 
             const owner = role === 'owner' ? updatedAuthority : undefined;
             const active = role === 'active' ? updatedAuthority : undefined;
-            const posting = role === 'posting' ? updatedAuthority : undefined;
 
             deipBroadcast.accountUpdate(
                 signingKey,
                 userAccount.name,
                 owner,
                 active,
-                posting,
                 userAccount.memo_key,
                 userAccount.json_metadata,
                 cb
@@ -73,7 +69,7 @@ exports = module.exports = deipBroadcast => {
         });
     };
 
-    deipBroadcast.addKeyAuth = ({ signingKey, username, authorizedKey, role = 'posting', weight }, cb) => {
+    deipBroadcast.addKeyAuth = ({ signingKey, username, authorizedKey, role = 'active', weight }, cb) => {
         api.getAccounts([username], (err, [userAccount]) => {
             if (err) { return cb(new Error(err), null); }
             if (!userAccount) { return cb(new Error('Invalid account name'), null); }
@@ -92,7 +88,6 @@ exports = module.exports = deipBroadcast => {
             updatedAuthority.key_auths.push([authorizedKey, weight]);
             const owner = role === 'owner' ? updatedAuthority : undefined;
             const active = role === 'active' ? updatedAuthority : undefined;
-            const posting = role === 'posting' ? updatedAuthority : undefined;
 
             /** Add authority on user account */
             deipBroadcast.accountUpdate(
@@ -100,7 +95,6 @@ exports = module.exports = deipBroadcast => {
                 userAccount.name,
                 owner,
                 active,
-                posting,
                 userAccount.memo_key,
                 userAccount.json_metadata,
                 cb
@@ -108,7 +102,7 @@ exports = module.exports = deipBroadcast => {
         });
     };
 
-    deipBroadcast.removeKeyAuth = ({ signingKey, username, authorizedKey, role = 'posting' }, cb) => {
+    deipBroadcast.removeKeyAuth = ({ signingKey, username, authorizedKey, role = 'active' }, cb) => {
         api.getAccounts([username], (err, [userAccount]) => {
             if (err) { return cb(new Error(err), null); }
             if (!userAccount) { return cb(new Error('Invalid account name'), null); }
@@ -130,14 +124,12 @@ exports = module.exports = deipBroadcast => {
 
             const owner = role === 'owner' ? updatedAuthority : undefined;
             const active = role === 'active' ? updatedAuthority : undefined;
-            const posting = role === 'posting' ? updatedAuthority : undefined;
 
             deipBroadcast.accountUpdate(
                 signingKey,
                 userAccount.name,
                 owner,
                 active,
-                posting,
                 userAccount.memo_key,
                 userAccount.json_metadata,
                 cb

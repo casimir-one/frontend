@@ -144,6 +144,20 @@ class BlockchainService extends Singleton {
     });
   }
 
+  async sendTransactionAsync(tx) {
+    const promise = new Promise((resolve, reject) => {
+      deipRpc.api.broadcastTransactionSynchronous(tx, function (err, result) {
+        if (err) {
+          console.log(err);
+          reject(err)
+        } else {
+          resolve(result)
+        }
+      });
+    });
+    return promise;
+  }
+
   async findBlocksByRange(startTime, endTime) {
     const props = await this.getDynamicGlobalProperties();
 

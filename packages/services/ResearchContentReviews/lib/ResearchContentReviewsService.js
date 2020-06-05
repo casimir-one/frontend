@@ -15,19 +15,18 @@ class ResearchContentReviewsService extends Singleton {
     return assessmentCriterias[typeCode] || assessmentCriterias.default;
   }
 
-  makeReview(author, researchContentId, text, weight, assessment, extensions) {
-    const review = {
+  createReviewViaOffchain(author, researchContentId, text, weight, assessment, extensions) {
+    const create_review_op = ['create_review', {
       author: author,
       research_content_id: researchContentId,
       content: text,
       weight: weight,
       assessment_model: assessment,
       extensions: extensions
-    };
+    }];
 
-    const operation = ['make_review', review];
-    return this.blockchainService.signOperations([operation], this.accessService.getOwnerWif())
-      .then((signedTx) => this.researchContentReviewsHttp.sendMakeReviewOp(signedTx));
+    return this.blockchainService.signOperations([create_review_op], this.accessService.getOwnerWif())
+      .then((signedTx) => this.researchContentReviewsHttp.sendCreateReviewOp(signedTx));
   }
  
   getReviewRequestsByExpert(username, status) {
