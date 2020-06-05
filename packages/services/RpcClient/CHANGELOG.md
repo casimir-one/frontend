@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.20.0...v1.21.0) (2020-06-05)
+
+
+### Features
+
+* **@deip/research-group-service:** Posting authorities replaced with active overrides ([c832136](https://gitlab.com/DEIP/deip-rpc/commit/c832136a7b0875171db05f69d445d1dd95d11379))
+
+
+
+
+
 # [1.18.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.17.0...v1.18.0) (2020-05-24)
 
 
