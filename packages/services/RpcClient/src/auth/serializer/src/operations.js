@@ -308,7 +308,7 @@ const create_research = new Serializer("create_research", {
   research_group: string,
   title: string,
   abstract: string,
-  disciplines: set(int64),
+  disciplines: set(string),
   is_private: bool,
   review_share: percent,
   compensation_share: optional(percent),
@@ -344,42 +344,39 @@ const create_research_content = new Serializer("create_research_content", {
 }, { entity_external_id: "external_id" });
 
 
-const base_assessment_model = {
-  version: string
-}
-
-const binary_scoring_assessment_model_v1_0_0 = new Serializer("binary_scoring_assessment_model_v1_0_0",
-  Object.assign({}, base_assessment_model, {
-    is_positive: bool
-  })
-);
-
-const multicriteria_scoring_assessment_model_v1_0_0 = new Serializer("multicriteria_scoring_assessment_model_v1_0_0",
-  Object.assign({}, base_assessment_model, {
-    scores: map((uint16), (uint16))
-  })
-);
-
-const create_review = new Serializer("create_review", {
-  author: string,
-  research_content_id: int64,
-  content: string,
-  weight: uint16,
-  assessment_model: static_variant([
-    binary_scoring_assessment_model_v1_0_0,
-    multicriteria_scoring_assessment_model_v1_0_0
-  ]),
+const binary_scoring_assessment_model = new Serializer("binary_scoring_assessment_model", {
+  is_positive: bool,
   extensions: set(future_extensions)
 });
+
+const multicriteria_scoring_assessment_model = new Serializer("multicriteria_scoring_assessment_model", {
+  scores: map((uint16), (uint16)),
+  extensions: set(future_extensions)
+});
+
+const create_review = new Serializer("create_review", {
+  external_id: string,
+  author: string,
+  research_content_external_id: string,
+  content: string,
+  weight: percent,
+  assessment_model: static_variant([
+    binary_scoring_assessment_model,
+    multicriteria_scoring_assessment_model
+  ]),
+  disciplines: set(string),
+  extensions: set(future_extensions)
+}, { entity_external_id: "external_id" });
 
 
 const vote_for_review = new Serializer("vote_for_review", {
-  "voter": string,
-  "review_id": int64,
-  "discipline_id": int64,
-  "weight": int16,
+  external_id: string,
+  voter: string,
+  review_external_id: string,
+  discipline_external_id: string,
+  weight: percent,
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 
 const create_research_token_sale = new Serializer("create_research_token_sale", {
