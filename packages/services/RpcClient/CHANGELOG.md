@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.21.0...v1.22.0) (2020-06-09)
+
+
+### Features
+
+* **@deip/research-service:** Discipline external ids ([04e64aa](https://gitlab.com/DEIP/deip-rpc/commit/04e64aa25998ed992e12167318d747ae33ddfc96))
+
+
+
+
+
 # [1.21.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.20.0...v1.21.0) (2020-06-05)
 
 
