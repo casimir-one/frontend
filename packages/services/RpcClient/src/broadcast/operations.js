@@ -254,11 +254,13 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "create_review",
   "params": [
+    "external_id",
     "author",
-    "research_content_id",
+    "research_content_external_id",
     "content",
     "weight",
     "assessment_model",
+    "disciplines",
     "extensions"
   ]
 }, {
@@ -274,9 +276,10 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "vote_for_review",
   "params": [
+    "external_id",
     "voter",
-    "review_id",
-    "discipline_id",
+    "review_external_id",
+    "discipline_external_id",
     "weight",
     "extensions"
   ]

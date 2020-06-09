@@ -288,6 +288,13 @@ export default [{
     ]
 },
 {
+  "api": "database_api",
+  "method": "get_review_votes_by_review",
+  "params": [
+    "review_external_id"
+  ]
+},
+{
     "api": "database_api",
     "method": "get_review_votes_by_voter",
     "params": [
@@ -316,13 +323,17 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_all_disciplines"
+    "method": "lookup_disciplines",
+    "params": [
+      "lower_bound",
+      "limit"
+    ]
 },
 {
     "api": "database_api",
     "method": "get_discipline",
     "params": [
-        "id"
+        "external_id"
     ]
 },
 {
@@ -334,9 +345,9 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_disciplines_by_parent_id",
+    "method": "get_disciplines_by_parent",
     "params": [
-        "parent_id"
+        "parent_external_id"
     ]
 },
 {
@@ -461,9 +472,9 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_expert_tokens_by_discipline_id",
+    "method": "get_expert_tokens_by_discipline",
     "params": [
-        "discipline_id"
+        "discipline_external_id"
     ]
 },
 {
@@ -627,6 +638,13 @@ export default [{
     "params": []
 },
 {
+  "api": "database_api",
+  "method": "get_review",
+  "params": [
+    "external_id"
+  ]
+},
+{
     "api": "database_api",
     "method": "get_review_by_id",
     "params": [
@@ -635,16 +653,16 @@ export default [{
 },
 {
     "api": "database_api",
-    "method": "get_reviews_by_content",
+    "method": "get_reviews_by_research_content",
     "params": [
-        "research_content_id"
+        "research_content_external_id"
     ]
 },
 {
     "api": "database_api",
     "method": "get_reviews_by_research",
     "params": [
-        "research_id"
+        "research_external_id"
     ]
 },
 {
