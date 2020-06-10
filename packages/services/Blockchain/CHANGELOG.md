@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.22.0...v1.23.0) (2020-06-10)
+
+**Note:** Version bump only for package @deip/blockchain-service
+
+
+
+
+
 # [1.22.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.21.0...v1.22.0) (2020-06-09)
 
 **Note:** Version bump only for package @deip/blockchain-service
