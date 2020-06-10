@@ -540,7 +540,7 @@ const create_grant = new Serializer("create_grant", {
   "external_id": string,
   "grantor": string,
   "amount": asset,
-  "target_disciplines": set(int64),
+  "target_disciplines": set(string),
   "distribution_model": static_variant([
     announced_application_window_contract,
     funding_opportunity_announcement_contract,
