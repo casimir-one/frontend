@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.23.0...v1.24.0) (2020-06-22)
+
+
+### Features
+
+* **@deip/research-service:** Review share percent is optional ([25ac91b](https://gitlab.com/DEIP/deip-client-modules/commit/25ac91b69379342b2164826fc2aff9b1b9fb7f56))
+
+
+
+
+
 # [1.23.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.22.0...v1.23.0) (2020-06-10)
 
 **Note:** Version bump only for package @deip/research-content-service
