@@ -310,7 +310,7 @@ const create_research = new Serializer("create_research", {
   abstract: string,
   disciplines: set(string),
   is_private: bool,
-  review_share: percent,
+  review_share: optional(percent),
   compensation_share: optional(percent),
   members: optional(set(string)),
   extensions: set(future_extensions)
@@ -339,7 +339,6 @@ const create_research_content = new Serializer("create_research_content", {
   content: string,
   authors: set(string),
   references: set(string),
-  foreign_references: set(string),
   extensions: set(future_extensions)
 }, { entity_external_id: "external_id" });
 

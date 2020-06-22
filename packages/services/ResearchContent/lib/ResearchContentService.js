@@ -18,7 +18,6 @@ class ResearchContentService extends Singleton {
     content,
     authors,
     references,
-    foreignReferences,
     extensions
   }) {
 
@@ -33,7 +32,6 @@ class ResearchContentService extends Singleton {
           content,
           authors,
           references,
-          foreign_references: foreignReferences,
           extensions
         }], refBlock);
 

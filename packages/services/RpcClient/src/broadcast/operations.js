@@ -202,7 +202,6 @@ module.exports = [{
     "content",
     "authors",
     "references",
-    "foreign_references",
     "extensions"
   ]
 }, {

@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import deipRpc from '@deip/rpc-client';
-import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
 
 import { AccessService } from '@deip/access-service';
