@@ -149,7 +149,6 @@ class ResearchService extends Singleton {
     const researchTitle = formData.get("researchTitle");
     const researchAbstract = formData.get("researchAbstract");
     const researchDisciplines = JSON.parse(formData.get("researchDisciplines"));
-    const researchReviewShare = formData.get("researchReviewShare") || undefined;
     
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
 
@@ -195,7 +194,7 @@ class ResearchService extends Singleton {
           abstract: researchAbstract,
           disciplines: researchDisciplines,
           is_private: researchIsPrivate,
-          review_share: researchReviewShare,
+          review_share: undefined,
           compensation_share: undefined,
           members: undefined,
           extensions: []
