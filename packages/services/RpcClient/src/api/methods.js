@@ -633,11 +633,6 @@ export default [{
     ]
 },
 {
-    "api": "database_api",
-    "method": "get_all_accounts",
-    "params": []
-},
-{
   "api": "database_api",
   "method": "get_review",
   "params": [
