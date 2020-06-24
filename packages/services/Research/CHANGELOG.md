@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.24.0...v1.25.0) (2020-06-24)
+
+
+### Features
+
+* **@deip/rpc-client:** fetch all accounts method is deprecated ([7f5b8ee](https://gitlab.com/DEIP/deip-client-modules/commit/7f5b8ee8615193d5257a245e9e7dd5f99dd97a7b))
+
+
+
+
+
 # [1.24.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.23.0...v1.24.0) (2020-06-22)
 
 

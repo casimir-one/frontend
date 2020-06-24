@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-content-reviews-service",
-  "version": "1.24.0",
+  "version": "1.25.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -21,9 +21,9 @@
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "1.1.0",
-    "@deip/blockchain-service": "1.24.0",
+    "@deip/blockchain-service": "1.25.0",
     "@deip/http-service": "1.1.0",
-    "@deip/research-service": "1.24.0",
+    "@deip/research-service": "1.25.0",
     "@deip/toolbox": "1.1.0"
   },
   "peerDependencies": {
