@@ -32,6 +32,23 @@ class ExpertiseContributionsService extends Singleton {
   getExpertiseContributionsByResearchContent(researchContentId) {
     return deipRpc.api.getExpertiseContributionsByResearchContentAsync(researchContentId);
   }
+
+  getAccountsExpertiseStats({
+    name,
+    discipline,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      name,
+      discipline,
+      contribution,
+      criteria
+    };
+
+    return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
+  }
 }
 
 export {
