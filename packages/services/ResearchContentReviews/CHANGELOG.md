@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.25.0...v1.26.0) (2020-06-28)
+
+
+### Features
+
+* **@deip/rpc-client:** Accounts ECI stats endpoint ([142ed5c](https://gitlab.com/DEIP/deip-client-modules/commit/142ed5cf0643d1535fede966c9f64cdf55b1ed7b))
+
+
+
+
+
 # [1.25.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.24.0...v1.25.0) (2020-06-24)
 
 **Note:** Version bump only for package @deip/research-content-reviews-service
