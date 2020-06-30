@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.26.0...v1.27.0) (2020-06-30)
+
+
+### Features
+
+* **@deip/rpc-client:** Accounts ECI stats endpoint filter ([5462606](https://gitlab.com/DEIP/deip-client-modules/commit/546260625203331333382044cd5288d51205e47b))
+
+
+
+
+
 # [1.26.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.25.0...v1.26.0) (2020-06-28)
 
 
