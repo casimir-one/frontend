@@ -1265,7 +1265,9 @@ export default [{
   "api": "eci_history_api",
   "method": "get_accounts_eci_stats",
   "params": [
-    "discipline_external_id"
+    "discipline_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
   ]
 }
 ];
