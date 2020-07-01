@@ -49,6 +49,19 @@ class ExpertiseContributionsService extends Singleton {
 
     return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
   }
+
+  getDisciplinesExpertiseStatsHistory() {
+    return this.expertiseContributionsHttp.getDisciplinesExpertiseStatsHistory();
+  }
+
+  getDisciplinesExpertiseStats() {
+    return this.expertiseContributionsHttp.getDisciplinesExpertiseStats();
+  }
+
+  getResearchContentsExpertiseHistory() {
+    return this.expertiseContributionsHttp.getResearchContentsExpertiseHistory();
+  }
+  
 }
 
 export {
