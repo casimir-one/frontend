@@ -1269,5 +1269,15 @@ export default [{
     "contribution_type_filter",
     "assessment_criteria_type_filter"
   ]
+},
+{
+  "api": "eci_history_api",
+  "method": "get_disciplines_eci_stats_history",
+  "params": []
+},
+{
+  "api": "eci_history_api",
+  "method": "get_disciplines_eci_stats",
+  "params": []
 }
 ];

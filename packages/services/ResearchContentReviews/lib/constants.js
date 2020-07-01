@@ -26,7 +26,7 @@ const assessmentCriterias = {
 
   default: [
     { id: ASSESSMENT_CRITERIA_TYPE.NOVELTY, name: 'novelty', title: 'Novelty', max: 5 },
-    { id: ASSESSMENT_CRITERIA_TYPE.technical_quality, name: 'technical_quality', title: 'Technical Quality', max: 5 },
+    { id: ASSESSMENT_CRITERIA_TYPE.TECHNICAL_QUALITY, name: 'technical_quality', title: 'Technical Quality', max: 5 },
     { id: ASSESSMENT_CRITERIA_TYPE.METHODOLOGY, name: 'methodology', title: 'Methodology', max: 5 }
   ]
 };
