@@ -22,8 +22,9 @@ class ExpertiseContributionsHttp extends Singleton {
     return this.http.get(`/api/expertise/disciplines/stats`);
   }
 
-  getResearchContentsExpertiseHistory() {
-    return this.http.get(`/api/expertise/research-content/history`);
+  getResearchContentsExpertiseHistory(filter) {
+    const query = `?filter[discipline]=${filter.discipline}`;
+    return this.http.get(`/api/expertise/research-content/history${query}`);
   }
 
 }
