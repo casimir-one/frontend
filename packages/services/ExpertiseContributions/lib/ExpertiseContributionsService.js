@@ -73,8 +73,15 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getDisciplinesExpertiseStats();
   }
 
-  getResearchContentsExpertiseHistory() {
-    return this.expertiseContributionsHttp.getResearchContentsExpertiseHistory();
+  getResearchContentsExpertiseHistory({
+    discipline
+  }) {
+
+    const filter = {
+      discipline
+    };
+
+    return this.expertiseContributionsHttp.getResearchContentsExpertiseHistory(filter);
   }
   
 }
