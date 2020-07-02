@@ -4,6 +4,11 @@ import { Singleton } from '@deip/toolbox';
 class ExpertiseContributionsHttp extends Singleton {
   http = HttpService.getInstance();
 
+  getAccountExpertiseStats(username, filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}`;
+    return this.http.get(`/api/expertise/user/${username}/stats${query}`);
+  }
+
   getAccountsExpertiseStats(filter) {
     const query = `?filter[name]=${filter.name}&filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}`;
     return this.http.get(`/api/expertise/users/stats${query}`);
