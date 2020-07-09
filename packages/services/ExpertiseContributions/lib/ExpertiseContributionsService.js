@@ -35,12 +35,16 @@ class ExpertiseContributionsService extends Singleton {
 
   getAccountExpertiseStats(username, {
     discipline,
+    from,
+    to,
     contribution,
     criteria
   }) {
 
     const filter = {
       discipline,
+      from,
+      to,
       contribution,
       criteria
     };
@@ -48,16 +52,41 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getAccountExpertiseStats(username, filter);
   }
 
-  getAccountsExpertiseStats({
-    name,
+
+  getAccountExpertiseHistory(username, {
     discipline,
+    from,
+    to,
     contribution,
     criteria
   }) {
 
     const filter = {
-      name,
       discipline,
+      from,
+      to,
+      contribution,
+      criteria
+    };
+
+    return this.expertiseContributionsHttp.getAccountExpertiseHistory(username, filter);
+  }
+
+
+  getAccountsExpertiseStats({
+    searchTerm,
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      searchTerm,
+      discipline,
+      from,
+      to,
       contribution,
       criteria
     };

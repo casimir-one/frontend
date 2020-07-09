@@ -87,6 +87,10 @@ class ResearchContentService extends Singleton {
   unlockContentDraft(refId) {
     return this.researchContentHttp.unlockContentDraft(refId);
   }
+
+  checkResearchContentExistenceByPermlink(researchExternalId, title) {
+    return deipRpc.api.checkResearchContentExistenceByPermlinkAsync(researchExternalId, title)
+  }
 }
 
 export {

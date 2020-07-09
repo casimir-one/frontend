@@ -574,17 +574,25 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "check_research_existence_by_permlink",
+  "method": "check_research_group_existence_by_permlink",
   "params": [
-    "research_group_id",
-    "permlink"
+    "name"
   ]
 },
 {
   "api": "database_api",
-  "method": "check_research_group_existence_by_permlink",
+  "method": "check_research_existence_by_permlink",
   "params": [
-    "permlink"
+    "research_group_external_id",
+    "title"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "check_research_content_existence_by_permlink",
+  "params": [
+    "research_external_id",
+    "title"
   ]
 },
 {
@@ -1258,7 +1266,11 @@ export default [{
   "method": "get_eci_history_by_account_and_discipline",
   "params": [
     "account",
-    "discipline_id"
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
   ]
 },
 {
@@ -1266,6 +1278,8 @@ export default [{
   "method": "get_accounts_eci_stats",
   "params": [
     "discipline_filter",
+    "from_filter",
+    "to_filter",
     "contribution_type_filter",
     "assessment_criteria_type_filter"
   ]
