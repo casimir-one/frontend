@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.31.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.30.0...v1.31.0) (2020-07-09)
+
+
+### Features
+
+* **@deip/expertise-contributions-service:** Accounts ECI filter ([f11f3c4](https://gitlab.com/DEIP/deip-client-modules/commit/f11f3c4eb1eefc0b076c106f5228b3a9c88b473c))
+
+
+
+
+
 # [1.30.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.29.0...v1.30.0) (2020-07-02)
 
 
