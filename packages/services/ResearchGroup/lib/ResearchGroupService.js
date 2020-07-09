@@ -345,6 +345,10 @@ class ResearchGroupService extends Singleton {
   updateJoinRequest(update) {
     return this.researchGroupHttp.updateJoinRequest(update);
   }
+
+  checkResearchGroupExistenceByPermlink(name) {
+    return deipRpc.api.checkResearchGroupExistenceByPermlinkAsync(name)
+  }
   
 }
 

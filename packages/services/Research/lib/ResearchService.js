@@ -612,6 +612,10 @@ class ResearchService extends Singleton {
       })
   }
 
+  checkResearchExistenceByPermlink(researchGroupExternalId, title) {
+    return deipRpc.api.checkResearchExistenceByPermlinkAsync(researchGroupExternalId, title);
+  }
+
 }
 
 export {
