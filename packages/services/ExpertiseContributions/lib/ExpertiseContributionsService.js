@@ -90,6 +90,25 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
   }
 
+  getDisciplineExpertiseHistory({
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      discipline: discipline || "",
+      from: from || "",
+      to: to || "",
+      contribution: contribution || "",
+      criteria: criteria || ""
+    };
+
+    return this.expertiseContributionsHttp.getDisciplineExpertiseHistory(filter);
+  }
+
   getDisciplinesExpertiseStatsHistory({
     from,
     to,
