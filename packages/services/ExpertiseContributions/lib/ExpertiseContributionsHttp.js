@@ -19,6 +19,11 @@ class ExpertiseContributionsHttp extends Singleton {
     return this.http.get(`/api/expertise/users/stats${query}`);
   }
 
+  getDisciplineExpertiseHistory(filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[from]=${filter.from}&filter[to]=${filter.to}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}`;
+    return this.http.get(`/api/expertise/disciplines/history${query}`);
+  }
+
   getDisciplinesExpertiseStatsHistory(filter) {
     const query = `?filter[from]=${filter.from}&filter[to]=${filter.to}&filter[step]=${filter.step}`;
     return this.http.get(`/api/expertise/disciplines/stats-history${query}`);

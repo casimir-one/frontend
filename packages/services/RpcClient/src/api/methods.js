@@ -1295,6 +1295,17 @@ export default [{
 },
 {
   "api": "eci_history_api",
+  "method": "get_discipline_eci_history",
+  "params": [
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
   "method": "get_disciplines_eci_last_stats",
   "params": []
 }
