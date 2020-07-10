@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.33.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.32.0...v1.33.0) (2020-07-10)
+
+
+### Features
+
+* **@deip/expertise-contributions-service:** Disciplines ECI history endpoint ([acd85ef](https://gitlab.com/DEIP/deip-rpc/commit/acd85ef9c6fd5134f2f7cf013225cfbf59ad2acb))
+
+
+
+
+
 # [1.32.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.31.0...v1.32.0) (2020-07-10)
 
 
