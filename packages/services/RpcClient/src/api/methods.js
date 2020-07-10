@@ -1263,7 +1263,7 @@ export default [{
 },
 {
   "api": "eci_history_api",
-  "method": "get_eci_history_by_account_and_discipline",
+  "method": "get_account_eci_history",
   "params": [
     "account",
     "discipline_filter",
@@ -1287,11 +1287,15 @@ export default [{
 {
   "api": "eci_history_api",
   "method": "get_disciplines_eci_stats_history",
-  "params": []
+  "params": [
+    "from_filter",
+    "to_filter",
+    "step_filter"
+  ]
 },
 {
   "api": "eci_history_api",
-  "method": "get_disciplines_eci_stats",
+  "method": "get_disciplines_eci_last_stats",
   "params": []
 }
 ];
