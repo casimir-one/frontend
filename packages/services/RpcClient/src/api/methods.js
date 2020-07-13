@@ -1247,18 +1247,28 @@ export default [{
 // ECI History Plugin
 {
   "api": "eci_history_api",
-  "method": "get_eci_history_by_research_content_and_discipline",
+  "method": "get_research_content_eci_history",
   "params": [
-    "research_content_id",
-    "discipline_id"
+    "research_content_external_id",
+    "cursor",
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
   ]
 },
 {
   "api": "eci_history_api",
-  "method": "get_eci_history_by_research_and_discipline",
+  "method": "get_research_eci_history",
   "params": [
-    "research_id",
-    "discipline_id"
+    "research_external_id",
+    "cursor",
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
   ]
 },
 {
