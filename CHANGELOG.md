@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.34.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.33.0...v1.34.0) (2020-07-15)
+
+
+### Features
+
+* **@deip/expertise-contributions-service:** Growth rate starting point ([0d013b5](https://gitlab.com/DEIP/deip-client-modules/commit/0d013b53a0d3a28a813c8e725577b07824f534c5))
+
+
+
+
+
 # [1.33.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.32.0...v1.33.0) (2020-07-10)
 
 
