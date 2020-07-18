@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.35.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.34.0...v1.35.0) (2020-07-18)
+
+**Note:** Version bump only for package @deip/disciplines-service
+
+
+
+
+
 # [1.34.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.33.0...v1.34.0) (2020-07-15)
 
 **Note:** Version bump only for package @deip/disciplines-service
