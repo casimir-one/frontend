@@ -104,6 +104,46 @@ class ExpertiseContributionsService extends Singleton {
   }
 
 
+  getResearchExpertiseStats(researchExternalId, {
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      discipline: discipline || "",
+      from: from || "",
+      to: to || "",
+      contribution: contribution || "",
+      criteria: criteria || ""
+    };
+
+    return this.expertiseContributionsHttp.getResearchExpertiseStats(researchExternalId, filter);
+  }
+
+
+  getResearchesExpertiseStats({
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      discipline: discipline || "",
+      from: from || "",
+      to: to || "",
+      contribution: contribution || "",
+      criteria: criteria || ""
+    };
+
+    return this.expertiseContributionsHttp.getResearchesExpertiseStats(filter);
+  }
+
+
   getResearchContentExpertiseHistory(researchContentExternalId, {
     discipline,
     from,
@@ -122,6 +162,47 @@ class ExpertiseContributionsService extends Singleton {
 
     return this.expertiseContributionsHttp.getResearchContentExpertiseHistory(researchContentExternalId, filter);
   }
+
+
+  getResearchContentExpertiseStats(researchContentExternalId, {
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      discipline: discipline || "",
+      from: from || "",
+      to: to || "",
+      contribution: contribution || "",
+      criteria: criteria || ""
+    };
+
+    return this.expertiseContributionsHttp.getResearchContentExpertiseStats(researchContentExternalId, filter);
+  }
+
+
+  getResearchContentsExpertiseStats({
+    discipline,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+
+    const filter = {
+      discipline: discipline || "",
+      from: from || "",
+      to: to || "",
+      contribution: contribution || "",
+      criteria: criteria || ""
+    };
+
+    return this.expertiseContributionsHttp.getResearchContentsExpertiseStats(filter);
+  }
+
 
   getDisciplineExpertiseHistory({
     discipline,

@@ -23,10 +23,30 @@ class ExpertiseContributionsHttp extends Singleton {
     const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
     return this.http.get(`/api/expertise/research/${researchExternalId}/history${query}`);
   }
+
+  getResearchExpertiseStats(researchExternalId, filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
+    return this.http.get(`/api/expertise/research/${researchExternalId}/stats${query}`);
+  }
   
+  getResearchesExpertiseStats(filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
+    return this.http.get(`/api/expertise/research/stats${query}`);
+  }
+
   getResearchContentExpertiseHistory(researchContentExternalId, filter) {
     const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
     return this.http.get(`/api/expertise/research-content/${researchContentExternalId}/history${query}`);
+  }
+
+  getResearchContentExpertiseStats(researchContentExternalId, filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
+    return this.http.get(`/api/expertise/research-content/${researchContentExternalId}/stats${query}`);
+  }
+
+  getResearchContentsExpertiseStats(filter) {
+    const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
+    return this.http.get(`/api/expertise/research-content/stats${query}`);
   }
 
   getDisciplineExpertiseHistory(filter) {

@@ -1260,6 +1260,29 @@ export default [{
 },
 {
   "api": "eci_history_api",
+  "method": "get_research_content_eci_stats",
+  "params": [
+    "research_content_external_id",
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
+  "method": "get_research_contents_eci_stats",
+  "params": [
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
   "method": "get_research_eci_history",
   "params": [
     "research_external_id",
@@ -1273,7 +1296,43 @@ export default [{
 },
 {
   "api": "eci_history_api",
+  "method": "get_research_eci_stats",
+  "params": [
+    "research_external_id",
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
+  "method": "get_researches_eci_stats",
+  "params": [
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
   "method": "get_account_eci_history",
+  "params": [
+    "account",
+    "cursor",
+    "discipline_filter",
+    "from_filter",
+    "to_filter",
+    "contribution_type_filter",
+    "assessment_criteria_type_filter"
+  ]
+},
+{
+  "api": "eci_history_api",
+  "method": "get_account_eci_stats",
   "params": [
     "account",
     "discipline_filter",
