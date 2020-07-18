@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.35.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.34.0...v1.35.0) (2020-07-18)
+
+
+### Features
+
+* **@deip/expertise-contributions-service:** Research\ResearchContent ECI stats ([1ccfc59](https://gitlab.com/DEIP/deip-rpc/commit/1ccfc59dab31021959a305b6dd3d2eb5a17804d9))
+
+
+
+
+
 # [1.34.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.33.0...v1.34.0) (2020-07-15)
 
 
