@@ -12,6 +12,18 @@ class TenantHttp extends Singleton {
     return this.http.put(`/tenant/profile`, updatedProfile);
   }
 
+  createTenantResearchAttribute(researchAttribute) {
+    return this.http.post(`/tenant/research-attributes`, researchAttribute);
+  }
+
+  updateTenantResearchAttribute(researchAttribute) {
+    return this.http.put(`/tenant/research-attributes`, researchAttribute);
+  }
+
+  deleteTenantResearchAttribute(researchAttributeId) {
+    return this.http.delete_(`/tenant/research-attributes/${researchAttributeId}`);
+  }
+
   postSignUp(data) {
     return this.http.post(`/tenant/sign-up`, data);
   }

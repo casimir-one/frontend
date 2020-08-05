@@ -63,7 +63,7 @@ class HttpService extends Singleton {
           httpPromise = this.axios[method](url, model, config);
           break;
         case 'delete':
-          httpPromise = this.axios[method](url, config);
+          httpPromise = this.axios[method](url, model, config);
           break;
         default:
           resolve();
@@ -132,8 +132,8 @@ class HttpService extends Singleton {
     return this._verb('put', url, model, options);
   }
 
-  delete_(url, options) {
-    return this._verb('delete', url, null, options);
+  delete_(url, model, options) {
+    return this._verb('delete', url, model, options);
   }
 }
 

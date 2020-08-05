@@ -568,6 +568,15 @@ module.exports = [{
     "request_id",
     "extensions"
   ]
+}, {
+  "roles": ["active", "owner"],
+  "operation": "create_assessment",
+  "params": [
+    "external_id",
+    "creator",
+    "stages",
+    "extensions"
+  ]
 },
 
 // virtual operations
