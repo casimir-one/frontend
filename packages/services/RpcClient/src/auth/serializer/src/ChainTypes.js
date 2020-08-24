@@ -73,12 +73,13 @@ ChainTypes.operations = {
   create_request_by_nda_contract: 49,
   fulfill_request_by_nda_contract: 50,
 
+  create_assessment: 51,
 
   // virtual operations
-  fill_common_tokens_withdraw: 51,
-  shutdown_witness: 52,
-  hardfork: 53,
-  producer_reward: 54
+  fill_common_tokens_withdraw: 52,
+  shutdown_witness: 53,
+  hardfork: 54,
+  producer_reward: 55
 };
 
 //types.hpp

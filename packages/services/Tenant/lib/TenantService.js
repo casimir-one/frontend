@@ -29,6 +29,18 @@ class TenantService extends Singleton {
     return this.tenantHttp.updateTenantProfile(updatedProfile);
   }
 
+  createTenantResearchAttribute(researchAttribute) {
+    return this.tenantHttp.createTenantResearchAttribute(researchAttribute);
+  }
+
+  updateTenantResearchAttribute(researchAttribute) {
+    return this.tenantHttp.updateTenantResearchAttribute(researchAttribute);
+  }
+
+  deleteTenantResearchAttribute(researchAttribute) {
+    return this.tenantHttp.deleteTenantResearchAttribute(researchAttribute);
+  }
+
   postSignUp(data) {
     return this.tenantHttp.postSignUp(data);
   }

@@ -721,6 +721,138 @@ const fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_c
 });
 
 
+const contribution_request = new Serializer("contribution_request", {
+  tag: string,
+  is_mandatory: bool,
+  type: uint16,
+  extensions: set(future_extensions)
+});
+
+const guard_fn = new Serializer("guard_fn", {
+  fn_type: uint16,
+  fn: optional(string),
+  fn_args: optional(string),
+  extensions: set(future_extensions)
+});
+
+
+const create_application_rule = new Serializer("create_application", {
+  guard: guard_fn
+});
+
+const update_application_rule = new Serializer("update_application", {
+  guard: guard_fn
+});
+
+const delete_application_rule = new Serializer("delete_application", {
+  guard: guard_fn
+});
+
+const apply_phase_type = new Serializer("apply_phase", {
+  start_time: time_point_sec,
+  end_time: time_point_sec,
+  options: set(static_variant([
+    create_application_rule,
+    update_application_rule,
+    delete_application_rule
+  ])),
+  extensions: set(future_extensions)
+});
+
+
+const await_review_rule = new Serializer("await_review", {
+  extensions: set(future_extensions)
+});
+
+
+const await_review_phase_type = new Serializer("await_review_phase", {
+  start_time: time_point_sec,
+  end_time: time_point_sec,
+  options: set(static_variant([
+    await_review_rule
+  ])),
+  extensions: set(future_extensions)
+});
+
+
+
+const create_review_rule = new Serializer("create_review", {
+  guard: guard_fn
+});
+
+const update_review_rule = new Serializer("update_review", {
+  guard: guard_fn
+});
+
+const delete_review_rule = new Serializer("delete_review", {
+  guard: guard_fn
+});
+
+const create_curation_rule = new Serializer("create_curation", {
+  guard: guard_fn
+});
+
+const delete_curation_rule = new Serializer("delete_curation", {
+  guard: guard_fn
+});
+
+const review_phase_type = new Serializer("review_phase", {
+  start_time: time_point_sec,
+  end_time: time_point_sec,
+  options: set(static_variant([
+    create_review_rule,
+    update_review_rule,
+    delete_review_rule,
+    create_curation_rule,
+    delete_curation_rule
+  ])),
+  extensions: set(future_extensions)
+});
+
+
+const auto_decision_making_rule = new Serializer("auto_decision_making", {
+  guard: guard_fn
+});
+
+const manual_decision_making_rule = new Serializer("manual_decision_making", {
+  decision_makers: set(string),
+  extensions: set(future_extensions)
+});
+
+
+const decision_phase_type = new Serializer("decision_phase", {
+  start_time: time_point_sec,
+  end_time: time_point_sec,
+  options: set(static_variant([
+    auto_decision_making_rule,
+    manual_decision_making_rule
+  ])),
+  extensions: set(future_extensions)
+});
+
+
+
+const assessment_stage = new Serializer("assessment_stage", {
+  external_id: string,
+  contributions_requests: array(contribution_request),
+  phases: set(static_variant([
+    apply_phase_type,
+    await_review_phase_type,
+    review_phase_type,
+    decision_phase_type
+  ])),
+  extensions: set(future_extensions)
+});
+
+
+const create_assessment = new Serializer("create_assessment", {
+  external_id: string,
+  creator: string,
+  stages: array(assessment_stage),
+  extensions: set(future_extensions)
+}, { entity_external_id: "external_id" });
+
+
 // virtual operations
 
 const fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -807,12 +939,13 @@ operation.st_operations = [
   close_nda_contract, // 48
   create_request_by_nda_contract, // 49
   fulfill_request_by_nda_contract, // 50
+  create_assessment, // 51
 
   // virtual operations
-  fill_common_tokens_withdraw, // 51
-  shutdown_witness, // 52
-  hardfork, // 53
-  producer_reward // 54
+  fill_common_tokens_withdraw, // 52
+  shutdown_witness, // 53
+  hardfork, // 54
+  producer_reward // 55
 ];
 
 let transaction = new Serializer(
