@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.37.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.36.0...v1.37.0) (2020-08-25)
+
+
+### Features
+
+* **@deip/research-service:** 'create_review' fixed ([dfa997e](https://gitlab.com/DEIP/deip-rpc/commit/dfa997e70a49741cfaebdc4b0741dbeb34e11ec2))
+
+
+
+
+
 # [1.36.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.35.0...v1.36.0) (2020-08-24)
 
 
