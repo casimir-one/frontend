@@ -776,7 +776,7 @@ const await_review_phase_type = new Serializer("await_review_phase", {
 
 
 
-const create_review_rule = new Serializer("create_review", {
+const create_review_rule = new Serializer("create_review_rule", {
   guard: guard_fn
 });
 
