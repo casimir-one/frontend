@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class ResearchHttp extends Singleton {
   http = HttpService.getInstance();
@@ -7,9 +8,10 @@ class ResearchHttp extends Singleton {
   getResearch(externalId) {
     return this.http.get(`/api/research/${externalId}`);
   }
-
-  getPublicResearchListing() {
-    return this.http.get(`/api/research/listing`);
+  
+  getPublicResearchListing(filter) {
+    let query = qs.stringify({ filter });
+    return this.http.get(`/api/research/listing?${query}`);
   }
 
   getUserResearchListing(username) {
