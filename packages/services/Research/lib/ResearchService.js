@@ -20,8 +20,19 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearch(externalId);
   }
 
-  getPublicResearchListing() {
-    return this.researchHttp.getPublicResearchListing();
+  getPublicResearchListing({
+    disciplines,
+    organizations,
+    researchAttributes
+  }) {
+
+    const filter = {
+      disciplines: disciplines || [],
+      organizations: organizations || [],
+      researchAttributes: researchAttributes || []
+    };
+
+    return this.researchHttp.getPublicResearchListing(filter);
   }
 
   getUserResearchListing(username) {
@@ -427,7 +438,8 @@ class ResearchService extends Singleton {
     }
   }
 
-  updateResearchOffchainMeta(researchExternalId, offchainMeta) {
+  updateResearchOffchainMeta(researchExternalId, { attributes }) {
+    const offchainMeta = { attributes };
     return this.researchHttp.updateResearchMeta(researchExternalId, offchainMeta);
   }
 
