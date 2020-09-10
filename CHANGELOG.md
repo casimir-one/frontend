@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.38.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.37.0...v1.38.0) (2020-09-10)
+
+
+### Features
+
+* **@deip/research-service:** Server side feed filter ([d402f55](https://gitlab.com/DEIP/deip-client-modules/commit/d402f55bab7297716b275aaa8154f68afaa775b2))
+
+
+
+
+
 # [1.37.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.36.0...v1.37.0) (2020-08-25)
 
 
