@@ -21,12 +21,14 @@ class ResearchService extends Singleton {
   }
 
   getPublicResearchListing({
+    searchTerm,
     disciplines,
     organizations,
     researchAttributes
   }) {
 
     const filter = {
+      searchTerm: searchTerm || "",
       disciplines: disciplines || [],
       organizations: organizations || [],
       researchAttributes: researchAttributes || []
@@ -44,36 +46,38 @@ class ResearchService extends Singleton {
   }
 
   createResearchViaOffchain(privKey, isProposal, {
-    researchGroup,
+    research_group,
     title,
     abstract,
     disciplines,
-    isPrivate,
+    is_private,
     members,
-    reviewShare,
-    compensationShare,
+    review_share,
+    compensation_share,
     extensions
-  }, offchainMeta) {
+  }, { attributes }) {
+
+    const offchainMeta = { attributes };
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
 
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
-          research_group: researchGroup,
+          research_group,
           title,
           abstract,
           disciplines,
-          is_private: isPrivate,
+          is_private,
           members,
-          review_share: reviewShare,
-          compensation_share: compensationShare,
+          review_share,
+          compensation_share,
           extensions
         }], refBlock)
 
         if (isProposal) {
 
           const proposal = {
-            creator: researchGroup,
+            creator: research_group,
             proposedOps: [{ "op": create_research_op }],
             expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
             reviewPeriodSeconds: undefined,
@@ -82,14 +86,14 @@ class ResearchService extends Singleton {
 
           return this.proposalsService.createProposal(privKey, false, proposal, refBlock)
             .then(({ tx: signedProposalTx }) => {
-              return this.researchHttp.createResearch({ tx: signedProposalTx, offchainMeta, isProposal })
+              return this.researchHttp.createResearch({ tx: signedProposalTx, isProposal, offchainMeta })
             })
 
         } else {
 
           return this.blockchainService.signOperations([create_research_op], privKey, refBlock)
             .then((signedTx) => {
-              return this.researchHttp.createResearch({ tx: signedTx, offchainMeta, isProposal })
+              return this.researchHttp.createResearch({ tx: signedTx, isProposal, offchainMeta })
             })
         }
 
@@ -391,25 +395,27 @@ class ResearchService extends Singleton {
   }
 
   updateResearchViaOffchain(privKey, isProposal, {
-    researchGroup,
-    externalId,
+    research_group,
+    external_id,
     title,
     abstract,
-    isPrivate,
-    reviewShare,
-    compensationShare,
+    is_private,
+    review_share,
+    compensation_share,
     members,
     extensions
-  }) {
+  }, { attributes }) {
+
+    const offchainMeta = { attributes };
       
     const update_research_op = ['update_research', {
-      research_group: researchGroup,
-      external_id: externalId,
+      research_group,
+      external_id,
       title,
       abstract,
-      is_private: isPrivate,
-      review_share: reviewShare,
-      compensation_share: compensationShare,
+      is_private,
+      review_share,
+      compensation_share,
       members,
       extensions
     }];
@@ -417,7 +423,7 @@ class ResearchService extends Singleton {
     if (isProposal) {
 
       const proposal = {
-        creator: researchGroup,
+        creator: research_group,
         proposedOps: [{ "op": update_research_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
@@ -426,21 +432,16 @@ class ResearchService extends Singleton {
 
       return this.proposalsService.createProposal(privKey, false, proposal)
         .then(({ tx: signedProposalTx }) => {
-          return this.researchHttp.updateResearch({ tx: signedProposalTx, isProposal })
+          return this.researchHttp.updateResearch({ tx: signedProposalTx, isProposal, offchainMeta });
         })
 
     } else {
 
       return this.blockchainService.signOperations([update_research_op], privKey)
         .then((signedTx) => {
-          return this.researchHttp.updateResearch({ tx: signedTx, isProposal })
+          return this.researchHttp.updateResearch({ tx: signedTx, isProposal, offchainMeta });
         });
     }
-  }
-
-  updateResearchOffchainMeta(researchExternalId, { attributes }) {
-    const offchainMeta = { attributes };
-    return this.researchHttp.updateResearchMeta(researchExternalId, offchainMeta);
   }
 
   /* TODO: Move this to InvestmentsService */
