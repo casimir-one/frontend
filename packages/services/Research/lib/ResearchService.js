@@ -64,14 +64,14 @@ class ResearchService extends Singleton {
 
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
           research_group: researchGroup,
-          title,
-          abstract,
-          disciplines,
-          is_private: isPrivate,
-          members,
-          review_share: reviewShare,
-          compensation_share: compensationShare,
-          extensions
+          title: title || "",
+          abstract: abstract || "",
+          disciplines: disciplines || [],
+          is_private: isPrivate || false,
+          members: members || undefined,
+          review_share: reviewShare || undefined,
+          compensation_share: compensationShare || undefined,
+          extensions: extensions || []
         }], refBlock)
 
         if (isProposal) {
@@ -411,13 +411,13 @@ class ResearchService extends Singleton {
     const update_research_op = ['update_research', {
       research_group: researchGroup,
       external_id: externalId,
-      title,
-      abstract,
-      is_private: isPrivate,
-      review_share: reviewShare,
-      compensation_share: compensationShare,
-      members,
-      extensions
+      title: title || "",
+      abstract: abstract || "",
+      is_private: isPrivate || false,
+      review_share: reviewShare || undefined,
+      compensation_share: compensationShare || undefined,
+      members: members || undefined,
+      extensions: extensions || []
     }];
 
     if (isProposal) {
