@@ -46,14 +46,14 @@ class ResearchService extends Singleton {
   }
 
   createResearchViaOffchain(privKey, isProposal, {
-    research_group,
+    researchGroup,
     title,
     abstract,
     disciplines,
-    is_private,
+    isPrivate,
     members,
-    review_share,
-    compensation_share,
+    reviewShare,
+    compensationShare,
     extensions
   }, { attributes }) {
 
@@ -63,21 +63,21 @@ class ResearchService extends Singleton {
       .then((refBlock) => {
 
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
-          research_group,
+          research_group: researchGroup,
           title,
           abstract,
           disciplines,
-          is_private,
+          is_private: isPrivate,
           members,
-          review_share,
-          compensation_share,
+          review_share: reviewShare,
+          compensation_share: compensationShare,
           extensions
         }], refBlock)
 
         if (isProposal) {
 
           const proposal = {
-            creator: research_group,
+            creator: researchGroup,
             proposedOps: [{ "op": create_research_op }],
             expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
             reviewPeriodSeconds: undefined,
@@ -395,13 +395,13 @@ class ResearchService extends Singleton {
   }
 
   updateResearchViaOffchain(privKey, isProposal, {
-    research_group,
-    external_id,
+    externalId,
+    researchGroup,
     title,
     abstract,
-    is_private,
-    review_share,
-    compensation_share,
+    isPrivate,
+    reviewShare,
+    compensationShare,
     members,
     extensions
   }, { attributes }) {
@@ -409,13 +409,13 @@ class ResearchService extends Singleton {
     const offchainMeta = { attributes };
       
     const update_research_op = ['update_research', {
-      research_group,
-      external_id,
+      research_group: researchGroup,
+      external_id: externalId,
       title,
       abstract,
-      is_private,
-      review_share,
-      compensation_share,
+      is_private: isPrivate,
+      review_share: reviewShare,
+      compensation_share: compensationShare,
       members,
       extensions
     }];
@@ -423,7 +423,7 @@ class ResearchService extends Singleton {
     if (isProposal) {
 
       const proposal = {
-        creator: research_group,
+        creator: researchGroup,
         proposedOps: [{ "op": update_research_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
