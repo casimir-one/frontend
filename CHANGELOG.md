@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.40.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.39.0...v1.40.0) (2020-09-21)
+
+
+### Features
+
+* **@deip/research-service:** Camel case for params ([cbe28f5](https://gitlab.com/DEIP/deip-client-modules/commit/cbe28f596b652b5190521ac81422665ea4295e1c))
+
+
+
+
+
 # [1.39.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.38.0...v1.39.0) (2020-09-18)
 
 
