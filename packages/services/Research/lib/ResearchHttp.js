@@ -22,8 +22,8 @@ class ResearchHttp extends Singleton {
     return this.http.get(`/api/research/group/listing/${researchGroupExternalId}`);
   }
 
-  createResearch({ tx, offchainMeta, isProposal }) {
-    return this.http.post('/api/research', { tx, offchainMeta, isProposal });
+  createResearch({ tx, offchainMeta, isProposal, isNewResearchGroup }) {
+    return this.http.post('/api/research', { tx, offchainMeta, isProposal, isNewResearchGroup });
   }
 
   createResearchApplication({ proposalId, formData }) {
