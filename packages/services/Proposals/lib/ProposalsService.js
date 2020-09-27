@@ -17,7 +17,10 @@ class ProposalsService extends Singleton {
     expirationTime,
     reviewPeriodSeconds,
     extensions
-  }, refBlock = {}) {
+  },
+    refBlock = {},
+    preOps = [],
+    postOps = []) {
     
     const { refBlockNum, refBlockPrefix } = refBlock;
     const refBlockPromise = refBlockNum && refBlockPrefix
@@ -35,7 +38,7 @@ class ProposalsService extends Singleton {
           extensions
         }], refBlock);
 
-        return this.blockchainService.signOperations([create_proposal_op], privKey, refBlock)
+        return this.blockchainService.signOperations([...preOps, create_proposal_op, ...postOps], privKey, refBlock)
           .then((signedTx) => {
             return propagate
               ? this.proposalsHttp.createProposal({ tx: signedTx })
