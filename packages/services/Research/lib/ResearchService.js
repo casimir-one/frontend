@@ -144,9 +144,7 @@ class ResearchService extends Singleton {
             }];
 
             invites_ops.push(...[create_proposal_op, update_proposal_op]);
-
           }
-          
         }
 
 
@@ -154,7 +152,7 @@ class ResearchService extends Singleton {
 
           const proposal = {
             creator: research_group_external_id,
-            proposedOps: [{ "op": create_research_op }, invites_ops.map((op) => { return { "op": op } })],
+            proposedOps: [{ "op": create_research_op }, ...invites_ops.map((op) => { return { "op": op } })],
             expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
             reviewPeriodSeconds: undefined,
             extensions: []
