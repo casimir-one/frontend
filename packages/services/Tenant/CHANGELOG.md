@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.44.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.43.0...v1.44.0) (2020-10-02)
+
+
+### Features
+
+* **@deip/research-service:** Research edit fixed; Auto-apptovals ([06d26bb](https://gitlab.com/DEIP/deip-client-modules/commit/06d26bba33c603f10423de981f8560e162578c91))
+
+
+
+
+
 # [1.37.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.36.0...v1.37.0) (2020-08-25)
 
 **Note:** Version bump only for package @deip/tenant-service
