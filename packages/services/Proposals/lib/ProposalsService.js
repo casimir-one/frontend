@@ -11,7 +11,7 @@ class ProposalsService extends Singleton {
   accessService = AccessService.getInstance();
   blockchainService = BlockchainService.getInstance();
 
-  createProposal(privKey, propagate, {
+  createProposal({ privKey, username, isApproved }, propagate, {
     creator,
     proposedOps,
     expirationTime,
@@ -37,6 +37,22 @@ class ProposalsService extends Singleton {
           review_period_seconds: reviewPeriodSeconds,
           extensions
         }], refBlock);
+
+        if (isApproved) {
+
+          const update_proposal_op = ['update_proposal', {
+            external_id: proposal_external_id,
+            active_approvals_to_add: [username],
+            active_approvals_to_remove: [],
+            owner_approvals_to_add: [],
+            owner_approvals_to_remove: [],
+            key_approvals_to_add: [],
+            key_approvals_to_remove: [],
+            extensions: []
+          }];
+
+          postOps.unshift(update_proposal_op);
+        }
 
         return this.blockchainService.signOperations([...preOps, create_proposal_op, ...postOps], privKey, refBlock)
           .then((signedTx) => {

@@ -168,7 +168,7 @@ module.exports = [{
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "left_research_group_membership",
+  "operation": "leave_research_group_membership",
   "params": [
     "member",
     "research_group",

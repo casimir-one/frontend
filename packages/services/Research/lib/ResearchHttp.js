@@ -22,8 +22,8 @@ class ResearchHttp extends Singleton {
     return this.http.get(`/api/research/group/listing/${researchGroupExternalId}`);
   }
 
-  createResearch({ tx, offchainMeta, isProposal, isNewResearchGroup }) {
-    return this.http.post('/api/research', { tx, offchainMeta, isProposal, isNewResearchGroup });
+  createResearch({ tx, offchainMeta }) {
+    return this.http.post('/api/research', { tx, offchainMeta });
   }
 
   createResearchApplication({ proposalId, formData }) {
@@ -70,8 +70,12 @@ class ResearchHttp extends Singleton {
     return this.http.post('/api/research/token-sale/contribution', { tx, isProposal });
   }
 
-  updateResearch({ tx, isProposal, offchainMeta }) {
-    return this.http.put(`/api/research`, { tx, isProposal, offchainMeta });
+  updateResearch({ tx, offchainMeta }) {
+    return this.http.put(`/api/research`, { tx, offchainMeta });
+  }
+
+  getResearchPendingInvites(researchExternalId) {
+    return this.http.get(`/api/invites/research/${researchExternalId}`);
   }
   
 }

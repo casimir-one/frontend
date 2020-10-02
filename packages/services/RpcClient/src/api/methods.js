@@ -275,6 +275,13 @@ export default [{
 },
 {
   "api": "database_api",
+  "method": "get_research_group_membership_tokens",
+  "params": [
+    "external_id"
+  ]
+},
+{
+  "api": "database_api",
   "method": "get_research_group_tokens_by_account",
   "params": [
     "account"

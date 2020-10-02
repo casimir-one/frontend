@@ -295,7 +295,7 @@ const join_research_group_membership = new Serializer("join_research_group_membe
 });
 
 
-const left_research_group_membership = new Serializer("left_research_group_membership", {
+const leave_research_group_membership = new Serializer("leave_research_group_membership", {
   member: string,
   research_group: string,
   is_exclusion: bool,
@@ -893,7 +893,7 @@ operation.st_operations = [
   change_recovery_account, // 11
 
   join_research_group_membership, // 12
-  left_research_group_membership, // 13
+  leave_research_group_membership, // 13
   create_research, // 14
   update_research, // 15
   create_research_content, // 16

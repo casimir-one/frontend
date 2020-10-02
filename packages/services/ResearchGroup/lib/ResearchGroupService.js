@@ -63,7 +63,7 @@ class ResearchGroupService extends Singleton {
   }
 
 
-  updateResearchGroupAccountViaOffchain(privKey, isProposal, {
+  updateResearchGroupAccountViaOffchain({ privKey, username }, isProposal, {
     researchGroup,
     accountOwnerAuth,
     accountActiveAuth,
@@ -107,7 +107,7 @@ class ResearchGroupService extends Singleton {
         extensions: []
       }
 
-      return this.proposalsService.createProposal(privKey, false, proposal)
+      return this.proposalsService.createProposal({ privKey, username }, false, proposal)
         .then(({ tx: signedProposalTx }) => {
           return this.researchGroupHttp.updateResearchGroup({ tx: signedProposalTx, offchainMeta, isProposal })
         })
@@ -150,27 +150,10 @@ class ResearchGroupService extends Singleton {
           extensions
         }];
 
-        // set permissions for user in this account
-        const update_account_op = ['update_account', {
-          account: researchGroup,
-          owner: undefined,
-          active: {
-            account_auths: [...researchGroupAccount.active.account_auths, [member, 1]],
-            key_auths: [],
-            weight_threshold: 1
-          },
-          active_overrides: undefined,
-          memo_key: undefined,
-          json_metadata: undefined,
-          traits: undefined,
-          extensions: []
-        }];
-
         const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
           creator: researchGroup,
           proposed_ops: [
-            { "op": join_research_group_membership_op },
-            { "op": update_account_op }
+            { "op": join_research_group_membership_op }
           ],
           expiration_time: proposalExpiration,
           review_period_seconds: undefined,
@@ -260,7 +243,7 @@ class ResearchGroupService extends Singleton {
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
 
-        const left_research_group_membership_op = ['left_research_group_membership', {
+        const leave_research_group_membership_op = ['leave_research_group_membership', {
           member,
           research_group: researchGroup,
           is_exclusion: isExclusion,
@@ -270,7 +253,7 @@ class ResearchGroupService extends Singleton {
         const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
           creator: researchGroup,
           proposed_ops: [
-            { "op": left_research_group_membership_op },
+            { "op": leave_research_group_membership_op },
           ],
           expiration_time: proposalExpiration,
           review_period_seconds: undefined,

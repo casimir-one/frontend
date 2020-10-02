@@ -10,7 +10,7 @@ class ResearchContentService extends Singleton {
   blockchainService = BlockchainService.getInstance();
   proposalsService = ProposalsService.getInstance();
 
-  createResearchContentViaOffchain(privKey, isProposal, {
+  createResearchContentViaOffchain({ privKey, username }, isProposal, {
     researchExternalId,
     researchGroup,
     type,
@@ -47,7 +47,7 @@ class ResearchContentService extends Singleton {
             extensions: []
           }
 
-          return this.proposalsService.createProposal(privKey, false, proposal, refBlock)
+          return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
             .then(({ tx: signedProposalTx }) => {
               return this.researchContentHttp.createResearchContent({ tx: signedProposalTx, offchainMeta, isProposal })
             })
