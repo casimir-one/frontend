@@ -45,7 +45,7 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchGroupResearchListing(researchGroupExternalId);
   }
 
-  createResearchViaOffchain(privKey, isProposal, {
+  createResearchViaOffchain({ privKey, username }, isProposal, {
     researchGroup,
     title,
     abstract,
@@ -158,7 +158,7 @@ class ResearchService extends Singleton {
             extensions: []
           }
 
-          return this.proposalsService.createProposal(privKey, false, proposal, refBlock, isNewResearchGroup ? [create_research_group_op] : [])
+          return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock, isNewResearchGroup ? [create_research_group_op] : [], [])
             .then(({ tx: signedProposalTx }) => {
               return this.researchHttp.createResearch({ tx: signedProposalTx, isProposal, isNewResearchGroup, offchainMeta })
             })
@@ -175,7 +175,7 @@ class ResearchService extends Singleton {
   }
 
 
-  createResearchTokenSaleViaOffchain(privKey, isProposal, {
+  createResearchTokenSaleViaOffchain({ privKey, username }, isProposal, {
     researchGroup,
     researchExternalId,
     startTime,
@@ -210,7 +210,7 @@ class ResearchService extends Singleton {
         extensions: []
       }
 
-      return this.proposalsService.createProposal(privKey, false, proposal)
+      return this.proposalsService.createProposal({ privKey, username }, false, proposal)
         .then(({ tx: signedProposalTx }) => {
           return this.researchHttp.createResearchTokenSale({ tx: signedProposalTx, offchainMeta, isProposal })
         })
@@ -469,7 +469,7 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.DELETED, researcher });
   }
 
-  updateResearchViaOffchain(privKey, isProposal, {
+  updateResearchViaOffchain({ privKey, username }, isProposal, {
     externalId,
     researchGroup,
     title,
@@ -482,41 +482,93 @@ class ResearchService extends Singleton {
   }, { attributes }) {
 
     const offchainMeta = { attributes };
-      
-    const update_research_op = ['update_research', {
-      research_group: researchGroup,
-      external_id: externalId,
-      title: title || "",
-      abstract: abstract || "",
-      is_private: isPrivate || false,
-      review_share: reviewShare || undefined,
-      compensation_share: compensationShare || undefined,
-      members: members || undefined,
-      extensions: extensions || []
-    }];
 
-    if (isProposal) {
+    return this.blockchainService.getRefBlockSummary()
+      .then((refBlock) => {
 
-      const proposal = {
-        creator: researchGroup,
-        proposedOps: [{ "op": update_research_op }],
-        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
-        reviewPeriodSeconds: undefined,
-        extensions: []
-      }
+        return Promise.all([
+          deipRpc.api.getResearchGroupMembershipTokensAsync(researchGroup),
+          this.researchHttp.getResearchPendingInvites(externalId)
+        ])
+          .then(([rgtList, researchInvites]) => {
+            const newMembers = members ? members.filter(member => !rgtList.some(rgt => rgt.owner == member)) : [];
+            const newInvites = newMembers.filter(member => !researchInvites.some(invite => invite.invitee == member));
 
-      return this.proposalsService.createProposal(privKey, false, proposal)
-        .then(({ tx: signedProposalTx }) => {
-          return this.researchHttp.updateResearch({ tx: signedProposalTx, isProposal, offchainMeta });
-        })
+            const invites_ops = [];
 
-    } else {
+            for (let i = 0; i < newInvites.length; i++) {
+              let invitee = newInvites[i];
 
-      return this.blockchainService.signOperations([update_research_op], privKey)
-        .then((signedTx) => {
-          return this.researchHttp.updateResearch({ tx: signedTx, isProposal, offchainMeta });
-        });
-    }
+              const join_research_group_membership_op = ['join_research_group_membership', {
+                member: invitee,
+                research_group: researchGroup,
+                reward_share: '0.00 %',
+                researches: [externalId],
+                extensions: []
+              }];
+
+              const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
+                creator: researchGroup,
+                proposed_ops: [
+                  { "op": join_research_group_membership_op }
+                ],
+                expiration_time: new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0], // 14 days;
+                review_period_seconds: undefined,
+                extensions: []
+              }], refBlock);
+
+              const update_proposal_op = ['update_proposal', {
+                external_id: proposal_external_id,
+                active_approvals_to_add: [username],
+                active_approvals_to_remove: [],
+                owner_approvals_to_add: [],
+                owner_approvals_to_remove: [],
+                key_approvals_to_add: [],
+                key_approvals_to_remove: [],
+                extensions: []
+              }];
+
+              invites_ops.push(...[create_proposal_op, update_proposal_op]);
+            }
+
+            const updatedMembers = members ? members.filter(member => rgtList.some(rgt => rgt.owner == member) && !researchInvites.some(invite => invite.invitee == member)) : undefined;
+
+            const update_research_op = ['update_research', {
+              research_group: researchGroup,
+              external_id: externalId,
+              title: title || "",
+              abstract: abstract || "",
+              is_private: isPrivate || false,
+              review_share: reviewShare || undefined,
+              compensation_share: compensationShare || undefined,
+              members: updatedMembers,
+              extensions: extensions || []
+            }];
+
+            if (isProposal) {
+
+              const proposal = {
+                creator: researchGroup,
+                proposedOps: [{ "op": update_research_op }, ...invites_ops.map((op) => { return { "op": op } })],
+                expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+                reviewPeriodSeconds: undefined,
+                extensions: []
+              }
+
+              return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
+                .then(({ tx: signedProposalTx }) => {
+                  return this.researchHttp.updateResearch({ tx: signedProposalTx, offchainMeta });
+                })
+
+            } else {
+
+              return this.blockchainService.signOperations([update_research_op, ...invites_ops], privKey, refBlock)
+                .then((signedTx) => {
+                  return this.researchHttp.updateResearch({ tx: signedTx, offchainMeta });
+                });
+            }
+          })
+      })
   }
 
   /* TODO: Move this to InvestmentsService */
