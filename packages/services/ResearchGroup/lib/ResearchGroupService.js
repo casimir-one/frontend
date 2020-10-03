@@ -122,67 +122,36 @@ class ResearchGroupService extends Singleton {
     }
   }
 
-  createResearchGroupInviteViaOffchain(privKey, {
+  createResearchGroupInviteViaOffchain({ privKey, username }, {
     member,
     researchGroup,
     rewardShare,
     researches,
     extensions
-  }, {
-    notes,
-    approver
-  }) {
+  }, { notes }) {
 
     const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
-    const offchainMeta = { notes, approver }
+    const offchainMeta = { notes }
 
-    return Promise.all([
-      this.blockchainService.getRefBlockSummary(),
-      deipRpc.api.getAccountsAsync([researchGroup])
-    ])
-      .then(([refBlock, [researchGroupAccount]]) => {
+    const join_research_group_membership_op = ['join_research_group_membership', {
+      member,
+      research_group: researchGroup,
+      reward_share: rewardShare,
+      researches,
+      extensions
+    }];
 
-        const join_research_group_membership_op = ['join_research_group_membership', {
-          member,
-          research_group: researchGroup,
-          reward_share: rewardShare,
-          researches,
-          extensions
-        }];
+    const proposal = {
+      creator: researchGroup,
+      proposedOps: [{ "op": join_research_group_membership_op }],
+      expirationTime: proposalExpiration,
+      reviewPeriodSeconds: undefined,
+      extensions: []
+    }
 
-        const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
-          creator: researchGroup,
-          proposed_ops: [
-            { "op": join_research_group_membership_op }
-          ],
-          expiration_time: proposalExpiration,
-          review_period_seconds: undefined,
-          extensions: []
-        }], refBlock);
-
-
-        const operations = [create_proposal_op];
-
-        if (approver) {
-
-          const update_proposal_op = ['update_proposal', {
-            external_id: proposal_external_id,
-            active_approvals_to_add: [approver],
-            active_approvals_to_remove: [],
-            owner_approvals_to_add: [],
-            owner_approvals_to_remove: [],
-            key_approvals_to_add: [],
-            key_approvals_to_remove: [],
-            extensions: []
-          }];
-          
-          operations.push(update_proposal_op);
-        }
-
-        return this.blockchainService.signOperations(operations, privKey, refBlock)
-          .then((signedTx) => {
-            return this.researchGroupHttp.createResearchGroupInvite({ tx: signedTx, offchainMeta })
-          })
+    return this.proposalsService.createProposal({ privKey, username }, false, proposal)
+      .then(({ tx: signedProposalTx }) => {
+        return this.researchGroupHttp.createResearchGroupInvite({ tx: signedProposalTx, offchainMeta })
       })
   }
 
@@ -226,64 +195,42 @@ class ResearchGroupService extends Singleton {
       });
   }
 
-
-  leftResearchGroupViaOffchain(privKey, {
-    member,
-    researchGroup,
-    isExclusion,
-    extensions
-  }, {
-    notes,
-    approver
-  }) {
+  
+  leaveResearchGroupViaOffchain(
+    { privKey, username }, 
+    {
+      member,
+      researchGroup,
+      isExclusion,
+      extensions
+    }, 
+    {
+      notes
+    }
+  ) {
 
     const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
-    const offchainMeta = { notes, approver }
+    const offchainMeta = { notes }
 
-    return this.blockchainService.getRefBlockSummary()
-      .then((refBlock) => {
+    const leave_research_group_membership_op = ['leave_research_group_membership', {
+      member,
+      research_group: researchGroup,
+      is_exclusion: isExclusion,
+      extensions
+    }];
 
-        const leave_research_group_membership_op = ['leave_research_group_membership', {
-          member,
-          research_group: researchGroup,
-          is_exclusion: isExclusion,
-          extensions
-        }];
+    const proposal = {
+      creator: researchGroup,
+      proposedOps: [{ "op": leave_research_group_membership_op }],
+      expirationTime: proposalExpiration,
+      reviewPeriodSeconds: undefined,
+      extensions: []
+    }
 
-        const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
-          creator: researchGroup,
-          proposed_ops: [
-            { "op": leave_research_group_membership_op },
-          ],
-          expiration_time: proposalExpiration,
-          review_period_seconds: undefined,
-          extensions: []
-        }], refBlock);
-
-        const operations = [create_proposal_op];
-
-        if (approver) {
-
-          const update_proposal_op = ['update_proposal', {
-            external_id: proposal_external_id,
-            active_approvals_to_add: [approver],
-            active_approvals_to_remove: [],
-            owner_approvals_to_add: [],
-            owner_approvals_to_remove: [],
-            key_approvals_to_add: [],
-            key_approvals_to_remove: [],
-            extensions: []
-          }];
-
-          operations.push(update_proposal_op);
-        }
-
-        return this.blockchainService.signOperations(operations, privKey, refBlock)
-          .then((signedTx) => {
-            return this.researchGroupHttp.leftResearchGroup({ tx: signedTx, offchainMeta, isProposal: true })
-          })
-
-      });
+    return this.proposalsService.createProposal({ privKey, username }, false, proposal)
+      .then(({ tx: signedProposalTx }) => {
+        return this.researchGroupHttp.leaveResearchGroup({ tx: signedProposalTx, offchainMeta })
+      })
   }
 
   getResearchGroupPendingInvites(researchGroupExternalId) {
