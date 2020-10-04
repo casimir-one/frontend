@@ -11,7 +11,7 @@ class ProposalsService extends Singleton {
   accessService = AccessService.getInstance();
   blockchainService = BlockchainService.getInstance();
 
-  createProposal({ privKey, username, isApproved }, propagate, {
+  createProposal({ privKey, username, isApproved = true }, propagate, {
     creator,
     proposedOps,
     expirationTime,
