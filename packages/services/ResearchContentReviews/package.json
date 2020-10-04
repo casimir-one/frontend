@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-content-reviews-service",
-  "version": "1.45.0",
+  "version": "1.46.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,7 +23,7 @@
     "@deip/access-service": "1.1.0",
     "@deip/blockchain-service": "1.44.0",
     "@deip/http-service": "1.36.0",
-    "@deip/research-service": "1.45.0",
+    "@deip/research-service": "1.46.0",
     "@deip/toolbox": "1.1.0"
   },
   "peerDependencies": {
