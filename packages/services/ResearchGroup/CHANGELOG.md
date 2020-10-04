@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.46.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.45.0...v1.46.0) (2020-10-04)
+
+
+### Features
+
+* **@deip/research-service:** Invites\Resignations fixed ([edb32ed](https://gitlab.com/DEIP/deip-client-modules/commit/edb32ed650d1532cc1b6890c5b41d16e865da143))
+
+
+
+
+
 # [1.44.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.43.0...v1.44.0) (2020-10-02)
 
 
