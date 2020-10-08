@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.48.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.47.0...v1.48.0) (2020-10-08)
+
+**Note:** Version bump only for package @deip/research-content-service
+
+
+
+
+
 # [1.46.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.45.0...v1.46.0) (2020-10-04)
 
 **Note:** Version bump only for package @deip/research-content-service
