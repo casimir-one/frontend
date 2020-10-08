@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.48.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.47.0...v1.48.0) (2020-10-08)
+
+
+### Features
+
+* **@deip/research-service:** Token sale endpoints ([5d8fb31](https://gitlab.com/DEIP/deip-rpc/commit/5d8fb31dd39726179ab5dcd3ffa46b32d9a5fcb3))
+
+
+
+
+
 # [1.44.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.43.0...v1.44.0) (2020-10-02)
 
 
