@@ -530,13 +530,6 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_research_token_sale_by_end_time",
-  "params": [
-    "end_time"
-  ]
-},
-{
-  "api": "database_api",
   "method": "get_research_token_sales_by_research_id_and_status",
   "params": [
     "research_id",
@@ -1234,6 +1227,20 @@ export default [{
   "params": [
     "contributor",
     "research_id"
+  ]
+},
+{
+  "api": "tsc_history_api",
+  "method": "get_contributions_history_by_research",
+  "params": [
+    "research_id"
+  ]
+},
+{
+  "api": "tsc_history_api",
+  "method": "get_contributions_history_by_token_sale",
+  "params": [
+    "research_token_sale_id"
   ]
 },
 // Research Content References Plugin
