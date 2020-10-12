@@ -67,6 +67,11 @@ class UserService extends Singleton {
   getUserInvites(username) {
     return this.userHttp.getInvitesByUser(username);
   }  
+
+  getUserTransactions(status) {
+    return this.userHttp.getUserTransactions(status);
+  }  
+  
 }
 
 export {

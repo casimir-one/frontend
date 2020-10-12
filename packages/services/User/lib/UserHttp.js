@@ -47,6 +47,10 @@ class UserHttp extends Singleton {
   getInvitesByUser(username) {
     return this.http.get(`/api/invites/${username}`);
   }
+
+  getUserTransactions(status) {
+    return this.http.get(`/api/user/transactions/${status}`);
+  }
 }
 
 export {
