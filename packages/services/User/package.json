@@ -1,6 +1,6 @@
 {
   "name": "@deip/user-service",
-  "version": "1.48.0",
+  "version": "1.50.0",
   "description": "",
   "main": "index.js",
   "directories": {
