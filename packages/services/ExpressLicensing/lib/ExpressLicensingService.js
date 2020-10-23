@@ -1,4 +1,5 @@
 import deipRpc from '@deip/rpc-client';
+import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
 import { ExpressLicensingHttp } from './ExpressLicensingHttp';
 import { BlockchainService } from '@deip/blockchain-service';
@@ -11,49 +12,57 @@ class ExpressLicensingService extends Singleton {
 
 
   createExpressLicensingRequest({ privKey, username }, {
-    requester,
-    researchGroup,
+    researchExternalId,
+    licensee,
+    licenser,
+    terms,
     fee,
     expirationDate
-  }, { 
-    researchExternalId,
-    licencePlan
-  }) {
+  }, { licencePlan }) {
 
-    const offchainMeta = { researchExternalId, licencePlan };
+    const offchainMeta = { licencePlan };
+    const termsHash = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(terms).buffer));
 
-    const transfer_op = ['transfer', {
-      from: requester,
-      to: researchGroup,
-      amount: fee,
-      memo: "",
-      extensions: []
-    }];
+    return Promise.all([
+      this.blockchainService.getRefBlockSummary(),
+      deipRpc.api.getResearchAsync(researchExternalId)
+    ])
+      .then(([refBlock, research]) => {
 
-    // Dummy op to wait for research group member approval. 
-    // Needs to be replaced with op that grants access to research content once we will have it done.
-    const update_account_op = ['update_account', { 
-      account: researchGroup,
-      owner: undefined,
-      active: undefined,
-      active_overrides: undefined,
-      memo_key: undefined,
-      json_metadata: undefined,
-      traits: undefined,
-      extensions: []
-    }];
+        const [research_license_external_id, create_research_license_op] = deipRpc.operations.createEntityOperation(['create_research_license', {
+          research_external_id: researchExternalId,
+          licenser: licenser,
+          licensee: licensee,
+          license_conditions: ["licensing_fee", {
+            terms: termsHash,
+            beneficiaries: research.security_tokens.reduce((acc, [securityToken, amount], idx) => {
+              let share = Math.floor(100 / research.security_tokens.length);
+              if (idx == research.security_tokens.length - 1) {
+                let rest = 100 - (share * research.security_tokens.length);
+                acc.push([securityToken, `${share + rest}.00 %`]);
+              } else {
+                acc.push([securityToken, `${share}.00 %`]);
+              }
+              return acc;
+            }, []),
+            fee: fee,
+            expiration_time: expirationDate
+          }],
+          extensions: []
+        }], refBlock);
 
-    const proposal = {
-      creator: requester,
-      proposedOps: [{ "op": transfer_op }, { "op": update_account_op }],
-      expirationTime: expirationDate,
-      reviewPeriodSeconds: undefined,
-      extensions: []
-    }
+        const proposal = {
+          creator: licensee,
+          proposedOps: [{ "op": create_research_license_op }],
+          expirationTime: expirationDate,
+          reviewPeriodSeconds: undefined,
+          extensions: []
+        }
 
-    return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-      .then(({ tx: signedProposalTx }) => {
-        return this.expressLicensingHttp.createExpressLicensingRequest({ tx: signedProposalTx, offchainMeta })
+        return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
+          .then(({ tx: signedProposalTx }) => {
+            return this.expressLicensingHttp.createExpressLicensingRequest({ tx: signedProposalTx, offchainMeta })
+          })
       })
   }
 
@@ -128,6 +137,36 @@ class ExpressLicensingService extends Singleton {
     return this.expressLicensingHttp.getExpressLicensingRequestsByRequester(requester);
   }
 
+
+  getResearchLicense(externalId) {
+    return deipRpc.api.getResearchLicenseAsync(externalId);
+  }
+
+
+  getResearchLicensesByLicensee(licensee) {
+    return deipRpc.api.getResearchLicensesByLicenseeAsync(licensee);
+  }
+
+
+  getResearchLicensesByLicenser(licenser) {
+    return deipRpc.api.getResearchLicensesByLicenserAsync(licenser);
+  }
+
+
+  getResearchLicensesByResearch(researchExternalId) {
+    return deipRpc.api.getResearchLicensesByResearchAsync(researchExternalId);
+  }
+
+
+  getResearchLicensesByLicenseeAndResearch(licensee, researchExternalId) {
+    return deipRpc.api.getResearchLicensesByLicenseeAndResearchAsync(licensee, researchExternalId);
+  }
+
+
+  getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
+    return deipRpc.api.getResearchLicensesByLicenseeAndLicenserAsync(licensee, licenser);
+  }
+  
 }
 
 export {

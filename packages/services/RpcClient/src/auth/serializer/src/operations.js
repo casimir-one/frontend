@@ -853,6 +853,49 @@ const create_assessment = new Serializer("create_assessment", {
 }, { entity_external_id: "external_id" });
 
 
+const basic_tokenization = new Serializer("basic_tokenization", {});
+
+const create_security_token = new Serializer("create_security_token", {
+  external_id: string,
+  research_external_id: string,
+  research_group: string,
+  amount: uint32,
+  options: static_variant([
+    basic_tokenization
+  ]),
+  extensions: set(future_extensions)
+}, { entity_external_id: "external_id" });
+
+
+const transfer_security_token = new Serializer("transfer_security_token", {
+  from: string,
+  to: string,
+  security_token_external_id: string,
+  amount: uint32,
+  extensions: set(future_extensions)
+});
+
+
+const licensing_fee = new Serializer("licensing_fee", {
+  terms: string,
+  beneficiaries: map(string, percent),
+  fee: optional(asset),
+  expiration_time: optional(time_point_sec)
+});
+
+
+const create_research_license = new Serializer("create_research_license", {
+  external_id: string,
+  research_external_id: string,
+  licenser: string,
+  licensee: string,
+  license_conditions: static_variant([
+    licensing_fee
+  ]),
+  extensions: set(future_extensions)
+}, { entity_external_id: "external_id" });
+
+
 // virtual operations
 
 const fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -940,12 +983,15 @@ operation.st_operations = [
   create_request_by_nda_contract, // 49
   fulfill_request_by_nda_contract, // 50
   create_assessment, // 51
+  create_security_token, // 52
+  transfer_security_token, // 53
+  create_research_license, // 54
 
   // virtual operations
-  fill_common_tokens_withdraw, // 52
-  shutdown_witness, // 53
-  hardfork, // 54
-  producer_reward // 55
+  fill_common_tokens_withdraw,
+  shutdown_witness,
+  hardfork,
+  producer_reward
 ];
 
 let transaction = new Serializer(

@@ -419,6 +419,50 @@ export default [{
 },
 {
   "api": "database_api",
+  "method": "get_research_license",
+  "params": [
+    "external_id",
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_licenses_by_licensee",
+  "params": [
+    "licensee",
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_licenses_by_licenser",
+  "params": [
+    "licenser",
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_licenses_by_research",
+  "params": [
+    "research_external_id",
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_licenses_by_licensee_and_research",
+  "params": [
+    "licensee",
+    "research_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_licenses_by_licensee_and_licenser",
+  "params": [
+    "licensee",
+    "licenser"
+  ]
+},
+{
+  "api": "database_api",
   "method": "get_research_content",
   "params": [
     "external_id"
@@ -695,6 +739,57 @@ export default [{
   "params": [
     "account_name",
     "research_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token",
+  "params": [
+    "security_token_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_tokens_by_research",
+  "params": [
+    "research_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token_balance",
+  "params": [
+    "owner",
+    "security_token_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token_balances",
+  "params": [
+    "security_token_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token_balances_by_owner",
+  "params": [
+    "owner"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token_balances_by_research",
+  "params": [
+    "research_external_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_security_token_balances_by_owner_and_research",
+  "params": [
+    "owner",
+    "research_external_id"
   ]
 },
 {
@@ -1391,5 +1486,33 @@ export default [{
   "api": "eci_history_api",
   "method": "get_disciplines_eci_last_stats",
   "params": []
+},
+
+// Investments History Plugin
+{
+  "api": "investments_history_api",
+  "method": "get_account_revenue_history_by_security_token",
+  "params": [
+    "account",
+    "security_token_external_id",
+    "cursor",
+    "step"
+  ]
+},
+{
+  "api": "investments_history_api",
+  "method": "get_account_revenue_history",
+  "params": [
+    "account",
+    "cursor"
+  ]
+},
+{
+  "api": "investments_history_api",
+  "method": "get_security_token_revenue_history",
+  "params": [
+    "security_token_external_id",
+    "cursor"
+  ]
 }
 ];
