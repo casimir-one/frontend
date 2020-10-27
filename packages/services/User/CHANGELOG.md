@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.51.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.50.0...v1.51.0) (2020-10-27)
+
+**Note:** Version bump only for package @deip/user-service
+
+
+
+
+
 # [1.50.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.49.0...v1.50.0) (2020-10-12)
 
 
