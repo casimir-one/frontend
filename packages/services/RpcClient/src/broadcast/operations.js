@@ -577,6 +577,38 @@ module.exports = [{
     "stages",
     "extensions"
   ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "create_security_token",
+    "params": [
+      "external_id",
+      "research_external_id",
+      "research_group",
+      "amount",
+      "options",
+      "extensions"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "transfer_security_token",
+    "params": [
+      "from",
+      "to",
+      "security_token_external_id",
+      "amount",
+      "extensions"
+    ]
+}, {
+    "roles": ["active", "owner"],
+    "operation": "create_research_license",
+    "params": [
+      "external_id",
+      "research_external_id",
+      "licenser",
+      "licensee",
+      "license_conditions",
+      "extensions"
+    ]
 },
 
 // virtual operations

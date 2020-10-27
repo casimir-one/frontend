@@ -69,6 +69,7 @@ class ResearchService extends Singleton {
       .then(([refBlock, rgtList]) => {
 
         const { creator, memo, fee } = isNewResearchGroup ? { creator: onchainData.creator, memo: onchainData.memo, fee: onchainData.fee } : { creator: username };
+        const security_tokens_amount = 10000;
         const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
 
         const [research_group_external_id, create_research_group_op] = isNewResearchGroup ? deipRpc.operations.createEntityOperation(['create_account', {
@@ -124,6 +125,15 @@ class ResearchService extends Singleton {
           extensions: extensions || []
         }], refBlock);
 
+        // Tokenize research by default
+        const [security_token_external_id, create_security_token_op] = deipRpc.operations.createEntityOperation(['create_security_token', {
+          research_external_id: research_external_id,
+          research_group: research_group_external_id,
+          amount: security_tokens_amount,
+          options: ['basic_tokenization', {}],
+          extensions: []
+        }], refBlock);
+
         const invites_ops = [];
         const invitees = members.filter(m => m != creator && !rgtList.some(rgt => rgt.owner == m)).reduce((acc, member) => {
           if (!acc.some(m => m == member)) {
@@ -173,13 +183,20 @@ class ResearchService extends Singleton {
 
           const proposal = {
             creator: research_group_external_id,
-            proposedOps: [{ "op": create_research_op }, ...invites_ops.map((op) => { return { "op": op } })],
+            proposedOps: [{ "op": create_research_op }, { "op": create_security_token_op }, ...invites_ops.map((op) => { return { "op": op } })],
             expirationTime: proposalExpiration,
             reviewPeriodSeconds: undefined,
             extensions: []
           }
 
-          return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock, isNewResearchGroup ? [create_research_group_op] : [], [])
+          const preOps = [];
+          const postOps = [];
+
+          if (isNewResearchGroup) {
+            preOps.unshift(create_research_group_op);
+          }
+
+          return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock, preOps, postOps)
             .then(({ tx: signedProposalTx }) => {
               formData.append("tx", JSON.stringify(signedProposalTx))
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
@@ -187,7 +204,13 @@ class ResearchService extends Singleton {
 
         } else {
 
-          return this.blockchainService.signOperations(isNewResearchGroup ? [create_research_group_op, create_research_op, ...invites_ops] : [create_research_op, ...invites_ops], privKey, refBlock)
+          const ops = [create_research_op, create_security_token_op, ...invites_ops];
+
+          if (isNewResearchGroup) {
+            ops.unshift(create_research_group_op);
+          }
+
+          return this.blockchainService.signOperations(ops, privKey, refBlock)
             .then((signedTx) => {
               formData.append("tx", JSON.stringify(signedTx))
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
