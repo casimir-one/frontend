@@ -554,15 +554,21 @@ export default [{
   "api": "database_api",
   "method": "get_research_token_sale",
   "params": [
-    "from",
-    "limit"
+    "token_sale_external_id"
   ]
 },
 {
   "api": "database_api",
   "method": "get_research_token_sale_by_id",
   "params": [
-    "research_token_sale_id"
+    "token_sale_id"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "get_research_token_sales_by_research",
+  "params": [
+    "research_external_id"
   ]
 },
 {
@@ -574,32 +580,24 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_research_token_sales_by_research_id_and_status",
+  "method": "get_research_token_sales",
   "params": [
-    "research_id",
-    "status"
+    "from",
+    "limit"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_research_token_sale_contribution_by_id",
+  "method": "get_research_token_sale_contributions_by_research_token_sale",
   "params": [
-    "research_token_sale_contribution_id"
+    "token_sale_external_id"
   ]
 },
 {
   "api": "database_api",
   "method": "get_research_token_sale_contributions_by_research_token_sale_id",
   "params": [
-    "research_token_sale_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_research_token_sale_contribution_by_contributor_and_research_token_sale_id",
-  "params": [
-    "owner",
-    "research_token_sale_id"
+    "token_sale_id"
   ]
 },
 {

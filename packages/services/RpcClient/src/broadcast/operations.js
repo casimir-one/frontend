@@ -208,11 +208,12 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "create_research_token_sale",
   "params": [
+    "external_id",
     "research_group",
     "research_external_id",
     "start_time",
     "end_time",
-    "share",
+    "security_tokens_on_sale",
     "soft_cap",
     "hard_cap",
     "extensions"
@@ -266,7 +267,7 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "contribute_to_token_sale",
   "params": [
-    "research_external_id",
+    "token_sale_external_id",
     "contributor",
     "amount",
     "extensions"
