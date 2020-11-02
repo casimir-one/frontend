@@ -1,12 +1,11 @@
 import deipRpc from '@deip/rpc-client';
-import _ from 'lodash';
 import { Singleton } from '@deip/toolbox';
 import { TS_TYPES } from './constants';
 import { BlockchainService } from '@deip/blockchain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
 class InvestmentsService extends Singleton {
-  investmentPortfolioHttp = InvestmentsHttp.getInstance();
+  investmentsHttp = InvestmentsHttp.getInstance();
   blockchainService = BlockchainService.getInstance();
 
   createSecurityToken({ privKey, username }, {
@@ -93,23 +92,95 @@ class InvestmentsService extends Singleton {
     return deipRpc.api.getSecurityTokenRevenueHistoryAsync(securityTokenExternalId, cursor);
   }
 
-  getCurrentTokenSaleByResearchId(researchId) {
-    return deipRpc.api.getResearchTokenSalesByResearchIdAsync(researchId)
-      .then((tokenSales) =>
-        // only one active or inactive token sale can exist in research
-        _.find(tokenSales, (tokenSale) => tokenSale.status === TS_TYPES.ACTIVE
-          || tokenSale.status === TS_TYPES.INACTIVE));
+  createResearchTokenSaleViaOffchain({ privKey, username }, isProposal, {
+    researchGroup,
+    researchExternalId,
+    startTime,
+    endTime,
+    securityTokensOnSale,
+    softCap,
+    hardCap,
+    extensions
+  }) {
+
+    const offchainMeta = {};
+    const expirationTime = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days
+
+    return this.blockchainService.getRefBlockSummary()
+      .then((refBlock) => {
+
+        const [research_token_sale_external_id, create_research_token_sale_op] = deipRpc.operations.createEntityOperation(['create_research_token_sale', {
+          research_group: researchGroup,
+          research_external_id: researchExternalId,
+          start_time: startTime,
+          end_time: endTime,
+          security_tokens_on_sale: securityTokensOnSale,
+          soft_cap: softCap,
+          hard_cap: hardCap,
+          extensions: extensions
+        }], refBlock);
+
+        if (isProposal) {
+
+          const proposal = {
+            creator: researchGroup,
+            proposedOps: [{ "op": create_research_token_sale_op }],
+            expirationTime: expirationTime,
+            reviewPeriodSeconds: undefined,
+            extensions: []
+          }
+
+          return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
+            .then(({ tx: signedProposalTx }) => {
+              return this.investmentsHttp.createResearchTokenSale({ tx: signedProposalTx, offchainMeta, isProposal })
+            })
+
+        } else {
+
+          return this.blockchainService.signOperations([create_research_token_sale_op], privKey, refBlock)
+            .then((signedTx) => {
+              return this.investmentsHttp.createResearchTokenSale({ tx: signedTx, offchainMeta, isProposal })
+            });
+        }
+
+      });
+  }
+
+  contributeToResearchTokenSaleViaOffchain({ privKey, username }, {
+    tokenSaleExternalId,
+    contributor,
+    amount,
+    extensions
+  }) {
+
+    const contribute_to_token_sale_op = ['contribute_to_token_sale', {
+      token_sale_external_id: tokenSaleExternalId,
+      contributor: contributor,
+      amount: amount,
+      extensions: extensions
+    }]
+
+    return this.blockchainService.signOperations([contribute_to_token_sale_op], privKey)
+      .then((signedTx) => {
+        return this.investmentsHttp.contributeResearchTokenSale({ tx: signedTx })
+      });
+  }
+
+
+  getCurrentTokenSaleByResearch(researchExternalId) {
+    return deipRpc.api.getResearchTokenSalesByResearchAsync(researchExternalId)
+      .then((tokenSales) => tokenSales.find(ts => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE))
   }
 
   // deprecated
   getInvestmentPortfolio(username) {
-    return this.investmentPortfolioHttp.getInvestmentPortfolio(username)
+    return this.investmentsHttp.getInvestmentPortfolio(username)
       .then((investmentPortfolio) => investmentPortfolio);
   }
 
   // deprecated
   updateInvestmentPortfolio(username, updated) {
-    return this.investmentPortfolioHttp.updateInvestmentPortfolio(username, updated)
+    return this.investmentsHttp.updateInvestmentPortfolio(username, updated)
       .then((investmentPortfolio) => investmentPortfolio);
   }
 

@@ -75,14 +75,6 @@ class ResearchHttp extends Singleton {
     query = researcher ? query ? `${query}&researcher=${researcher}` : `?researcher=${researcher}` : query;
     return this.http.get(`/api/research/application/list${query}`);
   }
-  
-  createResearchTokenSale({ tx, isProposal, offchainMeta }) {
-    return this.http.post('/api/research/token-sale', { tx, isProposal, offchainMeta });
-  }
-
-  contributeResearchTokenSale({ tx, isProposal }) {
-    return this.http.post('/api/research/token-sale/contribution', { tx, isProposal });
-  }
 
   getResearchPendingInvites(researchExternalId) {
     return this.http.get(`/api/invites/research/${researchExternalId}`);

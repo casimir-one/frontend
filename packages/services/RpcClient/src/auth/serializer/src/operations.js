@@ -379,19 +379,20 @@ const vote_for_review = new Serializer("vote_for_review", {
 
 
 const create_research_token_sale = new Serializer("create_research_token_sale", {
+  external_id: string,
   research_group: string,
   research_external_id: string,
   start_time: time_point_sec,
   end_time: time_point_sec,
-  share: percent,
+  security_tokens_on_sale: map(string, uint32),
   soft_cap: asset,
   hard_cap: asset,
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 
 const contribute_to_token_sale = new Serializer("contribute_to_token_sale", {
-  research_external_id: string,
+  token_sale_external_id: string,
   contributor: string,
   amount: asset,
   extensions: set(future_extensions)

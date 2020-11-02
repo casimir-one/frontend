@@ -332,58 +332,6 @@ class ResearchService extends Singleton {
       })
   }
 
-
-  createResearchTokenSaleViaOffchain({ privKey, username }, isProposal, {
-    researchGroup,
-    researchExternalId,
-    startTime,
-    endTime,
-    share,
-    softCap,
-    hardCap,
-    extensions
-  }) {
-
-    const op = {
-      research_group: researchGroup,
-      research_external_id: researchExternalId,
-      start_time: startTime,
-      end_time: endTime,
-      share,
-      soft_cap: softCap,
-      hard_cap: hardCap,
-      extensions
-    }
-
-    const offchainMeta = {};
-    const operation = ['create_research_token_sale', op];
-
-    if (isProposal) {
-
-      const proposal = {
-        creator: researchGroup,
-        proposedOps: [{ "op": operation }],
-        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
-        reviewPeriodSeconds: undefined,
-        extensions: []
-      }
-
-      return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-        .then(({ tx: signedProposalTx }) => {
-          return this.researchHttp.createResearchTokenSale({ tx: signedProposalTx, offchainMeta, isProposal })
-        })
-
-    } else {
-
-      return this.blockchainService.signOperations([operation], privKey)
-        .then((signedTx) => {
-          return this.researchHttp.createResearchTokenSale({ tx: signedTx, offchainMeta, isProposal })
-      });
-
-    }
-  }
-
-
   createResearchApplicationViaOffchain(researcherPrivKey, formData) {
 
     const researcher = formData.get("researcher");
@@ -625,27 +573,6 @@ class ResearchService extends Singleton {
 
   getDeletedResearchApplicationsByResearcher(researcher) {
     return this.researchHttp.getResearchApplications({ status: RESEARCH_APPLICATION_STATUS.DELETED, researcher });
-  }
-
-  /* TODO: Move this to InvestmentsService */
-  contributeToResearchTokenSaleViaOffchain(privKey, {
-    researchExternalId,
-    contributor,
-    amount,
-    extensions
-  }) {
-
-    const contribute_to_token_sale_op = ['contribute_to_token_sale', {
-      research_external_id: researchExternalId,
-      contributor,
-      amount,
-      extensions
-    }]
-
-    return this.blockchainService.signOperations([contribute_to_token_sale_op], privKey)
-      .then((signedTx) => { 
-        return this.researchHttp.contributeResearchTokenSale({ tx: signedTx })
-      });
   }
 
   /* TODO: Move this to ResearchContentService */
