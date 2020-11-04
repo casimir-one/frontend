@@ -101,7 +101,7 @@ class ResearchService extends Singleton {
 
 
         const researchMembers = isNewResearchGroup
-          ? [creator]
+          ? members && members.some(m => m == creator) ? [creator] : []
           : members
             ? members
               .filter(m => rgtList.some(rgt => rgt.owner == m))

@@ -597,6 +597,7 @@ module.exports = [{
       "to",
       "security_token_external_id",
       "amount",
+      "memo",
       "extensions"
     ]
 }, {
