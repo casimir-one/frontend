@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.53.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.52.0...v1.53.0) (2020-11-04)
+
+
+### Features
+
+* **@deip/investments-service:** Transfer security token memo ([2305fca](https://gitlab.com/DEIP/deip-rpc/commit/2305fcac34e8afac55dce606f1e24735eee68f7f))
+
+
+
+
+
 # [1.52.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.51.0...v1.52.0) (2020-11-02)
 
 
