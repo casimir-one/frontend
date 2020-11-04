@@ -35,7 +35,8 @@ class InvestmentsService extends Singleton {
     sender,
     receiver,
     securityTokenExternalId,
-    amount
+    amount,
+    memo
   }) {
 
     const transfer_security_token_op = ['transfer_security_token', {
@@ -43,6 +44,7 @@ class InvestmentsService extends Singleton {
       to: receiver,
       security_token_external_id: securityTokenExternalId,
       amount: amount,
+      memo: memo,
       extensions: []
     }];
 

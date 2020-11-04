@@ -873,6 +873,7 @@ const transfer_security_token = new Serializer("transfer_security_token", {
   to: string,
   security_token_external_id: string,
   amount: uint32,
+  memo: string,
   extensions: set(future_extensions)
 });
 
