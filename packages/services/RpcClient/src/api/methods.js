@@ -741,57 +741,6 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_security_token",
-  "params": [
-    "security_token_external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_tokens_by_research",
-  "params": [
-    "research_external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_token_balance",
-  "params": [
-    "owner",
-    "security_token_external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_token_balances",
-  "params": [
-    "security_token_external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_token_balances_by_owner",
-  "params": [
-    "owner"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_token_balances_by_research",
-  "params": [
-    "research_external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_security_token_balances_by_owner_and_research",
-  "params": [
-    "owner",
-    "research_external_id"
-  ]
-},
-{
-  "api": "database_api",
   "method": "get_expertise_allocation_proposal_by_id",
   "params": [
     "id"
@@ -1089,12 +1038,19 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_asset_by_string_symbol",
+  "method": "get_asset_by_symbol",
   "params": [
-    "string_symbol"
+    "symbol"
   ]
 },
-
+{
+  "api": "database_api",
+  "method": "get_assets_by_issuer",
+  "params": [
+    "issuer"
+  ]
+},
+  
 // Funding Transactions
 {
   "api": "database_api",
@@ -1128,23 +1084,23 @@ export default [{
 // Account Balances
 {
   "api": "database_api",
-  "method": "get_account_balance",
+  "method": "get_account_asset_balance",
   "params": [
-    "id"
+    "owner",
+    "symbol"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_account_balances_by_owner",
+  "method": "get_account_assets_balances",
   "params": [
     "owner"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_account_balance_by_owner_and_asset_symbol",
+  "method": "get_accounts_asset_balances_by_asset",
   "params": [
-    "owner",
     "symbol"
   ]
 },

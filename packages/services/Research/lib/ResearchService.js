@@ -62,11 +62,25 @@ class ResearchService extends Singleton {
     
     const isNewResearchGroup = researchGroup === null;
 
+    const MIN_SECURITY_TOKEN_SYMBOL_SIZE = 3;
+    const MAX_SECURITY_TOKEN_SYMBOL_SIZE = 6;
+
+    let securityTokenSymbol = "";
+    for (let i = 0; i < MAX_SECURITY_TOKEN_SYMBOL_SIZE; i++) {
+      let word = title.split(/[ ,]+/)[i];
+      if (!word) break;
+      let ch = word[0];
+      if (ch.toLowerCase() != ch.toUpperCase()) {
+        securityTokenSymbol += ch.toUpperCase();
+      }
+    }
+
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),
-      isNewResearchGroup ? Promise.resolve([]) : deipRpc.api.getResearchGroupMembershipTokensAsync(researchGroup)
+      isNewResearchGroup ? Promise.resolve([]) : deipRpc.api.getResearchGroupMembershipTokensAsync(researchGroup),
+      deipRpc.api.getAssetBySymbolAsync(securityTokenSymbol)
     ])
-      .then(([refBlock, rgtList]) => {
+      .then(([refBlock, rgtList, existingSecurityToken]) => {
 
         const { creator, memo, fee } = isNewResearchGroup ? { creator: onchainData.creator, memo: onchainData.memo, fee: onchainData.fee } : { creator: username };
         const security_tokens_amount = 10000;
@@ -126,13 +140,43 @@ class ResearchService extends Singleton {
         }], refBlock);
 
         // Tokenize research by default
-        const [security_token_external_id, create_security_token_op] = deipRpc.operations.createEntityOperation(['create_security_token', {
-          research_external_id: research_external_id,
-          research_group: research_group_external_id,
-          amount: security_tokens_amount,
-          options: ['basic_tokenization', {}],
+        function genRandomSymbol(length) {
+          var result = '';
+          var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          var charactersLength = characters.length;
+          for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          }
+          return result;
+        }
+    
+        const MAX_SECURITY_TOKENS_AMOUNT = 10000;
+        const SECURITY_TOKEN_PRECISION = 0;
+        const SECURITY_TOKEN_SYMBOL = existingSecurityToken || securityTokenSymbol.length < MIN_SECURITY_TOKEN_SYMBOL_SIZE ? genRandomSymbol(MAX_SECURITY_TOKEN_SYMBOL_SIZE) : securityTokenSymbol;
+
+        const SECURITY_TOKEN_TO_ISSUE = `${MAX_SECURITY_TOKENS_AMOUNT} ${SECURITY_TOKEN_SYMBOL}`;
+        const create_security_token_op = ['create_asset', {
+          issuer: research_group_external_id,
+          symbol: SECURITY_TOKEN_SYMBOL,
+          precision: SECURITY_TOKEN_PRECISION,
+          description: "",
+          max_supply: MAX_SECURITY_TOKENS_AMOUNT,
+          traits: [['research_security_token', {
+            research_external_id: research_external_id,
+            research_group: research_group_external_id,
+            extensions: []
+          }]],
           extensions: []
-        }], refBlock);
+        }];
+
+        const issue_security_token_op = ['issue_asset', {
+          issuer: research_group_external_id,
+          amount: SECURITY_TOKEN_TO_ISSUE,
+          recipient: research_group_external_id,
+          memo: undefined,
+          extensions: []
+        }];
+
 
         const invites_ops = [];
         const invitees = members.filter(m => m != creator && !rgtList.some(rgt => rgt.owner == m)).reduce((acc, member) => {
@@ -183,7 +227,7 @@ class ResearchService extends Singleton {
 
           const proposal = {
             creator: research_group_external_id,
-            proposedOps: [{ "op": create_research_op }, { "op": create_security_token_op }, ...invites_ops.map((op) => { return { "op": op } })],
+            proposedOps: [{ "op": create_research_op }, { "op": create_security_token_op }, { "op": issue_security_token_op }, ...invites_ops.map((op) => { return { "op": op } })],
             expirationTime: proposalExpiration,
             reviewPeriodSeconds: undefined,
             extensions: []
@@ -204,7 +248,7 @@ class ResearchService extends Singleton {
 
         } else {
 
-          const ops = [create_research_op, create_security_token_op, ...invites_ops];
+          const ops = [create_research_op, create_security_token_op, issue_security_token_op, ...invites_ops];
 
           if (isNewResearchGroup) {
             ops.unshift(create_research_group_op);

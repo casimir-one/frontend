@@ -11,87 +11,51 @@ class InvestmentsService extends Singleton {
   createSecurityToken({ privKey, username }, {
     researchExternalId,
     researchGroup,
+    symbol,
+    precision,
+    description,
+    maxSupply,
     amount
   }) {
-    return this.blockchainService.getRefBlockSummary()
-      .then((refBlock) => {
 
-        const [security_token_external_id, create_security_token_op] = deipRpc.operations.createEntityOperation(['create_security_token', {
-          research_external_id: researchExternalId,
-          research_group: researchGroup,
-          amount: amount,
-          options: ['basic_tokenization', {}],
-          extensions: []
-        }], refBlock);
-
-        return this.blockchainService.signOperations([create_security_token_op], privKey, refBlock)
-          .then((signedTx) => {
-            return this.blockchainService.sendTransactionAsync(signedTx)
-          });
-      });
-  }
-
-  transferSecurityToken({ privKey, username }, {
-    sender,
-    receiver,
-    securityTokenExternalId,
-    amount,
-    memo
-  }) {
-
-    const transfer_security_token_op = ['transfer_security_token', {
-      from: sender,
-      to: receiver,
-      security_token_external_id: securityTokenExternalId,
-      amount: amount,
-      memo: memo,
+    const create_security_token_op = ['create_asset', {
+      issuer: researchGroup,
+      symbol: symbol,
+      precision: precision,
+      description: description,
+      max_supply: maxSupply,
+      traits: ['research_security_token', {
+        research_external_id: researchExternalId,
+        research_group: researchGroup,
+        extensions: []
+      }],
       extensions: []
     }];
 
-    return this.blockchainService.signOperations([transfer_security_token_op], privKey)
+    const issue_security_token_op = ['issue_asset', {
+      issuer: researchGroup,
+      amount: amount,
+      recipient: researchGroup,
+      memo: undefined,
+      extensions: []
+    }];
+
+    return this.blockchainService.signOperations([create_security_token_op, issue_security_token_op], privKey)
       .then((signedTx) => {
         return this.blockchainService.sendTransactionAsync(signedTx)
       });
   }
 
-  getSecurityToken(securityTokenExternalId) {
-    return deipRpc.api.getSecurityTokenAsync(securityTokenExternalId);
-  }
-
-  getSecurityTokensByResearch(researchExternalId) {
-    return deipRpc.api.getSecurityTokensByResearchAsync(researchExternalId);
-  }
-
-  getSecurityTokenBalance(owner, securityTokenExternalId) {
-    return deipRpc.api.getSecurityTokenBalanceAsync(owner, securityTokenExternalId);
-  }
-
-  getSecurityTokenBalances(securityTokenExternalId) {
-    return deipRpc.api.getSecurityTokenBalancesAsync(securityTokenExternalId);
-  }
-
-  getSecurityTokenBalancesByOwner(owner) {
-    return deipRpc.api.getSecurityTokenBalancesByOwnerAsync(owner);
-  }
-
-  getSecurityTokenBalancesByResearch(researchExternalId) {
-    return deipRpc.api.getSecurityTokenBalancesByResearchAsync(researchExternalId);
-  }
-
-  getSecurityTokenBalancesByOwnerAndResearch(owner, researchExternalId) {
-    return deipRpc.api.getSecurityTokenBalancesByOwnerAndResearchAsync(owner, researchExternalId);
-  }
-
-  getAccountRevenueHistoryBySecurityToken(account, securityTokenExternalId, step = 0, cursor = 0) {
-    return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, securityTokenExternalId, cursor, step);
+  getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0) {
+    return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, symbol, cursor, step);
   }
 
   getAccountRevenueHistory(account, cursor = 0) {
     return deipRpc.api.getAccountRevenueHistoryAsync(account, cursor);
   }
 
-  getSecurityTokenRevenueHistory(securityTokenExternalId, cursor = 0) {
-    return deipRpc.api.getSecurityTokenRevenueHistoryAsync(securityTokenExternalId, cursor);
+  getAssetRevenueHistory(symbol, cursor = 0) {
+    return deipRpc.api.getSecurityTokenRevenueHistoryAsync(symbol, cursor);
   }
 
   createResearchTokenSaleViaOffchain({ privKey, username }, isProposal, {

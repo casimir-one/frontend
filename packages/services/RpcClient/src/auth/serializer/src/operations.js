@@ -384,7 +384,7 @@ const create_research_token_sale = new Serializer("create_research_token_sale", 
   research_external_id: string,
   start_time: time_point_sec,
   end_time: time_point_sec,
-  security_tokens_on_sale: map(string, uint32),
+  security_tokens_on_sale: set(asset),
   soft_cap: asset,
   hard_cap: asset,
   extensions: set(future_extensions)
@@ -407,28 +407,36 @@ const transfer_research_share = new Serializer("transfer_research_share", {
   extensions: set(future_extensions)
 })
 
-
-const create_asset = new Serializer("create_asset", {
-  "issuer": string,
-  "symbol": string,
-  "precision": uint8,
-  "name": string,
-  "description": string,
+const research_security_token = new Serializer("research_security_token", {
+  research_external_id: string,
+  research_group: string,
   extensions: set(future_extensions)
 });
 
+const create_asset = new Serializer("create_asset", {
+    "issuer": string,
+    "symbol": string,
+    "precision": uint8,
+    "description": string,
+    "max_supply": int64,
+    "traits": set(static_variant([
+      research_security_token
+    ])),
+    "extensions": set(future_extensions)
+});
 
 const issue_asset = new Serializer("issue_asset", {
   "issuer": string,
   "amount": asset,
-  extensions: set(future_extensions)
+  "recipient": string,
+  "memo": optional(string),
+  "extensions": set(future_extensions)
 });
-
 
 const reserve_asset = new Serializer("reserve_asset", {
   "owner": string,
   "amount": asset,
-  extensions: set(future_extensions)
+  "extensions": set(future_extensions)
 });
 
 
@@ -854,30 +862,6 @@ const create_assessment = new Serializer("create_assessment", {
 }, { entity_external_id: "external_id" });
 
 
-const basic_tokenization = new Serializer("basic_tokenization", {});
-
-const create_security_token = new Serializer("create_security_token", {
-  external_id: string,
-  research_external_id: string,
-  research_group: string,
-  amount: uint32,
-  options: static_variant([
-    basic_tokenization
-  ]),
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-
-const transfer_security_token = new Serializer("transfer_security_token", {
-  from: string,
-  to: string,
-  security_token_external_id: string,
-  amount: uint32,
-  memo: string,
-  extensions: set(future_extensions)
-});
-
-
 const licensing_fee = new Serializer("licensing_fee", {
   terms: string,
   beneficiaries: map(string, percent),
@@ -985,9 +969,7 @@ operation.st_operations = [
   create_request_by_nda_contract, // 49
   fulfill_request_by_nda_contract, // 50
   create_assessment, // 51
-  create_security_token, // 52
-  transfer_security_token, // 53
-  create_research_license, // 54
+  create_research_license, // 52
 
   // virtual operations
   fill_common_tokens_withdraw,

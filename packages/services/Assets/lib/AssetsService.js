@@ -7,28 +7,21 @@ class AssetsService extends Singleton {
 
   accessService = AccessService.getInstance();
 
-  createAsset({ issuer, symbol, precision, name, description }) {
-    return deipRpc.broadcast.createAssetAsync(
-      this.accessService.getOwnerWif(),
-      issuer,
-      symbol,
-      precision,
-      name,
-      description);
-  }
-
-  issueAsset({ issuer, amount }) {
-    return deipRpc.broadcast.issueAssetAsync(
-      this.accessService.getOwnerWif(),
-      issuer,
-      amount);
-  }
-
-  reserveAsset({ owner, amount }) {
-    return deipRpc.broadcast.reserveAssetAsync(
-      this.accessService.getOwnerWif(),
-      owner,
-      amount);
+  transferAsset({ privKey, username }, {
+    from,
+    to,
+    amount,
+    memo,
+    extensions
+  }) {
+    return deipRpc.broadcast.transferAsync(
+      privKey,
+      from,
+      to,
+      amount,
+      memo,
+      extensions || []
+    );
   }
 
   getAssetById(id) {
@@ -36,19 +29,23 @@ class AssetsService extends Singleton {
   }
 
   getAssetBySymbol(symbol) {
-    return deipRpc.api.getAssetByStringSymbolAsync(symbol);
+    return deipRpc.api.getAssetBySymbolAsync(symbol);
   }
 
-  getAccountBalanceById(id) {
-    return deipRpc.api.getAccountBalanceAsync(id);
+  getAssetsByIssuer(issuer) {
+    return deipRpc.api.getAssetsByIssuerAsync(issuer);
+  }
+  
+  getAccountAssetBalance(owner, symbol) {
+    return deipRpc.api.getAccountAssetBalanceAsync(owner, symbol);
   }
 
-  getAccountBalancesByOwner(owner) {
-    return deipRpc.api.getAccountBalancesByOwnerAsync(owner);
+  getAccountAssetsBalancesByOwner(owner) {
+    return deipRpc.api.getAccountAssetsBalancesAsync(owner);
   }
 
-  getAccountBalanceByOwnerAndAsset(owner, symbol) {
-    return deipRpc.api.getAccountBalanceByOwnerAndAssetSymbolAsync(owner, symbol);
+  getAccountsAssetBalancesByAsset(symbol) {
+    return deipRpc.api.getAccountsAssetBalancesByAssetAsync(symbol);
   }
 
 }

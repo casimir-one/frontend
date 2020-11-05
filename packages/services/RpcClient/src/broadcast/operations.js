@@ -488,8 +488,9 @@ module.exports = [{
     "issuer",
     "symbol",
     "precision",
-    "name",
     "description",
+    "max_supply",
+    "traits",
     "extensions"
   ]
 }, {
@@ -498,6 +499,8 @@ module.exports = [{
   "params": [
     "issuer",
     "amount",
+    "recipient",
+    "memo",
     "extensions"
   ]
 }, {
@@ -578,28 +581,6 @@ module.exports = [{
     "stages",
     "extensions"
   ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "create_security_token",
-    "params": [
-      "external_id",
-      "research_external_id",
-      "research_group",
-      "amount",
-      "options",
-      "extensions"
-    ]
-}, {
-    "roles": ["active", "owner"],
-    "operation": "transfer_security_token",
-    "params": [
-      "from",
-      "to",
-      "security_token_external_id",
-      "amount",
-      "memo",
-      "extensions"
-    ]
 }, {
     "roles": ["active", "owner"],
     "operation": "create_research_license",
