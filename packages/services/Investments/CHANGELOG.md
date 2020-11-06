@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.55.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.54.0...v1.55.0) (2020-11-06)
+
+
+### Features
+
+* **@deip/assets-service:** Assets revenue api ([f682066](https://gitlab.com/DEIP/deip-client-modules/commit/f682066528930170e9654c2a99a1c3bbeef44c74))
+
+
+
+
+
 # [1.54.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.53.0...v1.54.0) (2020-11-05)
 
 
