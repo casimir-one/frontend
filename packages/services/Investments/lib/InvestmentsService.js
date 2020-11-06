@@ -46,8 +46,8 @@ class InvestmentsService extends Singleton {
       });
   }
 
-  getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0) {
-    return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, symbol, cursor, step);
+  getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = "USD") {
+    return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, symbol, cursor, step, targetAsset);
   }
 
   getAccountRevenueHistory(account, cursor = 0) {
