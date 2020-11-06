@@ -1050,7 +1050,21 @@ export default [{
     "issuer"
   ]
 },
-  
+{
+  "api": "database_api",
+  "method": "get_assets_by_type",
+  "params": [
+    "type"
+  ]
+},
+{
+  "api": "database_api",
+  "method": "lookup_assets",
+  "params": [
+    "lower_bound_symbol",
+    "limit"
+  ]
+},
 // Funding Transactions
 {
   "api": "database_api",
@@ -1450,7 +1464,8 @@ export default [{
     "account",
     "security_token_external_id",
     "cursor",
-    "step"
+    "step",
+    "target_asset_symbol"
   ]
 },
 {

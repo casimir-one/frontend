@@ -32,10 +32,18 @@ class AssetsService extends Singleton {
     return deipRpc.api.getAssetBySymbolAsync(symbol);
   }
 
+  getAssetsByType(type) {
+    return deipRpc.api.getAssetsByTypeAsync(type);
+  }
+
   getAssetsByIssuer(issuer) {
     return deipRpc.api.getAssetsByIssuerAsync(issuer);
   }
   
+  lookupAssets(lowerBoundSymbol, limit) {
+    return deipRpc.api.lookupAssetsAsync(lowerBoundSymbol, limit);
+  }
+
   getAccountAssetBalance(owner, symbol) {
     return deipRpc.api.getAccountAssetBalanceAsync(owner, symbol);
   }
