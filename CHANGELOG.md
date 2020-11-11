@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.56.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.55.0...v1.56.0) (2020-11-11)
+
+
+### Features
+
+* **@deip/research-content-reviews-service:** Temp name for demo ([55d9cb7](https://gitlab.com/DEIP/deip-client-modules/commit/55d9cb725d8ee653ff0f19ca49b191bbfada9da2))
+
+
+
+
+
 # [1.55.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.54.0...v1.55.0) (2020-11-06)
 
 
