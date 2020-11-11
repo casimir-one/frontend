@@ -15,11 +15,11 @@ const assessmentCriterias = {
   [RESEARCH_TYPES[RESEARCH_TYPES.MILESTONE_ARTICLE].toLowerCase()]: [
     { id: ASSESSMENT_CRITERIA_TYPE.IMPACT, name: 'impact', title: 'Impact', max: 5 },
     { id: ASSESSMENT_CRITERIA_TYPE.NOVELTY, name: 'novelty', title: 'Novelty', max: 5 },
-    { id: ASSESSMENT_CRITERIA_TYPE.METHODOLOGY, name: 'methodology', title: 'Methodology', max: 5 }
+    { id: ASSESSMENT_CRITERIA_TYPE.METHODOLOGY, name: 'methodology', title: 'Commercialization', max: 5 }
   ],
 
   [RESEARCH_TYPES[RESEARCH_TYPES.MILESTONE_DATA].toLowerCase()]: [
-    { id: ASSESSMENT_CRITERIA_TYPE.RATIONALITY, name: 'rationality', title: 'Rationality', max: 5 },
+    { id: ASSESSMENT_CRITERIA_TYPE.RATIONALITY, name: 'rationality', title: 'Commercialization', max: 5 },
     { id: ASSESSMENT_CRITERIA_TYPE.TECHNICAL_QUALITY, name: 'technical_quality', title: 'Technical Quality', max: 5 },
     { id: ASSESSMENT_CRITERIA_TYPE.REPLICATION, name: 'replication', title: 'Replication', max: 5 }
   ],
@@ -27,7 +27,7 @@ const assessmentCriterias = {
   default: [
     { id: ASSESSMENT_CRITERIA_TYPE.NOVELTY, name: 'novelty', title: 'Novelty', max: 5 },
     { id: ASSESSMENT_CRITERIA_TYPE.TECHNICAL_QUALITY, name: 'technical_quality', title: 'Technical Quality', max: 5 },
-    { id: ASSESSMENT_CRITERIA_TYPE.METHODOLOGY, name: 'methodology', title: 'Methodology', max: 5 }
+    { id: ASSESSMENT_CRITERIA_TYPE.METHODOLOGY, name: 'methodology', title: 'Commercialization', max: 5 }
   ]
 };
 
