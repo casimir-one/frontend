@@ -77,7 +77,7 @@ class ExpressLicensingService extends Singleton {
 
     const update_proposal_op = ['update_proposal', {
       external_id: requestId,
-      active_approvals_to_add: approver == username ? [approver] : [approver, username],
+      active_approvals_to_add: [approver],
       active_approvals_to_remove: [],
       owner_approvals_to_add: [],
       owner_approvals_to_remove: [],

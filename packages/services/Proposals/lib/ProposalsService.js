@@ -75,7 +75,7 @@ class ProposalsService extends Singleton {
     extensions
   }) {
 
-    const op = {
+    const operation = ['update_proposal', {
       external_id: externalId,
       active_approvals_to_add: activeApprovalsToAdd,
       active_approvals_to_remove: activeApprovalsToRemove,
@@ -84,9 +84,8 @@ class ProposalsService extends Singleton {
       key_approvals_to_add: keyApprovalsToAdd,
       key_approvals_to_remove: keyApprovalsToRemove,
       extensions
-    }
+    }];
 
-    const operation = ['update_proposal', op];
     return this.blockchainService.signOperations([operation], privKey)
       .then((signedTx) => {
         return this.proposalsHttp.updateProposal({ tx: signedTx });
@@ -100,14 +99,13 @@ class ProposalsService extends Singleton {
     extensions
   }) {
 
-    const op = {
+    const operation = ['delete_proposal', {
       external_id: externalId,
       account,
       authority,
       extensions
-    }
-
-    const operation = ['delete_proposal', op];
+    }];
+    
     return this.blockchainService.signOperations([operation], privKey)
       .then((signedTx) => {
         return this.proposalsHttp.deleteProposal({ tx: signedTx });
@@ -147,6 +145,10 @@ class ProposalsService extends Singleton {
         return { ...o, extension: { ...o.extension, [ext]: data[i] } };
       }, extendedProposal);
     });
+  }
+
+  getAccountProposals(account, status = 0) {
+    return this.proposalsHttp.getAccountProposals(account, status);
   }
 
 }
