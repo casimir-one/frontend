@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.57.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.56.0...v1.57.0) (2020-11-18)
+
+
+### Features
+
+* **@deip/proposals-service:** Proposals for account ([a03e847](https://gitlab.com/DEIP/deip-rpc/commit/a03e847bb8a1b8b93dec3d4a77f43fb8a5db9410))
+
+
+
+
+
 # [1.55.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.54.0...v1.55.0) (2020-11-06)
 
 
