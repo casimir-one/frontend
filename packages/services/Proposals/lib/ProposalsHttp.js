@@ -19,6 +19,11 @@ class ProposalsHttp extends Singleton {
   getUserProfile(username) {
     return this.http.get(`/api/user/profiles${this.http.buildQueryString([username], 'accounts')}`);
   }
+
+  getAccountProposals(account, status) {
+    return this.http.get(`/api/proposals/${account}/${status}`);
+  }
+
 }
 
 export {

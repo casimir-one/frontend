@@ -1483,5 +1483,19 @@ export default [{
     "security_token_external_id",
     "cursor"
   ]
+},
+{
+  "api": "proposal_history_api",
+  "method": "get_proposals_by_signer",
+  "params": [
+    "account"
+  ]
+},
+{
+  "api": "proposal_history_api",
+  "method": "get_proposals_by_signers",
+  "params": [
+    "accounts"
+  ]
 }
 ];
