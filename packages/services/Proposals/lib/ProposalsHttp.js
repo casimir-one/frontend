@@ -24,6 +24,10 @@ class ProposalsHttp extends Singleton {
     return this.http.get(`/api/proposals/${account}/${status}`);
   }
 
+  getProposal(externalId) {
+    return this.http.get(`/api/proposals/${externalId}`);
+  }
+  
 }
 
 export {
