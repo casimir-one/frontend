@@ -151,6 +151,10 @@ class ProposalsService extends Singleton {
     return this.proposalsHttp.getAccountProposals(account, status);
   }
 
+  getProposal(externalId) {
+    return this.proposalsHttp.getProposal(externalId);
+  }
+
 }
 
 export {

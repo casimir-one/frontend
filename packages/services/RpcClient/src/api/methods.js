@@ -1497,5 +1497,12 @@ export default [{
   "params": [
     "accounts"
   ]
+},
+{
+  "api": "proposal_history_api",
+  "method": "get_proposal_state",
+  "params": [
+    "external_id"
+  ]
 }
 ];
