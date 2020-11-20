@@ -73,7 +73,7 @@ class ProposalsService extends Singleton {
     keyApprovalsToAdd,
     keyApprovalsToRemove,
     extensions
-  }) {
+  }, propagate = true) {
 
     const operation = ['update_proposal', {
       external_id: externalId,
@@ -88,8 +88,10 @@ class ProposalsService extends Singleton {
 
     return this.blockchainService.signOperations([operation], privKey)
       .then((signedTx) => {
-        return this.proposalsHttp.updateProposal({ tx: signedTx });
-      });
+        return propagate
+          ? this.proposalsHttp.updateProposal({ tx: signedTx })
+          : Promise.resolve({ tx: signedTx });
+      })
   }
 
   deleteProposal(privKey, {
@@ -97,7 +99,7 @@ class ProposalsService extends Singleton {
     account,
     authority,
     extensions
-  }) {
+  }, propagate = true) {
 
     const operation = ['delete_proposal', {
       external_id: externalId,
@@ -108,8 +110,10 @@ class ProposalsService extends Singleton {
     
     return this.blockchainService.signOperations([operation], privKey)
       .then((signedTx) => {
-        return this.proposalsHttp.deleteProposal({ tx: signedTx });
-      });
+        return propagate
+          ? this.proposalsHttp.deleteProposal({ tx: signedTx })
+          : Promise.resolve({ tx: signedTx });
+      })
   }
 
   getProposalsByCreator(account) {
