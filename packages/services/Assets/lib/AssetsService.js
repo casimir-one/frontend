@@ -1,27 +1,98 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { AccessService } from '@deip/access-service';
-import { AppConfigService } from '@deip/app-config-service';
+import { AssetsHttp } from './AssetsHttp';
+import { BlockchainService } from '@deip/blockchain-service';
+import { ProposalsService } from '@deip/proposals-service';
 
 class AssetsService extends Singleton {
-
   accessService = AccessService.getInstance();
+  assetsHttp = AssetsHttp.getInstance();
+  blockchainService = BlockchainService.getInstance();
+  proposalsService = ProposalsService.getInstance();
 
-  transferAsset({ privKey, username }, {
+  transferAssets({ privKey, username }, isProposal, {
     from,
     to,
     amount,
     memo,
     extensions
   }) {
-    return deipRpc.broadcast.transferAsync(
-      privKey,
-      from,
-      to,
-      amount,
-      memo,
-      extensions || []
-    );
+
+    const transfer_op = ['transfer', {
+      from: from,
+      to: to,
+      amount: amount,
+      memo: memo || "",
+      extensions: extensions || []
+    }];
+
+    if (isProposal) {
+      const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
+      const proposal = {
+        creator: username,
+        proposedOps: [{ "op": transfer_op }],
+        expirationTime: proposalExpiration,
+        reviewPeriodSeconds: undefined,
+        extensions: []
+      }
+
+      return this.proposalsService.createProposal({ privKey, username }, false, proposal)
+        .then(({ tx: signedProposalTx }) => {
+          return this.assetsHttp.createAssetsTransferProposal({ tx: signedProposalTx })
+        });
+
+    } else {
+
+      return this.blockchainService.signOperations([transfer_op], privKey)
+        .then((signedTx) => {
+          return this.assetsHttp.transferAssets({ tx: signedTx })
+        });
+    }
+
+  }
+
+
+  approveAssetsTransferProposal({ privKey, username }, {
+    proposalId,
+    approver
+  }) {
+
+    const proposalUpdate = {
+      externalId: proposalId,
+      activeApprovalsToAdd: [approver],
+      activeApprovalsToRemove: [],
+      ownerApprovalsToAdd: [],
+      ownerApprovalsToRemove: [],
+      keyApprovalsToAdd: [],
+      keyApprovalsToRemove: [],
+      extensions: []
+    }
+
+    return this.proposalsService.updateProposal(privKey, proposalUpdate, false)
+      .then(({ tx: signedProposalTx }) => {
+        return this.assetsHttp.approveAssetsTransferProposal({ tx: signedProposalTx })
+      });
+  }
+
+
+  rejectAssetsTransferProposal({ privKey, username }, {
+    proposalId,
+    rejector,
+    authority
+  }) {
+
+    const proposalDelete = {
+      externalId: proposalId,
+      account: rejector,
+      authority: authority,
+      extensions: []
+    }
+
+    return this.proposalsService.deleteProposal(privKey, proposalDelete, false)
+      .then(({ tx: signedProposalTx }) => {
+        return this.assetsHttp.rejectAssetsTransferProposal({ tx: signedProposalTx })
+      });
   }
 
   getAssetById(id) {
@@ -54,6 +125,90 @@ class AssetsService extends Singleton {
 
   getAccountsAssetBalancesByAsset(symbol) {
     return deipRpc.api.getAccountsAssetBalancesByAssetAsync(symbol);
+  }
+
+  createAssetsExchangeProposal({ privKey, username }, {
+    party1,
+    party2,
+    asset1,
+    asset2,
+    memo,
+    extensions
+  }) {
+    
+    const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
+
+    const party1_transfer_op = ['transfer', {
+      from: party1,
+      to: party2,
+      amount: asset1,
+      memo: memo || "",
+      extensions: extensions || []
+    }];
+
+    const party2_transfer_op = ['transfer', {
+      from: party2,
+      to: party1,
+      amount: asset2,
+      memo: memo || "",
+      extensions: extensions || []
+    }];
+
+    const proposal = {
+      creator: username,
+      proposedOps: [{ "op": party1_transfer_op }, { "op": party2_transfer_op }],
+      expirationTime: proposalExpiration,
+      reviewPeriodSeconds: undefined,
+      extensions: []
+    }
+
+    return this.proposalsService.createProposal({ privKey, username }, false, proposal)
+      .then(({ tx: signedProposalTx }) => {
+        return this.assetsHttp.createAssetsExchangeProposal({ tx: signedProposalTx })
+      });
+  }
+
+
+  approveAssetsExchangeProposal({ privKey, username }, {
+    proposalId,
+    approver
+  }) {
+
+    const proposalUpdate = {
+      externalId: proposalId,
+      activeApprovalsToAdd: [approver],
+      activeApprovalsToRemove: [],
+      ownerApprovalsToAdd: [],
+      ownerApprovalsToRemove: [],
+      keyApprovalsToAdd: [],
+      keyApprovalsToRemove: [],
+      extensions: []
+    }
+
+    return this.proposalsService.updateProposal(privKey, proposalUpdate, false)
+      .then(({ tx: signedProposalTx }) => {
+        return this.assetsHttp.approveAssetsExchangeProposal({ tx: signedProposalTx })
+      });
+  }
+
+
+  rejectAssetsExchangeProposal({ privKey, username }, {
+    proposalId,
+    rejector,
+    authority
+  }) {
+
+    const proposalDelete = {
+      externalId: proposalId,
+      account: rejector,
+      authority: authority,
+      extensions: []
+    }
+
+    return this.proposalsService.deleteProposal(privKey, proposalDelete, false)
+      .then(({ tx: signedProposalTx }) => {
+        return this.assetsHttp.rejectAssetsExchangeProposal({ tx: signedProposalTx })
+      });
   }
 
 }
