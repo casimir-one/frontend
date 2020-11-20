@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-service",
-  "version": "1.57.1",
+  "version": "1.58.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,8 +22,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/blockchain-service": "1.57.1",
     "@deip/http-service": "1.36.0",
-    "@deip/proposals-service": "1.57.1",
-    "@deip/research-content-service": "1.57.1",
+    "@deip/proposals-service": "1.58.0",
+    "@deip/research-content-service": "1.58.0",
     "@deip/rpc-client": "1.57.1",
     "@deip/toolbox": "1.1.0",
     "@deip/users-service": "1.57.1"
