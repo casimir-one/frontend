@@ -10,7 +10,7 @@ class ResearchContentService extends Singleton {
   blockchainService = BlockchainService.getInstance();
   proposalsService = ProposalsService.getInstance();
 
-  createResearchContentViaOffchain({ privKey, username }, isProposal, {
+  createResearchContent({ privKey, username }, isProposal, {
     researchExternalId,
     researchGroup,
     type,
@@ -40,7 +40,7 @@ class ResearchContentService extends Singleton {
         if (isProposal) {
 
           const proposal = {
-            creator: researchGroup,
+            creator: username,
             proposedOps: [{ "op": create_research_content_op }],
             expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
             reviewPeriodSeconds: undefined,

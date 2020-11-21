@@ -20,10 +20,6 @@ class ResearchGroupHttp extends Singleton {
     return this.http.get(`/api/groups/${researchGroupExternalId}`);
   }
 
-  getActivityLogsEntriesByResearchGroup(researchGroupExternalId) {
-    return this.http.get(`/api/groups/activity-log/${researchGroupExternalId}`);
-  }
-
   getJoinRequestsByGroup(groupId) {
     return this.http.get(`/api/join-requests/group/${groupId}`);
   }

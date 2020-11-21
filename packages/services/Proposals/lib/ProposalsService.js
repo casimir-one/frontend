@@ -64,7 +64,7 @@ class ProposalsService extends Singleton {
   }
 
 
-  updateProposal(privKey, {
+  updateProposal({ privKey, username }, {
     externalId,
     activeApprovalsToAdd,
     activeApprovalsToRemove,
@@ -94,7 +94,7 @@ class ProposalsService extends Singleton {
       })
   }
 
-  deleteProposal(privKey, {
+  deleteProposal({ privKey, username }, {
     externalId,
     account,
     authority,

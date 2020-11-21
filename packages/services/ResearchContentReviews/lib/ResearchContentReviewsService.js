@@ -16,7 +16,7 @@ class ResearchContentReviewsService extends Singleton {
     return assessmentCriterias[typeCode] || assessmentCriterias.default;
   }
 
-  createReviewViaOffchain(privKey, {
+  createReview(privKey, {
     author, 
     researchContentExternalId, 
     content, 

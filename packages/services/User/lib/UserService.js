@@ -10,7 +10,7 @@ class UserService extends Singleton {
   blockchainService = BlockchainService.getInstance();
 
 
-  updateUserAccountViaOffchain(privKey, {
+  updateUserAccount(privKey, {
     account,
     accountOwnerAuth,
     accountActiveAuth,

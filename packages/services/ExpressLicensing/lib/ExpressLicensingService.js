@@ -114,31 +114,6 @@ class ExpressLicensingService extends Singleton {
   }
 
 
-  getExpressLicensingRequests() {
-    return this.expressLicensingHttp.getExpressLicensingRequests();
-  }
-
-
-  getExpressLicensingRequestsByStatus(status) {
-    return this.expressLicensingHttp.getExpressLicensingRequestsByStatus(status);
-  }
-
-
-  getExpressLicensingRequestById(requestId) {
-    return this.expressLicensingHttp.getExpressLicensingRequestById(requestId);
-  }
-
-
-  getExpressLicensingRequestsByResearch(researchExternalId) {
-    return this.expressLicensingHttp.getExpressLicensingRequestsByResearch(researchExternalId);
-  }
-
-
-  getExpressLicensingRequestsByRequester(requester) {
-    return this.expressLicensingHttp.getExpressLicensingRequestsByRequester(requester);
-  }
-
-
   getResearchLicense(externalId) {
     return deipRpc.api.getResearchLicenseAsync(externalId);
   }
