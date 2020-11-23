@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.59.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.58.0...v1.59.0) (2020-11-23)
+
+
+### Features
+
+* **@deip/proposals-service:** Unified proposals ([99036d3](https://gitlab.com/DEIP/deip-client-modules/commit/99036d39d787f9c839e8aeba33ba6d1dc1545e6a))
+
+
+
+
+
 # [1.58.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.57.1...v1.58.0) (2020-11-20)
 
 
