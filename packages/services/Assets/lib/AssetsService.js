@@ -52,49 +52,6 @@ class AssetsService extends Singleton {
 
   }
 
-
-  approveAssetsTransferProposal({ privKey, username }, {
-    proposalId,
-    approver
-  }) {
-
-    const proposalUpdate = {
-      externalId: proposalId,
-      activeApprovalsToAdd: [approver],
-      activeApprovalsToRemove: [],
-      ownerApprovalsToAdd: [],
-      ownerApprovalsToRemove: [],
-      keyApprovalsToAdd: [],
-      keyApprovalsToRemove: [],
-      extensions: []
-    }
-
-    return this.proposalsService.updateProposal(privKey, proposalUpdate, false)
-      .then(({ tx: signedProposalTx }) => {
-        return this.assetsHttp.approveAssetsTransferProposal({ tx: signedProposalTx })
-      });
-  }
-
-
-  rejectAssetsTransferProposal({ privKey, username }, {
-    proposalId,
-    rejector,
-    authority
-  }) {
-
-    const proposalDelete = {
-      externalId: proposalId,
-      account: rejector,
-      authority: authority,
-      extensions: []
-    }
-
-    return this.proposalsService.deleteProposal(privKey, proposalDelete, false)
-      .then(({ tx: signedProposalTx }) => {
-        return this.assetsHttp.rejectAssetsTransferProposal({ tx: signedProposalTx })
-      });
-  }
-
   getAssetById(id) {
     return deipRpc.api.getAssetAsync(id);
   }
@@ -167,50 +124,6 @@ class AssetsService extends Singleton {
         return this.assetsHttp.createAssetsExchangeProposal({ tx: signedProposalTx })
       });
   }
-
-
-  approveAssetsExchangeProposal({ privKey, username }, {
-    proposalId,
-    approver
-  }) {
-
-    const proposalUpdate = {
-      externalId: proposalId,
-      activeApprovalsToAdd: [approver],
-      activeApprovalsToRemove: [],
-      ownerApprovalsToAdd: [],
-      ownerApprovalsToRemove: [],
-      keyApprovalsToAdd: [],
-      keyApprovalsToRemove: [],
-      extensions: []
-    }
-
-    return this.proposalsService.updateProposal(privKey, proposalUpdate, false)
-      .then(({ tx: signedProposalTx }) => {
-        return this.assetsHttp.approveAssetsExchangeProposal({ tx: signedProposalTx })
-      });
-  }
-
-
-  rejectAssetsExchangeProposal({ privKey, username }, {
-    proposalId,
-    rejector,
-    authority
-  }) {
-
-    const proposalDelete = {
-      externalId: proposalId,
-      account: rejector,
-      authority: authority,
-      extensions: []
-    }
-
-    return this.proposalsService.deleteProposal(privKey, proposalDelete, false)
-      .then(({ tx: signedProposalTx }) => {
-        return this.assetsHttp.rejectAssetsExchangeProposal({ tx: signedProposalTx })
-      });
-  }
-
 }
 
 export {

@@ -45,7 +45,7 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchGroupResearchListing(researchGroupExternalId);
   }
 
-  createResearchViaOffchain({ privKey, username }, isProposal, formData) {
+  createResearch({ privKey, username }, isProposal, formData) {
 
     const onchainData = JSON.parse(formData.get("onchainData"));
     const offchainMeta = JSON.parse(formData.get("offchainMeta"));
@@ -83,7 +83,6 @@ class ResearchService extends Singleton {
       .then(([refBlock, rgtList, existingSecurityToken]) => {
 
         const { creator, memo, fee } = isNewResearchGroup ? { creator: onchainData.creator, memo: onchainData.memo, fee: onchainData.fee } : { creator: username };
-        const security_tokens_amount = 10000;
         const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
 
         const [research_group_external_id, create_research_group_op] = isNewResearchGroup ? deipRpc.operations.createEntityOperation(['create_account', {
@@ -226,7 +225,7 @@ class ResearchService extends Singleton {
         if (isProposal) {
 
           const proposal = {
-            creator: research_group_external_id,
+            creator: username,
             proposedOps: [{ "op": create_research_op }, { "op": create_security_token_op }, { "op": issue_security_token_op }, ...invites_ops.map((op) => { return { "op": op } })],
             expirationTime: proposalExpiration,
             reviewPeriodSeconds: undefined,
@@ -243,6 +242,7 @@ class ResearchService extends Singleton {
           return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock, preOps, postOps)
             .then(({ tx: signedProposalTx }) => {
               formData.append("tx", JSON.stringify(signedProposalTx))
+              formData.append("isProposal", isProposal)
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
             })
 
@@ -257,6 +257,7 @@ class ResearchService extends Singleton {
           return this.blockchainService.signOperations(ops, privKey, refBlock)
             .then((signedTx) => {
               formData.append("tx", JSON.stringify(signedTx))
+              formData.append("isProposal", isProposal)              
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
             })
         }
@@ -265,7 +266,7 @@ class ResearchService extends Singleton {
   }
 
 
-  updateResearchViaOffchain({ privKey, username }, isProposal, formData) {
+  updateResearch({ privKey, username }, isProposal, formData) {
 
     const onchainData = JSON.parse(formData.get("onchainData"));
     const offchainMeta = JSON.parse(formData.get("offchainMeta"));
@@ -352,7 +353,7 @@ class ResearchService extends Singleton {
         if (isProposal) {
 
           const proposal = {
-            creator: researchGroup,
+            creator: username,
             proposedOps: [{ "op": update_research_op }, ...invites_ops.map((op) => { return { "op": op } })],
             expirationTime: proposalExpiration,
             reviewPeriodSeconds: undefined,
@@ -362,6 +363,7 @@ class ResearchService extends Singleton {
           return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
             .then(({ tx: signedProposalTx }) => {
               formData.append("tx", JSON.stringify(signedProposalTx))
+              formData.append("isProposal", isProposal)
               return this.researchHttp.updateResearch({ researchExternalId: externalId, formData });
             })
 
@@ -370,13 +372,14 @@ class ResearchService extends Singleton {
           return this.blockchainService.signOperations([update_research_op, ...invites_ops], privKey, refBlock)
             .then((signedTx) => {
               formData.append("tx", JSON.stringify(signedTx))
+              formData.append("isProposal", isProposal)
               return this.researchHttp.updateResearch({ researchExternalId: externalId, formData });
             });
         }
       })
   }
 
-  createResearchApplicationViaOffchain(researcherPrivKey, formData) {
+  createResearchApplication(researcherPrivKey, formData) {
 
     const researcher = formData.get("researcher");
     const tenant = formData.get("tenant");
@@ -525,11 +528,11 @@ class ResearchService extends Singleton {
       });
   }
 
-  editResearchApplicationViaOffchain(proposalId, formData) {
+  editResearchApplication(proposalId, formData) {
     return this.researchHttp.editResearchApplication({ proposalId, formData })
   }
 
-  approveResearchApplicationViaOffchain(privKey, {
+  approveResearchApplication(privKey, {
     proposalId,
     tenant
   }) {
@@ -551,7 +554,7 @@ class ResearchService extends Singleton {
       });
   }
 
-  rejectResearchApplicationViaOffchain(privKey, {
+  rejectResearchApplication(privKey, {
     proposalId,
     tenant
   }) {
@@ -569,7 +572,7 @@ class ResearchService extends Singleton {
       });
   }
 
-  deleteResearchApplicationViaOffchain(privKey, {
+  deleteResearchApplication(privKey, {
     proposalId,
     researcher
   }) {

@@ -17,7 +17,7 @@ class ResearchGroupService extends Singleton {
     return { ...rg };
   }
   
-  createResearchGroupViaOffchain(privKey, { 
+  createResearchGroup(privKey, {
       fee,
       creator,
       accountOwnerAuth,
@@ -63,7 +63,7 @@ class ResearchGroupService extends Singleton {
   }
 
 
-  updateResearchGroupAccountViaOffchain({ privKey, username }, isProposal, {
+  updateResearchGroupAccount({ privKey, username }, isProposal, {
     researchGroup,
     accountOwnerAuth,
     accountActiveAuth,
@@ -100,7 +100,7 @@ class ResearchGroupService extends Singleton {
     if (isProposal) {
 
       const proposal = {
-        creator: researchGroup,
+        creator: username,
         proposedOps: [{ "op": update_account_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
@@ -122,7 +122,7 @@ class ResearchGroupService extends Singleton {
     }
   }
 
-  createResearchGroupInviteViaOffchain({ privKey, username }, {
+  createResearchGroupInvite({ privKey, username }, {
     member,
     researchGroup,
     rewardShare,
@@ -142,7 +142,7 @@ class ResearchGroupService extends Singleton {
     }];
 
     const proposal = {
-      creator: researchGroup,
+      creator: username,
       proposedOps: [{ "op": join_research_group_membership_op }],
       expirationTime: proposalExpiration,
       reviewPeriodSeconds: undefined,
@@ -155,7 +155,7 @@ class ResearchGroupService extends Singleton {
       })
   }
 
-  approveResearchGroupInviteViaOffChain(privKey, {
+  approveResearchGroupInvite(privKey, {
     inviteId,
     account
   }) {
@@ -177,7 +177,7 @@ class ResearchGroupService extends Singleton {
       });
   }
 
-  rejectResearchGroupInviteViaOffChain(privKey, {
+  rejectResearchGroupInvite(privKey, {
     inviteId,
     account
   }) {
@@ -196,7 +196,7 @@ class ResearchGroupService extends Singleton {
   }
 
   
-  leaveResearchGroupViaOffchain(
+  leaveResearchGroup(
     { privKey, username }, 
     {
       member,
@@ -220,7 +220,7 @@ class ResearchGroupService extends Singleton {
     }];
 
     const proposal = {
-      creator: researchGroup,
+      creator: username,
       proposedOps: [{ "op": leave_research_group_membership_op }],
       expirationTime: proposalExpiration,
       reviewPeriodSeconds: undefined,
@@ -252,13 +252,6 @@ class ResearchGroupService extends Singleton {
   getResearchGroup(externalId) {
     return this.researchGroupHttp.getResearchGroup(externalId);
   }
-
-  /* [DEPRECATED] */
-  getActivityLogsEntriesByResearchGroup(researchGroupExternalId) {
-    return this.researchGroupHttp.getActivityLogsEntriesByResearchGroup(researchGroupExternalId);
-  }
-
-  // /////////////////
 
   getJoinRequestsByGroup(groupId) {
     return this.researchGroupHttp.getJoinRequestsByGroup(groupId);

@@ -2,11 +2,13 @@ import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { TS_TYPES } from './constants';
 import { BlockchainService } from '@deip/blockchain-service';
+import { ProposalsService } from '@deip/proposals-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
 class InvestmentsService extends Singleton {
   investmentsHttp = InvestmentsHttp.getInstance();
   blockchainService = BlockchainService.getInstance();
+  proposalsService = ProposalsService.getInstance();
 
   createSecurityToken({ privKey, username }, {
     researchExternalId,
@@ -58,7 +60,7 @@ class InvestmentsService extends Singleton {
     return deipRpc.api.getSecurityTokenRevenueHistoryAsync(symbol, cursor);
   }
 
-  createResearchTokenSaleViaOffchain({ privKey, username }, isProposal, {
+  createResearchTokenSale({ privKey, username }, isProposal, {
     researchGroup,
     researchExternalId,
     startTime,
@@ -89,7 +91,7 @@ class InvestmentsService extends Singleton {
         if (isProposal) {
 
           const proposal = {
-            creator: researchGroup,
+            creator: username,
             proposedOps: [{ "op": create_research_token_sale_op }],
             expirationTime: expirationTime,
             reviewPeriodSeconds: undefined,
@@ -112,7 +114,7 @@ class InvestmentsService extends Singleton {
       });
   }
 
-  contributeToResearchTokenSaleViaOffchain({ privKey, username }, {
+  contributeResearchTokenSale({ privKey, username }, {
     tokenSaleExternalId,
     contributor,
     amount,
