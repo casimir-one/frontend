@@ -67,53 +67,7 @@ class ExpressLicensingService extends Singleton {
       })
   }
 
-
-  approveExpressLicensingRequest({ privKey, username }, {
-    requestId,
-    approver
-  }) {
-
-    const offchainMeta = {};
-
-    const update_proposal_op = ['update_proposal', {
-      external_id: requestId,
-      active_approvals_to_add: [approver],
-      active_approvals_to_remove: [],
-      owner_approvals_to_add: [],
-      owner_approvals_to_remove: [],
-      key_approvals_to_add: [],
-      key_approvals_to_remove: [],
-      extensions: []
-    }];
-
-    return this.blockchainService.signOperations([update_proposal_op], privKey)
-      .then((signedTx) => {
-        return this.expressLicensingHttp.approveExpressLicensingRequest({ requestId, tx: signedTx, offchainMeta });
-      });
-  }
-
-
-  rejectExpressLicensingRequest({ privKey, username }, {
-    requestId,
-    rejector
-  }) {
-
-    const offchainMeta = {};
-
-    const delete_proposal_op = ['delete_proposal', {
-      external_id: requestId,
-      account: rejector,
-      authority: 2,
-      extensions: []
-    }];
-
-    return this.blockchainService.signOperations([delete_proposal_op], privKey)
-      .then((signedTx) => {
-        return this.expressLicensingHttp.rejectExpressLicensingRequest({ requestId, tx: signedTx, offchainMeta })
-      });
-  }
-
-
+  
   getResearchLicense(externalId) {
     return deipRpc.api.getResearchLicenseAsync(externalId);
   }

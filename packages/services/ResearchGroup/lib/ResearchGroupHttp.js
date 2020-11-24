@@ -44,14 +44,6 @@ class ResearchGroupHttp extends Singleton {
     return this.http.post('/api/invites', { tx, offchainMeta });
   }
 
-  approveResearchGroupInvite({ tx }) {
-    return this.http.post(`/api/invites/approve`, { tx });
-  }
-
-  rejectResearchGroupInvite({ tx }) {
-    return this.http.post(`/api/invites/reject`, { tx });
-  }
-
   leaveResearchGroup({ tx, offchainMeta }) {
     return this.http.post('/api/groups/leave', { tx, offchainMeta });
   }

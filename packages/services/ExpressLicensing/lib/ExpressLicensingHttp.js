@@ -9,14 +9,6 @@ class ExpressLicensingHttp extends Singleton {
     return this.http.post(`/api/express-licensing`, { tx, offchainMeta });
   }
 
-  approveExpressLicensingRequest({ requestId, tx, offchainMeta }) {
-    return this.http.put(`/api/express-licensing/approve/${requestId}`, { tx, offchainMeta });
-  }
-
-  rejectExpressLicensingRequest({ requestId, tx, offchainMeta }) {
-    return this.http.put(`/api/express-licensing/reject/${requestId}`, { tx, offchainMeta });
-  }
-  
 }
 
 export {
