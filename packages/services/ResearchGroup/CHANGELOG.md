@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.60.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.59.0...v1.60.0) (2020-11-24)
+
+
+### Features
+
+* **@deip/proposals-service:** Proposals update endpoint ([21ba24b](https://gitlab.com/DEIP/deip-client-modules/commit/21ba24bcc8c67f6e1ecc7b170239d52a55dabca1))
+
+
+
+
+
 # [1.59.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.58.0...v1.59.0) (2020-11-23)
 
 
