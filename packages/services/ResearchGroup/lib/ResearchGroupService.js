@@ -154,47 +154,6 @@ class ResearchGroupService extends Singleton {
         return this.researchGroupHttp.createResearchGroupInvite({ tx: signedProposalTx, offchainMeta })
       })
   }
-
-  approveResearchGroupInvite(privKey, {
-    inviteId,
-    account
-  }) {
-    
-    const update_proposal_op = ['update_proposal', {
-      external_id: inviteId,
-      active_approvals_to_add: [account],
-      active_approvals_to_remove: [],
-      owner_approvals_to_add: [],
-      owner_approvals_to_remove: [],
-      key_approvals_to_add: [],
-      key_approvals_to_remove: [],
-      extensions: []
-    }];
-
-    return this.blockchainService.signOperations([update_proposal_op], privKey)
-      .then((signedTx) => {
-        return this.researchGroupHttp.approveResearchGroupInvite({ tx: signedTx });
-      });
-  }
-
-  rejectResearchGroupInvite(privKey, {
-    inviteId,
-    account
-  }) {
-
-    const delete_proposal_op = ['delete_proposal', {
-      external_id: inviteId,
-      account: account,
-      authority: 2, // active
-      extensions: []
-    }]
-
-    return this.blockchainService.signOperations([delete_proposal_op], privKey)
-      .then((signedTx) => {
-        return this.researchGroupHttp.rejectResearchGroupInvite({ tx: signedTx });
-      });
-  }
-
   
   leaveResearchGroup(
     { privKey, username }, 
