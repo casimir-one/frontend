@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.61.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.60.0...v1.61.0) (2020-11-30)
+
+
+### Features
+
+* **@deip/grants-service:** Withdraw request auto-approval ([39a2361](https://gitlab.com/DEIP/deip-client-modules/commit/39a236137a3a62354832bc12f2cd12ca02dc6ea9))
+
+
+
+
+
 # [1.60.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.59.0...v1.60.0) (2020-11-24)
 
 

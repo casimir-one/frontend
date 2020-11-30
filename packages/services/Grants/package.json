@@ -1,6 +1,6 @@
 {
   "name": "@deip/grants-service",
-  "version": "1.36.0",
+  "version": "1.61.0",
   "description": "",
   "main": "index.js",
   "directories": {
