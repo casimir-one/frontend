@@ -119,6 +119,49 @@ class GrantsService extends Singleton {
       extensions);
   }
 
+
+  authorizeAwardWithdrawalRequest(privKey, {
+    paymentNumber,
+    awardNumber,
+    subawardNumber,
+    account,
+    extensions
+  }) {
+
+    const certify_award_withdrawal_request_op = ["certify_award_withdrawal_request", {
+      "payment_number": paymentNumber,
+      "award_number": awardNumber,
+      "subaward_number": subawardNumber,
+      "certifier": account,
+      "extensions": extensions || []
+    }];
+
+    const approve_award_withdrawal_request_op = ["approve_award_withdrawal_request", {
+      "payment_number": paymentNumber,
+      "award_number": awardNumber,
+      "subaward_number": subawardNumber,
+      "approver": account,
+      "extensions": extensions || []
+    }];
+
+    const pay_award_withdrawal_request_op = ["pay_award_withdrawal_request", {
+      "payment_number": paymentNumber,
+      "award_number": awardNumber,
+      "subaward_number": subawardNumber,
+      "payer": account,
+      "extensions": extensions || []
+    }];
+
+    return this.blockchainService.signOperations([
+      certify_award_withdrawal_request_op, 
+      approve_award_withdrawal_request_op, 
+      pay_award_withdrawal_request_op
+    ], privKey)
+      .then((signedTx) => {
+        return this.blockchainService.sendTransactionAsync(signedTx)
+      })
+  }
+
   certifyAwardWithdrawalRequest(privKey, {
     paymentNumber,
     awardNumber,
