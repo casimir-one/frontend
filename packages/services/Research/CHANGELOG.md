@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.63.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.62.0...v1.63.0) (2020-12-03)
+
+
+### Features
+
+* **@deip/research-service:** Research service hot fix ([daa7116](https://gitlab.com/DEIP/deip-client-modules/commit/daa711695ccb797daa8a8d545565d90a1411f992))
+
+
+
+
+
 # [1.62.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.61.0...v1.62.0) (2020-12-03)
 
 
