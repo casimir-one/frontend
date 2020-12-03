@@ -4,6 +4,7 @@ import { Singleton } from '@deip/toolbox';
 import { ResearchContentReviewsHttp } from './ResearchContentReviewsHttp';
 import deipRpc from '@deip/rpc-client';
 import { assessmentCriterias } from './constants';
+import crypto from '@deip/lib-crypto';
 
 class ResearchContentReviewsService extends Singleton {
   accessService = AccessService.getInstance();
@@ -40,7 +41,7 @@ class ResearchContentReviewsService extends Singleton {
         }], refBlock);
 
         return this.blockchainService.signOperations([create_review_op], privKey, refBlock)
-          .then((signedTx) => this.researchContentReviewsHttp.sendCreateReviewOp(signedTx));
+          .then((signedTx) => this.researchContentReviewsHttp.createReview(signedTx));
       })
   }
 

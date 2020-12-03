@@ -1,7 +1,6 @@
-import _ from 'lodash';
 import deipRpc from '@deip/rpc-client';
+import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
-
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ResearchGroupHttp } from './ResearchGroupHttp';
@@ -33,7 +32,14 @@ class ResearchGroupService extends Singleton {
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
-        
+
+        const offchainMeta = {
+          researchGroup: {
+            name: researchGroupName,
+            description: researchGroupDescription
+          }
+        };
+
         const [research_group_external_id, create_account_op] = deipRpc.operations.createEntityOperation(['create_account', {
           fee,
           creator,
@@ -45,15 +51,13 @@ class ResearchGroupService extends Singleton {
           traits: [[
             "research_group",
             {
-              name: researchGroupName,
-              description: researchGroupDescription,
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
               extensions: []
             }
           ]],
           extensions: accountExtensions
         }], refBlock);
 
-        const offchainMeta = {};
 
         return this.blockchainService.signOperations([create_account_op], privKey, refBlock)
           .then((signedTx) => {
@@ -76,7 +80,7 @@ class ResearchGroupService extends Singleton {
     researchGroupDescription,
   }) {
 
-    const offchainMeta = {};
+    const offchainMeta = { researchGroup: { name: researchGroupName, description: researchGroupDescription }};
 
     const update_account_op = ['update_account', {
       account: researchGroup,
@@ -88,8 +92,7 @@ class ResearchGroupService extends Singleton {
       traits: [[
         "research_group",
         {
-          name: researchGroupName,
-          description: researchGroupDescription,
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
           extensions: []
         }
       ]],
@@ -199,17 +202,23 @@ class ResearchGroupService extends Singleton {
   /* [DEPRECATED] */
   getResearchGroupById(groupId) {
     return deipRpc.api.getResearchGroupByIdAsync(groupId)
-      .then(this._mapResearchGroup);
+      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
+      .then((researchGroup) => { return researchGroup; })
   }
 
   /* [DEPRECATED] */
   getResearchGroupByPermlink(permlink) {
     return deipRpc.api.getResearchGroupByPermlinkAsync(permlink)
-      .then(this._mapResearchGroup);
+      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
+      .then((researchGroup) => { return researchGroup; })
   }
 
   getResearchGroup(externalId) {
     return this.researchGroupHttp.getResearchGroup(externalId);
+  }
+
+  getResearchGroups(externalIds) {
+    return Promise.all(externalIds.map((externalId) => this.researchGroupHttp.getResearchGroup(externalId)));
   }
 
   getJoinRequestsByGroup(groupId) {
