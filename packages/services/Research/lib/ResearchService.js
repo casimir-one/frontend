@@ -48,7 +48,7 @@ class ResearchService extends Singleton {
   createResearch({ privKey, username }, isProposal, formData) {
 
     const onchainData = JSON.parse(formData.get("onchainData"));
-    const offchainMeta = JSON.parse(formData.get("offchainMeta"));
+    let offchainMeta = JSON.parse(formData.get("offchainMeta"));
 
     const researchGroup = onchainData.researchGroup || null;
     const title = onchainData.title || "";
@@ -85,6 +85,14 @@ class ResearchService extends Singleton {
         const { creator, memo, fee } = isNewResearchGroup ? { creator: onchainData.creator, memo: onchainData.memo, fee: onchainData.fee } : { creator: username };
         const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
 
+        offchainMeta = {
+          ...offchainMeta, 
+          researchGroup: {
+            name: `${title} team`,
+            description: ""
+          }
+        };
+      
         const [research_group_external_id, create_research_group_op] = isNewResearchGroup ? deipRpc.operations.createEntityOperation(['create_account', {
           fee: fee,
           creator: creator,
@@ -104,8 +112,7 @@ class ResearchService extends Singleton {
           traits: [[
             "research_group",
             {
-              name: `${title} team`,
-              description: "",
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
               extensions: []
             }
           ]],
@@ -222,6 +229,10 @@ class ResearchService extends Singleton {
         }
 
 
+        formData.delete(offchainMeta);
+        formData.append('offchainMeta', JSON.stringify(offchainMeta));
+        formData.append("isProposal", isProposal)
+
         if (isProposal) {
 
           const proposal = {
@@ -242,7 +253,6 @@ class ResearchService extends Singleton {
           return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock, preOps, postOps)
             .then(({ tx: signedProposalTx }) => {
               formData.append("tx", JSON.stringify(signedProposalTx))
-              formData.append("isProposal", isProposal)
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
             })
 
@@ -257,7 +267,6 @@ class ResearchService extends Singleton {
           return this.blockchainService.signOperations(ops, privKey, refBlock)
             .then((signedTx) => {
               formData.append("tx", JSON.stringify(signedTx))
-              formData.append("isProposal", isProposal)              
               return this.researchHttp.createResearch({ researchExternalId: research_external_id, formData })
             })
         }
@@ -386,8 +395,6 @@ class ResearchService extends Singleton {
     const researcherPubKey = formData.get("researcherPubKey");
 
     const fee = formData.get("researchGroupFee");
-    const researchGroupName = formData.get("researchGroupName");
-    const researchGroupDescription = formData.get("researchGroupDescription");
 
     const researchTitle = formData.get("researchTitle");
     const researchAbstract = formData.get("researchAbstract");
@@ -396,6 +403,13 @@ class ResearchService extends Singleton {
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
 
     const proposalExpirationTime = formData.get("proposalExpirationTime");
+
+    const offchainMeta = {
+      researchGroup: {
+        name: formData.get("researchGroupName"),
+        description: formData.get("researchGroupDescription"),
+      }
+    }
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
@@ -421,8 +435,7 @@ class ResearchService extends Singleton {
             traits: [[
               "research_group",
               {
-                name: researchGroupName,
-                description: researchGroupDescription,
+                description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
                 extensions: []
               }
             ]],
@@ -519,10 +532,11 @@ class ResearchService extends Singleton {
 
         formData.append('proposalId', main_proposal_external_id);
         formData.append('researchExternalId', research_external_id);
-        
+        formData.append('offchainMeta', JSON.stringify(offchainMeta));
+
         return this.blockchainService.signOperations([main_proposal_op, update_main_proposal_op], researcherPrivKey, refBlock)
           .then((signedTx) => {
-            formData.append('tx', JSON.stringify(signedTx));
+            formData.append('tx', JSON.stringify(signedTx));            
             return this.researchHttp.createResearchApplication({ proposalId: main_proposal_external_id, formData })
           });
       });

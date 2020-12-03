@@ -164,7 +164,6 @@ const authority = new Serializer("authority", {
 });
 
 const research_group = new Serializer("research_group", {
-  name: string,
   description: string,
   extensions: set(future_extensions)
 });
