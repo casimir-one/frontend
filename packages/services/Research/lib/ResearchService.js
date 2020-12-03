@@ -1,4 +1,5 @@
 import deipRpc from '@deip/rpc-client';
+import crypto from '@deip/lib-crypto';
 import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
 import { Singleton } from '@deip/toolbox';
