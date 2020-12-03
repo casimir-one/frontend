@@ -230,8 +230,8 @@ class ResearchService extends Singleton {
         }
 
 
-        formData.delete(offchainMeta);
-        formData.append('offchainMeta', JSON.stringify(offchainMeta));
+        formData.delete("offchainMeta");
+        formData.append("offchainMeta", JSON.stringify(offchainMeta));
         formData.append("isProposal", isProposal)
 
         if (isProposal) {
