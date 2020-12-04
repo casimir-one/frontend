@@ -1,3 +1,4 @@
+import deipRpc from '@deip/rpc-client';
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
 import qs from 'qs';
@@ -7,6 +8,11 @@ class ResearchHttp extends Singleton {
 
   getResearch(externalId) {
     return this.http.get(`/api/research/${externalId}`);
+  }
+
+  getResearches(externalIds) {
+    const query = qs.stringify({ researches: externalIds });
+    return this.http.get(`/api/researches?${query}`);
   }
   
   getPublicResearchListing(filter) {

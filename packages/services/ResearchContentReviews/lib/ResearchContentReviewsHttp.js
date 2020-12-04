@@ -4,8 +4,24 @@ import { Singleton } from '@deip/toolbox';
 class ResearchContentReviewsHttp extends Singleton {
   http = HttpService.getInstance();
 
-  createReview(tx) {
-    return this.http.post('/api/reviews', tx);
+  createReview(tx, offchainMeta) {
+    return this.http.post('/api/reviews', { tx, offchainMeta });
+  }
+
+  getReview(reviewExternalId) {
+    return this.http.get(`/api/reviews/${reviewExternalId}`);
+  }
+
+  getReviewsByResearch(researchExternalId) {
+    return this.http.get(`/api/reviews/research/${researchExternalId}`);
+  }
+
+  getReviewsByResearchContent(researchContentExternalId) {
+    return this.http.get(`/api/reviews/research-content/${researchContentExternalId}`);
+  }
+
+  getReviewsByAuthor(author) {
+    return this.http.get(`/api/reviews/author/${author}`);
   }
 
   getReviewRequestsByExpert(username, status) {

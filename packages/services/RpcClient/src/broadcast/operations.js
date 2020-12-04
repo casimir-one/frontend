@@ -181,8 +181,7 @@ module.exports = [{
   "params": [
     "external_id",
     "research_group",
-    "title",
-    "abstract",
+    "description",
     "disciplines",
     "is_private",
     "review_share",
@@ -198,7 +197,7 @@ module.exports = [{
     "research_external_id",
     "research_group",
     "type",
-    "title",
+    "description",
     "content",
     "authors",
     "references",
@@ -224,8 +223,7 @@ module.exports = [{
   "params": [
     "research_group",
     "external_id",
-    "title",
-    "abstract",
+    "description",
     "is_private",
     "review_share",
     "compensation_share",

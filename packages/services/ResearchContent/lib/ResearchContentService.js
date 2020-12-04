@@ -1,4 +1,5 @@
 import deipRpc from '@deip/rpc-client';
+import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
 import { ResearchContentHttp } from './ResearchContentHttp';
 import { BlockchainService } from '@deip/blockchain-service';
@@ -21,6 +22,8 @@ class ResearchContentService extends Singleton {
     extensions
   }) {
 
+    const offchainMeta = { researchContent: { title } };
+
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
         
@@ -28,14 +31,12 @@ class ResearchContentService extends Singleton {
           research_external_id: researchExternalId,
           research_group: researchGroup,
           type,
-          title,
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchContent)).buffer)),
           content,
           authors,
           references,
           extensions
         }], refBlock);
-
-        const offchainMeta = {};
 
         if (isProposal) {
 
@@ -64,16 +65,30 @@ class ResearchContentService extends Singleton {
       })
   }
 
+  getResearchContent(externalId) {
+    return this.researchContentHttp.getResearchContent(externalId);
+  }
+
+  getResearchContents(externalIds) {
+    return this.researchContentHttp.getResearchContents(externalIds);
+  }
+
+  // DEPRECATED
+  getResearchContentByPermlink(groupPermlink, researchPermlink, contentPermlink) {
+    return deipRpc.api.getResearchContentByAbsolutePermlinkAsync(groupPermlink, researchPermlink, contentPermlink)
+      .then((researchContent) => this.getResearchContent(researchContent.external_id));
+  }
+
+  getResearchContentByResearch(researchExternalId) {
+    return this.researchContentHttp.getResearchContentByResearch(researchExternalId);
+  }
+
   getContentRefById(refId) {
     return this.researchContentHttp.getContentRefById(refId);
   }
 
   getContentRefByHash(researchExternalId, hash) {
     return this.researchContentHttp.getContentRefByHash(researchExternalId, hash);
-  }
-
-  getResearchContentByResearch(researchExternalId) {
-    return this.researchContentHttp.getResearchContentByResearch(researchExternalId);
   }
 
   createDarContent(researchExternalId) {

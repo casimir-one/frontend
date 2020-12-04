@@ -12,6 +12,15 @@ class ResearchContentHttp extends Singleton {
     return this.http.post(`/content/publish`, { tx, offchainMeta, isProposal });
   }
 
+  getResearchContent(externalId) {
+    return this.http.get(`/content/research-content/${externalId}`);
+  }
+
+  getResearchContents(externalIds) {
+    const query = qs.stringify({ researchContents: externalIds });
+    return this.http.get(`/content/research-contents?${query}`);
+  }
+
   getContentRefById(refId) {
     return this.http.get(`/content/refs/research/content-id/${refId}`);
   }
