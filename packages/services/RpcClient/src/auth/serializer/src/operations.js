@@ -305,8 +305,7 @@ const leave_research_group_membership = new Serializer("leave_research_group_mem
 const create_research = new Serializer("create_research", {
   external_id: string,
   research_group: string,
-  title: string,
-  abstract: string,
+  description: string,
   disciplines: set(string),
   is_private: bool,
   review_share: optional(percent),
@@ -319,8 +318,7 @@ const create_research = new Serializer("create_research", {
 const update_research = new Serializer("update_research", {
   research_group: string,
   external_id: string,
-  title: optional(string),
-  abstract: optional(string),
+  description: optional(string),
   is_private: optional(bool),
   review_share: optional(percent),
   compensation_share: optional(percent),
@@ -334,7 +332,7 @@ const create_research_content = new Serializer("create_research_content", {
   research_external_id: string,
   research_group: string,
   type: uint16,
-  title: string,
+  description: string,
   content: string,
   authors: set(string),
   references: set(string),

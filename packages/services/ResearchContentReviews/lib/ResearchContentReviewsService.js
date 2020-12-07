@@ -7,15 +7,10 @@ import { assessmentCriterias } from './constants';
 import crypto from '@deip/lib-crypto';
 
 class ResearchContentReviewsService extends Singleton {
+
   accessService = AccessService.getInstance();
-
   blockchainService = BlockchainService.getInstance();
-
   researchContentReviewsHttp = ResearchContentReviewsHttp.getInstance();
-
-  getAssessmentCriteriasForResearchContent(typeCode) {
-    return assessmentCriterias[typeCode] || assessmentCriterias.default;
-  }
 
   createReview(privKey, {
     author, 
@@ -30,10 +25,12 @@ class ResearchContentReviewsService extends Singleton {
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
 
+        const offchainMeta = { review: { content: content } };
+
         const [review_external_id, create_review_op] = deipRpc.operations.createEntityOperation(['create_review', {
           author: author,
           research_content_external_id: researchContentExternalId,
-          content: content,
+          content: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.review)).buffer)),
           weight: weight,
           assessment_model: assessment,
           disciplines: disciplines,
@@ -41,7 +38,7 @@ class ResearchContentReviewsService extends Singleton {
         }], refBlock);
 
         return this.blockchainService.signOperations([create_review_op], privKey, refBlock)
-          .then((signedTx) => this.researchContentReviewsHttp.createReview(signedTx));
+          .then((signedTx) => this.researchContentReviewsHttp.createReview(signedTx, offchainMeta));
       })
   }
 
@@ -78,13 +75,41 @@ class ResearchContentReviewsService extends Singleton {
     return this.researchContentReviewsHttp.getReviewRequestsByRequestor(username, status);
   }
 
-  createReviewRequest(data) {
-    return this.researchContentReviewsHttp.createReviewRequest(data);
+  createReviewRequest({
+    researchContentExternalId,
+    expert
+  }) {
+    const request = {
+      researchContentExternalId,
+      expert
+    }
+    return this.researchContentReviewsHttp.createReviewRequest(request);
   }
 
   denyReviewRequest(id) {
     return this.researchContentReviewsHttp.denyReviewRequest(id);
   }
+
+  getAssessmentCriteriasForResearchContent(typeCode) {
+    return assessmentCriterias[typeCode] || assessmentCriterias.default;
+  }
+
+  getReview(reviewExternalId) {
+    return this.researchContentReviewsHttp.getReview(reviewExternalId);
+  }
+
+  getReviewsByResearch(researchExternalId) {
+    return this.researchContentReviewsHttp.getReviewsByResearch(researchExternalId);
+  }
+
+  getReviewsByResearchContent(researchContentExternalId) {
+    return this.researchContentReviewsHttp.getReviewsByResearchContent(researchContentExternalId);
+  }
+
+  getReviewsByAuthor(author) {
+    return this.researchContentReviewsHttp.getReviewsByAuthor(author);
+  }
+  
 }
 
 export {

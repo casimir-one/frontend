@@ -419,6 +419,14 @@ export default [{
 },
 {
   "api": "database_api",
+  "method": "lookup_research_contents",
+  "params": [
+    "lower_bound",
+    "limit"
+  ]
+},  
+{
+  "api": "database_api",
   "method": "get_research_license",
   "params": [
     "external_id",

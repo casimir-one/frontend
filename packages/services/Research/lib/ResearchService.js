@@ -20,6 +20,23 @@ class ResearchService extends Singleton {
   getResearch(externalId) {
     return this.researchHttp.getResearch(externalId);
   }
+  
+  getResearches(externalIds) {
+    return this.researchHttp.getResearches(externalIds);
+  }
+
+  getResearchesByResearchGroup(researchGroupExternalId) {
+    return deipRpc.api.getResearchesByResearchGroupAsync(researchGroupExternalId)
+      .then((researches) => {
+        return researches.length ? this.getResearches(researches.map(r => r.external_id)) : Promise.resolve([]);
+      });
+  }
+
+  // DEPRECATED
+  getResearchByAbsolutePermlink(groupPermlink, researchPermlink) {
+    return deipRpc.api.getResearchByAbsolutePermlinkAsync(groupPermlink, researchPermlink)
+      .then((research) => this.getResearch(research.external_id));
+  }
 
   getPublicResearchListing({
     searchTerm,
@@ -53,7 +70,7 @@ class ResearchService extends Singleton {
 
     const researchGroup = onchainData.researchGroup || null;
     const title = onchainData.title || "";
-    const abstract = onchainData.abstract || "";
+    // const abstract = oncshainData.abstract || "";
     const disciplines = onchainData.disciplines || [];
     const isPrivate = onchainData.isPrivate || false;
     const members = onchainData.members || [];
@@ -62,6 +79,7 @@ class ResearchService extends Singleton {
     const extensions = onchainData.extensions || [];
     
     const isNewResearchGroup = researchGroup === null;
+    const isPersonalResearchGroup = researchGroup === username;
 
     const MIN_SECURITY_TOKEN_SYMBOL_SIZE = 3;
     const MAX_SECURITY_TOKEN_SYMBOL_SIZE = 6;
@@ -87,7 +105,9 @@ class ResearchService extends Singleton {
         const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
 
         offchainMeta = {
-          ...offchainMeta, 
+          research: {
+            ...offchainMeta
+          },
           researchGroup: {
             name: `${title} team`,
             description: ""
@@ -136,11 +156,10 @@ class ResearchService extends Singleton {
 
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
           research_group: research_group_external_id,
-          title: title || "",
-          abstract: abstract || "",
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.research)).buffer)),
           disciplines: disciplines || [],
           is_private: isPrivate || false,
-          members: researchMembers,
+          members: !isPersonalResearchGroup ? researchMembers : undefined,
           review_share: reviewShare || undefined,
           compensation_share: compensationShare || undefined,
           extensions: extensions || []
@@ -279,17 +298,19 @@ class ResearchService extends Singleton {
   updateResearch({ privKey, username }, isProposal, formData) {
 
     const onchainData = JSON.parse(formData.get("onchainData"));
-    const offchainMeta = JSON.parse(formData.get("offchainMeta"));
+    let offchainMeta = JSON.parse(formData.get("offchainMeta"));
 
     const externalId = onchainData.externalId;
     const researchGroup = onchainData.researchGroup;
-    const title = onchainData.title || undefined;
-    const abstract = onchainData.abstract || undefined;
+    // const title = onchainData.title || undefined;
+    // const abstract = onchainData.abstract || undefined;
     const isPrivate = onchainData.isPrivate || undefined;
     const members = onchainData.members || undefined;
     const reviewShare = onchainData.reviewShare || undefined;
     const compensationShare = onchainData.compensationShare || undefined;
     const extensions = onchainData.extensions || undefined;
+
+    const isPersonalResearchGroup = researchGroup === username;
 
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),
@@ -300,6 +321,12 @@ class ResearchService extends Singleton {
         const newMembers = members ? members.filter(member => !rgtList.some(rgt => rgt.owner == member)) : [];
         const newInvites = newMembers.filter(member => !researchInvites.some(invite => invite.invitee == member));
         const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
+
+        offchainMeta = {
+          research: {
+            ...offchainMeta
+          }
+        };
 
         const invites_ops = [];
 
@@ -351,14 +378,17 @@ class ResearchService extends Singleton {
         const update_research_op = ['update_research', {
           research_group: researchGroup,
           external_id: externalId,
-          title: title || "",
-          abstract: abstract || "",
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.research)).buffer)),
           is_private: isPrivate || false,
           review_share: reviewShare || undefined,
           compensation_share: compensationShare || undefined,
-          members: researchMembers,
+          members: !isPersonalResearchGroup ? researchMembers : undefined,
           extensions: extensions || []
         }];
+
+        formData.delete("offchainMeta");
+        formData.append("offchainMeta", JSON.stringify(offchainMeta));
+        formData.append("isProposal", isProposal);
 
         if (isProposal) {
 
@@ -373,7 +403,6 @@ class ResearchService extends Singleton {
           return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
             .then(({ tx: signedProposalTx }) => {
               formData.append("tx", JSON.stringify(signedProposalTx))
-              formData.append("isProposal", isProposal)
               return this.researchHttp.updateResearch({ researchExternalId: externalId, formData });
             })
 
@@ -382,7 +411,6 @@ class ResearchService extends Singleton {
           return this.blockchainService.signOperations([update_research_op, ...invites_ops], privKey, refBlock)
             .then((signedTx) => {
               formData.append("tx", JSON.stringify(signedTx))
-              formData.append("isProposal", isProposal)
               return this.researchHttp.updateResearch({ researchExternalId: externalId, formData });
             });
         }
@@ -406,6 +434,7 @@ class ResearchService extends Singleton {
     const proposalExpirationTime = formData.get("proposalExpirationTime");
 
     const offchainMeta = {
+      research: { attributes: [] },
       researchGroup: {
         name: formData.get("researchGroupName"),
         description: formData.get("researchGroupDescription"),
@@ -447,8 +476,7 @@ class ResearchService extends Singleton {
         // proposed research that requires tenant approval
         const [research_external_id, create_research_op] = deipRpc.operations.createEntityOperation(['create_research', {
           research_group: research_group_external_id,
-          title: researchTitle,
-          abstract: researchAbstract,
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.research)).buffer)),
           disciplines: researchDisciplines,
           is_private: researchIsPrivate,
           review_share: undefined,
