@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.67.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.66.0...v1.67.0) (2020-12-08)
+
+
+### Features
+
+* **@deip/assets-service:** Security token asset ([cef6d02](https://gitlab.com/DEIP/deip-client-modules/commit/cef6d025ae9d2ba3f72574ccbb0a8853d26f66d0))
+
+
+
+
+
 # [1.66.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.65.0...v1.66.0) (2020-12-08)
 
 
