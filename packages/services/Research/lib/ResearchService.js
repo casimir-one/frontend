@@ -187,11 +187,20 @@ class ResearchService extends Singleton {
           precision: SECURITY_TOKEN_PRECISION,
           description: "",
           max_supply: MAX_SECURITY_TOKENS_AMOUNT,
-          traits: [['research_security_token', {
-            research_external_id: research_external_id,
-            research_group: research_group_external_id,
-            extensions: []
-          }]],
+          traits: [
+
+            ['research_security_token', {
+              research_external_id: research_external_id,
+              research_group: research_group_external_id,
+              extensions: []
+            }],
+
+            ['research_license_revenue', {
+              holders_share: `100.00 %`,
+              extensions: []
+            }]
+            
+          ],
           extensions: []
         }];
 
