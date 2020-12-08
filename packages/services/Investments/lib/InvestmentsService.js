@@ -10,51 +10,6 @@ class InvestmentsService extends Singleton {
   blockchainService = BlockchainService.getInstance();
   proposalsService = ProposalsService.getInstance();
 
-  createSecurityToken({ privKey, username }, {
-    researchExternalId,
-    researchGroup,
-    symbol,
-    precision,
-    description,
-    maxSupply,
-    amount
-  }) {
-
-    const create_security_token_op = ['create_asset', {
-      issuer: researchGroup,
-      symbol: symbol,
-      precision: precision,
-      description: description,
-      max_supply: maxSupply,
-      traits: [
-        ['research_security_token', {
-          research_external_id: researchExternalId,
-          research_group: researchGroup,
-          extensions: []
-        }],
-
-        ['research_license_revenue', {
-          holders_share: `100.00 %`,
-          extensions: []
-        }]
-      ],
-      extensions: []
-    }];
-
-    const issue_security_token_op = ['issue_asset', {
-      issuer: researchGroup,
-      amount: amount,
-      recipient: researchGroup,
-      memo: undefined,
-      extensions: []
-    }];
-
-    return this.blockchainService.signOperations([create_security_token_op, issue_security_token_op], privKey)
-      .then((signedTx) => {
-        return this.blockchainService.sendTransactionAsync(signedTx)
-      });
-  }
-
   getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = "USD") {
     return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, symbol, cursor, step, targetAsset);
   }

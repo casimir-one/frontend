@@ -52,6 +52,61 @@ class AssetsService extends Singleton {
 
   }
 
+  createSecurityTokenAsset({ privKey, username }, {
+    researchExternalId,
+    researchGroup,
+    symbol,
+    precision,
+    description,
+    maxSupply,
+    holders
+  }) {
+
+    const ops = [];
+
+    const create_security_token_op = ['create_asset', {
+      issuer: researchGroup,
+      symbol: symbol,
+      precision: precision,
+      description: description,
+      max_supply: maxSupply,
+      traits: [
+        ['research_security_token', {
+          research_external_id: researchExternalId,
+          research_group: researchGroup,
+          extensions: []
+        }],
+
+        ['research_license_revenue', {
+          holders_share: `100.00 %`,
+          extensions: []
+        }]
+      ],
+      extensions: []
+    }];
+
+    ops.push(create_security_token_op);
+
+    for (let i = 0; i < holders.length; i++) {
+      const { account, amount } = holders[i];
+
+      const issue_security_token_op = ['issue_asset', {
+        issuer: researchGroup,
+        amount: amount,
+        recipient: account,
+        memo: undefined,
+        extensions: []
+      }];
+
+      ops.push(issue_security_token_op);
+    }
+
+    return this.blockchainService.signOperations(ops, privKey)
+      .then((signedTx) => {
+        return this.blockchainService.sendTransactionAsync(signedTx)
+      });
+  }
+
   getAssetById(id) {
     return deipRpc.api.getAssetAsync(id);
   }
