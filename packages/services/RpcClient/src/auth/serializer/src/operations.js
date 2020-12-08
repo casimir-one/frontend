@@ -410,6 +410,12 @@ const research_security_token = new Serializer("research_security_token", {
   extensions: set(future_extensions)
 });
 
+const research_license_revenue = new Serializer("research_license_revenue", {
+  holders_share: percent,
+  extensions: set(future_extensions)
+});
+
+
 const create_asset = new Serializer("create_asset", {
     "issuer": string,
     "symbol": string,
@@ -417,7 +423,8 @@ const create_asset = new Serializer("create_asset", {
     "description": string,
     "max_supply": int64,
     "traits": set(static_variant([
-      research_security_token
+      research_security_token,
+      research_license_revenue
     ])),
     "extensions": set(future_extensions)
 });
@@ -861,7 +868,6 @@ const create_assessment = new Serializer("create_assessment", {
 
 const licensing_fee = new Serializer("licensing_fee", {
   terms: string,
-  beneficiaries: map(string, percent),
   fee: optional(asset),
   expiration_time: optional(time_point_sec)
 });

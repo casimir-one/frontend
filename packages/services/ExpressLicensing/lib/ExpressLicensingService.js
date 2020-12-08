@@ -35,17 +35,6 @@ class ExpressLicensingService extends Singleton {
           licensee: licensee,
           license_conditions: ["licensing_fee", {
             terms: termsHash,
-            beneficiaries: research.security_tokens.reduce((acc, securityToken, idx) => {
-              let share = Math.floor(100 / research.security_tokens.length);
-              const symbol = securityToken.split(' ')[1];
-              if (idx == research.security_tokens.length - 1) {
-                let rest = 100 - (share * research.security_tokens.length);
-                acc.push([symbol, `${share + rest}.00 %`]);
-              } else {
-                acc.push([symbol, `${share}.00 %`]);
-              }
-              return acc;
-            }, []),
             fee: fee,
             expiration_time: expirationDate
           }],

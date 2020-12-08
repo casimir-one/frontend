@@ -26,11 +26,18 @@ class InvestmentsService extends Singleton {
       precision: precision,
       description: description,
       max_supply: maxSupply,
-      traits: ['research_security_token', {
-        research_external_id: researchExternalId,
-        research_group: researchGroup,
-        extensions: []
-      }],
+      traits: [
+        ['research_security_token', {
+          research_external_id: researchExternalId,
+          research_group: researchGroup,
+          extensions: []
+        }],
+
+        ['research_license_revenue', {
+          holders_share: `100.00 %`,
+          extensions: []
+        }]
+      ],
       extensions: []
     }];
 
