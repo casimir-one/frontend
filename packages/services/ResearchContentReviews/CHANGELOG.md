@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.68.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.67.0...v1.68.0) (2020-12-09)
+
+
+### Features
+
+* **@deip/research-content-reviews-service:** Review criterias ([97b0639](https://gitlab.com/DEIP/deip-client-modules/commit/97b0639ca1007ba5dc447400014cde9bfdf6a45c))
+
+
+
+
+
 # [1.67.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.66.0...v1.67.0) (2020-12-08)
 
 **Note:** Version bump only for package @deip/research-content-reviews-service
