@@ -2,6 +2,7 @@ import deipRpc from '@deip/rpc-client';
 import crypto from '@deip/lib-crypto';
 import { UsersService } from '@deip/users-service';
 import { ResearchContentService } from '@deip/research-content-service';
+import { ResearchGroupService } from '@deip/research-group-service';
 import { Singleton } from '@deip/toolbox';
 import { researchContentTypes } from './lists';
 import { RESEARCH_APPLICATION_STATUS } from './constants';
@@ -15,6 +16,7 @@ class ResearchService extends Singleton {
   usersService = UsersService.getInstance();
   researchContentService = ResearchContentService.getInstance();
   proposalsService = ProposalsService.getInstance();
+  researchGroupService = ResearchGroupService.getInstance();
 
 
   getResearch(externalId) {
@@ -698,9 +700,9 @@ class ResearchService extends Singleton {
         research_content_reference_id: referenceResearchContentId
       } = payload;
 
-      const outerRefResearch = await deipRpc.api.getResearchByIdAsync(researchId);
-      const outerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(outerRefResearch.research_group_id);
-      const outerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
+      const outerRefResearch = await this.getResearchById(researchId);
+      const outerRefResearchGroup = await this.researchGroupService.getResearchGroupById(outerRefResearch.research_group_id);
+      const outerRefResearchContent = await this.researchContentService.getResearchContentById(researchContentId);
 
       const hash = outerRefResearchContent.content;
       const ref = await this.researchContentService.getContentRefByHash(outerRefResearch.external_id, hash);
@@ -732,6 +734,7 @@ class ResearchService extends Singleton {
         trx_id, block, timestamp, op
       } = item;
       const [opName, payload] = op;
+
       const {
         research_id: researchId,
         research_content_id: researchContentId,
@@ -739,9 +742,9 @@ class ResearchService extends Singleton {
         research_content_reference_id: referenceResearchContentId
       } = payload;
 
-      const innerRefResearch = await deipRpc.api.getResearchByIdAsync(referenceResearchId);
-      const innerRefResearchGroup = await deipRpc.api.getResearchGroupByIdAsync(innerRefResearch.research_group_id);
-      const innerRefResearchContent = await deipRpc.api.getResearchContentByIdAsync(referenceResearchContentId);
+      const innerRefResearch = await this.getResearchById(referenceResearchId);
+      const innerRefResearchGroup = await this.researchGroupService.getResearchGroupById(innerRefResearch.research_group_id);
+      const innerRefResearchContent = await this.researchContentService.getResearchContentById(referenceResearchContentId);
 
       const hash = innerRefResearchContent.content;
       const ref = await this.researchContentService.getContentRefByHash(innerRefResearch.external_id, hash);
@@ -764,9 +767,9 @@ class ResearchService extends Singleton {
 
   /* TODO: Move this to ResearchContentService */
   async getResearchContentReferencesGraph(researchContentId) {
-    const researchContent = await deipRpc.api.getResearchContentByIdAsync(researchContentId);
-    const research = await deipRpc.api.getResearchByIdAsync(researchContent.research_id);
-    const researchGroup = await deipRpc.api.getResearchGroupByIdAsync(research.research_group_id);
+    const researchContent = await this.researchContentService.getResearchContentById(researchContentId);
+    const research = await this.getResearchById(researchContent.research_id);
+    const researchGroup = await this.researchGroupService.getResearchGroupById(research.research_group_id);
 
     const hash = researchContent.content;
     const ref = await this.researchContentService.getContentRefByHash(research.external_id, hash);
@@ -836,9 +839,6 @@ class ResearchService extends Singleton {
   getResearchById(researchId) {
     return deipRpc.api.getResearchByIdAsync(researchId)
       .then((research) => this.getResearch(research.external_id))
-      .then((research) => {
-        return research;
-      })
   }
 
   checkResearchExistenceByPermlink(researchGroupExternalId, title) {
