@@ -69,6 +69,12 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getResearchContent(externalId);
   }
 
+  /* [DEPRECATED] */
+  getResearchContentById(id) {
+    return deipRpc.api.getResearchContentByIdAsync(id)
+      .then((researchContent) => this.getResearchContent(researchContent.external_id))
+  }
+
   getResearchContents(externalIds) {
     return this.researchContentHttp.getResearchContents(externalIds);
   }

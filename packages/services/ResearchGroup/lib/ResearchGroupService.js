@@ -202,8 +202,7 @@ class ResearchGroupService extends Singleton {
   /* [DEPRECATED] */
   getResearchGroupById(groupId) {
     return deipRpc.api.getResearchGroupByIdAsync(groupId)
-      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
-      .then((researchGroup) => { return researchGroup; })
+      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id));
   }
 
   /* [DEPRECATED] */
