@@ -25,7 +25,6 @@ class UsersService extends Singleton {
           let account = accounts.find(a => a.name == profile._id);
           result.push({ profile, account });
         }
-        debugger
         return result;
       });
   }
