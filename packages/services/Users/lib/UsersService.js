@@ -12,6 +12,7 @@ class UsersService extends Singleton {
   }
 
   getActiveUsers() {
+    const result = [];
     const profiles = [];
     return this.usersHttp.getActiveUsersProfiles()
       .then((items) => {
@@ -19,9 +20,13 @@ class UsersService extends Singleton {
         return deipRpc.api.getAccountsAsync(profiles.map(p => p._id));
       })
       .then((accounts) => {
-        return profiles.reduce((acc, profile, i) => {
-          return [...acc, { account: accounts[i], profile }];
-        }, []);
+        for(let i = 0; i < profiles.length; i++) {
+          let profile = profiles[i];
+          let account = accounts.find(a => a.name == profile._id);
+          result.push({ profile, account });
+        }
+        debugger
+        return result;
       });
   }
 
