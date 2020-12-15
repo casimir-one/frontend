@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.70.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.69.0...v1.70.0) (2020-12-15)
+
+
+### Features
+
+* **@deip/users-service:** Active users getter fixed ([e905d98](https://gitlab.com/DEIP/deip-client-modules/commit/e905d98b84e4c31c31af9db354725838975373c8))
+
+
+
+
+
 # [1.69.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.68.0...v1.69.0) (2020-12-10)
 
 
