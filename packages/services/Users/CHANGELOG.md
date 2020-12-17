@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.72.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.71.0...v1.72.0) (2020-12-17)
+
+
+### Features
+
+* add getUser method ([80ff914](https://gitlab.com/DEIP/deip-client-modules/commit/80ff914d7804ca331ddca73ec5c7ff8849cb8d51))
+
+
+
+
+
 # [1.71.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.70.0...v1.71.0) (2020-12-15)
 
 
