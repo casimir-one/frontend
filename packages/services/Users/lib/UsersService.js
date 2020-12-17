@@ -1,15 +1,30 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
-import { BlockchainService } from '@deip/blockchain-service';
 
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
-  blockchainService = BlockchainService.getInstance();
+
+  // ////////////////////////////////////////
 
   getUserProfile(username) {
     return this.usersHttp.getUserProfile(username);
   }
+
+  getUserAccount(username) {
+    return deipRpc.api.getAccountsAsync([username])
+      .then((data) => data[0]);
+  }
+
+  getUser(username) {
+    return Promise.all([
+      this.getUserAccount(username),
+      this.getUserProfile(username)
+    ])
+      .then(([account, profile]) => ({ account, profile }))
+  }
+
+  // ////////////////////////////////////////
 
   getActiveUsers() {
     const result = [];
@@ -29,7 +44,9 @@ class UsersService extends Singleton {
       });
   }
 
-  getEnrichedProfiles(usernames) {
+  // ////////////////////////////////////////
+
+  getEnrichedProfiles(usernames) { // rename to getUsers
     const profilesPromise = this.usersHttp.getUsersProfiles(usernames)
       .then((profiles) => profiles, (err) => {
         console.log(err);
