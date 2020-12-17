@@ -61,6 +61,26 @@ class ResearchService extends Singleton {
     return this.researchHttp.getUserResearchListing(username);
   }
 
+  getUserPublicProjects(username) {
+    return this.researchHttp.getUserResearchListing(username)
+      .then((projects) => projects.filter((p) => !p.is_private));
+  }
+
+  getUserPrivateProjects(username) {
+    return this.researchHttp.getUserResearchListing(username)
+      .then((projects) => projects.filter((p) => p.is_private));
+  }
+
+  getUserTeamsProjects(username) {
+    return this.researchHttp.getUserResearchListing(username)
+      .then((projects) => projects.filter((p) => !p.research_group.is_personal));
+  }
+
+  getUserPersonalProjects(username) {
+    return this.researchHttp.getUserResearchListing(username)
+      .then((projects) => projects.filter((p) => p.research_group.is_personal));
+  }
+
   getResearchGroupResearchListing(researchGroupExternalId) {
     return this.researchHttp.getResearchGroupResearchListing(researchGroupExternalId);
   }
