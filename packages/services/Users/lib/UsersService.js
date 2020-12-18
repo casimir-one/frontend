@@ -7,6 +7,7 @@ const mapUsersData = (
   profiles = [],
   teams = []
 ) => accounts.map((account) => ({
+  username: account.name,
   account,
   profile: profiles.find((profile) => profile._id === account.name),
   teams: teams.find((item) => item.username === account.name).teams
@@ -39,7 +40,12 @@ class UsersService extends Singleton {
       this.getUserProfile(username),
       this.getUserTeams(username)
     ])
-      .then(([account, profile, teams]) => ({ account, profile, teams }));
+      .then(([account, profile, teams]) => ({
+        username: account.name,
+        account,
+        profile,
+        teams
+      }));
   }
 
   // ////////////////////////////////////////
