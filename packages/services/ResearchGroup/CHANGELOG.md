@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.74.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.73.0...v1.74.0) (2020-12-18)
+
+
+### Features
+
+* add team <-> user info to responce ([4a3f77a](https://gitlab.com/DEIP/deip-client-modules/commit/4a3f77a5edcbbd3306de5f36fcfe8d9bd7440fe6))
+
+
+
+
+
 # [1.73.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.72.1...v1.73.0) (2020-12-18)
 
 
