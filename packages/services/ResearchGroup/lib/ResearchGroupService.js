@@ -3,36 +3,37 @@ import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
-import { ResearchGroupHttp } from './ResearchGroupHttp';
 import { ProposalsService } from '@deip/proposals-service';
+import { ResearchGroupHttp } from './ResearchGroupHttp';
 
 class ResearchGroupService extends Singleton {
   researchGroupHttp = ResearchGroupHttp.getInstance();
+
   accessService = AccessService.getInstance();
+
   blockchainService = BlockchainService.getInstance();
+
   proposalsService = ProposalsService.getInstance();
 
   _mapResearchGroup(rg) {
     return { ...rg };
   }
-  
-  createResearchGroup(privKey, {
-      fee,
-      creator,
-      accountOwnerAuth,
-      accountActiveAuth,
-      accountMemoPubKey,
-      accountJsonMetadata,
-      accountExtensions
-  }, {
-      researchGroupName,
-      researchGroupDescription,
-      researchGroupThresholdOverrides
-  }) {
 
+  createResearchGroup(privKey, {
+    fee,
+    creator,
+    accountOwnerAuth,
+    accountActiveAuth,
+    accountMemoPubKey,
+    accountJsonMetadata,
+    accountExtensions
+  }, {
+    researchGroupName,
+    researchGroupDescription,
+    researchGroupThresholdOverrides
+  }) {
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
-
         const offchainMeta = {
           researchGroup: {
             name: researchGroupName,
@@ -49,7 +50,7 @@ class ResearchGroupService extends Singleton {
           memo_key: accountMemoPubKey,
           json_metadata: accountJsonMetadata,
           traits: [[
-            "research_group",
+            'research_group',
             {
               description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
               extensions: []
@@ -60,10 +61,8 @@ class ResearchGroupService extends Singleton {
 
 
         return this.blockchainService.signOperations([create_account_op], privKey, refBlock)
-          .then((signedTx) => {
-            return this.researchGroupHttp.createResearchGroup({ tx: signedTx, offchainMeta })
-          })
-      })
+          .then((signedTx) => this.researchGroupHttp.createResearchGroup({ tx: signedTx, offchainMeta }));
+      });
   }
 
 
@@ -77,10 +76,9 @@ class ResearchGroupService extends Singleton {
     accountExtensions
   }, {
     researchGroupName,
-    researchGroupDescription,
+    researchGroupDescription
   }) {
-
-    const offchainMeta = { researchGroup: { name: researchGroupName, description: researchGroupDescription }};
+    const offchainMeta = { researchGroup: { name: researchGroupName, description: researchGroupDescription } };
 
     const update_account_op = ['update_account', {
       account: researchGroup,
@@ -90,7 +88,7 @@ class ResearchGroupService extends Singleton {
       memo_key: accountMemoPubKey,
       json_metadata: accountJsonMetadata,
       traits: [[
-        "research_group",
+        'research_group',
         {
           description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
           extensions: []
@@ -101,28 +99,20 @@ class ResearchGroupService extends Singleton {
 
 
     if (isProposal) {
-
       const proposal = {
         creator: username,
-        proposedOps: [{ "op": update_account_op }],
+        proposedOps: [{ op: update_account_op }],
         expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
         reviewPeriodSeconds: undefined,
         extensions: []
-      }
+      };
 
       return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-        .then(({ tx: signedProposalTx }) => {
-          return this.researchGroupHttp.updateResearchGroup({ tx: signedProposalTx, offchainMeta, isProposal })
-        })
-
-    } else {
-
-      return this.blockchainService.signOperations([update_account_op], privKey)
-        .then((signedTx) => {
-          return this.researchGroupHttp.updateResearchGroup({ tx: signedTx, offchainMeta, isProposal })
-        })
-
+        .then(({ tx: signedProposalTx }) => this.researchGroupHttp.updateResearchGroup({ tx: signedProposalTx, offchainMeta, isProposal }));
     }
+
+    return this.blockchainService.signOperations([update_account_op], privKey)
+      .then((signedTx) => this.researchGroupHttp.updateResearchGroup({ tx: signedTx, offchainMeta, isProposal }));
   }
 
   createResearchGroupInvite({ privKey, username }, {
@@ -132,9 +122,8 @@ class ResearchGroupService extends Singleton {
     researches,
     extensions
   }, { notes }) {
-
     const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
-    const offchainMeta = { notes }
+    const offchainMeta = { notes };
 
     const join_research_group_membership_op = ['join_research_group_membership', {
       member,
@@ -146,33 +135,30 @@ class ResearchGroupService extends Singleton {
 
     const proposal = {
       creator: username,
-      proposedOps: [{ "op": join_research_group_membership_op }],
+      proposedOps: [{ op: join_research_group_membership_op }],
       expirationTime: proposalExpiration,
       reviewPeriodSeconds: undefined,
       extensions: []
-    }
+    };
 
     return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-      .then(({ tx: signedProposalTx }) => {
-        return this.researchGroupHttp.createResearchGroupInvite({ tx: signedProposalTx, offchainMeta })
-      })
+      .then(({ tx: signedProposalTx }) => this.researchGroupHttp.createResearchGroupInvite({ tx: signedProposalTx, offchainMeta }));
   }
-  
+
   leaveResearchGroup(
-    { privKey, username }, 
+    { privKey, username },
     {
       member,
       researchGroup,
       isExclusion,
       extensions
-    }, 
+    },
     {
       notes
     }
   ) {
-
     const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
-    const offchainMeta = { notes }
+    const offchainMeta = { notes };
 
     const leave_research_group_membership_op = ['leave_research_group_membership', {
       member,
@@ -183,16 +169,14 @@ class ResearchGroupService extends Singleton {
 
     const proposal = {
       creator: username,
-      proposedOps: [{ "op": leave_research_group_membership_op }],
+      proposedOps: [{ op: leave_research_group_membership_op }],
       expirationTime: proposalExpiration,
       reviewPeriodSeconds: undefined,
       extensions: []
-    }
+    };
 
     return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-      .then(({ tx: signedProposalTx }) => {
-        return this.researchGroupHttp.leaveResearchGroup({ tx: signedProposalTx, offchainMeta })
-      })
+      .then(({ tx: signedProposalTx }) => this.researchGroupHttp.leaveResearchGroup({ tx: signedProposalTx, offchainMeta }));
   }
 
   getResearchGroupPendingInvites(researchGroupExternalId) {
@@ -209,7 +193,7 @@ class ResearchGroupService extends Singleton {
   getResearchGroupByPermlink(permlink) {
     return deipRpc.api.getResearchGroupByPermlinkAsync(permlink)
       .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
-      .then((researchGroup) => { return researchGroup; })
+      .then((researchGroup) => researchGroup);
   }
 
   getResearchGroup(externalId) {
@@ -217,7 +201,15 @@ class ResearchGroupService extends Singleton {
   }
 
   getResearchGroups(externalIds) {
-    return Promise.all(externalIds.map((externalId) => this.researchGroupHttp.getResearchGroup(externalId)));
+    return Promise.all(
+      externalIds
+        .map((externalId) => this.researchGroupHttp.getResearchGroup(externalId))
+    );
+  }
+
+  getTeamsByUser(username) {
+    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
+      .then((data) => this.getResearchGroups(data.map((g) => g.research_group.external_id)));
   }
 
   getJoinRequestsByGroup(groupId) {
@@ -237,9 +229,8 @@ class ResearchGroupService extends Singleton {
   }
 
   checkResearchGroupExistenceByPermlink(name) {
-    return deipRpc.api.checkResearchGroupExistenceByPermlinkAsync(name)
+    return deipRpc.api.checkResearchGroupExistenceByPermlinkAsync(name);
   }
-  
 }
 
 export {

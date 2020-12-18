@@ -21,7 +21,7 @@ class UsersService extends Singleton {
       this.getUserAccount(username),
       this.getUserProfile(username)
     ])
-      .then(([account, profile]) => ({ account, profile }))
+      .then(([account, profile]) => ({ account, profile }));
   }
 
   // ////////////////////////////////////////
@@ -32,16 +32,26 @@ class UsersService extends Singleton {
     return this.usersHttp.getActiveUsersProfiles()
       .then((items) => {
         profiles.push(...items);
-        return deipRpc.api.getAccountsAsync(profiles.map(p => p._id));
+        return deipRpc.api.getAccountsAsync(profiles.map((p) => p._id));
       })
       .then((accounts) => {
-        for(let i = 0; i < profiles.length; i++) {
-          let profile = profiles[i];
-          let account = accounts.find(a => a.name == profile._id);
+        for (let i = 0; i < profiles.length; i++) {
+          const profile = profiles[i];
+          const account = accounts.find((a) => a.name == profile._id);
           result.push({ profile, account });
         }
         return result;
       });
+  }
+
+  getUsersByTeam(teamId) {
+    // res.map((user) => ({
+    //   ...user,
+    //   groupTokens: tokens.find((t) => t.owner === user.account.name)
+    // }))
+
+    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
+      .then((tokens) => this.getEnrichedProfiles(tokens.map((t) => t.owner)));
   }
 
   // ////////////////////////////////////////
