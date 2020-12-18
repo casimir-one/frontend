@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.74.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.74.0...v1.74.1) (2020-12-18)
+
+
+### Bug Fixes
+
+* add username to user object ([4faa6b4](https://gitlab.com/DEIP/deip-client-modules/commit/4faa6b40cb62ecedf1ea01cb5663685bc7599089))
+
+
+
+
+
 # [1.74.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.73.0...v1.74.0) (2020-12-18)
 
 
