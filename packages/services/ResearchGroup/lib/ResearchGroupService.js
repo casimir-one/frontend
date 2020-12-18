@@ -196,14 +196,25 @@ class ResearchGroupService extends Singleton {
       .then((researchGroup) => researchGroup);
   }
 
-  getResearchGroup(externalId) {
-    return this.researchGroupHttp.getResearchGroup(externalId);
+  getTeamMembers(teamId) {
+    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
+      .then((tokens) => tokens.map((t) => t.owner));
+  }
+
+  getResearchGroup(teamId) {
+    return Promise.all([
+      this.researchGroupHttp.getResearchGroup(teamId),
+      this.getTeamMembers(teamId)
+    ]).then(([group, members]) => ({
+      ...group,
+      members
+    }));
   }
 
   getResearchGroups(externalIds) {
     return Promise.all(
       externalIds
-        .map((externalId) => this.researchGroupHttp.getResearchGroup(externalId))
+        .map((externalId) => this.getResearchGroup(externalId))
     );
   }
 

@@ -2,8 +2,20 @@ import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
 
+const mapUsersData = (
+  accounts = [],
+  profiles = [],
+  teams = []
+) => accounts.map((account) => ({
+  account,
+  profile: profiles.find((profile) => profile._id === account.name),
+  teams: teams.find((item) => item.username === account.name).teams
+}));
+
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
+
+  rpcApi = deipRpc.api;
 
   // ////////////////////////////////////////
 
@@ -12,75 +24,60 @@ class UsersService extends Singleton {
   }
 
   getUserAccount(username) {
-    return deipRpc.api.getAccountsAsync([username])
+    return this.rpcApi.getAccountsAsync([username])
       .then((data) => data[0]);
+  }
+
+  getUserTeams(username) {
+    return this.rpcApi.getResearchGroupTokensByAccountAsync(username)
+      .then((data) => data.map((g) => g.research_group.external_id));
   }
 
   getUser(username) {
     return Promise.all([
       this.getUserAccount(username),
-      this.getUserProfile(username)
+      this.getUserProfile(username),
+      this.getUserTeams(username)
     ])
-      .then(([account, profile]) => ({ account, profile }));
+      .then(([account, profile, teams]) => ({ account, profile, teams }));
   }
 
   // ////////////////////////////////////////
 
+  getUsersTeams(users) {
+    return Promise.all(
+      users.map((u) => this.getUserTeams(u))
+    ).then((data) => data.map((teams, i) => ({
+      username: users[i],
+      teams
+    })));
+  }
+
   getActiveUsers() {
-    const result = [];
-    const profiles = [];
     return this.usersHttp.getActiveUsersProfiles()
-      .then((items) => {
-        profiles.push(...items);
-        return deipRpc.api.getAccountsAsync(profiles.map((p) => p._id));
-      })
-      .then((accounts) => {
-        for (let i = 0; i < profiles.length; i++) {
-          const profile = profiles[i];
-          const account = accounts.find((a) => a.name == profile._id);
-          result.push({ profile, account });
-        }
-        return result;
+      .then((profiles) => {
+        const users = profiles.map((p) => p._id);
+
+        return Promise.all([
+          this.rpcApi.getAccountsAsync(users),
+          this.getUsersTeams(users)
+        ]).then(([accounts, teams]) => mapUsersData(accounts, profiles, teams));
       });
   }
 
   getUsersByTeam(teamId) {
-    // res.map((user) => ({
-    //   ...user,
-    //   groupTokens: tokens.find((t) => t.owner === user.account.name)
-    // }))
-
-    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
+    return this.rpcApi.getResearchGroupMembershipTokensAsync(teamId)
       .then((tokens) => this.getEnrichedProfiles(tokens.map((t) => t.owner)));
   }
 
   // ////////////////////////////////////////
 
-  getEnrichedProfiles(usernames) { // rename to getUsers
-    const profilesPromise = this.usersHttp.getUsersProfiles(usernames)
-      .then((profiles) => profiles, (err) => {
-        console.log(err);
-        return [];
-      });
-
-    const accountsPromise = deipRpc.api.getAccountsAsync(usernames)
-      .then((accounts) => accounts, (err) => {
-        console.log(err);
-        return [];
-      });
-
-    return Promise.all([profilesPromise, accountsPromise])
-      .then((response) => {
-        const profiles = response[0];
-        const accounts = response[1];
-        const results = [];
-        for (let i = 0; i < accounts.length; i++) {
-          const account = accounts[i];
-          const profile = profiles.find((p) => p._id === account.name);
-          results.push({ profile, account });
-        }
-        return results;
-      });
+  getEnrichedProfiles(users) { // rename to getUsers
+    Promise.all([
+      this.rpcApi.getAccountsAsync(users),
+      this.usersHttp.getUsersProfiles(users),
+      this.getUsersTeams(users)
+    ]).then(([accounts, profiles, teams]) => mapUsersData(accounts, profiles, teams));
   }
 }
 
