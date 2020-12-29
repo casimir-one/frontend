@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class UsersHttp extends Singleton {
   http = HttpService.getInstance();
@@ -14,6 +15,19 @@ class UsersHttp extends Singleton {
 
   getActiveUsersProfiles() {
     return this.http.get(`/api/user/active`);
+  }
+
+  getUser(username) {
+    return this.http.get(`/api/user/name/${username}`);
+  }
+
+  getUserByEmail(email) {
+    return this.http.get(`/api/user/email/${email}`);
+  }
+
+  getUsers(usernames) {
+    const query = qs.stringify({ usernames });
+    return this.http.get(`/api/users?${query}`);
   }
 }
 
