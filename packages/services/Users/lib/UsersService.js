@@ -79,7 +79,7 @@ class UsersService extends Singleton {
   // ////////////////////////////////////////
 
   getEnrichedProfiles(users) { // rename to getUsers
-    Promise.all([
+    return Promise.all([
       this.rpcApi.getAccountsAsync(users),
       this.usersHttp.getUsersProfiles(users),
       this.getUsersTeams(users)
