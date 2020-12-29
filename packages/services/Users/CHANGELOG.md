@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.75.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.74.1...v1.75.0) (2020-12-29)
+
+
+### Bug Fixes
+
+* add return to getEnrichedProfiles ([87579ac](https://gitlab.com/DEIP/deip-client-modules/commit/87579accd04be5dd5ffc383c9a303b7604c51abf))
+
+
+### Features
+
+* **@deip/users-service:** getting user by email api ([d9c8126](https://gitlab.com/DEIP/deip-client-modules/commit/d9c8126fbcc31643b3691a63c33e1505221f1981))
+
+
+
+
+
 ## [1.74.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.74.0...v1.74.1) (2020-12-18)
 
 
