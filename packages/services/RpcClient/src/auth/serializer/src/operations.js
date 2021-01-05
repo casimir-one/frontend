@@ -99,12 +99,20 @@ Replace: authority.prototype.account_authority_map
 With: map((string), (uint16))
 */
 
+const tenant_marker = new Serializer("tenant_marker", {
+  tenant: string,
+  extensions: set(future_extensions)
+});
+
+
 const signed_transaction = new Serializer("signed_transaction", {
   ref_block_num: uint16,
   ref_block_prefix: uint32,
   expiration: time_point_sec,
   operations: array(operation),
-  extensions: set(future_extensions),
+  extensions: set(static_variant([
+    tenant_marker
+  ])),
   signatures: array(bytes(65))
 });
 
@@ -987,7 +995,9 @@ let transaction = new Serializer(
   ref_block_prefix: uint32,
   expiration: time_point_sec,
   operations: array(operation),
-  extensions: set(future_extensions)
+  extensions: set(static_variant([
+    tenant_marker
+  ])),
 }
 );
 

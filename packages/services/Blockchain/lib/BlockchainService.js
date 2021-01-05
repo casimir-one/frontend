@@ -1,7 +1,10 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
+import { AppConfigService } from '@deip/app-config-service';
 
 class BlockchainService extends Singleton {
+  
+  appConfig = AppConfigService.getInstance();
 
   getRefBlockSummary() {
     let refBlockNum;
@@ -34,7 +37,13 @@ class BlockchainService extends Singleton {
 
         const unsignedTX = {
           expiration: expire,
-          extensions: [],
+          extensions: [[
+            "tenant_marker",
+            {
+              tenant: this.appConfig.get('env').TENANT,
+              extensions: []
+            }
+          ]],
           operations: operations,
           ref_block_num: refBlockNum,
           ref_block_prefix: refBlockPrefix
