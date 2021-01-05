@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.75.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.75.0...v1.75.1) (2021-01-05)
+
+**Note:** Version bump only for package @deip/research-group-service
+
+
+
+
+
 # [1.75.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.74.1...v1.75.0) (2020-12-29)
 
 **Note:** Version bump only for package @deip/research-group-service
