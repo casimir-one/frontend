@@ -10,6 +10,10 @@ class DisciplinesService extends Singleton {
 
   disciplinesHttp = DisciplinesHttp.getInstance();
 
+  getAllDisciplines() {
+    return this.disciplinesHttp.getAllDisciplines();
+  }
+
   getExpertiseClaims(status = 'pending') {
     return this.disciplinesHttp.getExpertiseClaims(status);
   }
