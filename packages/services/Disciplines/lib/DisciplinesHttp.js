@@ -4,6 +4,10 @@ import { Singleton } from '@deip/toolbox';
 class DisciplinesHttp extends Singleton {
   http = HttpService.getInstance();
 
+  getAllDisciplines() {
+    return this.http.get(`/api/disciplines`);
+  }
+
   getExpertiseClaims(status = 'pending') {
     return this.http.get(`/api/expertise-claims?status=${status}`);
   }
