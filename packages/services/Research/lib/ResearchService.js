@@ -89,10 +89,10 @@ class ResearchService extends Singleton {
 
     const onchainData = JSON.parse(formData.get("onchainData"));
     let offchainMeta = JSON.parse(formData.get("offchainMeta"));
-
+    
     const researchGroup = onchainData.researchGroup || null;
     const title = onchainData.title || "";
-    // const abstract = oncshainData.abstract || "";
+    // const abstract = onchainData.abstract || "";
     const disciplines = onchainData.disciplines || [];
     const isPrivate = onchainData.isPrivate || false;
     const members = onchainData.members || [];
