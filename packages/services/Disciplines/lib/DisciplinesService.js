@@ -14,22 +14,6 @@ class DisciplinesService extends Singleton {
     return this.disciplinesHttp.getAllDisciplines();
   }
 
-  getExpertiseClaims(status = 'pending') {
-    return this.disciplinesHttp.getExpertiseClaims(status);
-  }
-
-  getExpertiseClaimsByUse(username) {
-    return this.disciplinesHttp.getExpertiseClaimsByUse(username);
-  }
-
-  getExpertiseClaimsByDiscipline(disciplineId) {
-    return this.disciplinesHttp.getExpertiseClaimsByDiscipline(disciplineId);
-  }
-
-  getExpertiseClaimsByUserAndDiscipline(username, disciplineId) {
-    return this.disciplinesHttp.getExpertiseClaimsByUserAndDiscipline(username, disciplineId);
-  }
-
   createExpertiseClaim(claimer, disciplineId, description, publications) {
     const claim = {
       claimer,

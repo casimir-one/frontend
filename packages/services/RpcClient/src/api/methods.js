@@ -699,6 +699,13 @@ export default [{
 },
 {
   "api": "database_api",
+  "method": "get_reviews",
+  "params": [
+    "ids"
+  ]
+},
+{
+  "api": "database_api",
   "method": "get_review_by_id",
   "params": [
     "review_id"
@@ -1511,6 +1518,13 @@ export default [{
   "method": "get_proposal_state",
   "params": [
     "external_id"
+  ]
+},
+{
+  "api": "proposal_history_api",
+  "method": "get_proposals_states",
+  "params": [
+    "external_ids"
   ]
 }
 ];
