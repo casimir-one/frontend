@@ -212,10 +212,11 @@ class ResearchGroupService extends Singleton {
   }
 
   getResearchGroups(externalIds) {
-    return Promise.all(
-      externalIds
-        .map((externalId) => this.getResearchGroup(externalId))
-    );
+    return Promise.all(externalIds.map((externalId) => this.getResearchGroup(externalId)));
+  }
+
+  getResearchGroupsByUser(user) {
+    return this.researchGroupHttp.getResearchGroupsByUser(user)
   }
 
   getTeamsByUser(username) {
