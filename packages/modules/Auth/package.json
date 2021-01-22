@@ -1,0 +1,46 @@
+{
+  "name": "@deip/auth-module",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://npm-registry.deip.world/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "@deip/access-service": "^1.1.0",
+    "@deip/app-config-service": "^1.1.0",
+    "@deip/auth-service": "^1.36.0",
+    "@deip/current-user-module": "^1.0.0",
+    "@deip/lib-crypto": "^1.21.0",
+    "@deip/proxydi": "^1.0.0",
+    "@deip/rpc-client": "^1.75.1",
+    "@deip/toolbox": "^1.1.0",
+    "@deip/users-service": "^1.75.1",
+    "@deip/validation-plugin": "^1.0.0",
+    "@deip/vuetify-extended": "^1.0.0",
+    "vuetify": "^2.4.2"
+  },
+  "peerDependencies": {
+    "vuex": "^3.6.0"
+  }
+}
