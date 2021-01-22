@@ -1,20 +1,19 @@
 import { Singleton } from '@deip/toolbox';
+import { proxydi } from '@deip/proxydi';
 
 class AppConfigService extends Singleton {
-  _config = {
-    env: {}
-  };
+  proxydi = proxydi;
 
   get(name) {
-    return this._config[name];
+    return this.proxydi.get(name);
   }
 
   set(name, value) {
-    this._config[name] = value;
+    this.proxydi.register(name, value)
   }
 
   init(config) {
-    this._config = {...config};
+    this.proxydi.batchRegister(config)
   }
 }
 
