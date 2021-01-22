@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
+
+
+### Features
+
+* **@deip/toolbox:** add new helpers ([215f192](https://gitlab.com/DEIP/deip-client-modules/commit/215f19222e908c91b28c2f4d511be70fbfc35a2c))
+
+
+
+
+
 # 1.1.0 (2020-03-20)
 
 

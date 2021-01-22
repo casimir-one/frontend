@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
+
+
+### Features
+
+* **@deip/http-service:** switch to @deip/proxydi ([9d97f86](https://gitlab.com/DEIP/deip-client-modules/commit/9d97f86cd73e4de89ee8859dbcb058821954b43b))
+
+
+
+
+
 # [1.36.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.35.0...v1.36.0) (2020-08-24)
 
 

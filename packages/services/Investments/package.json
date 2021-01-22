@@ -1,6 +1,6 @@
 {
   "name": "@deip/investments-service",
-  "version": "1.77.0",
+  "version": "1.78.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,9 +20,9 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@deip/http-service": "1.36.0",
+    "@deip/http-service": "1.78.0",
     "@deip/rpc-client": "1.77.0",
-    "@deip/toolbox": "1.1.0"
+    "@deip/toolbox": "1.78.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.0.0"
