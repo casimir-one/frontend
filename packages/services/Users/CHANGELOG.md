@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
+
+
+### Features
+
+* **@deip/users-service:** add alternative method getUserRe (temp) ([afcf093](https://gitlab.com/DEIP/deip-client-modules/commit/afcf093c45e729d5896bb988573123aab91e9250))
+
+
+
+
+
 # [1.77.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.76.0...v1.77.0) (2021-01-14)
 
 **Note:** Version bump only for package @deip/users-service

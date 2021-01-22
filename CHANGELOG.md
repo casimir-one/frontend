@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
+
+
+### Features
+
+* **@deip/app-config-service:** convert to @deip/proxydi wrapper ([3b8877a](https://gitlab.com/DEIP/deip-client-modules/commit/3b8877a34b9843e9ad494d78c8f296ada0adb7c3))
+* **@deip/auth-module:** release ([fc7ef57](https://gitlab.com/DEIP/deip-client-modules/commit/fc7ef57b3b17a121b198770462b980fe2966eed5))
+* **@deip/blockchain-service:** switch to @deip/proxydi ([e347a4e](https://gitlab.com/DEIP/deip-client-modules/commit/e347a4e9bf4fd4fd13fbbef0189fd89d690288c1))
+* **@deip/current-user-module:** release ([bce7ad1](https://gitlab.com/DEIP/deip-client-modules/commit/bce7ad112bd0323a98a62549d2ef7f48c6b1ec02))
+* **@deip/env-module:** release ([a744e36](https://gitlab.com/DEIP/deip-client-modules/commit/a744e36ae11afc88bf28695f0d4761d18b74f344))
+* **@deip/http-service:** switch to @deip/proxydi ([9d97f86](https://gitlab.com/DEIP/deip-client-modules/commit/9d97f86cd73e4de89ee8859dbcb058821954b43b))
+* **@deip/proxydi:** new utility ([9edb533](https://gitlab.com/DEIP/deip-client-modules/commit/9edb533a5eccd786a6eef2470b42576eb166e6de))
+* **@deip/toolbox:** add new helpers ([215f192](https://gitlab.com/DEIP/deip-client-modules/commit/215f19222e908c91b28c2f4d511be70fbfc35a2c))
+* **@deip/users-module:** release ([62cd14f](https://gitlab.com/DEIP/deip-client-modules/commit/62cd14f59984f1460f1c8e23abba0084e2f45963))
+* **@deip/users-service:** add alternative method getUserRe (temp) ([afcf093](https://gitlab.com/DEIP/deip-client-modules/commit/afcf093c45e729d5896bb988573123aab91e9250))
+* **@deip/validation-plugin:** release ([10641fe](https://gitlab.com/DEIP/deip-client-modules/commit/10641fe3f58a334bc35d92c3f1b8d44ad28b3636))
+* **@deip/vuetify-extended:** release ([2cf8bb6](https://gitlab.com/DEIP/deip-client-modules/commit/2cf8bb665e4328f232cd523588ec6db21a666be6))
+
+
+
+
+
 # [1.77.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.76.0...v1.77.0) (2021-01-14)
 
 
