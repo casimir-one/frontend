@@ -1,13 +1,13 @@
-import { AppConfigService } from '@deip/app-config-service';
 import { AccessService } from '@deip/access-service';
 import axios from 'axios';
+import { proxydi } from '@deip/proxydi';
 
 import { Singleton } from '@deip/toolbox';
 
 class HttpService extends Singleton {
   accessService = AccessService.getInstance();
 
-  appConfig = AppConfigService.getInstance();
+  proxydi = proxydi;
 
   _axiosInstance;
 
@@ -15,8 +15,11 @@ class HttpService extends Singleton {
     return this._axiosInstance
       ? this._axiosInstance
       : this._axiosInstance = axios.create({
-        baseURL: this.appConfig.get('env').DEIP_SERVER_URL,
-        headers: { 'Content-Type': 'application/json' }
+        baseURL: this.proxydi.get('env').DEIP_SERVER_URL,
+        headers: {
+          'Content-Type': 'application/json',
+          'deip-application': this.proxydi.get('env').APP_ID
+        }
       });
   }
 
