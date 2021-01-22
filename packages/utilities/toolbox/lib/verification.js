@@ -1,0 +1,57 @@
+import kindOf from 'kind-of';
+
+export const isArray = (val) => kindOf(val) === 'array';
+export const isObject = (val) => kindOf(val) === 'object';
+export const isFile = (val) => kindOf(val) === 'file';
+
+export const isBoolean = (val) => kindOf(val) === 'boolean';
+export const isString = (val) => kindOf(val) === 'string';
+export const isNumber = (val) => kindOf(val) === 'number';
+
+export const isSimpleVal = (val) => ['boolean', 'string', 'number'].includes(kindOf(val));
+
+export const isJsonString = (str) => {
+  if (!isString(str)) {
+    return false;
+  }
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const hasValue = (value) => {
+  if (!value) return false;
+
+  const res = [];
+
+  if (isSimpleVal(value)) {
+    res.push(!!value);
+  }
+
+  if (isArray(value)) {
+    for (const item of value) {
+      res.push(hasValue(item));
+    }
+  }
+
+  if (isObject(value)) {
+    if (Object.keys(value).length) {
+      for (const item of Object.values(value)) {
+        res.push(hasValue(item));
+      }
+    } else {
+      res.push(false);
+    }
+  }
+
+  return res.includes(true);
+};
+
+export const hasOwnProperty = (prop, obj) => {
+  if (kindOf(obj) !== 'object') return false;
+
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+};
