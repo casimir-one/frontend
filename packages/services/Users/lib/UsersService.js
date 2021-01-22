@@ -48,6 +48,15 @@ class UsersService extends Singleton {
       }));
   }
 
+  // TODO: rename and switch
+  getUserRe(username) {
+    if (username.includes('@')) {
+      return this.usersHttp.getUserByEmail(username);
+    }
+
+    return this.usersHttp.getUser(username);
+  }
+
   // ////////////////////////////////////////
 
   getUsersTeams(users) {
