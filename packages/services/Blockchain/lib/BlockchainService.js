@@ -1,10 +1,10 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
-import { AppConfigService } from '@deip/app-config-service';
+import { proxydi } from '@deip/proxydi';
 
 class BlockchainService extends Singleton {
-  
-  appConfig = AppConfigService.getInstance();
+
+  proxydi = proxydi;
 
   getRefBlockSummary() {
     let refBlockNum;
@@ -26,10 +26,10 @@ class BlockchainService extends Singleton {
   signOperations(operations, privKey, refBlock = {}) {
 
     const { refBlockNum, refBlockPrefix } = refBlock;
-    const refBlockPromise = refBlockNum && refBlockPrefix 
+    const refBlockPromise = refBlockNum && refBlockPrefix
       ? Promise.resolve({ refBlockNum, refBlockPrefix })
       : this.getRefBlockSummary();
-    
+
     return refBlockPromise
       .then(({ refBlockNum, refBlockPrefix }) => {
         const nowPlus1Hour = new Date().getTime() + 3e6;
@@ -40,7 +40,7 @@ class BlockchainService extends Singleton {
           extensions: [[
             "tenant_marker",
             {
-              tenant: this.appConfig.get('env').TENANT,
+              tenant: this.proxydi.get('env').TENANT,
               extensions: []
             }
           ]],
