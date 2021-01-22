@@ -1,7 +1,7 @@
 {
   "packages": [
-    "packages/components/*",
-    "packages/directives/*",
+    "packages/modules/*",
+    "packages/plugins/*",
     "packages/services/*",
     "packages/utilities/*"
   ],
