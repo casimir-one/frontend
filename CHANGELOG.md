@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.79.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.78.0...v1.79.0) (2021-01-22)
+
+
+### Features
+
+* **@deip/users-service:** getting users by research group ([11f2747](https://gitlab.com/DEIP/deip-client-modules/commit/11f2747abf7e75db7c8f3b3bf34089bc2908344c))
+
+
+
+
+
 # [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
 
 
