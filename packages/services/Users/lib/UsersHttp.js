@@ -29,6 +29,11 @@ class UsersHttp extends Singleton {
     const query = qs.stringify({ usernames });
     return this.http.get(`/api/users?${query}`);
   }
+
+  getUsersByResearchGroup(researchGroupExternalId) {
+    return this.http.get(`/api/users/group/${researchGroupExternalId}`);
+  }
+
 }
 
 export {

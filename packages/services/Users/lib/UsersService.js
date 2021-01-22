@@ -53,8 +53,11 @@ class UsersService extends Singleton {
     if (username.includes('@')) {
       return this.usersHttp.getUserByEmail(username);
     }
-
     return this.usersHttp.getUser(username);
+  }
+
+  getUsersByResearchGroup(researchGroupExternalId) {
+    return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
   }
 
   // ////////////////////////////////////////
