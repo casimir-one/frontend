@@ -16,36 +16,27 @@ const mapUsersData = (
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
 
-  rpcApi = deipRpc.api;
-
-  // ////////////////////////////////////////
-
-  getUserProfile(username) {
-    return this.usersHttp.getUserProfile(username);
-  }
-
-  getUserAccount(username) {
-    return this.rpcApi.getAccountsAsync([username])
-      .then((data) => data[0]);
-  }
-
+  /* [DEPRECATED] use researchGroupService.getResearchGroupsByUser(username) */
   getUserTeams(username) {
-    return this.rpcApi.getResearchGroupTokensByAccountAsync(username)
+    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
       .then((data) => data.map((g) => g.research_group.external_id));
   }
 
   getUser(username) {
     return Promise.all([
-      this.getUserAccount(username),
-      this.getUserProfile(username),
-      this.getUserTeams(username)
+      this.usersHttp.getUser(username),
+      this.getUserTeams(username) // TODO: get teams at the server side
     ])
-      .then(([account, profile, teams]) => ({
+      .then(([{ account, profile }, teams]) => ({
         username: account.name,
         account,
         profile,
         teams
       }));
+  }
+
+  getUsers(usernames) {
+    return this.usersHttp.getUsers(usernames);
   }
 
   // TODO: rename and switch
@@ -60,8 +51,7 @@ class UsersService extends Singleton {
     return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
   }
 
-  // ////////////////////////////////////////
-
+  /* [DEPRECATED] */
   getUsersTeams(users) {
     return Promise.all(
       users.map((u) => this.getUserTeams(u))
@@ -71,31 +61,36 @@ class UsersService extends Singleton {
     })));
   }
 
+  /* [DEPRECATED] use getUsersListing(status) */
   getActiveUsers() {
     return this.usersHttp.getActiveUsersProfiles()
       .then((profiles) => {
         const users = profiles.map((p) => p._id);
 
         return Promise.all([
-          this.rpcApi.getAccountsAsync(users),
+          deipRpc.api.getAccountsAsync(users),
           this.getUsersTeams(users)
         ]).then(([accounts, teams]) => mapUsersData(accounts, profiles, teams));
       });
   }
 
+  /* [DEPRECATED] use getUsersByResearchGroup(researchGroupExternalId) */
   getUsersByTeam(teamId) {
-    return this.rpcApi.getResearchGroupMembershipTokensAsync(teamId)
+    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
       .then((tokens) => this.getEnrichedProfiles(tokens.map((t) => t.owner)));
   }
 
-  // ////////////////////////////////////////
-
-  getEnrichedProfiles(users) { // rename to getUsers
+  /* [DEPRECATED] use getUsers */
+  getEnrichedProfiles(users) {
     return Promise.all([
-      this.rpcApi.getAccountsAsync(users),
+      deipRpc.api.getAccountsAsync(users),
       this.usersHttp.getUsersProfiles(users),
       this.getUsersTeams(users)
     ]).then(([accounts, profiles, teams]) => mapUsersData(accounts, profiles, teams));
+  }
+
+  getUsersListing(status) {
+    return this.usersHttp.getUsersListing(status || "");
   }
 }
 

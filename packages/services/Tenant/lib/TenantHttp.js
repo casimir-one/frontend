@@ -4,8 +4,8 @@ import { Singleton } from '@deip/toolbox';
 class TenantHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getTenantProfile(tenant) {
-    return this.http.get(`/tenant/profile/${tenant}`);
+  getTenant(tenantId) {
+    return this.http.get(`/tenant/${tenantId}`);
   }
 
   updateTenantProfile(updatedProfile) {
@@ -25,19 +25,19 @@ class TenantHttp extends Singleton {
   }
 
   postSignUp(data) {
-    return this.http.post(`/tenant/sign-up`, data);
+    return this.http.post(`/tenant/registry/sign-up`, data);
   }
 
   getSignUpRequests() {
-    return this.http.get(`/tenant/sign-ups`);
+    return this.http.get(`/tenant/registry/sign-ups`);
   }
 
   approveSignUpRequest(username) {
-    return this.http.put(`/tenant/sign-ups/approve`, { username });
+    return this.http.put(`/tenant/registry/sign-ups/approve`, { username });
   }
 
   rejectSignUpRequest(username) {
-    return this.http.put(`/tenant/sign-ups/reject`, { username });
+    return this.http.put(`/tenant/registry/sign-ups/reject`, { username });
   }
 
   addAdminTenant({ tx }) {

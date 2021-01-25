@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class ResearchGroupHttp extends Singleton {
   http = HttpService.getInstance();
@@ -51,6 +52,12 @@ class ResearchGroupHttp extends Singleton {
   leaveResearchGroup({ tx, offchainMeta }) {
     return this.http.post('/api/groups/leave', { tx, offchainMeta });
   }
+
+  getResearchGroupsListing(personal) {
+    const query = qs.stringify({ personal });
+    return this.http.get(`/api/groups/listing?${query}`);
+  }
+
 }
 
 export {

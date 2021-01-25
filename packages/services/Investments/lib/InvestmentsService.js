@@ -114,6 +114,18 @@ class InvestmentsService extends Singleton {
       .then((investmentPortfolio) => investmentPortfolio);
   }
 
+  getResearchTokenSalesByResearch(researchExternalId) {
+    return this.investmentsHttp.getResearchTokenSalesByResearch(researchExternalId)
+  }
+
+  getResearchTokenSaleContributions(researchTokenSaleExternalId) {
+    return this.investmentsHttp.getResearchTokenSaleContributions(researchTokenSaleExternalId)
+  }
+
+  getResearchTokenSaleContributionsByResearch(researchExternalId) {
+    return this.investmentsHttp.getResearchTokenSaleContributionsByResearch(researchExternalId)
+  }
+
 }
 
 export {

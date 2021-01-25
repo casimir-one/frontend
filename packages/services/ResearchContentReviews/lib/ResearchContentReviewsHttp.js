@@ -41,7 +41,11 @@ class ResearchContentReviewsHttp extends Singleton {
   denyReviewRequest(id) {
     return this.http.post(`/api/review-requests/${id}/deny`, null);
   }
-  
+
+  getReviewVotes(reviewExternalId) {
+    return this.http.get(`/api/reviews/votes/${reviewExternalId}`);
+  }
+
 }
 
 export {

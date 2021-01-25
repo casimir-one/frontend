@@ -109,7 +109,10 @@ class ResearchContentReviewsService extends Singleton {
   getReviewsByAuthor(author) {
     return this.researchContentReviewsHttp.getReviewsByAuthor(author);
   }
-  
+
+  getReviewVotes(reviewExternalId) {
+    return this.researchContentReviewsHttp.getReviewVotes(reviewExternalId);
+  }
 }
 
 export {

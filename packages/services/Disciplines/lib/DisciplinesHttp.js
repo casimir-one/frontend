@@ -7,6 +7,11 @@ class DisciplinesHttp extends Singleton {
   getAllDisciplines() {
     return this.http.get(`/api/disciplines`);
   }
+
+  getDisciplinesByResearch(researchExternalId) {
+    return this.http.get(`/api/disciplines/research/${researchExternalId}`);
+  }
+
 }
 
 export {

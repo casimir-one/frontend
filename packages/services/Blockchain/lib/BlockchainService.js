@@ -167,6 +167,37 @@ class BlockchainService extends Singleton {
     return promise;
   }
 
+
+  async getWitnessesListing(lowerBound, limit = 10000) {
+    const result = await deipRpc.api.lookupWitnessAccountsAsync(lowerBound, limit);
+    return result;
+  }
+
+  async getWitnessByAccount(username) {
+    const result = await deipRpc.api.getWitnessByAccountAsync(username);
+    return result;
+  }
+
+  async voteForWitness({ privKey, username }, {
+    voter,
+    witness,
+    isApproved,
+    extensions
+  }) {
+
+    const account_witness_vote_op = ['account_witness_vote', {
+      account: voter,
+      witness: witness,
+      approve: isApproved,
+      extensions: extensions || []
+    }];
+
+    return this.signOperations([account_witness_vote_op], privKey)
+      .then((signedTx) => {
+        return this.sendTransactionAsync(signedTx);
+      })
+  }
+
   async findBlocksByRange(startTime, endTime) {
     const props = await this.getDynamicGlobalProperties();
 

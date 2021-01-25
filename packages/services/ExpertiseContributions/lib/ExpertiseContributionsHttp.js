@@ -63,6 +63,14 @@ class ExpertiseContributionsHttp extends Singleton {
     return this.http.get(`/api/expertise/disciplines/stats`);
   }
 
+  getAccountExpertiseTokens(username) {
+    return this.http.get(`/api/expertise/user/${username}/tokens`);
+  }
+
+  getDisciplineExpertiseTokens(disciplineExternalId) {
+    return this.http.get(`/api/expertise/discipline/${disciplineExternalId}/tokens`);
+  }
+
 }
 
 export {
