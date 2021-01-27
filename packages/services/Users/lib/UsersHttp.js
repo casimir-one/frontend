@@ -5,10 +5,6 @@ import qs from 'qs';
 class UsersHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getUserProfile(username) {
-    return this.http.get(`/api/user/profile/${username}`);
-  }
-
   getUsersProfiles(usernames) {
     return this.http.get(`/api/user/profiles${this.http.buildQueryString(usernames, 'accounts')}`);
   }
@@ -32,6 +28,11 @@ class UsersHttp extends Singleton {
 
   getUsersByResearchGroup(researchGroupExternalId) {
     return this.http.get(`/api/users/group/${researchGroupExternalId}`);
+  }
+
+  getUsersListing(status) {
+    const query = qs.stringify({ status });
+    return this.http.get(`/api/users/list?${query}`);
   }
 
 }

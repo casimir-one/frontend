@@ -1,4 +1,3 @@
-import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { TenantHttp } from './TenantHttp';
 import { BlockchainService } from '@deip/blockchain-service';
@@ -8,21 +7,7 @@ class TenantService extends Singleton {
   blockchainService = BlockchainService.getInstance();
 
   getTenant(tenantId) {
-    return Promise.all([
-      this.getTenantAccount(tenantId),
-      this.getTenantProfile(tenantId)
-    ])
-      .then(([ account, profile ]) => {
-        return { account, profile };
-    });
-  }
-
-  getTenantAccount(tenantId) {
-    return deipRpc.api.getResearchGroupAsync(tenantId);
-  }
-
-  getTenantProfile(tenantId) {
-    return this.tenantHttp.getTenantProfile(tenantId);
+    return this.tenantHttp.getTenant(tenantId);
   }
 
   updateTenantProfile(updatedProfile) {

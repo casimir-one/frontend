@@ -241,6 +241,14 @@ class ExpertiseContributionsService extends Singleton {
   getDisciplinesExpertiseLastStats() {
     return this.expertiseContributionsHttp.getDisciplinesExpertiseLastStats();
   }
+
+  getAccountExpertiseTokens(username) {
+    return this.expertiseContributionsHttp.getAccountExpertiseTokens(username);
+  }
+
+  getDisciplineExpertiseTokens(disciplineExternalId) {
+    return this.expertiseContributionsHttp.getDisciplineExpertiseTokens(disciplineExternalId);
+  }
   
 }
 

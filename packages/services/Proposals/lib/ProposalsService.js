@@ -4,7 +4,6 @@ import { BlockchainService } from '@deip/blockchain-service';
 
 import { Singleton } from '@deip/toolbox';
 import { ProposalsHttp } from './ProposalsHttp';
-import { extenderMap } from './maps';
 
 class ProposalsService extends Singleton {
   proposalsHttp = ProposalsHttp.getInstance();
@@ -118,37 +117,14 @@ class ProposalsService extends Singleton {
 
   getProposalsByCreator(account) {
     return deipRpc.api.getProposalsByCreatorAsync(account)
-      .then((proposals) => {
-        return Promise.all(proposals.map((item) => {
-          return this.getProposalDetails(item);
-        }))
+      .then((result) => {
+        const proposals = result.map(proposal => {
+          const { proposed_transaction: { operations: [[op_name, op_payload], ...rest] } } = proposal;
+          const op_tag = deipRpc.operations.getOperationTag(op_name);
+          return { ...proposal, action: op_tag, payload: op_payload };
+        });
+        return proposals;
       })
-  }
-
-  getProposalDetails(proposal) {
-    const { proposed_transaction: { operations: [ [ op_name, op_payload ], ...rest ] } } = proposal;
-
-    const op_tag = deipRpc.operations.getOperationTag(op_name);
-    const extender = extenderMap[op_tag];
-
-    if (!extender) {
-      return Promise.resolve({ ...proposal, action: op_tag, payload: op_payload });
-    }
-
-    let extendedProposal = { ...proposal, action: op_tag, payload: op_payload, extension: {} };
-
-  
-    let extensions = Object.keys(extender);
-    
-    return Promise.all(extensions.map(ext => {
-      let func = extender[ext];
-      return func(op_payload)
-    }))
-    .then((data) => {
-      return extensions.reduce((o, ext, i) => {
-        return { ...o, extension: { ...o.extension, [ext]: data[i] } };
-      }, extendedProposal);
-    });
   }
 
   getAccountProposals(account, status = 0) {

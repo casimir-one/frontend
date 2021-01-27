@@ -184,18 +184,19 @@ class ResearchGroupService extends Singleton {
   }
 
   /* [DEPRECATED] */
-  getResearchGroupById(groupId) {
-    return deipRpc.api.getResearchGroupByIdAsync(groupId)
-      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id));
-  }
-
-  /* [DEPRECATED] */
   getResearchGroupByPermlink(permlink) {
     return deipRpc.api.getResearchGroupByPermlinkAsync(permlink)
       .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
       .then((researchGroup) => researchGroup);
   }
 
+  /* [DEPRECATED] */
+  getResearchGroupById(groupId) {
+    return deipRpc.api.getResearchGroupByIdAsync(groupId)
+      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id));
+  }
+
+  /* [DEPRECATED] use usersService.getUsersByResearchGroup(teamId) */
   getTeamMembers(teamId) {
     return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
       .then((tokens) => tokens.map((t) => t.owner));
@@ -215,10 +216,15 @@ class ResearchGroupService extends Singleton {
     return Promise.all(externalIds.map((externalId) => this.getResearchGroup(externalId)));
   }
 
+  getResearchGroupsListing(personal = false) {
+    return this.researchGroupHttp.getResearchGroupsListing(personal);
+  }
+
   getResearchGroupsByUser(user) {
     return this.researchGroupHttp.getResearchGroupsByUser(user)
   }
 
+  /* [DEPRECATED] use getResearchGroupsByUser(username) */
   getTeamsByUser(username) {
     return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
       .then((data) => this.getResearchGroups(data.map((g) => g.research_group.external_id)));
@@ -240,6 +246,7 @@ class ResearchGroupService extends Singleton {
     return this.researchGroupHttp.updateJoinRequest(update);
   }
 
+  /* [DEPRECATED] */
   checkResearchGroupExistenceByPermlink(name) {
     return deipRpc.api.checkResearchGroupExistenceByPermlinkAsync(name);
   }

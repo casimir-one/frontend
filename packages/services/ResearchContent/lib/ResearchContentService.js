@@ -69,20 +69,20 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getResearchContent(externalId);
   }
 
-  /* [DEPRECATED] */
-  getResearchContentById(id) {
-    return deipRpc.api.getResearchContentByIdAsync(id)
-      .then((researchContent) => this.getResearchContent(researchContent.external_id))
-  }
-
   getResearchContents(externalIds) {
     return this.researchContentHttp.getResearchContents(externalIds);
   }
 
-  // DEPRECATED
+  /* [DEPRECATED] */
   getResearchContentByPermlink(groupPermlink, researchPermlink, contentPermlink) {
     return deipRpc.api.getResearchContentByAbsolutePermlinkAsync(groupPermlink, researchPermlink, contentPermlink)
       .then((researchContent) => this.getResearchContent(researchContent.external_id));
+  }
+
+  /* [DEPRECATED] */
+  getResearchContentById(id) {
+    return deipRpc.api.getResearchContentByIdAsync(id)
+      .then((researchContent) => this.getResearchContent(researchContent.external_id))
   }
 
   getResearchContentByResearch(researchExternalId) {
@@ -109,6 +109,7 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.unlockContentDraft(refId);
   }
 
+  /* [DEPRECATED] */
   checkResearchContentExistenceByPermlink(researchExternalId, title) {
     return deipRpc.api.checkResearchContentExistenceByPermlinkAsync(researchExternalId, title)
   }

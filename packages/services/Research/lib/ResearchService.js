@@ -27,17 +27,16 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearches(externalIds);
   }
 
-  getResearchesByResearchGroup(researchGroupExternalId) {
-    return deipRpc.api.getResearchesByResearchGroupAsync(researchGroupExternalId)
-      .then((researches) => {
-        return researches.length ? this.getResearches(researches.map(r => r.external_id)) : Promise.resolve([]);
-      });
-  }
-
-  // DEPRECATED
+  /* [DEPRECATED] */
   getResearchByAbsolutePermlink(groupPermlink, researchPermlink) {
     return deipRpc.api.getResearchByAbsolutePermlinkAsync(groupPermlink, researchPermlink)
       .then((research) => this.getResearch(research.external_id));
+  }
+
+  /* [DEPRECATED] */
+  getResearchById(researchId) {
+    return deipRpc.api.getResearchByIdAsync(researchId)
+      .then((research) => this.getResearch(research.external_id))
   }
 
   getPublicResearchListing({
@@ -850,17 +849,6 @@ class ResearchService extends Singleton {
   }
 
   /* [DEPRECATED] */
-  getTopResearchesIds() {
-    // return [ 21, 14, 24, 7, 10, 5, 0, 6, 26, 28, 15, 23, 9, 25, 20, 12 ];
-    return [];
-  }
-
-  /* [DEPRECATED] */
-  getResearchById(researchId) {
-    return deipRpc.api.getResearchByIdAsync(researchId)
-      .then((research) => this.getResearch(research.external_id))
-  }
-
   checkResearchExistenceByPermlink(researchGroupExternalId, title) {
     return deipRpc.api.checkResearchExistenceByPermlinkAsync(researchGroupExternalId, title);
   }
