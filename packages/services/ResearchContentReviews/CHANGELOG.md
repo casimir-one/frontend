@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.80.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.79.1...v1.80.0) (2021-01-27)
+
+
+### Features
+
+* **@deip/users-service:** moving deipRpc to the server ([c6b1d6e](https://gitlab.com/DEIP/deip-client-modules/commit/c6b1d6ec48f6a94b27abb0724e49ba2d63a57e0c))
+
+
+
+
+
 # [1.79.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.78.0...v1.79.0) (2021-01-22)
 
 **Note:** Version bump only for package @deip/research-content-reviews-service
