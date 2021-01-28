@@ -4,11 +4,13 @@ import { Singleton } from '@deip/toolbox';
 import { ExpressLicensingHttp } from './ExpressLicensingHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
+import { ResearchService } from '@deip/research-service';
 
 class ExpressLicensingService extends Singleton {
   expressLicensingHttp = ExpressLicensingHttp.getInstance();
   blockchainService = BlockchainService.getInstance();
   proposalsService = ProposalsService.getInstance();
+  researchService = ResearchService.getInstance();
 
 
   createExpressLicensingRequest({ privKey, username }, {
@@ -25,7 +27,7 @@ class ExpressLicensingService extends Singleton {
 
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),
-      deipRpc.api.getResearchAsync(researchExternalId)
+      researchService.getResearch(researchExternalId)
     ])
       .then(([refBlock, research]) => {
 
@@ -58,32 +60,32 @@ class ExpressLicensingService extends Singleton {
 
   
   getResearchLicense(externalId) {
-    return deipRpc.api.getResearchLicenseAsync(externalId);
+    return this.expressLicensingHttp.getResearchLicense(externalId);
   }
 
 
   getResearchLicensesByLicensee(licensee) {
-    return deipRpc.api.getResearchLicensesByLicenseeAsync(licensee);
+    return this.expressLicensingHttp.getResearchLicensesByLicensee(licensee);
   }
 
 
   getResearchLicensesByLicenser(licenser) {
-    return deipRpc.api.getResearchLicensesByLicenserAsync(licenser);
+    return this.expressLicensingHttp.getResearchLicensesByLicenser(licenser);
   }
 
 
-  getResearchLicensesByResearch(researchExternalId) {
-    return deipRpc.api.getResearchLicensesByResearchAsync(researchExternalId);
+  getResearchLicensesByResearch(researchId) {
+    return this.expressLicensingHttp.getResearchLicensesByResearch(researchId);
   }
 
 
-  getResearchLicensesByLicenseeAndResearch(licensee, researchExternalId) {
-    return deipRpc.api.getResearchLicensesByLicenseeAndResearchAsync(licensee, researchExternalId);
+  getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
+    return this.expressLicensingHttp.getResearchLicensesByLicenseeAndResearch(licensee, researchId);
   }
 
 
   getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
-    return deipRpc.api.getResearchLicensesByLicenseeAndLicenserAsync(licensee, licenser);
+    return this.expressLicensingHttp.getResearchLicensesByLicenseeAndLicenser(licensee, licenser);
   }
   
 }

@@ -71,6 +71,25 @@ class ExpertiseContributionsHttp extends Singleton {
     return this.http.get(`/api/expertise/discipline/${disciplineExternalId}/tokens`);
   }
 
+  getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
+    return this.http.get(`/api/expertise/content/${contentId}/discipline/${disciplineId}/history`);
+  }
+  
+  getExpertiseContributionsByResearch(researchId) {
+    return this.http.get(`/api/expertise/research/${researchId}`);
+  }
+  
+  getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
+    return this.http.get(`/api/expertise/research/${researchId}/discipline/${disciplineId}`);
+  }
+
+  getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
+    return this.http.get(`/api/expertise/content/${contentId}/discipline/${disciplineId}`);
+  }
+
+  getExpertiseContributionsByResearchContent(contentId) {
+    return this.http.get(`/api/expertise/content/${contentId}`);
+  }
 }
 
 export {

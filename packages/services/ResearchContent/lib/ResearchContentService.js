@@ -50,14 +50,14 @@ class ResearchContentService extends Singleton {
 
           return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
             .then(({ tx: signedProposalTx }) => {
-              return this.researchContentHttp.createResearchContent({ tx: signedProposalTx, offchainMeta, isProposal })
+              return this.researchContentHttp.publishResearchContent({ tx: signedProposalTx, offchainMeta, isProposal })
             })
 
         } else {
 
           return this.blockchainService.signOperations([create_research_content_op], privKey, refBlock)
             .then((signedTx) => {
-              return this.researchContentHttp.createResearchContent({ tx: signedTx, offchainMeta, isProposal })
+              return this.researchContentHttp.publishResearchContent({ tx: signedTx, offchainMeta, isProposal })
             });
 
         }
@@ -67,16 +67,6 @@ class ResearchContentService extends Singleton {
 
   getResearchContent(externalId) {
     return this.researchContentHttp.getResearchContent(externalId);
-  }
-
-  getResearchContents(externalIds) {
-    return this.researchContentHttp.getResearchContents(externalIds);
-  }
-
-  /* [DEPRECATED] */
-  getResearchContentByPermlink(groupPermlink, researchPermlink, contentPermlink) {
-    return deipRpc.api.getResearchContentByAbsolutePermlinkAsync(groupPermlink, researchPermlink, contentPermlink)
-      .then((researchContent) => this.getResearchContent(researchContent.external_id));
   }
 
   /* [DEPRECATED] */
@@ -89,24 +79,24 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getResearchContentByResearch(researchExternalId);
   }
 
-  getContentRefById(refId) {
-    return this.researchContentHttp.getContentRefById(refId);
+  getResearchContentRef(refId) {
+    return this.researchContentHttp.getResearchContentRef(refId);
   }
 
-  getContentRefByHash(researchExternalId, hash) {
-    return this.researchContentHttp.getContentRefByHash(researchExternalId, hash);
+  createResearchContentDraftDar(researchExternalId) {
+    return this.researchContentHttp.createResearchContentDraftDar(researchExternalId);
   }
 
-  createDarContent(researchExternalId) {
-    return this.researchContentHttp.createDarContent(researchExternalId);
+  deleteResearchContentDraft(refId) {
+    return this.researchContentHttp.deleteResearchContentDraft(refId);
   }
 
-  deleteContentDraft(refId) {
-    return this.researchContentHttp.deleteContentDraft(refId);
+  unlockResearchContentDraft(refId) {
+    return this.researchContentHttp.unlockResearchContentDraft(refId);
   }
 
-  unlockContentDraft(refId) {
-    return this.researchContentHttp.unlockContentDraft(refId);
+  uploadResearchContentPackage(researchExternalId, formData) {
+    return this.researchContentHttp.uploadResearchContentPackage(researchExternalId, formData);
   }
 
   /* [DEPRECATED] */

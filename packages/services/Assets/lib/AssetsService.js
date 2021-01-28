@@ -107,36 +107,36 @@ class AssetsService extends Singleton {
       });
   }
 
-  getAssetById(id) {
-    return deipRpc.api.getAssetAsync(id);
+  getAssetById(assetId) {
+    return this.assetsHttp.getAssetById(assetId)
   }
 
   getAssetBySymbol(symbol) {
-    return deipRpc.api.getAssetBySymbolAsync(symbol);
+    return this.assetsHttp.getAssetBySymbol(symbol);
   }
 
   getAssetsByType(type) {
-    return deipRpc.api.getAssetsByTypeAsync(type);
+    return this.assetsHttp.getAssetsByType(type);
   }
 
   getAssetsByIssuer(issuer) {
-    return deipRpc.api.getAssetsByIssuerAsync(issuer);
+    return this.assetsHttp.getAssetsByIssuer(issuer);
   }
   
   lookupAssets(lowerBoundSymbol, limit) {
-    return deipRpc.api.lookupAssetsAsync(lowerBoundSymbol, limit);
+    return this.assetsHttp.lookupAssets(lowerBoundSymbol, limit);
   }
 
   getAccountAssetBalance(owner, symbol) {
-    return deipRpc.api.getAccountAssetBalanceAsync(owner, symbol);
+    return this.assetsHttp.getAccountAssetBalance(owner, symbol);
   }
 
   getAccountAssetsBalancesByOwner(owner) {
-    return deipRpc.api.getAccountAssetsBalancesAsync(owner);
+    return this.assetsHttp.getAccountAssetsBalancesByOwner(owner);
   }
 
   getAccountsAssetBalancesByAsset(symbol) {
-    return deipRpc.api.getAccountsAssetBalancesByAssetAsync(symbol);
+    return this.assetsHttp.getAccountsAssetBalancesByAsset(symbol);
   }
 
   createAssetsExchangeProposal({ privKey, username }, {

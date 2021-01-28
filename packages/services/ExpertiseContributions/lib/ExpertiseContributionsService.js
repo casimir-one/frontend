@@ -5,24 +5,24 @@ import deipRpc from '@deip/rpc-client';
 class ExpertiseContributionsService extends Singleton {
   expertiseContributionsHttp = ExpertiseContributionsHttp.getInstance();
 
-  getEciHistoryByResearchContentAndDiscipline(researchContentId, disciplineId) {
-    return deipRpc.api.getEciHistoryByResearchContentAndDisciplineAsync(researchContentId, disciplineId);
+  getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
+    return this.expertiseContributionsHttp.getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
   getExpertiseContributionsByResearch(researchId) {
-    return deipRpc.api.getExpertiseContributionsByResearchAsync(researchId);
+    return this.expertiseContributionsHttp.getExpertiseContributionsByResearch(researchId);
   }
 
   getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
-    return deipRpc.api.getExpertiseContributionsByResearchAndDisciplineAsync(researchId, disciplineId);
+    return this.expertiseContributionsHttp.getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId);
   }
 
-  getExpertiseContributionByResearchContentAndDiscipline(researchContentId, disciplineId) {
-    return deipRpc.api.getExpertiseContributionByResearchContentAndDisciplineAsync(researchContentId, disciplineId);
+  getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
+    return this.expertiseContributionsHttp.getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
-  getExpertiseContributionsByResearchContent(researchContentId) {
-    return deipRpc.api.getExpertiseContributionsByResearchContentAsync(researchContentId);
+  getExpertiseContributionsByResearchContent(contentId) {
+    return this.expertiseContributionsHttp.getExpertiseContributionsByResearchContent(contentId);
   }
 
   getAccountExpertiseHistory(username, {

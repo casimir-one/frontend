@@ -16,23 +16,8 @@ const mapUsersData = (
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
 
-  /* [DEPRECATED] use researchGroupService.getResearchGroupsByUser(username) */
-  getUserTeams(username) {
-    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
-      .then((data) => data.map((g) => g.research_group.external_id));
-  }
-
   getUser(username) {
-    return Promise.all([
-      this.usersHttp.getUser(username),
-      this.getUserTeams(username) // TODO: get teams at the server side
-    ])
-      .then(([{ account, profile }, teams]) => ({
-        username: account.name,
-        account,
-        profile,
-        teams
-      }));
+    return this.usersHttp.getUser(username);
   }
 
   getUsers(usernames) {
@@ -51,6 +36,12 @@ class UsersService extends Singleton {
     return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
   }
 
+  /* [DEPRECATED] use researchGroupService.getResearchGroupsByUser(username) */
+  getUserTeams(username) {
+    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
+      .then((data) => data.map((g) => g.research_group.external_id));
+  }
+
   /* [DEPRECATED] */
   getUsersTeams(users) {
     return Promise.all(
@@ -59,19 +50,6 @@ class UsersService extends Singleton {
       username: users[i],
       teams
     })));
-  }
-
-  /* [DEPRECATED] use getUsersListing(status) */
-  getActiveUsers() {
-    return this.usersHttp.getActiveUsersProfiles()
-      .then((profiles) => {
-        const users = profiles.map((p) => p._id);
-
-        return Promise.all([
-          deipRpc.api.getAccountsAsync(users),
-          this.getUsersTeams(users)
-        ]).then(([accounts, teams]) => mapUsersData(accounts, profiles, teams));
-      });
   }
 
   /* [DEPRECATED] use getUsersByResearchGroup(researchGroupExternalId) */

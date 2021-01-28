@@ -10,8 +10,20 @@ class TenantService extends Singleton {
     return this.tenantHttp.getTenant(tenantId);
   }
 
+  getNetworkInfo() {
+    return this.tenantHttp.getNetworkInfo();
+  }
+
   updateTenantProfile(updatedProfile) {
     return this.tenantHttp.updateTenantProfile(updatedProfile);
+  }
+
+  updateNetworkSettings(data) {
+    return this.tenantHttp.updateNetworkSettings(data);
+  }
+
+  updateTenantSettings(form) {
+    return this.tenantHttp.updateTenantSettings(form);
   }
 
   createTenantResearchAttribute(researchAttribute) {

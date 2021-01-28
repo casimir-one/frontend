@@ -1331,9 +1331,23 @@ export default [{
 },
 {
   "api": "research_content_reference_history_api",
+  "method": "get_content_references2",
+  "params": [
+    "research_content_external_id"
+  ]
+},
+{
+  "api": "research_content_reference_history_api",
   "method": "get_contents_refer_to_content",
   "params": [
     "research_content_id"
+  ]
+},
+{
+  "api": "research_content_reference_history_api",
+  "method": "get_contents_refer_to_content2",
+  "params": [
+    "research_content_external_id"
   ]
 },
 // ECI History Plugin
