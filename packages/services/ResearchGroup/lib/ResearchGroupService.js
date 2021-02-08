@@ -184,13 +184,6 @@ class ResearchGroupService extends Singleton {
   }
 
   /* [DEPRECATED] */
-  getResearchGroupByPermlink(permlink) {
-    return deipRpc.api.getResearchGroupByPermlinkAsync(permlink)
-      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id))
-      .then((researchGroup) => researchGroup);
-  }
-
-  /* [DEPRECATED] */
   getResearchGroupById(groupId) {
     return deipRpc.api.getResearchGroupByIdAsync(groupId)
       .then((researchGroup) => this.getResearchGroup(researchGroup.external_id));

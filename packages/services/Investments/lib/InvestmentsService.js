@@ -11,15 +11,20 @@ class InvestmentsService extends Singleton {
   proposalsService = ProposalsService.getInstance();
 
   getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = "USD") {
-    return deipRpc.api.getAccountRevenueHistoryBySecurityTokenAsync(account, symbol, cursor, step, targetAsset);
+    return this.investmentsHttp.getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset);
   }
 
   getAccountRevenueHistory(account, cursor = 0) {
-    return deipRpc.api.getAccountRevenueHistoryAsync(account, cursor);
+    return this.investmentsHttp.getAccountRevenueHistory(account, cursor);
   }
 
   getAssetRevenueHistory(symbol, cursor = 0) {
-    return deipRpc.api.getSecurityTokenRevenueHistoryAsync(symbol, cursor);
+    return this.investmentsHttp.getAssetRevenueHistory(symbol, cursor);
+  }
+
+  getCurrentTokenSaleByResearch(researchId) {
+    return this.investmentsHttp.getCurrentTokenSaleByResearch(researchId)
+      .then((tokenSales) => tokenSales.find(ts => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE))
   }
 
   createResearchTokenSale({ privKey, username }, isProposal, {
@@ -94,12 +99,6 @@ class InvestmentsService extends Singleton {
       .then((signedTx) => {
         return this.investmentsHttp.contributeResearchTokenSale({ tx: signedTx })
       });
-  }
-
-
-  getCurrentTokenSaleByResearch(researchExternalId) {
-    return deipRpc.api.getResearchTokenSalesByResearchAsync(researchExternalId)
-      .then((tokenSales) => tokenSales.find(ts => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE))
   }
 
   // deprecated

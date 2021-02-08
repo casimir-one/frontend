@@ -8,8 +8,28 @@ class TenantHttp extends Singleton {
     return this.http.get(`/tenant/${tenantId}`);
   }
 
+  getNetworkInfo() {
+    return this.http.get(`/api/network/info`);
+  }
+
   updateTenantProfile(updatedProfile) {
     return this.http.put(`/tenant/profile`, updatedProfile);
+  }
+
+  updateNetworkSettings(data) {
+    return this.http.put(`/tenant/network-settings`, data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  updateTenantSettings(form) {
+    return this.http.put(`/tenant/settings`, form, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 
   createTenantResearchAttribute(researchAttribute) {

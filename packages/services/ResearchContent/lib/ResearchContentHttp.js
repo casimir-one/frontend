@@ -8,42 +8,43 @@ class ResearchContentHttp extends Singleton {
     super();
   }
 
-  createResearchContent({ tx, offchainMeta, isProposal }) {
-    return this.http.post(`/content/publish`, { tx, offchainMeta, isProposal });
+  getResearchContentRef(refId) {
+    return this.http.get(`/api/research-content/ref/${refId}`);
   }
 
   getResearchContent(externalId) {
-    return this.http.get(`/content/research-content/${externalId}`);
+    return this.http.get(`/api/research-content/${externalId}`);
   }
 
-  getResearchContents(externalIds) {
-    const query = qs.stringify({ researchContents: externalIds });
-    return this.http.get(`/content/research-contents?${query}`);
-  }
-
-  getContentRefById(refId) {
-    return this.http.get(`/content/refs/research/content-id/${refId}`);
-  }
-
-  getContentRefByHash(researchExternalId, hash) {
-    return this.http.get(`/content/refs/research/${researchExternalId}/content-hash/${hash}`);
+  publishResearchContent({ tx, offchainMeta, isProposal }) {
+    return this.http.post(`/api/research-content/ref/publish`, { tx, offchainMeta, isProposal });
   }
 
   getResearchContentByResearch(researchExternalId) {
-    return this.http.get(`/content/research/${researchExternalId}`);
+    return this.http.get(`/api/research-content/research/${researchExternalId}`);
   }
 
-  createDarContent(researchExternalId) {
-    return this.http.post(`/content/dar/${researchExternalId}`, {});
+  createResearchContentDraftDar(researchExternalId) {
+    return this.http.post(`/api/research-content/texture/${researchExternalId}`, {});
+  }
+  
+  deleteResearchContentDraft(refId) {
+    return this.http.delete_(`/api/research-content/ref/${refId}`);
   }
 
-  deleteContentDraft(refId) {
-    return this.http.delete_(`/content/refs/${refId}`);
+  unlockResearchContentDraft(refId) {
+    return this.http.put(`/api/research-content/ref/unlock/${refId}`, {});
   }
 
-  unlockContentDraft(refId) {
-    return this.http.put(`/content/refs/unlock/${refId}`, {});
+  uploadResearchContentPackage(researchExternalId, formData) {
+    return this.http.post(`/api/research-content/package`, formData, {
+      headers: {
+        'Research-External-Id': researchExternalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
+  
 }
 
 export {

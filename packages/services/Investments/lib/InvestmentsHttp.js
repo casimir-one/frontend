@@ -31,6 +31,22 @@ class InvestmentsHttp extends Singleton {
   updateInvestmentPortfolio(username, updated) {
     return this.http.put(`/api/investment-portfolio/${username}`, updated);
   }
+
+  getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {
+    return this.http.get(`/api/history/account/${account}/${symbol}/${step}/${cursor}/asset/${targetAsset}`);
+  }
+
+  getAccountRevenueHistory(account, cursor) {
+    return this.http.get(`/api/history/account/${account}/${cursor}`);
+  }
+
+  getAssetRevenueHistory(symbol, cursor) {
+    return this.http.get(`/api/history/symbol/${symbol}/${cursor}`);
+  }
+
+  getCurrentTokenSaleByResearch(researchId) {
+    return this.http.get(`/api/contributions/researchId/${researchId}`);
+  }
 }
 
 export {

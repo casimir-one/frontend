@@ -28,12 +28,6 @@ class ResearchService extends Singleton {
   }
 
   /* [DEPRECATED] */
-  getResearchByAbsolutePermlink(groupPermlink, researchPermlink) {
-    return deipRpc.api.getResearchByAbsolutePermlinkAsync(groupPermlink, researchPermlink)
-      .then((research) => this.getResearch(research.external_id));
-  }
-
-  /* [DEPRECATED] */
   getResearchById(researchId) {
     return deipRpc.api.getResearchByIdAsync(researchId)
       .then((research) => this.getResearch(research.external_id))
@@ -704,7 +698,7 @@ class ResearchService extends Singleton {
 
   /* TODO: Move this to ResearchContentService */
   async getResearchContentOuterReferences(researchContent, acc) {
-    const outerReferences = await deipRpc.api.getContentsReferToContentAsync(researchContent.id);
+    const outerReferences = await deipRpc.api.getContentsReferToContent2Async(researchContent.external_id);
 
     for (let i = 0; i < outerReferences.length; i++) {
       const item = outerReferences[i];
@@ -712,6 +706,7 @@ class ResearchService extends Singleton {
         trx_id, block, timestamp, op
       } = item;
       const [opName, payload] = op;
+      
       const {
         research_id: researchId,
         research_content_id: researchContentId,
@@ -723,8 +718,7 @@ class ResearchService extends Singleton {
       const outerRefResearchGroup = await this.researchGroupService.getResearchGroupById(outerRefResearch.research_group_id);
       const outerRefResearchContent = await this.researchContentService.getResearchContentById(researchContentId);
 
-      const hash = outerRefResearchContent.content;
-      const ref = await this.researchContentService.getContentRefByHash(outerRefResearch.external_id, hash);
+      const ref = await this.researchContentService.getResearchContentRef(outerRefResearchContent.external_id);
 
       const authorsProfiles = await this.usersService.getEnrichedProfiles(outerRefResearchContent.authors);
 
@@ -745,7 +739,7 @@ class ResearchService extends Singleton {
 
   /* TODO: Move this to ResearchContentService */
   async getResearchContentInnerReferences(researchContent, acc) {
-    const innerReferences = await deipRpc.api.getContentReferencesAsync(researchContent.id);
+    const innerReferences = await deipRpc.api.getContentReferences2Async(researchContent.external_id);
 
     for (let i = 0; i < innerReferences.length; i++) {
       const item = innerReferences[i];
@@ -753,7 +747,7 @@ class ResearchService extends Singleton {
         trx_id, block, timestamp, op
       } = item;
       const [opName, payload] = op;
-
+      
       const {
         research_id: researchId,
         research_content_id: researchContentId,
@@ -765,8 +759,7 @@ class ResearchService extends Singleton {
       const innerRefResearchGroup = await this.researchGroupService.getResearchGroupById(innerRefResearch.research_group_id);
       const innerRefResearchContent = await this.researchContentService.getResearchContentById(referenceResearchContentId);
 
-      const hash = innerRefResearchContent.content;
-      const ref = await this.researchContentService.getContentRefByHash(innerRefResearch.external_id, hash);
+      const ref = await this.researchContentService.getResearchContentRef(innerRefResearchContent.external_id);
 
       const authorsProfiles = await this.usersService.getEnrichedProfiles(innerRefResearchContent.authors);
 
@@ -790,8 +783,7 @@ class ResearchService extends Singleton {
     const research = await this.getResearchById(researchContent.research_id);
     const researchGroup = await this.researchGroupService.getResearchGroupById(research.research_group_id);
 
-    const hash = researchContent.content;
-    const ref = await this.researchContentService.getContentRefByHash(research.external_id, hash);
+    const ref = await this.researchContentService.getResearchContentRef(researchContent.external_id);
 
     const authorsProfiles = await this.usersService.getEnrichedProfiles(researchContent.authors);
 
