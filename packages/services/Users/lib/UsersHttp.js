@@ -30,9 +30,13 @@ class UsersHttp extends Singleton {
     return this.http.get(`/api/users/group/${researchGroupExternalId}`);
   }
 
+  getUsersByTenant(tenantId) {
+    return this.http.get(`/api/users/tenant/${tenantId}`);
+  }
+
   getUsersListing(status) {
     const query = qs.stringify({ status });
-    return this.http.get(`/api/users/list?${query}`);
+    return this.http.get(`/api/users/listing?${query}`);
   }
 
 }

@@ -434,6 +434,13 @@ export default [{
 },
 {
   "api": "database_api",
+  "method": "get_research_licenses",
+  "params": [
+    "external_ids",
+  ]
+},
+{
+  "api": "database_api",
   "method": "get_research_licenses_by_licensee",
   "params": [
     "licensee",
