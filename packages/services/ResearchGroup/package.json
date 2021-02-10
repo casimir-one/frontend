@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-group-service",
-  "version": "1.81.0",
+  "version": "1.82.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -21,13 +21,13 @@
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "1.78.0",
-    "@deip/blockchain-service": "1.81.0",
+    "@deip/blockchain-service": "1.82.0",
     "@deip/http-service": "1.78.0",
-    "@deip/proposals-service": "1.81.0",
-    "@deip/research-content-service": "1.81.0",
-    "@deip/rpc-client": "1.81.0",
+    "@deip/proposals-service": "1.82.0",
+    "@deip/research-content-service": "1.82.0",
+    "@deip/rpc-client": "1.82.0",
     "@deip/toolbox": "1.78.0",
-    "@deip/users-service": "1.81.0",
+    "@deip/users-service": "1.82.0",
     "lodash": "^4.17.5"
   },
   "peerDependencies": {

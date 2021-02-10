@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.82.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.81.0...v1.82.0) (2021-02-10)
+
+
+### Features
+
+* **@deip/express-licensing-service:** Express licensing fixed ([4a81f8d](https://gitlab.com/DEIP/deip-rpc/commit/4a81f8d80fdb1729e047db719be27440c278c946))
+
+
+
+
+
 # [1.81.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.80.0...v1.81.0) (2021-02-08)
 
 
