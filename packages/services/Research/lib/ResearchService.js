@@ -78,6 +78,10 @@ class ResearchService extends Singleton {
     return this.researchHttp.getResearchGroupResearchListing(researchGroupExternalId);
   }
 
+  getTenantResearchListing(tenantId) {
+    return this.researchHttp.getTenantResearchListing(tenantId);
+  }
+
   createResearch({ privKey, username }, isProposal, formData, isTokenized = true) {
 
     const onchainData = JSON.parse(formData.get("onchainData"));

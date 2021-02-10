@@ -20,14 +20,14 @@ class ExpressLicensingService extends Singleton {
     terms,
     fee,
     expirationDate
-  }, { licencePlan }) {
+  }, { licensePlan }) {
 
-    const offchainMeta = { licencePlan };
+    const offchainMeta = { licensePlan };
     const termsHash = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(terms).buffer));
 
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),
-      researchService.getResearch(researchExternalId)
+      this.researchService.getResearch(researchExternalId)
     ])
       .then(([refBlock, research]) => {
 

@@ -28,6 +28,10 @@ class ResearchHttp extends Singleton {
     return this.http.get(`/api/research/group/listing/${researchGroupExternalId}`);
   }
 
+  getTenantResearchListing(tenantId) {
+    return this.http.get(`/api/research/tenant/listing/${tenantId}`);
+  }
+
   createResearch({ researchExternalId, formData }) {
     return this.http.post('/api/research', formData, {
       headers: {
@@ -79,7 +83,7 @@ class ResearchHttp extends Singleton {
   getResearchApplications({ status, researcher }) {
     let query = status ? `?status=${status}` : '';
     query = researcher ? query ? `${query}&researcher=${researcher}` : `?researcher=${researcher}` : query;
-    return this.http.get(`/api/research/application/list${query}`);
+    return this.http.get(`/api/research/application/listing${query}`);
   }
 
   getResearchPendingInvites(researchExternalId) {

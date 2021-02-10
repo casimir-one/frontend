@@ -70,6 +70,10 @@ class UsersService extends Singleton {
   getUsersListing(status) {
     return this.usersHttp.getUsersListing(status || "");
   }
+
+  getUsersByTenant(tenantId) {
+    return this.usersHttp.getUsersByTenant(tenantId);
+  }
 }
 
 export {
