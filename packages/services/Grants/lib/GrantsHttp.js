@@ -19,6 +19,15 @@ class GrantsHttp extends Singleton {
   getApplicationsRefsByFoa(foaId) {
     return this.http.get(`/applications/refs/foa/${foaId}`);
   }
+
+  createGrantAwardWithdrawalRequest(researchExternalId, formData) {
+    return this.http.post(`/api/award-withdrawal-requests/upload-attachments`, formData, {
+      headers: {
+        'Research-External-Id': researchExternalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
 }
 
 export {

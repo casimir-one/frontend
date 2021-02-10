@@ -97,26 +97,22 @@ class GrantsService extends Singleton {
       extensions);
   }
 
-  createAwardWithdrawalRequest(privKey, {
-    paymentNumber,
-    awardNumber,
-    subawardNumber,
-    requester,
-    amount,
-    description,
-    attachment,
-    extensions
-  }) {
-    return deipRpc.broadcast.createAwardWithdrawalRequestAsync(
-      privKey,
-      paymentNumber,
-      awardNumber,
-      subawardNumber,
-      requester,
-      amount,
-      description,
-      attachment,
-      extensions);
+  createAwardWithdrawalRequest({ privKey, username }, form) {
+    return this.grantsHttp.createGrantAwardWithdrawalRequest(form.get('researchExternalId'), form)
+      .then((res) => {
+        const { hash } = res;
+        return deipRpc.broadcast.createAwardWithdrawalRequestAsync(
+          privKey,
+          form.get('paymentNumber'),
+          form.get('awardNumber'),
+          form.get('subawardNumber'),
+          form.get('requester'),
+          form.get('amount'),
+          form.get('description'),
+          hash,
+          []
+        );
+      })
   }
 
 
@@ -352,6 +348,7 @@ class GrantsService extends Singleton {
     }
     return ascendants;
   }
+
 }
 
 export {
