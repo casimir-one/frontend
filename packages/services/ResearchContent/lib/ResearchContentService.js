@@ -75,8 +75,12 @@ class ResearchContentService extends Singleton {
       .then((researchContent) => this.getResearchContent(researchContent.external_id))
   }
 
-  getResearchContentByResearch(researchExternalId) {
-    return this.researchContentHttp.getResearchContentByResearch(researchExternalId);
+  getResearchContentAndDraftsByResearch(researchExternalId) {
+    return this.researchContentHttp.getResearchContentAndDraftsByResearch(researchExternalId);
+  }
+  
+  getResearchContentsByTenant(tenantId) {
+    return this.researchContentHttp.getResearchContentsByTenant(tenantId);
   }
 
   getResearchContentRef(refId) {
@@ -97,6 +101,10 @@ class ResearchContentService extends Singleton {
 
   uploadResearchContentPackage(researchExternalId, formData) {
     return this.researchContentHttp.uploadResearchContentPackage(researchExternalId, formData);
+  }
+
+  getPublicResearchContentListing() {
+    return this.researchContentHttp.getPublicResearchContentListing();
   }
 
   /* [DEPRECATED] */

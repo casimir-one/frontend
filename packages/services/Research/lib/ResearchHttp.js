@@ -1,4 +1,3 @@
-import deipRpc from '@deip/rpc-client';
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
 import qs from 'qs';
@@ -39,6 +38,10 @@ class ResearchHttp extends Singleton {
         'Content-Type': 'multipart/form-data'
       }
     });
+  }
+
+  deleteResearch(externalId) {
+    return this.http.delete_(`/api/research/${externalId}`);
   }
 
   updateResearch({ researchExternalId, formData }) {

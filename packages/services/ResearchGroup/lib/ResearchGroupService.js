@@ -217,6 +217,10 @@ class ResearchGroupService extends Singleton {
     return this.researchGroupHttp.getResearchGroupsByUser(user)
   }
 
+  getResearchGroupsByTenant(tenantId) {
+    return this.researchGroupHttp.getResearchGroupsByTenant(tenantId)
+  }
+
   /* [DEPRECATED] use getResearchGroupsByUser(username) */
   getTeamsByUser(username) {
     return deipRpc.api.getResearchGroupTokensByAccountAsync(username)

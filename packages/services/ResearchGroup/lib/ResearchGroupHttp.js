@@ -58,6 +58,10 @@ class ResearchGroupHttp extends Singleton {
     return this.http.get(`/api/groups/listing?${query}`);
   }
 
+  getResearchGroupsByTenant(tenantId) {
+    return this.http.get(`/api/groups/tenant/${tenantId}`);
+  }
+
 }
 
 export {
