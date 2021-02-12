@@ -20,7 +20,7 @@ class ResearchContentHttp extends Singleton {
     return this.http.post(`/api/research-content/ref/publish`, { tx, offchainMeta, isProposal });
   }
 
-  getResearchContentByResearch(researchExternalId) {
+  getResearchContentAndDraftsByResearch(researchExternalId) {
     return this.http.get(`/api/research-content/research/${researchExternalId}`);
   }
 
@@ -43,6 +43,14 @@ class ResearchContentHttp extends Singleton {
         'Content-Type': 'multipart/form-data'
       }
     });
+  }
+
+  getResearchContentsByTenant(tenantId) {
+    return this.http.get(`/api/research-content/tenant/${tenantId}`);
+  }
+
+  getPublicResearchContentListing() {
+    return this.http.get(`/api/research-content/listing`);
   }
   
 }

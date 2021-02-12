@@ -8,8 +8,8 @@ class TenantHttp extends Singleton {
     return this.http.get(`/tenant/${tenantId}`);
   }
 
-  getNetworkInfo() {
-    return this.http.get(`/api/network/info`);
+  getNetworkTenants() {
+    return this.http.get(`/api/network/tenants`);
   }
 
   updateTenantProfile(updatedProfile) {

@@ -37,14 +37,16 @@ class ResearchService extends Singleton {
     searchTerm,
     disciplines,
     organizations,
-    researchAttributes
+    researchAttributes,
+    tenantIds
   }) {
 
     const filter = {
       searchTerm: searchTerm || "",
       disciplines: disciplines || [],
       organizations: organizations || [],
-      researchAttributes: researchAttributes || []
+      researchAttributes: researchAttributes || [],
+      tenantIds: tenantIds || []
     };
 
     return this.researchHttp.getPublicResearchListing(filter);
@@ -452,6 +454,10 @@ class ResearchService extends Singleton {
       })
   }
 
+  deleteResearch(externalId) {
+    return this.researchHttp.deleteResearch(externalId);
+  }
+
   createResearchApplication(researcherPrivKey, formData) {
 
     const researcher = formData.get("researcher");
@@ -719,6 +725,9 @@ class ResearchService extends Singleton {
       } = payload;
 
       const outerRefResearch = await this.getResearchById(researchId);
+      if (!outerRefResearch) {
+        continue; // deleted research\content
+      }
       const outerRefResearchGroup = await this.researchGroupService.getResearchGroupById(outerRefResearch.research_group_id);
       const outerRefResearchContent = await this.researchContentService.getResearchContentById(researchContentId);
 
@@ -760,6 +769,10 @@ class ResearchService extends Singleton {
       } = payload;
 
       const innerRefResearch = await this.getResearchById(referenceResearchId);
+      if (!innerRefResearch) {
+        continue; // deleted research\content
+      }
+      
       const innerRefResearchGroup = await this.researchGroupService.getResearchGroupById(innerRefResearch.research_group_id);
       const innerRefResearchContent = await this.researchContentService.getResearchContentById(referenceResearchContentId);
 
