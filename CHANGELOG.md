@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.85.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.84.0...v1.85.0) (2021-02-15)
+
+
+### Features
+
+* **@deip/tenant-service:** Tenants network api ([83eb7d3](https://gitlab.com/DEIP/deip-client-modules/commit/83eb7d335bd44cebd0b5afa3f57d0a4100b6d96c))
+
+
+
+
+
 # [1.84.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.83.0...v1.84.0) (2021-02-12)
 
 
