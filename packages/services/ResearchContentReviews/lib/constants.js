@@ -1,4 +1,4 @@
-import { RESEARCH_TYPES } from '@deip/research-service';
+import { RESEARCH_TYPES } from '@deip/research-content-service';
 import { createEnum } from '@deip/toolbox';
 
 const ASSESSMENT_CRITERIA_TYPE = createEnum({

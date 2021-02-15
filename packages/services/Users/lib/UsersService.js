@@ -36,37 +36,6 @@ class UsersService extends Singleton {
     return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
   }
 
-  /* [DEPRECATED] use researchGroupService.getResearchGroupsByUser(username) */
-  getUserTeams(username) {
-    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
-      .then((data) => data.map((g) => g.research_group.external_id));
-  }
-
-  /* [DEPRECATED] */
-  getUsersTeams(users) {
-    return Promise.all(
-      users.map((u) => this.getUserTeams(u))
-    ).then((data) => data.map((teams, i) => ({
-      username: users[i],
-      teams
-    })));
-  }
-
-  /* [DEPRECATED] use getUsersByResearchGroup(researchGroupExternalId) */
-  getUsersByTeam(teamId) {
-    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
-      .then((tokens) => this.getEnrichedProfiles(tokens.map((t) => t.owner)));
-  }
-
-  /* [DEPRECATED] use getUsers */
-  getEnrichedProfiles(users) {
-    return Promise.all([
-      deipRpc.api.getAccountsAsync(users),
-      this.usersHttp.getUsersProfiles(users),
-      this.getUsersTeams(users)
-    ]).then(([accounts, profiles, teams]) => mapUsersData(accounts, profiles, teams));
-  }
-
   getUsersListing(status) {
     return this.usersHttp.getUsersListing(status || "");
   }

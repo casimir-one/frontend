@@ -5,6 +5,7 @@ import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 import { ResearchGroupHttp } from './ResearchGroupHttp';
+import { UsersService } from '@deip/users-service';
 
 class ResearchGroupService extends Singleton {
   researchGroupHttp = ResearchGroupHttp.getInstance();
@@ -14,6 +15,8 @@ class ResearchGroupService extends Singleton {
   blockchainService = BlockchainService.getInstance();
 
   proposalsService = ProposalsService.getInstance();
+
+  usersService = UsersService.getInstance();
 
   _mapResearchGroup(rg) {
     return { ...rg };
@@ -183,22 +186,10 @@ class ResearchGroupService extends Singleton {
     return this.researchGroupHttp.getResearchGroupPendingInvites(researchGroupExternalId);
   }
 
-  /* [DEPRECATED] */
-  getResearchGroupById(groupId) {
-    return deipRpc.api.getResearchGroupByIdAsync(groupId)
-      .then((researchGroup) => this.getResearchGroup(researchGroup.external_id));
-  }
-
-  /* [DEPRECATED] use usersService.getUsersByResearchGroup(teamId) */
-  getTeamMembers(teamId) {
-    return deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
-      .then((tokens) => tokens.map((t) => t.owner));
-  }
-
   getResearchGroup(teamId) {
     return Promise.all([
       this.researchGroupHttp.getResearchGroup(teamId),
-      this.getTeamMembers(teamId)
+      this.usersService.getUsersByResearchGroup(teamId)
     ]).then(([group, members]) => ({
       ...group,
       members
@@ -213,18 +204,12 @@ class ResearchGroupService extends Singleton {
     return this.researchGroupHttp.getResearchGroupsListing(personal);
   }
 
-  getResearchGroupsByUser(user) {
-    return this.researchGroupHttp.getResearchGroupsByUser(user)
+  getTeamsByUser(user) {
+    return this.researchGroupHttp.getTeamsByUser(user)
   }
 
   getResearchGroupsByTenant(tenantId) {
     return this.researchGroupHttp.getResearchGroupsByTenant(tenantId)
-  }
-
-  /* [DEPRECATED] use getResearchGroupsByUser(username) */
-  getTeamsByUser(username) {
-    return deipRpc.api.getResearchGroupTokensByAccountAsync(username)
-      .then((data) => this.getResearchGroups(data.map((g) => g.research_group.external_id)));
   }
 
   getJoinRequestsByGroup(groupId) {
@@ -241,11 +226,6 @@ class ResearchGroupService extends Singleton {
 
   updateJoinRequest(update) {
     return this.researchGroupHttp.updateJoinRequest(update);
-  }
-
-  /* [DEPRECATED] */
-  checkResearchGroupExistenceByPermlink(name) {
-    return deipRpc.api.checkResearchGroupExistenceByPermlinkAsync(name);
   }
 }
 
