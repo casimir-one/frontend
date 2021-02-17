@@ -1,19 +1,19 @@
 {
   "name": "@deip/users-module",
-  "version": "1.82.0",
+  "version": "1.85.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
   "main": "index.js",
   "dependencies": {
-    "@deip/access-service": "1.78.0",
-    "@deip/app-config-service": "1.78.0",
-    "@deip/proxydi": "1.78.0",
-    "@deip/toolbox": "1.78.0",
-    "@deip/users-service": "1.82.0",
-    "@deip/validation-plugin": "1.79.1",
-    "@deip/vuetify-extended": "1.78.0"
+    "@deip/access-service": "1.85.1",
+    "@deip/app-config-service": "1.85.1",
+    "@deip/proxydi": "1.85.1",
+    "@deip/toolbox": "1.85.1",
+    "@deip/users-service": "1.85.1",
+    "@deip/validation-plugin": "1.85.1",
+    "@deip/vuetify-extended": "1.85.1"
   },
   "peerDependencies": {
     "vuetify": "^2.4.2",

@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.82.0",
+  "version": "1.85.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -26,8 +26,8 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/app-config-service": "1.78.0",
-    "@deip/proxydi": "1.78.0",
+    "@deip/app-config-service": "1.85.1",
+    "@deip/proxydi": "1.85.1",
     "@deip/rpc-client": "1.82.0",
     "axios": "^0.21.1"
   }
