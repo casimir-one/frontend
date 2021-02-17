@@ -10,12 +10,13 @@ class ProposalsService extends Singleton {
   accessService = AccessService.getInstance();
   blockchainService = BlockchainService.getInstance();
 
-  createProposal({ privKey, username, isApproved = true }, propagate, {
+  createProposal({ privKey, username }, propagate, {
     creator,
     proposedOps,
     expirationTime,
     reviewPeriodSeconds,
-    extensions
+    extensions,
+    approvers = [username]
   },
     refBlock = {},
     preOps = [],
@@ -34,14 +35,16 @@ class ProposalsService extends Singleton {
           proposed_ops: proposedOps,
           expiration_time: expirationTime,
           review_period_seconds: reviewPeriodSeconds,
-          extensions
+          extensions: extensions
         }], refBlock);
 
-        if (isApproved) {
+        const approvalsToAdd = approvers || [];
 
+        for (let i = 0; i < approvalsToAdd.length; i++) {
+          const name = approvalsToAdd[i];
           const update_proposal_op = ['update_proposal', {
             external_id: proposal_external_id,
-            active_approvals_to_add: [username],
+            active_approvals_to_add: [name],
             active_approvals_to_remove: [],
             owner_approvals_to_add: [],
             owner_approvals_to_remove: [],
@@ -49,7 +52,6 @@ class ProposalsService extends Singleton {
             key_approvals_to_remove: [],
             extensions: []
           }];
-
           postOps.unshift(update_proposal_op);
         }
 
