@@ -66,12 +66,12 @@ ChainTypes.operations = {
   reject_award_withdrawal_request: 43,
   pay_award_withdrawal_request: 44,
 
-  create_nda_contract: 45,
+  create_research_nda: 45,
   sign_nda_contract: 46,
   decline_nda_contract: 47,
   close_nda_contract: 48,
-  create_request_by_nda_contract: 49,
-  fulfill_request_by_nda_contract: 50,
+  create_nda_content_access_request: 49,
+  fulfill_nda_content_access_request: 50,
 
   create_assessment: 51,
   create_research_license: 52,

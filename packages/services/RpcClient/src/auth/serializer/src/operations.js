@@ -687,22 +687,19 @@ const pay_award_withdrawal_request = new Serializer("pay_award_withdrawal_reques
 });
 
 
-const create_nda_contract = new Serializer("create_nda_contract", {
-  contract_creator: string,
-  party_a: string,
-  party_a_research_group_id: int64,
-  party_b: string,
-  party_b_research_group_id: int64,
-  disclosing_party: set(string),
-  title: string,
-  contract_hash: string,
-  start_date: optional(time_point_sec),
-  end_date: time_point_sec,
+const create_research_nda = new Serializer("create_research_nda", {
+  external_id: string,
+  creator: string,
+  parties: set(string),
+  description: string,
+  research_external_id: string,
+  start_time: optional(time_point_sec),
+  end_time: time_point_sec,
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 
-const sign_nda_contract = new Serializer("sign_nda_contract", {
+const sign_nda_contract = new Serializer("sign_nda_contract", { // DEPRECATED
   contract_id: int64,
   contract_signer: string,
   signature: string,
@@ -710,34 +707,35 @@ const sign_nda_contract = new Serializer("sign_nda_contract", {
 });
 
 
-const decline_nda_contract = new Serializer("decline_nda_contract", {
+const decline_nda_contract = new Serializer("decline_nda_contract", { // DEPRECATED
   contract_id: int64,
   decliner: string,
   extensions: set(future_extensions)
 });
 
 
-const close_nda_contract = new Serializer("close_nda_contract", {
+const close_nda_contract = new Serializer("close_nda_contract", { // DEPRECATED
   contract_id: int64,
   closer: string,
   extensions: set(future_extensions)
 });
 
 
-const create_request_by_nda_contract = new Serializer("create_request_by_nda_contract", {
+const create_nda_content_access_request = new Serializer("create_nda_content_access_request", {
+  external_id: string,
+  nda_external_id: string,
   requester: string,
   encrypted_payload_hash: string,
   encrypted_payload_iv: string,
-  contract_id: int64,
   extensions: set(future_extensions)
-});
+}, { entity_external_id: "external_id" });
 
 
-const fulfill_request_by_nda_contract = new Serializer("fulfill_request_by_nda_contract", {
+const fulfill_nda_content_access_request = new Serializer("fulfill_nda_content_access_request", {
+  external_id: string,
   grantor: string,
   encrypted_payload_encryption_key: string,
   proof_of_encrypted_payload_encryption_key: string,
-  request_id: int64,
   extensions: set(future_extensions)
 });
 
@@ -973,12 +971,12 @@ operation.st_operations = [
   reject_award_withdrawal_request, // 43
   pay_award_withdrawal_request, // 44
 
-  create_nda_contract, // 45
-  sign_nda_contract, // 46
-  decline_nda_contract, // 47
-  close_nda_contract, // 48
-  create_request_by_nda_contract, // 49
-  fulfill_request_by_nda_contract, // 50
+  create_research_nda, // 45
+  sign_nda_contract, // 46 DEPRECATED
+  decline_nda_contract, // 47 DEPRECATED
+  close_nda_contract, // 48 DEPRECATED
+  create_nda_content_access_request, // 49
+  fulfill_nda_content_access_request, // 50
   create_assessment, // 51
   create_research_license, // 52
 

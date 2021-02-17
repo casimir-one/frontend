@@ -76,13 +76,13 @@ class ProposalsService extends Singleton {
 
     const operation = ['update_proposal', {
       external_id: externalId,
-      active_approvals_to_add: activeApprovalsToAdd,
-      active_approvals_to_remove: activeApprovalsToRemove,
-      owner_approvals_to_add: ownerApprovalsToAdd,
-      owner_approvals_to_remove: ownerApprovalsToRemove,
-      key_approvals_to_add: keyApprovalsToAdd,
-      key_approvals_to_remove: keyApprovalsToRemove,
-      extensions
+      active_approvals_to_add: activeApprovalsToAdd || [],
+      active_approvals_to_remove: activeApprovalsToRemove || [],
+      owner_approvals_to_add: ownerApprovalsToAdd || [],
+      owner_approvals_to_remove: ownerApprovalsToRemove || [],
+      key_approvals_to_add: keyApprovalsToAdd || [],
+      key_approvals_to_remove: keyApprovalsToRemove || [],
+      extensions: extensions || []
     }];
 
     return this.blockchainService.signOperations([operation], privKey)

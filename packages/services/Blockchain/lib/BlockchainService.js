@@ -65,6 +65,11 @@ class BlockchainService extends Singleton {
     });
   }
 
+  async signTransaction(unsignedTX, privKey) {
+    const signedTX = await deipRpc.auth.signTransaction(unsignedTX, { owner: privKey });
+    return signedTX;
+  }
+
   async getTransactionHex(trx) {
     return new Promise((resolve, reject) => {
       deipRpc.api.getTransactionHex(trx, (err, result) => {

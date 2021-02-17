@@ -10,27 +10,27 @@ class ExpressLicensingHttp extends Singleton {
   }
 
   getResearchLicense(externalId) {
-    return this.http.post(`/api/express-licensing/externalId/${externalId}`);
+    return this.http.get(`/api/express-licensing/externalId/${externalId}`);
   }
 
   getResearchLicensesByLicensee(licensee) {
-    return this.http.post(`/api/express-licensing/licensee/${licensee}`);
+    return this.http.get(`/api/express-licensing/licensee/${licensee}`);
   }
 
   getResearchLicensesByLicenser(licenser) {
-    return this.http.post(`/api/express-licensing/licenser/${licenser}`);
+    return this.http.get(`/api/express-licensing/licenser/${licenser}`);
   }
 
   getResearchLicensesByResearch(researchId) {
-    return this.http.post(`/api/express-licensing/researchId/${researchId}`);
+    return this.http.get(`/api/express-licensing/researchId/${researchId}`);
   }
 
   getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
-    return this.http.post(`/api/express-licensing/licensee/${licensee}/researchId/${researchId}`);
+    return this.http.get(`/api/express-licensing/licensee/${licensee}/researchId/${researchId}`);
   }
 
   getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
-    return this.http.post(`/api/express-licensing/licensee/${licensee}/licenser/${licenser}`);
+    return this.http.get(`/api/express-licensing/licensee/${licensee}/licenser/${licenser}`);
   }
 }
 

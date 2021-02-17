@@ -1144,77 +1144,51 @@ export default [{
 // NDA Contracts
 {
   "api": "database_api",
-  "method": "get_nda_contract",
+  "method": "get_research_nda",
   "params": [
-    "id"
+    "external_id"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_creator",
+  "method": "get_research_nda_by_creator",
   "params": [
     "creator"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_signee",
-  "params": [
-    "signee"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_nda_contracts_by_hash",
+  "method": "get_research_nda_by_hash",
   "params": [
     "hash"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_creator_research_group",
+  "method": "get_research_nda_by_research",
   "params": [
-    "research_group_id"
+    "external_id"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_signee_research_group",
+  "method": "get_nda_contract_content_access_request",
   "params": [
-    "research_group_id"
+    "external_id"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_creator_research_group_and_contract_hash",
+  "method": "get_nda_contract_content_access_requests_by_nda",
   "params": [
-    "research_group_id",
-    "hash"
+    "nda_external_id"
   ]
 },
 {
   "api": "database_api",
-  "method": "get_nda_contracts_by_signee_research_group_and_contract_hash",
+  "method": "get_nda_contract_content_access_requests_by_requester",
   "params": [
-    "research_group_id",
-    "hash"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_nda_contracts_by_creator_research_group_and_signee_research_group",
-  "params": [
-    "creator_research_group_id",
-    "signee_research_group_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_nda_contracts_by_creator_research_group_and_signee_research_group_and_contract_hash",
-  "params": [
-    "creator_research_group_id",
-    "signee_research_group_id",
-    "hash"
+    "requester"
   ]
 },
 
