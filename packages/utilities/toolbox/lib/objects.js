@@ -17,7 +17,7 @@ export const mergeDeep = (source = {}, target = {}) => {
     }
   }
 
-  return source;
+  return res;
 };
 
 export const deepFreeze = (obj) => {
