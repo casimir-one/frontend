@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.87.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.86.0...v1.87.0) (2021-02-17)
+
+
+### Features
+
+* **@deip/research-nda-service:** NDA signatures ([9a76a45](https://gitlab.com/DEIP/deip-client-modules/commit/9a76a45ed4160707e44c51049e81d67430532799))
+
+
+
+
+
 # [1.86.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.85.1...v1.86.0) (2021-02-17)
 
 
