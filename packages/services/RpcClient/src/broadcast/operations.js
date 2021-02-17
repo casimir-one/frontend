@@ -509,20 +509,18 @@ module.exports = [{
     "amount",
     "extensions"
   ]
-}, {
+},
+{
   "roles": ["active", "owner"],
-  "operation": "create_nda_contract",
+  "operation": "create_research_nda",
   "params": [
-    "contract_creator",
-    "party_a",
-    "party_a_research_group_id",
-    "party_b",
-    "party_b_research_group_id",
-    "disclosing_party",
-    "title",
-    "contract_hash",
-    "start_date",
-    "end_date",
+    "external_id",
+    "creator",
+    "parties",
+    "description",
+    "research_external_id",
+    "start_time",
+    "end_time",
     "extensions"
   ]
 }, {
@@ -552,22 +550,23 @@ module.exports = [{
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "create_request_by_nda_contract",
+  "operation": "create_nda_content_access_request",
   "params": [
+    "external_id",
+    "nda_external_id",
     "requester",
     "encrypted_payload_hash",
     "encrypted_payload_iv",
-    "contract_id",
     "extensions"
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "fulfill_request_by_nda_contract",
+  "operation": "fulfill_nda_content_access_request",
   "params": [
+    "external_id",
     "grantor",
     "encrypted_payload_encryption_key",
     "proof_of_encrypted_payload_encryption_key",
-    "request_id",
     "extensions"
   ]
 }, {
