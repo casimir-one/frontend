@@ -16,7 +16,8 @@ class ResearchNdaService extends Singleton {
     researchExternalId,
     startTime,
     endTime,
-    extensions
+    extensions,
+    tenant
   }) {
 
     const offchainMeta = {};
@@ -40,7 +41,8 @@ class ResearchNdaService extends Singleton {
           proposedOps: [{ "op": create_research_nda_op }],
           expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
           reviewPeriodSeconds: undefined,
-          extensions: []
+          extensions: [],
+          approvers: [creator, tenant]
         }
 
         return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
