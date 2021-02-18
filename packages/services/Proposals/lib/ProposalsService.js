@@ -1,7 +1,7 @@
 import deipRpc from '@deip/rpc-client';
 import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
-
+import { proxydi } from '@deip/proxydi';
 import { Singleton } from '@deip/toolbox';
 import { ProposalsHttp } from './ProposalsHttp';
 
@@ -9,6 +9,7 @@ class ProposalsService extends Singleton {
   proposalsHttp = ProposalsHttp.getInstance();
   accessService = AccessService.getInstance();
   blockchainService = BlockchainService.getInstance();
+  proxydi = proxydi;
 
   createProposal({ privKey, username }, propagate, {
     creator,
@@ -55,7 +56,8 @@ class ProposalsService extends Singleton {
           postOps.unshift(update_proposal_op);
         }
 
-        return this.blockchainService.signOperations([...preOps, create_proposal_op, ...postOps], privKey, refBlock)
+        const isTenantSign = approvalsToAdd.some(name => name == this.proxydi.get('env').TENANT);
+        return this.blockchainService.signOperations([...preOps, create_proposal_op, ...postOps], privKey, refBlock, isTenantSign)
           .then((signedTx) => {
             return propagate
               ? this.proposalsHttp.createProposal({ tx: signedTx })
@@ -67,27 +69,28 @@ class ProposalsService extends Singleton {
 
   updateProposal({ privKey, username }, {
     externalId,
-    activeApprovalsToAdd,
-    activeApprovalsToRemove,
-    ownerApprovalsToAdd,
-    ownerApprovalsToRemove,
-    keyApprovalsToAdd,
-    keyApprovalsToRemove,
-    extensions
+    activeApprovalsToAdd = [],
+    activeApprovalsToRemove = [],
+    ownerApprovalsToAdd = [],
+    ownerApprovalsToRemove = [],
+    keyApprovalsToAdd = [],
+    keyApprovalsToRemove = [],
+    extensions = []
   }, propagate = true) {
 
     const operation = ['update_proposal', {
       external_id: externalId,
-      active_approvals_to_add: activeApprovalsToAdd || [],
-      active_approvals_to_remove: activeApprovalsToRemove || [],
-      owner_approvals_to_add: ownerApprovalsToAdd || [],
-      owner_approvals_to_remove: ownerApprovalsToRemove || [],
-      key_approvals_to_add: keyApprovalsToAdd || [],
-      key_approvals_to_remove: keyApprovalsToRemove || [],
-      extensions: extensions || []
+      active_approvals_to_add: activeApprovalsToAdd,
+      active_approvals_to_remove: activeApprovalsToRemove,
+      owner_approvals_to_add: ownerApprovalsToAdd,
+      owner_approvals_to_remove: ownerApprovalsToRemove,
+      key_approvals_to_add: keyApprovalsToAdd,
+      key_approvals_to_remove: keyApprovalsToRemove,
+      extensions: extensions
     }];
 
-    return this.blockchainService.signOperations([operation], privKey)
+    const isTenantSign = [...activeApprovalsToAdd, ...activeApprovalsToRemove, ...ownerApprovalsToAdd, ...ownerApprovalsToRemove].some(name => name == this.proxydi.get('env').TENANT);
+    return this.blockchainService.signOperations([operation], privKey, {}, isTenantSign)
       .then((signedTx) => {
         return propagate
           ? this.proposalsHttp.updateProposal({ tx: signedTx })
@@ -109,7 +112,8 @@ class ProposalsService extends Singleton {
       extensions
     }];
     
-    return this.blockchainService.signOperations([operation], privKey)
+    const isTenantSign = [account].some(name => name == this.proxydi.get('env').TENANT);
+    return this.blockchainService.signOperations([operation], privKey, {}, isTenantSign)
       .then((signedTx) => {
         return propagate
           ? this.proposalsHttp.deleteProposal({ tx: signedTx })

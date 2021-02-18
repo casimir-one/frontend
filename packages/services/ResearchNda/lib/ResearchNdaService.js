@@ -17,11 +17,10 @@ class ResearchNdaService extends Singleton {
     startTime,
     endTime,
     extensions,
-    tenant
+    approvers
   }) {
 
     const offchainMeta = {};
-
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
 
@@ -35,14 +34,13 @@ class ResearchNdaService extends Singleton {
           extensions: extensions
         }], refBlock);
 
-
         const proposal = {
           creator: username,
           proposedOps: [{ "op": create_research_nda_op }],
-          expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+          expirationTime: endTime,
           reviewPeriodSeconds: undefined,
           extensions: [],
-          approvers: [creator, tenant]
+          approvers: approvers
         }
 
         return this.proposalsService.createProposal({ privKey, username }, false, proposal, refBlock)
@@ -50,7 +48,6 @@ class ResearchNdaService extends Singleton {
              return this.researchNdaHttp.createResearchNda({ tx: signedProposalTx, offchainMeta })
           })
       });
-
   }
 
   getResearchNda(externalId) {
