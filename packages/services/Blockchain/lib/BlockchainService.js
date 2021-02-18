@@ -1,9 +1,10 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
+import { BlockchainHttp } from './BlockchainHttp';
 
 class BlockchainService extends Singleton {
-
+  blockchainHttp = BlockchainHttp.getInstance();
   proxydi = proxydi;
 
   getRefBlockSummary() {
@@ -23,7 +24,7 @@ class BlockchainService extends Singleton {
       })
   }
 
-  signOperations(operations, privKey, refBlock = {}) {
+  signOperations(operations, privKey, refBlock = {}, isTenantSign = false) {
 
     const { refBlockNum, refBlockPrefix } = refBlock;
     const refBlockPromise = refBlockNum && refBlockPrefix
@@ -49,9 +50,14 @@ class BlockchainService extends Singleton {
           ref_block_prefix: refBlockPrefix
         };
 
-        const signedTX = deipRpc.auth.signTransaction(unsignedTX, { owner: privKey });
+        return isTenantSign 
+          ? this.blockchainHttp.signTxByTenant(unsignedTX) 
+          : Promise.resolve(unsignedTX);
+      })
+      .then((tx) => {
+        const signedTX = deipRpc.auth.signTransaction(tx, { owner: privKey });
         return signedTX;
-      });
+      })
   }
 
   async getTransaction(trxId) {
