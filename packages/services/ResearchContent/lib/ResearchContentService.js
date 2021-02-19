@@ -1,6 +1,7 @@
 import deipRpc from '@deip/rpc-client';
 import crypto from '@deip/lib-crypto';
 import { Singleton } from '@deip/toolbox';
+import { researchContentTypes } from './lists';
 import { ResearchContentHttp } from './ResearchContentHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
@@ -69,12 +70,6 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getResearchContent(externalId);
   }
 
-  /* [DEPRECATED] */
-  getResearchContentById(id) {
-    return deipRpc.api.getResearchContentByIdAsync(id)
-      .then((researchContent) => this.getResearchContent(researchContent.external_id))
-  }
-
   getResearchContentAndDraftsByResearch(researchExternalId) {
     return this.researchContentHttp.getResearchContentAndDraftsByResearch(researchExternalId);
   }
@@ -107,9 +102,12 @@ class ResearchContentService extends Singleton {
     return this.researchContentHttp.getPublicResearchContentListing();
   }
 
-  /* [DEPRECATED] */
-  checkResearchContentExistenceByPermlink(researchExternalId, title) {
-    return deipRpc.api.checkResearchContentExistenceByPermlinkAsync(researchExternalId, title)
+  getResearchContentReferencesGraph(contentId) {
+    return this.researchContentHttp.getResearchContentReferencesGraph(contentId);
+  }
+
+  getResearchContentType(type) {
+    return researchContentTypes.find((t) => t.type === type);
   }
 }
 

@@ -52,6 +52,10 @@ class ResearchContentHttp extends Singleton {
   getPublicResearchContentListing() {
     return this.http.get(`/api/research-content/listing`);
   }
+
+  getResearchContentReferencesGraph(contentId) {
+    return this.http.get(`/api/research-content/ref/graph/${contentId}`);
+  }
   
 }
 

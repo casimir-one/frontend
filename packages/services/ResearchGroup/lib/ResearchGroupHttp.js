@@ -21,7 +21,7 @@ class ResearchGroupHttp extends Singleton {
     return this.http.get(`/api/groups/${researchGroupExternalId}`);
   }
 
-  getResearchGroupsByUser(username) {
+  getTeamsByUser(username) {
     return this.http.get(`/api/groups/member/${username}`);
   }
   
