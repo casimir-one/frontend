@@ -99,8 +99,9 @@ Replace: authority.prototype.account_authority_map
 With: map((string), (uint16))
 */
 
-const tenant_marker = new Serializer("tenant_marker", {
+const tenant_affirmation = new Serializer("tenant_affirmation", {
   tenant: string,
+  signature: bytes(65),
   extensions: set(future_extensions)
 });
 
@@ -110,10 +111,9 @@ const signed_transaction = new Serializer("signed_transaction", {
   ref_block_prefix: uint32,
   expiration: time_point_sec,
   operations: array(operation),
-  extensions: set(static_variant([
-    tenant_marker
-  ])),
-  signatures: array(bytes(65))
+  extensions: set(future_extensions),
+  signatures: array(bytes(65)),
+  tenant_signature: optional(tenant_affirmation)
 });
 
 
@@ -987,17 +987,13 @@ operation.st_operations = [
   producer_reward
 ];
 
-let transaction = new Serializer(
-  "transaction", {
+const transaction = new Serializer("transaction", {
   ref_block_num: uint16,
   ref_block_prefix: uint32,
   expiration: time_point_sec,
   operations: array(operation),
-  extensions: set(static_variant([
-    tenant_marker
-  ])),
-}
-);
+  extensions: set(future_extensions)
+});
 
 //# -------------------------------
 //#  Generated code end  S T O P

@@ -5,6 +5,8 @@ import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+
 class InvestmentsService extends Singleton {
   investmentsHttp = InvestmentsHttp.getInstance();
   blockchainService = BlockchainService.getInstance();
@@ -39,7 +41,6 @@ class InvestmentsService extends Singleton {
   }) {
 
     const offchainMeta = {};
-    const expirationTime = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days
 
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
@@ -60,7 +61,7 @@ class InvestmentsService extends Singleton {
           const proposal = {
             creator: username,
             proposedOps: [{ "op": create_research_token_sale_op }],
-            expirationTime: expirationTime,
+            expirationTime: proposalExpiration,
             reviewPeriodSeconds: undefined,
             extensions: []
           }

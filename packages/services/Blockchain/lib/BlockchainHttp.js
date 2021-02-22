@@ -11,6 +11,11 @@ class BlockchainHttp extends Singleton {
   signTxByTenant(tx) {
     return this.http.post(`/api/infrastructure/tenant/sign`, { tx });
   }
+
+  affirmTxByTenant(tx) {
+    return this.http.post(`/api/infrastructure/tenant/affirm`, { tx });
+  }
+  
 }
 
 export {

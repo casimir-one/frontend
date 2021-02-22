@@ -305,7 +305,6 @@ class Deip extends EventEmitter {
                     const {
                         signed_transaction
                     } = ops;
-                    // console.log('-- broadcastTransactionSynchronous -->', JSON.stringify(signed_transaction.toObject(trx), null, 2));
                     // toObject converts objects into serializable types
                     const trObject = signed_transaction.toObject(trx);
                     const buf = signed_transaction.toBuffer(trx);

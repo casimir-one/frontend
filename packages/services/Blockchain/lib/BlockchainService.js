@@ -36,28 +36,25 @@ class BlockchainService extends Singleton {
         const nowPlus1Hour = new Date().getTime() + 3e6;
         const expire = new Date(nowPlus1Hour).toISOString().split('.')[0];
 
-        const unsignedTX = {
+        const tx = {
           expiration: expire,
-          extensions: [[
-            "tenant_marker",
-            {
-              tenant: this.proxydi.get('env').TENANT,
-              extensions: []
-            }
-          ]],
+          extensions: [],
           operations: operations,
           ref_block_num: refBlockNum,
           ref_block_prefix: refBlockPrefix
         };
 
         return isTenantSign 
-          ? this.blockchainHttp.signTxByTenant(unsignedTX) 
-          : Promise.resolve(unsignedTX);
+          ? this.blockchainHttp.signTxByTenant(tx) 
+          : Promise.resolve(tx);
       })
       .then((tx) => {
-        const signedTX = deipRpc.auth.signTransaction(tx, { owner: privKey });
-        return signedTX;
+        const clientSignedTx = deipRpc.auth.signTransaction(tx, { owner: privKey });
+        return clientSignedTx;
       })
+      .then((tx) => {
+        return this.blockchainHttp.affirmTxByTenant(tx);
+      });
   }
 
   async getTransaction(trxId) {
