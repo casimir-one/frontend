@@ -7,6 +7,8 @@ import { ProposalsService } from '@deip/proposals-service';
 import { ResearchGroupHttp } from './ResearchGroupHttp';
 import { UsersService } from '@deip/users-service';
 
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+
 class ResearchGroupService extends Singleton {
   researchGroupHttp = ResearchGroupHttp.getInstance();
 
@@ -105,7 +107,7 @@ class ResearchGroupService extends Singleton {
       const proposal = {
         creator: username,
         proposedOps: [{ op: update_account_op }],
-        expirationTime: new Date(new Date().getTime() + 86400000 * 7).toISOString().split('.')[0], // 7 days,
+        expirationTime: proposalExpiration,
         reviewPeriodSeconds: undefined,
         extensions: []
       };
@@ -125,7 +127,6 @@ class ResearchGroupService extends Singleton {
     researches,
     extensions
   }, { notes }) {
-    const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
     const offchainMeta = { notes };
 
     const join_research_group_membership_op = ['join_research_group_membership', {
@@ -160,7 +161,6 @@ class ResearchGroupService extends Singleton {
       notes
     }
   ) {
-    const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
     const offchainMeta = { notes };
 
     const leave_research_group_membership_op = ['leave_research_group_membership', {

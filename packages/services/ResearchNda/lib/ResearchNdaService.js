@@ -17,6 +17,7 @@ class ResearchNdaService extends Singleton {
     startTime,
     endTime,
     extensions,
+    requestEndTime,
     approvers
   }) {
 
@@ -37,7 +38,7 @@ class ResearchNdaService extends Singleton {
         const proposal = {
           creator: username,
           proposedOps: [{ "op": create_research_nda_op }],
-          expirationTime: endTime,
+          expirationTime: requestEndTime,
           reviewPeriodSeconds: undefined,
           extensions: [],
           approvers: approvers

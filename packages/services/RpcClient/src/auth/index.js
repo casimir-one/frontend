@@ -102,23 +102,39 @@ Auth.isPubkey = function(pubkey, address_prefix) {
     return PublicKey.fromString(pubkey, address_prefix) != null
 }
 
-Auth.signTransaction = function(trx, keys) {
-    var signatures = [];
-    if (trx.signatures) {
-        signatures = [].concat(trx.signatures);
-    }
+Auth.signTransaction = function (trx, keys, tenantStamp) {
+  var signatures = [];
+  var tenant_signature;
 
-    var cid = new Buffer(config.get('chain_id'), 'hex');
-    var buf = transaction.toBuffer(trx);
+  if (trx.signatures) {
+    signatures = [].concat(trx.signatures);
+  }
 
-    for (var key in keys) {
-        var sig = Signature.signBuffer(Buffer.concat([cid, buf]), keys[key]);
-        signatures.push(sig.toBuffer())
-    }
+  if (trx.tenant_signature) {
+    tenant_signature = trx.tenant_signature;
+  } else if (tenantStamp) {
+    let tenant = tenantStamp.tenant;
+    let tenantPrivKey = tenantStamp.tenantPrivKey;
+    let chainId = new Buffer(config.get('chain_id'), 'hex');
+    let txBuffer = transaction.toBuffer(trx);
+    let tenantSig = Signature.signBuffer(Buffer.concat([chainId, txBuffer]), tenantPrivKey);
+    tenant_signature = {
+      tenant: tenant, 
+      signature: tenantSig.toBuffer(),
+      extensions: [] 
+    };
+  }
 
-    return signed_transaction.toObject(Object.assign(trx, { signatures: signatures }))
+  var cid = new Buffer(config.get('chain_id'), 'hex');
+  var buf = transaction.toBuffer(trx);
+
+  for (var key in keys) {
+    var sig = Signature.signBuffer(Buffer.concat([cid, buf]), keys[key]);
+    signatures.push(sig.toBuffer());
+  }
+
+  return tenant_signature ? signed_transaction.toObject(Object.assign(trx, { signatures: signatures, tenant_signature: tenant_signature })) : signed_transaction.toObject(Object.assign(trx, { signatures: signatures, tenant_signature: undefined }));
 };
-
 Auth.signString = function(string, privKey) {
     return Signature.sign(string, privKey).toBuffer();
 };

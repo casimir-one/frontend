@@ -5,6 +5,8 @@ import { AssetsHttp } from './AssetsHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+
 class AssetsService extends Singleton {
   accessService = AccessService.getInstance();
   assetsHttp = AssetsHttp.getInstance();
@@ -28,7 +30,6 @@ class AssetsService extends Singleton {
     }];
 
     if (isProposal) {
-      const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
       const proposal = {
         creator: username,
         proposedOps: [{ "op": transfer_op }],
@@ -148,8 +149,6 @@ class AssetsService extends Singleton {
     extensions
   }) {
     
-    const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
-
     const party1_transfer_op = ['transfer', {
       from: party1,
       to: party2,

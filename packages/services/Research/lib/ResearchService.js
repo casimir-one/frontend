@@ -9,6 +9,8 @@ import { ResearchHttp } from './ResearchHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+
 class ResearchService extends Singleton {
   researchHttp = ResearchHttp.getInstance();
   blockchainService = BlockchainService.getInstance();
@@ -116,7 +118,6 @@ class ResearchService extends Singleton {
       .then(([refBlock, rgtList, existingSecurityToken]) => {
 
         const { creator, memo, fee } = isNewResearchGroup ? { creator: onchainData.creator, memo: onchainData.memo, fee: onchainData.fee } : { creator: username };
-        const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
         const ops = [];
 
         offchainMeta = {
@@ -350,7 +351,6 @@ class ResearchService extends Singleton {
       .then(([refBlock, rgtList, researchInvites]) => {
         const newMembers = members ? members.filter(member => !rgtList.some(rgt => rgt.owner == member)) : [];
         const newInvites = newMembers.filter(member => !researchInvites.some(invite => invite.invitee == member));
-        const proposalExpiration = new Date(new Date().getTime() + 86400000 * 14).toISOString().split('.')[0]; // 14 days;
 
         offchainMeta = {
           research: {
