@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.89.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.88.1...v1.89.0) (2021-02-23)
+
+
+### Features
+
+* **@deip/research-nda-service:** Transaction tenant signature ([29ede55](https://gitlab.com/DEIP/deip-rpc/commit/29ede55b92bf126f176acb42515019b3af802d05))
+
+
+
+
+
 # [1.86.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.85.1...v1.86.0) (2021-02-17)
 
 
