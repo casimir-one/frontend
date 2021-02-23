@@ -7,7 +7,7 @@ import { ProposalsService } from '@deip/proposals-service';
 import { ResearchGroupHttp } from './ResearchGroupHttp';
 import { UsersService } from '@deip/users-service';
 
-const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
 class ResearchGroupService extends Singleton {
   researchGroupHttp = ResearchGroupHttp.getInstance();
