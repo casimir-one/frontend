@@ -6,7 +6,7 @@ import { ResearchContentHttp } from './ResearchContentHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 
-const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
 class ResearchContentService extends Singleton {
   researchContentHttp = ResearchContentHttp.getInstance();

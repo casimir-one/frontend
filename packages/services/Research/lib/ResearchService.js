@@ -8,8 +8,9 @@ import { RESEARCH_APPLICATION_STATUS } from './constants';
 import { ResearchHttp } from './ResearchHttp';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
+import { proxydi } from '@deip/proxydi';
 
-const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 100).toISOString().split('.')[0]; // 100 years
+const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
 class ResearchService extends Singleton {
   researchHttp = ResearchHttp.getInstance();
@@ -18,6 +19,7 @@ class ResearchService extends Singleton {
   researchContentService = ResearchContentService.getInstance();
   proposalsService = ProposalsService.getInstance();
   researchGroupService = ResearchGroupService.getInstance();
+  proxydi = proxydi;
 
 
   getResearch(externalId) {
@@ -80,7 +82,8 @@ class ResearchService extends Singleton {
   }
 
   createResearch({ privKey, username }, isProposal, formData, isTokenized = true) {
-
+    
+    const tenant = this.proxydi.get('env').TENANT;
     const onchainData = JSON.parse(formData.get("onchainData"));
     let offchainMeta = JSON.parse(formData.get("offchainMeta"));
     
@@ -138,12 +141,12 @@ class ResearchService extends Singleton {
           fee: fee,
           creator: creator,
           owner: {
-            account_auths: [[creator, 1]], // requires tenant approval
+            account_auths: [[tenant, 1]],
             key_auths: [],
             weight_threshold: 1
           },
           active: {
-            account_auths: [[creator, 1]],
+            account_auths: [[tenant, 1]],
             key_auths: [],
             weight_threshold: 1
           },
@@ -465,8 +468,6 @@ class ResearchService extends Singleton {
     
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
 
-    const proposalExpirationTime = formData.get("proposalExpirationTime");
-
     const offchainMeta = {
       research: { attributes: [] },
       researchGroup: {
@@ -548,7 +549,7 @@ class ResearchService extends Singleton {
             { op: create_research_op },
             { op: update_account_op }
           ],
-          expiration_time: proposalExpirationTime,
+          expiration_time: proposalExpiration,
           review_period_seconds: undefined,
           extensions: []
         }], refBlock);
@@ -575,7 +576,7 @@ class ResearchService extends Singleton {
             { op: nested_proposal_op },
             { op: update_nested_proposal_op }
           ],
-          expiration_time: proposalExpirationTime,
+          expiration_time: proposalExpiration,
           review_period_seconds: undefined,
           extensions: []
         }], refBlock);
