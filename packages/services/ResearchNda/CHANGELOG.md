@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.92.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.91.0...v1.92.0) (2021-03-03)
+
+
+### Features
+
+* **@deip/research-nda-service:** Research nda list of projects ([24e9a85](https://gitlab.com/DEIP/deip-client-modules/commit/24e9a855d238afa6b6fe19d2a0bc308963a5b1f6))
+
+
+
+
+
 # [1.89.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.88.1...v1.89.0) (2021-02-23)
 
 
