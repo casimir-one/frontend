@@ -1521,5 +1521,13 @@ export default [{
   "params": [
     "external_ids"
   ]
+},
+{
+  "api": "proposal_history_api",
+  "method": "lookup_proposals_states",
+  "params": [
+    "lower_bound", 
+    "limit"
+  ]
 }
 ];
