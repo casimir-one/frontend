@@ -518,7 +518,7 @@ module.exports = [{
     "creator",
     "parties",
     "description",
-    "research_external_id",
+    "researches",
     "start_time",
     "end_time",
     "extensions"
