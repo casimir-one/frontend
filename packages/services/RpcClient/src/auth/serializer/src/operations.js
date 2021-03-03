@@ -692,7 +692,7 @@ const create_research_nda = new Serializer("create_research_nda", {
   creator: string,
   parties: set(string),
   description: string,
-  research_external_id: string,
+  research_external_id: optional(string),
   start_time: optional(time_point_sec),
   end_time: time_point_sec,
   extensions: set(future_extensions)
