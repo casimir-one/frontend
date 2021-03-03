@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.91.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.90.0...v1.91.0) (2021-03-03)
+
+
+### Features
+
+* **@deip/research-nda-service:** Optional field; new method ([2843189](https://gitlab.com/DEIP/deip-rpc/commit/284318937182de7aca4449a324cc0e3f02ec9d81))
+
+
+
+
+
 # [1.89.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.88.1...v1.89.0) (2021-02-23)
 
 
