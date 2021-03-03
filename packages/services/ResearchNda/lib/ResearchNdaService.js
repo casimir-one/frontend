@@ -29,7 +29,7 @@ class ResearchNdaService extends Singleton {
           creator: creator,
           parties: parties,
           description: description,
-          research_external_id: researchExternalId,
+          researches: [researchExternalId],
           start_time: startTime,
           end_time: endTime,
           extensions: extensions
