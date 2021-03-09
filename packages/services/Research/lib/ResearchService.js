@@ -182,7 +182,7 @@ class ResearchService extends Singleton {
           description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.research)).buffer)),
           disciplines: disciplines || [],
           is_private: isPrivate || false,
-          members: !isPersonalResearchGroup ? researchMembers : undefined,
+          members: isPersonalResearchGroup ? undefined : researchMembers,
           review_share: reviewShare || undefined,
           compensation_share: compensationShare || undefined,
           extensions: extensions || []
@@ -349,9 +349,12 @@ class ResearchService extends Singleton {
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),
       deipRpc.api.getResearchGroupMembershipTokensAsync(researchGroup),
-      this.researchHttp.getResearchPendingInvites(externalId)
+      this.researchHttp.getResearchPendingInvites(externalId),
+      this.getResearch(externalId)
     ])
-      .then(([refBlock, rgtList, researchInvites]) => {
+      .then(([refBlock, rgtList, invites, existingResearch]) => {
+        // we have to check 'rgtList' instead of 'existingResearch.members' because invitation is being sent by the research group, not the research itself
+        const researchInvites = invites.filter(invite => !rgtList.some(rgt => rgt.owner == invite.invitee) /* in case there is a duplicated invite */);
         const newMembers = members ? members.filter(member => !rgtList.some(rgt => rgt.owner == member)) : [];
         const newInvites = newMembers.filter(member => !researchInvites.some(invite => invite.invitee == member));
 
@@ -413,9 +416,13 @@ class ResearchService extends Singleton {
           external_id: externalId,
           description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.research)).buffer)),
           is_private: isPrivate || false,
-          review_share: reviewShare || undefined,
+          review_share: reviewShare || undefined, 
           compensation_share: compensationShare || undefined,
-          members: !isPersonalResearchGroup ? researchMembers : undefined,
+          members: isPersonalResearchGroup 
+            ? undefined 
+            : existingResearch.members.every(member => researchMembers.some(m => m == member)) && researchMembers.every(member => existingResearch.members.some(m => m == member)) 
+              ? undefined 
+              : researchMembers,
           extensions: extensions || []
         }];
 
