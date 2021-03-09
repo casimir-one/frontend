@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.93.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.92.0...v1.93.0) (2021-03-09)
+
+**Note:** Version bump only for package @deip/research-content-reviews-service
+
+
+
+
+
 # [1.92.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.91.0...v1.92.0) (2021-03-03)
 
 **Note:** Version bump only for package @deip/research-content-reviews-service
