@@ -92,7 +92,7 @@ const ACTIONS = {
           privateKey
         });
 
-        dispatch('CurrentUser/getData', null, { root: true });
+        dispatch('currentUser/get', null, { root: true });
 
         return response;
       });
@@ -121,7 +121,7 @@ const ACTIONS = {
 
   clear({ commit }) {
     commit('clearData')
-    commit('CurrentUser/clearData', null, { root: true });
+    commit('currentUser/clearData', null, { root: true });
   }
 
 };

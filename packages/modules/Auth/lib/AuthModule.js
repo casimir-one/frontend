@@ -1,6 +1,6 @@
 import { ValidationPlugin } from '@deip/validation-plugin';
 import { VuetifyExtended } from '@deip/vuetify-extended';
-import { CurrentUserModule } from '@deip/current-user-module';
+import { UsersModule } from '@deip/users-module';
 import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
 
@@ -12,9 +12,12 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const router = proxydi.get('routerInstance')
-  const store = proxydi.get('storeInstance')
-  const authRedirectRouteName = proxydi.get('authRedirectRouteName')
+  const {
+    signInRedirect = 'home'
+  } = options;
+
+  const router = proxydi.get('routerInstance');
+  const store = proxydi.get('storeInstance');
 
   if (store && router) {
     Vue.use(ValidationPlugin);
@@ -23,11 +26,11 @@ const install = (Vue, options = {}) => {
     // for guests
     router.beforeEach((to, from, next) => {
       if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (store.getters['Auth/isLoggedIn']) {
+        if (store.getters['auth/isLoggedIn']) {
           next();
           return;
         }
-        next('/sign-in');
+        next('/sign-in'); // TODO: get from options
       } else {
         next();
       }
@@ -36,8 +39,8 @@ const install = (Vue, options = {}) => {
     // for users
     router.beforeEach((to, from, next) => {
       if (to.matched.some((record) => record.meta.guest)) {
-        if (store.getters['Auth/isLoggedIn']) {
-          next(authRedirectRouteName || 'explore');
+        if (store.getters['auth/isLoggedIn']) {
+          next(signInRedirect);
           return;
         }
         next();
@@ -46,24 +49,26 @@ const install = (Vue, options = {}) => {
       }
     });
 
-    Vue.prototype.$authRedirectRouteName = authRedirectRouteName || 'explore';
+    Vue.prototype.$signInRedirect = signInRedirect;
 
-    // //////////////
+    // Store chore //////////////
 
-    store.registerModule('Auth', authStore);
+    store.registerModule('auth', authStore);
 
-    Vue.use(CurrentUserModule, { store });
+    Vue.use(UsersModule);
+
+    // Other //////////////
 
     Vue.mixin({
       computed: {
-        $isUser() { return store.getters['Auth/isLoggedIn']; },
+        $isUser() { return store.getters['auth/isLoggedIn']; },
         $isGuest() { return !this.$isUser; }
       }
     });
 
     if (accessService.isLoggedIn()) {
-      store.dispatch('Auth/restoreData');
-      store.dispatch('CurrentUser/getData');
+      store.dispatch('auth/restoreData');
+      store.dispatch('currentUser/get');
     }
   } else {
     console.warn('Router and Store is not defined');

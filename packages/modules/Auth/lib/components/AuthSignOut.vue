@@ -19,7 +19,7 @@
     },
     methods: {
       signOut() {
-        this.$store.dispatch('Auth/signOut');
+        this.$store.dispatch('auth/signOut');
       }
     }
   }

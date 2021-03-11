@@ -4,59 +4,71 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(signIn)"
     >
-      <slot name="prepend"/>
+      <vex-stack :gutter="formGutter">
+        <slot name="prepend"/>
 
-      <vex-stack gutter="16">
-        <validation-provider
-          v-slot="{ errors }"
-          :name="usernameLabel"
-          rules="required"
-        >
-          <v-text-field
-            v-model="formModel.username"
-            :label="usernameLabel"
-            :error-messages="errors"
-            v-bind="fieldsProps"
-          />
-        </validation-provider>
+        <vex-stack :gutter="fieldsGutter">
+          <validation-provider
+            v-slot="{ errors }"
+            :name="usernameLabel"
+            rules="required"
+          >
+            <v-text-field
+              v-model="formModel.username"
+              :label="usernameLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+            />
+          </validation-provider>
 
-        <validation-provider
-          v-slot="{ errors }"
-          :name="passwordLabel"
-          rules="required"
-        >
-          <vex-password-input
-            v-model="formModel.password"
-            :label="passwordLabel"
-            :error-messages="errors"
-            v-bind="fieldsProps"
-          />
-        </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            :name="passwordLabel"
+            rules="required"
+          >
+            <vex-password-input
+              v-model="formModel.password"
+              :label="passwordLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+              counter
+            >
+              <template #counter>
+                <div class="text-caption">
+                  <router-link :to="{}" class="text-decoration-none">
+                    {{ passwordRestoreLabel }}
+                  </router-link>
+                </div>
+              </template>
+            </vex-password-input>
+          </validation-provider>
+        </vex-stack>
 
-        <v-btn
-          type="submit"
-          color="primary"
-          block
-          :disabled="invalid || loading"
-          :loading="loading"
-        >
-          {{ submitLabel }}
-        </v-btn>
-        <div class="text-center">
-          <router-link :to="{}" class="font-weight-medium text-decoration-none">
-            Забыли пароль?
-          </router-link>
-        </div>
-        <div class="text-center">
-          Еще нет аккаунта?
-          <router-link :to="{ name: 'signUp' }" class="font-weight-medium text-decoration-none">
-            Зарегистрируйтесь
-          </router-link>
-        </div>
+        <vex-stack :gutter="submitGutter">
+          <v-btn
+            type="submit"
+            color="primary"
+            block
+            depressed
+            :disabled="invalid || loading"
+            :loading="loading"
+          >
+            {{ submitLabel }}
+          </v-btn>
+
+          <slot name="to-register">
+            <div class="text-center">
+              No accoutn?
+              <router-link :to="{ name: 'signUp' }" class="font-weight-medium text-decoration-none">
+                Sign up
+              </router-link>
+            </div>
+          </slot>
+        </vex-stack>
+
+        <slot name="append"/>
 
       </vex-stack>
-
-      <slot name="append"/>
     </v-form>
   </validation-observer>
 </template>
@@ -74,9 +86,28 @@ export default {
       type: String,
       default: 'Password'
     },
+    passwordRestoreLabel: {
+      type: String,
+      default: 'Forgot password?'
+    },
     submitLabel: {
       type: String,
       default: 'Sign in'
+    },
+
+    formGutter: {
+      type: [String, Number],
+      default: 48
+    },
+
+    fieldsGutter: {
+      type: [String, Number],
+      default: 8
+    },
+
+    submitGutter: {
+      type: [String, Number],
+      default: 16
     },
 
     fieldsProps: {
@@ -103,7 +134,7 @@ export default {
     signIn() {
       this.loading = true;
 
-      this.$store.dispatch('Auth/signIn', this.formModel)
+      this.$store.dispatch('auth/signIn', this.formModel)
         .then(() => {
           this.$notifier.showSuccess('You are successfully logged in.');
           this.$router.push({ name: this.$authRedirectRouteName })

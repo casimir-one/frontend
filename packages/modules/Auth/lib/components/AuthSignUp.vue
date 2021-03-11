@@ -4,75 +4,86 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(signUp)"
     >
-      <slot name="prepend" />
+      <input autocomplete="false" name="hidden" type="text" style="display:none;"/>
 
-      <input autocomplete="false" name="hidden" type="text" style="display:none;" />
+      <vex-stack :gutter="formGutter">
+        <slot name="prepend"/>
 
-      <vex-stack gutter="16">
-        <validation-provider
-          v-slot="{ errors }"
-          :name="usernameLabel"
-          rules="required"
-        >
-          <v-text-field
-            v-model="formModel.username"
-            :label="usernameLabel"
-            :error-messages="errors"
-            v-bind="fieldsProps"
-          />
-        </validation-provider>
+        <vex-stack :gutter="fieldsGutter">
+          <validation-provider
+            v-slot="{ errors }"
+            :name="usernameLabel"
+            rules="required"
+          >
+            <v-text-field
+              v-model="formModel.username"
+              :label="usernameLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+            />
+          </validation-provider>
 
 
-        <validation-provider
-          v-slot="{ errors }"
-          :name="emailLabel"
-          rules="required"
-        >
-          <v-text-field
-            v-model="formModel.email"
-            :label="emailLabel"
-            :error-messages="errors"
-            v-bind="fieldsProps"
-          />
-        </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            :name="emailLabel"
+            rules="required"
+          >
+            <v-text-field
+              v-model="formModel.email"
+              :label="emailLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+            />
+          </validation-provider>
 
-        <validation-provider
-          v-slot="{ errors }"
-          :name="passwordLabel"
-          rules="required"
-        >
-          <vex-password-input
-            v-model="formModel.password"
-            :label="passwordLabel"
-            :error-messages="errors"
-            v-bind="fieldsProps"
-          />
-        </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            :name="passwordLabel"
+            rules="required"
+          >
+            <vex-password-input
+              v-model="formModel.password"
+              :label="passwordLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+            />
+          </validation-provider>
 
-        <v-radio-group class="ma-0 pa-0" v-model="formModel.roles">
-          <v-radio label="Студент" :value="1" />
-          <v-radio label="Инвестор" :value="2" />
-        </v-radio-group>
+          <!-- TEMP -->
+          <v-radio-group hide-details class="ma-0 pa-0" v-model="formModel.roles">
+            <v-radio label="Студент" :value="1"/>
+            <v-radio label="Инвестор" :value="2"/>
+          </v-radio-group>
 
-        <v-btn
-          type="submit"
-          color="primary"
-          block
-          :disabled="invalid || loading"
-          :loading="loading"
-        >
-          {{ submitLabel }}
-        </v-btn>
+          <!-- END TEMP -->
+        </vex-stack>
 
-        <div class="text-center">
-          Уже есть аккаунт?
-          <router-link :to="{ name: 'signIn' }" class="font-weight-medium text-decoration-none">
-            Войдите
-          </router-link>
-        </div>
+        <vex-stack :gutter="submitGutter">
+          <v-btn
+            type="submit"
+            color="primary"
+            block
+            depressed
+            :disabled="invalid || loading"
+            :loading="loading"
+          >
+            {{ submitLabel }}
+          </v-btn>
+
+          <slot name="to-register">
+            <div class="text-center">
+              Has account?
+              <router-link :to="{ name: 'signIn' }" class="font-weight-medium text-decoration-none">
+                Sign in
+              </router-link>
+            </div>
+          </slot>
+        </vex-stack>
+
+        <slot name="append"/>
+
       </vex-stack>
-
-      <slot name="append" />
     </v-form>
   </validation-observer>
 </template>
@@ -99,6 +110,21 @@
         default: 'Sign up'
       },
 
+      formGutter: {
+        type: [ String, Number ],
+        default: 48
+      },
+
+      fieldsGutter: {
+        type: [ String, Number ],
+        default: 8
+      },
+
+      submitGutter: {
+        type: [ String, Number ],
+        default: 16
+      },
+
       fieldsProps: {
         type: Object,
         default: () => ({
@@ -123,7 +149,7 @@
       signUp() {
         this.loading = true;
 
-        this.$store.dispatch('Auth/signUp', this.formModel)
+        this.$store.dispatch('auth/signUp', this.formModel)
           .then(() => {
             this.$router.push({ name: this.$authRedirectRouteName })
           })

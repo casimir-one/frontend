@@ -1,23 +1,17 @@
 {
-  "name": "@deip/current-user-module",
-  "version": "1.92.0",
+  "name": "@deip/platform-fns",
+  "version": "1.93.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "dependencies": {
-    "@deip/access-service": "1.85.1",
-    "@deip/app-config-service": "1.85.1",
-    "@deip/proxydi": "1.85.1",
-    "@deip/users-service": "1.92.0",
-    "@deip/validation-plugin": "1.85.1",
-    "@deip/vuetify-extended": "1.85.1"
+  "directories": {
+    "lib": "lib"
   },
-  "peerDependencies": {
-    "vuetify": "^2.4.2",
-    "vuex": "^3.6.0"
-  },
+  "files": [
+    "lib"
+  ],
   "publishConfig": {
     "registry": "https://npm-registry.deip.world/"
   },
@@ -30,5 +24,9 @@
   },
   "bugs": {
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "date-fns": "^2.19.0",
+    "qs": "^6.9.6"
   }
 }

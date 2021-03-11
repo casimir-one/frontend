@@ -16,33 +16,34 @@ const mapUsersData = (
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
 
-  getUser(username) {
-    return this.usersHttp.getUser(username);
-  }
+  // LIST
 
   getUsers(usernames) {
     return this.usersHttp.getUsers(usernames);
-  }
-
-  // TODO: rename and switch
-  getUserRe(username) {
-    if (username.includes('@')) {
-      return this.usersHttp.getUserByEmail(username);
-    }
-    return this.usersHttp.getUser(username);
   }
 
   getUsersByResearchGroup(researchGroupExternalId) {
     return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
   }
 
-  getUsersListing(status) {
-    return this.usersHttp.getUsersListing(status || "");
-  }
-
   getUsersByTenant(tenantId) {
     return this.usersHttp.getUsersByTenant(tenantId);
   }
+
+  getUsersListing(query = {}) {
+    return this.usersHttp.getUsersListing(query);
+  }
+
+  // ONE
+
+  getUser(username) {
+    if (username.includes('@')) {
+      return this.usersHttp.getUserByEmail(username);
+    }
+    return this.usersHttp.getUser(username);
+  }
+
+
 }
 
 export {

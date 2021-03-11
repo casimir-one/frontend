@@ -24,13 +24,19 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  getData({ commit }) {
+  get({ commit, dispatch }) {
     if (accessService.isLoggedIn()) {
       const { username } = accessService.getDecodedToken();
 
-      return usersService.getUserRe(username)
-        .then(({ account, profile }) => {
-          commit('setData', { username, account, profile });
+      return usersService.getUser(username)
+        .then((res) => {
+          if (res) {
+            const { account, profile } = res;
+            commit('setData', { username, account, profile });
+          } else {
+            console.error('No currentUser data')
+            dispatch('auth/signOut', null, { root: true });
+          }
         });
     }
 
@@ -38,7 +44,11 @@ const ACTIONS = {
   },
 
   clear({ commit }) {
-    commit('clearData');
+    commit('setData', {
+      username: null,
+      account: {},
+      profile: {}
+    });
   }
 };
 
@@ -47,12 +57,6 @@ const MUTATIONS = {
     state.username = username;
     state.account = account;
     state.profile = profile;
-  },
-
-  clearData(state) {
-    state.username = null;
-    state.account = {};
-    state.profile = {};
   }
 };
 
