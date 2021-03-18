@@ -1,4 +1,4 @@
-import { isObject } from './verification'
+import { isObject, isString, isNumeric } from './verification'
 
 export function addValueToEnum(_enum, key, value) {
   if (typeof value === 'undefined') {
@@ -19,12 +19,27 @@ export function createEnum(items) {
   let _enum = {};
 
   if (Array.isArray(items)) {
-    items.forEach(it => typeof it === 'string' ? addValueToEnum(_enum, it) : addValueToEnum(_enum, it.key, it.value));
+    items.forEach((it) => isString(it) ? addValueToEnum(_enum, it) : addValueToEnum(_enum, it.key, it.value));
   }
 
   if (isObject(items)) {
-    Object.keys(items).forEach(it => typeof it === 'string' && addValueToEnum(_enum, it, items[it]));
+    Object.keys(items).forEach((it) => isString(it) && addValueToEnum(_enum, it, items[it]));
   }
 
-  return _enum;
+  const keys = () => {
+    return Object.keys(_enum)
+      .reduce((res, key) => ([...res, ...(!isNumeric(key) ? [key] : [])]), [])
+  }
+  const values = () => {
+    return Object.keys(_enum)
+      .reduce((res, key) => ([...res, ...(isNumeric(key) ? [key] : [])]), [])
+  }
+
+  return {
+    ..._enum,
+    ...{
+      keys,
+      values
+    }
+  };
 }
