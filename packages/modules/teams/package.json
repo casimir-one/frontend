@@ -6,10 +6,6 @@
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
     "lib"
   ],
