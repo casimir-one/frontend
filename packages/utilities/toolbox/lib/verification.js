@@ -7,6 +7,10 @@ export const isFile = (val) => kindOf(val) === 'file';
 export const isBoolean = (val) => kindOf(val) === 'boolean';
 export const isString = (val) => kindOf(val) === 'string';
 export const isNumber = (val) => kindOf(val) === 'number';
+export const isNumeric = (val) => {
+  if (isNumber(val)) return false;
+  return !Number.isNaN(val) && !Number.isNaN(Number.parseFloat(val))
+};
 
 export const isSimpleVal = (val) => ['boolean', 'string', 'number'].includes(kindOf(val));
 
