@@ -5,7 +5,7 @@
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
-  "main": "index.js",
+  "main": "lib/helpers/index.js",
   "directories": {
     "lib": "lib"
   },
@@ -26,6 +26,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
+    "@deip/toolbox": "^1.85.1",
     "date-fns": "^2.19.0",
     "qs": "^6.9.6"
   }

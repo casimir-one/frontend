@@ -19,9 +19,12 @@ export const userFullName = (model) => {
 export const userLocation = (model) => {
   if (!model) return false;
 
-  const {
-    profile: { location: { city, country } = {} } = {}
-  } = model;
+  // const {
+  //   profile: { location: { city, country } = {} } = {}
+  // } = model;
+
+  const city = model?.profile?.location?.city;
+  const country = model?.profile?.location?.country;
 
   const res = [city, country].filter((item) => !!item);
 
