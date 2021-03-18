@@ -12,7 +12,7 @@ const install = (Vue, options = {}) => {
   const store = proxydi.get('storeInstance')
 
   if (store) {
-    store.registerModule('users', usersStore);
+    store.registerModule(options.storeNamespace || 'users', usersStore);
     store.registerModule('currentUser', currentUserStore);
 
     Vue.use(ValidationPlugin);
@@ -20,7 +20,10 @@ const install = (Vue, options = {}) => {
 
     Vue.mixin({
       computed: {
-        $currentUser() { return this.$store.getters['currentUser/data']; }
+        $currentUser() { return this.$store.getters['currentUser/data']; },
+        $isAdmin() {
+          return true;
+        }
       }
     });
 

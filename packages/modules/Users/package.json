@@ -9,6 +9,7 @@
   "dependencies": {
     "@deip/access-service": "1.85.1",
     "@deip/app-config-service": "1.85.1",
+    "@deip/platform-fns": "^1.93.0",
     "@deip/proxydi": "1.85.1",
     "@deip/toolbox": "1.85.1",
     "@deip/users-service": "1.94.0",

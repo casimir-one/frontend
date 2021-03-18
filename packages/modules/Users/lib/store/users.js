@@ -1,29 +1,26 @@
 import { UsersService } from '@deip/users-service';
 
 import {
-  camelizeObjectKeys,
-  collectionList,
-  collectionMerge,
-  collectionOne
-} from '@deip/toolbox';
+  listGetter,
+  oneGetterFabric,
+  setListMutationFabric,
+  setOneMutationFabric
+} from '@deip/platform-fns/lib/store';
 
 const usersService = UsersService.getInstance();
+
 
 const STATE = {
   data: []
 };
 
 const GETTERS = {
-  list: (state) => (query = {}) => collectionList(state.data, query),
-
-  one: (state) => (username, query = {}) => collectionOne(state.data, {
-    ...(username ? { username } : {}),
-    ...query
-  })
+  list: listGetter,
+  one: oneGetterFabric({ selectorKey: 'username' })
 };
 
 const ACTIONS = {
-  fetch({ commit }) {
+  get({ commit }) {
     return usersService.getUsersListing()
       .then((data) => {
         commit('setList', data);
@@ -33,7 +30,7 @@ const ACTIONS = {
       });
   },
 
-  get({ commit }, username) {
+  getOne({ commit }, username) {
     return usersService.getUser(username)
       .then(({ account, profile }) => {
         commit('setOne', { username, account, profile });
@@ -45,25 +42,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList(state, payload) {
-    if (!payload) return;
-
-    state.data = collectionMerge(
-      state.data,
-      payload.map((asset) => camelizeObjectKeys(asset)),
-      { key: 'username' }
-    );
-  },
-
-  setOne(state, payload) {
-    if (!payload) return;
-
-    state.data = collectionMerge(
-      state.data,
-      camelizeObjectKeys(payload),
-      { id: 'username' }
-    );
-  }
+  setList: setListMutationFabric({ mergeKey: 'username' }),
+  setOne: setOneMutationFabric({ mergeKey: 'username' })
 };
 
 export const usersStore = {
