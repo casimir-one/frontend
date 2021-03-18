@@ -4,18 +4,23 @@ import { UsersService } from '@deip/users-service';
 const accessService = AccessService.getInstance();
 const usersService = UsersService.getInstance();
 
-const STATE = {
+const defaultState = () => ({
   username: null,
   account: {},
-  profile: {}
-};
+  profile: {},
+  privKey: null
+});
+
+const STATE = defaultState();
+
 const GETTERS = {
   data: (state) => {
     if (state.username) {
       return {
         username: state.username,
         account: state.account,
-        profile: state.profile
+        profile: state.profile,
+        privKey: state.privKey
       };
     }
 
@@ -32,7 +37,9 @@ const ACTIONS = {
         .then((res) => {
           if (res) {
             const { account, profile } = res;
-            commit('setData', { username, account, profile });
+            const privKey = accessService.getOwnerWif();
+
+            commit('setData', { username, account, profile, privKey });
           } else {
             console.error('No currentUser data')
             dispatch('auth/signOut', null, { root: true });
@@ -44,19 +51,16 @@ const ACTIONS = {
   },
 
   clear({ commit }) {
-    commit('setData', {
-      username: null,
-      account: {},
-      profile: {}
-    });
+    commit('setData', defaultState());
   }
 };
 
 const MUTATIONS = {
-  setData(state, { username, account, profile }) {
+  setData(state, { username, account, profile, privKey }) {
     state.username = username;
     state.account = account;
     state.profile = profile;
+    state.privKey = privKey;
   }
 };
 
