@@ -49,7 +49,7 @@ const ACTIONS = {
   signIn({ commit, dispatch }, { username, password }) {
     let privateKey;
 
-    return usersService.getUserRe(username)
+    return usersService.getUser(username)
       .then(({ account }) => {
         if (!account) {
           throw new Error('invalid account');
