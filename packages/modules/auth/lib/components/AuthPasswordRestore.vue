@@ -2,7 +2,7 @@
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form
       :disabled="loading"
-      @submit.prevent="handleSubmit(signIn)"
+      @submit.prevent="handleSubmit(restore)"
     >
       <vex-stack :gutter="formGutter">
         <slot name="prepend"/>
@@ -23,24 +23,30 @@
 
           <validation-provider
             v-slot="{ errors }"
-            :name="passwordLabel"
+            :name="emailLabel"
             rules="required"
           >
-            <vex-password-input
-              v-model="formModel.password"
-              :label="passwordLabel"
+            <v-text-field
+              v-model="formModel.email"
+              :label="emailLabel"
               :error-messages="errors"
               v-bind="fieldsProps"
-              counter
-            >
-              <template #counter>
-                <div class="text-caption">
-                  <router-link :to="{name: 'passwordRestore'}" class="text-decoration-none">
-                    {{ passwordRestoreLabel }}
-                  </router-link>
-                </div>
-              </template>
-            </vex-password-input>
+            />
+          </validation-provider>
+
+          <validation-provider
+            v-slot="{ errors }"
+            :name="messageLabel"
+            rules="required"
+          >
+            <v-textarea
+              v-model="formModel.message"
+              :label="messageLabel"
+              :error-messages="errors"
+              v-bind="fieldsProps"
+              no-resize
+              rows="4"
+            />
           </validation-provider>
         </vex-stack>
 
@@ -55,19 +61,9 @@
           >
             {{ submitLabel }}
           </v-btn>
-
-          <slot name="to-register">
-            <div class="text-center">
-              No accoutn?
-              <router-link :to="{ name: 'signUp' }" class="font-weight-medium text-decoration-none">
-                Sign up
-              </router-link>
-            </div>
-          </slot>
         </vex-stack>
 
         <slot name="append"/>
-
       </vex-stack>
     </v-form>
   </validation-observer>
@@ -75,47 +71,46 @@
 
 <script>
 export default {
-  name: 'AuthSignIn',
-
+  name: 'AuthPasswordRestore',
   props: {
     usernameLabel: {
       type: String,
       default: 'Username'
     },
-    passwordLabel: {
+    emailLabel: {
       type: String,
-      default: 'Password'
+      default: 'Email'
     },
-    passwordRestoreLabel: {
+    messageLabel: {
       type: String,
-      default: 'Forgot password?'
+      default: 'Message'
     },
     submitLabel: {
       type: String,
-      default: 'Sign in'
+      default: 'Restore'
     },
 
     formGutter: {
-      type: [String, Number],
+      type: [ String, Number ],
       default: 48
     },
 
     fieldsGutter: {
-      type: [String, Number],
+      type: [ String, Number ],
       default: 8
     },
 
     submitGutter: {
-      type: [String, Number],
+      type: [ String, Number ],
       default: 16
     },
 
     fieldsProps: {
       type: Object,
       default: () => ({
-        outlined: true
+        outlined: true,
       })
-    }
+    } 
   },
 
   data() {
@@ -123,30 +118,14 @@ export default {
       loading: false,
       formModel: {
         username: '',
-        password: ''
+        email: '',
+        message: '',
       }
     };
   },
-  mounted() {
-    document.body.click(); // workaround chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=1166619
-  },
-  methods: {
-    signIn() {
-      this.loading = true;
 
-      this.$store.dispatch('auth/signIn', this.formModel)
-        .then(() => {
-          this.$notifier.showSuccess('You are successfully logged in.');
-          this.$router.push({ name: this.$authRedirectRouteName })
-        })
-        .catch((error) => {
-          this.$notifier.showError(error);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-      ;
-    }
+  methods: {
+    restore() {}
   }
-};
+}
 </script>
