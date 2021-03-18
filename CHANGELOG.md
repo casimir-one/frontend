@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.96.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.0...v1.96.1) (2021-03-18)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** getUser method ([424e833](https://gitlab.com/DEIP/deip-client-modules/commit/424e833f6e477b3f4bb7f8743ed8310e3f56d042))
+
+
+
+
+
 # [1.96.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.95.1...v1.96.0) (2021-03-18)
 
 
