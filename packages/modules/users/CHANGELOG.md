@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.96.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.95.1...v1.96.0) (2021-03-18)
+
+
+### Features
+
+* **@deip/users-module:** add prifKey ([bc82a27](https://gitlab.com/DEIP/deip-client-modules/commit/bc82a27133f8a2c847cbe4b42b0ab0de7e73f1d7))
+
+
+
+
+
 # [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 **Note:** Version bump only for package @deip/users-module
