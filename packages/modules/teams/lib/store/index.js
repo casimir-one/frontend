@@ -14,7 +14,7 @@ const DEIP_1_PERCENT = 10000 / 100;
 const toAssetUnits = (
   amount,
   precision = 3,
-  asset = window.env.ASSET_UNIT
+  asset = 'TESTS'
 ) => {
   let value = parseFloat(amount).toFixed(precision);
   return `${value} ${asset}`;
