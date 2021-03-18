@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
+
+
+### Features
+
+* **@deip/vuetify-extended:** new components ([0ebeda5](https://gitlab.com/DEIP/deip-client-modules/commit/0ebeda56862879243a64b22997a526b139aa313c))
+
+
+
+
+
 # [1.94.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.93.0...v1.94.0) (2021-03-12)
 
 

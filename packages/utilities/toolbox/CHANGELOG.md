@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
+
+
+### Features
+
+* **@deip/toolbox:** add isNumeric checker ([d29ed65](https://gitlab.com/DEIP/deip-client-modules/commit/d29ed65470a894a61b875afa67220944d0e104cb))
+* **@deip/toolbox:** add keys/values to createEnum ([6fe7651](https://gitlab.com/DEIP/deip-client-modules/commit/6fe7651f1b5fdc8b12fac0c251dc606b0834e0d8))
+
+
+
+
+
 ## [1.85.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.85.0...v1.85.1) (2021-02-17)
 
 

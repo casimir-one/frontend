@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
+
+
+### Features
+
+* new module @deip/teams-module (basic) ([19faf1d](https://gitlab.com/DEIP/deip-client-modules/commit/19faf1d8413044045525ebfc613c6ebc79c861ac))
+* **@deip/platform-fns:** new helpers ([29d6917](https://gitlab.com/DEIP/deip-client-modules/commit/29d6917e71040e53ba279ac482fd6e4d6ca735a5))
+* **@deip/toolbox:** add isNumeric checker ([d29ed65](https://gitlab.com/DEIP/deip-client-modules/commit/d29ed65470a894a61b875afa67220944d0e104cb))
+* **@deip/toolbox:** add keys/values to createEnum ([6fe7651](https://gitlab.com/DEIP/deip-client-modules/commit/6fe7651f1b5fdc8b12fac0c251dc606b0834e0d8))
+* **@deip/users-module:** switch to store fabric ([853639a](https://gitlab.com/DEIP/deip-client-modules/commit/853639a2b01bda8608d1e8577aa2d73ce31c0da5))
+* **@deip/vuetify-extended:** new components ([0ebeda5](https://gitlab.com/DEIP/deip-client-modules/commit/0ebeda56862879243a64b22997a526b139aa313c))
+
+
+
+
+
 # [1.94.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.93.0...v1.94.0) (2021-03-12)
 
 
