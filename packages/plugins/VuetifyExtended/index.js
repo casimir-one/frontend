@@ -5,6 +5,9 @@ import VexGrid from './lib/components/VexGrid/VexGrid';
 import VexPasswordInput from './lib/components/VexPasswordInput/VexPasswordInput';
 import VexMiniMetaItem from './lib/components/VexMiniMeta/VexMiniMetaItem';
 import VexMiniMetaList from './lib/components/VexMiniMeta/VexMiniMetaList';
+import VexSection from './lib/components/VexSection/VexSection';
+import VexSectionSplit from './lib/components/VexSection/VexSectionSplit';
+import VexSectionTitle from './lib/components/VexSection/VexSectionTitle';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
@@ -13,6 +16,9 @@ const install = (Vue, options = {}) => {
   // simple components
 
   Vue.component('VexStack', VexStack);
+  Vue.component('VexSection', VexSection);
+  Vue.component('VexSectionTitle', VexSectionTitle);
+  Vue.component('VexSectionSplit', VexSectionSplit);
   Vue.component('VexGrid', VexGrid);
   Vue.component('VexMiniMeta', VexMiniMetaItem);
   Vue.component('VexMiniMetaList', VexMiniMetaList);

@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex text-caption align-center">
-    <v-icon v-if="internalIcon" class="mr-2" size="18">
+    <v-icon v-if="internalIcon" class="mr-1" size="18">
       {{ internalIcon }}
     </v-icon>
 

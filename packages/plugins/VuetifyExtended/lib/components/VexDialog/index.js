@@ -1,11 +1,13 @@
 import VexDialog from './VexDialog';
+import { proxydi } from '@deip/proxydi';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
   const property = options.property || '$confirm';
-  const { vuetify } = options;
+
+  const vuetify = proxydi.get('vuetifyInstance');
 
   if (!vuetify) {
     console.warn('Module vex-confirm needs vuetify instance. Use Vue.use(VeConfirm, { vuetify })');

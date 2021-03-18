@@ -12,8 +12,6 @@
   import VexMiniMetaItem from './VexMiniMetaItem';
   import VexStack from '../VexStack/VexStack';
 
-  console.log(VexStack)
-
   import { getBindableProps } from '../../composables/props';
 
   export default {
