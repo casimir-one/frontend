@@ -1,4 +1,4 @@
-export * from './lib/AuthModule';
+export * from './lib/auth-module';
 
 export { default as AuthSignIn } from './lib/components/AuthSignIn';
 export { default as AuthSignUp } from './lib/components/AuthSignUp';
