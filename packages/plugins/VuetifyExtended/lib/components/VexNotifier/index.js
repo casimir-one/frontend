@@ -1,19 +1,18 @@
-import { proxydi } from '@deip/proxydi';
-
 import VexNotifier from "./VexNotifier";
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const property = options.property || '$notifier';
-  const vuetify = proxydi.get('vuetifyInstance');
+  const property = options.property || '$confirm';
+  const { vuetify } = options;
 
   if (!vuetify) {
-    console.warn('Module VexNotifier needs vuetify instance. Use proxydi.register(\'vuetifyInstance\', vuetify)');
+    console.warn('VexNotifier needs vuetify instance. Use Vue.use(VexNotifier, { vuetify })');
   }
 
   Vue.delete(options, 'property');
+  Vue.delete(options, 'vuetify');
 
   const Ctor = Vue.extend({ vuetify, ...VexNotifier });
 

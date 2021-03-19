@@ -26,18 +26,22 @@ const install = (Vue, options = {}) => {
 
   // dynamic components
 
-  Vue.use(VexNotifierPlugin);
-  Vue.use(VexDialogPlugin);
+  const {
+    vexNotifier,
+    vexDialog,
+    vuetify
+  } = options;
 
+  if (!vuetify) {
+    console.warn('VuetifyExtended needs vuetify instance. Use Vue.use(VuetifyExtended, { vuetify })');
+  }
 
+  Vue.use(VexNotifierPlugin, { vuetify, ...vexNotifier});
+  Vue.use(VexDialogPlugin, { vuetify, ...vexDialog});
 };
 
-const VuetifyExtended = {
+export const VuetifyExtended = {
+  name: 'VuetifyExtended',
+  deps: ['EnvModule'],
   install
 };
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(VuetifyExtended);
-}
-
-export { VuetifyExtended };

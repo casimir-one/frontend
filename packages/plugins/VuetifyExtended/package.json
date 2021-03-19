@@ -22,8 +22,5 @@
   "peerDependencies": {
     "lodash": "^4.17.20",
     "vuetify": "^2.4.2"
-  },
-  "dependencies": {
-    "@deip/proxydi": "1.95.0"
   }
 }
