@@ -127,12 +127,7 @@ const install = (Vue, options = {}) => {
   localize('en', en);
 };
 
-const ValidationPlugin = {
+export const ValidationPlugin = {
+  name: 'ValidationPlugin',
   install
 };
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(ValidationPlugin);
-}
-
-export { ValidationPlugin };
