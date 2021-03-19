@@ -1,8 +1,4 @@
 import { proxydi } from "@deip/proxydi";
-
-import { ValidationPlugin } from '@deip/validation-plugin';
-import { VuetifyExtended } from '@deip/vuetify-extended';
-
 import { usersStore, currentUserStore } from './store';
 
 const install = (Vue, options = {}) => {
@@ -18,9 +14,6 @@ const install = (Vue, options = {}) => {
     store.registerModule('users', usersStore);
     store.registerModule('currentUser', currentUserStore);
 
-    Vue.use(ValidationPlugin);
-    Vue.use(VuetifyExtended);
-
     Vue.mixin({
       computed: {
         $currentUser() { return this.$store.getters['currentUser/data']; },
@@ -31,14 +24,16 @@ const install = (Vue, options = {}) => {
     });
 
   } else {
-    console.warn('VUEX Store and Vue Router is not defined');
+    throw Error('[UsersModule]: storeInstance is not provided');
   }
 };
 
 export const UsersModule = {
+  name: 'UsersModule',
+  deps: [
+    'ValidationPlugin',
+    'VuetifyExtended',
+    'EnvModule'
+  ],
   install
 };
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(UsersModule);
-}
