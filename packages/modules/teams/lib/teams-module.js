@@ -1,8 +1,4 @@
 import { proxydi } from "@deip/proxydi";
-
-import { ValidationPlugin } from '@deip/validation-plugin';
-import { VuetifyExtended } from '@deip/vuetify-extended';
-
 import { teamsStore } from './store';
 
 const install = (Vue, options = {}) => {
@@ -14,18 +10,17 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('teams', teamsStore);
 
-    Vue.use(ValidationPlugin);
-    Vue.use(VuetifyExtended);
-
   } else {
-    console.warn('VUEX Store is not defined');
+    throw Error('[TeamsModule]: storeInstance is not provided');
   }
 };
 
 export const TeamsModule = {
+  name: 'TeamsModule',
+  deps: [
+    'EnvModule',
+    'ValidationPlugin',
+    'VuetifyExtended'
+  ],
   install
 };
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(TeamsModule);
-}
