@@ -5,13 +5,7 @@
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
-  "main": "lib/helpers/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
+  "main": "index.js",
   "publishConfig": {
     "registry": "https://npm-registry.deip.world/"
   },
