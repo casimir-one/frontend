@@ -9,9 +9,6 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  if (!Vue.prototype.$deipModules) Vue.prototype.$deipModules = [];
-  Vue.prototype.$deipModules.push('TeamsModule');
-
   const store = proxydi.get('storeInstance')
 
   if (store) {

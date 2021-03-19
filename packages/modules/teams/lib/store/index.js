@@ -56,15 +56,14 @@ const ACTIONS = {
   create({ commit, dispatch }, payload) {
 
     const {
-      members,
-      creator,
       name,
-      description
+      description,
+      members,
+      creator
     } = payload;
 
-    const memo = creator.account.memo_key;
     const auth = {
-      account_auths: [[creator, 1]],
+      account_auths: [[creator.username, 1]],
       key_auths: [],
       weight_threshold: 1
     };
@@ -74,10 +73,10 @@ const ACTIONS = {
         creator.privKey,
       {
         fee: toAssetUnits(0),
-        creator: creator,
+        creator: creator.username,
         accountOwnerAuth: auth,
         accountActiveAuth: auth,
-        accountMemoPubKey: memo,
+        accountMemoPubKey: creator.account.memo_key,
         accountJsonMetadata: undefined,
         accountExtensions: []
       },
