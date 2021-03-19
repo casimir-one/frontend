@@ -21,19 +21,18 @@
   },
   "dependencies": {
     "@deip/access-service": "1.95.0",
-    "@deip/app-config-service": "1.95.0",
     "@deip/auth-service": "1.95.0",
     "@deip/lib-crypto": "^1.21.0",
     "@deip/proxydi": "1.95.0",
     "@deip/rpc-client": "1.92.0",
     "@deip/toolbox": "1.95.0",
-    "@deip/users-module": "1.96.0",
-    "@deip/users-service": "1.95.0",
-    "@deip/validation-plugin": "1.95.0",
-    "@deip/vuetify-extended": "1.95.0",
-    "vuetify": "^2.4.2"
+    "@deip/users-service": "1.95.0"
   },
   "peerDependencies": {
-    "vuex": "^3.6.0"
+    "vuex": "^3.6.0",
+    "vuetify": "^2.4.2",
+    "@deip/validation-plugin": "^1.95.0",
+    "@deip/vuetify-extended": "^1.95.0",
+    "@deip/users-module": "^1.96.0"
   }
 }

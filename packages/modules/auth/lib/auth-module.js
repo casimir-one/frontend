@@ -1,6 +1,3 @@
-import { ValidationPlugin } from '@deip/validation-plugin';
-import { VuetifyExtended } from '@deip/vuetify-extended';
-import { UsersModule } from '@deip/users-module';
 import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
 
@@ -20,8 +17,6 @@ const install = (Vue, options = {}) => {
   const store = proxydi.get('storeInstance');
 
   if (store && router) {
-    Vue.use(ValidationPlugin);
-    Vue.use(VuetifyExtended);
 
     // for guests
     router.beforeEach((to, from, next) => {
@@ -55,8 +50,6 @@ const install = (Vue, options = {}) => {
 
     store.registerModule('auth', authStore);
 
-    Vue.use(UsersModule);
-
     // Other //////////////
 
     Vue.mixin({
@@ -71,14 +64,17 @@ const install = (Vue, options = {}) => {
       store.dispatch('currentUser/get');
     }
   } else {
-    console.warn('Router and Store is not defined');
+    throw Error('[AuthModule]: routerInstance and storeInstance is not provided');
   }
 };
 
 export const AuthModule = {
+  name: 'AuthModule',
+  deps: [
+    'EnvModule',
+    'ValidationPlugin',
+    'VuetifyExtended',
+    'UsersModule',
+  ],
   install
 };
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(AuthModule);
-}
