@@ -1,9 +1,10 @@
-import { ValidationObserver, ValidationProvider, extend } from 'vee-validate';
+import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
 import { wrapInArray } from '@deip/toolbox';
 
+import en from 'vee-validate/dist/locale/en.json';
 import {
   required,
-  integer as defaultInteger
+  integer
 } from 'vee-validate/dist/rules';
 
 export const minMax = {
@@ -36,11 +37,6 @@ export const unique = {
     return !l.includes(v);
   },
   message: '{_field_} must be unique'
-};
-
-export const integer = {
-  ...defaultInteger,
-  message: 'The {_field_} field must be an integer'
 };
 
 const normalizeDates = (curr, prev, next) => ({
@@ -127,6 +123,8 @@ const install = (Vue, options = {}) => {
 
   extend('dateBefore', dateBefore);
   extend('dateAfter', dateAfter);
+
+  localize('en', en);
 };
 
 const ValidationPlugin = {
