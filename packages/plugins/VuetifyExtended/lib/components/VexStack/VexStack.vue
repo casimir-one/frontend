@@ -1,6 +1,6 @@
 <script>
   import { convertToUnit } from 'vuetify/lib/util/helpers';
-  import { VSheet } from 'vuetify/lib/components/VSheet';
+  import { VSheet } from 'vuetify/lib/components';
 
   export default {
     name: 'VexStack',
