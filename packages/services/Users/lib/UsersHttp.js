@@ -43,6 +43,14 @@ class UsersHttp extends Singleton {
     return this.http.get(`/api/user/email/${email}`);
   }
 
+  updateUserAccount(username, { tx }) {
+    return this.http.put(`/api/user/account/${username}`, { tx });
+  }
+
+  updateUserProfile(username, payload) {
+    return this.http.put(`/api/user/profile/${username}`, payload);
+  }
+
 }
 
 export {

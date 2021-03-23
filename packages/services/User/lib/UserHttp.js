@@ -4,7 +4,7 @@ import { Singleton } from '@deip/toolbox';
 class UserHttp extends Singleton {
   http = HttpService.getInstance();
 
-  // Settings
+  // Settings [deprecated]
 
   updateUserAccount(username, { tx }) {
     return this.http.put(`/api/user/account/${username}`, { tx });

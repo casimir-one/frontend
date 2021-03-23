@@ -43,6 +43,14 @@ class UsersService extends Singleton {
     return this.usersHttp.getUser(username);
   }
 
+  updateUserProfile(username, payload) {
+    return this.usersHttp.updateUserProfile(username, payload);
+  }
+
+  updateUserAccount(username, payload) {
+    return this.usersHttp.updateUserProfile(username, payload);
+  }
+
 
 }
 
