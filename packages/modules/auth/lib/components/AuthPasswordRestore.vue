@@ -70,62 +70,68 @@
 </template>
 
 <script>
-export default {
-  name: 'AuthPasswordRestore',
-  props: {
-    usernameLabel: {
-      type: String,
-      default: 'Username'
-    },
-    emailLabel: {
-      type: String,
-      default: 'Email'
-    },
-    messageLabel: {
-      type: String,
-      default: 'Message'
-    },
-    submitLabel: {
-      type: String,
-      default: 'Restore'
-    },
+  import { VexStack } from '@deip/vuetify-extended';
 
-    formGutter: {
-      type: [ String, Number ],
-      default: 48
-    },
+  export default {
+    name: 'AuthPasswordRestore',
 
-    fieldsGutter: {
-      type: [ String, Number ],
-      default: 8
-    },
+    components: { VexStack },
 
-    submitGutter: {
-      type: [ String, Number ],
-      default: 16
-    },
+    props: {
+      usernameLabel: {
+        type: String,
+        default: 'Username'
+      },
+      emailLabel: {
+        type: String,
+        default: 'Email'
+      },
+      messageLabel: {
+        type: String,
+        default: 'Message'
+      },
+      submitLabel: {
+        type: String,
+        default: 'Restore'
+      },
 
-    fieldsProps: {
-      type: Object,
-      default: () => ({
-        outlined: true,
-      })
-    } 
-  },
+      formGutter: {
+        type: [ String, Number ],
+        default: 48
+      },
 
-  data() {
-    return {
-      loading: false,
-      formModel: {
-        username: '',
-        email: '',
-        message: '',
+      fieldsGutter: {
+        type: [ String, Number ],
+        default: 8
+      },
+
+      submitGutter: {
+        type: [ String, Number ],
+        default: 16
+      },
+
+      fieldsProps: {
+        type: Object,
+        default: () => ({
+          outlined: true,
+        })
       }
-    };
-  },
+    },
 
-  methods: {
-    restore() {}
+    data() {
+      return {
+        loading: false,
+        formModel: {
+          username: '',
+          email: '',
+          message: '',
+        }
+      };
+    },
+
+    methods: {
+      restore() {
+      }
+    }
   }
-}
 </script>

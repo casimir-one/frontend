@@ -89,8 +89,15 @@
 </template>
 
 <script>
+  import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
+
   export default {
     name: 'AuthSignUp',
+
+    components: {
+      VexStack,
+      VexPasswordInput
+    },
 
     props: {
       usernameLabel: {

@@ -74,79 +74,86 @@
 </template>
 
 <script>
-export default {
-  name: 'AuthSignIn',
+  import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
 
-  props: {
-    usernameLabel: {
-      type: String,
-      default: 'Username'
-    },
-    passwordLabel: {
-      type: String,
-      default: 'Password'
-    },
-    passwordRestoreLabel: {
-      type: String,
-      default: 'Forgot password?'
-    },
-    submitLabel: {
-      type: String,
-      default: 'Sign in'
+  export default {
+    name: 'AuthSignIn',
+
+    components: {
+      VexStack,
+      VexPasswordInput
     },
 
-    formGutter: {
-      type: [String, Number],
-      default: 48
-    },
+    props: {
+      usernameLabel: {
+        type: String,
+        default: 'Username'
+      },
+      passwordLabel: {
+        type: String,
+        default: 'Password'
+      },
+      passwordRestoreLabel: {
+        type: String,
+        default: 'Forgot password?'
+      },
+      submitLabel: {
+        type: String,
+        default: 'Sign in'
+      },
 
-    fieldsGutter: {
-      type: [String, Number],
-      default: 8
-    },
+      formGutter: {
+        type: [ String, Number ],
+        default: 48
+      },
 
-    submitGutter: {
-      type: [String, Number],
-      default: 16
-    },
+      fieldsGutter: {
+        type: [ String, Number ],
+        default: 8
+      },
 
-    fieldsProps: {
-      type: Object,
-      default: () => ({
-        outlined: true
-      })
-    }
-  },
+      submitGutter: {
+        type: [ String, Number ],
+        default: 16
+      },
 
-  data() {
-    return {
-      loading: false,
-      formModel: {
-        username: '',
-        password: ''
+      fieldsProps: {
+        type: Object,
+        default: () => ({
+          outlined: true
+        })
       }
-    };
-  },
-  mounted() {
-    document.body.click(); // workaround chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=1166619
-  },
-  methods: {
-    signIn() {
-      this.loading = true;
+    },
 
-      this.$store.dispatch('auth/signIn', this.formModel)
-        .then(() => {
-          this.$notifier.showSuccess('You are successfully logged in.');
-          this.$router.push({ name: this.$authRedirectRouteName })
-        })
-        .catch((error) => {
-          this.$notifier.showError(error);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-      ;
+    data() {
+      return {
+        loading: false,
+        formModel: {
+          username: '',
+          password: ''
+        }
+      };
+    },
+    mounted() {
+      document.body.click(); // workaround chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=1166619
+    },
+    methods: {
+      signIn() {
+        this.loading = true;
+
+        this.$store.dispatch('auth/signIn', this.formModel)
+          .then(() => {
+            this.$notifier.showSuccess('You are successfully logged in.');
+            this.$router.push({ name: this.$authRedirectRouteName })
+          })
+          .catch((error) => {
+            this.$notifier.showError(error);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+        ;
+      }
     }
-  }
-};
+  };
 </script>

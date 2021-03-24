@@ -67,9 +67,15 @@
 
 <script>
   import { TEAM_FORM_MODES } from '../variables';
+  import { VexStack } from '@deip/vuetify-extended';
 
   export default {
     name: 'TeamForm',
+
+    components: {
+      VexStack
+    },
+
     props: {
       mode: {
         type: [ String, Number ],

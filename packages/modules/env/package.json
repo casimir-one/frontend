@@ -29,6 +29,7 @@
     "@deip/app-config-service": "1.95.0",
     "@deip/proxydi": "1.95.0",
     "@deip/rpc-client": "1.92.0",
+    "@deip/vuetify-extended": "^1.95.0",
     "axios": "^0.21.1"
   }
 }

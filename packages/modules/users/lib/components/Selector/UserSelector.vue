@@ -78,14 +78,18 @@
     VAutocomplete
   } from 'vuetify/lib/components';
 
-  import { wrapInArray, isArray, isString, hasValue } from '@deip/toolbox';
+  import { wrapInArray, isString, hasValue } from '@deip/toolbox';
   import { userFullName, userAvatarSrc } from '@deip/platform-fns';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import UsersDataProvider from '../DataProvider/UsersDataProvider';
+  import { VexAutocomplete } from '@deip/vuetify-extended';
 
   export default {
     name: 'UserSelector',
-    components: { UsersDataProvider },
+    components: {
+      UsersDataProvider,
+      VexAutocomplete
+    },
     mixins: [
       Proxyable
     ],
