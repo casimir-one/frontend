@@ -24,6 +24,7 @@
     "vuetify": "^2.4.2"
   },
   "dependencies": {
+    "@deip/toolbox": "^1.95.0",
     "mime": "^2.5.2",
     "parse-path": "^4.0.3",
     "raw-loader": "^4.0.2",

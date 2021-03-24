@@ -12,10 +12,10 @@
   import VexMiniMetaItem from './VexMiniMetaItem';
   import VexStack from '../VexStack/VexStack';
 
-  import { getBindableProps } from '../../composables/props';
+  import { getBindableProps } from '../../composables';
 
   export default {
-    name: 'VexMiniMetaList',
+    name: 'VexMiniMeta',
     components: { VexStack, VexMiniMetaItem },
     props: {
       items: {
