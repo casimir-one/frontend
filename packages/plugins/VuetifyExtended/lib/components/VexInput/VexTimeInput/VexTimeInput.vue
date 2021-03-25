@@ -1,5 +1,5 @@
 <template>
-  <d-autocomplete
+  <vex-autocomplete
     v-model="internalValue"
     :labe="label"
     :placeholder="placeholder"
@@ -10,14 +10,18 @@
 </template>
 
 <script>
-  import DAutocomplete from '@/components/Deipify/DAutocomplete/DAutocomplete';
+  import moment from 'moment';
+
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { createRange } from 'vuetify/lib/util/helpers';
-  import { padStart } from '@/utils/helpers';
+
+  import { padStart } from '@deip/toolbox';
+
+  import VexAutocomplete from '../../VexAutocomplete';
 
   export default {
-    name: 'DTimeInput',
-    components: { DAutocomplete },
+    name: 'VexTimeInput',
+    components: { VexAutocomplete },
     mixins: [Proxyable],
     props: {
       graduate: {
@@ -41,7 +45,7 @@
       list() {
         const hours = createRange(24);
         const minutes = createRange(60);
-        const currentDate = this.moment(new Date());
+        const currentDate = moment.utc().local();
         if (currentDate.format('YYYY-MM-DD') === this.date) {
           hours.splice(0, currentDate.format('HH'));
         }

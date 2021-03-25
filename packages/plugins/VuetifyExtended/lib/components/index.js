@@ -6,7 +6,7 @@ export * from './VexHeader';
 export * from './VexImageInput';
 export * from './VexMiniMeta';
 export * from './VexNotifier';
-export * from './VexPasswordInput';
 export * from './VexSection';
 export * from './VexStack';
 export * from './VexTooltip';
+export * from './VexInput';

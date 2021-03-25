@@ -5,3 +5,4 @@ export * from './lib/objects';
 export * from './lib/singleton';
 export * from './lib/verification';
 export * from './lib/color';
+export * from './lib/strings';

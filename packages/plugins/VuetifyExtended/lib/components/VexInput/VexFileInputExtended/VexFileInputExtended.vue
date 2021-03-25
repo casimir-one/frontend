@@ -1,13 +1,14 @@
 <template>
   <div>
-    <d-file-input
+    <vex-file-input
       v-model="fileModel"
       :label="label"
       v-bind="attrs$"
       hide-details="auto"
     />
+
     <slot name="existList" :files="existsFiles">
-      <d-stack v-if="existsFiles && existsFiles.length" class="mt-2" :gap="8">
+      <vex-stack v-if="existsFiles && existsFiles.length" class="mt-2" :gutter="8">
         <div
           v-for="(file, index) of existsFiles"
           :key="`link-${index}`"
@@ -23,7 +24,7 @@
             {{ file }}
           </a>
         </div>
-      </d-stack>
+      </vex-stack>
     </slot>
   </div>
 </template>
@@ -32,17 +33,24 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
 
-  import { filesChore } from '@/mixins/chores';
-
   import { wrapInArray } from 'vuetify/lib/util/helpers';
 
-  import DFileInput from '@/components/Deipify/DInput/DFileInput';
-  import DStack from '@/components/Deipify/DStack/DStack';
+  import VexFileInput from '../VexFileInput';
+  import VexStack from '../../VexStack';
+
+  const iconsMap = [
+    { icon: 'mdi-file-image-outline', ext: ['jpg', 'jpeg', 'png', 'svg', 'bmp', 'gif'] },
+    { icon: 'mdi-file-document-outline', ext: [] },
+    { icon: 'mdi-file-excel-outline', ext: ['xlsx'] },
+    { icon: 'mdi-file-table-outline', ext: [] },
+    { icon: 'mdi-file-pdf-outline', ext: ['pdf'] },
+    { icon: 'mdi-file-powerpoint-outline', ext: ['ppt', 'pptx'] }
+  ];
 
   export default {
-    name: 'DFileInputExtended',
-    components: { DStack, DFileInput },
-    mixins: [Proxyable, BindsAttrs, filesChore],
+    name: 'VexFileInputExtended',
+    components: { VexStack, VexFileInput },
+    mixins: [Proxyable, BindsAttrs],
     props: {
       urlBuilder: {
         type: Function,
@@ -86,6 +94,18 @@
       } else {
         this.existsFiles = [];
       }
+    },
+    methods: {
+      fileIcon(name) {
+        if (!name) return false;
+
+        const target = iconsMap
+          .find((item) => item.ext.includes(name.split('.').pop()));
+
+        if (!target) return 'mdi-file-outline';
+
+        return target.icon;
+      },
     }
   };
 </script>
