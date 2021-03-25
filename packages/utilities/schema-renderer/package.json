@@ -1,0 +1,33 @@
+{
+  "name": "@deip/schema-renderer",
+  "version": "1.96.1",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "@deip/toolbox": "^1.95.0",
+    "change-case": "^4.1.2",
+    "dot-prop": "^6.0.1",
+    "lodash": "^4.17.21",
+    "recursive-iterator": "^3.3.0",
+    "vuetify": "^2.4.8"
+  }
+}
