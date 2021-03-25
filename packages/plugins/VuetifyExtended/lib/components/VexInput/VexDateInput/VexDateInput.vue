@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import moment from 'moment';
+  import { isFuture, isToday, parseISO } from 'date-fns'
 
   import Validatable from 'vuetify/lib/mixins/validatable';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
@@ -113,7 +113,8 @@
       },
       allowedDates(val) {
         if (this.onlyFuture) {
-          return moment(val).isSameOrAfter(moment.utc().local(), 'day');
+          const date = parseISO(val);
+          return isToday(date) || isFuture(date);
         }
 
         return true;
