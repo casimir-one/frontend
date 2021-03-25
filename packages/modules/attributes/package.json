@@ -1,0 +1,29 @@
+{
+  "name": "@deip/attributes-module",
+  "version": "1.96.1",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "@deip/schema-renderer": "^1.96.1",
+    "vuedraggable": "^2.24.3"
+  }
+}
