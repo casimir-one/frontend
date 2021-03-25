@@ -1,5 +1,5 @@
 <template>
-  <d-autocomplete
+  <vex-autocomplete
     v-model="internalValue"
     :labe="label"
     :placeholder="placeholder"
@@ -10,14 +10,18 @@
 </template>
 
 <script>
-  import DAutocomplete from '@/components/Deipify/DAutocomplete/DAutocomplete';
+  import {isToday, getHours, getMinutes, parseISO} from 'date-fns';
+
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { createRange } from 'vuetify/lib/util/helpers';
-  import { padStart } from '@/utils/helpers';
+
+  import { padStart } from '@deip/toolbox';
+
+  import VexAutocomplete from '../../VexAutocomplete';
 
   export default {
-    name: 'DTimeInput',
-    components: { DAutocomplete },
+    name: 'VexTimeInput',
+    components: { VexAutocomplete },
     mixins: [Proxyable],
     props: {
       graduate: {
@@ -41,9 +45,10 @@
       list() {
         const hours = createRange(24);
         const minutes = createRange(60);
-        const currentDate = this.moment(new Date());
-        if (currentDate.format('YYYY-MM-DD') === this.date) {
-          hours.splice(0, currentDate.format('HH'));
+        const currentDate = Date.now();
+
+        if (isToday(parseISO(this.date))) {
+          hours.splice(0, getHours(currentDate));
         }
 
         const list = [];
@@ -52,9 +57,8 @@
           for (const m of minutes) {
             if (m % this.graduate === 0) {
               if (this.date) {
-                if (h === parseInt(currentDate.format('HH'), 10) && m > currentDate.format('mm')) {
-                  list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
-                } else if (h !== parseInt(currentDate.format('HH'), 10)) {
+                if (h === getHours(currentDate) && m > getMinutes(currentDate)
+                  || h !== getHours(currentDate)) {
                   list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
                 }
               } else {

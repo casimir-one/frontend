@@ -12,7 +12,7 @@
         :label="label"
         outlined
         hide-details="auto"
-        append-icon="event"
+        append-icon="mdi-calendar"
         v-bind="internalFieldProps"
 
         @click:clear="$refs.field.blur()"
@@ -29,14 +29,15 @@
 </template>
 
 <script>
+  import { isFuture, isToday, parseISO } from 'date-fns'
+
   import Validatable from 'vuetify/lib/mixins/validatable';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
-  import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
 
-  import { isArray } from '@/utils/helpers';
+  import { isArray } from '@deip/toolbox';
 
   export default {
-    name: 'DInputDate',
+    name: 'VexDateInput',
     mixins: [Proxyable],
     props: {
       label: {
@@ -112,7 +113,8 @@
       },
       allowedDates(val) {
         if (this.onlyFuture) {
-          return this.moment(val).isSameOrAfter(this.moment(new Date()), 'day');
+          const date = parseISO(val);
+          return isToday(date) || isFuture(date);
         }
 
         return true;

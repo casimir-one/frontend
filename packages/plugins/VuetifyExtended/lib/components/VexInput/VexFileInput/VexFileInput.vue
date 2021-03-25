@@ -2,7 +2,7 @@
   import { VFileInput, VChip, VTextField } from 'vuetify/lib/components';
 
   export default {
-    name: 'DFileInput',
+    name: 'VexFileInput',
     mixins: [VFileInput],
     props: {
       smallChips: {
@@ -39,7 +39,7 @@
         return {
           ...VTextField.options.computed.classes.call(this),
           'v-file-input': true,
-          'd-file-input': true
+          'vex-file-input': true
         };
       }
     },
@@ -51,7 +51,8 @@
           props: {
             small: this.smallChips,
             label: this.chipAsLabel,
-            color: this.chipColor
+            color: this.chipColor,
+            close: true
           },
           on: {
             'click:close': () => {
@@ -67,7 +68,7 @@
 </script>
 
 <style lang="scss">
-  .d-file-input {
+  .vex-file-input {
     .v-file-input__text--chips {
       margin-left: -4px;
     }

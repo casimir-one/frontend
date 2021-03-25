@@ -3,7 +3,7 @@
     <v-spacer
       style="margin-right: -1px;"
     >
-      <d-input-date
+      <vex-date-input
         v-model="internalValue.date"
         :label="label"
         :only-future="onlyFuture"
@@ -11,7 +11,7 @@
       />
     </v-spacer>
     <v-sheet min-width="112px" width="30%">
-      <d-time-input
+      <vex-time-input
         v-model="internalValue.time"
         :date="onlyFuture ? internalValue.date : ''"
         placeholder="00:00"
@@ -24,12 +24,12 @@
 <script>
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
 
-  import DInputDate from '@/components/Deipify/DInput/DInputDate';
-  import DTimeInput from '@/components/Deipify/DInput/DTimeInput';
+  import VexDateInput from '../VexDateInput';
+  import VexTimeInput from '../VexTimeInput';
 
   export default {
-    name: 'DDateTimeInput',
-    components: { DTimeInput, DInputDate },
+    name: 'VexDateTimeInput',
+    components: { VexDateInput, VexTimeInput },
     mixins: [BindsAttrs],
     model: {
       prop: 'value',

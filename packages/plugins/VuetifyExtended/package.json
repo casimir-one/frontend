@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@deip/toolbox": "^1.95.0",
+    "date-fns": "^2.19.0",
     "mime": "^2.5.2",
     "parse-path": "^4.0.3",
     "raw-loader": "^4.0.2",
