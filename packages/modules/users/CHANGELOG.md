@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* **@deip/users-module:** add components ([52ce732](https://gitlab.com/DEIP/deip-client-modules/commit/52ce732edcb9aa11dcfed15d6cae7001850ce3f8))
+* **@deip/users-module:** remove internal instals, add module deps ([17760d5](https://gitlab.com/DEIP/deip-client-modules/commit/17760d52b54a7782fa4a6ac262ff6c001ff218be))
+
+
+
+
+
 # [1.96.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.95.1...v1.96.0) (2021-03-18)
 
 

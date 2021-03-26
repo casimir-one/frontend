@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* **@deip/auth-module:** add Password restore form ([c41dc73](https://gitlab.com/DEIP/deip-client-modules/commit/c41dc73f97c3bb3b7dc9259cbfc89d70c15dadcc))
+* **@deip/validation-plugin:** add plugin name (usefull in module resolver) ([a91fed9](https://gitlab.com/DEIP/deip-client-modules/commit/a91fed9473033f181d262850b64f8b1530668715))
+
+
+
+
+
 # [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 **Note:** Version bump only for package @deip/validation-plugin

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Bug Fixes
+
+* replace moment with date-fns ([ccb5947](https://gitlab.com/DEIP/deip-client-modules/commit/ccb59474e38e48fb384667febc18a4f3b74b0326))
+
+
+### Features
+
+* **@deip/vuetify-extended:** add input components ([18fdf33](https://gitlab.com/DEIP/deip-client-modules/commit/18fdf33b002d3e1fbdc198d2b819c3023cea4356))
+* **@deip/vuetify-extended:** new components ([cfce78a](https://gitlab.com/DEIP/deip-client-modules/commit/cfce78ac42fcb041150cb0081615ae92fa4bcb44))
+* **@deip/vuetify-extended:** remove components from global ([507a9d6](https://gitlab.com/DEIP/deip-client-modules/commit/507a9d666674ae4590381a1c41aa2c53b26d0860))
+* **@deip/vuetify-extended:** remove proxydi dependency and add config options for dynamic components ([33492c6](https://gitlab.com/DEIP/deip-client-modules/commit/33492c6c15bee5b4008554e20c1b15546f4dd893))
+
+
+
+
+
 # [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 

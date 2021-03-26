@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* **@deip/env-module:** rewrite for module resolver ([04ff1dd](https://gitlab.com/DEIP/deip-client-modules/commit/04ff1dd2a53370c503870f9611c84780c1cc4a45))
+
+
+
+
+
 # [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 **Note:** Version bump only for package @deip/env-module
