@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Bug Fixes
+
+* replace moment with date-fns ([ccb5947](https://gitlab.com/DEIP/deip-client-modules/commit/ccb59474e38e48fb384667febc18a4f3b74b0326))
+* **@deip/teams-module:** create team action ([358d159](https://gitlab.com/DEIP/deip-client-modules/commit/358d159f8117e32a051afb6b072d300775b1daa0))
+
+
+### Features
+
+* **@deip/schema-renderer:** scheema composer alpha ([f7c2049](https://gitlab.com/DEIP/deip-client-modules/commit/f7c2049e8b033de53ff51e734dabbd96d4c17000))
+* new service @deip/attributes-service ([8dbcff0](https://gitlab.com/DEIP/deip-client-modules/commit/8dbcff0770a8e5705ef6191467f97d5c931215ac))
+* **@deip/attributes-module:** add Checkbox attribute ([e79c5ff](https://gitlab.com/DEIP/deip-client-modules/commit/e79c5ff068d3ebf58dcfcc41b68bdc846a47edca))
+* **@deip/auth-module:** add Password restore form ([c41dc73](https://gitlab.com/DEIP/deip-client-modules/commit/c41dc73f97c3bb3b7dc9259cbfc89d70c15dadcc))
+* **@deip/auth-module:** remove internal instals, add module deps ([5bb9390](https://gitlab.com/DEIP/deip-client-modules/commit/5bb9390f619bb933ef82af3240b34c1ea6da4879))
+* **@deip/env-module:** rewrite for module resolver ([04ff1dd](https://gitlab.com/DEIP/deip-client-modules/commit/04ff1dd2a53370c503870f9611c84780c1cc4a45))
+* **@deip/platform-fns:** add AppCreate resolver ([92979bc](https://gitlab.com/DEIP/deip-client-modules/commit/92979bc52d0cd493a3538246dafbd3f73f20d554))
+* **@deip/platform-fns:** add componentType helper ([c692fc1](https://gitlab.com/DEIP/deip-client-modules/commit/c692fc1b9ad730f53eedbd5f3c49817f45296600))
+* **@deip/shema-renderer:** first release ([b03648c](https://gitlab.com/DEIP/deip-client-modules/commit/b03648c5312f558b888181dcad67701dfab1b02c))
+* **@deip/teams-module:** remove internal instals, add module deps ([594307a](https://gitlab.com/DEIP/deip-client-modules/commit/594307a581c9813dcbd05e88415414d759cf1628))
+* **@deip/toolbox:** add color helpers ([66e022d](https://gitlab.com/DEIP/deip-client-modules/commit/66e022df9224aca3bd52f456d4a8b7b6a9905290))
+* **@deip/users-module:** add components ([52ce732](https://gitlab.com/DEIP/deip-client-modules/commit/52ce732edcb9aa11dcfed15d6cae7001850ce3f8))
+* **@deip/users-module:** remove internal instals, add module deps ([17760d5](https://gitlab.com/DEIP/deip-client-modules/commit/17760d52b54a7782fa4a6ac262ff6c001ff218be))
+* **@deip/users/service:** new methods ([2a7216a](https://gitlab.com/DEIP/deip-client-modules/commit/2a7216a10f50ffe09c80d889522fd4ffd42a9714))
+* **@deip/validation-plugin:** add plugin name (usefull in module resolver) ([a91fed9](https://gitlab.com/DEIP/deip-client-modules/commit/a91fed9473033f181d262850b64f8b1530668715))
+* **@deip/vuetify-extended:** add input components ([18fdf33](https://gitlab.com/DEIP/deip-client-modules/commit/18fdf33b002d3e1fbdc198d2b819c3023cea4356))
+* **@deip/vuetify-extended:** new components ([cfce78a](https://gitlab.com/DEIP/deip-client-modules/commit/cfce78ac42fcb041150cb0081615ae92fa4bcb44))
+* **@deip/vuetify-extended:** remove components from global ([507a9d6](https://gitlab.com/DEIP/deip-client-modules/commit/507a9d666674ae4590381a1c41aa2c53b26d0860))
+* **@deip/vuetify-extended:** remove proxydi dependency and add config options for dynamic components ([33492c6](https://gitlab.com/DEIP/deip-client-modules/commit/33492c6c15bee5b4008554e20c1b15546f4dd893))
+
+
+
+
+
 ## [1.96.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.0...v1.96.1) (2021-03-18)
 
 

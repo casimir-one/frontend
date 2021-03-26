@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Bug Fixes
+
+* **@deip/teams-module:** create team action ([358d159](https://gitlab.com/DEIP/deip-client-modules/commit/358d159f8117e32a051afb6b072d300775b1daa0))
+
+
+### Features
+
+* **@deip/teams-module:** remove internal instals, add module deps ([594307a](https://gitlab.com/DEIP/deip-client-modules/commit/594307a581c9813dcbd05e88415414d759cf1628))
+
+
+
+
+
 # [1.96.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.95.1...v1.96.0) (2021-03-18)
 
 

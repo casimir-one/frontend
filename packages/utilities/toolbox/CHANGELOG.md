@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* **@deip/toolbox:** add color helpers ([66e022d](https://gitlab.com/DEIP/deip-client-modules/commit/66e022df9224aca3bd52f456d4a8b7b6a9905290))
+* **@deip/vuetify-extended:** add input components ([18fdf33](https://gitlab.com/DEIP/deip-client-modules/commit/18fdf33b002d3e1fbdc198d2b819c3023cea4356))
+
+
+
+
+
 # [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 

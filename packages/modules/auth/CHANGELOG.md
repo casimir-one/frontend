@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* **@deip/auth-module:** add Password restore form ([c41dc73](https://gitlab.com/DEIP/deip-client-modules/commit/c41dc73f97c3bb3b7dc9259cbfc89d70c15dadcc))
+* **@deip/auth-module:** remove internal instals, add module deps ([5bb9390](https://gitlab.com/DEIP/deip-client-modules/commit/5bb9390f619bb933ef82af3240b34c1ea6da4879))
+
+
+
+
+
 ## [1.96.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.0...v1.96.1) (2021-03-18)
 
 
