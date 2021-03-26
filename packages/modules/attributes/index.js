@@ -1,11 +1,11 @@
 import AttributeComplex from './lib/components/AttributeComplex';
-import AttributeBaseEdit from './lib/components/base/AttributeBaseEdit';
-import AttributeBaseRead from './lib/components/base/AttributeBaseRead';
-import AttributeBaseSet from './lib/components/base/AttributeBaseSet';
+import AttributeEdit from './lib/components/AttributeEdit';
+import AttributeRead from './lib/components/AttributeRead';
+import AttributeSet from './lib/components/AttributeSet';
 
 export { 
   AttributeComplex,
-  AttributeBaseEdit,
-  AttributeBaseRead,
-  AttributeBaseSet
+  AttributeEdit,
+  AttributeRead,
+  AttributeSet
  }

@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  import { attributeTypeComponent } from '../../mixins/base';
+  import { attributeTypeComponent } from '../mixins/base';
 
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
 
   import { AttributeCheckboxRead } from './Checkbox';
 
   export default {
-    name: 'AttributeBaseRead',
+    name: 'AttributeRead',
     components: {
       AttributeCheckboxRead,
     },

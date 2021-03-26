@@ -6,7 +6,7 @@ export const attributeTypeComponent = {
 
   computed: {
     attributeComponent() {
-      const componentName = this.$options.name;
+      const componentNameSplitted = this.$options.name.split(/(?=[A-Z])/);;
       let type;
 
       if (this.type) {
@@ -19,7 +19,9 @@ export const attributeTypeComponent = {
         throw new Error('Unknown attribute');
       }
 
-      return componentName.replace('Base', pascalCase(type));
+      componentNameSplitted.splice(1, 0, pascalCase(type));
+
+      return componentNameSplitted.join('');
     }
   }
 };

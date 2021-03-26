@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { attributeRead } from '../../../mixins/base';
+  import { attributeRead } from '../../mixins/base';
 
   export default {
     name: 'AttributeCheckboxRead',

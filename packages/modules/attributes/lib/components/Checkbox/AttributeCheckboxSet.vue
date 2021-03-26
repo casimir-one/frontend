@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { attributeSet } from '../../../mixins/base';
+  import { attributeSet } from '../../mixins/base';
 
   import { extend } from 'vee-validate';
 

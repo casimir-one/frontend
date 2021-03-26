@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { attributeTypeComponent } from '../../mixins/base';
+  import { attributeTypeComponent } from '../mixins/base';
 
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
@@ -18,7 +18,7 @@
   import { AttributeCheckboxSet } from './Checkbox';
 
   export default {
-    name: 'AttributeBaseSet',
+    name: 'AttributeSet',
     components: {
       AttributeCheckboxSet,
     },

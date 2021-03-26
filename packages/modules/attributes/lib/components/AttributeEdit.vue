@@ -8,17 +8,17 @@
 </template>
 
 <script>
-  import { attributeTypeComponent } from '../../mixins/base';
+  import { attributeTypeComponent } from '../mixins/base';
 
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
 
   import { AttributeCheckboxEdit } from './Checkbox';
   
-  import { ATTR_TYPES } from '../../variables';
+  import { ATTR_TYPES } from '../variables';
 
   export default {
-    name: 'AttributeBaseEdit',
+    name: 'AttributeEdit',
     components: {
       AttributeCheckboxEdit,
     },

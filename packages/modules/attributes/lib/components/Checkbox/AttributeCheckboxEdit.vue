@@ -1,5 +1,5 @@
 <script>
-  import { AttributeEditBase } from '../../../mixins/base';
+  import { AttributeEditBase } from '../../mixins/base';
 
   export default {
     name: 'AttributeCheckboxEdit',
