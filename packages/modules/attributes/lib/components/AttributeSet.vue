@@ -18,6 +18,7 @@
   import { AttributeCheckboxSet } from './Checkbox';
   import { AttributeTextSet } from './Text';
   import { AttributeTextareaSet } from './Textarea';
+  import { AttributeSwitchSet } from './Switch';
 
   export default {
     name: 'AttributeSet',
@@ -25,6 +26,7 @@
       AttributeCheckboxSet,
       AttributeTextSet,
       AttributeTextareaSet,
+      AttributeSwitchSet,
     },
 
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],

@@ -16,6 +16,7 @@
   import { AttributeCheckboxRead } from './Checkbox';
   import { AttributeTextRead } from './Text';
   import { AttributeTextareaRead } from './Textarea';
+  import { AttributeSwitchRead } from './Switch';
 
   export default {
     name: 'AttributeRead',
@@ -23,6 +24,7 @@
       AttributeCheckboxRead,
       AttributeTextRead,
       AttributeTextareaRead,
+      AttributeSwitchRead,
     },
     mixins: [attributeTypeComponent, BindsAttrs],
     props: {
