@@ -126,7 +126,7 @@
             }
           }
         }, [
-          this.$createElement(VIcon, 'clear')
+          this.$createElement(VIcon, 'mdi-close')
         ]);
 
         return this.$createElement(VChip, {

@@ -1,3 +1,7 @@
-export function hasSlot() {
-  return (name) => !!(this.$slots[name] || this.$scopedSlots[name])
+export const contextMixin = {
+  methods: {
+    hasSlot() {
+      return (name) => !!(this.$slots[name] || this.$scopedSlots[name])
+    }
+  }
 }
