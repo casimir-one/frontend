@@ -14,6 +14,7 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
 
   import { AttributeCheckboxEdit } from './Checkbox';
+  import { AttributeTextEdit } from './Text';
   
   import { ATTR_TYPES } from '../variables';
 
@@ -21,6 +22,7 @@
     name: 'AttributeEdit',
     components: {
       AttributeCheckboxEdit,
+      AttributeTextEdit,
     },
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],
     props: {

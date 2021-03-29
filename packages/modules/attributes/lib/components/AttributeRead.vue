@@ -14,11 +14,13 @@
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
 
   import { AttributeCheckboxRead } from './Checkbox';
+  import { AttributeTextRead } from './Text';
 
   export default {
     name: 'AttributeRead',
     components: {
       AttributeCheckboxRead,
+      AttributeTextRead,
     },
     mixins: [attributeTypeComponent, BindsAttrs],
     props: {

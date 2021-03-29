@@ -16,11 +16,13 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
 
   import { AttributeCheckboxSet } from './Checkbox';
+  import { AttributeTextSet } from './Text';
 
   export default {
     name: 'AttributeSet',
     components: {
       AttributeCheckboxSet,
+      AttributeTextSet,
     },
 
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],
