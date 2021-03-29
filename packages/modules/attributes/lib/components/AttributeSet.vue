@@ -21,6 +21,7 @@
   import { AttributeSwitchSet } from './Switch';
   import { AttributeSelectSet } from './Select';
   import { AttributeUrlSet } from './Url';
+  import { AttributeVideoUrlSet } from './VideoUrl';
 
   export default {
     name: 'AttributeSet',
@@ -30,7 +31,8 @@
       AttributeTextareaSet,
       AttributeSwitchSet,
       AttributeSelectSet,
-      AttributeUrlSet
+      AttributeUrlSet,
+      AttributeVideoUrlSet
     },
 
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],

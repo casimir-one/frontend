@@ -19,6 +19,7 @@
   import { AttributeSwitchRead } from './Switch';
   import { AttributeSelectRead } from './Select';
   import { AttributeUrlRead } from './Url';
+  import { AttributeVideoUrlRead } from './VideoUrl';
 
   export default {
     name: 'AttributeRead',
@@ -29,6 +30,7 @@
       AttributeSwitchRead,
       AttributeSelectRead,
       AttributeUrlRead,
+      AttributeVideoUrlRead
     },
     mixins: [attributeTypeComponent, BindsAttrs],
     props: {

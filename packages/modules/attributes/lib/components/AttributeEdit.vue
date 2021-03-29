@@ -19,6 +19,7 @@
   import { AttributeSwitchEdit } from './Switch';
   import { AttributeSelectEdit } from './Select';
   import { AttributeUrlEdit } from './Url';
+  import { AttributeVideoUrlEdit } from './VideoUrl';
 
   import { ATTR_TYPES } from '../variables';
 
@@ -31,6 +32,7 @@
       AttributeSwitchEdit,
       AttributeSelectEdit,
       AttributeUrlEdit,
+      AttributeVideoUrlEdit
     },
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],
     props: {
