@@ -17,12 +17,14 @@
 
   import { AttributeCheckboxSet } from './Checkbox';
   import { AttributeTextSet } from './Text';
+  import { AttributeTextareaSet } from './Textarea';
 
   export default {
     name: 'AttributeSet',
     components: {
       AttributeCheckboxSet,
       AttributeTextSet,
+      AttributeTextareaSet,
     },
 
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],

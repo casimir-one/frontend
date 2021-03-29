@@ -15,12 +15,14 @@
 
   import { AttributeCheckboxRead } from './Checkbox';
   import { AttributeTextRead } from './Text';
+  import { AttributeTextareaRead } from './Textarea';
 
   export default {
     name: 'AttributeRead',
     components: {
       AttributeCheckboxRead,
       AttributeTextRead,
+      AttributeTextareaRead,
     },
     mixins: [attributeTypeComponent, BindsAttrs],
     props: {

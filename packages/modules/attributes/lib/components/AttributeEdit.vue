@@ -15,6 +15,7 @@
 
   import { AttributeCheckboxEdit } from './Checkbox';
   import { AttributeTextEdit } from './Text';
+  import { AttributeTextareaEdit } from './Textarea';
   
   import { ATTR_TYPES } from '../variables';
 
@@ -23,6 +24,7 @@
     components: {
       AttributeCheckboxEdit,
       AttributeTextEdit,
+      AttributeTextareaEdit,
     },
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],
     props: {

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@deip/schema-renderer": "1.97.0",
+    "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   }
 }
