@@ -3,7 +3,7 @@
     <attribute-edit-meta v-model="internalValue" />
     <attribute-edit-props v-model="internalValue" can-be-multiple />
     <v-divider class="my-6" />
-    <!-- <attribute-edit-options v-model="internalValue.valueOptions" /> -->
+    <attribute-edit-options v-model="internalValue.valueOptions" />
   </div>
 </template>
 
@@ -13,12 +13,12 @@
 
   import AttributeEditProps from './_partials/AttributeEditProps';
   import AttributeEditMeta from './_partials/AttributeEditMeta';
-  // import AttributeEditOptions from './_partials/AttributeEditOptions';
+  import AttributeEditOptions from './_partials/AttributeEditOptions';
 
   export default {
     name: 'AttributeEditExtendable',
     components: {
-      // AttributeEditOptions,
+      AttributeEditOptions,
       AttributeEditMeta,
       AttributeEditProps
     },

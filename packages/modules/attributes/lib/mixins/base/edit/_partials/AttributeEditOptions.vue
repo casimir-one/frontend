@@ -1,7 +1,7 @@
 <template>
-  <d-block small :title="label">
-    <d-timeline>
-      <d-timeline-item
+  <vex-block small :title="label">
+    <vex-timeline>
+      <vex-timeline-item
         v-for="(item, index) of internalValue"
         :key="`row-${index}`"
         :dot-top="16"
@@ -19,24 +19,26 @@
 
         <template #action>
           <v-btn icon :disabled="!index" @click="removeItem(item)">
-            <v-icon>delete</v-icon>
+            <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>
-      </d-timeline-item>
-      <d-timeline-add @click="addItem()" />
-    </d-timeline>
-  </d-block>
+      </vex-timeline-item>
+      <vex-timeline-add @click="addItem()" />
+    </vex-timeline>
+  </vex-block>
 </template>
 
 <script>
   import Proxyable from 'vuetify/lib/mixins/proxyable';
-  import { arrayModelAddFactory } from '@/mixins/extendModel';
+  import { arrayModelAddFactory } from '@deip/platform-fns';
 
-  import DBlock from '@/components/Deipify/DBlock/DBlock';
-  import DTimelineAdd from '@/components/Deipify/DTimeline/DTimelineAdd';
-  import DTimelineItem from '@/components/Deipify/DTimeline/DTimelineItem';
-  import AttributeEditMeta from '@/components/Attributes/_mixins/edit/_partials/AttributeEditMeta';
-  import DTimeline from '@/components/Deipify/DTimeline/DTimeline';
+  import { 
+    VexBlock, 
+    VexTimeline, 
+    VexTimelineItem, 
+    VexTimelineAdd 
+  } from '@deip/vuetify-extended';
+  import AttributeEditMeta from './AttributeEditMeta';
 
   const optModelFactory = () => ({
     label: undefined,
@@ -46,11 +48,11 @@
   export default {
     name: 'AttributeEditOptions',
     components: {
-      DTimeline,
       AttributeEditMeta,
-      DTimelineItem,
-      DTimelineAdd,
-      DBlock
+      VexBlock,
+      VexTimeline,
+      VexTimelineItem,
+      VexTimelineAdd
     },
     mixins: [Proxyable, arrayModelAddFactory(optModelFactory)],
     props: {

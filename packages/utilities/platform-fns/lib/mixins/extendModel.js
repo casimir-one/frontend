@@ -1,4 +1,4 @@
-import { hasValue, isArray, isObject } from '../helpers';
+import { hasValue, isArray, isObject } from '@deip/toolbox';
 import Proxyable from 'vuetify/lib/mixins/proxyable';
 
 // Array model setups
@@ -35,8 +35,6 @@ export const arrayModelAddFactory = (modelFactory) => ({
       if (idx !== -1) {
         this.internalValue.splice(idx, 1);
         this.internalValue = [...new Set(this.internalValue)];
-
-        // this.internalValue = [...new Set(this.internalValue.splice(idx, 1))];
       }
     },
 
