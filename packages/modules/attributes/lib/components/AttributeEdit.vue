@@ -18,6 +18,7 @@
   import { AttributeTextareaEdit } from './Textarea';
   import { AttributeSwitchEdit } from './Switch';
   import { AttributeSelectEdit } from './Select';
+  import { AttributeUrlEdit } from './Url';
 
   import { ATTR_TYPES } from '../variables';
 
@@ -29,6 +30,7 @@
       AttributeTextareaEdit,
       AttributeSwitchEdit,
       AttributeSelectEdit,
+      AttributeUrlEdit,
     },
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],
     props: {

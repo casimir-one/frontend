@@ -18,6 +18,7 @@
   import { AttributeTextareaRead } from './Textarea';
   import { AttributeSwitchRead } from './Switch';
   import { AttributeSelectRead } from './Select';
+  import { AttributeUrlRead } from './Url';
 
   export default {
     name: 'AttributeRead',
@@ -27,6 +28,7 @@
       AttributeTextareaRead,
       AttributeSwitchRead,
       AttributeSelectRead,
+      AttributeUrlRead,
     },
     mixins: [attributeTypeComponent, BindsAttrs],
     props: {

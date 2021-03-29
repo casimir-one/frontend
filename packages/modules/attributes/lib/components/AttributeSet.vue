@@ -20,6 +20,7 @@
   import { AttributeTextareaSet } from './Textarea';
   import { AttributeSwitchSet } from './Switch';
   import { AttributeSelectSet } from './Select';
+  import { AttributeUrlSet } from './Url';
 
   export default {
     name: 'AttributeSet',
@@ -29,6 +30,7 @@
       AttributeTextareaSet,
       AttributeSwitchSet,
       AttributeSelectSet,
+      AttributeUrlSet
     },
 
     mixins: [attributeTypeComponent, Proxyable, BindsAttrs],

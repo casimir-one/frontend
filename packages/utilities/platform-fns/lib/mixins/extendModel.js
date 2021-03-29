@@ -5,14 +5,12 @@ import Proxyable from 'vuetify/lib/mixins/proxyable';
 
 export const arrayedModel = {
   mixins: [Proxyable],
-  data() {
-    return {
-      internalLazyValue: this.value !== undefined
+  
+  created() {
+    this.internalLazyValue = this.value !== undefined
         ? this.value
         : []
-    };
-  },
-  created() {
+
     if (!isArray(this.internalValue)) {
       console.warn('Model must be bound to an Array.', this.$options.name);
     }
