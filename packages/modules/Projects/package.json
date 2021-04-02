@@ -1,14 +1,17 @@
 {
-  "name": "@deip/platform-fns",
+  "name": "@deip/projects-module",
   "version": "1.97.0",
   "description": "> TODO: description",
-  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
+  "directories": {
+    "lib": "lib"
   },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
@@ -20,12 +23,11 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/toolbox": "1.97.0",
-    "change-case": "^4.1.2",
-    "date-fns": "^2.19.0",
-    "qs": "^6.9.6"
+    "@deip/platform-fns": "1.97.0",
+    "@deip/research-service": "1.97.0"
   },
   "peerDependencies": {
-    "vuetify": "^2.4.2"
+    "@deip/users-module": "1.97.0",
+    "vuex": "^3.6.0"
   }
 }
