@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.98.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.97.0...v1.98.0) (2021-04-02)
+
+
+### Features
+
+* **@deip/rpc-client:** Conversion to array buffer ([4ff9013](https://gitlab.com/DEIP/deip-rpc/commit/4ff9013fa1d2d28b4d61c017b50aca6a22506ed1))
+
+
+
+
+
 # [1.92.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.91.0...v1.92.0) (2021-03-03)
 
 

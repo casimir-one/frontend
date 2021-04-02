@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.97.0",
+  "version": "1.98.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -28,8 +28,8 @@
   "dependencies": {
     "@deip/app-config-service": "1.97.0",
     "@deip/proxydi": "1.97.0",
-    "@deip/rpc-client": "1.92.0",
-    "@deip/vuetify-extended": "1.97.0",
+    "@deip/rpc-client": "1.98.0",
+    "@deip/vuetify-extended": "1.98.0",
     "axios": "^0.21.1"
   }
 }
