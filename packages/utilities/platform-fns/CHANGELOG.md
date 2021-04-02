@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.98.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.97.0...v1.98.0) (2021-04-02)
+
+
+### Features
+
+* **@deip/attributes-module:** add Select attribute ([8fdcdaf](https://gitlab.com/DEIP/deip-client-modules/commit/8fdcdaf4e17217f2d7f0ae987411e74207c5c191))
+* **@deip/attributes-module:** add Url attribute ([e1d3954](https://gitlab.com/DEIP/deip-client-modules/commit/e1d395423cf7ae2f6c7cb081f371555656d3030b))
+* **@deip/projects-module:** create module ([6e9d43d](https://gitlab.com/DEIP/deip-client-modules/commit/6e9d43dcd11736bf6bff1c3e9594c243017e8dbf))
+
+
+
+
+
 # [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
 
 

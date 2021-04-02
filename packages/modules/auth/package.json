@@ -1,6 +1,6 @@
 {
   "name": "@deip/auth-module",
-  "version": "1.97.0",
+  "version": "1.98.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,10 +24,10 @@
     "@deip/auth-service": "1.97.0",
     "@deip/lib-crypto": "^1.21.0",
     "@deip/proxydi": "1.97.0",
-    "@deip/rpc-client": "1.92.0",
+    "@deip/rpc-client": "1.98.0",
     "@deip/toolbox": "1.97.0",
-    "@deip/users-service": "1.97.0",
-    "@deip/vuetify-extended": "1.97.0"
+    "@deip/users-service": "1.98.0",
+    "@deip/vuetify-extended": "1.98.0"
   },
   "peerDependencies": {
     "@deip/users-module": "^1.96.0",
