@@ -3,16 +3,16 @@ import {
   collectionOne
 } from '@deip/toolbox';
 
-export const listGetterFabric = (opts = {}) => {
+export const listGetterFactory = (opts = {}) => {
   const {
     storeKey = 'data'
   } = opts;
 
   return (state) => (query = {}) => collectionList(state[storeKey], query);
 }
-export const listGetter = listGetterFabric();
+export const listGetter = listGetterFactory();
 
-export const oneGetterFabric = (opts = {}) => {
+export const oneGetterFactory = (opts = {}) => {
   const {
     selectorKey = 'externalId',
     storeKey = 'data'
@@ -29,4 +29,4 @@ export const oneGetterFabric = (opts = {}) => {
     })
   }
 }
-export const oneGetter = oneGetterFabric();
+export const oneGetter = oneGetterFactory();

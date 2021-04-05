@@ -2,10 +2,10 @@ import { UsersService } from '@deip/users-service';
 
 import {
   listGetter,
-  oneGetterFabric,
-  setListMutationFabric,
-  setOneMutationFabric
-} from '@deip/platform-fns/lib/store';
+  oneGetterFactory,
+  setListMutationFactory,
+  setOneMutationFactory
+} from '@deip/platform-fns';
 import { hasValue } from '@deip/toolbox';
 
 const usersService = UsersService.getInstance();
@@ -17,7 +17,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFabric({ selectorKey: 'username' })
+  one: oneGetterFactory({ selectorKey: 'username' })
 };
 
 const ACTIONS = {
@@ -105,8 +105,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFabric({ mergeKey: 'username' }),
-  setOne: setOneMutationFabric({ mergeKey: 'username' })
+  setList: setListMutationFactory({ mergeKey: 'username' }),
+  setOne: setOneMutationFactory({ mergeKey: 'username' })
 };
 
 export const usersStore = {

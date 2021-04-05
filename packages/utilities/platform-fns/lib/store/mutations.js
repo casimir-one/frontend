@@ -1,6 +1,6 @@
 import { camelizeObjectKeys, collectionMerge } from '@deip/toolbox';
 
-export const setListMutationFabric = (opts = {}) => {
+export const setListMutationFactory = (opts = {}) => {
   const {
     mergeKey = 'externalId',
     storeKey = 'data'
@@ -16,9 +16,9 @@ export const setListMutationFabric = (opts = {}) => {
     );
   }
 };
-export const setListMutation = setListMutationFabric();
+export const setListMutation = setListMutationFactory();
 
-export const setOneMutationFabric = (opts = {}) => {
+export const setOneMutationFactory = (opts = {}) => {
   const {
     mergeKey = 'externalId',
     storeKey = 'data'
@@ -34,7 +34,7 @@ export const setOneMutationFabric = (opts = {}) => {
     );
   }
 };
-export const setOneMutation = setOneMutationFabric()
+export const setOneMutation = setOneMutationFactory()
 
 
 

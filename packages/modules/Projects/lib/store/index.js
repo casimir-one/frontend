@@ -1,12 +1,11 @@
 import { ResearchService } from "@deip/research-service";
-import { getActionByPath } from '@deip/platform-fns';
-
-import {
+import { 
+  getActionByPath,   
   listGetter,
   oneGetter,
   setListMutation,
-  setOneMutation
-} from '@deip/platform-fns/lib/store';
+  setOneMutation 
+} from '@deip/platform-fns';
 
 const researchService = ResearchService.getInstance();
 
