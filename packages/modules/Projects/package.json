@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@deip/platform-fns": "1.98.0",
+    "@deip/proxydi": "1.98.0",
     "@deip/research-service": "1.98.0"
   },
   "peerDependencies": {
