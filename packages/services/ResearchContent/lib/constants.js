@@ -1,6 +1,7 @@
 import { createEnum } from '@deip/toolbox';
 
-const RESEARCH_TYPES = createEnum({
+const RESEARCH_CONTENT_TYPES = createEnum({
+  UNKNOWN: 0,
   ANNOUNCEMENT: 1,
   FINAL_RESULT: 2,
   MILESTONE_ARTICLE: 3,
@@ -24,5 +25,5 @@ const RESEARCH_TYPES = createEnum({
 });
 
 export {
-  RESEARCH_TYPES
+  RESEARCH_CONTENT_TYPES
 };

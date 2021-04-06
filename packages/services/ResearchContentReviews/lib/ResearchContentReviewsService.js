@@ -3,7 +3,6 @@ import { BlockchainService } from '@deip/blockchain-service';
 import { Singleton } from '@deip/toolbox';
 import { ResearchContentReviewsHttp } from './ResearchContentReviewsHttp';
 import deipRpc from '@deip/rpc-client';
-import { assessmentCriterias } from './constants';
 import crypto from '@deip/lib-crypto';
 
 class ResearchContentReviewsService extends Singleton {
@@ -88,10 +87,6 @@ class ResearchContentReviewsService extends Singleton {
 
   denyReviewRequest(id) {
     return this.researchContentReviewsHttp.denyReviewRequest(id);
-  }
-
-  getAssessmentCriteriasForResearchContent(typeCode) {
-    return assessmentCriterias[typeCode] || assessmentCriterias.default;
   }
 
   getReview(reviewExternalId) {
