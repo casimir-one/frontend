@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.99.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.98.0...v1.99.0) (2021-04-06)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** rename store helper functions ([8168f40](https://gitlab.com/DEIP/deip-client-modules/commit/8168f406283f73fad54bfde190d337f42ea6cf2b))
+* **@deip/projects-module:** add proxydi to dependencies ([957e89c](https://gitlab.com/DEIP/deip-client-modules/commit/957e89cb7ef354dbbe6677f1e9125f94e003f4bf))
+* **@deip/tenants-module:** fix dependency version ([3dd60a3](https://gitlab.com/DEIP/deip-client-modules/commit/3dd60a3063d704c783745a072e82670992a454d5))
+
+
+### Features
+
+* **@deip/@deip/research-content-reviews-service:** Assessment criterias method removed ([7339262](https://gitlab.com/DEIP/deip-client-modules/commit/73392629b4d625c89269a6dbcd243d25c27bd499))
+* **@deip/bookmarks-module:** create bookmarks-module ([9fe1a6f](https://gitlab.com/DEIP/deip-client-modules/commit/9fe1a6fde06d4bbcb1a8675163d1cb5ebd92ef0d))
+* **@deip/notifications-module:** create notifications-module ([9134f8d](https://gitlab.com/DEIP/deip-client-modules/commit/9134f8d59063c6277ed38ab93d608680057ece7b))
+* **@deip/tenants-module:** create tenants-module ([30974b0](https://gitlab.com/DEIP/deip-client-modules/commit/30974b094d52448d9f62e04e7227161e271877fa))
+
+
+
+
+
 # [1.98.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.97.0...v1.98.0) (2021-04-02)
 
 

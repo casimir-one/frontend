@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.99.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.98.0...v1.99.0) (2021-04-06)
+
+
+### Features
+
+* **@deip/@deip/research-content-reviews-service:** Assessment criterias method removed ([7339262](https://gitlab.com/DEIP/deip-client-modules/commit/73392629b4d625c89269a6dbcd243d25c27bd499))
+
+
+
+
+
 # [1.98.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.97.0...v1.98.0) (2021-04-02)
 
 **Note:** Version bump only for package @deip/research-content-service
