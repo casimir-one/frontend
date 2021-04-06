@@ -95,16 +95,11 @@ const ACTIONS = {
       });
   },
 
-  getUserFollowingProjects({ commit, rootGetters }) {
-    const ids = rootGetters['currentUser/data']   // TODO: fix after bookmarks module implemented
-      .bookmarks
-      .filter((b) => b.type === 'research')
-      .map((b) => b.ref);
-
-    return ids.length ? researchService.getResearches(ids)
+  getUserFollowingProjects({ commit }, bookmarkIds) {
+    return researchService.getResearches(bookmarkIds)
       .then((result) => {
         commit('setList', result);
-      }) : commit('setList', []);
+      });
   },
 
   // team
