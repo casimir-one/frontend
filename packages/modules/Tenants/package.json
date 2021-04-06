@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@deip/platform-fns": "1.98.0",
-    "@deip/proxydi": "1.98.0",
+    "@deip/proxydi": "1.97.0",
     "@deip/tenant-service": "1.98.0"
   }
 }
