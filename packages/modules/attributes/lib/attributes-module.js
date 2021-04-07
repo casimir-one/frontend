@@ -1,10 +1,18 @@
+import { proxydi } from '@deip/proxydi';
+import { attributesStore } from './store';
+
+// eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  if (!Vue.prototype.$deipModules) Vue.prototype.$deipModules = [];
-  Vue.prototype.$deipModules.push('AttributesModule');
+  const store = proxydi.get('storeInstance');
 
+  if (store) {
+    store.registerModule('attributes', attributesStore);
+  } else {
+    throw Error('[AttributesModule]: storeInstance is not provided');
+  }
 };
 
 export const AttributesModule = {
