@@ -3,6 +3,7 @@ import { UserService } from '@deip/user-service';
 import {
   listGetter,
   setListMutationFactory,
+  removeFromListMutationFactory
 } from '@deip/platform-fns';
 
 const userService = UserService.getInstance();
@@ -47,12 +48,7 @@ const ACTIONS = {
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  remove: (state, notificationId) => {
-    const index = state.data.findIndex(notification => notification.id === notificationId);
-    if (index > -1) {
-      state.data.splice(index, 1);
-    }
-  },
+  remove: removeFromListMutationFactory({ mergeKey: 'id'}),
 };
 
 export const notificationsStore = {
