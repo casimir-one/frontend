@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.100.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.99.0...v1.100.0) (2021-04-08)
+
+
+### Bug Fixes
+
+* **@deip/projects-module:** fix proxydi version ([7653004](https://gitlab.com/DEIP/deip-client-modules/commit/7653004ee18d7467a35911a332118d0781b669e9))
+
+
+### Features
+
+* **@deip/research-content-service:** Final result is hidden ([201eba7](https://gitlab.com/DEIP/deip-client-modules/commit/201eba7c41bb17f7f4fe0fc71f1b82410f852d8f))
+
+
+
+
+
 # [1.99.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.98.0...v1.99.0) (2021-04-06)
 
 
