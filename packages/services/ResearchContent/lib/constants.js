@@ -3,7 +3,7 @@ import { createEnum } from '@deip/toolbox';
 const RESEARCH_CONTENT_TYPES = createEnum({
   UNKNOWN: 0,
   ANNOUNCEMENT: 1,
-  FINAL_RESULT: 2,
+  // FINAL_RESULT: 2,
   MILESTONE_ARTICLE: 3,
   MILESTONE_BOOK: 4,
   MILESTONE_CHAPTER: 5,

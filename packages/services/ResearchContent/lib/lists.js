@@ -2,7 +2,7 @@ import { RESEARCH_CONTENT_TYPES } from './constants';
 
 let contentTypesMap = {
   [RESEARCH_CONTENT_TYPES.ANNOUNCEMENT]: { text: 'Announcement', order: 1 },
-  [RESEARCH_CONTENT_TYPES.FINAL_RESULT]: { text: 'Final Result', order: 20 },
+  // [RESEARCH_CONTENT_TYPES.FINAL_RESULT]: { text: 'Final Result', order: 20 },
   [RESEARCH_CONTENT_TYPES.MILESTONE_ARTICLE]: { text: 'Article', order: 2 },
   [RESEARCH_CONTENT_TYPES.MILESTONE_BOOK]: { text: 'Book', order: 3 },
   [RESEARCH_CONTENT_TYPES.MILESTONE_CHAPTER]: { text: 'Chapter', order: 4 },
