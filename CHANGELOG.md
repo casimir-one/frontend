@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.103.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.102.0...v1.103.0) (2021-04-12)
+
+
+### Features
+
+* **@deip/attributes-service:** Attributes service constants ([6b1bcb5](https://gitlab.com/DEIP/deip-client-modules/commit/6b1bcb5c6a80b8f0f7e08475c7a49eb80cb31baa))
+
+
+
+
+
 # [1.102.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.101.0...v1.102.0) (2021-04-12)
 
 
