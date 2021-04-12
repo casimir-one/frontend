@@ -1,10 +1,14 @@
 <template>
   <v-sheet class="vex-header">
-    <v-img
+    <div 
       v-if="backgroundImage"
-      class="vex-header__image"
-      :src="backgroundImage"
-    />
+      class="vex-header__image-wrapper"
+    >
+      <v-img
+        class="vex-header__image"
+        :src="backgroundImage"
+      />
+    </div>
     <div
       class="vex-header__overlay"
       :style="overlayStyles"
@@ -101,13 +105,17 @@
   .vex-header {
     position: relative;
 
-    &__image {
+    &__image-wrapper {
       position: absolute;
       left: 0;
       right: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
+    }
+
+    &__image {
+      height: 100%;
     }
 
     &__overlay {
