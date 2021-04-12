@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.101.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.100.0...v1.101.0) (2021-04-12)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix image position in VexHeader ([1708d25](https://gitlab.com/DEIP/deip-client-modules/commit/1708d252864e26d1f3912390aa9937d9829d75d2))
+
+
+
+
+
 # [1.98.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.97.0...v1.98.0) (2021-04-02)
 
 
