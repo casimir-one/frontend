@@ -1,26 +1,30 @@
 {
   "name": "@deip/attributes-service",
   "version": "1.97.0",
-  "description": "> TODO: description",
-  "author": "Egor Anikey <egor.anikey@deip.world>",
-  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
-  "license": "ISC",
-  "main": "lib/attributes.js",
+  "description": "",
+  "main": "index.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+    "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "bugs": {
-    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@deip/http-service": "1.97.0",
+    "@deip/rpc-client": "1.98.0",
+    "@deip/toolbox": "1.97.0"
+  },
+  "peerDependencies": {
+    "@deip/app-config-service": "^1.0.0"
   }
 }
