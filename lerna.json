@@ -3,7 +3,8 @@
     "packages/modules/*",
     "packages/plugins/*",
     "packages/services/*",
-    "packages/utilities/*"
+    "packages/utilities/*",
+    "packages/models/*"
   ],
   "version": "1.103.0",
   "npmClient": "npm",

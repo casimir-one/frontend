@@ -59,3 +59,9 @@ export const hasOwnProperty = (prop, obj) => {
 
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
+
+
+export const assert = (condition, failureMessage = "Assertion failed") => {
+  if (condition) return;
+  throw new Error(failureMessage);
+}
