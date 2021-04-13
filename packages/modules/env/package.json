@@ -20,6 +20,9 @@
     "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
   },
   "scripts": {
+    "precommit": "lint-staged",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
@@ -31,5 +34,15 @@
     "@deip/rpc-client": "1.98.0",
     "@deip/vuetify-extended": "1.101.0",
     "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@deip/eslint-config": "1.99.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-import": "^2.22.1",
+    "lint-staged": "^10.5.4"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   }
 }

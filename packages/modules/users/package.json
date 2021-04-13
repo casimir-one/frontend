@@ -6,6 +6,22 @@
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
   "license": "ISC",
   "main": "index.js",
+  "publishConfig": {
+    "registry": "https://npm-registry.deip.world/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "precommit": "lint-staged",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
   "dependencies": {
     "@deip/access-service": "1.97.0",
     "@deip/platform-fns": "1.99.0",
@@ -21,17 +37,18 @@
     "vuetify": "^2.4.2",
     "vuex": "^3.6.0"
   },
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
+  "devDependencies": {
+    "@deip/eslint-config": "1.99.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-vue": "^7.8.0",
+    "eslint-plugin-vuetify": "^1.0.0-beta.8",
+    "lint-staged": "^10.5.4",
+    "vue": "^2.6.12",
+    "vuetify": "^2.4.9"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "bugs": {
-    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  "lint-staged": {
+    "*.{js,vue}": "eslint --fix"
   }
 }
