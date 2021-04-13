@@ -1,0 +1,31 @@
+{
+  "name": "@deip/transaction-models",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
+  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "@deip/toolbox": "1.97.0",
+    "@deip/rpc-client": "1.98.0",
+    "vue-clamp": "^0.3.2",
+    "vuedraggable": "^2.24.3"
+  }
+}
