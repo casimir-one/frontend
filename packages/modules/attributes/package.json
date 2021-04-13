@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-module",
-  "version": "1.98.0",
+  "version": "1.104.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -26,7 +26,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/schema-renderer": "1.97.0",
+    "@deip/schema-renderer": "1.104.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },
@@ -37,7 +37,7 @@
     "vuetify": "^2.4.2"
   },
   "devDependencies": {
-    "@deip/eslint-config": "1.99.0",
+    "@deip/eslint-config": "1.104.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
+
+
+### Features
+
+* **@deip/command-models:** Models package ([49b47ef](https://gitlab.com/DEIP/deip-client-modules/commit/49b47ef0b1581c1774048c631f3d2778bb6f2c71))
+
+
+
+
+
 # [1.101.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.100.0...v1.101.0) (2021-04-12)
 
 

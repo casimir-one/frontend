@@ -5,7 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
-
-### Features
-
-* **@deip/command-models:** Models package ([49b47ef](https://gitlab.com/DEIP/deip-client-modules/commit/49b47ef0b1581c1774048c631f3d2778bb6f2c71))
+**Note:** Version bump only for package @deip/eslint-config
