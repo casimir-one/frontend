@@ -1,4 +1,5 @@
 import { assert } from '@deip/toolbox';
+import { APP_CMD_INFO } from './../../constants';
 
 
 class BaseCmd {
@@ -11,21 +12,22 @@ class BaseCmd {
 
   getCmdNum() { return this._cmdNum; }
   getCmdPayload() { return this._cmdPayload; }
-  isProtocolOpCmd() { throw new Error("Base command is an abstract command"); }
+  isProtocolOpCmd() { return false };
 
   serialize() { return BaseCmd.Serialize(this); }
   deserialize(serialized) { return BaseCmd.Deserialize(serialized); }
 
   static Serialize(cmd) {
-    return JSON.stringify({
+    return {
       CMD_NUM: cmd.getCmdNum(),
-      CMD_PAYLOAD: cmd.getCmdPayload()
-    });
+      CMD_PAYLOAD: JSON.stringify(cmd.getCmdPayload())
+    };
   }
 
   static Deserialize(serialized) {
-    const { CMD_NUM, CMD_PAYLOAD } = JSON.parse(serialized);
-    return new BaseCmd(CMD_NUM, CMD_PAYLOAD);
+    const { CMD_NUM, CMD_PAYLOAD } = serialized;
+    const CmdClass = APP_CMD_INFO[CMD_NUM].class;
+    return new CmdClass(JSON.parse(CMD_PAYLOAD));
   }
 
 }

@@ -13,7 +13,7 @@ const APP_CMD = createEnum({
 const APP_CMD_INFO = {
   [APP_CMD.GENERAL]: { class: GeneralCmd, isProtocolOp: false },
   [APP_CMD.CREATE_PROJECT]: { class: CreateProjectCmd, isProtocolOp: true },
-  [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd, isProtocolOp: true },
+  [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd, isProtocolOp: true }
 }
 
 

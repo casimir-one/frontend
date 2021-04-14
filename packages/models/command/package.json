@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@deip/toolbox": "1.104.0",
+    "@deip/rpc-client": "1.98.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   }
