@@ -1,7 +1,9 @@
-import { APP_CMD } from '@deip/command-models';
 import BaseOperationsRegistry from './../base/BaseOperationsRegistry';
+import { APP_CMD } from './../../constants';
+
 
 const GRAPHENE_OPERATIONS_MAP = (api) => {
+
   return {
 
     [APP_CMD.CREATE_PROJECT]: ({
@@ -59,6 +61,7 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
 
       return createProposalOp;
     }
+
   }
 }
 

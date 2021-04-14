@@ -49,30 +49,30 @@ class CreateProposalCmd extends ProtocolEntityCmd {
   }
 
   static Serialize(proposalCmd) {
-    return JSON.stringify({
-      PROTOCOL_OP: true,
-      PROTOCOL_PROPOSAL: true,
+    return {
+      IS_PROTOCOL_PROPOSAL: true,
       CMD_NUM: proposalCmd.getCmdNum(),
-      CMD_PAYLOAD: {
+      CMD_PAYLOAD: JSON.stringify({
         ...proposalCmd.getCmdPayload(),
         proposedCmds: proposalCmd.getProposedCmds()
           .map((cmd) => {
-            const OP_NUM = cmd.getCmdNum();
-            return OP_NUM == APP_CMD.CREATE_PROPOSAL
+            const CMD_NUM = cmd.getCmdNum();
+            return CMD_NUM == APP_CMD.CREATE_PROPOSAL
               ? CreateProposalCmd.Serialize(cmd)
               : ProtocolCmd.Serialize(cmd)
           })
-      }
-    });
+      })
+    };
   }
 
   static Deserialize(serialized) {
-    const { CMD_PAYLOAD } = JSON.parse(serialized);
+    const { CMD_PAYLOAD } = serialized;
+    const payload = JSON.parse(CMD_PAYLOAD);
     return new CreateProposalCmd({
-      ...CMD_PAYLOAD,
-      proposedCmds: CMD_PAYLOAD.proposedCmds.map((cmd) => {
-        const { CMD_NUM: OP_NUM } = JSON.parse(cmd);
-        return OP_NUM == APP_CMD.CREATE_PROPOSAL
+      ...payload,
+      proposedCmds: payload.proposedCmds.map((cmd) => {
+        const { CMD_NUM: CMD_NUM } = cmd;
+        return CMD_NUM == APP_CMD.CREATE_PROPOSAL
           ? CreateProposalCmd.Deserialize(cmd)
           : ProtocolCmd.Deserialize(cmd)
       })
