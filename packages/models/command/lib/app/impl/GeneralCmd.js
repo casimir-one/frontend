@@ -1,4 +1,4 @@
-import BaseCmd from './base/BaseCmd';
+import BaseCmd from './../base/BaseCmd';
 import { APP_CMD } from './../constants';
 
 class GeneralCmd extends BaseCmd {

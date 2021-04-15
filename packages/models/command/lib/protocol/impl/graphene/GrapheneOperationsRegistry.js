@@ -1,5 +1,5 @@
-import BaseOperationsRegistry from './../base/BaseOperationsRegistry';
-import { APP_CMD } from './../../constants';
+import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
+import { APP_CMD } from './../../../app/constants';
 
 
 const GRAPHENE_OPERATIONS_MAP = (api) => {

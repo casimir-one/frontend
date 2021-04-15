@@ -1,5 +1,6 @@
-import BaseTx from './../base/BaseTx';
+import BaseTx from './../../base/BaseTx';
 import deipRpc from '@deip/rpc-client';
+import { PROTOCOL } from './../../constants';
 
 
 class GrapheneTx extends BaseTx {
@@ -33,6 +34,8 @@ class GrapheneTx extends BaseTx {
     this._impl = deipRpc.auth.signTransaction(this._impl, { owner: privKey });
     return this;
   }
+
+  getProtocol() { return PROTOCOL.GRAPHENE; };
 
   serialize() {
     return GrapheneTx.Serialize(this);

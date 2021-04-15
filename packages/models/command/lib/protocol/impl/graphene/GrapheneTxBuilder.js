@@ -1,11 +1,12 @@
-import BaseTxBuilder from './../base/BaseTxBuilder';
+import { PROTOCOL } from './../../constants';
+import BaseTxBuilder from './../../base/BaseTxBuilder';
 import GrapheneTx from './../graphene/GrapheneTx';
 
 
 class GrapheneTxBuilder extends BaseTxBuilder {
 
   constructor(api) {
-    super(api);
+    super(api, PROTOCOL.GRAPHENE);
     this._tx = null;
   }
 
@@ -32,7 +33,7 @@ class GrapheneTxBuilder extends BaseTxBuilder {
 
   end() {
     const tx = this._tx.seal();
-    return Promise.resolve({ tx, ctx: this.getTxCtx() });
+    return Promise.resolve({ tx, txCtx: this.getTxCtx() });
   }
 
   getTxCtx() {

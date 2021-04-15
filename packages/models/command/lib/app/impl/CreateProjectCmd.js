@@ -1,4 +1,4 @@
-import ProtocolEntityCmd from './base/ProtocolEntityCmd';
+import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
 import { APP_CMD } from './../constants';
 import { assert } from '@deip/toolbox';
 
