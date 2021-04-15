@@ -35,7 +35,9 @@ class GrapheneTx extends BaseTx {
     return this;
   }
 
-  getProtocol() { return PROTOCOL.GRAPHENE; };
+  finalize() { return { ...this._impl }; }
+
+  getProtocol() { return PROTOCOL.GRAPHENE; }
 
   serialize() {
     return GrapheneTx.Serialize(this);
