@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.107.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.106.0...v1.107.0) (2021-04-15)
+
+
+### Features
+
+* **@deip/command-models:** Tx finalize method ([112eac3](https://gitlab.com/DEIP/deip-client-modules/commit/112eac3c66d3b8d2bd021b57062acaa26dde6b85))
+
+
+
+
+
 # [1.106.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.105.0...v1.106.0) (2021-04-15)
 
 
