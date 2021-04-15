@@ -1,5 +1,5 @@
-import ProtocolCmd from './base/ProtocolCmd';
-import ProtocolEntityCmd from './base/ProtocolEntityCmd';
+import ProtocolCmd from './../base/ProtocolCmd';
+import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
 import { APP_CMD } from './../constants';
 import { assert } from '@deip/toolbox';
 
@@ -9,7 +9,6 @@ class CreateProposalCmd extends ProtocolEntityCmd {
   constructor(cmdPayload, txContext) {
 
     const {
-      // entityId,
       creator,
       proposedCmds,
       expirationTime,
@@ -50,7 +49,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
 
   static Serialize(proposalCmd) {
     return {
-      IS_PROTOCOL_PROPOSAL: true,
+      PROTOCOL: proposalCmd.getProtocol(),
       CMD_NUM: proposalCmd.getCmdNum(),
       CMD_PAYLOAD: JSON.stringify({
         ...proposalCmd.getCmdPayload(),
@@ -66,7 +65,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
   }
 
   static Deserialize(serialized) {
-    const { CMD_PAYLOAD } = serialized;
+    const { CMD_PAYLOAD, PROTOCOL } = serialized;
     const payload = JSON.parse(CMD_PAYLOAD);
     return new CreateProposalCmd({
       ...payload,
@@ -76,7 +75,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
           ? CreateProposalCmd.Deserialize(cmd)
           : ProtocolCmd.Deserialize(cmd)
       })
-    });
+    }, { protocol: PROTOCOL });
   }
 
 }

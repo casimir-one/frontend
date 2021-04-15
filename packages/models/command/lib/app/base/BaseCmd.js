@@ -1,5 +1,5 @@
 import { assert } from '@deip/toolbox';
-import { APP_CMD_INFO } from './../../constants';
+import { APP_CMD_INFO } from './../constants';
 
 
 class BaseCmd {

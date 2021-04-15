@@ -3,8 +3,8 @@ import BaseRequest from './base/BaseRequest';
 
 class ApplicationJsonRequest extends BaseRequest {
 
-  constructor(jsonData, appCmds, protocolTxs, headers) {
-    super(appCmds, protocolTxs, headers);
+  constructor(jsonData, appCmds, headers) {
+    super(appCmds, headers);
     this._headers['content-type'] = 'application/json';
     this._jsonData = jsonData || {};
   }
@@ -12,8 +12,7 @@ class ApplicationJsonRequest extends BaseRequest {
   getRequestBody() {
     return {
       ...this._jsonData,
-      appCmds: this._appCmds,
-      protocolTxs: this._protocolTxs
+      appCmds: this._appCmds
     };
   }
 

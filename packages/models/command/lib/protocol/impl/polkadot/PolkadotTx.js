@@ -1,4 +1,5 @@
-import BaseTx from './../base/BaseTx';
+import BaseTx from './../../base/BaseTx';
+import { PROTOCOL } from './../../constants';
 
 
 class PolkadotTx extends BaseTx {
@@ -6,6 +7,8 @@ class PolkadotTx extends BaseTx {
     super({ operations });
   }
   
+  getProtocol() { return PROTOCOL.POLKADOT; };
+
   // TODO: implementation for polkadot
 }
 

@@ -3,19 +3,18 @@ import { assert } from '@deip/toolbox';
 
 class BaseTxBuilder {
 
-  constructor(api) {
+  constructor(api, protocol) {
     this._api = api;
     this._tx = null;
     this._txCtx = {
+      protocol: protocol,
       appCmds: []
     };
   }
 
   clear() {
     this._tx = null;
-    this._txCtx = {
-      appCmds: []
-    };
+    this._txCtx.appCmds = [];
   }
 
   addCmd(protocolCmd) {
