@@ -19,6 +19,7 @@ class BaseTx {
   }
 
   sign() { throw new Error("Not implemented exception!"); }
+  finalize() { throw new Error("Not implemented exception!"); }
   getProtocol() { throw new Error("Not implemented exception!"); };
 
   serialize() { throw new Error("Not implemented exception!"); }
