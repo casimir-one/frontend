@@ -8,10 +8,10 @@
 </template>
 
 <script>
-  import { attributeTypeComponent } from '../mixins/base';
-
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
+
+  import { attributeTypeComponent } from '../mixins/base';
 
   import { AttributeCheckboxEdit } from './Checkbox';
   import { AttributeTextEdit } from './Text';
@@ -21,7 +21,7 @@
   import { AttributeUrlEdit } from './Url';
   import { AttributeVideoUrlEdit } from './VideoUrl';
 
-  import { ATTR_TYPES } from '../variables';
+  import { ATTRIBUTE_TYPES } from '../constants';
 
   export default {
     name: 'AttributeEdit',
@@ -38,9 +38,9 @@
     props: {
       type: {
         type: String,
-        default: ATTR_TYPES.TEXT,
+        default: ATTRIBUTE_TYPES.TEXT,
         validator(val) {
-          return Object.values(ATTR_TYPES)
+          return Object.values(ATTRIBUTE_TYPES)
             .indexOf(val) !== -1;
         }
       }

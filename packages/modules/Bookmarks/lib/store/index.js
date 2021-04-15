@@ -3,6 +3,7 @@ import { UserService } from '@deip/user-service';
 import {
   listGetter,
   setListMutationFactory,
+  removeFromListMutationFactory
 } from '@deip/platform-fns';
 
 import { camelizeObjectKeys } from '@deip/toolbox';
@@ -64,12 +65,7 @@ const MUTATIONS = {
   add: (state, bookmark) => {
     state.data.push(camelizeObjectKeys(bookmark));
   },
-  remove: (state, bookmarkId) => {
-    const index = state.data.findIndex(bookmark => bookmark.id === bookmarkId);
-    if (index > -1) {
-      state.data.splice(index, 1);
-    }
-  },
+  remove: removeFromListMutationFactory({ mergeKey: 'id'}),
   clear: (state) => {
     state.data = [];
   }

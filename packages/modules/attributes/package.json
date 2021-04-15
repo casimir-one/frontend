@@ -26,6 +26,9 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
+    "@deip/attributes-service": "1.103.0",
+    "@deip/platform-fns": "1.99.0",
+    "@deip/proxydi": "1.97.0",
     "@deip/schema-renderer": "1.104.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"

@@ -36,6 +36,22 @@ export const setOneMutationFactory = (opts = {}) => {
 };
 export const setOneMutation = setOneMutationFactory()
 
+export const removeFromListMutationFactory = (opts = {}) => {
+  const {
+    mergeKey = 'externalId',
+    storeKey = 'data'
+  } = opts;
+
+  return (state, id) => {
+    if (!id) return;
+
+    const index = state[storeKey].findIndex(item => item[mergeKey] === id);
+    if (index > -1) {
+      state[storeKey].splice(index, 1);
+    }
+  }
+};
+export const removeFromListMutation = removeFromListMutationFactory();
 
 
 

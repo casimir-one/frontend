@@ -1,13 +1,6 @@
 export * from './lib/attributes-module';
 
-import AttributeComplex from './lib/components/AttributeComplex';
-import AttributeEdit from './lib/components/AttributeEdit';
-import AttributeRead from './lib/components/AttributeRead';
-import AttributeSet from './lib/components/AttributeSet';
-
-export { 
-  AttributeComplex,
-  AttributeEdit,
-  AttributeRead,
-  AttributeSet
-}
+export { default as AttributeComplex } from './lib/components/AttributeComplex';
+export { default as AttributeEdit } from './lib/components/AttributeEdit';
+export { default as AttributeRead } from './lib/components/AttributeRead';
+export { default as AttributeSet } from './lib/components/AttributeSet';
