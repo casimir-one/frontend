@@ -5,7 +5,7 @@ module.exports = {
     "es6": true
   },
   "extends": [
-    "plugin:vue/base",
+    "plugin:vue/recommended",
     "@vue/airbnb"
   ],
   "parserOptions": {
