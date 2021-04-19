@@ -39,7 +39,7 @@ const ACTIONS = {
 
   createProjectSecurityToken(_, payload) {
     // TODO: rename to createProjectSecurityTokenAsset
-    assetsService.createSecurityTokenAsset(...payload);
+    return assetsService.createSecurityTokenAsset(...payload);
   }
 };
 

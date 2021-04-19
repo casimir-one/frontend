@@ -1,3 +1,4 @@
+import Maska from 'maska';
 import { proxydi } from '@deip/proxydi';
 import { assetsStore, balancesStore, currentUserBalancesStore } from './store';
 
@@ -15,6 +16,8 @@ const install = (Vue, options = {}) => {
   } else {
     throw Error('[AssetsModule]: storeInstance is not provided');
   }
+
+  Vue.use(Maska);
 };
 
 export const AssetsModule = {
