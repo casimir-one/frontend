@@ -2,6 +2,7 @@ export * from './VexAutocomplete';
 export * from './VexBlock';
 export * from './VexCroppa';
 export * from './VexDialog';
+export * from './VexDotList';
 export * from './VexGrid';
 export * from './VexHeader';
 export * from './VexImageInput';
