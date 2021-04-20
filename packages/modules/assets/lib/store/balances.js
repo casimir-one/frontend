@@ -18,16 +18,17 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  getList({ commit, rootGetters }) {
-    const assets = rootGetters['assets/list'];
+  getList({ commit }) {
+    assetsService.lookupAssets('', 10000)
+      .then((assets) => {
+        const balancesPromises = assets
+          .filter((asset) => asset.type === ASSET_TYPE.TOKEN)
+          .map((asset) => assetsService.getAccountsAssetBalancesByAsset(asset.string_symbol));
 
-    const balancesPromises = assets
-      .filter((asset) => asset.type === ASSET_TYPE.TOKEN)
-      .map((asset) => assetsService.getAccountsAssetBalancesByAsset(asset.stringSymbol));
-
-    return Promise.all(balancesPromises)
-      .then((balances) => {
-        commit('setList', balances.flat(1));
+        return Promise.all(balancesPromises)
+          .then((balances) => {
+            commit('setList', balances.flat(1));
+          });
       });
   }
 };
