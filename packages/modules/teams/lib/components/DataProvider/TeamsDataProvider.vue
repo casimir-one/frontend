@@ -8,24 +8,16 @@
   import { wrapInArray } from '@deip/toolbox';
 
   export default {
-    name: 'UsersDataProvider',
+    name: 'TeamsDataProvider',
     props: {
       tag: {
         type: String,
         default: 'div'
       },
 
-      users: {
+      teams: {
         type: [Array, String],
         default: () => ([])
-      },
-      teamId: {
-        type: String,
-        default: null
-      },
-      tenantId: {
-        type: String,
-        default: null
       },
 
       filterItems: {
@@ -46,26 +38,20 @@
       getterFilter() {
         const filter = { ...this.filterItems };
 
-        if (this.tenantId) {
-          filter.tenantId = this.tenantId;
-        }
-        if (this.teamId) {
-          filter['+teams'] = this.teamId;
-        }
-        if (this.users && wrapInArray(this.users).length > 0) {
-          filter['+username'] = this.users;
+        if (this.teams && wrapInArray(this.teams).length > 0) {
+          filter['+externalId'] = this.teams;
         }
 
         return filter;
       },
 
-      usersList() {
-        return this.$store.getters['users/list'](this.getterFilter);
+      teamsList() {
+        return this.$store.getters['teams/list'](this.getterFilter);
       },
 
       slotProps() {
         return {
-          users: this.usersList,
+          teams: this.teamsList,
 
           loading: this.loading,
           ready: this.ready,
@@ -75,23 +61,21 @@
     },
 
     created() {
-      this.loadUsers();
+      this.loadTeams();
     },
 
     methods: {
-      loadUsers() {
+      loadTeams() {
         this.loading = true;
 
-        this.$store.dispatch('users/get', {
-          users: wrapInArray(this.users),
-          teamId: this.teamId,
-          tenantId: this.tenantId
+        this.$store.dispatch('teams/getList', {
+          teams: wrapInArray(this.teams)
         })
           .then(() => {
             this.loading = false;
             this.ready = true;
 
-            this.$emit('ready', this.usersList);
+            this.$emit('ready', this.teamsList);
           });
       }
     }
