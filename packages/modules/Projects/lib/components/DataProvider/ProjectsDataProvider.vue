@@ -22,7 +22,7 @@
         default: 'all'
       },
 
-      userName: {
+      username: {
         type: String,
         default: null
       },
@@ -34,6 +34,10 @@
         type: String,
         default: null
       },
+      projects: {
+        type: Array,
+        default: () => []
+      },
 
       filterItems: {
         type: Object,
@@ -44,13 +48,50 @@
     data() {
       return {
         loading: false,
-        ready: false,
-      }
+        ready: false
+      };
     },
 
     computed: {
+      getterFilter() {
+        const filter = {
+          ...this.filterItems
+        };
+
+        if (this.username) {
+          filter['+members'] = this.username;
+
+          switch (this.type) {
+            case 'following':
+              filter['+externalId'] = this.projects;
+              break;
+            case 'public':
+              filter.isPrivate = false;
+              break;
+            case 'teams':
+              filter.researchGroup = { isPersonal: false };
+              break;
+            case ' personal':
+              filter.researchGroup = { isPersonal: true };
+              break;
+            default:
+              break;
+          }
+        } else if (this.teamId) {
+          filter.researchGroup = {
+            external_id: this.teamId
+          };
+        } else if (this.tenantId) {
+          filter.tenantId = this.tenantId;
+        } else {
+          filter.isPrivate = false;
+        }
+
+        return filter;
+      },
+
       projectsList() {
-        return this.$store.getters['projects/list']()
+        return this.$store.getters['projects/list'](this.getterFilter);
       },
 
       slotProps() {
@@ -58,8 +99,8 @@
           projects: this.projectsList,
 
           loading: this.loading,
-          ready: this.ready,
-        }
+          ready: this.ready
+        };
       }
     },
 
@@ -70,18 +111,21 @@
     methods: {
       loadProjects() {
         this.loading = true;
-        
-        const payload = {
-          scope: this.scope,
-          type: this.type,
 
-          userName: this.userName,
-          teamId: this.teamId,
-          tenantId: this.tenantId,
+        const {
+          scope, type, username, teamId, tenantId, filterItems
+        } = this;
+
+        const payload = {
+          scope,
+          type,
+          username,
+          teamId,
+          tenantId
         };
 
-        if (this.filterItems) {
-          payload.filter = this.filterItems;
+        if (filterItems) {
+          payload.filter = filterItems;
         }
 
         this.$store.dispatch('projects/getProjects', payload)
@@ -91,7 +135,7 @@
 
             this.$emit('ready', this.projectsList);
           });
-      },
+      }
     }
-  }
+  };
 </script>

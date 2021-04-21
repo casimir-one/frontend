@@ -1,10 +1,10 @@
-import { ResearchService } from "@deip/research-service";
-import { 
-  getActionByPath,   
+import { ResearchService } from '@deip/research-service';
+import {
+  getActionByPath,
   listGetter,
   oneGetter,
   setListMutation,
-  setOneMutation 
+  setOneMutation
 } from '@deip/platform-fns';
 
 const researchService = ResearchService.getInstance();
@@ -27,13 +27,13 @@ const actionsMap = {
     tenant: {
       all: 'getTenantProjects'
     }
-  },
+  }
 };
 
 const getAction = getActionByPath(actionsMap).get;
 
 const STATE = {
-  data: [],
+  data: []
 };
 
 const GETTERS = {
@@ -46,7 +46,7 @@ const ACTIONS = {
   getProjects({ dispatch }, payload = {}) {
     const target = [payload.scope];
 
-    if (payload.userName) target.push('user');
+    if (payload.username) target.push('user');
     else if (payload.teamId) target.push('team');
     else if (payload.tenantId) target.push('tenant');
     else target.push('public');
@@ -56,9 +56,9 @@ const ACTIONS = {
     return dispatch(getAction(target), payload);
   },
 
-   // public
+  // public
 
-   getPublicProjects({ commit }, { filter = {} }) {
+  getPublicProjects({ commit }, { filter = {} }) {
     return researchService.getPublicResearchListing(filter)
       .then((result) => {
         commit('setList', result);
@@ -67,36 +67,36 @@ const ACTIONS = {
 
   // user
 
-  getUserProjects({ commit }, { userName }) {
-    return researchService.getUserResearchListing(userName)
+  getUserProjects({ commit }, { username }) {
+    return researchService.getUserResearchListing(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
-  getUserPublicProjects({ commit }, { userName }) {
-    return researchService.getUserPublicProjects(userName)
+  getUserPublicProjects({ commit }, { username }) {
+    return researchService.getUserPublicProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
-  getUserTeamsProjects({ commit }, { userName }) {
-    return researchService.getUserTeamsProjects(userName)
+  getUserTeamsProjects({ commit }, { username }) {
+    return researchService.getUserTeamsProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
-  getUserPersonalProjects({ commit }, { userName }) {
-    return researchService.getUserPersonalProjects(userName)
+  getUserPersonalProjects({ commit }, { username }) {
+    return researchService.getUserPersonalProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
-  getUserFollowingProjects({ commit }, bookmarkIds) {
-    return researchService.getResearches(bookmarkIds)
+  getUserFollowingProjects({ commit }, { externalIds }) {
+    return researchService.getResearches(externalIds)
       .then((result) => {
         commit('setList', result);
       });
@@ -137,9 +137,9 @@ const ACTIONS = {
       formData,
       false
     )
-    .then((result) => {
-      commit('setOne', result);
-    });
+      .then((result) => {
+        commit('setOne', result);
+      });
   },
 
   updateProject({ commit }, payload) {
@@ -150,9 +150,9 @@ const ACTIONS = {
       isProposal,
       formData
     )
-    .then((result) => {
-      commit('setOne', result);
-    });
+      .then((result) => {
+        commit('setOne', result);
+      });
   }
 };
 
@@ -167,4 +167,4 @@ export const projectsStore = {
   getters: GETTERS,
   actions: ACTIONS,
   mutations: MUTATIONS
-}
+};
