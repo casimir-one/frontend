@@ -28,7 +28,6 @@
         default: null
       },
 
-
       filterItems: {
         type: Object,
         default: () => ({})
@@ -39,13 +38,29 @@
       return {
         loading: false,
         ready: false,
-        disabled: false,
-      }
+        disabled: false
+      };
     },
 
     computed: {
+      getterFilter() {
+        const filter = { ...this.filterItems };
+
+        if (this.tenantId) {
+          filter.tenantId = this.tenantId;
+        }
+        if (this.teamId) {
+          filter['+teams'] = this.teamId;
+        }
+        if (this.users && wrapInArray(this.users).length > 0) {
+          filter['+username'] = this.users;
+        }
+
+        return filter;
+      },
+
       usersList() {
-        return this.$store.getters['users/list'](this.filterItems)
+        return this.$store.getters['users/list'](this.getterFilter);
       },
 
       slotProps() {
@@ -55,7 +70,7 @@
           loading: this.loading,
           ready: this.ready,
           disabled: this.disabled
-        }
+        };
       }
     },
 
@@ -70,7 +85,7 @@
         this.$store.dispatch('users/get', {
           users: wrapInArray(this.users),
           teamId: this.teamId,
-          tenantId: this.tenantId,
+          tenantId: this.tenantId
         })
           .then(() => {
             this.loading = false;
@@ -78,7 +93,7 @@
 
             this.$emit('ready', this.usersList);
           });
-      },
+      }
     }
-  }
+  };
 </script>
