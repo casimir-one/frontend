@@ -54,7 +54,8 @@ module.exports = {
       "error",
       2,
       {
-        "baseIndent": 1
+        "baseIndent": 1,
+        "switchCase": 1
       }
     ],
     "vue/max-attributes-per-line": [
