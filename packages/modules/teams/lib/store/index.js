@@ -16,9 +16,9 @@ const toAssetUnits = (
   precision = 3,
   asset = 'TESTS'
 ) => {
-  let value = parseFloat(amount).toFixed(precision);
+  const value = parseFloat(amount).toFixed(precision);
   return `${value} ${asset}`;
-}
+};
 // end temp
 
 const STATE = {
@@ -31,9 +31,14 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  get({ commit }) {
-    return teamsService
-      .getResearchGroupsListing()
+  getList({ commit }, payload = {}) {
+    let getListPromise = teamsService.getResearchGroupsListing();
+
+    if (payload.teams && payload.teams.length > 0) {
+      getListPromise = teamsService.getResearchGroups(payload.teams);
+    }
+
+    return getListPromise
       .then((res) => {
         commit('setList', res);
       })
@@ -53,8 +58,7 @@ const ACTIONS = {
       });
   },
 
-  create({ commit, dispatch }, payload) {
-
+  create({ dispatch }, payload) {
     const {
       name,
       description,
@@ -71,24 +75,24 @@ const ACTIONS = {
     return teamsService
       .createResearchGroup(
         creator.privKey,
-      {
-        fee: toAssetUnits(0),
-        creator: creator.username,
-        accountOwnerAuth: auth,
-        accountActiveAuth: auth,
-        accountMemoPubKey: creator.account.memo_key,
-        accountJsonMetadata: undefined,
-        accountExtensions: []
-      },
-      {
-        researchGroupName: name,
-        researchGroupDescription: description,
-        researchGroupThresholdOverrides: []
-      }
-    ).then((team) => {
+        {
+          fee: toAssetUnits(0),
+          creator: creator.username,
+          accountOwnerAuth: auth,
+          accountActiveAuth: auth,
+          accountMemoPubKey: creator.account.memo_key,
+          accountJsonMetadata: undefined,
+          accountExtensions: []
+        },
+        {
+          researchGroupName: name,
+          researchGroupDescription: description,
+          researchGroupThresholdOverrides: []
+        }
+      ).then((team) => {
         dispatch('get');
 
-        const { 'external_id': teamId } = team;
+        const { external_id: teamId } = team;
 
         // TODO: rethink and use getUsers?
         const invites = members
@@ -114,21 +118,17 @@ const ACTIONS = {
         ));
 
         return Promise.all(invitesPromises)
-          .then((invites) => {
-            return {
-              team,
-              invites
-            }
-          })
+          .then((result) => ({
+            team,
+            invites: result
+          }))
           .catch((err) => {
             console.error(err);
           });
-
       })
       .catch((err) => {
         console.error(err);
       });
-
   }
 };
 
@@ -143,4 +143,4 @@ export const teamsStore = {
   getters: GETTERS,
   actions: ACTIONS,
   mutations: MUTATIONS
-}
+};
