@@ -20,9 +20,9 @@
 </template>
 
 <script>
-  import { attributeSet } from '../../mixins/base';
+  import { extend } from '@deip/validation-plugin';
 
-  import { extend } from 'vee-validate';
+  import { attributeSet } from '../../mixins/base';
 
   extend('required', {
     validate(val) {
