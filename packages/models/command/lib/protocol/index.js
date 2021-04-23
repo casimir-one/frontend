@@ -1,3 +1,5 @@
+import TxEnvelope from './../protocol/TxEnvelope';
+
 import GrapheneTx from './../protocol/impl/graphene/GrapheneTx';
 import GrapheneTxBuilder from './../protocol/impl/graphene/GrapheneTxBuilder';
 
@@ -6,6 +8,8 @@ import PolkadotTxBuilder from './../protocol/impl/polkadot/PolkadotTxBuilder';
 
 
 export {
+  TxEnvelope,
+
   GrapheneTx,
   GrapheneTxBuilder,
 

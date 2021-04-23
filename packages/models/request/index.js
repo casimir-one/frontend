@@ -1,8 +1,8 @@
-import ApplicationJsonRequest from './lib/ApplicationJsonRequest';
-import MultipartFormDataRequest from './lib/MultipartFormDataRequest';
+import ApplicationJsonMessage from './lib/ApplicationJsonMessage';
+import MultipartFormDataMessage from './lib/MultipartFormDataMessage';
 
 
 export {
-  ApplicationJsonRequest,
-  MultipartFormDataRequest
+  ApplicationJsonMessage,
+  MultipartFormDataMessage
 }

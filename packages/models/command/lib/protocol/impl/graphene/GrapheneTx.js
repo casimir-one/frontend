@@ -25,9 +25,9 @@ class GrapheneTx extends BaseTx {
       signatures: signatures || [],
       tenant_signature: tenantSignature || undefined
     };
-
-    if (this._impl.signatures.length)
-      this._isSealed = true;
+    
+    if (this._operations.length) // deserialized tx
+      super.seal();
   }
 
   sign(privKey) {

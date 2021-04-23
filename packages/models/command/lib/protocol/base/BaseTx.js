@@ -7,7 +7,7 @@ class BaseTx {
   }
 
   addOp(op) {
-    assert(!this._isSealed, "Transaction cannot be modified after it has been sealed");
+    assert(!this.isSealed(), "Transaction cannot be modified after it has been sealed");
     this._operations.push(op);
     return this;
   }
@@ -17,6 +17,8 @@ class BaseTx {
     this._isSealed = true;
     return this;
   }
+
+  isSealed() { return this._isSealed; }
 
   sign() { throw new Error("Not implemented exception!"); }
   finalize() { throw new Error("Not implemented exception!"); }

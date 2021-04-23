@@ -31,9 +31,8 @@ class GrapheneTxBuilder extends BaseTxBuilder {
       });
   }
 
-  end() {
-    const tx = this._tx.seal();
-    return Promise.resolve({ tx, txCtx: this.getTxCtx() });
+  end() { 
+    return this.pack();
   }
 
   getTxCtx() {
