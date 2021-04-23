@@ -1,6 +1,6 @@
 {
 	"name": "@deip/assets-module",
-	"version": "1.104.0",
+	"version": "1.108.0",
 	"description": "> TODO: description",
 	"author": "Elena Vlasova <e.vlasova@paralect.com>",
 	"homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -18,19 +18,19 @@
 	},
 	"dependencies": {
 		"@deip/assets-service": "^1.104.0",
-		"@deip/users-module": "^1.104.0",
+		"@deip/users-module": "1.108.0",
 		"change-case": "^4.1.2",
 		"currency.js": "^2.0.3",
 		"maska": "^1.4.1"
 	},
 	"peerDependencies": {
-    "@deip/validation-plugin": "1.95.0",
-    "@deip/vuetify-extended": "1.95.0",
-    "vue": "^2.6.12",
-    "vuetify": "^2.4.2"
-  },
+		"@deip/validation-plugin": "1.95.0",
+		"@deip/vuetify-extended": "1.95.0",
+		"vue": "^2.6.12",
+		"vuetify": "^2.4.2"
+	},
 	"devDependencies": {
-		"@deip/eslint-config": "^1.104.0",
+		"@deip/eslint-config": "1.108.0",
 		"babel-eslint": "^10.1.0",
 		"eslint": "^7.23.0",
 		"eslint-plugin-import": "^2.22.1",

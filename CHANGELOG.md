@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **@deip/assets-module:** fix getList in balances store ([92b9cb9](https://gitlab.com/DEIP/deip-client-modules/commit/92b9cb98640149a58a0a6f23a03769005e7cd04c))
+* **@deip/attributes-module:** update dependencies ([27249bb](https://gitlab.com/DEIP/deip-client-modules/commit/27249bb22ce19b4c6e5dfabf336c7ad51ea68789))
+* **@deip/eslint-config:** fix indent in switch statement ([3d41d5d](https://gitlab.com/DEIP/deip-client-modules/commit/3d41d5dd63ff60c207f55f0382c8b17b459ddeff))
+* **@deip/projects-module:** fix filter criteria for getter in ProjectsDataProvider ([228af2c](https://gitlab.com/DEIP/deip-client-modules/commit/228af2ccb317cdb3be4da757ea9edcf4ea6537c4))
+* **@deip/users-module:** fix filter criteria for getter in UsersDataProvider ([550a406](https://gitlab.com/DEIP/deip-client-modules/commit/550a40630fa63ffb444363fe3490ef1ff51b23b9))
+
+
+### Features
+
+* **@deip/assets-module:** add assets module ([f0dd015](https://gitlab.com/DEIP/deip-client-modules/commit/f0dd0152efe3c74850fabde935dd4a410c6866bd))
+* **@deip/assets-module:** add form for project security token creation ([63bbfaa](https://gitlab.com/DEIP/deip-client-modules/commit/63bbfaa4287b39435250799a7818d5e0f921db4c))
+* **@deip/command-models:** Message envelope ([b497fb4](https://gitlab.com/DEIP/deip-client-modules/commit/b497fb4865086d8c54519a4a5e770c0d4aa4e9ba))
+* **@deip/eslint-config:** change vue config plugin ([55605b2](https://gitlab.com/DEIP/deip-client-modules/commit/55605b2cff7f4675384cec8a6f73da033e0b58c6))
+* **@deip/teams-module:** add TeamsDataProvider ([d98a85e](https://gitlab.com/DEIP/deip-client-modules/commit/d98a85e2fa38a80693141c3397a1e01e5d6b79bd))
+* **@deip/vuetify-extended:** add VexDotList component ([9ab5d8b](https://gitlab.com/DEIP/deip-client-modules/commit/9ab5d8b9a77e6f92eaed0f0f4db9a0fb6274ab2f))
+
+
+
+
+
 # [1.107.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.106.0...v1.107.0) (2021-04-15)
 
 

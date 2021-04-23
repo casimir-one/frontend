@@ -1,6 +1,6 @@
 {
   "name": "@deip/projects-module",
-  "version": "1.106.0",
+  "version": "1.108.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -26,7 +26,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/platform-fns": "1.106.0",
+    "@deip/platform-fns": "1.108.0",
     "@deip/proxydi": "1.104.0",
     "@deip/research-service": "1.104.0"
   },
@@ -35,7 +35,7 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
-    "@deip/eslint-config": "1.104.0",
+    "@deip/eslint-config": "1.108.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",
