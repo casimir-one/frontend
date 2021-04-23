@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+**Note:** Version bump only for package @deip/bookmarks-module
+
+
+
+
+
 # [1.106.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.105.0...v1.106.0) (2021-04-15)
 
 

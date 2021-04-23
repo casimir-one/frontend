@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+
+### Features
+
+* **@deip/vuetify-extended:** add VexDotList component ([9ab5d8b](https://gitlab.com/DEIP/deip-client-modules/commit/9ab5d8b9a77e6f92eaed0f0f4db9a0fb6274ab2f))
+
+
+
+
+
 # [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 **Note:** Version bump only for package @deip/vuetify-extended

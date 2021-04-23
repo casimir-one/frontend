@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** fix filter criteria for getter in UsersDataProvider ([550a406](https://gitlab.com/DEIP/deip-client-modules/commit/550a40630fa63ffb444363fe3490ef1ff51b23b9))
+
+
+### Features
+
+* **@deip/teams-module:** add TeamsDataProvider ([d98a85e](https://gitlab.com/DEIP/deip-client-modules/commit/d98a85e2fa38a80693141c3397a1e01e5d6b79bd))
+
+
+
+
+
 # [1.106.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.105.0...v1.106.0) (2021-04-15)
 
 **Note:** Version bump only for package @deip/teams-module

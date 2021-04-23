@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+
+### Features
+
+* **@deip/command-models:** Message envelope ([b497fb4](https://gitlab.com/DEIP/deip-client-modules/commit/b497fb4865086d8c54519a4a5e770c0d4aa4e9ba))
+
+
+
+
+
 # [1.107.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.106.0...v1.107.0) (2021-04-15)
 
 

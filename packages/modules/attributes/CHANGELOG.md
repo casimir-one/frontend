@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** update dependencies ([27249bb](https://gitlab.com/DEIP/deip-client-modules/commit/27249bb22ce19b4c6e5dfabf336c7ad51ea68789))
+
+
+
+
+
 # [1.106.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.105.0...v1.106.0) (2021-04-15)
 
 

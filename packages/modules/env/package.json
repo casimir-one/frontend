@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.104.0",
+  "version": "1.108.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -32,11 +32,11 @@
     "@deip/app-config-service": "1.104.0",
     "@deip/proxydi": "1.104.0",
     "@deip/rpc-client": "1.98.0",
-    "@deip/vuetify-extended": "1.104.0",
+    "@deip/vuetify-extended": "1.108.0",
     "axios": "^0.21.1"
   },
   "devDependencies": {
-    "@deip/eslint-config": "1.104.0",
+    "@deip/eslint-config": "1.108.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",

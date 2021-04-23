@@ -1,6 +1,6 @@
 {
   "name": "@deip/users-module",
-  "version": "1.106.0",
+  "version": "1.108.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,11 +24,11 @@
   },
   "dependencies": {
     "@deip/access-service": "1.104.0",
-    "@deip/platform-fns": "1.106.0",
+    "@deip/platform-fns": "1.108.0",
     "@deip/proxydi": "1.104.0",
     "@deip/toolbox": "1.104.0",
     "@deip/users-service": "1.104.0",
-    "@deip/vuetify-extended": "1.104.0"
+    "@deip/vuetify-extended": "1.108.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.95.0",
@@ -38,7 +38,7 @@
     "vuex": "^3.6.0"
   },
   "devDependencies": {
-    "@deip/eslint-config": "1.104.0",
+    "@deip/eslint-config": "1.108.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",
