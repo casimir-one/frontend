@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-lerna run --no-bail --stream precommit
+npm run precommit
