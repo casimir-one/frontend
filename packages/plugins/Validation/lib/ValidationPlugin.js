@@ -50,7 +50,7 @@ export const dateBefore = {
   validate(value, { target }) {
     if (!target) return true;
 
-    const { currentDate, nextDates } = normalizeDates(value, target, null);
+    const { currentDate, nextDates } = normalizeDates(value, null, target);
 
     return nextDates.some((d) => currentDate <= d);
   },
@@ -63,7 +63,7 @@ export const dateAfter = {
   validate(value, { target }) {
     if (!target) return true;
 
-    const { currentDate, prevDates } = normalizeDates(value, null, target);
+    const { currentDate, prevDates } = normalizeDates(value, target, null);
 
     return prevDates.some((d) => currentDate >= d);
   },
