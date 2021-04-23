@@ -1,10 +1,10 @@
-import { PROTOCOL } from './constants'
-import GrapheneOperationsRegistry from './../protocol/impl/graphene/GrapheneOperationsRegistry';
-import PolkadotOperationsRegistry from './../protocol/impl/polkadot/PolkadotOperationsRegistry';
-import GrapheneTxBuilder from './../protocol/impl/graphene/GrapheneTxBuilder';
-import PolkadotTxBuilder from './../protocol/impl/polkadot/PolkadotTxBuilder';
 import { assert } from '@deip/toolbox';
 import deipRpc from '@deip/rpc-client';
+import { PROTOCOL } from './../constants'
+import GrapheneOperationsRegistry from './../../protocol/impl/graphene/GrapheneOperationsRegistry';
+import PolkadotOperationsRegistry from './../../protocol/impl/polkadot/PolkadotOperationsRegistry';
+import GrapheneTxBuilder from './../../protocol/impl/graphene/GrapheneTxBuilder';
+import PolkadotTxBuilder from './../../protocol/impl/polkadot/PolkadotTxBuilder';
 
 
 class ProtocolRegistry {

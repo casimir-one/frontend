@@ -1,11 +1,11 @@
 import { assert } from '@deip/toolbox';
 
 
-class BaseRequest {
+class BaseMessage {
 
-  constructor(appCmd, headers = {}) {
-    assert(!!appCmd, "Application command must be specified");
-    this._appCmd = appCmd.serialize();
+  constructor(envelope, headers = {}) {
+    assert(!!envelope, "Application command must be specified");
+    this._envelope = envelope.serialize();
     this._headers = headers;
   }
 
@@ -15,4 +15,4 @@ class BaseRequest {
 }
 
 
-export default BaseRequest;
+export default BaseMessage;

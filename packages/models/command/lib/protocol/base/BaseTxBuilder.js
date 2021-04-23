@@ -1,4 +1,5 @@
 import { assert } from '@deip/toolbox';
+import TxEnvelope from './../TxEnvelope';
 
 
 class BaseTxBuilder {
@@ -32,6 +33,12 @@ class BaseTxBuilder {
 
   begin(options) { throw new Error("Not implemented exception!"); }
   end(options) { throw new Error("Not implemented exception!"); }
+
+  pack() {
+    if (!this._tx.isSealed())
+      this._tx.seal();
+    return new TxEnvelope(this._tx, this._txCtx.appCmds);
+  }
 
 }
 
