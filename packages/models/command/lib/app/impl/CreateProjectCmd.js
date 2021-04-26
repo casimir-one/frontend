@@ -9,6 +9,7 @@ class CreateProjectCmd extends ProtocolEntityCmd {
 
     const {
       // onchain
+      entityId,
       teamId,
       description,
       domains,
@@ -16,17 +17,14 @@ class CreateProjectCmd extends ProtocolEntityCmd {
       members,
       reviewShare,
       compensationShare,
-      extensions,
 
       // offchain
       attributes
     } = cmdPayload;
 
-    assert(!!teamId, "Team ID is required");
-    assert(!!description, "Project description is required");
-    assert(!!domains && domains.length, "Project domain is required");
-
-    // TODO: validate others
+    assert(!!teamId, "'teamId' is required");
+    assert(!!description, "'description' is required");
+    assert(!!domains && domains.length, "'domains' list is required");
 
     super(APP_CMD.CREATE_PROJECT, cmdPayload, txContext);
   }
@@ -41,3 +39,5 @@ class CreateProjectCmd extends ProtocolEntityCmd {
 
 
 export default CreateProjectCmd;
+
+

@@ -22,7 +22,10 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/http-service": "1.104.0",
     "@deip/rpc-client": "1.98.0",
-    "@deip/toolbox": "1.104.0"
+    "@deip/toolbox": "1.104.0",
+    "@deip/lib-crypto": "1.21.0",
+    "@deip/command-models": "1.108.0",
+    "@deip/request-models": "1.108.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.0.0"
