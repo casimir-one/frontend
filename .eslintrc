@@ -1,26 +1,23 @@
-module.exports = {
+{
+  "root": true,
   "env": {
-    "node": true,
-    "browser": true,
-    "es6": true
+    "node": true
   },
   "extends": [
     "plugin:vue/recommended",
+    "eslint:recommended",
     "@vue/airbnb"
   ],
   "parserOptions": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
+    "requireConfigFile": false,
     "ecmaVersion": 6,
-    "sourceType": "module",
+    "sourceType": "module"
   },
   "plugins": [
-    "vuetify"
   ],
   "rules": {
     "import/prefer-default-export": "off",
-    "vuetify/no-deprecated-classes": "error",
-    "vuetify/grid-unknown-attributes": "error",
-    "vuetify/no-legacy-grid": "error",
     "no-param-reassign": [
       "error",
       {
@@ -40,6 +37,7 @@ module.exports = {
         "vue": "never"
       }
     ],
+    "no-restricted-syntax": "off",
     "no-underscore-dangle": [
       "error",
       {
@@ -49,6 +47,20 @@ module.exports = {
         "allowAfterThis": true,
         "enforceInMethodNames": false
       }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info"
+        ]
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
     ],
     "vue/script-indent": [
       "error",
@@ -63,10 +75,6 @@ module.exports = {
       {
         "singleline": 3
       }
-    ],
-    "comma-dangle": [
-      "error",
-      "never"
     ]
   },
   "overrides": [
