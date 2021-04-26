@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
+
+
+### Bug Fixes
+
+* **@deip/validation-plugin:** fix dates validation rules ([d95bf0c](https://gitlab.com/DEIP/deip-client-modules/commit/d95bf0c04b94c7a57ba7ecebfb0e12f623d13eeb))
+
+
+
+
+
 # [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 **Note:** Version bump only for package @deip/validation-plugin

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** update validator dependency ([045e49d](https://gitlab.com/DEIP/deip-client-modules/commit/045e49d33d628a6ed795d889d4420dbf0e11acab))
+* **@deip/validation-plugin:** fix dates validation rules ([d95bf0c](https://gitlab.com/DEIP/deip-client-modules/commit/d95bf0c04b94c7a57ba7ecebfb0e12f623d13eeb))
+* **@deip/vuetify-extended:** add autocomplite off to date and time inputs ([74244c1](https://gitlab.com/DEIP/deip-client-modules/commit/74244c16c64d7ce72222ce926d8bcd40668f8ae5))
+
+
+### Features
+
+* **@deip/assets-module:** add AssetInput ([c978c73](https://gitlab.com/DEIP/deip-client-modules/commit/c978c7331585a9e7bdeb41a3c591138473a857e0))
+* **@deip/fundraising-module:** add module ([c597cce](https://gitlab.com/DEIP/deip-client-modules/commit/c597cce74c48767e2d644bb9b54bda37252388a4))
+* **@deip/project-service:** Commands for projects service ([2b626e5](https://gitlab.com/DEIP/deip-client-modules/commit/2b626e518e7b33ba87a9a97b25361dc0d612d5a5))
+
+
+
+
+
 # [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
 
 

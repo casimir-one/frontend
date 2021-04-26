@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
+
+
+### Features
+
+* **@deip/assets-module:** add AssetInput ([c978c73](https://gitlab.com/DEIP/deip-client-modules/commit/c978c7331585a9e7bdeb41a3c591138473a857e0))
+
+
+
+
+
 # [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
 
 
