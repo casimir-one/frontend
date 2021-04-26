@@ -9,23 +9,20 @@ class CreateProposalCmd extends ProtocolEntityCmd {
   constructor(cmdPayload, txContext) {
 
     const {
+      entityId,
       creator,
       proposedCmds,
       expirationTime,
-      reviewPeriodSeconds,
-      extensions
+      reviewPeriodSeconds
     } = cmdPayload;
 
 
+    assert(!!creator, "'creator' is required");
     assert(!!proposedCmds && proposedCmds.length, "Protocol proposal must contain at least 1 ProtocolCmd");
-
     for (let i = 0; i < proposedCmds.length; i++) {
       const protocolCmd = proposedCmds[i];
       assert(protocolCmd instanceof ProtocolCmd, "Proposal can contain only protocol commands");
     }
-
-    assert(!!creator, "Proposal creator is required");
-    assert(!!expirationTime, "Proposal expiration time is required");
 
     super(APP_CMD.CREATE_PROPOSAL, cmdPayload, txContext);
   }
