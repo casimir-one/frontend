@@ -50,6 +50,7 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
       const op = ['create_account', {
         fee: fee,
         creator: creator,
+        new_account_name: entityId,
         owner: ownerAuths,
         active: activeAuths,
         active_overrides: [],
