@@ -13,6 +13,7 @@
         outlined
         hide-details="auto"
         append-icon="mdi-calendar"
+        autocomplete="off"
         v-bind="internalFieldProps"
 
         @click:clear="$refs.field.blur()"
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-  import { isFuture, isToday, parseISO } from 'date-fns'
+  import { isFuture, isToday, parseISO } from 'date-fns';
 
   import Validatable from 'vuetify/lib/mixins/validatable';
   import Proxyable from 'vuetify/lib/mixins/proxyable';

@@ -1,23 +1,26 @@
 <template>
   <vex-autocomplete
     v-model="internalValue"
-    :labe="label"
+    :label="label"
     :placeholder="placeholder"
     :items="list"
     outlined
     hide-details="auto"
+    autocomplete="off"
   />
 </template>
 
 <script>
-  import {isToday, getHours, getMinutes, parseISO} from 'date-fns';
+  import {
+    isToday, getHours, getMinutes, parseISO
+  } from 'date-fns';
 
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { createRange } from 'vuetify/lib/util/helpers';
 
   import { padStart } from '@deip/toolbox';
 
-  import VexAutocomplete from '../../VexAutocomplete';
+  import { VexAutocomplete } from '../../VexAutocomplete';
 
   export default {
     name: 'VexTimeInput',
@@ -53,11 +56,11 @@
 
         const list = [];
 
-        for (const h of hours) {
-          for (const m of minutes) {
+        hours.forEach((h) => {
+          minutes.forEach((m) => {
             if (m % this.graduate === 0) {
               if (this.date) {
-                if (h === getHours(currentDate) && m > getMinutes(currentDate)
+                if ((h === getHours(currentDate) && m > getMinutes(currentDate))
                   || h !== getHours(currentDate)) {
                   list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
                 }
@@ -65,8 +68,8 @@
                 list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
               }
             }
-          }
-        }
+          });
+        });
 
         return list;
       }

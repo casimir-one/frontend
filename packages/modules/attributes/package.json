@@ -30,12 +30,12 @@
     "@deip/platform-fns": "1.108.0",
     "@deip/proxydi": "1.104.0",
     "@deip/schema-renderer": "1.104.0",
+    "@deip/validation-plugin": "1.104.0",
+    "@deip/vuetify-extended": "1.108.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
-    "@deip/validation-plugin": "1.95.0",
-    "@deip/vuetify-extended": "1.95.0",
     "vue": "^2.6.12",
     "vuetify": "^2.4.2"
   },
