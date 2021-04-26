@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-module",
-  "version": "1.108.0",
+  "version": "1.109.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -27,8 +27,8 @@
     "@deip/platform-fns": "1.108.0",
     "@deip/proxydi": "1.104.0",
     "@deip/schema-renderer": "1.104.0",
-    "@deip/validation-plugin": "1.104.0",
-    "@deip/vuetify-extended": "1.108.0",
+    "@deip/validation-plugin": "1.109.0",
+    "@deip/vuetify-extended": "1.109.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },
