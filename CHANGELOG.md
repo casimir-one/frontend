@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.109.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.0...v1.109.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* **@deip/command-models:** entityId for CreateAccountCmd fixed ([1fd9509](https://gitlab.com/DEIP/deip-client-modules/commit/1fd9509a42e0d7988ff65f044f7b7a2b93667bcf))
+
+
+
+
+
 # [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
 
 
