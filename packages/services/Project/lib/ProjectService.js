@@ -4,6 +4,7 @@ import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import { MultipartFormDataMessage } from '@deip/request-models';
 import {
+  APP_PROPOSAL,
   ProtocolRegistry,
   CreateProjectCmd,
   CreateProposalCmd,
@@ -118,13 +119,14 @@ class ProjectService extends Singleton {
           }, txBuilder.getTxCtx());
 
           const createProposalCmd = new CreateProposalCmd({
+            type: APP_PROPOSAL.PROJECT_INVITE_PROPOSAL,
             creator: creator,
             proposedCmds: [joinProjectCmd]
           }, txBuilder.getTxCtx());
 
           const inviteId = createProposalCmd.getProtocolEntityId();
 
-          const updateProposalCmd = new UpdateProposalCmd({ // auto approve
+          const updateProposalCmd = new UpdateProposalCmd({ // approve by default
             entityId: inviteId,
             activeApprovalsToAdd: [creator]
           }, txBuilder.getTxCtx());
@@ -136,6 +138,7 @@ class ProjectService extends Singleton {
         if (isProposal) {
 
           const createProposalCmd = new CreateProposalCmd({
+            type: APP_PROPOSAL.PROJECT_PROPOSAL,
             creator: creator,
             proposedCmds: [createProjectCmd, ...invites.reduce((acc, invite) => {
               return [...acc, invite[0], invite[1]]
