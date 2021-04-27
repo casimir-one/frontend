@@ -1,6 +1,6 @@
 import ProtocolCmd from './../base/ProtocolCmd';
 import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
-import { APP_CMD } from './../constants';
+import { APP_CMD, APP_PROPOSAL } from './../constants';
 import { assert } from '@deip/toolbox';
 
 
@@ -10,6 +10,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
 
     const {
       entityId,
+      type,
       creator,
       proposedCmds,
       expirationTime,
@@ -17,7 +18,10 @@ class CreateProposalCmd extends ProtocolEntityCmd {
     } = cmdPayload;
 
 
+    assert(!!type, "'type' is required");
+    assert(!!APP_PROPOSAL[type], "'type' is unknown");
     assert(!!creator, "'creator' is required");
+
     assert(!!proposedCmds && proposedCmds.length, "Protocol proposal must contain at least 1 ProtocolCmd");
     for (let i = 0; i < proposedCmds.length; i++) {
       const protocolCmd = proposedCmds[i];
@@ -29,6 +33,10 @@ class CreateProposalCmd extends ProtocolEntityCmd {
 
   getProposedCmds() {
     return this._cmdPayload.proposedCmds;
+  }
+
+  getProposalType() {
+    return this._cmdPayload.type;
   }
 
   getProtocolEntityId() {
