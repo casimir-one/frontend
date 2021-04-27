@@ -12,7 +12,12 @@
     "parser": "@babel/eslint-parser",
     "requireConfigFile": false,
     "ecmaVersion": 6,
-    "sourceType": "module"
+    "sourceType": "module",
+    "babelOptions": {
+      "plugins": [
+        "@babel/plugin-proposal-class-properties"
+      ]
+    }
   },
   "plugins": [
   ],

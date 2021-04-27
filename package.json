@@ -18,6 +18,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.16",
     "@babel/eslint-parser": "^7.13.14",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@mdi/font": "^5.0.45",
     "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-airbnb": "^5.3.0",
