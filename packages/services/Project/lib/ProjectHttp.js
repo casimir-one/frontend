@@ -6,7 +6,7 @@ class ProjectHttp extends Singleton {
   http = HttpService.getInstance();
 
   createProject(req) {
-    return this.http.post('/api/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.post('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
   
 }

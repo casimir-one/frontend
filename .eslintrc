@@ -80,7 +80,8 @@
       {
         "singleline": 3
       }
-    ]
+    ],
+    "no-plusplus": "off"
   },
   "overrides": [
     {

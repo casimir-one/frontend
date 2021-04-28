@@ -5,15 +5,23 @@ class ProposalsHttp extends Singleton {
   http = HttpService.getInstance();
 
   createProposal({ tx }) {
-    return this.http.post(`/api/proposals`, { tx });
+    return this.http.post('/api/proposals', { tx });
   }
 
-  updateProposal({ tx }) {
-    return this.http.put(`/api/proposals`, { tx });
+  updateProposal(req) {
+    return this.http.put('/api/v2/proposals/update', req.getRequestBody());
   }
 
-  deleteProposal({ tx }) {
-    return this.http.put(`/api/proposals/delete`, { tx });
+  declineProposal(req) {
+    return this.http.put('/api/v2/proposals/decline', req.getRequestBody());
+  }
+
+  updateProposalLegacy({ tx }) {
+    return this.http.put('/api/proposals', { tx });
+  }
+
+  deleteProposalLegacy({ tx }) {
+    return this.http.put('/api/proposals/delete', { tx });
   }
 
   getUserProfile(username) {
@@ -27,7 +35,6 @@ class ProposalsHttp extends Singleton {
   getProposal(externalId) {
     return this.http.get(`/api/proposals/${externalId}`);
   }
-  
 }
 
 export {

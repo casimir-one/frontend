@@ -14,24 +14,36 @@ import {
 } from '@deip/command-models';
 
 
+// TODO: move to constants
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+
 class ProjectService extends Singleton {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
   
 
-  createProject({ privKey, username }, {
-    isProposal,
+  createProject({ privKey }, {
     teamId,
     creator,
     domains,
     isPrivate,
     members,
+    inviteLifetime,
     reviewShare,
     compensationShare,
     attributes,
     memoKey,
     formData
-  }) {
+  },
+    proposalInfo) {
+
+    const { isProposal, isProposalApproved, proposalLifetime } =
+      Object.assign({
+        isProposal: false,
+        isProposalApproved: true,
+        proposalLifetime: proposalDefaultLifetime
+      }, proposalInfo);
+
 
     const TENANT = this.proxydi.get('env').TENANT;
     const PROTOCOL = this.proxydi.get('env').PROTOCOL;
@@ -110,7 +122,7 @@ class ProjectService extends Singleton {
             return acc.some(m => m === member) ? acc : [...acc, member];
         }, []);
 
-        const invites = invitees.map((invitee) => {
+        const invitesFlows = invitees.map((invitee) => {
 
           const joinProjectCmd = new JoinProjectCmd({
             member: invitee,
@@ -121,18 +133,19 @@ class ProjectService extends Singleton {
           const createProposalCmd = new CreateProposalCmd({
             type: APP_PROPOSAL.PROJECT_INVITE_PROPOSAL,
             creator: creator,
+            expirationTime: inviteLifetime || proposalDefaultLifetime,
             proposedCmds: [joinProjectCmd]
           }, txBuilder.getTxCtx());
 
           const inviteId = createProposalCmd.getProtocolEntityId();
 
-          const updateProposalCmd = new UpdateProposalCmd({ // approve by default
+          const updateProposalCmd = new UpdateProposalCmd({
             entityId: inviteId,
             activeApprovalsToAdd: [creator]
           }, txBuilder.getTxCtx());
-          
+
           return [createProposalCmd, updateProposalCmd];
-        })
+        });
 
 
         if (isProposal) {
@@ -140,23 +153,35 @@ class ProjectService extends Singleton {
           const createProposalCmd = new CreateProposalCmd({
             type: APP_PROPOSAL.PROJECT_PROPOSAL,
             creator: creator,
-            proposedCmds: [createProjectCmd, ...invites.reduce((acc, invite) => {
-              return [...acc, invite[0], invite[1]]
+            expirationTime: proposalLifetime || proposalDefaultLifetime,
+            proposedCmds: [createProjectCmd, ...invitesFlows.reduce((acc, invite) => {
+              return [...acc, ...invite]
             }, [])]
           }, txBuilder.getTxCtx());
 
           txBuilder.addCmd(createProposalCmd);
+
+          if (isProposalApproved) {
+
+            const projectProposalId = createProposalCmd.getProtocolEntityId();
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: projectProposalId,
+              activeApprovalsToAdd: [creator]
+            }, txBuilder.getTxCtx());
+
+            txBuilder.addCmd(updateProposalCmd);
+          }
         
         } else {
 
           txBuilder.addCmd(createProjectCmd);
 
-          for (let i = 0; i < invites.length; i++) {
-            const invite = invites[i];
-            txBuilder.addCmd(invite[0]);
-            txBuilder.addCmd(invite[1]);
+          for (let i = 0; i < invitesFlows.length; i++) {
+            const inviteFlow = invitesFlows[i];
+            for (let j = 0; j < inviteFlow.length; j++) {
+              txBuilder.addCmd(inviteFlow[j]);
+            }
           }
-          
         }
 
         return txBuilder.end();

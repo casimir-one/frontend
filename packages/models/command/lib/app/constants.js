@@ -5,6 +5,7 @@ import CreateProjectCmd from './impl/CreateProjectCmd';
 import JoinProjectCmd from './impl/JoinProjectCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
+import DeclineProposalCmd from './impl/DeclineProposalCmd';
 
 
 const APP_CMD = createEnum({
@@ -13,7 +14,8 @@ const APP_CMD = createEnum({
   CREATE_PROJECT: 3,
   JOIN_PROJECT: 4,
   CREATE_PROPOSAL: 5,
-  UPDATE_PROPOSAL: 6
+  UPDATE_PROPOSAL: 6,
+  DECLINE_PROPOSAL: 7
 });
 
 
@@ -38,7 +40,8 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_PROJECT]: { class: CreateProjectCmd, isProtocolOp: true },
   [APP_CMD.JOIN_PROJECT]: { class: JoinProjectCmd, isProtocolOp: true },
   [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd, isProtocolOp: true },
-  [APP_CMD.UPDATE_PROPOSAL]: { class: UpdateProposalCmd, isProtocolOp: true }
+  [APP_CMD.UPDATE_PROPOSAL]: { class: UpdateProposalCmd, isProtocolOp: true },
+  [APP_CMD.DECLINE_PROPOSAL]: { class: DeclineProposalCmd, isProtocolOp: true }
 }
 
 
