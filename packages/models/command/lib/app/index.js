@@ -5,6 +5,7 @@ import JoinProjectCmd from './impl/JoinProjectCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
+import DeclineProposalCmd from './impl/DeclineProposalCmd';
 
 
 export {
@@ -14,5 +15,6 @@ export {
   CreateProjectCmd,
   JoinProjectCmd,
   CreateProposalCmd,
-  UpdateProposalCmd
+  UpdateProposalCmd,
+  DeclineProposalCmd
 }

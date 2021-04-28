@@ -3,13 +3,20 @@ import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import { Singleton } from '@deip/toolbox';
+import { ProtocolRegistry, UpdateProposalCmd, DeclineProposalCmd } from '@deip/command-models';
+import { ApplicationJsonMessage } from '@deip/request-models';
 import { ProposalsHttp } from './ProposalsHttp';
 
 class ProposalsService extends Singleton {
   proposalsHttp = ProposalsHttp.getInstance();
+
   accessService = AccessService.getInstance();
+
   blockchainService = BlockchainService.getInstance();
+
   proxydi = proxydi;
+
+  deipRpc = deipRpc;
 
   createProposal({ privKey, username }, propagate, {
     creator,
@@ -19,32 +26,30 @@ class ProposalsService extends Singleton {
     extensions,
     approvers = [username]
   },
-    refBlock = {},
-    preOps = [],
-    postOps = []) {
-    
-    const { refBlockNum, refBlockPrefix } = refBlock;
+  refBlockData = {},
+  preOps = [],
+  postOps = []) {
+    const { refBlockNum, refBlockPrefix } = refBlockData;
     const refBlockPromise = refBlockNum && refBlockPrefix
       ? Promise.resolve({ refBlockNum, refBlockPrefix })
       : this.blockchainService.getRefBlockSummary();
 
     return refBlockPromise
       .then((refBlock) => {
-
-        const [proposal_external_id, create_proposal_op] = deipRpc.operations.createEntityOperation(['create_proposal', {
-          creator: creator,
+        const [proposalExternalId, createProposalOp] = deipRpc.operations.createEntityOperation(['create_proposal', {
+          creator,
           proposed_ops: proposedOps,
           expiration_time: expirationTime,
           review_period_seconds: reviewPeriodSeconds,
-          extensions: extensions
+          extensions
         }], refBlock);
 
         const approvalsToAdd = approvers || [];
 
         for (let i = 0; i < approvalsToAdd.length; i++) {
           const name = approvalsToAdd[i];
-          const update_proposal_op = ['update_proposal', {
-            external_id: proposal_external_id,
+          const updateProposalOp = ['update_proposal', {
+            external_id: proposalExternalId,
             active_approvals_to_add: [name],
             active_approvals_to_remove: [],
             owner_approvals_to_add: [],
@@ -53,21 +58,20 @@ class ProposalsService extends Singleton {
             key_approvals_to_remove: [],
             extensions: []
           }];
-          postOps.unshift(update_proposal_op);
+          postOps.unshift(updateProposalOp);
         }
 
-        const isTenantSign = approvalsToAdd.some(name => name == this.proxydi.get('env').TENANT);
-        return this.blockchainService.signOperations([...preOps, create_proposal_op, ...postOps], privKey, refBlock, isTenantSign)
-          .then((signedTx) => {
-            return propagate
-              ? this.proposalsHttp.createProposal({ tx: signedTx })
-              : Promise.resolve({ tx: signedTx });
-          })
-      })
+        const isTenantSign = approvalsToAdd.some((name) => name === this.proxydi.get('env').TENANT);
+        return this.blockchainService.signOperations(
+          [...preOps, createProposalOp, ...postOps], privKey, refBlock, isTenantSign
+        )
+          .then((signedTx) => (propagate
+            ? this.proposalsHttp.createProposal({ tx: signedTx })
+            : Promise.resolve({ tx: signedTx })));
+      });
   }
 
-
-  updateProposal({ privKey, username }, {
+  updateProposalLegacy({ privKey }, {
     externalId,
     activeApprovalsToAdd = [],
     activeApprovalsToRemove = [],
@@ -77,7 +81,6 @@ class ProposalsService extends Singleton {
     keyApprovalsToRemove = [],
     extensions = []
   }, propagate = true) {
-
     const operation = ['update_proposal', {
       external_id: externalId,
       active_approvals_to_add: activeApprovalsToAdd,
@@ -86,51 +89,114 @@ class ProposalsService extends Singleton {
       owner_approvals_to_remove: ownerApprovalsToRemove,
       key_approvals_to_add: keyApprovalsToAdd,
       key_approvals_to_remove: keyApprovalsToRemove,
-      extensions: extensions
+      extensions
     }];
 
-    const isTenantSign = [...activeApprovalsToAdd, ...activeApprovalsToRemove, ...ownerApprovalsToAdd, ...ownerApprovalsToRemove].some(name => name == this.proxydi.get('env').TENANT);
+    const isTenantSign = [
+      ...activeApprovalsToAdd,
+      ...activeApprovalsToRemove,
+      ...ownerApprovalsToAdd,
+      ...ownerApprovalsToRemove
+    ].some((name) => name === this.proxydi.get('env').TENANT);
+
     return this.blockchainService.signOperations([operation], privKey, {}, isTenantSign)
-      .then((signedTx) => {
-        return propagate
-          ? this.proposalsHttp.updateProposal({ tx: signedTx })
-          : Promise.resolve({ tx: signedTx });
-      })
+      .then((signedTx) => (propagate
+        ? this.proposalsHttp.updateProposalLegacy({ tx: signedTx })
+        : Promise.resolve({ tx: signedTx })));
   }
 
-  deleteProposal({ privKey, username }, {
+  deleteProposalLegacy({ privKey }, {
     externalId,
     account,
     authority,
     extensions
   }, propagate = true) {
-
     const operation = ['delete_proposal', {
       external_id: externalId,
       account,
       authority,
       extensions
     }];
-    
-    const isTenantSign = [account].some(name => name == this.proxydi.get('env').TENANT);
+
+    const isTenantSign = [account].some((name) => name === this.proxydi.get('env').TENANT);
     return this.blockchainService.signOperations([operation], privKey, {}, isTenantSign)
-      .then((signedTx) => {
-        return propagate
-          ? this.proposalsHttp.deleteProposal({ tx: signedTx })
-          : Promise.resolve({ tx: signedTx });
+      .then((signedTx) => (propagate
+        ? this.proposalsHttp.deleteProposalLegacy({ tx: signedTx })
+        : Promise.resolve({ tx: signedTx })));
+  }
+
+  updateProposal({ privKey }, {
+    proposalId,
+    activeApprovalsToAdd = [],
+    activeApprovalsToRemove = [],
+    ownerApprovalsToAdd = [],
+    ownerApprovalsToRemove = [],
+    keyApprovalsToAdd = [],
+    keyApprovalsToRemove = []
+  }) {
+    const { PROTOCOL } = this.proxydi.get('env');
+    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
+    const txBuilder = protocolRegistry.getTransactionsBuilder();
+
+    return txBuilder.begin()
+      .then(() => {
+        const updateProposalCmd = new UpdateProposalCmd({
+          entityId: proposalId,
+          activeApprovalsToAdd,
+          activeApprovalsToRemove,
+          ownerApprovalsToAdd,
+          ownerApprovalsToRemove,
+          keyApprovalsToAdd,
+          keyApprovalsToRemove
+        }, txBuilder.getTxCtx());
+
+        txBuilder.addCmd(updateProposalCmd);
+        return txBuilder.end();
       })
+      .then((txEnvelop) => {
+        txEnvelop.sign(privKey);
+        const msg = new ApplicationJsonMessage({}, txEnvelop);
+        return this.proposalsHttp.updateProposal(msg);
+      });
+  }
+
+  declineProposal({ privKey }, {
+    proposalId,
+    account,
+    authorityType
+  }) {
+    const { PROTOCOL } = this.proxydi.get('env');
+    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
+    const txBuilder = protocolRegistry.getTransactionsBuilder();
+
+    return txBuilder.begin()
+      .then(() => {
+        const declineProposalCmd = new DeclineProposalCmd({
+          entityId: proposalId,
+          account,
+          authorityType
+        }, txBuilder.getTxCtx());
+
+        txBuilder.addCmd(declineProposalCmd);
+        return txBuilder.end();
+      })
+      .then((txEnvelop) => {
+        txEnvelop.sign(privKey);
+        const msg = new ApplicationJsonMessage({}, txEnvelop);
+        return this.proposalsHttp.declineProposal(msg);
+      });
   }
 
   getProposalsByCreator(account) {
-    return deipRpc.api.getProposalsByCreatorAsync(account)
+    return this.deipRpc.api.getProposalsByCreatorAsync(account)
       .then((result) => {
-        const proposals = result.map(proposal => {
-          const { proposed_transaction: { operations: [[op_name, op_payload], ...rest] } } = proposal;
-          const op_tag = deipRpc.operations.getOperationTag(op_name);
-          return { ...proposal, action: op_tag, payload: op_payload };
+        const proposals = result.map((proposal) => {
+          const { proposed_transaction: { operations: [[opName, opPayload]] } } = proposal;
+          const opTag = deipRpc.operations.getOperationTag(opName);
+          return { ...proposal, action: opTag, payload: opPayload };
         });
         return proposals;
-      })
+      });
   }
 
   getAccountProposals(account, status = 0) {
@@ -140,7 +206,6 @@ class ProposalsService extends Singleton {
   getProposal(externalId) {
     return this.proposalsHttp.getProposal(externalId);
   }
-
 }
 
 export {

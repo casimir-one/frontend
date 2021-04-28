@@ -132,7 +132,7 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
         external_id: entityId,
         creator: creator,
         proposed_ops: proposedCmds.map((cmd) => ({ op: cmd.getProtocolOp() })),
-        expiration_time: expirationTime || new Date(new Date().getTime() + 86400000 * 364 * 3).toISOString().split('.')[0],
+        expiration_time: expirationTime,
         review_period_seconds: reviewPeriodSeconds || undefined
       }];
 
@@ -166,6 +166,23 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
       }];
 
       return updateProposalOp;
+    },
+
+    
+    [APP_CMD.DECLINE_PROPOSAL]: ({
+      entityId,
+      account,
+      authorityType,
+    }, txContext) => {
+
+      const declineProposalOp = ['delete_proposal', {
+        external_id: entityId,
+        account: account,
+        authority: authorityType,
+        extensions: []
+      }];
+
+      return declineProposalOp;
     }
 
   }
