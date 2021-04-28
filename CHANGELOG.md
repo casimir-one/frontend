@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.109.3](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.2...v1.109.3) (2021-04-28)
+
+
+### Bug Fixes
+
+* add @babel/plugin-proposal-class-properties to eslint babelOptions ([a9d60b8](https://gitlab.com/DEIP/deip-client-modules/commit/a9d60b890b134afd5130a3ff9a9baee2becb7bfb))
+
+
+
+
+
 ## [1.109.2](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.1...v1.109.2) (2021-04-27)
 
 **Note:** Version bump only for package library
