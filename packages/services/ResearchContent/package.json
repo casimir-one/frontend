@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-content-service",
-  "version": "1.109.0",
+  "version": "1.109.3",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/http-service": "1.104.0",
     "@deip/lib-crypto": "1.21.0",
-    "@deip/proposals-service": "1.104.0",
+    "@deip/proposals-service": "1.109.3",
     "@deip/toolbox": "1.104.0"
   },
   "peerDependencies": {
