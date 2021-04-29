@@ -285,7 +285,8 @@ class ProjectService extends Singleton {
             ? project.members.every(member => projectMembers.some(m => m === member)) && projectMembers.every(member => project.members.some(m => m === member))
               ? undefined
               : projectMembers
-            : undefined
+            : undefined,
+          attributes: attributes
         }, txBuilder.getTxCtx());
 
         if (isProposal) {
