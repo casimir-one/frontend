@@ -101,6 +101,31 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
     },
 
 
+    [APP_CMD.UPDATE_PROJECT]: ({
+      entityId,
+      teamId,
+      description,
+      isPrivate,
+      reviewShare,
+      compensationShare,
+      members
+    }, txContext) => {
+
+      const updateProjectOp = ['update_research', {
+        external_id: entityId,
+        research_group: teamId,
+        description: description,
+        is_private: isPrivate || false,
+        review_share: reviewShare || undefined,
+        compensation_share: compensationShare || undefined,
+        members: members,
+        extensions: []
+      }];
+
+      return updateProjectOp;
+    },
+
+
     [APP_CMD.JOIN_PROJECT]: ({
       member,
       teamId,
