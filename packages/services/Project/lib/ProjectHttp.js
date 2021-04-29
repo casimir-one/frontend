@@ -8,6 +8,14 @@ class ProjectHttp extends Singleton {
   createProject(req) {
     return this.http.post('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
+
+  getProjectPendingInvites(projectId) {
+    return this.http.get(`/api/invites/research/${projectId}`);
+  }
+
+  updateProject(req) {
+    return this.http.put('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
+  }
   
 }
 

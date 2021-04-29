@@ -2,11 +2,13 @@ import { Singleton } from '@deip/toolbox';
 import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
+import deipRpc from '@deip/rpc-client';
 import { MultipartFormDataMessage } from '@deip/request-models';
 import {
   APP_PROPOSAL,
   ProtocolRegistry,
   CreateProjectCmd,
+  UpdateProjectCmd,
   CreateProposalCmd,
   CreateAccountCmd,
   JoinProjectCmd,
@@ -20,6 +22,7 @@ const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 *
 class ProjectService extends Singleton {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
+  deipRpc = deipRpc;
   
 
   createProject({ privKey }, {
@@ -59,7 +62,7 @@ class ProjectService extends Singleton {
     let projectId;
     // TODO: Replace legacy deipRpc.api call with getTeamMembers call
     return Promise.all([
-      isNewProjectTeam ? Promise.resolve([]) : deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
+      isNewProjectTeam ? Promise.resolve([]) : this.deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
     ])
       .then(([list]) => {
         teamMembers.push(...list.map(({ owner: member }) => (member)));
@@ -193,6 +196,144 @@ class ProjectService extends Singleton {
       });
 
   }
+
+
+  updateProject({ privKey }, {
+    projectId,
+    teamId,
+    isPrivate,
+    members,
+    inviteLifetime,
+    reviewShare,
+    compensationShare,
+    updater,
+    attributes,
+    formData
+  },
+    proposalInfo) {
+
+    const { isProposal, isProposalApproved, proposalLifetime } =
+      Object.assign({
+        isProposal: false,
+        isProposalApproved: true,
+        proposalLifetime: proposalDefaultLifetime
+      }, proposalInfo);
+
+
+    const PROTOCOL = this.proxydi.get('env').PROTOCOL;
+
+    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
+    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const isPersonalProject = teamId === updater;
+
+    const teamMembers = [];
+    // TODO: Replace legacy deipRpc.api call with getTeamMembers call
+    return Promise.all([
+      this.deipRpc.api.getResearchGroupMembershipTokensAsync(teamId),
+      this.deipRpc.api.getResearchAsync(projectId),
+      this.projectHttp.getProjectPendingInvites(projectId),
+      txBuilder.begin()
+    ])
+      .then(([list, project, invites]) => {
+        teamMembers.push(...list.map(({ owner: member }) => (member)));
+
+        const projectInvites = invites.filter(({ invitee }) => !teamMembers.some(m => m === invitee)); // for a case there is a duplicated invite
+        const newProjectMembers = members ? members.filter(member => !teamMembers.some(m => m === member)) : [];
+        const newProjectInvites = newProjectMembers.filter(member => !projectInvites.some(({ invitee }) => invitee === member));
+
+        const invitesFlows = newProjectInvites.map((invitee) => {
+
+          const joinProjectCmd = new JoinProjectCmd({
+            member: invitee,
+            teamId: teamId,
+            projectId: projectId
+          }, txBuilder.getTxCtx());
+
+          const createProposalCmd = new CreateProposalCmd({
+            type: APP_PROPOSAL.PROJECT_INVITE_PROPOSAL,
+            creator: updater,
+            expirationTime: inviteLifetime || proposalDefaultLifetime,
+            proposedCmds: [joinProjectCmd]
+          }, txBuilder.getTxCtx());
+
+          const inviteId = createProposalCmd.getProtocolEntityId();
+
+          const updateProposalCmd = new UpdateProposalCmd({
+            entityId: inviteId,
+            activeApprovalsToAdd: [updater]
+          }, txBuilder.getTxCtx());
+
+          return [createProposalCmd, updateProposalCmd];
+        });
+
+        const projectMembers = isPersonalProject || !members
+          ? undefined
+          : members
+            .filter(member => teamMembers.some(m => m === member) && !projectInvites.some(({ invitee }) => invitee === member))
+            .reduce((acc, member) => {
+              return acc.some(m => m === member) ? acc : [...acc, member];
+            }, []);
+
+        const updateProjectCmd = new UpdateProjectCmd({
+          entityId: projectId,
+          teamId: teamId,
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+          isPrivate: isPrivate,
+          reviewShare: reviewShare,
+          compensationShare: compensationShare,
+          members: projectMembers
+            ? project.members.every(member => projectMembers.some(m => m === member)) && projectMembers.every(member => project.members.some(m => m === member))
+              ? undefined
+              : projectMembers
+            : undefined
+        }, txBuilder.getTxCtx());
+
+        if (isProposal) {
+
+          const createProposalCmd = new CreateProposalCmd({
+            type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
+            creator: updater,
+            expirationTime: proposalLifetime || proposalDefaultLifetime,
+            proposedCmds: [updateProjectCmd, ...invitesFlows.reduce((acc, invite) => {
+              return [...acc, ...invite]
+            }, [])]
+          }, txBuilder.getTxCtx());
+
+          txBuilder.addCmd(createProposalCmd);
+
+          if (isProposalApproved) {
+
+            const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: projectUpdateProposalId,
+              activeApprovalsToAdd: [updater]
+            }, txBuilder.getTxCtx());
+
+            txBuilder.addCmd(updateProposalCmd);
+          }
+
+        } else {
+
+          txBuilder.addCmd(updateProjectCmd);
+
+          for (let i = 0; i < invitesFlows.length; i++) {
+            const inviteFlow = invitesFlows[i];
+            for (let j = 0; j < inviteFlow.length; j++) {
+              txBuilder.addCmd(inviteFlow[j]);
+            }
+          }
+        }
+
+        return txBuilder.end();
+      })
+      .then((txEnvelop) => {
+        txEnvelop.sign(privKey);
+        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': projectId });
+        return this.projectHttp.updateProject(msg);
+      });
+
+  }
+
 }
 
 
