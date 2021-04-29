@@ -4,10 +4,15 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(signUp)"
     >
-      <input autocomplete="false" name="hidden" type="text" style="display:none;"/>
+      <input
+        autocomplete="false"
+        name="hidden"
+        type="text"
+        style="display:none;"
+      >
 
       <vex-stack :gutter="formGutter">
-        <slot name="prepend"/>
+        <slot name="prepend" />
 
         <vex-stack :gutter="fieldsGutter">
           <validation-provider
@@ -22,7 +27,6 @@
               v-bind="fieldsProps"
             />
           </validation-provider>
-
 
           <validation-provider
             v-slot="{ errors }"
@@ -51,9 +55,9 @@
           </validation-provider>
 
           <!-- TEMP -->
-          <v-radio-group hide-details class="ma-0 pa-0" v-model="formModel.roles">
-            <v-radio label="Студент" :value="1"/>
-            <v-radio label="Инвестор" :value="2"/>
+          <v-radio-group v-model="formModel.roles" hide-details class="ma-0 pa-0">
+            <v-radio label="Студент" :value="1" />
+            <v-radio label="Инвестор" :value="2" />
           </v-radio-group>
 
           <!-- END TEMP -->
@@ -81,8 +85,7 @@
           </slot>
         </vex-stack>
 
-        <slot name="append"/>
-
+        <slot name="append" />
       </vex-stack>
     </v-form>
   </validation-observer>
@@ -118,17 +121,17 @@
       },
 
       formGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 48
       },
 
       fieldsGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 8
       },
 
       submitGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 16
       },
 
@@ -158,10 +161,10 @@
 
         this.$store.dispatch('auth/signUp', this.formModel)
           .then(() => {
-            this.$router.push({ name: this.$authRedirectRouteName })
+            this.$emit('success');
           })
           .catch((error) => {
-            this.$notifier.showError(error);
+            this.$emit('error', error);
           })
           .finally(() => {
             this.loading = false;

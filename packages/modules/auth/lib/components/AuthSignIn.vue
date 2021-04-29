@@ -5,7 +5,7 @@
       @submit.prevent="handleSubmit(signIn)"
     >
       <vex-stack :gutter="formGutter">
-        <slot name="prepend"/>
+        <slot name="prepend" />
 
         <vex-stack :gutter="fieldsGutter">
           <validation-provider
@@ -66,8 +66,7 @@
           </slot>
         </vex-stack>
 
-        <slot name="append"/>
-
+        <slot name="append" />
       </vex-stack>
     </v-form>
   </validation-observer>
@@ -103,17 +102,17 @@
       },
 
       formGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 48
       },
 
       fieldsGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 8
       },
 
       submitGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 16
       },
 
@@ -143,16 +142,14 @@
 
         this.$store.dispatch('auth/signIn', this.formModel)
           .then(() => {
-            this.$notifier.showSuccess('You are successfully logged in.');
-            this.$router.push({ name: this.$authRedirectRouteName })
+            this.$emit('success');
           })
           .catch((error) => {
-            this.$notifier.showError(error);
+            this.$emit('error', error);
           })
           .finally(() => {
             this.loading = false;
           });
-        ;
       }
     }
   };
