@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.109.4](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.3...v1.109.4) (2021-04-29)
+
+**Note:** Version bump only for package library
+
+
+
+
+
 ## [1.109.3](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.2...v1.109.3) (2021-04-28)
 
 
