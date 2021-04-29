@@ -13,4 +13,5 @@ export * from './VexSection';
 export * from './VexStack';
 export * from './VexTimeline';
 export * from './VexTooltip';
+export * from './VexTreeview';
 export * from './VexVideoEmbed';
