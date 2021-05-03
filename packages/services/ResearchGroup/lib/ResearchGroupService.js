@@ -32,61 +32,60 @@ class ResearchGroupService extends Singleton {
     accountMemoPubKey,
     accountJsonMetadata,
     accountExtensions
-  }, {
-    researchGroupName,
-    researchGroupDescription,
-    researchGroupThresholdOverrides
-  }) {
+  },
+  formData
+  ) {
+    const onchainData = JSON.parse(formData.get("onchainData"));
+    const offchainMeta = JSON.parse(formData.get("offchainMeta"));
+
     return this.blockchainService.getRefBlockSummary()
       .then((refBlock) => {
-        const offchainMeta = {
-          researchGroup: {
-            name: researchGroupName,
-            description: researchGroupDescription
-          }
-        };
-
         const [research_group_external_id, create_account_op] = deipRpc.operations.createEntityOperation(['create_account', {
           fee,
           creator,
           owner: accountOwnerAuth,
           active: accountActiveAuth,
-          active_overrides: researchGroupThresholdOverrides,
+          active_overrides: onchainData.researchGroupThresholdOverrides,
           memo_key: accountMemoPubKey,
           json_metadata: accountJsonMetadata,
           traits: [[
             'research_group',
             {
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.attributes)).buffer)),
               extensions: []
             }
           ]],
           extensions: accountExtensions
         }], refBlock);
 
-
         return this.blockchainService.signOperations([create_account_op], privKey, refBlock)
-          .then((signedTx) => this.researchGroupHttp.createResearchGroup({ tx: signedTx, offchainMeta }));
+          .then((signedTx) => {
+            formData.append("tx", JSON.stringify(signedTx))
+
+            return this.researchGroupHttp.createResearchGroup({
+              researchGroupExternalId: research_group_external_id,
+              formData
+            })
+        });
       });
   }
 
 
   updateResearchGroupAccount({ privKey, username }, isProposal, {
-    researchGroup,
+    researchGroupExternalId,
     accountOwnerAuth,
     accountActiveAuth,
     accountActiveAuthOverrides,
     accountMemoPubKey,
     accountJsonMetadata,
     accountExtensions
-  }, {
-    researchGroupName,
-    researchGroupDescription
-  }) {
-    const offchainMeta = { researchGroup: { name: researchGroupName, description: researchGroupDescription } };
+  },
+  formData
+  ) {
+    const offchainMeta = JSON.parse(formData.get("offchainMeta"));
 
     const update_account_op = ['update_account', {
-      account: researchGroup,
+      account: researchGroupExternalId,
       owner: accountOwnerAuth,
       active: accountActiveAuth,
       active_overrides: accountActiveAuthOverrides,
@@ -95,13 +94,14 @@ class ResearchGroupService extends Singleton {
       traits: [[
         'research_group',
         {
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.researchGroup)).buffer)),
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(offchainMeta.attributes)).buffer)),
           extensions: []
         }
       ]],
       extensions: accountExtensions
     }];
 
+    formData.append("isProposal", isProposal);
 
     if (isProposal) {
       const proposal = {
@@ -113,11 +113,19 @@ class ResearchGroupService extends Singleton {
       };
 
       return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-        .then(({ tx: signedProposalTx }) => this.researchGroupHttp.updateResearchGroup({ tx: signedProposalTx, offchainMeta, isProposal }));
+        .then(({ tx: signedProposalTx }) => {
+          formData.append("tx", JSON.stringify(signedProposalTx))
+
+          return this.researchGroupHttp.updateResearchGroup({researchGroupExternalId, formData})
+        });
     }
 
     return this.blockchainService.signOperations([update_account_op], privKey)
-      .then((signedTx) => this.researchGroupHttp.updateResearchGroup({ tx: signedTx, offchainMeta, isProposal }));
+      .then((signedTx) => {
+        formData.append("tx", JSON.stringify(signedTx))
+
+        return this.researchGroupHttp.updateResearchGroup({researchGroupExternalId, formData})
+      });
   }
 
   createResearchGroupInvite({ privKey, username }, {

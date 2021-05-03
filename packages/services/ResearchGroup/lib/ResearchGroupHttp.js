@@ -9,12 +9,22 @@ class ResearchGroupHttp extends Singleton {
     super();
   }
 
-  createResearchGroup({ tx, offchainMeta }) {
-    return this.http.post('/api/groups', { tx, offchainMeta });
+  createResearchGroup({ researchGroupExternalId, formData }) {
+    return this.http.post('/api/groups', formData, {
+      headers: {
+        'Research-Group-External-Id': researchGroupExternalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 
-  updateResearchGroup({ tx, offchainMeta, isProposal}) {
-    return this.http.put('/api/groups', { tx, offchainMeta, isProposal });
+  updateResearchGroup({ researchGroupExternalId, formData}) {
+    return this.http.put('/api/groups', formData, {
+      headers: {
+        'Research-Group-External-Id': researchGroupExternalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 
   getResearchGroup(researchGroupExternalId) {
