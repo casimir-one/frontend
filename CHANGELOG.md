@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.110.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
+
+
+### Features
+
+* **@deip/domains-module:** add module ([1b3fb0b](https://gitlab.com/DEIP/deip-client-modules/commit/1b3fb0b8ed6be83074ece1c42271a44a6b9145fc))
+* **@deip/research-group-service:** change create/update group ([a05a4bc](https://gitlab.com/DEIP/deip-client-modules/commit/a05a4bc5ac43cb862707ddb8de7eba7fb0be3649))
+* **@deip/vuetify-extended:** add VexTreeview component ([e7fd701](https://gitlab.com/DEIP/deip-client-modules/commit/e7fd7013fe8bdcfd644137cebdb5cc05a73fbebd))
+
+
+
+
+
 ## [1.109.5](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.4...v1.109.5) (2021-04-29)
 
 

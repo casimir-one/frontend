@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.110.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
+
+
+### Features
+
+* **@deip/vuetify-extended:** add VexTreeview component ([e7fd701](https://gitlab.com/DEIP/deip-client-modules/commit/e7fd7013fe8bdcfd644137cebdb5cc05a73fbebd))
+
+
+
+
+
 # [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
 
 
