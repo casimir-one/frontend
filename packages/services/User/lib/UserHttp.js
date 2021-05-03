@@ -11,7 +11,12 @@ class UserHttp extends Singleton {
   }
 
   updateUserProfile(username, update) {
-    return this.http.put(`/api/user/profile/${username}`, update);
+    return this.http.put(`/api/user/profile/${username}`, update, {
+      headers: {
+        'username': username,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
 
   // Notifications
