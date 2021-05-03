@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.110.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
+
+
+### Features
+
+* **@deip/research-group-service:** change create/update group ([a05a4bc](https://gitlab.com/DEIP/deip-client-modules/commit/a05a4bc5ac43cb862707ddb8de7eba7fb0be3649))
+
+
+
+
+
 # [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 **Note:** Version bump only for package @deip/user-service

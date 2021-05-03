@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-service",
-  "version": "1.109.4",
+  "version": "1.110.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,7 +25,7 @@
     "@deip/lib-crypto": "1.21.0",
     "@deip/proposals-service": "1.109.4",
     "@deip/research-content-service": "1.109.4",
-    "@deip/research-group-service": "1.109.4",
+    "@deip/research-group-service": "1.110.0",
     "@deip/rpc-client": "1.98.0",
     "@deip/toolbox": "1.104.0",
     "@deip/users-service": "1.104.0"
