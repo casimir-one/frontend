@@ -9,19 +9,13 @@
     <v-icon left>
       {{ bookmarkId ? 'mdi-bookmark-minus' : 'mdi-bookmark-plus-outline' }}
     </v-icon>
-    {{ bookmarkId ? 'Remove bookmark' : 'Add bookmark' }}
+    {{ bookmarkId ? $t('module.bookmarks.remove') : $t('module.bookmarks.add') }}
   </v-btn>
 </template>
 
 <script>
   export default {
     name: 'ToggleBookmarkBtn',
-
-    data() {
-      return {
-        loading: false
-      };
-    },
 
     props: {
       type: {
@@ -32,6 +26,12 @@
         type: String,
         required: true
       }
+    },
+
+    data() {
+      return {
+        loading: false
+      };
     },
 
     computed: {
