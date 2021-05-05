@@ -8,7 +8,7 @@
       <validation-provider
         ref="amountValidator"
         v-slot="{ errors }"
-        name="Amount"
+        :name="$t('module.assets.input.amount')"
         :rules="required ? 'required|amount' : ''"
       >
         <v-text-field
@@ -18,7 +18,7 @@
           outlined
           hide-details="auto"
           :error-messages="[...errors, ...errorMessages]"
-          name="Amount"
+          :name="$t('module.assets.input.amount')"
           autocomplete="off"
           @change="update()"
         />
@@ -42,6 +42,7 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { extend, integer, double } from '@deip/validation-plugin';
   import { objectedModel } from '@deip/platform-fns';
+  import { proxydi } from '@deip/proxydi';
 
   import { assetsMixin } from '../../mixins';
 
@@ -49,7 +50,10 @@
     validate(value) {
       return integer.validate(value) || double.validate(value);
     },
-    message: '{_field_} must be valid number'
+    message: (_, values) => {
+      const i18n = proxydi.get('i18nInstance');
+      return i18n.t('module.assets.input.errors.validNumber', values);
+    }
   });
 
   export default {

@@ -5,7 +5,10 @@
       @submit.prevent="handleSubmit(createAsset)"
     >
       <vex-stack gap="32">
-        <vex-block :title="`${sentenceCase(projectAlias)} token details`" title-margin="16">
+        <vex-block
+          :title="$t('module.assets.createTokenForm.title', {entity: sentenceCase(projectAlias) })"
+          title-margin="16"
+        >
           <div class="text-body-2">
             {{ sentenceCase(projectAlias) }}: {{ project.title }}
           </div>
@@ -14,12 +17,12 @@
             <v-col cols="8">
               <validation-provider
                 v-slot="{ errors }"
-                name="Number of tokens"
+                :name="$t('module.assets.createTokenForm.numberOfTokens')"
                 rules="required|integer"
               >
                 <v-text-field
                   v-model.number="formModel.maxSupply"
-                  label="Total number of tokens to issue"
+                  :label="$t('module.assets.createTokenForm.totalNumberOfTokens')"
                   outlined
                   hide-details="auto"
                   :error-messages="errors"
@@ -29,20 +32,20 @@
             <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
-                name="Ticker (abbreviation)"
+                :name="$t('module.assets.createTokenForm.ticker')"
                 :rules="{
                   required: true,
                   minMax: { min: 5, max: 6 },
                   unique: { list: assetsKeys }
                 }"
                 :custom-messages="{
-                  unique: '{_field_} is taken. Try another.'
+                  unique: $t('module.assets.createTokenForm.errors.tickerUnique')
                 }"
               >
                 <v-text-field
                   v-model="formModel.symbol"
                   v-maska="assetMask"
-                  label="Ticker (abbreviation)"
+                  :label="$t('module.assets.createTokenForm.ticker')"
                   outlined
                   hide-details="auto"
                   :error-messages="errors"
@@ -52,13 +55,13 @@
           </v-row>
 
           <div class="text-body-2">
-            Note: 2,000 to 20,000 tokens are usualy issued per {{ projectAlias }}.
+            {{ $t('module.assets.createTokenForm.tokensAmountNote',{entity: projectAlias}) }}
           </div>
         </vex-block>
 
-        <vex-block title="Shareholders" title-margin="16">
+        <vex-block :title="$t('module.assets.createTokenForm.shareholders')" title-margin="16">
           <div class="text-body-2">
-            Note: Only tokens that belong to a team can be used for fundraising.
+            {{ $t('module.assets.createTokenForm.shareholdersNote') }}
           </div>
           <vex-timeline>
             <vex-timeline-item :dot-top="16">
@@ -71,7 +74,7 @@
                     :value="teamData.external_id"
                     disabled
                     outlined
-                    label="Shareholder"
+                    :label="$t('module.assets.createTokenForm.shareholder')"
                     :hide-details="true"
                   >
                     <template #selection="{ item }">
@@ -91,7 +94,7 @@
                 </v-col>
                 <v-col cols="3">
                   <v-text-field
-                    label="Tokens"
+                    :label="$t('module.assets.createTokenForm.tokens')"
                     :value="teamTokens.amount"
                     outlined
                     :hide-details="true"
@@ -119,12 +122,12 @@
                 <v-col cols="6">
                   <validation-provider
                     v-slot="{ errors }"
-                    name="Shareholder"
+                    :name="$t('module.assets.createTokenForm.shareholder')"
                     rules="required"
                   >
                     <users-selector
                       v-model="item.account"
-                      label="Shareholder"
+                      :label="$t('module.assets.createTokenForm.shareholder')"
                       outlined
                       hide-details="auto"
                       :error-messages="errors"
@@ -135,12 +138,12 @@
                 <v-col cols="3">
                   <validation-provider
                     v-slot="{ errors }"
-                    name="Tokens"
+                    :name="$t('module.assets.createTokenForm.tokens')"
                     rules="integer|required"
                   >
                     <v-text-field
                       v-model="item.amount"
-                      label="Tokens"
+                      :label="$t('module.assets.createTokenForm.tokens')"
                       outlined
                       hide-details="auto"
                       :error-messages="errors"
@@ -159,18 +162,18 @@
             </vex-timeline-item>
 
             <vex-timeline-add
-              label="Add shareholder"
+              :label="$t('module.assets.createTokenForm.addShareholder')"
               @click="addShareholder()"
             />
           </vex-timeline>
         </vex-block>
 
-        <vex-block title="Legal">
+        <vex-block :title="$t('module.assets.createTokenForm.legal')">
           <v-row no-gutters>
             <v-col cols="auto">
               <validation-provider
                 ref="s"
-                name="Confirmation"
+                :name="$t('module.assets.createTokenForm.confirmation')"
                 :rules="{ required: { allowFalse: false } }"
               >
                 <v-checkbox
@@ -182,7 +185,7 @@
             </v-col>
             <v-col style="padding-top:2px">
               <div class="text-body-2">
-                I agree to the Terms and Conditions listed below
+                {{ $t('module.assets.createTokenForm.agree') }}
               </div>
             </v-col>
           </v-row>
@@ -190,7 +193,7 @@
             <v-col cols="auto">
               <validation-provider
                 ref="s"
-                name="Confirmation"
+                :name="$t('module.assets.createTokenForm.confirmation')"
                 :rules="{required: {allowFalse: false}}"
               >
                 <v-checkbox
@@ -202,12 +205,7 @@
             </v-col>
             <v-col style="padding-top:2px">
               <div class="text-body-2">
-                I understand that issued tokens will be distributed among shareholders,
-                effectively transferring ownership
-                over the property related to the {{ projectAlias }}.
-                Holding a share does not grant access to participate on
-                decisions related to the {{ projectAlias }}.
-                It’s not possible to undo this action.
+                {{ $t('module.assets.createTokenForm.understand', {entity: projectAlias}) }}
               </div>
             </v-col>
           </v-row>
@@ -224,7 +222,7 @@
               :disabled="loading"
               @click="cancel()"
             >
-              Cancel
+              {{ $t('module.assets.createTokenForm.cancel') }}
             </v-btn>
             <v-btn
               color="primary"
@@ -232,7 +230,7 @@
               :loading="loading"
               @click="createAsset()"
             >
-              Submit
+              {{ $t('module.assets.createTokenForm.submit') }}
             </v-btn>
           </vex-stack>
         </div>
@@ -263,7 +261,7 @@
   });
 
   export default {
-    name: 'AssetCreate',
+    name: 'CreateProjectSecurityTokenForm',
     components: {
       UsersSelector,
       VexBlock,
