@@ -3,14 +3,14 @@
     <v-form :disabled="loading" @submit.prevent="handleSubmit(createFundraising)">
       <vex-stack gap="32">
         <vex-block
-          title="Determine the number of security token units"
+          :title="$t('module.fundraising.createForm.determineNumberOfTokens')"
           compact
         >
           <v-row>
             <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
-                name="Units"
+                :name="$t('module.fundraising.createForm.units')"
                 :rules="{
                   required: true,
                   minMaxValue: {
@@ -21,7 +21,6 @@
               >
                 <v-text-field
                   v-model="formData.amount"
-                  v-maska="'#####'"
                   outlined
                   persistent-hint
                   :error-messages="errors"
@@ -38,21 +37,21 @@
         </vex-block>
 
         <vex-block
-          title="Select start and end dates of fundraise"
+          :title="$t('module.fundraising.createForm.selectDates')"
           compact
         >
           <v-row>
             <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
-                name="Start date"
+                :name="$t('module.fundraising.createForm.startDate')"
                 vid="startDate"
                 rules="required|dateBefore:@endDate"
               >
                 <vex-date-time-input
                   v-model="formData.startDate"
                   :error-messages="errors"
-                  label="Start date"
+                  :label="$t('module.fundraising.createForm.startDate')"
                   only-future
                 />
               </validation-provider>
@@ -60,14 +59,14 @@
             <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
-                name="End date"
+                :name="$t('module.fundraising.createForm.endDate')"
                 vid="endDate"
                 rules="required|dateAfter:@startDate"
               >
                 <vex-date-time-input
                   v-model="formData.endDate"
                   :error-messages="errors"
-                  label="End date"
+                  :label="$t('module.fundraising.createForm.endDate')"
                   only-future
                 />
               </validation-provider>
@@ -76,14 +75,14 @@
         </vex-block>
 
         <vex-block
-          title="Select min and max amounts"
+          :title="$t('module.fundraising.createForm.selectAmounts')"
           compact
         >
           <v-row>
             <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
-                name="Min"
+                :name="$t('module.fundraising.createForm.min')"
                 vid="softCup"
                 rules="assetSmaller:@hardCup"
               >
@@ -91,7 +90,7 @@
                   v-model="formData.softCap"
                   required
                   :error-messages="errors"
-                  label="Min"
+                  :label="$t('module.fundraising.createForm.min')"
                   @change="equalizeAsset"
                 />
               </validation-provider>
@@ -99,13 +98,13 @@
             <v-col cols="6">
               <validation-provider
                 v-slot="{ errors }"
-                name="Max"
+                :name="$t('module.fundraising.createForm.max')"
                 vid="hardCup"
                 rules="assetGreater:@softCup"
               >
                 <asset-input
                   v-model="formData.hardCap"
-                  label="Max"
+                  :label="$t('module.fundraising.createForm.max')"
                   :error-messages="errors"
                   required
                   disable-assets
@@ -127,7 +126,7 @@
               :disabled="loading"
               @click="handleCancelClick"
             >
-              Cancel
+              {{ $t('module.fundraising.createForm.cancel') }}
             </v-btn>
 
             <v-btn
@@ -137,7 +136,7 @@
               :loading="loading"
               :disabled="invalid || loading"
             >
-              Start
+              {{ $t('module.fundraising.createForm.start') }}
             </v-btn>
           </vex-stack>
         </div>
@@ -158,6 +157,7 @@
   import { VexBlock, VexStack, VexDateTimeInput } from '@deip/vuetify-extended';
   import { AssetInput, assetsMixin } from '@deip/assets-module';
   import { hasValue } from '@deip/toolbox';
+  import { proxydi } from '@deip/proxydi';
 
   const MIN_TOKEN_UNITS_TO_SELL = 100;
 
@@ -167,7 +167,10 @@
       if (!(target && target.amount) || !(value && value.amount)) return true;
       return parseFloat(value.amount) < parseFloat(target.amount);
     },
-    message: '{_field_} should be smaller than {target}'
+    message: (_, values) => {
+      const i18n = proxydi.get('i18nInstance');
+      return i18n.t('module.fundraising.createForm.validations.assetSmaller', values);
+    }
   });
 
   extend('assetGreater', {
@@ -177,11 +180,14 @@
 
       return parseFloat(value.amount) > parseFloat(target.amount);
     },
-    message: '{_field_} should be greater than {target}'
+    message: (_, values) => {
+      const i18n = proxydi.get('i18nInstance');
+      return i18n.t('module.fundraising.createForm.validations.assetGreater', values);
+    }
   });
 
   export default {
-    name: 'FundraisingCreate',
+    name: 'CreateFundraisingForm',
     components: {
       AssetInput,
       VexBlock,

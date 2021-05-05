@@ -31,5 +31,8 @@
     "@deip/vuetify-extended": "1.110.0",
     "date-fns": "^2.21.1",
     "maska": "^1.4.1"
+  },
+  "peerDependencies": {
+    "vue-i18n": "^8.22.3"
   }
 }
