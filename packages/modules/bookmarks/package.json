@@ -26,7 +26,7 @@
     "@deip/user-service": "1.110.0"
   },
   "peerDependencies": {
-    "@deip/users-module": "1.98.0",
+    "@deip/users-module": "^1.98.0",
     "vuetify": "^2.4.2",
     "vuex": "^3.6.0"
   }

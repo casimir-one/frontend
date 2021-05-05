@@ -24,11 +24,10 @@
     "@deip/proxydi": "1.104.0",
     "@deip/research-group-service": "1.110.0",
     "@deip/toolbox": "1.104.0",
+    "@deip/validation-plugin": "1.109.0",
     "@deip/vuetify-extended": "1.110.0"
   },
   "peerDependencies": {
-    "@deip/validation-plugin": "1.95.0",
-    "@deip/vuetify-extended": "1.95.0",
     "vue": "^2.6.12",
     "vuetify": "^2.4.2"
   }
