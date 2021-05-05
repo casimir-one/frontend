@@ -28,7 +28,6 @@
     "@deip/research-service": "1.110.0"
   },
   "peerDependencies": {
-    "@deip/users-module": "1.97.0",
     "vuex": "^3.6.0"
   }
 }
