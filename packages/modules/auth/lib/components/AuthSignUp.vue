@@ -77,9 +77,9 @@
 
           <slot name="to-register">
             <div class="text-center">
-              Has account?
+              {{ $t('module.auth.haveAccountQuestion') }}
               <router-link :to="{ name: 'signIn' }" class="font-weight-medium text-decoration-none">
-                Sign in
+                {{ $t('module.auth.signIn') }}
               </router-link>
             </div>
           </slot>
@@ -105,19 +105,19 @@
     props: {
       usernameLabel: {
         type: String,
-        default: 'Username'
+        default() { return this.$t('module.auth.username'); }
       },
       passwordLabel: {
         type: String,
-        default: 'Password'
+        default() { return this.$t('module.auth.password'); }
       },
       emailLabel: {
         type: String,
-        default: 'Email'
+        default() { return this.$t('module.auth.email'); }
       },
       submitLabel: {
         type: String,
-        default: 'Sign up'
+        default() { return this.$t('module.auth.signUp'); }
       },
 
       formGutter: {
