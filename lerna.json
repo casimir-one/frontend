@@ -6,7 +6,7 @@
     "packages/utilities/*",
     "packages/models/*"
   ],
-  "version": "1.110.1",
+  "version": "1.111.0",
   "npmClient": "npm",
   "command": {
     "version": {

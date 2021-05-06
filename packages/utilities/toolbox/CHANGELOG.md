@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.111.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.110.1...v1.111.0) (2021-05-06)
+
+
+### Features
+
+* **@deip/toolbox:** add setLocalesMessages method ([1bb66ce](https://gitlab.com/DEIP/deip-client-modules/commit/1bb66cee9d2d82a00007d5feafe3365ff5bd534c))
+
+
+
+
+
 # [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.111.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.110.1...v1.111.0) (2021-05-06)
+
+
+### Features
+
+* **@deip/validation-plugin:** add localization ([b3da891](https://gitlab.com/DEIP/deip-client-modules/commit/b3da8916ba6fbff628246b5e330eb0a16cd8d8d7))
+
+
+
+
+
 # [1.109.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.108.0...v1.109.0) (2021-04-26)
 
 
