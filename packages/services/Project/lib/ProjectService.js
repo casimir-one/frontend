@@ -3,12 +3,14 @@ import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import deipRpc from '@deip/rpc-client';
-import { MultipartFormDataMessage } from '@deip/request-models';
+import { MultipartFormDataMessage, ApplicationJsonMessage } from '@deip/request-models';
 import {
   APP_PROPOSAL,
+  CmdEnvelope,
   ProtocolRegistry,
   CreateProjectCmd,
   UpdateProjectCmd,
+  DeleteProjectCmd,
   CreateProposalCmd,
   CreateAccountCmd,
   JoinProjectCmd,
@@ -333,6 +335,14 @@ class ProjectService extends Singleton {
         return this.projectHttp.updateProject(msg);
       });
 
+  }
+
+
+  deleteProject(projectId) {
+    const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
+    const cmdEnvelope = new CmdEnvelope([deleteProjectCmd]);
+    const msg = new ApplicationJsonMessage({}, cmdEnvelope, { 'entity-id': projectId });
+    return this.projectHttp.deleteProject(msg);
   }
 
 }
