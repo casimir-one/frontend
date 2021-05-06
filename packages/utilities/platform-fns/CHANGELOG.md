@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.111.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.110.1...v1.111.0) (2021-05-06)
+
+**Note:** Version bump only for package @deip/platform-fns
+
+
+
+
+
 # [1.108.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.107.0...v1.108.0) (2021-04-23)
 
 **Note:** Version bump only for package @deip/platform-fns

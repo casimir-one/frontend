@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.111.0](https://github.com/DEIPworld/deip-modules/compare/v1.110.1...v1.111.0) (2021-05-06)
+
+
+### Features
+
+* **@deip/assets-module:** add localization ([6f669be](https://github.com/DEIPworld/deip-modules/commit/6f669be2cbc6976f0cb0cbe880ec01d5c2bc2e09))
+* **@deip/auth-module:** add localization ([a7e8dc4](https://github.com/DEIPworld/deip-modules/commit/a7e8dc4fdad04499bdcf6677c3036ca347e39018))
+* **@deip/bookmarks-module:** add localization ([2933ac1](https://github.com/DEIPworld/deip-modules/commit/2933ac12e1d56c6385d0125a3a408c3567a7caa8))
+* **@deip/fundraising-module:** add localization ([aa31b69](https://github.com/DEIPworld/deip-modules/commit/aa31b692616241cf82471ea5375c9c40d5aa1647))
+* **@deip/toolbox:** add setLocalesMessages method ([1bb66ce](https://github.com/DEIPworld/deip-modules/commit/1bb66cee9d2d82a00007d5feafe3365ff5bd534c))
+* **@deip/validation-plugin:** add localization ([b3da891](https://github.com/DEIPworld/deip-modules/commit/b3da8916ba6fbff628246b5e330eb0a16cd8d8d7))
+
+
+
+
+
 ## [1.110.1](https://github.com/DEIPworld/deip-modules/compare/v1.110.0...v1.110.1) (2021-05-06)
 
 **Note:** Version bump only for package library

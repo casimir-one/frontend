@@ -1,6 +1,6 @@
 {
   "name": "@deip/proxydi",
-  "version": "1.104.0",
+  "version": "1.111.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,6 +20,6 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@deip/toolbox": "1.104.0"
+    "@deip/toolbox": "1.111.0"
   }
 }
