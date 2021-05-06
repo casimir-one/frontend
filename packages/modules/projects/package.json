@@ -1,6 +1,6 @@
 {
   "name": "@deip/projects-module",
-  "version": "1.110.0",
+  "version": "1.110.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -25,7 +25,7 @@
   "dependencies": {
     "@deip/platform-fns": "1.108.0",
     "@deip/proxydi": "1.104.0",
-    "@deip/research-service": "1.110.0"
+    "@deip/research-service": "1.110.1"
   },
   "peerDependencies": {
     "vuex": "^3.6.0"

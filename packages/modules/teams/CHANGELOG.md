@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.110.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.110.0...v1.110.1) (2021-05-06)
+
+**Note:** Version bump only for package @deip/teams-module
+
+
+
+
+
 # [1.110.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
 
 **Note:** Version bump only for package @deip/teams-module
