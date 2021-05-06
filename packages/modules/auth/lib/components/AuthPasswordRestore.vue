@@ -5,7 +5,7 @@
       @submit.prevent="handleSubmit(restore)"
     >
       <vex-stack :gutter="formGutter">
-        <slot name="prepend"/>
+        <slot name="prepend" />
 
         <vex-stack :gutter="fieldsGutter">
           <validation-provider
@@ -63,7 +63,7 @@
           </v-btn>
         </vex-stack>
 
-        <slot name="append"/>
+        <slot name="append" />
       </vex-stack>
     </v-form>
   </validation-observer>
@@ -80,40 +80,40 @@
     props: {
       usernameLabel: {
         type: String,
-        default: 'Username'
+        default() { return this.$t('module.auth.username'); }
       },
       emailLabel: {
         type: String,
-        default: 'Email'
+        default() { return this.$t('module.auth.email'); }
       },
       messageLabel: {
         type: String,
-        default: 'Message'
+        default() { return this.$t('module.auth.message'); }
       },
       submitLabel: {
         type: String,
-        default: 'Restore'
+        default() { return this.$t('module.auth.restore'); }
       },
 
       formGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 48
       },
 
       fieldsGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 8
       },
 
       submitGutter: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: 16
       },
 
       fieldsProps: {
         type: Object,
         default: () => ({
-          outlined: true,
+          outlined: true
         })
       }
     },
@@ -124,7 +124,7 @@
         formModel: {
           username: '',
           email: '',
-          message: '',
+          message: ''
         }
       };
     },
@@ -133,5 +133,5 @@
       restore() {
       }
     }
-  }
+  };
 </script>

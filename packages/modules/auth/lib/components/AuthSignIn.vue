@@ -58,9 +58,9 @@
 
           <slot name="to-register">
             <div class="text-center">
-              No accoutn?
+              {{ $t('module.auth.noAccountQuestion') }}
               <router-link :to="{ name: 'signUp' }" class="font-weight-medium text-decoration-none">
-                Sign up
+                {{ $t('module.auth.signUp') }}
               </router-link>
             </div>
           </slot>
@@ -86,19 +86,19 @@
     props: {
       usernameLabel: {
         type: String,
-        default: 'Username'
+        default() { return this.$t('module.auth.username'); }
       },
       passwordLabel: {
         type: String,
-        default: 'Password'
+        default() { return this.$t('module.auth.password'); }
       },
       passwordRestoreLabel: {
         type: String,
-        default: 'Forgot password?'
+        default() { return this.$t('module.auth.fogotPasswordQuestion'); }
       },
       submitLabel: {
         type: String,
-        default: 'Sign in'
+        default() { return this.$t('module.auth.signIn'); }
       },
 
       formGutter: {

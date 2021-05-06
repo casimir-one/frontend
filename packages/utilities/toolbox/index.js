@@ -6,3 +6,4 @@ export * from './lib/singleton';
 export * from './lib/verification';
 export * from './lib/color';
 export * from './lib/strings';
+export * from './lib/i18n';

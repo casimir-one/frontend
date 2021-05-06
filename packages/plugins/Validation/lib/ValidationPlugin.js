@@ -1,11 +1,18 @@
-import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
-import { wrapInArray } from '@deip/toolbox';
+import {
+  ValidationObserver,
+  ValidationProvider,
+  extend
+} from 'vee-validate';
 
-import en from 'vee-validate/dist/locale/en.json';
 import {
   required,
   integer
 } from 'vee-validate/dist/rules';
+
+import { setLocalesMessages, wrapInArray } from '@deip/toolbox';
+import { proxydi } from '@deip/proxydi';
+
+const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
 export const minMax = {
   params: ['min', 'max'],
@@ -14,7 +21,10 @@ export const minMax = {
     return value.length >= min && value.length <= max;
   },
 
-  message: '{_field_} length should be from {min} to {max} characters in length'
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.minMax', values);
+  }
 };
 
 export const minMaxValue = {
@@ -25,7 +35,10 @@ export const minMaxValue = {
     return v >= min && v <= max;
   },
 
-  message: '{_field_} should be from {min} to {max}'
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.minMaxValue', values);
+  }
 };
 
 export const unique = {
@@ -36,7 +49,10 @@ export const unique = {
 
     return !l.includes(v);
   },
-  message: '{_field_} must be unique'
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.unique', values);
+  }
 };
 
 const normalizeDates = (curr, prev, next) => ({
@@ -55,7 +71,10 @@ export const dateBefore = {
     return nextDates.some((d) => currentDate <= d);
   },
 
-  message: '{_field_} should be smaller than {target}'
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.dateBefore', values);
+  }
 };
 
 export const dateAfter = {
@@ -68,7 +87,10 @@ export const dateAfter = {
     return prevDates.some((d) => currentDate >= d);
   },
 
-  message: '{_field_} should be greater than {target}'
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.dateAfter', values);
+  }
 };
 
 export const dateBetween = {
@@ -93,24 +115,35 @@ export const dateBetween = {
   },
 
   message(name, { prev, next }) {
+    const i18n = proxydi.get('i18nInstance');
     const prevDates = wrapInArray(prev);
     const nextDates = wrapInArray(next);
 
     if (!nextDates.length) {
-      return `${name} should be after ${prevDates[0]}`;
+      return i18n.t('plugin.validation.dateBetween.after', { date: prevDates[0] });
     }
     if (!prevDates.length) {
-      return `${name} should be before ${prevDates[0]}`;
+      return i18n.t('plugin.validation.dateBetween.before', { date: nextDates[0] });
     }
 
-    return `${name} should be between ${prevDates[0]} and ${nextDates[0]}`;
+    return i18n.t('plugin.validation.dateBetween.between',
+      {
+        prev: prevDates[0],
+        next: nextDates[0]
+      });
   }
 };
 
+// eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
   if (install.installed) return;
-  // eslint-disable-next-line no-unused-vars
   install.installed = true;
+
+  const i18n = proxydi.get('i18nInstance');
+
+  if (i18n) {
+    setLocalesMessages(i18n, locales);
+  }
 
   Vue.component('ValidationProvider', ValidationProvider);
   Vue.component('ValidationObserver', ValidationObserver);
@@ -118,16 +151,23 @@ const install = (Vue, options = {}) => {
   extend('minMax', minMax);
   extend('minMaxValue', minMaxValue);
   extend('unique', unique);
-  extend('required', required);
-  extend('integer', integer);
+  extend('required', {
+    ...required,
+    message: (_, values) => i18n.t('plugin.validation.required', values)
+  });
+  extend('integer', {
+    ...integer,
+    message: (_, values) => i18n.t('plugin.validation.integer', values)
+  });
 
   extend('dateBefore', dateBefore);
   extend('dateAfter', dateAfter);
-
-  localize('en', en);
 };
 
 export const ValidationPlugin = {
   name: 'ValidationPlugin',
+  deps: [
+    'EnvModule'
+  ],
   install
 };

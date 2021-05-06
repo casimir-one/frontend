@@ -10,11 +10,11 @@
 
 <script>
   export default {
-    name: "AuthSignOut",
+    name: 'AuthSignOut',
     props: {
       buttonLabel: {
         type: String,
-        default: 'Sign out'
+        default() { return this.$t('module.auth.signOut'); }
       }
     },
     methods: {
@@ -22,5 +22,5 @@
         this.$store.dispatch('auth/signOut');
       }
     }
-  }
+  };
 </script>
