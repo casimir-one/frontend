@@ -5,6 +5,16 @@ import qs from 'qs';
 class ProjectHttp extends Singleton {
   http = HttpService.getInstance();
 
+
+  getProject(projectId) {
+    return this.http.get(`/api/v2/project/${projectId}`);
+  }
+  
+  getProjects(projectsIds) {
+    const query = qs.stringify({ projectsIds });
+    return this.http.get(`/api/v2/projects?${query}`);
+  }
+
   createProject(req) {
     return this.http.post('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }

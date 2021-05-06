@@ -26,6 +26,14 @@ class ProjectService extends Singleton {
   proxydi = proxydi;
   deipRpc = deipRpc;
   
+  
+  getProject(projectId) {
+    return this.projectHttp.getProject(projectId);
+  }
+
+  getProjects(projectsIds) {
+    return this.projectHttp.getProjects(projectsIds);
+  }
 
   createProject({ privKey }, {
     teamId,
