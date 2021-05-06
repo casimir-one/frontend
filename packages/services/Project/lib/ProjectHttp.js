@@ -16,6 +16,10 @@ class ProjectHttp extends Singleton {
   updateProject(req) {
     return this.http.put('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
+
+  deleteProject(req) {
+    return this.http.put(`/api/v2/project/delete`, req.getRequestBody(), { headers: req.getRequestHeaders() });
+  }
   
 }
 

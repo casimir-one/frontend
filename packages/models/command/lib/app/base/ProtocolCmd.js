@@ -1,10 +1,10 @@
 import { assert } from '@deip/toolbox';
-import BaseCmd from './BaseCmd';
+import AppCmd from './AppCmd';
 import { APP_CMD_INFO } from './../constants';
 import { ProtocolRegistry } from './../../protocol/registry';
 
 
-class ProtocolCmd extends BaseCmd {
+class ProtocolCmd extends AppCmd {
 
   constructor(cmdNum, cmdPayload, txContext) {
     assert(!!txContext && txContext.protocol, "Protocol must be specified for protocol related command");
@@ -15,7 +15,8 @@ class ProtocolCmd extends BaseCmd {
     this._protocolOp = opRegistry.get(cmdNum)(cmdPayload, txContext);
   }
 
-  isProtocolOpCmd() { return true; }
+  isProtocolOpCmd() { return ProtocolCmd.IsProtocolOpCmd(); }
+  static IsProtocolOpCmd() { return true; }
 
   getProtocol() { return this._protocol; }
   getProtocolOp() { return this._protocolOp; }

@@ -14,7 +14,9 @@ class BaseCmd {
   getCmdName() { return APP_CMD[this._cmdNum]; }
 
   getCmdPayload() { return this._cmdPayload; }
-  isProtocolOpCmd() { return false };
+  
+  isProtocolOpCmd() { return BaseCmd.IsProtocolOpCmd() };
+  static IsProtocolOpCmd() { return false };
 
   serialize() { return BaseCmd.Serialize(this); }
   deserialize(serialized) { return BaseCmd.Deserialize(serialized); }
