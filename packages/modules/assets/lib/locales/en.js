@@ -10,11 +10,11 @@ export default {
       createTokenForm: {
         submit: 'Submit',
         cancel: 'Cancel',
-        title: ({ named }) => `${named('entity')} token details`,
+        title: '{entity} token details',
         numberOfTokens: 'Number of tokens',
         totalNumberOfTokens: 'Total number of tokens to issue',
         ticker: 'Ticker (abbreviation)',
-        tokensAmountNote: ({ named }) => `Note: 2,000 to 20,000 tokens are usualy issued per ${named('entity')}.`,
+        tokensAmountNote: 'Note: 2,000 to 20,000 tokens are usualy issued per {entity}',
         shareholders: 'Shareholders',
         shareholder: 'Shareholder',
         addShareholder: 'Add shareholder',
@@ -23,11 +23,11 @@ export default {
         legal: 'Legal',
         confirmation: 'Confirmation',
         agree: 'I agree to the Terms and Conditions listed below',
-        understand: ({ named }) => `I understand that issued tokens will be distributed among shareholders,
+        understand: `I understand that issued tokens will be distributed among shareholders,
         effectively transferring ownership
-        over the property related to the ${named('entity')}.
+        over the property related to the {entity}.
         Holding a share does not grant access to participate on
-        decisions related to the ${named('entity')}.
+        decisions related to the {entity}.
         It’s not possible to undo this action.`,
         errors: {
           tickerUnique: '{_field_} is taken. Try another.'
