@@ -25,7 +25,8 @@
   "dependencies": {
     "@deip/platform-fns": "1.111.0",
     "@deip/proxydi": "1.111.0",
-    "@deip/research-service": "1.111.1"
+    "@deip/research-service": "1.111.1",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "vuex": "^3.6.0"

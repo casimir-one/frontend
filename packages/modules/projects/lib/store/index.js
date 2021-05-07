@@ -1,6 +1,7 @@
+import { get } from 'lodash/fp';
+
 import { ResearchService } from '@deip/research-service';
 import {
-  getActionByPath,
   listGetter,
   oneGetter,
   setListMutation,
@@ -30,8 +31,6 @@ const actionsMap = {
   }
 };
 
-const getAction = getActionByPath(actionsMap).get;
-
 const STATE = {
   data: []
 };
@@ -53,7 +52,7 @@ const ACTIONS = {
 
     target.push(payload.type || 'all');
 
-    return dispatch(getAction(target), payload);
+    return dispatch(get(target, actionsMap), payload);
   },
 
   // public
