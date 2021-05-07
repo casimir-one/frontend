@@ -14,7 +14,7 @@ export const setListMutationFactory = (opts = {}) => {
       payload.map((asset) => camelizeObjectKeys(asset)),
       { key: mergeKey }
     );
-  }
+  };
 };
 export const setListMutation = setListMutationFactory();
 
@@ -32,9 +32,9 @@ export const setOneMutationFactory = (opts = {}) => {
       camelizeObjectKeys(payload),
       { key: mergeKey }
     );
-  }
+  };
 };
-export const setOneMutation = setOneMutationFactory()
+export const setOneMutation = setOneMutationFactory();
 
 export const removeFromListMutationFactory = (opts = {}) => {
   const {
@@ -44,27 +44,18 @@ export const removeFromListMutationFactory = (opts = {}) => {
 
   return (state, id) => {
     if (!id) return;
+    if (!state[storeKey]) throw new Error(`state.${storeKey} is undefined`);
 
-    const index = state[storeKey].findIndex(item => item[mergeKey] === id);
+    const index = state[storeKey].findIndex((item) => item[mergeKey] === id);
     if (index > -1) {
       state[storeKey].splice(index, 1);
     }
-  }
+  };
 };
 export const removeFromListMutation = removeFromListMutationFactory();
 
-
-
-
-
-
-
-
-
-
-
+/// experimental
 export const crudMutationsFabric = (opts = {}) => {
-
   const { collectionMergeKey = 'externalId' } = opts;
 
   return {
@@ -87,7 +78,7 @@ export const crudMutationsFabric = (opts = {}) => {
         { key: collectionMergeKey }
       );
     }
-  }
+  };
 };
 
 export const crudMutations = crudMutationsFabric();
