@@ -9,9 +9,9 @@ export default {
       dateBefore: '{_field_} should be smaller than {target}',
       dateAfter: '{_field_} should be greater than {target}',
       dateBetween: {
-        after: ({ named }) => `{_field_} should be after ${named('date')}`,
-        before: ({ named }) => `{_field_} should be before ${named('date')}`,
-        between: ({ named }) => `{_field_} should be between ${named('prev')} and ${named('next')}`
+        after: '{_field_} should be after {date}',
+        before: '{_field_} should be before {date}',
+        between: '{_field_} should be between {prev} and {next}'
       }
 
     }
