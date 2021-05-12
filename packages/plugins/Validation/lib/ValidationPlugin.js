@@ -143,6 +143,8 @@ const install = (Vue, options = {}) => {
 
   if (i18n) {
     setLocalesMessages(i18n, locales);
+  } else {
+    throw Error('[ValidationPlugin]: i18nInstance is not provided');
   }
 
   Vue.component('ValidationProvider', ValidationProvider);
