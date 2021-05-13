@@ -9,5 +9,6 @@ module.exports = {
   testPathIgnorePatterns: [
     'packages/utilities/lib-crypto',
     'packages/services/RpcClient'
-  ]
+  ],
+  setupFilesAfterEnv: ['jest-extended']
 };
