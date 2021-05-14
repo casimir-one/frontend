@@ -1,5 +1,5 @@
 {
-  "name": "@deip/project-service",
+  "name": "@deip/team-service",
   "version": "1.111.0",
   "description": "",
   "main": "index.js",
@@ -17,6 +17,7 @@
     "@babel/preset-env": "^7.8.4"
   },
   "dependencies": {
+    "@deip/users-service": "1.111.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",

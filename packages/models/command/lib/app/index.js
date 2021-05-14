@@ -7,7 +7,7 @@ import JoinProjectCmd from './impl/JoinProjectCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
-
+import UpdateAccountCmd from './impl/UpdateAccountCmd';
 
 export {
   CmdEnvelope,
@@ -18,5 +18,6 @@ export {
   JoinProjectCmd,
   CreateProposalCmd,
   UpdateProposalCmd,
-  DeclineProposalCmd
+  DeclineProposalCmd,
+  UpdateAccountCmd
 }

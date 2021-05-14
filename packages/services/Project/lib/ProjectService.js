@@ -58,9 +58,9 @@ class ProjectService extends Singleton {
       }, proposalInfo);
 
 
-    const TENANT = this.proxydi.get('env').TENANT;
-    const PROTOCOL = this.proxydi.get('env').PROTOCOL;
-    const IS_TESTNET = this.proxydi.get('env').IS_TESTNET;
+    const { TENANT } = this.proxydi.get('env');
+    const { PROTOCOL } = this.proxydi.get('env');
+    const { IS_TESTNET } = this.proxydi.get('env');
 
     const protocolRegistry = new ProtocolRegistry(PROTOCOL);
     const txBuilder = protocolRegistry.getTransactionsBuilder();
@@ -230,7 +230,7 @@ class ProjectService extends Singleton {
       }, proposalInfo);
 
 
-    const PROTOCOL = this.proxydi.get('env').PROTOCOL;
+    const { PROTOCOL } = this.proxydi.get('env');
 
     const protocolRegistry = new ProtocolRegistry(PROTOCOL);
     const txBuilder = protocolRegistry.getTransactionsBuilder();
