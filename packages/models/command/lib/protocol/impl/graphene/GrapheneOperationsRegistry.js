@@ -69,6 +69,32 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
       return createAccountOp;
     },
 
+    [APP_CMD.UPDATE_ACCOUNT]: ({
+      description,
+      entityId,
+      isTeamAccount,
+      memoKey,
+      creator,
+      ownerAuth,
+      activeAuth
+    }, txContext) => {
+      const updateAccountOp = ['update_account', {
+        account: entityId,
+        owner: ownerAuth || undefined,
+        active: activeAuth || undefined,
+        creator: creator,
+        active_overrides: [],
+        memo_key: memoKey || undefined,
+        json_metadata: JSON.stringify({ description }),
+        traits: isTeamAccount
+        ? [["research_group", { description: description, extensions: [] }]]
+        : [],
+        extensions: []
+      }];
+
+      return updateAccountOp;
+    },
+
 
     [APP_CMD.CREATE_PROJECT]: ({
       entityId,
