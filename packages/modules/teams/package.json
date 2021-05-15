@@ -1,6 +1,6 @@
 {
   "name": "@deip/teams-module",
-  "version": "1.111.0",
+  "version": "1.111.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -22,9 +22,9 @@
   "dependencies": {
     "@deip/platform-fns": "1.111.0",
     "@deip/proxydi": "1.111.0",
-    "@deip/research-group-service": "1.111.0",
+    "@deip/research-group-service": "1.111.1",
     "@deip/toolbox": "1.111.0",
-    "@deip/validation-plugin": "1.111.0",
+    "@deip/validation-plugin": "1.111.1",
     "@deip/vuetify-extended": "1.111.0"
   },
   "peerDependencies": {
