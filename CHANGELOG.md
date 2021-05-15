@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.111.1](https://github.com/DEIPworld/deip-modules/compare/v1.111.0...v1.111.1) (2021-05-15)
+
+
+### Bug Fixes
+
+* **@deip/assets-module:** fix l10n messages ([4f50984](https://github.com/DEIPworld/deip-modules/commit/4f50984ddb99b8632cb354758c984135a1503ccb))
+* **@deip/validation-plugin:** fix l10n messages ([3e63832](https://github.com/DEIPworld/deip-modules/commit/3e638320136503857a7db3f91821a1c79f4d0d73))
+
+
+
+
+
 # [1.111.0](https://github.com/DEIPworld/deip-modules/compare/v1.110.1...v1.111.0) (2021-05-06)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-service",
-  "version": "1.111.0",
+  "version": "1.111.1",
   "description": "",
   "main": "index.js",
   "directories": {

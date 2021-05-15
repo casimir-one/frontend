@@ -1,6 +1,6 @@
 {
   "name": "@deip/proposals-service",
-  "version": "1.111.0",
+  "version": "1.111.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
     "@deip/access-service": "1.111.0",
     "@deip/blockchain-service": "1.111.0",
-    "@deip/command-models": "1.111.0",
+    "@deip/command-models": "1.111.1",
     "@deip/http-service": "1.111.0",
     "@deip/proxydi": "1.111.0",
     "@deip/request-models": "1.111.0",
