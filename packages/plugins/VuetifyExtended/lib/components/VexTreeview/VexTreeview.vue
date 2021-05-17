@@ -15,7 +15,7 @@
 <script>
   import { find as deepFind } from 'find-keypath';
   import { VTreeview } from 'vuetify/lib';
-  import { arrayDiff, getNestedValue } from 'vuetify/lib/util/helpers';
+  import { isNil, get, difference } from 'lodash/fp';
 
   import { getBindableProps } from '../../composables/props';
 
@@ -25,7 +25,7 @@
 
     props: {
       ...VTreeview.options.props,
-      autoselectParents: {
+      autoselectParents: { // works only with independent selection type
         type: Boolean,
         default: false
       }
@@ -76,9 +76,10 @@
         if (this.selectionType === 'independent' && this.autoselectParents) {
           const removed = this.oldValue.length > value.length;
           const changedId = (removed
-            ? arrayDiff(value, this.oldValue)
-            : arrayDiff(this.oldValue, value)
+            ? difference(this.oldValue, value)
+            : difference(value, this.oldValue)
           )[0];
+          if (isNil(changedId)) return;
 
           if (removed) {
             this.removeChildren(changedId);
@@ -86,7 +87,7 @@
             this.addParents(changedId);
           }
 
-          this.oldValue = [...value];
+          this.oldValue = [...this.internalValue];
         } else {
           this.internalValue = [...value];
         }
@@ -117,7 +118,7 @@
 
         for (const value of path) {
           target = target[value];
-          if (target.id) {
+          if (!isNil(target.id)) {
             this.addItem(target.id);
           }
         }
@@ -130,16 +131,14 @@
       },
 
       getItemObject(id) {
-        return getNestedValue(this.items, this.getItemPath(id));
+        return get(this.getItemPath(id), this.items);
       },
 
       removeItem(id) {
-        if (this.internalValue) {
-          const idx = this.internalValue.indexOf(id);
-          if (idx !== -1) {
-            this.internalValue.splice(idx, 1);
-            this.internalValue = [...new Set(this.internalValue)];
-          }
+        const idx = this.internalValue.indexOf(id);
+        if (idx !== -1) {
+          this.internalValue.splice(idx, 1);
+          this.internalValue = [...new Set(this.internalValue)];
         }
       },
 
