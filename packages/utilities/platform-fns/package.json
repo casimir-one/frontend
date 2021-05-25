@@ -23,9 +23,13 @@
     "@deip/toolbox": "1.111.2",
     "change-case": "^4.1.2",
     "date-fns": "^2.19.0",
+    "lodash": "^4.17.21",
     "qs": "^6.9.6"
   },
   "peerDependencies": {
     "vuetify": "^2.4.2"
+  },
+  "devDependencies": {
+    "vuetify": "^2.5.0"
   }
 }
