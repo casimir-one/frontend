@@ -41,7 +41,7 @@ const ACTIONS = {
   restoreData({ commit }) {
     if (accessService.isLoggedIn()) {
       commit('setData', {
-        username: accessService.getDecodedToken().username,
+        username: accessService.getDecodedToken().username
       });
     }
   },
@@ -81,7 +81,7 @@ const ACTIONS = {
           secretSigHex: crypto.hexify(secretSig)
         });
       })
-      .then(async (response) => {
+      .then((response) => {
         if (!response.success) {
           dispatch('clear');
           throw new Error(response.error);
@@ -92,13 +92,11 @@ const ACTIONS = {
           privateKey
         });
 
-        dispatch('currentUser/get', null, { root: true });
-
-        return response;
+        return dispatch('currentUser/get', null, { root: true });
       });
   },
 
-  signUp({ commit }, payload) {
+  signUp(_, payload) {
     const { ownerPubkey: pubKey } = deipRpc.auth.getPrivateKeys(
       payload.username,
       payload.password,
@@ -120,7 +118,7 @@ const ACTIONS = {
   },
 
   clear({ commit }) {
-    commit('clearData')
+    commit('clearData');
     commit('currentUser/clearData', null, { root: true });
   }
 
@@ -128,7 +126,6 @@ const ACTIONS = {
 
 const MUTATIONS = {
   setData(state, { jwtToken, privateKey }) {
-
     if (jwtToken && privateKey) {
       accessService.setAccessToken(jwtToken, privateKey);
     }

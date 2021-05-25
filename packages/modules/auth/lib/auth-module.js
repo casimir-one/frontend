@@ -70,7 +70,6 @@ const install = (Vue, options = {}) => {
 
     if (accessService.isLoggedIn()) {
       store.dispatch('auth/restoreData');
-      store.dispatch('currentUser/get');
     }
   } else {
     throw Error('[AuthModule]: routerInstance and storeInstance is not provided');
