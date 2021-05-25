@@ -1,6 +1,7 @@
 import { get } from 'lodash/fp';
 
 import { ResearchService } from '@deip/research-service';
+import { ProjectService } from '@deip/project-service';
 import {
   listGetter,
   oneGetter,
@@ -9,6 +10,7 @@ import {
 } from '@deip/platform-fns';
 
 const researchService = ResearchService.getInstance();
+const projectService = ProjectService.getInstance();
 
 const actionsMap = {
   projects: {
@@ -122,32 +124,94 @@ const ACTIONS = {
   // one
 
   getProjectDetails({ commit }, projectId) {
-    return researchService.getResearch(projectId)
+    return projectService.getProject(projectId)
       .then((result) => {
         commit('setOne', result);
       });
   },
 
-  createProject({ commit }, payload) {
-    const { creator, isProposal, formData } = payload;
-    return researchService.createResearch(
-      creator,
-      isProposal,
-      formData,
-      false
+  create({ commit }, payload) {
+    const {
+      creator: { privKey },
+      data: {
+        teamId,
+        creator,
+        domains,
+        isPrivate,
+        members,
+        inviteLifetime,
+        reviewShare,
+        compensationShare,
+        attributes,
+        memoKey,
+        formData
+      },
+      proposal: {
+        isProposal,
+        isProposalApproved,
+        proposalLifetime
+      }
+    } = payload;
+
+    return projectService.createProject(
+      { privKey },
+      {
+        teamId,
+        creator,
+        domains,
+        isPrivate,
+        members,
+        inviteLifetime,
+        reviewShare,
+        compensationShare,
+        attributes,
+        memoKey,
+        formData
+      },
+      { isProposal, isProposalApproved, proposalLifetime }
     )
       .then((result) => {
         commit('setOne', result);
       });
   },
 
-  updateProject({ commit }, payload) {
-    const { creator, isProposal, formData } = payload;
+  update({ commit }, payload) {
+    const {
+      creator: { privKey },
+      data: {
+        projectId,
+        teamId,
+        isPrivate,
+        members,
+        inviteLifetime,
+        reviewShare,
+        compensationShare,
+        updater,
+        attributes,
+        formData
+      },
+      proposal: {
+        isProposal,
+        isProposalApproved,
+        proposalLifetime
+      }
+    } = payload;
 
-    return researchService.updateResearch(
-      creator,
-      isProposal,
-      formData
+    return projectService.updateProject(
+      { privKey },
+      {
+        projectId,
+        teamId,
+        isPrivate,
+        members,
+        inviteLifetime,
+        reviewShare,
+        compensationShare,
+        updater,
+        attributes,
+        formData
+      },
+      { isProposal, isProposalApproved, proposalLifetime }
     )
       .then((result) => {
         commit('setOne', result);
