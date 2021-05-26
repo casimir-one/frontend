@@ -22,7 +22,7 @@ class TeamService extends Singleton {
 
   usersService = UsersService.getInstance();
 
-  createTeam(privKey, {
+  createTeam({ privKey }, {
     creator,
     memoKey,
     attributes,
