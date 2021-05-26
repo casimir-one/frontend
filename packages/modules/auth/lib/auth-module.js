@@ -29,12 +29,12 @@ const install = (Vue, options = {}) => {
   if (store && router) {
     // for guests
     router.beforeEach((to, from, next) => {
-      if (to.matched.some((record) => record.meta.requiresAuth)) {
+      if (to.meta.requiresAuth) {
         if (store.getters['auth/isLoggedIn']) {
           next();
           return;
         }
-        next('/sign-in'); // TODO: get from options
+        next({ name: signInRedirect });
       } else {
         next();
       }
@@ -42,9 +42,9 @@ const install = (Vue, options = {}) => {
 
     // for users
     router.beforeEach((to, from, next) => {
-      if (to.matched.some((record) => record.meta.guest)) {
+      if (to.meta.guest) {
         if (store.getters['auth/isLoggedIn']) {
-          next(signInRedirect);
+          next({ name: signInRedirect });
           return;
         }
         next();
@@ -70,7 +70,6 @@ const install = (Vue, options = {}) => {
 
     if (accessService.isLoggedIn()) {
       store.dispatch('auth/restoreData');
-      store.dispatch('currentUser/get');
     }
   } else {
     throw Error('[AuthModule]: routerInstance and storeInstance is not provided');
