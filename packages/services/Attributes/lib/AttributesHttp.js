@@ -5,39 +5,39 @@ class AttributesHttp extends Singleton {
   http = HttpService.getInstance();
 
   getAttributes() {
-    return this.http.get(`/api/attributes`);
+    return this.http.get('/api/v2/attributes');
   }
 
   getAttributesByScope(scope) {
-    return this.http.get(`/api/attributes/scope/${scope}`);
+    return this.http.get(`/api/v2/attributes/scope/${scope}`);
   }
 
   getNetworkAttributesByScope(scope) {
-    return this.http.get(`/api/attributes/scope/network/${scope}`);
+    return this.http.get(`/api/v2/attributes/scope/network/${scope}`);
   }
 
   getAttribute(id) {
-    return this.http.get(`/api/attribute/${id}`);
+    return this.http.get(`/api/v2/attribute/${id}`);
   }
 
   getNetworkAttributes() {
-    return this.http.get(`/api/attributes/network`);
+    return this.http.get('/api/v2/attributes/network');
   }
 
   getSystemAttributes() {
-    return this.http.get(`/api/attributes/system`);
+    return this.http.get('/api/v2/attributes/system');
   }
 
-  createAttribute(attribute) {
-    return this.http.post(`/api/attribute`, attribute);
+  createAttribute(req) {
+    return this.http.post('/api/v2/attribute', req.getRequestBody());
   }
 
-  updateAttribute(attribute) {
-    return this.http.put(`/api/attribute`, attribute);
+  updateAttribute(req) {
+    return this.http.put('/api/v2/attribute', req.getRequestBody());
   }
 
-  deleteAttribute(attributeId) {
-    return this.http.delete_(`/api/attribute/${attributeId}`);
+  deleteAttribute(req) {
+    return this.http.put('/api/v2/attribute/delete', req.getRequestBody());
   }
 }
 
