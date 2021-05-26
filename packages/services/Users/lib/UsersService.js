@@ -1,17 +1,17 @@
-import deipRpc from '@deip/rpc-client';
+// import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { UsersHttp } from './UsersHttp';
 
-const mapUsersData = (
-  accounts = [],
-  profiles = [],
-  teams = []
-) => accounts.map((account) => ({
-  username: account.name,
-  account,
-  profile: profiles.find((profile) => profile._id === account.name),
-  teams: teams.find((item) => item.username === account.name).teams
-}));
+// const mapUsersData = (
+//   accounts = [],
+//   profiles = [],
+//   teams = []
+// ) => accounts.map((account) => ({
+//   username: account.name,
+//   account,
+//   profile: profiles.find((profile) => profile._id === account.name),
+//   teams: teams.find((item) => item.username === account.name).teams
+// }));
 
 class UsersService extends Singleton {
   usersHttp = UsersHttp.getInstance();
@@ -23,7 +23,7 @@ class UsersService extends Singleton {
   }
 
   getUsersByResearchGroup(researchGroupExternalId) {
-    return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId)
+    return this.usersHttp.getUsersByResearchGroup(researchGroupExternalId);
   }
 
   getUsersByTenant(tenantId) {
@@ -50,8 +50,6 @@ class UsersService extends Singleton {
   updateUserAccount(username, payload) {
     return this.usersHttp.updateUserProfile(username, payload);
   }
-
-
 }
 
 export {

@@ -10,7 +10,7 @@ class UsersHttp extends Singleton {
   }
 
   getActiveUsersProfiles() { // DEPRECATED
-    return this.http.get(`/api/user/active`);
+    return this.http.get('/api/user/active');
   }
 
   // LIST
@@ -48,9 +48,13 @@ class UsersHttp extends Singleton {
   }
 
   updateUserProfile(username, payload) {
-    return this.http.put(`/api/user/profile/${username}`, payload);
+    return this.http.put(`/api/user/profile/${username}`, payload, {
+      headers: {
+        username,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   }
-
 }
 
 export {

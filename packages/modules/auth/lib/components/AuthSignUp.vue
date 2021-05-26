@@ -11,82 +11,81 @@
         style="display:none;"
       >
 
-      <vex-stack :gutter="formGutter">
-        <slot name="prepend" />
+      <slot v-bind="binds">
+        <slot name="prepend" v-bind="binds" />
 
-        <vex-stack :gutter="fieldsGutter">
-          <validation-provider
-            v-slot="{ errors }"
-            :name="usernameLabel"
-            rules="required"
-          >
-            <v-text-field
-              v-model="formModel.username"
-              :label="usernameLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
+        <slot name="fields" v-bind="binds">
+          <vex-stack :gutter="8" class="mb-7">
+            <validation-provider
+              v-slot="{ errors }"
+              :name="usernameLabel"
+              rules="required"
+            >
+              <v-text-field
+                v-model="formModel.username"
+                :label="usernameLabel"
+                :error-messages="errors"
+                v-bind="fieldsProps"
+              />
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            :name="emailLabel"
-            rules="required"
-          >
-            <v-text-field
-              v-model="formModel.email"
-              :label="emailLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              :name="emailLabel"
+              rules="required"
+            >
+              <v-text-field
+                v-model="formModel.email"
+                :label="emailLabel"
+                :error-messages="errors"
+                v-bind="fieldsProps"
+              />
+            </validation-provider>
 
-          <validation-provider
-            v-slot="{ errors }"
-            :name="passwordLabel"
-            rules="required"
-          >
-            <vex-password-input
-              v-model="formModel.password"
-              :label="passwordLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
+            <validation-provider
+              v-slot="{ errors }"
+              :name="passwordLabel"
+              rules="required"
+            >
+              <vex-password-input
+                v-model="formModel.password"
+                :label="passwordLabel"
+                :error-messages="errors"
+                v-bind="fieldsProps"
+              />
+            </validation-provider>
+          </vex-stack>
+        </slot>
 
-          <!-- TEMP -->
-          <v-radio-group v-model="formModel.roles" hide-details class="ma-0 pa-0">
-            <v-radio label="Студент" :value="1" />
-            <v-radio label="Инвестор" :value="2" />
-          </v-radio-group>
+        <slot name="submit" v-bind="binds">
+          <vex-stack :gutter="24">
+            <v-btn
+              type="submit"
+              color="primary"
+              block
+              depressed
+              :disabled="invalid || loading"
+              :loading="loading"
+            >
+              {{ submitLabel }}
+            </v-btn>
 
-          <!-- END TEMP -->
-        </vex-stack>
-
-        <vex-stack :gutter="submitGutter">
-          <v-btn
-            type="submit"
-            color="primary"
-            block
-            depressed
-            :disabled="invalid || loading"
-            :loading="loading"
-          >
-            {{ submitLabel }}
-          </v-btn>
-
-          <slot name="to-register">
             <div class="text-center">
               {{ $t('module.auth.haveAccountQuestion') }}
-              <router-link :to="{ name: 'signIn' }" class="font-weight-medium text-decoration-none">
+              <router-link
+                :to="{
+                  name: $store.getters['auth/settings'].signInRouteName
+                }"
+                class="font-weight-medium text-decoration-none"
+              >
                 {{ $t('module.auth.signIn') }}
               </router-link>
             </div>
-          </slot>
-        </vex-stack>
+          </vex-stack>
+        </slot>
 
-        <slot name="append" />
-      </vex-stack>
+        <slot name="append" v-bind="binds" />
+      </slot>
     </v-form>
   </validation-observer>
 </template>
@@ -105,34 +104,27 @@
     props: {
       usernameLabel: {
         type: String,
-        default() { return this.$t('module.auth.username'); }
+        default() {
+          return this.$t('module.auth.username');
+        }
       },
       passwordLabel: {
         type: String,
-        default() { return this.$t('module.auth.password'); }
+        default() {
+          return this.$t('module.auth.password');
+        }
       },
       emailLabel: {
         type: String,
-        default() { return this.$t('module.auth.email'); }
+        default() {
+          return this.$t('module.auth.email');
+        }
       },
       submitLabel: {
         type: String,
-        default() { return this.$t('module.auth.signUp'); }
-      },
-
-      formGutter: {
-        type: [String, Number],
-        default: 48
-      },
-
-      fieldsGutter: {
-        type: [String, Number],
-        default: 8
-      },
-
-      submitGutter: {
-        type: [String, Number],
-        default: 16
+        default() {
+          return this.$t('module.auth.signUp');
+        }
       },
 
       fieldsProps: {
@@ -141,6 +133,11 @@
           outlined: true,
           autocomplete: 'new-password'
         })
+      },
+
+      autologin: {
+        type: Boolean,
+        default: true
       }
     },
 
@@ -150,18 +147,37 @@
         formModel: {
           username: '',
           email: '',
-          password: '',
-          roles: 1
+          password: ''
         }
       };
     },
+
+    computed: {
+      binds() {
+        return {
+          formModel: this.formModel,
+          signUp: this.signUp
+        };
+      }
+    },
+
     methods: {
       signUp() {
         this.loading = true;
 
         this.$store.dispatch('auth/signUp', this.formModel)
           .then(() => {
-            this.$emit('success');
+            if (this.autologin) {
+              this.$store.dispatch('auth/signIn', this.formModel)
+                .then(() => {
+                  this.$emit('success');
+                })
+                .catch((error) => {
+                  this.$emit('error', error);
+                });
+            } else {
+              this.$emit('success');
+            }
           })
           .catch((error) => {
             this.$emit('error', error);

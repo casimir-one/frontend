@@ -27,16 +27,19 @@
     "@babel/preset-env": "^7.8.4"
   },
   "dependencies": {
+    "@array-utils/chunk-it": "^3.0.1",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "change-case": "^4.1.2",
     "chroma-js": "^2.1.1",
+    "chunk": "^0.0.3",
     "colorthief": "^2.3.2",
     "crc": "^3.8.0",
     "filter-where": "^2.0.0",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.21",
+    "recursive-iterator": "^3.3.0",
     "sort-keys": "^4.2.0"
   }
 }

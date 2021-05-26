@@ -6,10 +6,9 @@ import {
   setListMutationFactory,
   setOneMutationFactory
 } from '@deip/platform-fns';
-import { hasValue } from '@deip/toolbox';
+import { createFormData, hasValue } from '@deip/toolbox';
 
 const usersService = UsersService.getInstance();
-
 
 const STATE = {
   data: []
@@ -21,14 +20,13 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  get({ dispatch }, payload = {}) {
-
+  getList({ dispatch }, payload = {}) {
     const methods = {
-      users: 'getByNames',
-      teamId: 'getByTeam',
-      tenantId: 'getByTenant',
-      status: 'getByStatus',
-    }
+      users: 'getListByNames',
+      teamId: 'getListByTeam',
+      tenantId: 'getListByTenant',
+      status: 'getListByStatus'
+    };
 
     for (const key of Object.keys(methods)) {
       if (hasValue(payload[key])) {
@@ -39,7 +37,7 @@ const ACTIONS = {
     return dispatch(methods.status, payload);
   },
 
-  getByNames({ commit }, { users }) {
+  getListByNames({ commit }, { users }) {
     return usersService.getUsers(users)
       .then((data) => {
         commit('setList', data);
@@ -49,7 +47,7 @@ const ACTIONS = {
       });
   },
 
-  getByTeam({ commit }, { teamId }) {
+  getListByTeam({ commit }, { teamId }) {
     return usersService.getUsersByResearchGroup(teamId)
       .then((data) => {
         commit('setList', data);
@@ -59,7 +57,7 @@ const ACTIONS = {
       });
   },
 
-  getByTenant({ commit }, { tenantId }) {
+  getListByTenant({ commit }, { tenantId }) {
     return usersService.getUsersByTenant(tenantId)
       .then((data) => {
         commit('setList', data);
@@ -69,7 +67,7 @@ const ACTIONS = {
       });
   },
 
-  getByStatus({ commit }, { status = 'approved' }) {
+  getListByStatus({ commit }, { status = 'approved' }) {
     return usersService.getUsersListing(status)
       .then((data) => {
         commit('setList', data);
@@ -92,9 +90,10 @@ const ACTIONS = {
   },
 
   update({ dispatch }, payload) {
-    const { username } = payload;
+    const { _id: username } = payload;
+    const data = createFormData({ profile: payload });
 
-    return usersService.updateUserProfile(username)
+    return usersService.updateUserProfile(username, data)
       .then(() => {
         dispatch('getOne', username);
       })

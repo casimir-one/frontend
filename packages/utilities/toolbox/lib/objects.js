@@ -16,10 +16,15 @@ export const deepFreeze = (obj) => {
   return Object.freeze(obj);
 };
 
-export const camelizeObjectKeys = (obj) => {
+export const camelizeObjectKeys = (obj, exception = ['_id', '__v']) => {
   if (!obj) return {};
   return Object.keys(obj)
-    .reduce((o, key) => ({ ...o, ...{ [camelCase(key)]: obj[key] } }), {});
+    .reduce((o, key) => ({
+      ...o,
+      ...{
+        [exception.includes(key) ? key : camelCase(key)]: obj[key]
+      }
+    }), {});
 };
 
 export const genObjectId = (obj, turns = 3) => {

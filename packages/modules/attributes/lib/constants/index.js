@@ -1,9 +1,2 @@
-export const ATTRIBUTE_TYPES = {
-  TEXT: 'text',
-  TEXTAREA: 'textarea',
-  SELECT: 'select',
-  SWITCH: 'switch',
-  CHECKBOX: 'checkbox',
-  URL: 'url',
-  VIDEO_URL: 'video-url'
-};
+export * from './rules';
+export * from './schemas';

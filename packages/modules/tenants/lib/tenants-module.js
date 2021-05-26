@@ -1,7 +1,7 @@
 import { proxydi } from '@deip/proxydi';
 import { tenantsStore, currentTenantStore } from './store';
 
-const install = (Vue, options = {}) => {
+const install = (Vue) => {
   if (install.installed) return;
   install.installed = true;
 
@@ -10,6 +10,14 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('tenants', tenantsStore);
     store.registerModule('currentTenant', currentTenantStore);
+
+    store.dispatch('currentTenant/get');
+
+    Vue.mixin({
+      computed: {
+        $currentTenant() { return this.$store.getters['currentTenant/data']; }
+      }
+    });
   } else {
     throw Error('[TenantsModule]: storeInstance is not provided');
   }
@@ -18,7 +26,7 @@ const install = (Vue, options = {}) => {
 export const TenantsModule = {
   name: 'TenantsModule',
   deps: [
-    'EnvModule',
+    'EnvModule'
   ],
   install
 };

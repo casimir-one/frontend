@@ -28,12 +28,18 @@ const getPrivateKeyRole = (privateKey, account) => {
 
 const STATE = {
   username: null,
-  isLoggedIn: false
+  isLoggedIn: false,
+  settings: {
+    signInRouteName: 'signIn',
+    signInRedirectRouteName: 'home',
+    signUpRouteName: 'signUp'
+  }
 };
 
 const GETTERS = {
   username: (state) => state.username,
-  isLoggedIn: (state) => state.isLoggedIn
+  isLoggedIn: (state) => state.isLoggedIn,
+  settings: (state) => state.settings
 };
 
 const ACTIONS = {
@@ -115,6 +121,18 @@ const ACTIONS = {
 
   clear({ commit }) {
     commit('clearData');
+  },
+
+  setup({ commit }, {
+    signInRouteName,
+    signInRedirectRouteName,
+    signUpRouteName
+  }) {
+    commit('setSettings', {
+      ...(signInRouteName ? { signInRouteName } : {}),
+      ...(signInRedirectRouteName ? { signInRedirectRouteName } : {}),
+      ...(signUpRouteName ? { signUpRouteName } : {})
+    });
   }
 };
 
@@ -133,6 +151,13 @@ const MUTATIONS = {
 
     state.username = null;
     state.isLoggedIn = accessService.isLoggedIn();
+  },
+
+  setSettings(state, payload) {
+    state.settings = {
+      ...state.settings,
+      ...payload
+    };
   }
 };
 

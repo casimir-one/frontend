@@ -1,4 +1,6 @@
-import { isArray, isString, isObject } from '@deip/toolbox';
+import {
+  isArray, isString, isObject, isBoolean, isNumber
+} from '@deip/toolbox';
 import { cloneDeep, merge } from 'lodash/fp/';
 import dotProp from 'dot-prop';
 import RecursiveIterator from 'recursive-iterator';
@@ -31,7 +33,7 @@ export const SchemaRenderer = {
     },
 
     value: {
-      type: Object,
+      type: [String, Object, Array, Boolean, Number, File],
       default: () => ({})
     }
   },
@@ -39,7 +41,7 @@ export const SchemaRenderer = {
   data() {
     return {
       lazyValue: this.value
-    }
+    };
   },
 
   computed: {
@@ -52,7 +54,7 @@ export const SchemaRenderer = {
         this.lazyValue = val;
         this.$emit('input', this.lazyValue);
       }
-    },
+    }
   },
 
   watch: {
@@ -77,33 +79,35 @@ export const SchemaRenderer = {
   methods: {
     normalizeSchema(schema) {
       if (!schema) return false;
-      if (!isArray(schema)) throw Error('Schema mus be an Array')
-
-      const stringPattern = /{{\s*(.*?)\s*}}/gm;
-      const modelPattern = /^@([a-zA-Z0-9_.-]*)$/;
-      const methodPattern = /^@([a-zA-Z0-9_.-]*\(['"]?[a-zA-Z0-9_.-]*['"]?\))$/;
+      if (!isArray(schema)) throw Error('Schema mus be an Array');
 
       const clone = cloneDeep(schema);
 
       for (const { parent, node, key } of new RecursiveIterator(clone, 1, true)) {
         if (isString(node)) {
-          const stringMatches = [ ...node.matchAll(stringPattern) ];
-          const modelMatches = node.match(modelPattern);
-          const methodMatches = node.match(methodPattern);
+          let nodeString = node;
 
-          if (modelMatches && modelMatches.length) {
-            parent[key] = dotProp.get(this.schemaData, modelMatches[1]);
-          }
-
-          if (methodMatches && methodMatches.length) {
-            // eslint-disable-next-line no-eval
-            parent[key] = eval(`this.schemaData.${methodMatches[1]}`);
-          }
-
+          const stringPattern = /{{\s*(.*?)\s*}}/gm;
+          const stringMatches = [...nodeString.matchAll(stringPattern)];
           if (stringMatches && stringMatches.length) {
-            parent[key] = node
+            nodeString = node
               .replace(stringPattern, (...args) => dotProp.get(this.schemaData, args[1]));
           }
+
+          const modelPattern = /^@([a-zA-Z0-9_.-]*)$/;
+          const modelMatches = nodeString.match(modelPattern);
+          if (modelMatches && modelMatches.length) {
+            nodeString = dotProp.get(this.schemaData, modelMatches[1]);
+          }
+
+          const methodPattern = /^@([a-zA-Z0-9_.-]*\((['"]?[a-zA-Z0-9_,.-]*['"]?[,]?[ ]?)*\))$/;
+          const methodMatches = nodeString.match(methodPattern);
+          if (methodMatches && methodMatches.length) {
+            // eslint-disable-next-line no-eval
+            nodeString = eval(`this.schemaData.${methodMatches[1]}`);
+          }
+
+          parent[key] = nodeString;
         }
       }
 
@@ -129,12 +133,15 @@ export const SchemaRenderer = {
         data = {},
         children = [],
         condition = true,
-        text,
-      } = node
+        text
+      } = node;
 
-      const nodeChildren = text ? text : this.getChildren(children);
-      const nodeData = merge(data, this.getNodeModelData(node));
-
+      const nodeChildren = text || this.getChildren(children);
+      let nodeData = merge(data, this.getNodeModelData(node));
+      if (Object.keys(this.schemaData).length) {
+        nodeData = merge(nodeData, { props: { schemaData: this.schemaData } });
+      }
+      // eslint-disable-next-line no-eval
       return eval(`${condition}`) ? this.$createElement(
         nodeComponent,
         nodeData,
@@ -162,40 +169,52 @@ export const SchemaRenderer = {
       const modelProps = {
         ...{ prop: 'value', event: 'input' },
         ...componentModelProps,
+        ...(isBoolean(model) ? { path: false } : {}),
         ...(isString(model) ? { path: model } : {}),
         ...(isObject(model) ? model : {})
       };
 
-      if (!Object.prototype.hasOwnProperty.call(modelProps, 'path'))
-        throw Error('Model must contain path')
+      if (!Object.prototype.hasOwnProperty.call(modelProps, 'path')) throw Error('Model must contain path');
 
       return modelProps;
     },
 
     getNodeModelData(node) {
       if (!node?.model) return {};
-      if (!isObject(node.model) && !isString(node.model)) throw new Error('Model must be an String or Object');
+      if (
+        !isString(node.model)
+        && !isObject(node.model)
+        && !isArray(node.model)
+        && !isBoolean(node.model)
+        && !isNumber(node.model)
+      ) throw new Error('Model must be an [String, Object, Array, Boolean, Number]');
 
       const vm = this;
 
-      const isNativeInput = this.isNativeInput(node)
-      const modelProps = this.getNodeModelProps(node)
+      const isNativeInput = this.isNativeInput(node);
+      const modelProps = this.getNodeModelProps(node);
 
       return {
         [isNativeInput ? 'attrs' : 'props']: {
-          [modelProps.prop]: dotProp.get(vm.value, modelProps.path)
+          [modelProps.prop]: dotProp.get(vm.internalValue, modelProps.path)
         },
         on: {
           [modelProps.event](event) {
             const value = isNativeInput ? event.target.value : event;
 
-            vm.internalValue = {
-              ...vm.internalValue,
-              ...dotProp.set({} , modelProps.path, value)
+            if (value) {
+              if (!modelProps.path) {
+                vm.internalValue = value;
+              } else {
+                vm.internalValue = merge(
+                  vm.internalValue,
+                  dotProp.set({}, modelProps.path, value)
+                );
+              }
             }
           }
         }
-      }
+      };
     }
   },
 
@@ -206,4 +225,4 @@ export const SchemaRenderer = {
         .map((n) => this.generateNode(n, h))
     );
   }
-}
+};

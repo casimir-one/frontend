@@ -9,10 +9,6 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const {
-    signInRedirect = 'home'
-  } = options;
-
   const router = proxydi.get('routerInstance');
   const store = proxydi.get('storeInstance');
   const i18n = proxydi.get('i18nInstance');
@@ -31,7 +27,7 @@ const install = (Vue, options = {}) => {
           next();
           return;
         }
-        next({ name: signInRedirect });
+        next({ name: store.getters['auth/settings'].signInRouteName });
       } else {
         next();
       }
@@ -41,7 +37,7 @@ const install = (Vue, options = {}) => {
     router.beforeEach((to, from, next) => {
       if (to.meta.guest) {
         if (store.getters['auth/isLoggedIn']) {
-          next({ name: signInRedirect });
+          next({ name: store.getters['auth/settings'].signInRedirectRouteName });
           return;
         }
         next();
@@ -49,14 +45,13 @@ const install = (Vue, options = {}) => {
         next();
       }
     });
-
-    Vue.prototype.$signInRedirect = signInRedirect;
   } else {
     throw Error('[AuthModule]: routerInstance is not provided');
   }
 
   if (store) {
     store.registerModule('auth', authStore);
+    store.dispatch('auth/setup', options);
 
     Vue.mixin({
       computed: {

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div v-if="ready">
     <div v-if="label" class="text-body-2 mb-1 text--secondary">
       {{ label }}
     </div>
@@ -7,11 +7,10 @@
       <v-responsive
         :aspect-ratio="aspectRatio"
       >
-
-        <template v-if="$slots.mask && isInited && croppa.hasImage()">
-          <v-sheet class="d-mage-input__mask" color="transparent">
-            <slot name="mask"></slot>
-          </v-sheet>
+        <template v-if="mask && isInited && croppa.hasImage()">
+          <!-- eslint-disable vue/no-v-html -->
+          <div class="vex-mage-input__mask" v-html="mask" />
+          <!-- eslint-enable -->
         </template>
 
         <vex-croppa
@@ -31,14 +30,14 @@
           initial-position="center"
           auto-sizing
           :style="{width: '100%', height: '100%', display: 'block'}"
-          :initial-image="initialImage"
+          :initial-image="checkedInitialImage"
 
           @init="onInit"
 
           @new-image-drawn="onNewImage"
           @draw="onDrawDebounce"
           @file-choose="onFileChoose"
-          @initial-image-loaded="onInitialImageLoaded"
+          @initial-image-loaded="onInitialImageLoadedDebounce"
         />
       </v-responsive>
 
@@ -46,7 +45,6 @@
         <v-divider />
 
         <v-sheet color="grey lighten-4 pa-2 d-flex align-center">
-
           <template v-if="!noRotate">
             <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.rotate(1)">
               <v-icon>mdi-rotate-right</v-icon>
@@ -64,7 +62,6 @@
               <v-icon>mdi-flip-vertical</v-icon>
             </v-btn>
           </template>
-
 
           <div class="spacer mx-4">
             <v-slider
@@ -92,29 +89,27 @@
 </template>
 
 <script>
-
   import parsePath from 'parse-path';
   import mime from 'mime';
 
+  // eslint-disable-next-line import/extensions,import/no-unresolved
   import Proxyable from 'vuetify/lib/mixins/proxyable';
+  // eslint-disable-next-line import/extensions,import/no-unresolved
   import { debounce } from 'vuetify/lib/util/helpers';
 
-  import VexTooltip from '../VexTooltip/VexTooltip';
+  // import VexTooltip from '../VexTooltip/VexTooltip';
   import VexCroppa from '../VexCroppa/VexCroppa';
-
 
   const imageNameFromUrl = (url) => {
     const { pathname } = parsePath(url);
-    const arr = pathname.split('/');
-
-    return 'aaa';
-  }
+    return pathname.split('/').pop();
+  };
 
   export default {
     name: 'VexImageInput',
 
     components: {
-      VexTooltip,
+      // VexTooltip,
       VexCroppa
     },
 
@@ -148,6 +143,11 @@
       noRotate: {
         type: Boolean,
         default: false
+      },
+
+      mask: {
+        type: String,
+        default: null
       }
     },
 
@@ -156,21 +156,40 @@
         croppa: {},
 
         isInited: false,
+        ready: false,
 
         sliderVal: 0,
         sliderMin: 0,
         sliderMax: 0,
 
         onDrawDebounce: null,
-        chosedFile: null
+        onInitialImageLoadedDebounce: null,
+
+        chosedFile: null,
+        checkedInitialImage: ''
       };
     },
 
     created() {
-      this.onDrawDebounce = debounce(this.onDraw, 500);
+      if (this.initialImage) {
+        this.checkInitialImage()
+          .then((ok) => {
+            if (ok) this.checkedInitialImage = this.initialImage;
+            this.ready = true;
+          });
+      } else {
+        this.ready = true;
+      }
+      this.onDrawDebounce = debounce(this.onDraw, 1500);
+      this.onInitialImageLoadedDebounce = debounce(this.onInitialImageLoaded, 1500);
     },
 
     methods: {
+      checkInitialImage() {
+        return fetch(this.initialImage)
+          .then((res) => res.ok);
+      },
+
       onInit() {
         this.isInited = true;
       },
@@ -234,7 +253,7 @@
 </script>
 
 <style lang="scss">
-  .d-mage-input {
+  .vex-mage-input {
     &__mask {
       position: absolute;
       width: 100%;

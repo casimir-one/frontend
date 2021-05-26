@@ -1,4 +1,5 @@
 import { TenantService } from '@deip/tenant-service';
+import { proxydi } from '@deip/proxydi';
 
 const tenantService = TenantService.getInstance();
 
@@ -8,35 +9,35 @@ const STATE = {
 
 const GETTERS = {
   data: (state) => state.tenant
-}
+};
 
 const ACTIONS = {
-  get({ commit }, tenantId) {
-    return tenantService.getTenant(tenantId)
-    .then((result) => {
-      commit('setData', result);
-    });
+  get({ commit }) {
+    return tenantService.getTenant(proxydi.get('env').TENANT)
+      .then((result) => {
+        commit('setData', result);
+      });
   },
 
   updateProfile({ commit }, payload) {
     return tenantService.updateTenantProfile(payload)
-    .then((result) => {
-      commit('setData', result);
-    });
+      .then((result) => {
+        commit('setData', result);
+      });
   },
 
   updateNetworkSettings({ commit }, payload) {
     return tenantService.updateNetworkSettings(payload)
-    .then((result) => {
-      commit('setData', result);
-    });
+      .then((result) => {
+        commit('setData', result);
+      });
   },
 
   updateSettings({ commit }, payload) {
     return tenantService.updateTenantSettings(payload)
-    .then((result) => {
-      commit('setData', result);
-    });
+      .then((result) => {
+        commit('setData', result);
+      });
   }
 };
 

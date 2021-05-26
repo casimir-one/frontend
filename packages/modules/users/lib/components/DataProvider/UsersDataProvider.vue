@@ -82,7 +82,7 @@
       loadUsers() {
         this.loading = true;
 
-        this.$store.dispatch('users/get', {
+        this.$store.dispatch('users/getList', {
           users: wrapInArray(this.users),
           teamId: this.teamId,
           tenantId: this.tenantId

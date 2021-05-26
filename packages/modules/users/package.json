@@ -21,12 +21,15 @@
   },
   "dependencies": {
     "@deip/access-service": "1.111.2",
+    "@deip/attributes-module": "^1.111.2",
     "@deip/platform-fns": "1.111.2",
     "@deip/proxydi": "1.111.2",
+    "@deip/schema-renderer": "^1.111.2",
     "@deip/toolbox": "1.111.2",
     "@deip/users-service": "1.111.2",
     "@deip/validation-plugin": "1.111.2",
-    "@deip/vuetify-extended": "1.111.2"
+    "@deip/vuetify-extended": "1.111.2",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.95.0",

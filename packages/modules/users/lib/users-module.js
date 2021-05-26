@@ -1,8 +1,7 @@
 import { proxydi } from '@deip/proxydi';
 import { usersStore, currentUserStore } from './store';
 
-// eslint-disable-next-line no-unused-vars
-const install = (Vue, options = {}) => {
+const install = (Vue) => {
   if (install.installed) return;
   install.installed = true;
 

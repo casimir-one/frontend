@@ -12,20 +12,22 @@ export const clearBlock = (node) => {
     children
   } = cloneDeep(node);
 
-  const uid =genObjectId({ salt: Math.random() + new Date().getTime().toString() })
+  const uid = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
 
   return {
-    id, uid, is,
+    id,
+    uid,
+    is,
     ...(hasValue(data) ? { data } : {}),
     ...(children ? { children: children.map((ch) => clearBlock(ch)) } : {})
   };
-}
+};
 
 export const normalizeBlocksObject = (obj, ext = {}) => {
   const clone = cloneDeep(obj);
   for (const { node } of new RecursiveIterator(clone)) {
     if (ifValidBlock(node)) {
-      node.id = genObjectId(node);
+      node.id = genObjectId({ name: node.name, is: node.is });
 
       for (const key of Object.keys(ext)) {
         if (!node[key]) {

@@ -1,42 +1,45 @@
-import { isObject, isString, isNumeric } from './verification'
+import {
+  isObject, isString, isNumeric, isArray
+} from './verification';
 
-export function addValueToEnum(_enum, key, value) {
+export function addValueToEnum(enumObj, key, value) {
   if (typeof value === 'undefined') {
+    // eslint-disable-next-line no-param-reassign
     value = Math.max.apply(
       null,
-      [...Object.values(_enum).map((it) => +it).filter((it) => !isNaN(it)), -1]) + 1;
+      [...Object.values(enumObj).map((it) => +it).filter((it) => !Number.isNaN(it)), -1]
+    ) + 1;
   }
 
   if (Number.isNaN(value)) {
-    _enum[key] = value;
+    // eslint-disable-next-line no-param-reassign
+    enumObj[key] = value;
   } else {
-    _enum[_enum[key] = value] = key;
+    // eslint-disable-next-line no-param-reassign
+    enumObj[enumObj[key] = value] = key;
   }
 }
 
-
 export function createEnum(items) {
-  let _enum = {};
+  const enumObj = {};
 
-  if (Array.isArray(items)) {
-    items.forEach((it) => isString(it) ? addValueToEnum(_enum, it) : addValueToEnum(_enum, it.key, it.value));
+  if (isArray(items)) {
+    items.forEach((it) => (isString(it)
+      ? addValueToEnum(enumObj, it)
+      : addValueToEnum(enumObj, it.key, it.value)));
   }
 
   if (isObject(items)) {
-    Object.keys(items).forEach((it) => isString(it) && addValueToEnum(_enum, it, items[it]));
+    Object.keys(items).forEach((it) => isString(it) && addValueToEnum(enumObj, it, items[it]));
   }
 
-  const keys = () => {
-    return Object.keys(_enum)
-      .reduce((res, key) => ([...res, ...(!isNumeric(key) ? [key] : [])]), [])
-  }
-  const values = () => {
-    return Object.keys(_enum)
-      .reduce((res, key) => ([...res, ...(isNumeric(key) ? [key] : [])]), [])
-  }
+  const keys = () => Object.keys(enumObj)
+    .reduce((res, key) => ([...res, ...(!isNumeric(key) ? [key] : [])]), []);
+  const values = () => Object.keys(enumObj)
+    .reduce((res, key) => ([...res, ...(isNumeric(key) ? [parseInt(key, 10)] : [])]), []);
 
   return {
-    ..._enum,
+    ...enumObj,
     ...{
       keys,
       values

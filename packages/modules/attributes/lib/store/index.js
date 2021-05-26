@@ -9,6 +9,7 @@ import {
 } from '@deip/platform-fns';
 
 const attributesService = AttributesService.getInstance();
+const idKey = '_id';
 
 const STATE = {
   data: []
@@ -16,7 +17,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: 'id' }),
+  one: oneGetterFactory({ selectorKey: idKey }),
   listByScopes: (state) => {
     const initialListByScopes = {
       [ATTR_SCOPES.PROJECT]: [],
@@ -33,6 +34,13 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
+    return attributesService.getAttributes()
+      .then((result) => {
+        commit('setList', result);
+      });
+  },
+
+  getNetworkList({ commit }) {
     return attributesService.getNetworkAttributes()
       .then((result) => {
         commit('setList', result);
@@ -46,17 +54,17 @@ const ACTIONS = {
       });
   },
 
-  create({ commit }, attribute) {
+  create({ dispatch }, attribute) {
     return attributesService.createAttribute(attribute)
-      .then((result) => {
-        commit('setOne', result);
+      .then(() => {
+        dispatch('getList');
       });
   },
 
-  update({ commit }, attribute) {
+  update({ dispatch }, attribute) {
     return attributesService.updateAttribute(attribute)
-      .then((result) => {
-        commit('setOne', result);
+      .then(() => {
+        dispatch('getList');
       });
   },
 
@@ -69,9 +77,9 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' }),
-  setOne: setOneMutationFactory({ mergeKey: 'id' }),
-  remove: removeFromListMutationFactory({ mergeKey: 'id' })
+  setList: setListMutationFactory({ mergeKey: idKey }),
+  setOne: setOneMutationFactory({ mergeKey: idKey }),
+  remove: removeFromListMutationFactory({ mergeKey: idKey })
 };
 
 export const attributesStore = {
