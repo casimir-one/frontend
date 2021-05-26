@@ -1,5 +1,6 @@
 import where from 'filter-where';
-import { mergeDeep } from './objects';
+import { merge } from 'lodash/fp';
+
 import { isArray } from './verification';
 
 const defaultOpts = { // as object for future extensions
@@ -23,9 +24,9 @@ export const collectionMerge = (
   const result = [...col1];
 
   for (const item of col2) {
-    const idx = col1.findIndex((i) => i[key] === item[key]);
+    const idx = col1.findIndex((i) => i[key] && item[key] && i[key] === item[key]);
     if (idx >= 0) {
-      result[idx] = mergeDeep(result[idx], item);
+      result[idx] = merge(result[idx], item);
     } else {
       result.push(item);
     }

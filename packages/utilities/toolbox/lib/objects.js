@@ -4,22 +4,6 @@ import crc32 from 'crc/crc32';
 
 import { isObject } from './verification';
 
-export const mergeDeep = (source = {}, target = {}) => {
-  const res = { ...source };
-  for (const key in target) {
-    const sourceProperty = res[key];
-    const targetProperty = target[key];
-
-    if (isObject(sourceProperty) && isObject(targetProperty)) {
-      res[key] = mergeDeep(sourceProperty, targetProperty);
-    } else {
-      res[key] = targetProperty;
-    }
-  }
-
-  return res;
-};
-
 export const deepFreeze = (obj) => {
   const propsNames = Object.getOwnPropertyNames(obj);
   propsNames.forEach((name) => {
@@ -36,20 +20,6 @@ export const camelizeObjectKeys = (obj) => {
   if (!obj) return {};
   return Object.keys(obj)
     .reduce((o, key) => ({ ...o, ...{ [camelCase(key)]: obj[key] } }), {});
-};
-
-export const excludeObjectKeys = (obj, keys = []) => {
-  if (!keys.length) return obj;
-
-  const filtered = {};
-
-  for (const key of Object.keys(obj)) {
-    if (!keys.includes(key)) {
-      filtered[key] = obj[key];
-    }
-  }
-
-  return filtered;
 };
 
 export const genObjectId = (obj, turns = 3) => {

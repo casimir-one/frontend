@@ -8,8 +8,14 @@ export const listGetterFactory = (opts = {}) => {
     storeKey = 'data'
   } = opts;
 
-  return (state) => (query = {}) => collectionList(state[storeKey], query);
-}
+  return (state) => (query = {}) => {
+    if (!state[storeKey]) {
+      throw new Error(`state.${storeKey} is undefined`);
+    }
+
+    return collectionList(state[storeKey], query);
+  };
+};
 export const listGetter = listGetterFactory();
 
 export const oneGetterFactory = (opts = {}) => {
@@ -22,11 +28,14 @@ export const oneGetterFactory = (opts = {}) => {
     if (!itemId) {
       throw new Error(`${selectorKey} id not specified`);
     }
+    if (!state[storeKey]) {
+      throw new Error(`state.${storeKey} is undefined`);
+    }
 
     return collectionOne(state[storeKey], {
       [selectorKey]: itemId,
       ...query
-    })
-  }
-}
+    });
+  };
+};
 export const oneGetter = oneGetterFactory();

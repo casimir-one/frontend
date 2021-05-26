@@ -1,4 +1,4 @@
-import { mergeDeep } from './objects';
+import { merge } from 'lodash/fp';
 
 const getMessagesByLocales = (locales) => {
   const messages = {};
@@ -18,6 +18,6 @@ export const setLocalesMessages = (i18n, locales) => {
   const messagesByLocales = getMessagesByLocales(locales);
   for (const [locale, messages] of Object.entries(messagesByLocales)) {
     const appMessages = i18n.getLocaleMessage(locale);
-    i18n.setLocaleMessage(locale, mergeDeep(appMessages, messages));
+    i18n.setLocaleMessage(locale, merge(appMessages, messages));
   }
 };

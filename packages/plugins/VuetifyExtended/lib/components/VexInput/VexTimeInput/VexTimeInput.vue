@@ -18,9 +18,14 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { createRange } from 'vuetify/lib/util/helpers';
 
-  import { padStart } from '@deip/toolbox';
+  import { padCharsStart } from 'lodash/fp';
 
   import { VexAutocomplete } from '../../VexAutocomplete';
+
+  const formatTime = (h, m) => {
+    const addLeadingZero = padCharsStart('0')(2);
+    return `${addLeadingZero(h)}:${addLeadingZero(m)}`;
+  };
 
   export default {
     name: 'VexTimeInput',
@@ -62,10 +67,10 @@
               if (this.date) {
                 if ((h === getHours(currentDate) && m > getMinutes(currentDate))
                   || h !== getHours(currentDate)) {
-                  list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
+                  list.push(formatTime(h, m));
                 }
               } else {
-                list.push(`${padStart(h, 2)}:${padStart(m, 2)}`);
+                list.push(formatTime(h, m));
               }
             }
           });
