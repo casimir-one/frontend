@@ -1,7 +1,7 @@
 export const contextMixin = {
   methods: {
-    hasSlot() {
-      return (name) => !!(this.$slots[name] || this.$scopedSlots[name])
+    hasSlot(name) {
+      return !!(this.$slots[name] || this.$scopedSlots[name]);
     }
   }
-}
+};

@@ -30,13 +30,13 @@
 </template>
 
 <script>
-  import VexStack from '../VexStack';
+  import { VexStack } from '../VexStack';
   import { contextMixin } from '../../composables';
 
   export default {
     name: 'VexBlock',
     components: { VexStack },
-    mixins: [ contextMixin ],
+    mixins: [contextMixin],
     props: {
       compact: {
         type: Boolean,
@@ -57,9 +57,15 @@
       }
     },
     computed: {
-      hasTitle() { return !!this.title || this.hasSlot('title'); },
-      hasSubtitle() { return !!this.subtitle || this.hasSlot('subtitle'); },
-      hasHeader() { return this.hasTitle || this.hasSubtitle; },
+      hasTitle() {
+        return !!this.title || this.hasSlot('title');
+      },
+      hasSubtitle() {
+        return !!this.subtitle || this.hasSlot('subtitle');
+      },
+      hasHeader() {
+        return this.hasTitle || this.hasSubtitle;
+      },
 
       titleMarginComputed() {
         return this.compact ? 16 : this.titleMargin;
@@ -68,20 +74,23 @@
       titleClassList() {
         return {
           'text-h6': this.compact,
-          'text-h5': !this.compact
+          'text-h5': !this.compact,
+          'vex-block-title': true
         };
       },
       headerClassList() {
         return {
           'd-flex': true,
-          'align-center': true
+          'align-center': true,
+          'vex-block-header': true
         };
       },
 
       subtitleClassList() {
         return {
           'text-body-2': true,
-          'text--secondary': true
+          'text--secondary': true,
+          'vex-block-subtitle': true
         };
       }
     }
