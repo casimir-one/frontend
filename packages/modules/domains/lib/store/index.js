@@ -1,6 +1,6 @@
 import { arrayToTree } from 'performant-array-to-tree';
 
-import { DisciplinesService } from '@deip/disciplines-service';
+import { DomainsService } from '@deip/domains-service';
 
 import {
   listGetter,
@@ -10,7 +10,7 @@ import {
 
 import { collectionList } from '@deip/toolbox';
 
-const domainsService = DisciplinesService.getInstance();
+const domainsService = DomainsService.getInstance();
 
 const STATE = {
   data: []
@@ -33,9 +33,9 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
-    return domainsService.getAllDisciplines()
-      .then((disciplines) => {
-        commit('setList', disciplines);
+    return domainsService.getAllDomains()
+      .then((domains) => {
+        commit('setList', domains);
       });
   }
 };
