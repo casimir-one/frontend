@@ -29,25 +29,27 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  get({ commit, dispatch }) {
-    if (accessService.isLoggedIn()) {
-      const { username } = accessService.getDecodedToken();
-
-      return usersService.getUser(username)
-        .then((res) => {
-          if (res) {
-            const { account, profile } = res;
-            const privKey = accessService.getOwnerWif();
-
-            commit('setData', { username, account, profile, privKey });
-          } else {
-            console.error('No currentUser data')
-            dispatch('auth/signOut', null, { root: true });
-          }
-        });
+  get({ commit, dispatch, rootGetters }) {
+    if (!rootGetters['auth/isLoggedIn']) {
+      return Promise.resolve(false);
     }
 
-    return Promise.resolve(false);
+    const username = rootGetters['auth/username'];
+
+    return usersService.getUser(username)
+      .then((res) => {
+        if (res) {
+          const { account, profile } = res;
+          const privKey = accessService.getOwnerWif();
+
+          commit('setData', {
+            username, account, profile, privKey
+          });
+        } else {
+          console.error('No currentUser data');
+          dispatch('auth/signOut', null, { root: true });
+        }
+      });
   },
 
   clear({ commit }) {
@@ -56,7 +58,9 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setData(state, { username, account, profile, privKey }) {
+  setData(state, {
+    username, account, profile, privKey
+  }) {
     state.username = username;
     state.account = account;
     state.profile = profile;
