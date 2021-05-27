@@ -1,5 +1,12 @@
-import { AttributesHttp } from './AttributesHttp';
 import { Singleton } from '@deip/toolbox';
+import {
+  CmdEnvelope,
+  CreateAttributeCmd,
+  UpdateAttributeCmd,
+  DeleteAttributeCmd
+} from '@deip/command-models';
+import { ApplicationJsonMessage } from '@deip/request-models';
+import { AttributesHttp } from './AttributesHttp';
 
 class AttributesService extends Singleton {
   attributesHttp = AttributesHttp.getInstance();
@@ -29,15 +36,24 @@ class AttributesService extends Singleton {
   }
 
   createAttribute(attribute) {
-    return this.attributesHttp.createAttribute(attribute);
+    const createAttributeCmd = new CreateAttributeCmd(attribute);
+    const cmdEnvelope = new CmdEnvelope([createAttributeCmd]);
+    const msg = new ApplicationJsonMessage({}, cmdEnvelope);
+    return this.attributesHttp.createAttribute(msg);
   }
 
   updateAttribute(attribute) {
-    return this.attributesHttp.updateAttribute(attribute);
+    const updateAttributeCmd = new UpdateAttributeCmd(attribute);
+    const cmdEnvelope = new CmdEnvelope([updateAttributeCmd]);
+    const msg = new ApplicationJsonMessage({}, cmdEnvelope);
+    return this.attributesHttp.updateAttribute(msg);
   }
 
   deleteAttribute(attributeId) {
-    return this.attributesHttp.deleteAttribute(attributeId);
+    const deleteAttributeCmd = new DeleteAttributeCmd({ attributeId });
+    const cmdEnvelope = new CmdEnvelope([deleteAttributeCmd]);
+    const msg = new ApplicationJsonMessage({}, cmdEnvelope);
+    return this.attributesHttp.deleteAttribute(msg);
   }
 }
 

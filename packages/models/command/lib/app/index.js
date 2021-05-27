@@ -8,6 +8,9 @@ import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
 import UpdateAccountCmd from './impl/UpdateAccountCmd';
+import CreateAttributeCmd from './impl/CreateAttributeCmd';
+import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
+import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 
 export {
   CmdEnvelope,
@@ -19,5 +22,8 @@ export {
   CreateProposalCmd,
   UpdateProposalCmd,
   DeclineProposalCmd,
-  UpdateAccountCmd
+  UpdateAccountCmd,
+  CreateAttributeCmd,
+  UpdateAttributeCmd,
+  DeleteAttributeCmd
 }

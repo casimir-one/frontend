@@ -8,7 +8,9 @@ import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
 import UpdateAccountCmd from './impl/UpdateAccountCmd';
-
+import CreateAttributeCmd from './impl/CreateAttributeCmd';
+import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
+import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 
 const APP_CMD = createEnum({
   CREATE_ACCOUNT: 1,
@@ -19,7 +21,10 @@ const APP_CMD = createEnum({
   JOIN_PROJECT: 6,
   CREATE_PROPOSAL: 7,
   UPDATE_PROPOSAL: 8,
-  DECLINE_PROPOSAL: 9
+  DECLINE_PROPOSAL: 9,
+  CREATE_ATTRIBUTE: 10,
+  UPDATE_ATTRIBUTE: 11,
+  DELETE_ATTRIBUTE: 12
 });
 
 
@@ -47,7 +52,10 @@ const APP_CMD_INFO = {
   [APP_CMD.JOIN_PROJECT]: { class: JoinProjectCmd },
   [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd },
   [APP_CMD.UPDATE_PROPOSAL]: { class: UpdateProposalCmd },
-  [APP_CMD.DECLINE_PROPOSAL]: { class: DeclineProposalCmd }
+  [APP_CMD.DECLINE_PROPOSAL]: { class: DeclineProposalCmd },
+  [APP_CMD.CREATE_ATTRIBUTE]: { class: CreateAttributeCmd },
+  [APP_CMD.UPDATE_ATTRIBUTE]: { class: UpdateAttributeCmd },
+  [APP_CMD.DELETE_ATTRIBUTE]: { class: DeleteAttributeCmd }
 }
 
 
