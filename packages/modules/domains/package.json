@@ -23,7 +23,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/disciplines-service": "1.111.0",
+    "@deip/domains-service": "1.111.2",
     "@deip/platform-fns": "1.111.2",
     "@deip/proxydi": "1.111.2",
     "@deip/toolbox": "1.111.2",
