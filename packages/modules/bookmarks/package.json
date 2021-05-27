@@ -26,6 +26,7 @@
     "@deip/user-service": "1.111.2"
   },
   "peerDependencies": {
+    "@deip/auth-module": "^1.111.1",
     "@deip/users-module": "^1.98.0",
     "vue-i18n": "^8.22.3",
     "vuetify": "^2.4.2",
