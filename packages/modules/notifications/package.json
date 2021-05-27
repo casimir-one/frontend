@@ -25,6 +25,7 @@
     "@deip/user-service": "1.111.2"
   },
   "peerDependencies": {
+    "@deip/auth-module": "^1.111.1",
     "@deip/users-module": "^1.98.0",
     "vuex": "^3.6.0"
   }
