@@ -1,4 +1,4 @@
-import { ResearchGroupService } from '@deip/research-group-service';
+import { TeamService } from '@deip/team-service';
 
 import {
   listGetter,
@@ -7,19 +7,7 @@ import {
   setOneMutation
 } from '@deip/platform-fns/lib/store';
 
-const teamsService = ResearchGroupService.getInstance(); // TODO: need service rename
-
-// start temp
-const DEIP_1_PERCENT = 10000 / 100;
-const toAssetUnits = (
-  amount,
-  precision = 3,
-  asset = 'TESTS'
-) => {
-  const value = parseFloat(amount).toFixed(precision);
-  return `${value} ${asset}`;
-};
-// end temp
+const teamService = TeamService.getInstance();
 
 const STATE = {
   data: []
@@ -32,10 +20,10 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }, payload = {}) {
-    let getListPromise = teamsService.getResearchGroupsListing();
+    let getListPromise = teamService.getTeamsListing();
 
     if (payload.teams && payload.teams.length > 0) {
-      getListPromise = teamsService.getResearchGroups(payload.teams);
+      getListPromise = teamService.getTeams(payload.teams);
     }
 
     return getListPromise
@@ -47,9 +35,19 @@ const ACTIONS = {
       });
   },
 
+  getUserTeams({ commit }, username) {
+    return teamService.getTeamsByUser(username)
+      .then((res) => {
+        commit('setList', res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+
   getOne({ commit }, payload) {
-    return teamsService
-      .getResearchGroup(payload)
+    return teamService
+      .getTeam(payload)
       .then((res) => {
         commit('setOne', res);
       })
@@ -60,74 +58,79 @@ const ACTIONS = {
 
   create({ dispatch }, payload) {
     const {
-      name,
-      description,
-      members,
+      attributes,
+      formData,
       creator
     } = payload;
 
-    const auth = {
-      account_auths: [[creator.username, 1]],
-      key_auths: [],
-      weight_threshold: 1
-    };
-
-    return teamsService
-      .createResearchGroup(
-        creator.privKey,
+    return teamService
+      .createTeam(
+        { privKey: creator.privKey },
         {
-          fee: toAssetUnits(0),
           creator: creator.username,
-          accountOwnerAuth: auth,
-          accountActiveAuth: auth,
-          accountMemoPubKey: creator.account.memo_key,
-          accountJsonMetadata: undefined,
-          accountExtensions: []
-        },
-        {
-          researchGroupName: name,
-          researchGroupDescription: description,
-          researchGroupThresholdOverrides: []
+          memoKey: creator.account.memo_key,
+          attributes,
+          formData
         }
-      ).then((team) => {
-        dispatch('get');
+      )
+      .then((res) => {
+        const { model: { entityId: teamId } } = res;
+        dispatch('getOne', teamId);
+        // XXX: invites functionality is not ready
+        // const invites = members
+        //   .filter((m) => m.account.name !== creator.username)
+        //   .map((m) => ({
+        //     account: m.account.name,
+        //     rgt: m.stake * DEIP_1_PERCENT,
+        //     notes: ''
+        //   }));
 
-        const { external_id: teamId } = team;
+        // const invitesPromises = invites.map((invitee) => teamService.createResearchGroupInvite(
+        //   { privKey: this.user.privKey, username: this.user.username },
+        //   {
+        //     researchGroup: teamId,
+        //     member: invitee.account,
+        //     rewardShare: '0.00 %',
+        //     researches: [],
+        //     extensions: []
+        //   },
+        //   {
+        //     notes: `${name} invites you to join them`
+        //   }
+        // ));
 
-        // TODO: rethink and use getUsers?
-        const invites = members
-          .filter((m) => m.account.name !== creator.username)
-          .map((m) => ({
-            account: m.account.name,
-            rgt: m.stake * DEIP_1_PERCENT,
-            notes: ''
-          }));
+        // return Promise.all(invitesPromises)
+        //   .then((result) => ({
+        //     team,
+        //     invites: result
+        //   }))
+        //   .catch((err) => {
+        //     console.error(err);
+        //   });
+      });
+  },
 
-        const invitesPromises = invites.map((invitee) => teamsService.createResearchGroupInvite(
-          { privKey: this.user.privKey, username: this.user.username },
-          {
-            researchGroup: teamId,
-            member: invitee.account,
-            rewardShare: '0.00 %',
-            researches: [],
-            extensions: []
-          },
-          {
-            notes: `${name} invites you to join them`
-          }
-        ));
+  update({ dispatch }, payload) {
+    const {
+      teamId,
+      updater,
+      formData,
+      attributes,
+      proposalInfo: { isProposal, isProposalApproved, proposalLifetime }
+    } = payload;
 
-        return Promise.all(invitesPromises)
-          .then((result) => ({
-            team,
-            invites: result
-          }))
-          .catch((err) => {
-            console.error(err);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
+    return teamService
+      .updateTeamAccount(
+        { privKey: updater.privKey },
+        {
+          teamId,
+          creator: updater.username,
+          attributes,
+          formData
+        },
+        { isProposal, isProposalApproved, proposalLifetime }
+      ).then(() => {
+        dispatch('getOne', teamId);
       });
   }
 };

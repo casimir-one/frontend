@@ -2,159 +2,120 @@
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form
       :disabled="loading"
-      @submit.prevent="handleSubmit(createTeam)"
+      @submit.prevent="handleSubmit(onSubmit)"
     >
-      <vex-stack :gutter="formGutter">
-        <slot name="prepend"/>
+      <!-- TODO: form renderer will be here -->
 
-        <vex-stack :gutter="fieldsGutter">
-          <validation-provider
-            v-slot="{ errors }"
-            :name="nameLabel"
-            rules="required"
-          >
-            <v-text-field
-              v-model="formModel.name"
-              :label="nameLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
+      <v-divider />
 
-          <validation-provider
-            v-slot="{ errors }"
-            :name="descriptionLabel"
-            rules="required"
-          >
-            <v-textarea
-              v-model="formModel.description"
-              :label="descriptionLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
-        </vex-stack>
+      <div class="d-flex">
+        <v-spacer />
+        <v-btn
+          color="primary"
+          text
+          :disabled="loading"
+          @click="$router.back()"
+        >
+          {{ cancelLabel }}
+        </v-btn>
+        <v-btn
+          type="submit"
+          color="primary"
+          depressed
+          :disabled="invalid || loading"
+          :loading="loading"
+        >
+          {{ submitLabel }}
+        </v-btn>
+      </div>
 
-        <v-divider />
-
-        <div class="d-flex">
-          <v-spacer />
-          <v-btn
-            color="primary"
-            text
-            :disabled="loading"
-            @click="$router.back()"
-          >
-            {{ cancelLabel }}
-          </v-btn>
-          <v-btn
-            type="submit"
-            color="primary"
-            depressed
-            :disabled="invalid || loading"
-            :loading="loading"
-          >
-            {{ submitLabel }}
-          </v-btn>
-        </div>
-
-        <slot name="append"/>
-
-      </vex-stack>
+      <slot name="append" />
     </v-form>
   </validation-observer>
 </template>
 
 <script>
-  import { TEAM_FORM_MODES } from '../variables';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { TEAM_FORM_MODES } from '../constants';
 
   export default {
     name: 'TeamForm',
 
-    components: {
-      VexStack
-    },
-
     props: {
       mode: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: TEAM_FORM_MODES.CREATE,
         validation(value) {
-          return TEAM_FORM_MODES.keys().indexOf(value) !== -1
+          return TEAM_FORM_MODES.keys().indexOf(value) !== -1;
         }
       },
-
-      nameLabel: {
-        type: String,
-        default: 'Name'
-      },
-
-      descriptionLabel: {
-        type: String,
-        default: 'Description'
-      },
-
-      fieldsProps: {
+      team: {
         type: Object,
-        default: () => ({
-          outlined: true
-        })
+        default: () => ({})
       },
-
-      formGutter: {
-        type: [ String, Number ],
-        default: 48
-      },
-
-      fieldsGutter: {
-        type: [ String, Number ],
-        default: 8
-      },
-
       cancelLabel: {
         type: String,
-        default: 'Cancel'
+        default() { return this.$t('module.teams.form.cancel'); }
       },
-
       submitLabel: {
         type: String,
-        default: 'Create'
-      },
-    },
-    data() {
-      return {
-        TEAM_FORM_MODES,
-        loading: false,
-        formModel: {
-          name: '',
-          description: '',
-          members: []
-        }
+        default() { return this.$t('module.teams.form.create'); }
       }
     },
+
+    data() {
+      return {
+        loading: false
+      };
+    },
+
     methods: {
       onSubmit() {
-        this.createTeam();
+        if (this.mode === TEAM_FORM_MODES.CREATE) {
+          this.createTeam();
+        } else if (this.mode === TEAM_FORM_MODES.EDIT) {
+          this.updateTeam();
+        }
       },
 
       createTeam() {
         this.loading = true;
-        console.log(this.$currentUser)
 
         return this.$store.dispatch(
           'teams/create',
           {
-            ...this.formModel,
+            // TODO
+            //  attributes,
+            //  formData,
             ...{
               creator: this.$currentUser
             }
           }
         )
-        .then((res) => {
-          this.loading = false;
-        })
+          .finally(() => {
+            this.loading = false;
+          });
+      },
+
+      updateTeam() {
+        this.loading = true;
+
+        return this.$store.dispatch(
+          'teams/create',
+          {
+            // TODO
+            //  attributes,
+            //  formData,
+            // proposalInfo,
+            teamId: this.team.external_id,
+            ...{
+              updater: this.$currentUser
+            }
+          }
+        )
+          .finally(() => {
+            this.loading = false;
+          });
       }
     }
-  }
+  };
 </script>
