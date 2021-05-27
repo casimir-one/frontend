@@ -5,12 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.111.2](https://github.com/DEIPworld/deip-modules/compare/v1.111.1...v1.111.2) (2021-05-27)
 
-**Note:** Version bump only for package @deip/team-service
-
-
-
-
-
-## [1.111.1](https://github.com/DEIPworld/deip-modules/compare/v1.111.0...v1.111.1) (2021-05-15)
-
-**Note:** Version bump only for package @deip/team-service
+**Note:** Version bump only for package @deip/domains-service
