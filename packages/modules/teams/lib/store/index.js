@@ -45,6 +45,14 @@ const ACTIONS = {
       });
   },
 
+  getCurrentUserTeams({ dispatch, rootGetters }) {
+    if (!rootGetters['auth/isLoggedIn']) {
+      return Promise.resolve(false);
+    }
+
+    return dispatch('getUserTeams', rootGetters['auth/username']);
+  },
+
   getOne({ commit }, payload) {
     return teamService
       .getTeam(payload)
