@@ -1,6 +1,6 @@
 {
   "name": "@deip/domains-module",
-  "version": "1.111.0",
+  "version": "1.111.2",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,10 +24,10 @@
   },
   "dependencies": {
     "@deip/disciplines-service": "1.111.0",
-    "@deip/platform-fns": "1.111.0",
-    "@deip/proxydi": "1.111.0",
-    "@deip/toolbox": "1.111.0",
-    "@deip/vuetify-extended": "1.111.0",
+    "@deip/platform-fns": "1.111.2",
+    "@deip/proxydi": "1.111.2",
+    "@deip/toolbox": "1.111.2",
+    "@deip/vuetify-extended": "1.111.2",
     "performant-array-to-tree": "^1.8.1"
   }
 }

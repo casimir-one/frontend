@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.111.2](https://github.com/DEIPworld/deip-modules/compare/v1.111.1...v1.111.2) (2021-05-27)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix routes access checks ([d3d007c](https://github.com/DEIPworld/deip-modules/commit/d3d007c253af615997ca7b721d0fbdb3428f1229))
+* **@deip/auth-module:** remove get current user on module install ([85269a3](https://github.com/DEIPworld/deip-modules/commit/85269a3bd0914e2bf288449ab7ebafb1a445f68d))
+
+
+
+
+
 ## [1.111.1](https://github.com/DEIPworld/deip-modules/compare/v1.111.0...v1.111.1) (2021-05-15)
 
 

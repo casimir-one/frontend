@@ -1,6 +1,6 @@
 {
   "name": "@deip/command-models",
-  "version": "1.111.1",
+  "version": "1.111.2",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@deip/rpc-client": "1.98.0",
-    "@deip/toolbox": "1.111.0",
+    "@deip/toolbox": "1.111.2",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   }
