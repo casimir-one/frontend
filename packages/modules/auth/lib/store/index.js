@@ -40,9 +40,7 @@ const ACTIONS = {
 
   restoreData({ commit }) {
     if (accessService.isLoggedIn()) {
-      commit('setData', {
-        username: accessService.getDecodedToken().username
-      });
+      commit('setData');
     }
   },
 
@@ -91,8 +89,6 @@ const ACTIONS = {
           jwtToken: response.jwtToken,
           privateKey
         });
-
-        return dispatch('currentUser/get', null, { root: true });
       });
   },
 
@@ -119,13 +115,11 @@ const ACTIONS = {
 
   clear({ commit }) {
     commit('clearData');
-    commit('currentUser/clearData', null, { root: true });
   }
-
 };
 
 const MUTATIONS = {
-  setData(state, { jwtToken, privateKey }) {
+  setData(state, { jwtToken, privateKey } = {}) {
     if (jwtToken && privateKey) {
       accessService.setAccessToken(jwtToken, privateKey);
     }
