@@ -1,4 +1,4 @@
-import { AttributesService, ATTRIBUTE_SCOPE } from '@deip/attributes-service';
+import { AttributesService, ATTR_SCOPES } from '@deip/attributes-service';
 
 import {
   listGetter,
@@ -19,9 +19,9 @@ const GETTERS = {
   one: oneGetterFactory({ selectorKey: 'id' }),
   listByScopes: (state) => {
     const initialListByScopes = {
-      [ATTRIBUTE_SCOPE.PROJECT]: [],
-      [ATTRIBUTE_SCOPE.TEAM]: [],
-      [ATTRIBUTE_SCOPE.USER]: []
+      [ATTR_SCOPES.PROJECT]: [],
+      [ATTR_SCOPES.TEAM]: [],
+      [ATTR_SCOPES.USER]: []
     };
 
     return state.data.reduce((acc, current) => {

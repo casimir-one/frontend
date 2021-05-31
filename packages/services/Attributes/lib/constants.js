@@ -1,6 +1,6 @@
 import { createEnum } from '@deip/toolbox';
 
-const ATTRIBUTE_SCOPE = createEnum({
+const ATTR_SCOPES = createEnum({
   PROJECT: 1,
   USER: 2,
   TEAM: 3
@@ -20,6 +20,7 @@ const ATTR_TYPES = createEnum({
   NUMBER: 11,
   VIDEO_URL: 12,
   USER: 13,
+  AVATAR: 14,
   STEPPER: 501,
   DISCIPLINE: 502,
   RESEARCH_GROUP: 503,
@@ -34,6 +35,6 @@ const ATTR_TYPES = createEnum({
 });
 
 export {
-  ATTRIBUTE_SCOPE,
+  ATTR_SCOPES,
   ATTR_TYPES
 };
