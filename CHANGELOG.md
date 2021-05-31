@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.111.3](https://github.com/DEIPworld/deip-modules/compare/v1.111.2...v1.111.3) (2021-05-31)
+
+
+### Bug Fixes
+
+* **@deip/domains-module:** replace DisciplinesService with DomainsService ([cf8bf8d](https://github.com/DEIPworld/deip-modules/commit/cf8bf8d9f9ba76a20c71dcd316eb40f02c41c9c7))
+
+
+
+
+
 ## [1.111.2](https://github.com/DEIPworld/deip-modules/compare/v1.111.1...v1.111.2) (2021-05-27)
 
 

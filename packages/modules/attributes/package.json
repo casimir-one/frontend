@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-module",
-  "version": "1.111.2",
+  "version": "1.111.3",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-service": "1.111.2",
+    "@deip/attributes-service": "1.111.3",
     "@deip/platform-fns": "1.111.2",
     "@deip/proxydi": "1.111.2",
     "@deip/schema-renderer": "1.111.2",
