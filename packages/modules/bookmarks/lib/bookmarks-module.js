@@ -20,6 +20,16 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('bookmarks', bookmarksStore);
+
+    store.dispatch('bookmarks/get');
+
+    store.watch((_, getters) => getters['auth/username'], (username) => {
+      if (username) {
+        store.dispatch('bookmarks/get');
+      } else {
+        store.dispatch('bookmarks/clear');
+      }
+    });
   } else {
     throw Error('[BookmarksModule]: storeInstance is not provided');
   }
@@ -29,6 +39,7 @@ export const BookmarksModule = {
   name: 'BookmarksModule',
   deps: [
     'EnvModule',
+    'AuthModule',
     'UsersModule'
   ],
   install

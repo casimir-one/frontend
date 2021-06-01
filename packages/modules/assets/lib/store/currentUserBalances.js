@@ -17,21 +17,27 @@ const GETTERS = {
 
 const ACTIONS = {
   get({ commit, rootGetters }) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
+    if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
 
-    return assetsService.getAccountAssetsBalancesByOwner(currentUser.username)
+    return assetsService.getAccountAssetsBalancesByOwner(rootGetters['auth/username'])
       .then((balances) => {
         commit('setList',
           balances.filter((balance) => !balance.tokenized_research));
       });
+  },
+
+  clear({ commit }) {
+    commit('clear');
   }
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' })
+  setList: setListMutationFactory({ mergeKey: 'id' }),
+  clear: (state) => {
+    state.data = [];
+  }
 };
 
 export const currentUserBalancesStore = {

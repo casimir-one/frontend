@@ -15,48 +15,45 @@ const STATE = {
 };
 
 const GETTERS = {
-  list: listGetter,
+  list: listGetter
 };
 
 const ACTIONS = {
   get({ commit, rootGetters }) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
-      return Promise.resolve(false)
+    if (!rootGetters['auth/isLoggedIn']) {
+      return Promise.resolve(false);
     }
 
-    return userService.getResearchBookmarks(currentUser.username)
+    return userService.getResearchBookmarks(rootGetters['auth/username'])
       .then((bookmarks) => {
         commit('setList', bookmarks);
-      })
+      });
   },
 
   add({ commit, rootGetters }, projectId) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
+    if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
 
-    return userService.createResearchBookmark(currentUser.username, projectId)
+    return userService.createResearchBookmark(rootGetters['auth/username'], projectId)
       .then((bookmark) => {
         commit('add', bookmark);
-      })
+      });
   },
 
   remove({ commit, rootGetters }, bookmarkId) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
+    if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
 
-    return userService.removeResearchBookmark(currentUser.username, bookmarkId)
+    return userService.removeResearchBookmark(rootGetters['auth/username'], bookmarkId)
       .then(() => {
         commit('remove', bookmarkId);
-      })
+      });
   },
 
   clear({ commit }) {
-    return commit('clear');
+    commit('clear');
   }
 };
 
@@ -65,7 +62,7 @@ const MUTATIONS = {
   add: (state, bookmark) => {
     state.data.push(camelizeObjectKeys(bookmark));
   },
-  remove: removeFromListMutationFactory({ mergeKey: 'id'}),
+  remove: removeFromListMutationFactory({ mergeKey: 'id' }),
   clear: (state) => {
     state.data = [];
   }
@@ -77,4 +74,4 @@ export const bookmarksStore = {
   getters: GETTERS,
   actions: ACTIONS,
   mutations: MUTATIONS
-}
+};

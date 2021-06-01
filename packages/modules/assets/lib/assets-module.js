@@ -24,6 +24,16 @@ const install = (Vue, options = {}) => {
     store.registerModule('assets', assetsStore);
     store.registerModule('balances', balancesStore);
     store.registerModule('currentUserBalances', currentUserBalancesStore);
+
+    store.dispatch('currentUserBalances/get');
+
+    store.watch((_, getters) => getters['auth/username'], (username) => {
+      if (username) {
+        store.dispatch('currentUserBalances/get');
+      } else {
+        store.dispatch('currentUserBalances/clear');
+      }
+    });
   } else {
     throw Error('[AssetsModule]: storeInstance is not provided');
   }
@@ -37,7 +47,8 @@ export const AssetsModule = {
     'EnvModule',
     'ValidationPlugin',
     'VuetifyExtended',
-    'UsersModule'
+    'UsersModule',
+    'AuthModule'
   ],
   install
 };

@@ -21,6 +21,14 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('teams', teamsStore);
+
+    store.dispatch('teams/getCurrentUserTeams');
+
+    store.watch((_, getters) => getters['auth/username'], (username) => {
+      if (username) {
+        store.dispatch('teams/getCurrentUserTeams');
+      }
+    });
   } else {
     throw Error('[TeamsModule]: storeInstance is not provided');
   }
@@ -31,7 +39,8 @@ export const TeamsModule = {
   deps: [
     'EnvModule',
     'ValidationPlugin',
-    'VuetifyExtended'
+    'VuetifyExtended',
+    'AuthModule'
   ],
   install
 };

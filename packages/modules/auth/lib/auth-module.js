@@ -1,12 +1,9 @@
-import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
 
 import { authStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
-
-const accessService = AccessService.getInstance();
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
@@ -26,7 +23,7 @@ const install = (Vue, options = {}) => {
     throw Error('[AuthModule]: i18nInstance is not provided');
   }
 
-  if (store && router) {
+  if (router) {
     // for guests
     router.beforeEach((to, from, next) => {
       if (to.meta.requiresAuth) {
@@ -54,12 +51,12 @@ const install = (Vue, options = {}) => {
     });
 
     Vue.prototype.$signInRedirect = signInRedirect;
+  } else {
+    throw Error('[AuthModule]: routerInstance is not provided');
+  }
 
-    // Store chore //////////////
-
+  if (store) {
     store.registerModule('auth', authStore);
-
-    // Other //////////////
 
     Vue.mixin({
       computed: {
@@ -68,11 +65,9 @@ const install = (Vue, options = {}) => {
       }
     });
 
-    if (accessService.isLoggedIn()) {
-      store.dispatch('auth/restoreData');
-    }
+    store.dispatch('auth/restoreData');
   } else {
-    throw Error('[AuthModule]: routerInstance and storeInstance is not provided');
+    throw Error('[AuthModule]: storeInstance is not provided');
   }
 };
 
@@ -81,8 +76,7 @@ export const AuthModule = {
   deps: [
     'EnvModule',
     'ValidationPlugin',
-    'VuetifyExtended',
-    'UsersModule'
+    'VuetifyExtended'
   ],
   install
 };

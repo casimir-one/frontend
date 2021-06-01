@@ -18,12 +18,11 @@ const GETTERS = {
 
 const ACTIONS = {
   get({ commit, rootGetters }) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
+    if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
-    
-    return userService.getNotificationsByUser(currentUser.username)
+
+    return userService.getNotificationsByUser(rootGetters['auth/username'])
       .then((notifications) => {
         commit('setList', notifications);
       })
@@ -33,22 +32,28 @@ const ACTIONS = {
   },
 
   markAsRead({ commit, rootGetters }, notificationId) {
-    const currentUser = rootGetters['currentUser/data'];
-    if (!currentUser) {
+    if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
-    
+
     return userService
-      .markUserNotificationAsRead(currentUser.username, notificationId)
+      .markUserNotificationAsRead(rootGetters['auth/username'], notificationId)
       .then(() => {
         commit('remove', notificationId);
       });
+  },
+
+  clear({ commit }) {
+    commit('clear');
   }
 };
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  remove: removeFromListMutationFactory({ mergeKey: 'id'}),
+  remove: removeFromListMutationFactory({ mergeKey: 'id' }),
+  clear: (state) => {
+    state.data = [];
+  }
 };
 
 export const notificationsStore = {
