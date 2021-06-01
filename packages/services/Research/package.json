@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-service",
-  "version": "1.111.2",
+  "version": "1.112.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,15 +20,15 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-    "@deip/blockchain-service": "1.111.2",
-    "@deip/http-service": "1.111.2",
+    "@deip/blockchain-service": "1.112.0",
+    "@deip/http-service": "1.112.0",
     "@deip/lib-crypto": "1.21.0",
-    "@deip/proposals-service": "1.111.2",
-    "@deip/research-content-service": "1.111.2",
-    "@deip/research-group-service": "1.111.2",
+    "@deip/proposals-service": "1.112.0",
+    "@deip/research-content-service": "1.112.0",
+    "@deip/research-group-service": "1.112.0",
     "@deip/rpc-client": "1.98.0",
-    "@deip/toolbox": "1.111.2",
-    "@deip/users-service": "1.111.2"
+    "@deip/toolbox": "1.112.0",
+    "@deip/users-service": "1.112.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.0.0"

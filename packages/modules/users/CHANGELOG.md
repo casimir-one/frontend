@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.112.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
+
+
+### Features
+
+* **@deip/attributes-module:** global rebuild ([ff9f8aa](https://gitlab.com/DEIP/deip-client-modules/commit/ff9f8aabbffe26f4341462ba44353241eb669dd8))
+
+
+
+
+
 ## [1.111.2](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.1...v1.111.2) (2021-05-27)
 
 **Note:** Version bump only for package @deip/users-module

@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.112.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
+
+
+### Features
+
+* **@deip/attributes-module:** global rebuild ([ff9f8aa](https://gitlab.com/DEIP/deip-client-modules/commit/ff9f8aabbffe26f4341462ba44353241eb669dd8))
+* **@deip/platform-fns:** add changeable mixin ([6298bae](https://gitlab.com/DEIP/deip-client-modules/commit/6298baeaa8374521c5ce14a5a5eb0545b8860fcc))
+* **@deip/platform-fns:** add mixin for formatting localized dates ([3feec69](https://gitlab.com/DEIP/deip-client-modules/commit/3feec69226ae1b43d1728779e91ca89aab645850))
+
+
+
+
+
 ## [1.111.2](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.1...v1.111.2) (2021-05-27)
 
 **Note:** Version bump only for package @deip/platform-fns
