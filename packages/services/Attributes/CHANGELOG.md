@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.112.0](https://github.com/DEIPworld/deip-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
+
+
+### Features
+
+* **@deip/attributes-module:** global rebuild ([ff9f8aa](https://github.com/DEIPworld/deip-modules/commit/ff9f8aabbffe26f4341462ba44353241eb669dd8))
+
+
+
+
+
 ## [1.111.3](https://github.com/DEIPworld/deip-modules/compare/v1.111.2...v1.111.3) (2021-05-31)
 
 **Note:** Version bump only for package @deip/attributes-service

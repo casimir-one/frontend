@@ -1,6 +1,6 @@
 {
   "name": "@deip/vuetify-extended",
-  "version": "1.111.2",
+  "version": "1.112.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,7 +24,7 @@
     "vuetify": "^2.4.2"
   },
   "dependencies": {
-    "@deip/toolbox": "1.111.2",
+    "@deip/toolbox": "1.112.0",
     "date-fns": "^2.19.0",
     "find-keypath": "^1.0.0",
     "lodash": "^4.17.21",
