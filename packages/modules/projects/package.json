@@ -24,8 +24,11 @@
   },
   "dependencies": {
     "@deip/platform-fns": "1.111.2",
+    "@deip/project-service": "^1.111.2",
     "@deip/proxydi": "1.111.2",
     "@deip/research-service": "1.111.2",
+    "@deip/toolbox": "^1.111.2",
+    "@deip/vuetify-extended": "^1.111.2",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
