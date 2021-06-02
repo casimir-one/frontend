@@ -1,7 +1,9 @@
 <script>
   // TODO: Perhaps in the future it will be rewritten to own
 
+  // eslint-disable-next-line import/no-duplicates
   import component from 'vue-croppa/src/cropper?vue&type=script';
+  // eslint-disable-next-line import/no-webpack-loader-syntax,import/no-duplicates
   import template from '!raw-loader!vue-loader!vue-croppa/src/cropper?vue&type=template';
   // import render from 'vue-croppa/src/cropper.vue?vue&type=template' // return undefined :(
 
@@ -11,16 +13,15 @@
     name: 'VexCroppa',
     extends: component,
     methods: {
-      _autoSizingInit () { // hotfix
+      _autoSizingInit() { // hotfix
         this.$nextTick(() => {
-          this._setContainerSize()
-          window.addEventListener('resize', this._setContainerSize)
-        })
-      },
+          this._setContainerSize();
+          window.addEventListener('resize', this._setContainerSize);
+        });
+      }
     }
-  }
+  };
 </script>
-
 
 <style lang="scss">
   .croppa-container {
@@ -31,51 +32,65 @@
     font-size: 0;
     align-self: flex-start;
     background-color: #e6e6e6;
+
     canvas {
       transition: all 0.3s;
     }
+
     &:hover {
       opacity: 0.7;
     }
+
     &.croppa--dropzone {
       box-shadow: inset 0 0 10px #333;
+
       canvas {
         opacity: 0.5;
       }
     }
+
     &.croppa--disabled-cc {
       cursor: default;
+
       &:hover {
         opacity: 1;
       }
     }
+
     &.croppa--has-target {
       cursor: move;
+
       &:hover {
         opacity: 1;
       }
+
       &.croppa--disabled-mz {
         cursor: default;
       }
     }
+
     &.croppa--disabled {
       cursor: not-allowed;
+
       &:hover {
         opacity: 1;
       }
     }
+
     &.croppa--passive {
       cursor: default;
+
       &:hover {
         opacity: 1;
       }
     }
+
     svg {
       &.icon-remove {
         position: absolute;
         background: #fff;
         border-radius: 50%;
-        filter: drop-shadow(-2px 2px 2px rgba(0,0,0,0.7));
+        filter: drop-shadow(-2px 2px 2px rgba(0, 0, 0, 0.7));
         z-index: 10;
         cursor: pointer;
         border: 2px solid #fff;
@@ -118,6 +133,7 @@
       }
     }
   }
+
   @keyframes sk-circleFadeDelay {
     0%,
     39%,

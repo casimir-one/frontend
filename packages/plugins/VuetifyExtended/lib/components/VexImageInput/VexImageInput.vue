@@ -20,6 +20,7 @@
           :prevent-white-space="true"
           :show-remove-button="false"
           :disable-scroll-to-zoom="true"
+          :quality="croppaQuality"
 
           placeholder="Choose or drag-n-drop an image"
           :placeholder-font-size="14"
@@ -148,6 +149,11 @@
       mask: {
         type: String,
         default: null
+      },
+
+      imageWidth: {
+        type: Number,
+        default: 0
       }
     },
 
@@ -168,6 +174,15 @@
         chosedFile: null,
         checkedInitialImage: ''
       };
+    },
+
+    computed: {
+      croppaQuality() {
+        if (this.isInited && this.imageWidth) {
+          return this.imageWidth / this.$refs.croppa.$el.clientWidth;
+        }
+        return 2;
+      }
     },
 
     created() {
