@@ -82,8 +82,12 @@ const ACTIONS = {
         }
       )
       .then((res) => {
-        const { model: { entityId: teamId } } = res;
-        dispatch('getOne', teamId);
+        const { entityId } = res;
+
+        dispatch('getOne', entityId);
+
+        return res;
+
         // XXX: invites functionality is not ready
         // const invites = members
         //   .filter((m) => m.account.name !== creator.username)
