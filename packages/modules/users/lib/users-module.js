@@ -18,7 +18,7 @@ const install = (Vue) => {
       computed: {
         $currentUser() { return this.$store.getters['currentUser/data']; },
         $isAdmin() {
-          return true;
+          return this.$currentUser.profile.roles.some((r) => r.role === 'admin');
         }
       }
     });
