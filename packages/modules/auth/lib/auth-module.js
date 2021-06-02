@@ -22,7 +22,7 @@ const install = (Vue, options = {}) => {
   if (router) {
     // for guests
     router.beforeEach((to, from, next) => {
-      if (to.meta.requiresAuth) {
+      if (to.matched.some((r) => r.meta.requiresAuth)) {
         if (store.getters['auth/isLoggedIn']) {
           next();
           return;
@@ -35,7 +35,7 @@ const install = (Vue, options = {}) => {
 
     // for users
     router.beforeEach((to, from, next) => {
-      if (to.meta.guest) {
+      if (to.matched.some((r) => r.meta.guest)) {
         if (store.getters['auth/isLoggedIn']) {
           next({ name: store.getters['auth/settings'].signInRedirectRouteName });
           return;
