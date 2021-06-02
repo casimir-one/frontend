@@ -64,7 +64,7 @@
               color="primary"
               block
               depressed
-              :disabled="invalid || loading"
+              :disabled="invalid || loading || disabled"
               :loading="loading"
             >
               {{ submitLabel }}
@@ -92,6 +92,7 @@
 
 <script>
   import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
+  import { hasValue } from '@deip/toolbox';
 
   export default {
     name: 'AuthSignUp',
@@ -144,6 +145,8 @@
     data() {
       return {
         loading: false,
+        disabled: false,
+
         formModel: {
           username: '',
           email: '',
@@ -162,28 +165,50 @@
     },
 
     methods: {
+      setLoading(state) {
+        this.loading = state;
+        this.disabled = state;
+      },
+
+      emitSuccess() {
+        this.setLoading(false);
+        this.$emit('success');
+      },
+
+      emitError(error) {
+        this.setLoading(false);
+        this.$emit('error', error);
+      },
+
+      signIn() {
+        return this.$store.dispatch('auth/signIn', this.formModel)
+          .then(() => {
+            const unwatch = this.$store
+              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
+                if (hasValue(currentUser)) {
+                  this.emitSuccess();
+                  unwatch();
+                }
+              });
+          })
+          .catch((error) => {
+            this.emitError(error);
+          });
+      },
+
       signUp() {
-        this.loading = true;
+        this.setLoading(true);
 
         this.$store.dispatch('auth/signUp', this.formModel)
           .then(() => {
             if (this.autologin) {
-              this.$store.dispatch('auth/signIn', this.formModel)
-                .then(() => {
-                  this.$emit('success');
-                })
-                .catch((error) => {
-                  this.$emit('error', error);
-                });
+              this.signIn();
             } else {
-              this.$emit('success');
+              this.emitSuccess();
             }
           })
           .catch((error) => {
-            this.$emit('error', error);
-          })
-          .finally(() => {
-            this.loading = false;
+            this.emitError(error);
           });
       }
     }
