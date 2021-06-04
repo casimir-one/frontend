@@ -16,7 +16,7 @@
           <v-spacer />
           <v-btn
             color="primary"
-            :disabled="disabled"
+            :disabled="loading || disabled"
             text
             class="mr-2"
           >
@@ -38,9 +38,8 @@
 
 <script>
   import { SchemaRenderer } from '@deip/schema-renderer';
-  import { AttributeSet, expandAttributes, compactAttributes } from '@deip/attributes-module';
-  import { isEqual, cloneDeep } from 'lodash/fp';
-  import { getAttributeFileSrc } from '@deip/platform-fns';
+  import { AttributeSet } from '@deip/attributes-module';
+  import { getAttributeFileSrc, attributedFormFactory } from '@deip/platform-fns';
   import { VexStack } from '@deip/vuetify-extended';
 
   export default {
@@ -51,83 +50,21 @@
       VexStack
     },
 
-    model: {
-      prop: 'value',
-      event: 'input'
-    },
-
-    props: {
-      schema: {
-        type: Array,
-        default: () => []
-      },
-      value: {
-        type: Object,
-        default: () => ({})
-      }
-    },
+    mixins: [attributedFormFactory('user')],
 
     data() {
       return {
         rendererComponents: {
           AttributeSet
-        },
-
-        lazyFormData: null,
-
-        disabled: false,
-        loading: false,
-
-        oldValue: null
+        }
       };
     },
 
     computed: {
-      formData: {
-        get() {
-          return {
-            ...this.lazyFormData,
-            ...{
-              attributes: expandAttributes(this.lazyFormData.attributes)
-            }
-          };
-        },
-        set(val) {
-          if (isEqual(val, this.lazyFormData)) return;
-          this.lazyFormData = {
-            ...val,
-            ...{
-              attributes: compactAttributes(val.attributes)
-            }
-          };
-          this.$emit('input', val);
-        }
-      },
-
       schemaData() {
         return {
           getAttributeFileSrc: this.getAttributeFileSrc
         };
-      },
-
-      untouched() {
-        return this.oldValue && isEqual(this.oldValue, this.value);
-      }
-    },
-
-    watch: {
-      value: {
-        handler(val) {
-          if (val && !isEqual(this.value, this.lazyFormData)) this.lazyFormData = val;
-        },
-        immediate: true,
-        deep: true
-      }
-    },
-
-    created() {
-      if (this.value) {
-        this.oldValue = cloneDeep(this.value);
       }
     },
 

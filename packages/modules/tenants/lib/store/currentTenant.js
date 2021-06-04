@@ -4,11 +4,11 @@ import { proxydi } from '@deip/proxydi';
 const tenantService = TenantService.getInstance();
 
 const STATE = {
-  tenant: null
+  data: null
 };
 
 const GETTERS = {
-  data: (state) => state.tenant
+  data: (state) => state.data
 };
 
 const ACTIONS = {
@@ -43,7 +43,7 @@ const ACTIONS = {
 
 const MUTATIONS = {
   setData(state, payload) {
-    state.tenant = payload;
+    state.data = payload;
   }
 };
 
