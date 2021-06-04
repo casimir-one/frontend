@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.113.0](https://github.com/DEIPworld/deip-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
+
+
+### Features
+
+* **@deip/attributes-service:** add location type ([924b2f4](https://github.com/DEIPworld/deip-modules/commit/924b2f47524e7133ceeaab01f54e9dcc771f2024))
+
+
+
+
+
 # [1.112.0](https://github.com/DEIPworld/deip-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
 
 

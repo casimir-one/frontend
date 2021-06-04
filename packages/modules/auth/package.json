@@ -1,6 +1,6 @@
 {
   "name": "@deip/auth-module",
-  "version": "1.112.0",
+  "version": "1.113.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -28,7 +28,7 @@
     "@deip/toolbox": "1.112.0",
     "@deip/users-service": "1.112.0",
     "@deip/validation-plugin": "1.112.0",
-    "@deip/vuetify-extended": "1.112.0"
+    "@deip/vuetify-extended": "1.113.0"
   },
   "peerDependencies": {
     "@deip/users-module": "^1.96.0",
