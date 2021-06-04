@@ -18,7 +18,8 @@ import {
   VexTimeInput,
   VexDateTimeInput,
   VexFileInput,
-  VexFileInputExtended
+  VexFileInputExtended,
+  VexPlacesAutocomplete
 } from '@deip/vuetify-extended';
 
 import { ATTR_TYPES } from '@deip/attributes-service';
@@ -36,7 +37,8 @@ const components = {
   VexTimeInput,
   VexDateTimeInput,
   VexFileInput,
-  VexFileInputExtended
+  VexFileInputExtended,
+  VexPlacesAutocomplete
 };
 
 const AttributeSet = {
@@ -59,6 +61,11 @@ const AttributeSet = {
     },
 
     schemaData: {
+      type: Object,
+      default: () => ({})
+    },
+
+    proxyProps: {
       type: Object,
       default: () => ({})
     }
@@ -132,12 +139,15 @@ const AttributeSet = {
           schemaData: {
             ...this.schemaData,
             attributeInfo: this.attributeInfo,
-            attributeValue: isFile(this.value) ? this.value.name : this.value
+            attributeValue: isFile(this.value) ? this.value.name : this.value,
+            proxyProps: Object.keys(components)
+              .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {})
           },
           value: this.value || this.attributeInfo.defaultValue,
           disabled: this.attributeInfo.isEditable,
           ...additionalProps
         },
+        attrs: this.$attrs,
         on: {
           input: (val) => {
             this.internalValue = val;

@@ -39,7 +39,8 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     is: 'vex-image-input',
     data: {
       props: {
-        label: '{{attributeInfo.title}}'
+        label: '{{attributeInfo.title}}',
+        aspectRatio: '{{proxyProps.VexImageInput.aspectRatio}}'
       }
     },
     model: true
@@ -55,6 +56,19 @@ export const ATTR_TYPES_SET_SCHEMAS = {
         noFlip: true,
         noRotate: true,
         initialImage: '@getAttributeFileSrc("{{attributeInfo._id}}", "{{attributeValue}}")'
+      }
+    },
+    model: {
+      event: 'change',
+      path: false
+    }
+  },
+
+  [ATTR_TYPES.LOCATION]: {
+    is: 'vex-places-autocomplete',
+    data: {
+      props: {
+        label: '{{attributeInfo.title}}'
       }
     },
     model: {
