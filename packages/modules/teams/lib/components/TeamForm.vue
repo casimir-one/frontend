@@ -4,30 +4,38 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(onSubmit)"
     >
-      <!-- TODO: form renderer will be here -->
+      <vex-stack gutter="32">
+        <schema-renderer
+          v-if="schema.length"
+          v-model="formData"
+          :schema="schema"
+          :schema-data="schemaData"
+          :components="rendererComponents"
+        />
 
-      <v-divider />
+        <v-divider />
 
-      <div class="d-flex">
-        <v-spacer />
-        <v-btn
-          color="primary"
-          text
-          :disabled="loading"
-          @click="$router.back()"
-        >
-          {{ cancelLabel }}
-        </v-btn>
-        <v-btn
-          type="submit"
-          color="primary"
-          depressed
-          :disabled="invalid || loading"
-          :loading="loading"
-        >
-          {{ submitLabel }}
-        </v-btn>
-      </div>
+        <div class="d-flex">
+          <v-spacer />
+          <v-btn
+            color="primary"
+            text
+            :disabled="loading || disabled"
+            @click="$router.back()"
+          >
+            {{ cancelLabel }}
+          </v-btn>
+          <v-btn
+            type="submit"
+            color="primary"
+            depressed
+            :disabled="disabled || untouched || invalid"
+            :loading="loading"
+          >
+            {{ submitLabel }}
+          </v-btn>
+        </div>
+      </vex-stack>
 
       <slot name="append" />
     </v-form>
@@ -35,10 +43,21 @@
 </template>
 
 <script>
+  import { VexStack } from '@deip/vuetify-extended';
+  import { SchemaRenderer } from '@deip/schema-renderer';
+  import { AttributeSet } from '@deip/attributes-module';
+  import { getAttributeFileSrc, attributedFormFactory } from '@deip/platform-fns';
   import { TEAM_FORM_MODES } from '../constants';
 
   export default {
     name: 'TeamForm',
+
+    components: {
+      VexStack,
+      SchemaRenderer
+    },
+
+    mixins: [attributedFormFactory('team')],
 
     props: {
       mode: {
@@ -47,10 +66,6 @@
         validation(value) {
           return TEAM_FORM_MODES.keys().indexOf(value) !== -1;
         }
-      },
-      team: {
-        type: Object,
-        default: () => ({})
       },
       cancelLabel: {
         type: String,
@@ -64,11 +79,38 @@
 
     data() {
       return {
-        loading: false
+        rendererComponents: {
+          ...this.components,
+          ...{
+            AttributeSet
+          }
+        }
       };
     },
 
+    computed: {
+      schemaData() {
+        return {
+          getAttributeFileSrc: this.getAttributeFileSrc
+        };
+      }
+    },
+
     methods: {
+      getAttributeFileSrc(attributeId, filename) {
+        const hasValue = !!filename && filename !== 'null' && filename !== 'undefined';
+
+        if (hasValue) {
+          return getAttributeFileSrc(
+            'team',
+            this.formData.externalId,
+            attributeId,
+            filename
+          );
+        }
+        return '';
+      },
+
       onSubmit() {
         if (this.mode === TEAM_FORM_MODES.CREATE) {
           this.createTeam();
