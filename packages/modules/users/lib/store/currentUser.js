@@ -45,6 +45,7 @@ const ACTIONS = {
           commit('setData', {
             username, account, profile, privKey
           });
+          dispatch('auth/setRoles', profile.roles, { root: true });
         } else {
           console.error('No currentUser data');
           dispatch('auth/signOut', null, { root: true });
