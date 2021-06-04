@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.113.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
+
+
+### Features
+
+* **@deip/teams-module:** create/edit form ([fda786e](https://gitlab.com/DEIP/deip-client-modules/commit/fda786e02fa418a1c0f0ae188403c72c116c2859))
+* **@deip/teams-module:** id key rename ([b290bc2](https://gitlab.com/DEIP/deip-client-modules/commit/b290bc285d05439429aea5e35402770a49728c87))
+
+
+
+
+
 # [1.112.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
 
 **Note:** Version bump only for package @deip/teams-module

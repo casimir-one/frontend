@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.113.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
+
+
+### Features
+
+* **@deip/vuetify-extended:** add ability to set result image width in vex-image-input ([e72854a](https://gitlab.com/DEIP/deip-client-modules/commit/e72854ade183011bf408eca74584de4daaef5e39))
+* **@deip/vuetify-extended:** add places autocomplete component ([f04556b](https://gitlab.com/DEIP/deip-client-modules/commit/f04556b9a05052bc5c2e33356534cfc6c34f14e8))
+
+
+
+
+
 # [1.112.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
 
 

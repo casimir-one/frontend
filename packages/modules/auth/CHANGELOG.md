@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.113.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fixed auth meta checking ([a135b39](https://gitlab.com/DEIP/deip-client-modules/commit/a135b39b5e23adda898824ddd3c8a3b33f14d63c))
+
+
+### Features
+
+* **@deip/auth-module:** add current user await ([345e669](https://gitlab.com/DEIP/deip-client-modules/commit/345e669cd8b64cfef6378dbc4c6961ae1ce20e2a))
+* **@deip/auth-module:** restyle signIn form ([3668c3e](https://gitlab.com/DEIP/deip-client-modules/commit/3668c3e80fac8e671c5be970a88bfaa06ee05fca))
+
+
+
+
+
 # [1.112.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
 
 

@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.113.0](https://github.com/DEIPworld/deip-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fixed auth meta checking ([a135b39](https://github.com/DEIPworld/deip-modules/commit/a135b39b5e23adda898824ddd3c8a3b33f14d63c))
+
+
+### Features
+
+* **@deip/attributes-module:** add new type & proxyProps ([22b6994](https://github.com/DEIPworld/deip-modules/commit/22b699444986d73b424c288d272f8083255d2cf9))
+* **@deip/attributes-service:** add location type ([924b2f4](https://github.com/DEIPworld/deip-modules/commit/924b2f47524e7133ceeaab01f54e9dcc771f2024))
+* **@deip/auth-module:** add current user await ([345e669](https://github.com/DEIPworld/deip-modules/commit/345e669cd8b64cfef6378dbc4c6961ae1ce20e2a))
+* **@deip/auth-module:** restyle signIn form ([3668c3e](https://github.com/DEIPworld/deip-modules/commit/3668c3e80fac8e671c5be970a88bfaa06ee05fca))
+* **@deip/platform-fns:** add attribetes helpers ([788f9f6](https://github.com/DEIPworld/deip-modules/commit/788f9f6be61ab7fe46b5f793ee3a8ca5bcb7e519))
+* **@deip/platform-fns:** add helper for watching getters ([8b30c22](https://github.com/DEIPworld/deip-modules/commit/8b30c229cf8ae66315d2db896dac55b595d1c6e7))
+* **@deip/platform-fns:** add router helpers ([7d726ef](https://github.com/DEIPworld/deip-modules/commit/7d726ef3777f0065460b485abb248b6ac01f0f7c))
+* **@deip/teams-module:** create/edit form ([fda786e](https://github.com/DEIPworld/deip-modules/commit/fda786e02fa418a1c0f0ae188403c72c116c2859))
+* **@deip/teams-module:** id key rename ([b290bc2](https://github.com/DEIPworld/deip-modules/commit/b290bc285d05439429aea5e35402770a49728c87))
+* **@deip/vuetify-extended:** add ability to set result image width in vex-image-input ([e72854a](https://github.com/DEIPworld/deip-modules/commit/e72854ade183011bf408eca74584de4daaef5e39))
+* **@deip/vuetify-extended:** add places autocomplete component ([f04556b](https://github.com/DEIPworld/deip-modules/commit/f04556b9a05052bc5c2e33356534cfc6c34f14e8))
+
+
+
+
+
 # [1.112.0](https://github.com/DEIPworld/deip-modules/compare/v1.111.3...v1.112.0) (2021-06-01)
 
 
