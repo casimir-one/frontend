@@ -5,7 +5,7 @@
     </div>
     <v-sheet rounded class="overflow-hidden">
       <v-responsive
-        :aspect-ratio="aspectRatio"
+        :aspect-ratio="_aspectRatio"
       >
         <template v-if="mask && isInited && croppa.hasImage()">
           <!-- eslint-disable vue/no-v-html -->
@@ -45,7 +45,7 @@
       <template v-if="isInited">
         <v-divider />
 
-        <v-sheet color="grey lighten-4 pa-2 d-flex align-center">
+        <v-sheet color="grey lighten-4 px-2 py-1 d-flex align-center">
           <template v-if="!noRotate">
             <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.rotate(1)">
               <v-icon>mdi-rotate-right</v-icon>
@@ -127,7 +127,7 @@
       },
 
       aspectRatio: {
-        type: Number,
+        type: [Number, String],
         default: 16 / 9
       },
 
@@ -182,6 +182,10 @@
           return this.imageWidth / this.$refs.croppa.$el.clientWidth;
         }
         return 2;
+      },
+
+      _aspectRatio() {
+        return parseFloat(this.aspectRatio);
       }
     },
 

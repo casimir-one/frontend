@@ -15,3 +15,4 @@ export * from './VexTimeline';
 export * from './VexTooltip';
 export * from './VexTreeview';
 export * from './VexVideoEmbed';
+export * from './VexPlacesAutocomplete';
