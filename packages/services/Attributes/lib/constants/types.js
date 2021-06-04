@@ -15,6 +15,7 @@ const ATTR_TYPES = createEnum({
   VIDEO_URL: 12,
   USER: 13,
   AVATAR: 14,
+  LOCATION: 15,
 
   STEPPER: 501,
   DISCIPLINE: 502,
@@ -50,6 +51,7 @@ const ATTR_TYPES_LABELS = {
   [ATTR_TYPES.VIDEO_URL]: 'Video url',
   [ATTR_TYPES.USER]: 'User selector',
   [ATTR_TYPES.AVATAR]: 'Avatar/Photo image',
+  [ATTR_TYPES.LOCATION]: 'Location',
 
   // temp section
 
