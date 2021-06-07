@@ -1,6 +1,6 @@
 {
   "name": "@deip/auth-module",
-  "version": "1.114.0",
+  "version": "1.114.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@deip/access-service": "1.112.0",
-    "@deip/auth-service": "1.114.0",
+    "@deip/auth-service": "1.114.1",
     "@deip/lib-crypto": "1.21.0",
     "@deip/platform-fns": "1.114.0",
     "@deip/proxydi": "1.112.0",
