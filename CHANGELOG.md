@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.114.0](https://github.com/DEIPworld/deip-modules/compare/v1.113.0...v1.114.0) (2021-06-07)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** fix store watch helper ([9c766c1](https://github.com/DEIPworld/deip-modules/commit/9c766c1b014e55f9c548b5c72b5a57323b5d12d9))
+
+
+### Features
+
+* **@deip/platform-fns:** add roles check helper ([4b73a45](https://github.com/DEIPworld/deip-modules/commit/4b73a45a9d0f11778b34ae55bed44907f3cc7f5a))
+
+
+
+
+
 # [1.113.0](https://github.com/DEIPworld/deip-modules/compare/v1.112.0...v1.113.0) (2021-06-04)
 
 
