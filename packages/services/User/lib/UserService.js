@@ -1,43 +1,58 @@
-import { AccessService } from '@deip/access-service';
-import { BlockchainService } from '@deip/blockchain-service';
+import crypto from '@deip/lib-crypto';
+import { proxydi } from '@deip/proxydi';
+import { MultipartFormDataMessage } from '@deip/request-models';
+import {
+  ProtocolRegistry,
+  UpdateAccountCmd
+} from '@deip/command-models';
 
 import { Singleton } from '@deip/toolbox';
 import { UserHttp } from './UserHttp';
 
 class UserService extends Singleton {
   userHttp = UserHttp.getInstance();
-  accessService = AccessService.getInstance();
-  blockchainService = BlockchainService.getInstance();
 
+  proxydi = proxydi;
 
-  updateUserAccount(privKey, {
-    account,
-    accountOwnerAuth,
-    accountActiveAuth,
-    accountMemoPubKey,
-    accountJsonMetadata,
-    accountExtensions
-  }) {
+  updateUser({ privKey },
+    {
+      attributes,
+      email,
+      status,
+      formData,
+      updater,
+      accountOwnerAuth,
+      accountActiveAuth,
+      memoKey
+    }) {
+    const { PROTOCOL } = this.proxydi.get('env');
+    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
+    const txBuilder = protocolRegistry.getTransactionsBuilder();
 
-    const update_account_op = ['update_account', {
-      account,
-      owner: accountOwnerAuth,
-      active: accountActiveAuth,
-      active_overrides: undefined,
-      memo_key: accountMemoPubKey,
-      json_metadata: accountJsonMetadata,
-      traits: undefined,
-      extensions: accountExtensions
-    }];
-    
-    return this.blockchainService.signOperations([update_account_op], privKey)
-      .then((signedTx) => {
-        return this.userHttp.updateUserAccount(account, { tx: signedTx });
+    return txBuilder.begin()
+      .then(() => {
+        const updateAccountCmd = new UpdateAccountCmd({
+          isTeamAccount: false,
+          entityId: updater,
+          creator: updater,
+          ownerAuth: accountOwnerAuth,
+          activeAuth: accountActiveAuth,
+          memoKey,
+          description: attributes ? crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)) : undefined,
+          attributes,
+          email,
+          status
+        }, txBuilder.getTxCtx());
+
+        txBuilder.addCmd(updateAccountCmd);
+
+        return txBuilder.end();
       })
-  }
-
-  updateUserProfile(username, update) {
-    return this.userHttp.updateUserProfile(username, update);
+      .then((txEnvelop) => {
+        txEnvelop.sign(privKey);
+        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': updater });
+        return this.userHttp.updateUser(msg);
+      });
   }
 
   getNotificationsByUser(username) {
@@ -66,12 +81,7 @@ class UserService extends Singleton {
 
   getUserInvites(username) {
     return this.userHttp.getInvitesByUser(username);
-  }  
-
-  getUserTransactions(status) {
-    return this.userHttp.getUserTransactions(status);
-  }  
-  
+  }
 }
 
 export {

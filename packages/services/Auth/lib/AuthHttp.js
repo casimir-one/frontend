@@ -12,12 +12,8 @@ class AuthHttp extends Singleton {
     return this.http.post('/tenant/sign-in/', model);
   }
 
-  preliminaryRegistration(model) {
-    return this.http.post('/preliminary-registration', model, { baseURL: `${registrationCommitteeUrl}/api` });
-  }
-
-  signUp(model) {
-    return this.http.post('/auth/sign-up/', model);
+  signUp(req) {
+    return this.http.post('/auth/v2/sign-up/', req.getRequestBody());
   }
 }
 

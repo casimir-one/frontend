@@ -132,7 +132,7 @@ const ACTIONS = {
     } = payload;
 
     return teamService
-      .updateTeamAccount(
+      .updateTeam(
         { privKey: updater.privKey },
         {
           teamId,

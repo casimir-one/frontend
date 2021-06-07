@@ -71,7 +71,7 @@ class TeamService extends Singleton {
       });
   }
 
-  updateTeamAccount({ privKey }, {
+  updateTeam({ privKey }, {
     teamId,
     accountOwnerAuth,
     accountActiveAuth,
