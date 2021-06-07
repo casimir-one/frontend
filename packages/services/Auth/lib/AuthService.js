@@ -37,6 +37,7 @@ class AuthService extends Singleton {
 
     const protocolRegistry = new ProtocolRegistry(PROTOCOL);
     const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const userAttributes = attributes || [];
 
     return txBuilder.begin()
       .then(() => {
@@ -55,8 +56,8 @@ class AuthService extends Singleton {
             }
           },
           memoKey: pubKey,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
-          attributes,
+          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(userAttributes)).buffer)),
+          attributes: userAttributes,
           email,
           roles,
           entityId: username
