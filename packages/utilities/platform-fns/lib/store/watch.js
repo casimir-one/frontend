@@ -1,5 +1,7 @@
+import { hasValue } from '@deip/toolbox';
+
 export const awaitForStore = (store, getter) => new Promise((resolve) => {
-  if (store.getters[getter]) {
+  if (hasValue(store.getters[getter])) {
     resolve(store.getters[getter]);
   }
   const unwatch = store.watch(
