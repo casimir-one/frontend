@@ -6,54 +6,41 @@ class UsersHttp extends Singleton {
   http = HttpService.getInstance();
 
   getUsersProfiles(usernames) { // DEPRECATED
-    return this.http.get(`/api/user/profiles${this.http.buildQueryString(usernames, 'accounts')}`);
+    return this.http.get(`/api/v2/users/profile${this.http.buildQueryString(usernames, 'accounts')}`);
   }
 
   getActiveUsersProfiles() { // DEPRECATED
-    return this.http.get('/api/user/active');
+    return this.http.get('/api/v2/users/active');
   }
 
   // LIST
 
   getUsers(usernames) {
     const query = qs.stringify({ usernames });
-    return this.http.get(`/api/users?${query}`);
+    return this.http.get(`/api/v2/users?${query}`);
   }
 
   getUsersByResearchGroup(teamId) {
-    return this.http.get(`/api/users/group/${teamId}`);
+    return this.http.get(`/api/v2/users/team/${teamId}`);
   }
 
   getUsersByTenant(tenantId) {
-    return this.http.get(`/api/users/tenant/${tenantId}`);
+    return this.http.get(`/api/v2/users/tenant/${tenantId}`);
   }
 
   getUsersListing(query) {
     const q = qs.stringify(query);
-    return this.http.get(`/api/users/listing?${q}`);
+    return this.http.get(`/api/v2/users/listing?${q}`);
   }
 
   // ONE
 
   getUser(username) {
-    return this.http.get(`/api/user/name/${username}`);
+    return this.http.get(`/api/v2/user/name/${username}`);
   }
 
   getUserByEmail(email) {
-    return this.http.get(`/api/user/email/${email}`);
-  }
-
-  updateUserAccount(username, { tx }) {
-    return this.http.put(`/api/user/account/${username}`, { tx });
-  }
-
-  updateUserProfile(username, payload) {
-    return this.http.put(`/api/user/profile/${username}`, payload, {
-      headers: {
-        username,
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    return this.http.get(`/api/v2/user/email/${email}`);
   }
 }
 

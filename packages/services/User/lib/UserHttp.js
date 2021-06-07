@@ -6,17 +6,8 @@ class UserHttp extends Singleton {
 
   // Settings [deprecated]
 
-  updateUserAccount(username, { tx }) {
-    return this.http.put(`/api/user/account/${username}`, { tx });
-  }
-
-  updateUserProfile(username, update) {
-    return this.http.put(`/api/user/profile/${username}`, update, {
-      headers: {
-        'username': username,
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+  updateUser(req) {
+    return this.http.put('/api/v2/user/update', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
 
   // Notifications
@@ -36,7 +27,7 @@ class UserHttp extends Singleton {
   // Bookmarks
 
   getResearchBookmarks(username) {
-    return this.http.get(`/api/bookmarks/user/${username}?type=research`);
+    return this.http.get(`/api/v2/bookmarks/user/${username}?type=research`);
   }
 
   createResearchBookmark(username, researchId) {
@@ -51,10 +42,6 @@ class UserHttp extends Singleton {
 
   getInvitesByUser(username) {
     return this.http.get(`/api/invites/${username}`);
-  }
-
-  getUserTransactions(status) {
-    return this.http.get(`/api/user/transactions/${status}`);
   }
 }
 
