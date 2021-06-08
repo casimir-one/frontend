@@ -9,10 +9,14 @@ class ProjectHttp extends Singleton {
   getProject(projectId) {
     return this.http.get(`/api/v2/project/${projectId}`);
   }
-  
+
   getProjects(projectsIds) {
     const query = qs.stringify({ projectsIds });
     return this.http.get(`/api/v2/projects?${query}`);
+  }
+
+  getTeamDefaultProject(teamId) {
+    return this.http.get(`/api/v2/project/default/${teamId}`);
   }
 
   createProject(req) {
