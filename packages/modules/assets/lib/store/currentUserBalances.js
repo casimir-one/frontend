@@ -1,6 +1,7 @@
 import { AssetsService } from '@deip/assets-service';
 
 import {
+  clearMutation,
   listGetter,
   setListMutationFactory
 } from '@deip/platform-fns';
@@ -35,9 +36,7 @@ const ACTIONS = {
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  clear: (state) => {
-    state.data = [];
-  }
+  clear: clearMutation
 };
 
 export const currentUserBalancesStore = {

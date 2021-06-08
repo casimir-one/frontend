@@ -1,5 +1,6 @@
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
+import { callForCurrentUser } from '@deip/platform-fns';
 import { bookmarksStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
@@ -21,15 +22,11 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('bookmarks', bookmarksStore);
 
-    store.dispatch('bookmarks/get');
-
-    store.watch((_, getters) => getters['auth/username'], (username) => {
-      if (username) {
-        store.dispatch('bookmarks/get');
-      } else {
-        store.dispatch('bookmarks/clear');
-      }
-    });
+    callForCurrentUser(
+      store,
+      'bookmarks/get',
+      'bookmarks/clear'
+    );
   } else {
     throw Error('[BookmarksModule]: storeInstance is not provided');
   }

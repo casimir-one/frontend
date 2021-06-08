@@ -1,4 +1,5 @@
 import { proxydi } from '@deip/proxydi';
+import { callForCurrentUser } from '@deip/platform-fns';
 import { notificationsStore } from './store';
 
 // eslint-disable-next-line no-unused-vars
@@ -11,15 +12,11 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('notifications', notificationsStore);
 
-    store.dispatch('notifications/get');
-
-    store.watch((_, getters) => getters['auth/username'], (username) => {
-      if (username) {
-        store.dispatch('notifications/get');
-      } else {
-        store.dispatch('notifications/clear');
-      }
-    });
+    callForCurrentUser(
+      store,
+      'notifications/get',
+      'notifications/clear'
+    );
   } else {
     throw Error('[NotificationsModule]: storeInstance is not provided');
   }

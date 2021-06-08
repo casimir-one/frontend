@@ -1,4 +1,5 @@
 import { proxydi } from '@deip/proxydi';
+import { callForCurrentUser } from '@deip/platform-fns';
 import { usersStore, currentUserStore } from './store';
 
 const install = (Vue) => {
@@ -23,15 +24,11 @@ const install = (Vue) => {
       }
     });
 
-    store.dispatch('currentUser/get');
-
-    store.watch((_, getters) => getters['auth/username'], (username) => {
-      if (username) {
-        store.dispatch('currentUser/get');
-      } else {
-        store.dispatch('currentUser/clear');
-      }
-    });
+    callForCurrentUser(
+      store,
+      'currentUser/get',
+      'currentUser/clear'
+    );
   } else {
     throw Error('[UsersModule]: storeInstance is not provided');
   }
