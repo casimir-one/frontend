@@ -54,6 +54,19 @@ export const removeFromListMutationFactory = (opts = {}) => {
 };
 export const removeFromListMutation = removeFromListMutationFactory();
 
+export const clearMutationFactory = (opts = {}) => {
+  const {
+    storeKey = 'data',
+    emptyData = []
+  } = opts;
+
+  return (state) => {
+    state[storeKey] = emptyData;
+  };
+};
+
+export const clearMutation = clearMutationFactory();
+
 /// experimental
 export const crudMutationsFabric = (opts = {}) => {
   const { collectionMergeKey = 'externalId' } = opts;
