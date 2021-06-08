@@ -7,12 +7,14 @@ import {
   setOneMutationFactory,
   removeFromListMutationFactory
 } from '@deip/platform-fns';
+import { collectionOne, createFormData } from '@deip/toolbox';
 
 const attributesService = AttributesService.getInstance();
 const idKey = '_id';
 
 const STATE = {
-  data: []
+  data: [],
+  settings: {}
 };
 
 const GETTERS = {
@@ -29,7 +31,9 @@ const GETTERS = {
       acc[current.scope].push(current);
       return acc;
     }, initialListByScopes);
-  }
+  },
+
+  map: (state) => (key) => collectionOne(state.settings.map || [], { key })
 };
 
 const ACTIONS = {
@@ -73,13 +77,41 @@ const ACTIONS = {
       .then(() => {
         commit('remove', attributeId);
       });
+  },
+
+  getSettings({ commit }) {
+    return attributesService.getSettings(window.env.TENANT)
+      .then((res) => {
+        commit('setSettings', res);
+      });
+  },
+
+  updateSettings({ dispatch, rootGetters }, payload) {
+    const newSettings = createFormData({
+      ...rootGetters['currentTenant/data'].profile.settings,
+      ...{
+        attributes: payload
+      }
+    });
+
+    return attributesService.updateSettings(newSettings)
+      .then(() => {
+        dispatch('getSettings');
+      });
   }
 };
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: idKey }),
   setOne: setOneMutationFactory({ mergeKey: idKey }),
-  remove: removeFromListMutationFactory({ mergeKey: idKey })
+  remove: removeFromListMutationFactory({ mergeKey: idKey }),
+
+  setSettings(state, payload) {
+    state.settings = {
+      ...state.settings,
+      ...payload
+    };
+  }
 };
 
 export const attributesStore = {

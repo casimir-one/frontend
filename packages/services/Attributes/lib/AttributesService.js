@@ -55,6 +55,16 @@ class AttributesService extends Singleton {
     const msg = new ApplicationJsonMessage({}, cmdEnvelope);
     return this.attributesHttp.deleteAttribute(msg);
   }
+
+  // temp solution
+
+  getSettings(tenantId) {
+    return this.attributesHttp.getSettings(tenantId);
+  }
+
+  updateSettings(data) {
+    return this.attributesHttp.updateSettings(data);
+  }
 }
 
 export {

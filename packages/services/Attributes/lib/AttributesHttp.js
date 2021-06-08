@@ -39,6 +39,21 @@ class AttributesHttp extends Singleton {
   deleteAttribute(req) {
     return this.http.put('/api/v2/attribute/delete', req.getRequestBody());
   }
+
+  // temp solution
+
+  getSettings(tenantId) {
+    return this.http.get(`/tenant/${tenantId}`)
+      .then((res) => res.profile.settings.attributes || {});
+  }
+
+  updateSettings(data) {
+    return this.http.put('/tenant/settings', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
 }
 
 export {

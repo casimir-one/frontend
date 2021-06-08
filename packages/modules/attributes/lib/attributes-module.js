@@ -11,6 +11,7 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('attributes', attributesStore);
     store.dispatch('attributes/getList');
+    store.dispatch('attributes/getSettings');
   } else {
     throw Error('[AttributesModule]: storeInstance is not provided');
   }
