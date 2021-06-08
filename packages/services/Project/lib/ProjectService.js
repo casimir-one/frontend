@@ -35,6 +35,10 @@ class ProjectService extends Singleton {
     return this.projectHttp.getProjects(projectsIds);
   }
 
+  getTeamDefaultProject(teamId) {
+    return this.projectHttp.getTeamDefaultProject(teamId);
+  }
+
   createProject({ privKey }, {
     teamId,
     creator,
