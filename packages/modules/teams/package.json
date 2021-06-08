@@ -1,6 +1,6 @@
 {
   "name": "@deip/teams-module",
-  "version": "1.115.0",
+  "version": "1.116.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,7 +20,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-module": "1.115.0",
+    "@deip/attributes-module": "1.116.0",
     "@deip/platform-fns": "1.115.0",
     "@deip/proxydi": "1.112.0",
     "@deip/schema-renderer": "^1.112.0",
