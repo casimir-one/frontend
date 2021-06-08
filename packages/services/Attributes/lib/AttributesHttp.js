@@ -40,19 +40,14 @@ class AttributesHttp extends Singleton {
     return this.http.put('/api/v2/attribute/delete', req.getRequestBody());
   }
 
-  // temp solution
-
   getSettings(tenantId) {
-    return this.http.get(`/tenant/${tenantId}`)
-      .then((res) => res.profile.settings.attributes || {});
+    return this.http.get(`/tenant/settings/attribute-settings/${tenantId}`);
   }
 
+  // temp solution, need change to msg
+
   updateSettings(data) {
-    return this.http.put('/tenant/settings', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    return this.http.put('/tenant/settings/attribute-settings', data);
   }
 }
 

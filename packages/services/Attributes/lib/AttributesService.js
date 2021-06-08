@@ -56,11 +56,11 @@ class AttributesService extends Singleton {
     return this.attributesHttp.deleteAttribute(msg);
   }
 
-  // temp solution
-
   getSettings(tenantId) {
     return this.attributesHttp.getSettings(tenantId);
   }
+
+  // temp solution need change to cmd and send msg
 
   updateSettings(data) {
     return this.attributesHttp.updateSettings(data);
