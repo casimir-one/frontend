@@ -1,7 +1,7 @@
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
-
-import { teamsStore } from './store';
+import { callForCurrentUser } from '@deip/platform-fns';
+import { teamsStore, currentUserTeamsStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
@@ -21,14 +21,13 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('teams', teamsStore);
+    store.registerModule('currentUserTeams', currentUserTeamsStore);
 
-    store.dispatch('teams/getCurrentUserTeams');
-
-    store.watch((_, getters) => getters['auth/username'], (username) => {
-      if (username) {
-        store.dispatch('teams/getCurrentUserTeams');
-      }
-    });
+    callForCurrentUser(
+      store,
+      'currentUserTeams/getList',
+      'currentUserTeams/clear'
+    );
   } else {
     throw Error('[TeamsModule]: storeInstance is not provided');
   }
