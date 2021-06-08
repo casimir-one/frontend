@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.116.0](https://github.com/DEIPworld/deip-modules/compare/v1.115.0...v1.116.0) (2021-06-08)
+
+
+### Features
+
+* **@deip/project-service:** default project api ([32db812](https://github.com/DEIPworld/deip-modules/commit/32db812c09b0c5523f4e0cfe37da8c381c9dcbcd))
+
+
+
+
+
 # [1.115.0](https://github.com/DEIPworld/deip-modules/compare/v1.114.1...v1.115.0) (2021-06-08)
 
 
