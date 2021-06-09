@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix",
     "test": "jest",
     "publish": "node ./scripts/publish.js",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "lerna bootstrap --hoist",
     "prepare": "husky install"
   },
   "keywords": [],
