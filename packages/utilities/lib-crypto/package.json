@@ -12,8 +12,14 @@
         "test": "./scripts/build.js && ./scripts/test.js && ./scripts/test.js && tape 'test/*.test.js'"
     },
     "devDependencies": {
-        "eslint": "^4.10.0",
-        "prettier": "~1.8.2",
-        "tape": "^4.8.0"
+        "@babel/core": "^7.14.3",
+        "@babel/plugin-proposal-class-properties": "^7.13.0",
+        "@babel/plugin-proposal-decorators": "^7.14.2",
+        "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
+        "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+        "@babel/plugin-proposal-private-methods": "^7.13.0",
+        "eslint": "^7.28.0",
+        "prettier": "~2.3.1",
+        "tape": "^5.2.2"
     }
 }

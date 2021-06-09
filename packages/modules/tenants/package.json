@@ -23,5 +23,13 @@
     "@deip/platform-fns": "1.115.0",
     "@deip/proxydi": "1.112.0",
     "@deip/tenant-service": "1.114.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-proposal-private-methods": "^7.13.0"
   }
 }

@@ -22,9 +22,17 @@
   "dependencies": {
     "@deip/proxydi": "1.112.0",
     "@deip/toolbox": "1.112.0",
-    "vee-validate": "^3.4.5"
+    "vee-validate": "^3.4.9"
   },
   "peerDependencies": {
-    "vue-i18n": "^8.22.3"
+    "vue-i18n": "^8.24.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-proposal-private-methods": "^7.13.0"
   }
 }

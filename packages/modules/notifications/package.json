@@ -25,8 +25,16 @@
     "@deip/user-service": "1.114.0"
   },
   "peerDependencies": {
-    "@deip/auth-module": "^1.111.1",
-    "@deip/users-module": "^1.98.0",
-    "vuex": "^3.6.0"
+    "@deip/auth-module": "^1.115.0",
+    "@deip/users-module": "^1.116.1",
+    "vuex": "^3.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-proposal-private-methods": "^7.13.0"
   }
 }
