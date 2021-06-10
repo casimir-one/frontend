@@ -21,21 +21,24 @@ export const compactAttributes = (
     [valueKey]: attrs[id]
   }));
 
-export const getAttributeFileSrc = (
-  scope,
-  scopeId,
-  attributeId,
-  filename,
+export const getAttributeFileSrc = (opts = {}) => {
+  const {
+    serverUrl,
+    scope,
+    scopeId,
+    attributeId,
+    filename,
 
-  width,
-  height,
-  round,
-  noCache,
-  image,
-  download
-) => {
+    width,
+    height,
+    round,
+    noCache,
+    image,
+    download
+  } = opts;
+
   const url = [
-    window.env.DEIP_SERVER_URL,
+    serverUrl,
     'api',
     scope,
     scopeId,

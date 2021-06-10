@@ -1,12 +1,13 @@
 import { getImageSrc } from './common';
 
+// DEPRECATED
 export const userFullName = (model) => {
   if (!model) return false;
 
-  const { profile, account} = model;
+  const { profile, account } = model;
 
   if (profile) {
-    const { firstName ='', lastName = ''} = profile;
+    const { firstName = '', lastName = '' } = profile;
 
     if (firstName || lastName) {
       return [firstName, lastName].join(' ');
@@ -14,8 +15,9 @@ export const userFullName = (model) => {
   }
 
   return account.name;
-}
+};
 
+// DEPRECATED
 export const userLocation = (model) => {
   if (!model) return false;
 
@@ -31,10 +33,11 @@ export const userLocation = (model) => {
   if (!res.length) return false;
 
   return res.join(', ');
-}
+};
 
+// DEPRECATED
 export const userAvatarSrc = (model, width, height, isRound, noCache) => {
-  const { profile: { _id: profileId = 'initdelegate'} } = model;
+  const { profile: { _id: profileId = 'initdelegate' } } = model;
 
   return getImageSrc(profileId, 'api/user/avatar', width || 48, height, isRound, noCache);
-}
+};
