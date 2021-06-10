@@ -1,6 +1,6 @@
 {
   "name": "@deip/tenant-service",
-  "version": "1.114.0",
+  "version": "1.117.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,13 +22,13 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/blockchain-service": "1.112.0",
-    "@deip/command-models": "1.112.0",
-    "@deip/http-service": "1.112.0",
-    "@deip/lib-crypto": "1.21.0",
-    "@deip/proxydi": "1.112.0",
-    "@deip/request-models": "1.112.0",
-    "@deip/toolbox": "1.112.0"
+    "@deip/blockchain-service": "1.117.0",
+    "@deip/command-models": "1.117.0",
+    "@deip/http-service": "1.117.0",
+    "@deip/lib-crypto": "1.117.0",
+    "@deip/proxydi": "1.117.0",
+    "@deip/request-models": "1.117.0",
+    "@deip/toolbox": "1.117.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.112.0"
