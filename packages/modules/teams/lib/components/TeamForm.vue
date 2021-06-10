@@ -46,7 +46,7 @@
   import { VexStack } from '@deip/vuetify-extended';
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
-  import { getAttributeFileSrc, attributedFormFactory } from '@deip/platform-fns';
+  import { attributedFormFactory } from '@deip/platform-fns';
   import { TEAM_FORM_MODES } from '../constants';
 
   export default {
@@ -101,12 +101,12 @@
         const hasValue = !!filename && filename !== 'null' && filename !== 'undefined';
 
         if (hasValue) {
-          return getAttributeFileSrc(
-            'team',
-            this.formData.externalId,
+          return this.$attributes.getFileSrc({
+            scope: 'team',
+            scopeId: this.formData.externalId,
             attributeId,
             filename
-          );
+          });
         }
         return '';
       },
