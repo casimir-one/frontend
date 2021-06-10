@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.118.0](https://github.com/DEIPworld/deip-modules/compare/v1.116.1...v1.118.0) (2021-06-10)
+
+
+### Features
+
+* **@deip/attributes-module:** extemd module ([c6a070d](https://github.com/DEIPworld/deip-modules/commit/c6a070d092913e85c7ba814587caa669887aa6e0))
+* **@deip/layout-service:** addlayout-service ([20db8d4](https://github.com/DEIPworld/deip-modules/commit/20db8d49941334b9a956dd52aff15f977ccbf9fc))
+* **@deip/platform-fns:** rebuild ‘getAttributeFileSrc’ helper ([3ad8365](https://github.com/DEIPworld/deip-modules/commit/3ad836520a61b9af3de968e096115f403c716a7c))
+
+
+
+
+
 # [1.117.0](https://github.com/DEIPworld/deip-modules/compare/v1.116.1...v1.117.0) (2021-06-10)
 
 

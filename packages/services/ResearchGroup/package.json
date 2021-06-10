@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-group-service",
-  "version": "1.117.0",
+  "version": "1.118.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,15 +22,15 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/access-service": "1.117.0",
-    "@deip/blockchain-service": "1.117.0",
-    "@deip/http-service": "1.117.0",
-    "@deip/lib-crypto": "1.117.0",
-    "@deip/proposals-service": "1.117.0",
-    "@deip/research-content-service": "1.117.0",
-    "@deip/rpc-client": "1.117.0",
-    "@deip/toolbox": "1.117.0",
-    "@deip/users-service": "1.117.0",
+    "@deip/access-service": "1.118.0",
+    "@deip/blockchain-service": "1.118.0",
+    "@deip/http-service": "1.118.0",
+    "@deip/lib-crypto": "1.118.0",
+    "@deip/proposals-service": "1.118.0",
+    "@deip/research-content-service": "1.118.0",
+    "@deip/rpc-client": "1.118.0",
+    "@deip/toolbox": "1.118.0",
+    "@deip/users-service": "1.118.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
