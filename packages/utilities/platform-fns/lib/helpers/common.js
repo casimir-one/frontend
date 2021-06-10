@@ -1,5 +1,6 @@
 import qs from 'qs';
 
+// DEPRECATED ???
 export const getImageSrc = (
   itemId,
   from,
