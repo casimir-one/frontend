@@ -7,7 +7,7 @@ import {
   setOneMutationFactory,
   removeFromListMutationFactory
 } from '@deip/platform-fns';
-import { collectionOne, createFormData } from '@deip/toolbox';
+import { collectionOne } from '@deip/toolbox';
 
 const attributesService = AttributesService.getInstance();
 const idKey = '_id';
@@ -33,7 +33,8 @@ const GETTERS = {
     }, initialListByScopes);
   },
 
-  map: (state) => (key) => collectionOne(state.settings.map || [], { key })
+  map: (state) => (key) => collectionOne(state.settings.map || [], { key }).value,
+  settings: (state) => state.settings
 };
 
 const ACTIONS = {
@@ -86,15 +87,8 @@ const ACTIONS = {
       });
   },
 
-  updateSettings({ dispatch, rootGetters }, payload) {
-    const newSettings = createFormData({
-      ...rootGetters['currentTenant/data'].profile.settings,
-      ...{
-        attributes: payload
-      }
-    });
-
-    return attributesService.updateSettings(newSettings)
+  updateSettings({ dispatch }, payload) {
+    return attributesService.updateSettings(payload)
       .then(() => {
         dispatch('getSettings');
       });
