@@ -39,7 +39,7 @@
 <script>
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
-  import { getAttributeFileSrc, attributedFormFactory } from '@deip/platform-fns';
+  import { attributedFormFactory } from '@deip/platform-fns';
   import { VexStack } from '@deip/vuetify-extended';
 
   export default {
@@ -70,12 +70,17 @@
 
     methods: {
       getAttributeFileSrc(attributeId, filename) {
-        return getAttributeFileSrc(
-          'user',
-          this.formData._id,
-          attributeId,
-          filename
-        );
+        const hasValue = !!filename && filename !== 'null' && filename !== 'undefined';
+
+        if (hasValue) {
+          return this.$attributes.getFileSrc({
+            scope: 'user',
+            scopeId: this.formData._id,
+            attributeId,
+            filename
+          });
+        }
+        return '';
       },
 
       updateUser() {
