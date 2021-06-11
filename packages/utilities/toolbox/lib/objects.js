@@ -1,8 +1,29 @@
 import { camelCase } from 'change-case';
-import sortKeys from 'sort-keys';
 import crc32 from 'crc/crc32';
+import { cloneDeep, sortBy } from 'lodash/fp';
+import { isArray, isObject } from './verification';
 
-import { isObject } from './verification';
+export const sortObjectKeys = (obj, comparator) => {
+  const clone = cloneDeep(obj);
+
+  if (isArray(clone)) {
+    return clone.map((i) => sortObjectKeys(i));
+  }
+
+  if (isObject(clone)) {
+    const keys = sortBy(
+      (key) => (comparator ? comparator(obj[key], key) : key),
+      Object.keys(clone)
+    );
+
+    return keys.reduce((acc, key) => ({
+      ...acc,
+      ...{ [key]: sortObjectKeys(obj[key]) }
+    }), {});
+  }
+
+  return clone;
+};
 
 export const deepFreeze = (obj) => {
   const propsNames = Object.getOwnPropertyNames(obj);
@@ -28,7 +49,7 @@ export const camelizeObjectKeys = (obj, exception = ['_id', '__v']) => {
 };
 
 export const genObjectId = (obj, turns = 3) => {
-  const sorted = sortKeys(obj, { deep: true });
+  const sorted = sortObjectKeys(obj, { deep: true });
 
   return new Array(turns)
     .fill(null)
