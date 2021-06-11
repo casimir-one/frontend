@@ -19,9 +19,12 @@
       >
         <template #item="{ item }">
           <slot name="item">
-            <v-list-item-avatar :size="24">
-              <v-img :src="userAvatarSrc(item, 24)" />
-            </v-list-item-avatar>
+            <user-avatar
+              :user="item"
+              :size="24"
+              view-type="listItem"
+              color="neutral lighten-5"
+            />
             <v-list-item-content class="text-body-2">
               {{ userFullName(item) }}
             </v-list-item-content>
@@ -36,10 +39,12 @@
               outlined
               class="ml-0 mr-2"
             >
-              <v-avatar left class="mr-2 ml-n2">
-                <img :src="userAvatarSrc(item, 24)" alt="">
-              </v-avatar>
-
+              <user-avatar
+                :user="item"
+                :size="24"
+                left
+                class="mr-2 ml-n2"
+              />
               <div class="text-truncate spacer">
                 {{ userFullName(item) }}
               </div>
@@ -56,10 +61,16 @@
               </v-btn>
             </v-chip>
 
-            <div v-else class="d-inline-flex mr-4 align-center" style="max-width: calc(100% - 80px)">
-              <v-avatar size="24" class="mr-2">
-                <img :src="userAvatarSrc(item, 24)" alt="">
-              </v-avatar>
+            <div
+              v-else
+              class="d-inline-flex mr-4 align-center"
+              style="max-width: calc(100% - 80px)"
+            >
+              <user-avatar
+                :user="item"
+                :size="24"
+                class="mr-2"
+              />
               <div class="text-truncate">
                 {{ userFullName(item) }}
               </div>
@@ -69,29 +80,31 @@
       </vex-autocomplete>
     </template>
   </users-data-provider>
-
 </template>
 
 <script>
+  /* eslint-disable import/extensions, import/no-unresolved */
   import Proxyable from 'vuetify/lib/mixins/proxyable';
-  import {
-    VAutocomplete
-  } from 'vuetify/lib/components';
+  import { VAutocomplete } from 'vuetify/lib/components';
+  /* eslint-enable import/extensions, import/no-unresolved */
 
-  import { wrapInArray, isString, hasValue } from '@deip/toolbox';
-  import { userFullName, userAvatarSrc } from '@deip/platform-fns';
+  import { hasValue } from '@deip/toolbox';
+  import { userHelpersMixin } from '@deip/platform-fns';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-  import UsersDataProvider from '../DataProvider/UsersDataProvider';
   import { VexAutocomplete } from '@deip/vuetify-extended';
+  import UsersDataProvider from '../DataProvider/UsersDataProvider';
+  import UserAvatar from '../Avatar/UserAvatar';
 
   export default {
-    name: 'UserSelector',
+    name: 'UsersSelector',
     components: {
       UsersDataProvider,
+      UserAvatar,
       VexAutocomplete
     },
     mixins: [
-      Proxyable
+      Proxyable,
+      userHelpersMixin
     ],
 
     props: {
@@ -102,7 +115,7 @@
         label: {
           type: String,
           default: 'Select members'
-        },
+        }
       }
     },
 
@@ -126,26 +139,9 @@
     },
 
     methods: {
-      readUserData(user) {
-        let _user = wrapInArray(user)[0];
-
-        if (isString(_user)) {
-          return this.$refs.dataProvider.usersList.find(u => u.username === _user);
-        }  else {
-          return _user;
-        }
-      },
-
-      userAvatarSrc,
-
-      userFullName(data) {
-        if (!hasValue(data)) return false;
-        return userFullName(this.readUserData(data));
-      },
-
       userExternalId(data) {
         if (!hasValue(data)) return false;
-        return this.readUserData(data).account.name;
+        return data.account.name;
       }
     }
   };

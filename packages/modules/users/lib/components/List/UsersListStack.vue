@@ -1,37 +1,32 @@
 <template>
   <div class="d-flex">
-
     <template v-if="clickable">
       <v-btn
-        v-for="(user, index) of displayedUsers"
+        v-for="(user, index) in displayedUsers"
+        :key="index"
         :class="$style.item"
         width="40"
         height="40"
         icon
         @click="onClickItem(user)"
       >
-        <v-avatar
-          :key="index"
+        <user-avatar
           size="40"
-          color="neutral lighten-5"
-        >
-          <v-img :src="userAvatarSrc(user)" />
-        </v-avatar>
+          :user="user"
+        />
       </v-btn>
     </template>
 
     <template v-else>
       <div
-        v-for="(user, index) of displayedUsers"
+        v-for="(user, index) in displayedUsers"
+        :key="index"
         :class="$style.item"
       >
-        <v-avatar
-          :key="index"
+        <user-avatar
           size="40"
-          color="neutral lighten-5"
-        >
-          <v-img :src="userAvatarSrc(user)" />
-        </v-avatar>
+          :user="user"
+        />
       </div>
     </template>
 
@@ -47,10 +42,13 @@
 </template>
 
 <script>
-  import { userAvatarSrc } from '@deip/platform-fns';
+  import { userHelpersMixin } from '@deip/platform-fns';
+  import UserAvatar from '../Avatar/UserAvatar';
 
   export default {
     name: 'UsersListStack',
+    components: { UserAvatar },
+    mixins: [userHelpersMixin],
     props: {
       users: {
         type: Array,
@@ -73,13 +71,11 @@
 
       clickable() {
         return !!this.$listeners['click-item'];
-      },
+      }
     },
     methods: {
-      userAvatarSrc,
-
       onClickItem(e) {
-        this.$emit('click-item', e)
+        this.$emit('click-item', e);
       }
     }
   };
