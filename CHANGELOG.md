@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.119.0](https://github.com/DEIPworld/deip-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
+
+
+### Features
+
+* **@deip/toolbox:** sortObjectKeys helper ([aa69e21](https://github.com/DEIPworld/deip-modules/commit/aa69e219889cb851e313bfaee2c4a5f41839030a))
+
+
+
+
+
 # [1.118.0](https://github.com/DEIPworld/deip-modules/compare/v1.116.1...v1.118.0) (2021-06-10)
 
 
