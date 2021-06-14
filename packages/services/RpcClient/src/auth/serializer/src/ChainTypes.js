@@ -25,8 +25,8 @@ ChainTypes.operations = {
   recover_account: 10,
   change_recovery_account: 11,
 
-  join_research_group_membership: 12,
-  leave_research_group_membership: 13,
+  join_research_contract: 12,
+  leave_research_contract: 13,
   create_research: 14,
   update_research: 15,
   create_research_content: 16,

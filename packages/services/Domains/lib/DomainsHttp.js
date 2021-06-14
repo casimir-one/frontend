@@ -9,7 +9,7 @@ class DomainsHttp extends Singleton {
   }
 
   getDomainsByProject(projectId) {
-    return this.http.get(`/api/v2/domains/research/${projectId}`);
+    return this.http.get(`/api/v2/domains/project/${projectId}`);
   }
 }
 

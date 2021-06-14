@@ -34,7 +34,6 @@ class UserService extends Singleton {
         const updateAccountCmd = new UpdateAccountCmd({
           isTeamAccount: false,
           entityId: updater,
-          creator: updater,
           ownerAuth: accountOwnerAuth,
           activeAuth: accountActiveAuth,
           memoKey,

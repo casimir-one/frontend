@@ -45,11 +45,11 @@ class TeamService extends Singleton {
           creator,
           authority: {
             owner: {
-              auths: [{ name: TENANT, weight: 1 }],
+              auths: [{ name: TENANT, weight: 1 }, { name: creator, weight: 1 }],
               weight: 1
             },
             active: {
-              auths: [{ name: TENANT, weight: 1 }],
+              auths: [{ name: TENANT, weight: 1 }, { name: creator, weight: 1 }],
               weight: 1
             }
           },
@@ -88,7 +88,6 @@ class TeamService extends Singleton {
     };
 
     const { PROTOCOL } = this.proxydi.get('env');
-
     const protocolRegistry = new ProtocolRegistry(PROTOCOL);
     const txBuilder = protocolRegistry.getTransactionsBuilder();
 
@@ -97,7 +96,6 @@ class TeamService extends Singleton {
         const updateAccountCmd = new UpdateAccountCmd({
           isTeamAccount: true,
           entityId: teamId,
-          creator: updater,
           ownerAuth: accountOwnerAuth,
           activeAuth: accountActiveAuth,
           memoKey,

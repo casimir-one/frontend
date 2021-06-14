@@ -13,8 +13,9 @@ import {
   DeleteProjectCmd,
   CreateProposalCmd,
   CreateAccountCmd,
-  JoinProjectCmd,
-  UpdateProposalCmd
+  JoinProjectTeamCmd,
+  UpdateProposalCmd,
+  LeaveProjectTeamCmd
 } from '@deip/command-models';
 
 
@@ -40,14 +41,12 @@ class ProjectService extends Singleton {
   }
 
   createProject({ privKey }, {
+    isAdmin,
     teamId,
     creator,
     domains,
     isPrivate,
     members,
-    inviteLifetime,
-    reviewShare,
-    compensationShare,
     attributes,
     memoKey,
     formData
@@ -61,7 +60,6 @@ class ProjectService extends Singleton {
         proposalLifetime: proposalDefaultLifetime
       }, proposalInfo);
 
-
     const { TENANT } = this.proxydi.get('env');
     const { PROTOCOL } = this.proxydi.get('env');
     const { IS_TESTNET } = this.proxydi.get('env');
@@ -70,34 +68,48 @@ class ProjectService extends Singleton {
     const txBuilder = protocolRegistry.getTransactionsBuilder();
 
     const isNewProjectTeam = teamId === null;
-    const isPersonalProject = teamId === creator;
     const teamMembers = [];
 
     let projectId;
-    // TODO: Replace legacy deipRpc.api call with getTeamMembers call
     return Promise.all([
-      isNewProjectTeam ? Promise.resolve([]) : this.deipRpc.api.getResearchGroupMembershipTokensAsync(teamId)
+      isNewProjectTeam
+        ? Promise.resolve([])
+        : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
     ])
-      .then(([list]) => {
-        teamMembers.push(...list.map(({ owner: member }) => (member)));
+      .then(([refs]) => {
+        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        teamMembers.push(...list);
         return txBuilder.begin();
       })
       .then(() => {
 
         if (isNewProjectTeam) {
+
+          const authoritySetup = {
+            auths: [],
+            weight: 1
+          };
+
+          if (isAdmin) {
+            authoritySetup.auths.push({ name: TENANT, weight: 1 })
+          }
+
+          const projectTeamMembers = members
+            .filter(member => !teamMembers.some((m) => m === member))
+            .reduce((acc, member) => {
+              return acc.some(m => m === member) ? acc : [...acc, member];
+            }, [])
+            .map(member => ({ name: member, weight: 1 }));
+
+          authoritySetup.auths.push(...projectTeamMembers);
+
           const createAccountCmd = new CreateAccountCmd({
             isTeamAccount: true,
             fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
             creator: creator,
             authority: {
-              owner: {
-                auths: [{ name: TENANT, weight: 1 }],
-                weight: 1
-              },
-              active: {
-                auths: [{ name: TENANT, weight: 1 }],
-                weight: 1
-              }
+              owner: authoritySetup,
+              active: authoritySetup
             },
             memoKey: memoKey,
             description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({})).buffer)),
@@ -108,62 +120,16 @@ class ProjectService extends Singleton {
           teamId = createAccountCmd.getProtocolEntityId();
         }
 
-
-        let projectMembers;
-        if (isNewProjectTeam || isPersonalProject) {
-          projectMembers = [creator];
-        } else {
-          projectMembers = members
-            .filter(m => teamMembers.some(member => member === m))
-            .reduce((acc, member) => {
-              return acc.some(m => m === member) ? acc : [...acc, member];
-            }, []);
-        }
-
         const createProjectCmd = new CreateProjectCmd({
           teamId: teamId,
           description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
           domains: domains,
           isPrivate: isPrivate,
-          members: projectMembers,
-          reviewShare: reviewShare,
-          compensationShare: compensationShare,
+          members: undefined,
           attributes: attributes
         }, txBuilder.getTxCtx());
 
         projectId = createProjectCmd.getProtocolEntityId();
-
-        const invitees = members
-          .filter(m => m !== creator && !teamMembers.some((member) => member === m))
-          .reduce((acc, member) => {
-            return acc.some(m => m === member) ? acc : [...acc, member];
-        }, []);
-
-        const invitesFlows = invitees.map((invitee) => {
-
-          const joinProjectCmd = new JoinProjectCmd({
-            member: invitee,
-            teamId: teamId,
-            projectId: projectId
-          }, txBuilder.getTxCtx());
-
-          const createProposalCmd = new CreateProposalCmd({
-            type: APP_PROPOSAL.PROJECT_INVITE_PROPOSAL,
-            creator: creator,
-            expirationTime: inviteLifetime || proposalDefaultLifetime,
-            proposedCmds: [joinProjectCmd]
-          }, txBuilder.getTxCtx());
-
-          const inviteId = createProposalCmd.getProtocolEntityId();
-
-          const updateProposalCmd = new UpdateProposalCmd({
-            entityId: inviteId,
-            activeApprovalsToAdd: [creator]
-          }, txBuilder.getTxCtx());
-
-          return [createProposalCmd, updateProposalCmd];
-        });
-
 
         if (isProposal) {
 
@@ -171,15 +137,12 @@ class ProjectService extends Singleton {
             type: APP_PROPOSAL.PROJECT_PROPOSAL,
             creator: creator,
             expirationTime: proposalLifetime || proposalDefaultLifetime,
-            proposedCmds: [createProjectCmd, ...invitesFlows.reduce((acc, invite) => {
-              return [...acc, ...invite]
-            }, [])]
+            proposedCmds: [createProjectCmd]
           }, txBuilder.getTxCtx());
 
           txBuilder.addCmd(createProposalCmd);
 
           if (isProposalApproved) {
-
             const projectProposalId = createProposalCmd.getProtocolEntityId();
             const updateProposalCmd = new UpdateProposalCmd({
               entityId: projectProposalId,
@@ -188,17 +151,9 @@ class ProjectService extends Singleton {
 
             txBuilder.addCmd(updateProposalCmd);
           }
-        
+
         } else {
-
           txBuilder.addCmd(createProjectCmd);
-
-          for (let i = 0; i < invitesFlows.length; i++) {
-            const inviteFlow = invitesFlows[i];
-            for (let j = 0; j < inviteFlow.length; j++) {
-              txBuilder.addCmd(inviteFlow[j]);
-            }
-          }
         }
 
         return txBuilder.end();
@@ -217,9 +172,6 @@ class ProjectService extends Singleton {
     teamId,
     isPrivate,
     members,
-    inviteLifetime,
-    reviewShare,
-    compensationShare,
     updater,
     attributes,
     formData
@@ -233,75 +185,54 @@ class ProjectService extends Singleton {
         proposalLifetime: proposalDefaultLifetime
       }, proposalInfo);
 
-
+    const { TENANT } = this.proxydi.get('env');
     const { PROTOCOL } = this.proxydi.get('env');
 
     const protocolRegistry = new ProtocolRegistry(PROTOCOL);
     const txBuilder = protocolRegistry.getTransactionsBuilder();
-    const isPersonalProject = teamId === updater;
 
     const teamMembers = [];
-    // TODO: Replace legacy deipRpc.api call with getTeamMembers call
     return Promise.all([
-      this.deipRpc.api.getResearchGroupMembershipTokensAsync(teamId),
-      this.deipRpc.api.getResearchAsync(projectId),
-      this.projectHttp.getProjectPendingInvites(projectId),
+      this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false),
       txBuilder.begin()
     ])
-      .then(([list, project, invites]) => {
-        teamMembers.push(...list.map(({ owner: member }) => (member)));
+      .then(([refs]) => {
+        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        teamMembers.push(...list);
 
-        const projectInvites = invites.filter(({ invitee }) => !teamMembers.some(m => m === invitee)); // for a case there is a duplicated invite
-        const newProjectMembers = members ? members.filter(member => !teamMembers.some(m => m === member)) : [];
-        const newProjectInvites = newProjectMembers.filter(member => !projectInvites.some(({ invitee }) => invitee === member));
+        const joinedMembers = members ? members.filter(member => !teamMembers.includes(member)) : [];
+        const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];
 
-        const invitesFlows = newProjectInvites.map((invitee) => {
-
-          const joinProjectCmd = new JoinProjectCmd({
+        const invites = joinedMembers.map((invitee) => {
+          const joinProjectTeamCmd = new JoinProjectTeamCmd({
             member: invitee,
             teamId: teamId,
             projectId: projectId
           }, txBuilder.getTxCtx());
 
-          const createProposalCmd = new CreateProposalCmd({
-            type: APP_PROPOSAL.PROJECT_INVITE_PROPOSAL,
-            creator: updater,
-            expirationTime: inviteLifetime || proposalDefaultLifetime,
-            proposedCmds: [joinProjectCmd]
-          }, txBuilder.getTxCtx());
-
-          const inviteId = createProposalCmd.getProtocolEntityId();
-
-          const updateProposalCmd = new UpdateProposalCmd({
-            entityId: inviteId,
-            activeApprovalsToAdd: [updater]
-          }, txBuilder.getTxCtx());
-
-          return [createProposalCmd, updateProposalCmd];
+          return joinProjectTeamCmd;
         });
 
-        const projectMembers = isPersonalProject || !members
-          ? undefined
-          : members
-            .filter(member => teamMembers.some(m => m === member) && !projectInvites.some(({ invitee }) => invitee === member))
-            .reduce((acc, member) => {
-              return acc.some(m => m === member) ? acc : [...acc, member];
-            }, []);
+        const leavings = leftMembers.map((leaving) => {
+          const leaveProjectTeamCmd = new LeaveProjectTeamCmd({
+            member: leaving,
+            teamId: teamId,
+            projectId: projectId
+          }, txBuilder.getTxCtx());
+
+          return leaveProjectTeamCmd;
+        });
+
 
         const updateProjectCmd = new UpdateProjectCmd({
           entityId: projectId,
           teamId: teamId,
           description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
           isPrivate: isPrivate,
-          reviewShare: reviewShare,
-          compensationShare: compensationShare,
-          members: projectMembers
-            ? project.members.every(member => projectMembers.some(m => m === member)) && projectMembers.every(member => project.members.some(m => m === member))
-              ? undefined
-              : projectMembers
-            : undefined,
+          members: undefined,
           attributes: attributes
         }, txBuilder.getTxCtx());
+
 
         if (isProposal) {
 
@@ -309,15 +240,12 @@ class ProjectService extends Singleton {
             type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
             creator: updater,
             expirationTime: proposalLifetime || proposalDefaultLifetime,
-            proposedCmds: [updateProjectCmd, ...invitesFlows.reduce((acc, invite) => {
-              return [...acc, ...invite]
-            }, [])]
+            proposedCmds: [updateProjectCmd, ...invites, ...leavings]
           }, txBuilder.getTxCtx());
 
           txBuilder.addCmd(createProposalCmd);
 
           if (isProposalApproved) {
-
             const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
             const updateProposalCmd = new UpdateProposalCmd({
               entityId: projectUpdateProposalId,
@@ -328,14 +256,12 @@ class ProjectService extends Singleton {
           }
 
         } else {
-
           txBuilder.addCmd(updateProjectCmd);
-
-          for (let i = 0; i < invitesFlows.length; i++) {
-            const inviteFlow = invitesFlows[i];
-            for (let j = 0; j < inviteFlow.length; j++) {
-              txBuilder.addCmd(inviteFlow[j]);
-            }
+          for (let i = 0; i < invites.length; i++) {
+            txBuilder.addCmd(invites[i]);
+          }
+          for (let i = 0; i < leavings.length; i++) {
+            txBuilder.addCmd(leavings[i]);
           }
         }
 
