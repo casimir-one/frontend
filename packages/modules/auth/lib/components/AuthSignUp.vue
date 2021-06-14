@@ -92,7 +92,7 @@
 
 <script>
   import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
-  import { hasValue } from '@deip/toolbox';
+  import AuthSignIn from './AuthSignIn';
 
   export default {
     name: 'AuthSignUp',
@@ -180,35 +180,19 @@
         this.$emit('error', error);
       },
 
-      signIn() {
-        return this.$store.dispatch('auth/signIn', this.formModel)
-          .then(() => {
-            const unwatch = this.$store
-              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
-                if (hasValue(currentUser)) {
-                  this.emitSuccess();
-                  unwatch();
-                }
-              });
-          })
-          .catch((error) => {
-            this.emitError(error);
-          });
-      },
-
       signUp() {
         this.setLoading(true);
 
         this.$store.dispatch('auth/signUp', this.formModel)
           .then(() => {
             if (this.autologin) {
-              this.signIn();
+              AuthSignIn.methods.signIn.call(this);
             } else {
               this.emitSuccess();
             }
           })
           .catch((error) => {
-            this.emitError(error);
+            this.emitError(error.response.data);
           });
       }
     }

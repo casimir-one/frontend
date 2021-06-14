@@ -53,7 +53,7 @@
               color="primary"
               block
               depressed
-              :disabled="invalid || loading"
+              :disabled="invalid || loading || disabled"
               :loading="loading"
             >
               {{ submitLabel }}
@@ -76,6 +76,7 @@
 
 <script>
   import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
+  import { hasValue } from '@deip/toolbox';
 
   export default {
     name: 'AuthSignIn',
@@ -114,6 +115,8 @@
     data() {
       return {
         loading: false,
+        disabled: false,
+
         formModel: {
           username: '',
           password: ''
@@ -131,22 +134,42 @@
     },
 
     mounted() {
-      document.body.click(); // workaround chrome issue https://bugs.chromium.org/p/chromium/issues/detail?id=1166619
+      document.body.click();
     },
 
     methods: {
-      signIn() {
-        this.loading = true;
+      setLoading(state) {
+        this.loading = state;
+        this.disabled = state;
+      },
 
-        this.$store.dispatch('auth/signIn', this.formModel)
+      emitSuccess() {
+        this.setLoading(false);
+        this.$emit('success');
+      },
+
+      emitError(error) {
+        this.setLoading(false);
+        this.$emit('error', error);
+      },
+
+      signIn() {
+        this.setLoading(true);
+        // console.log('@@@',this.formModel);
+
+        return this.$store.dispatch('auth/signIn', this.formModel)
           .then(() => {
-            this.$emit('success');
+            const unwatch = this.$store
+              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
+                if (hasValue(currentUser)) {
+                  this.emitSuccess();
+                  unwatch();
+                }
+              });
           })
           .catch((error) => {
-            this.$emit('error', error);
-          })
-          .finally(() => {
-            this.loading = false;
+            // console.log(111,error)
+            this.emitError(error);
           });
       }
     }
