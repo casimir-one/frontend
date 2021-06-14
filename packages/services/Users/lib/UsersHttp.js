@@ -6,7 +6,7 @@ class UsersHttp extends Singleton {
   http = HttpService.getInstance();
 
   getUsersProfiles(usernames) { // DEPRECATED
-    return this.http.get(`/api/v2/users/profile${this.http.buildQueryString(usernames, 'accounts')}`);
+    return this.http.get(`/api/v2/users/profile${qs({ accounts: usernames }, { addQueryPrefix: true })}`);
   }
 
   getActiveUsersProfiles() { // DEPRECATED

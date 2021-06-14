@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class ProposalsHttp extends Singleton {
   http = HttpService.getInstance();
@@ -25,7 +26,7 @@ class ProposalsHttp extends Singleton {
   }
 
   getUserProfile(username) {
-    return this.http.get(`/api/v2/users/profile${this.http.buildQueryString([username], 'accounts')}`);
+    return this.http.get(`/api/v2/users/profile${qs({ accounts: [username] }, { addQueryPrefix: true })}`);
   }
 
   getAccountProposals(account, status) {
