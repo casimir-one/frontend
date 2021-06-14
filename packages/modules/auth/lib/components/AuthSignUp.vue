@@ -170,9 +170,9 @@
         this.disabled = state;
       },
 
-      emitSuccess() {
+      emitSuccess(data) {
         this.setLoading(false);
-        this.$emit('success');
+        this.$emit('success', data);
       },
 
       emitError(error) {
@@ -184,11 +184,11 @@
         this.setLoading(true);
 
         this.$store.dispatch('auth/signUp', this.formModel)
-          .then(() => {
+          .then((res) => {
             if (this.autologin) {
               AuthSignIn.methods.signIn.call(this);
             } else {
-              this.emitSuccess();
+              this.emitSuccess(res);
             }
           })
           .catch((error) => {

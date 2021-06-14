@@ -76,7 +76,6 @@
 
 <script>
   import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
-  import { hasValue } from '@deip/toolbox';
 
   export default {
     name: 'AuthSignIn',
@@ -143,9 +142,9 @@
         this.disabled = state;
       },
 
-      emitSuccess() {
+      emitSuccess(data) {
         this.setLoading(false);
-        this.$emit('success');
+        this.$emit('success', data);
       },
 
       emitError(error) {
@@ -155,20 +154,12 @@
 
       signIn() {
         this.setLoading(true);
-        // console.log('@@@',this.formModel);
 
         return this.$store.dispatch('auth/signIn', this.formModel)
-          .then(() => {
-            const unwatch = this.$store
-              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
-                if (hasValue(currentUser)) {
-                  this.emitSuccess();
-                  unwatch();
-                }
-              });
+          .then((res) => {
+            this.emitSuccess(res);
           })
           .catch((error) => {
-            // console.log(111,error)
             this.emitError(error);
           });
       }
