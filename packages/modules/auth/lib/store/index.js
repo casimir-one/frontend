@@ -28,7 +28,7 @@ const getPrivateKeyRole = (privateKey, account) => {
 
 const STATE = {
   username: null,
-  roles: [],
+  roles: null,
   isLoggedIn: false,
   settings: {
     signInRouteName: 'signIn',
