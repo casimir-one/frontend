@@ -19,7 +19,8 @@
             <validation-provider
               v-slot="{ errors }"
               :name="usernameLabel"
-              rules="required"
+              rules="username"
+              :debounce="1000"
             >
               <v-text-field
                 v-model="formModel.username"
@@ -32,7 +33,8 @@
             <validation-provider
               v-slot="{ errors }"
               :name="emailLabel"
-              rules="required"
+              rules="required|email"
+              :debounce="1000"
             >
               <v-text-field
                 v-model="formModel.email"
@@ -139,6 +141,11 @@
       autologin: {
         type: Boolean,
         default: true
+      },
+
+      roles: {
+        type: Array,
+        default: () => []
       }
     },
 
@@ -183,7 +190,7 @@
       signUp() {
         this.setLoading(true);
 
-        this.$store.dispatch('auth/signUp', this.formModel)
+        this.$store.dispatch('auth/signUp', { ...this.formModel, ...{ roles: this.roles } })
           .then((res) => {
             if (this.autologin) {
               AuthSignIn.methods.signIn.call(this);
