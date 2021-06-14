@@ -1,6 +1,6 @@
 import {
   isObject, isString, isNumeric, isArray
-} from './verification';
+} from './validation';
 
 export function addValueToEnum(enumObj, key, value) {
   if (typeof value === 'undefined') {

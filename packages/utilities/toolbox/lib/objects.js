@@ -1,7 +1,7 @@
 import { camelCase } from 'change-case';
 import crc32 from 'crc/crc32';
 import { cloneDeep, sortBy } from 'lodash/fp';
-import { isArray, isObject } from './verification';
+import { isArray, isObject } from './validation';
 
 export const sortObjectKeys = (obj, comparator) => {
   const clone = cloneDeep(obj);

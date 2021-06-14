@@ -1,4 +1,4 @@
-import { isJsonString } from './verification';
+import { isJsonString } from './validation';
 import { extractFilesFromModel, replaceFileWithName } from './files';
 
 export const parseFormData = (formData) => {

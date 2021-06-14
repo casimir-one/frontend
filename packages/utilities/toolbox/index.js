@@ -3,7 +3,7 @@ export * from './lib/enum';
 export * from './lib/form';
 export * from './lib/objects';
 export * from './lib/singleton';
-export * from './lib/verification';
+export * from './lib/validation';
 export * from './lib/color';
 export * from './lib/strings';
 export * from './lib/i18n';

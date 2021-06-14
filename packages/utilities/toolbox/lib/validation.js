@@ -62,7 +62,78 @@ export const hasOwnProperty = (prop, obj) => {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
 
+// TODO: rename to validateAssert or something more abstarct
+/**
+ export const validateConditionFabric = (failureMessage) => {
+   return {
+     validate(condition, failureMessage) {
+       if (condition) return;
+       throw new Error(failureMessage);
+     }
+   }
+ }
+ export validateCondition = validateConditionFabric().validate
+
+ import { validateCondition, validateConditionFabric } from '...';
+
+ const assertValidation = validateConditionFabric('Assertion failed')
+ assertValidation(cond);
+
+ validateCondition(cond, 'alarma!!!')
+*/
 export const assert = (condition, failureMessage = 'Assertion failed') => {
   if (condition) return;
   throw new Error(failureMessage);
+};
+
+export const validateAccountName = (
+  value,
+  suffix = 'Account name'
+) => {
+  if (!value) {
+    return {
+      valid: false,
+      error: `${suffix} should not be empty.`
+    };
+  }
+  if (!/^[a-z]/.test(value)) {
+    return {
+      valid: false,
+      error: `${suffix} should start with a small letter.`
+    };
+  }
+  if (!/^[a-z0-9-]*$/.test(value)) {
+    return {
+      valid: false,
+      error: `${suffix} should have only small letters, digits, or dashes.`
+    };
+  }
+  if (/--/.test(value)) {
+    return {
+      valid: false,
+      error: `${suffix} should have only one dash in a row.`
+    };
+  }
+  if (!/[a-z0-9]$/.test(value)) {
+    return {
+      valid: false,
+      error: `${suffix} should end with a small letter or digit.`
+    };
+  }
+  if (value.length < 3) {
+    return {
+      valid: false,
+      error: `${suffix} should be longer`
+    };
+  }
+  if (value.length > 40) {
+    return {
+      valid: false,
+      error: `${suffix} should be shorter`
+    };
+  }
+
+  return {
+    valid: true
+  };
 };
