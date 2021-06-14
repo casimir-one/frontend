@@ -4,12 +4,14 @@ export const isArray = (val) => kindOf(val) === 'array';
 export const isObject = (val) => kindOf(val) === 'object';
 export const isFile = (val) => kindOf(val) === 'file';
 
+export const isFunction = (val) => kindOf(val) === 'function';
+
 export const isBoolean = (val) => kindOf(val) === 'boolean';
 export const isString = (val) => kindOf(val) === 'string';
 export const isNumber = (val) => kindOf(val) === 'number';
 export const isNumeric = (val) => {
   if (isNumber(val)) return false;
-  return !Number.isNaN(val) && !Number.isNaN(Number.parseFloat(val))
+  return !Number.isNaN(val) && !Number.isNaN(Number.parseFloat(val));
 };
 
 export const isSimpleVal = (val) => ['boolean', 'string', 'number'].includes(kindOf(val));
@@ -60,8 +62,7 @@ export const hasOwnProperty = (prop, obj) => {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
 
-
-export const assert = (condition, failureMessage = "Assertion failed") => {
+export const assert = (condition, failureMessage = 'Assertion failed') => {
   if (condition) return;
   throw new Error(failureMessage);
-}
+};
