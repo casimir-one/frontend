@@ -1,4 +1,5 @@
 export * from './VexAutocomplete';
+export * from './VexAvatar';
 export * from './VexBlock';
 export * from './VexCroppa';
 export * from './VexDialog';

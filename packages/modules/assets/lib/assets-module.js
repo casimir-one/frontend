@@ -44,8 +44,9 @@ export const AssetsModule = {
     'EnvModule',
     'ValidationPlugin',
     'VuetifyExtended',
+    'AuthModule',
     'UsersModule',
-    'AuthModule'
+    'TeamsModule'
   ],
   install
 };

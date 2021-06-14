@@ -82,11 +82,9 @@
                         class="d-inline-flex mr-4 align-center"
                         style="max-width: calc(100% - 80px)"
                       >
-                        <v-avatar :size="24" class="mr-2">
-                          <img :src="accountAvatarSrc(item)" alt="">
-                        </v-avatar>
+                        <team-avatar :team="item" :size="24" class="mr-2" />
                         <div class="text-truncate">
-                          {{ item.name }}
+                          {{ teamTitle(item) }}
                         </div>
                       </div>
                     </template>
@@ -251,7 +249,7 @@
     VexTimelineAdd
   } from '@deip/vuetify-extended';
   import { UsersSelector } from '@deip/users-module';
-  import { accountAvatarSrc } from '@deip/platform-fns';
+  import { TeamAvatar } from '@deip/teams-module';
 
   import { assetsMixin } from '../../mixins';
 
@@ -264,6 +262,7 @@
     name: 'CreateProjectSecurityTokenForm',
     components: {
       UsersSelector,
+      TeamAvatar,
       VexBlock,
       VexStack,
       VexTimeline,
@@ -323,8 +322,16 @@
     },
 
     methods: {
-      accountAvatarSrc,
       sentenceCase,
+
+      teamTitle(team) {
+        const title = this.$attributes.getGlobal(
+          'teamTitle',
+          team.researchGroupRef.attributes
+        );
+
+        return title?.value;
+      },
 
       addShareholder() {
         this.formModel.holders = [
