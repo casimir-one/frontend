@@ -6,13 +6,20 @@ import {
 
 import {
   required,
-  integer
+  integer,
+  regex,
+  email
 } from 'vee-validate/dist/rules';
 
-import { setLocalesMessages, wrapInArray } from '@deip/toolbox';
+import { setLocalesMessages, validateAccountName, wrapInArray } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
+
+export const username = (value) => {
+  const { valid, error } = validateAccountName(value, '{_field_}');
+  return valid || error;
+};
 
 export const minMax = {
   params: ['min', 'max'],
@@ -153,10 +160,16 @@ const install = (Vue, options = {}) => {
   extend('minMax', minMax);
   extend('minMaxValue', minMaxValue);
   extend('unique', unique);
+  extend('regex', regex);
+  extend('email', email);
+
+  extend('username', username);
+
   extend('required', {
     ...required,
     message: (_, values) => i18n.t('plugin.validation.required', values)
   });
+
   extend('integer', {
     ...integer,
     message: (_, values) => i18n.t('plugin.validation.integer', values)
