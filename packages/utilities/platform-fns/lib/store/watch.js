@@ -1,7 +1,7 @@
-import { hasValue } from '@deip/toolbox';
+import { isNil } from 'lodash/fp';
 
 export const awaitForStore = (store, getter) => new Promise((resolve) => {
-  if (hasValue(store.getters[getter])) {
+  if (!isNil(store.getters[getter])) {
     resolve(store.getters[getter]);
   }
   const unwatch = store.watch(
