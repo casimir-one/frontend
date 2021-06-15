@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+
+### Features
+
+* **@deip/users-module:** add UserAvatar component ([e01bc32](https://gitlab.com/DEIP/deip-client-modules/commit/e01bc32eb76b4251e2c98bfb98e6a22b045b1aee))
+* **@deip/users-module:** awaitCurrentUser global method ([b97a14c](https://gitlab.com/DEIP/deip-client-modules/commit/b97a14c71769a8a1cd5f6946ca6925096904df90))
+
+
+
+
+
 # [1.119.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 **Note:** Version bump only for package @deip/users-module

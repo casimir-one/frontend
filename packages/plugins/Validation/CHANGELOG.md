@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+
+### Features
+
+* **@deip/validation-plugin:** add rules ([5c9646e](https://gitlab.com/DEIP/deip-client-modules/commit/5c9646e52012f22f80379c75b59e79388ac8dfe4))
+
+
+
+
+
 # [1.119.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 **Note:** Version bump only for package @deip/validation-plugin

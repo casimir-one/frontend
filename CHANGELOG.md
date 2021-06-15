@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://github.com/DEIPworld/deip-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** change roles initial state ([767c136](https://github.com/DEIPworld/deip-modules/commit/767c13601aa1f3b32e67df64b70d154253143054))
+* **@deip/platform-fns:** fix value check in awaitForStore ([6091d32](https://github.com/DEIPworld/deip-modules/commit/6091d325753e6da6bf77ae65744249dbc39b5a7b))
+
+
+### Features
+
+* **@deip/auth-module:** add signUp field validation ([70970d4](https://github.com/DEIPworld/deip-modules/commit/70970d4dc1928b6150e4285de8bd16b1616b22e2))
+* **@deip/http-service:** refactor handleError method ([72996a1](https://github.com/DEIPworld/deip-modules/commit/72996a117bee76b85c4ee55c4485ef43040815f4))
+* **@deip/platform-fns:** add mixins for user full name and avatar ([7126cb8](https://github.com/DEIPworld/deip-modules/commit/7126cb814ac5d1c1ad3e233bc24ac8e32c817f3a))
+* **@deip/project-service:** account-based project team model ([194be1d](https://github.com/DEIPworld/deip-modules/commit/194be1d0be338f560de7b6dfc63bad7b2938a815))
+* **@deip/teams-module:** add TeamAvatar ([b5ae7c4](https://github.com/DEIPworld/deip-modules/commit/b5ae7c46f70bdd115b1affa4219d53c28dd6e969))
+* **@deip/toolbox:** add accountNameValidation ([04ae0b9](https://github.com/DEIPworld/deip-modules/commit/04ae0b909803d21b5ad03856bc97e081007ed1c9))
+* **@deip/users-module:** add UserAvatar component ([e01bc32](https://github.com/DEIPworld/deip-modules/commit/e01bc32eb76b4251e2c98bfb98e6a22b045b1aee))
+* **@deip/users-module:** awaitCurrentUser global method ([b97a14c](https://github.com/DEIPworld/deip-modules/commit/b97a14c71769a8a1cd5f6946ca6925096904df90))
+* **@deip/validation-plugin:** add rules ([5c9646e](https://github.com/DEIPworld/deip-modules/commit/5c9646e52012f22f80379c75b59e79388ac8dfe4))
+* **@deip/vuetify-extended:** add VexAvatar ([6413539](https://github.com/DEIPworld/deip-modules/commit/641353916f83b0cf13650be1a2054eac46e2d2ac))
+
+
+
+
+
 # [1.119.0](https://github.com/DEIPworld/deip-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://github.com/DEIPworld/deip-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+**Note:** Version bump only for package @deip/auth-service
+
+
+
+
+
 # [1.119.0](https://github.com/DEIPworld/deip-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 **Note:** Version bump only for package @deip/auth-service

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** fix value check in awaitForStore ([6091d32](https://gitlab.com/DEIP/deip-client-modules/commit/6091d325753e6da6bf77ae65744249dbc39b5a7b))
+
+
+### Features
+
+* **@deip/platform-fns:** add mixins for user full name and avatar ([7126cb8](https://gitlab.com/DEIP/deip-client-modules/commit/7126cb814ac5d1c1ad3e233bc24ac8e32c817f3a))
+
+
+
+
+
 # [1.119.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 **Note:** Version bump only for package @deip/platform-fns
