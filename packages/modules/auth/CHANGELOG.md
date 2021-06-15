@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** change roles initial state ([767c136](https://gitlab.com/DEIP/deip-client-modules/commit/767c13601aa1f3b32e67df64b70d154253143054))
+
+
+### Features
+
+* **@deip/auth-module:** add signUp field validation ([70970d4](https://gitlab.com/DEIP/deip-client-modules/commit/70970d4dc1928b6150e4285de8bd16b1616b22e2))
+
+
+
+
+
 # [1.119.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.118.0...v1.119.0) (2021-06-11)
 
 **Note:** Version bump only for package @deip/auth-module
