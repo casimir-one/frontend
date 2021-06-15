@@ -2,10 +2,7 @@ export default {
   module: {
     assets: {
       input: {
-        amount: 'Amount',
-        errors: {
-          validNumber: '{_field_} must be valid number'
-        }
+        amount: 'Amount'
       },
       createTokenForm: {
         submit: 'Submit',
