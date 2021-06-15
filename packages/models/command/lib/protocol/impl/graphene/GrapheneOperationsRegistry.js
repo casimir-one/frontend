@@ -57,7 +57,7 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
         memo_key: memoKey,
         json_metadata: JSON.stringify({ description }),
         traits: isTeamAccount
-          ? [["research_group", { description: description, extensions: [] }]]
+          ? [["research_group", { description: "", extensions: [] }]] // deprecated
           : [],
         extensions: []
       }];
@@ -74,7 +74,6 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
       entityId,
       isTeamAccount,
       memoKey,
-      creator,
       ownerAuth,
       activeAuth
     }, txContext) => {
@@ -82,14 +81,13 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
         account: entityId,
         owner: ownerAuth || undefined,
         active: activeAuth || undefined,
-        creator: creator,
         active_overrides: [],
         memo_key: memoKey || undefined,
         json_metadata: JSON.stringify({ description }),
         traits: isTeamAccount
-        ? [["research_group", { description: description, extensions: [] }]]
-        : [],
-        extensions: []
+          ? [["research_group", { description: "", extensions: [] }]] // deprecated
+          : [],
+        update_extensions: []
       }];
 
       return updateAccountOp;
@@ -109,7 +107,7 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
 
       const op = ['create_research', {
         external_id: entityId,
-        research_group: teamId,
+        account: teamId,
         description: description,
         disciplines: domains,
         is_private: isPrivate || false,
@@ -139,35 +137,82 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
 
       const updateProjectOp = ['update_research', {
         external_id: entityId,
-        research_group: teamId,
+        account: teamId,
         description: description,
         is_private: isPrivate || false,
         review_share: reviewShare || undefined,
         compensation_share: compensationShare || undefined,
         members: members,
-        extensions: []
+        update_extensions: []
       }];
 
       return updateProjectOp;
     },
 
 
-    [APP_CMD.JOIN_PROJECT]: ({
+    [APP_CMD.JOIN_PROJECT_TEAM]: ({
       member,
-      teamId,
-      rewardShare,
-      projectId
+      teamId
     }, txContext) => {
 
-      const joinProjectOp = ['join_research_group_membership', {
-        member: member,
-        research_group: teamId,
-        reward_share: rewardShare || '0.00 %',
-        researches: [projectId],
-        extensions: []
+      const joinProjectOp = ['update_account', {
+        account: teamId,
+        owner: undefined,
+        active: undefined,
+        active_overrides: undefined,
+        memo_key: undefined,
+        json_metadata: undefined,
+        traits: undefined,
+        update_extensions: [
+          ["authority_update", {
+
+            active_accounts_to_add: [[member, 1]],
+            active_accounts_to_remove: [],
+            owner_accounts_to_add: [],
+            owner_accounts_to_remove: [],
+            active_keys_to_add: [],
+            active_keys_to_remove: [],
+            owner_keys_to_add: [],
+            owner_keys_to_remove: []
+
+          }]
+        ]
       }];
 
       return joinProjectOp;
+    },
+
+
+    [APP_CMD.LEAVE_PROJECT_TEAM]: ({
+      member,
+      teamId
+    }, txContext) => {
+
+      const leaveProjectOp = ['update_account', {
+        account: teamId,
+        owner: undefined,
+        active: undefined,
+        active_overrides: undefined,
+        memo_key: undefined,
+        json_metadata: undefined,
+        traits: undefined,
+        update_extensions: [
+          ["authority_update", {
+
+            active_accounts_to_add: [],
+            active_accounts_to_remove: [member],
+            owner_accounts_to_add: [],
+            owner_accounts_to_remove: [member],
+            active_keys_to_add: [],
+            active_keys_to_remove: [],
+            owner_keys_to_add: [],
+            owner_keys_to_remove: []
+
+          }]
+        ]
+      }];
+
+      return leaveProjectOp;
     },
 
 

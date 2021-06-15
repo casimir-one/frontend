@@ -3,7 +3,7 @@ import { APP_CMD } from './../constants';
 import { assert } from '@deip/toolbox';
 
 
-class JoinProjectCmd extends ProtocolCmd {
+class LeaveProjectTeamCmd extends ProtocolCmd {
 
   constructor(cmdPayload, txContext) {
 
@@ -12,7 +12,6 @@ class JoinProjectCmd extends ProtocolCmd {
       member,
       teamId,
       projectId,
-      rewardShare,
 
       // offchain
       notes
@@ -22,9 +21,9 @@ class JoinProjectCmd extends ProtocolCmd {
     assert(!!teamId, "'teamId' is required");
     assert(!!projectId, "'projectId' is required");
 
-    super(APP_CMD.JOIN_PROJECT, cmdPayload, txContext);
+    super(APP_CMD.LEAVE_PROJECT_TEAM, cmdPayload, txContext);
   }
 }
 
 
-export default JoinProjectCmd;
+export default LeaveProjectTeamCmd;

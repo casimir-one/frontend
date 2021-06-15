@@ -32,11 +32,6 @@ export default [{
   "method": "get_next_scheduled_hardfork"
 },
 {
-  "api": "account_by_key_api",
-  "method": "get_key_references",
-  "params": ["key"]
-},
-{
   "api": "database_api",
   "method": "get_accounts",
   "params": ["names"]
@@ -91,7 +86,27 @@ export default [{
   "params": ["trx"]
 },
 
-
+// account_by_key_api
+{
+  "api": "account_by_key_api",
+  "method": "get_key_references",
+  "params": ["keys", "full_history"]
+},
+{
+  "api": "account_by_key_api",
+  "method": "get_account_key_references",
+  "params": ["accounts", "full_history"]
+},
+{
+  "api": "account_by_key_api",
+  "method": "get_team_references",
+  "params": ["teams", "full_history"]
+},
+{
+  "api": "account_by_key_api",
+  "method": "get_team_member_references",
+  "params": ["members", "full_history"]
+},
 // blockchain_history_api
 {
   "api": "database_api", // TODO: Move to blockchain_history_api after refactoring delayed_node_plugin
@@ -130,7 +145,6 @@ export default [{
   "method": "get_account_deip_to_deip_transfers",
   "params": ["account", "from", "limit"]
 },
-
 {
   "api": "database_api",
   "method": "get_required_signatures",
@@ -145,11 +159,6 @@ export default [{
   "api": "database_api",
   "method": "verify_authority",
   "params": ["trx"]
-},
-{
-  "api": "database_api",
-  "method": "verify_account_authority",
-  "params": ["nameOrId", "signers"]
 },
 {
   "api": "database_api",
@@ -247,13 +256,6 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_research_groups_by_member",
-  "params": [
-    "member"
-  ]
-},
-{
-  "api": "database_api",
   "method": "get_research_group_by_permlink",
   "params": [
     "permlink"
@@ -264,27 +266,6 @@ export default [{
   "method": "get_research_group_by_id",
   "params": [
     "id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_research_group_tokens_by_research_group",
-  "params": [
-    "research_group_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_research_group_membership_tokens",
-  "params": [
-    "external_id"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_research_group_tokens_by_account",
-  "params": [
-    "account"
   ]
 },
 {
@@ -374,13 +355,6 @@ export default [{
 },
 {
   "api": "database_api",
-  "method": "get_research_by_id",
-  "params": [
-    "id"
-  ]
-},
-{
-  "api": "database_api",
   "method": "get_research_by_permlink",
   "params": [
     "research_group_id",
@@ -401,13 +375,6 @@ export default [{
   "method": "get_researches",
   "params": [
     "ids"
-  ]
-},
-{
-  "api": "database_api",
-  "method": "get_researches_by_research_group_member",
-  "params": [
-    "member"
   ]
 },
 {

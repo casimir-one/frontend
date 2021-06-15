@@ -42,7 +42,7 @@ module.exports = [{
     "memo_key",
     "json_metadata",
     "traits",
-    "extensions"
+    "update_extensions"
   ]
 }, {
   "roles": ["active", "owner"],
@@ -158,7 +158,7 @@ module.exports = [{
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "join_research_group_membership",
+  "operation": "join_research_contract",
   "params": [
     "member",
     "research_group",
@@ -168,7 +168,7 @@ module.exports = [{
   ]
 }, {
   "roles": ["active", "owner"],
-  "operation": "leave_research_group_membership",
+  "operation": "leave_research_contract",
   "params": [
     "member",
     "research_group",
@@ -221,14 +221,14 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "update_research",
   "params": [
-    "research_group",
+    "account",
     "external_id",
     "description",
     "is_private",
     "review_share",
     "compensation_share",
     "members",
-    "extensions"
+    "update_extensions"
   ]
 }, {
   "roles": ["active", "owner"],

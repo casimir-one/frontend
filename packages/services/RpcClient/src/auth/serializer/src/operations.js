@@ -185,12 +185,26 @@ const create_account = new Serializer("create_account", {
   active_overrides: map(uint16, authority),
   memo_key: public_key,
   json_metadata: optional(string),
-  traits: set(static_variant([
+  traits: set(static_variant([ // deprecated
     research_group
   ])),
   extensions: set(future_extensions)
 }, { entity_external_id: "new_account_name" });
 
+
+const authority_update = new Serializer("authority_update", {
+  active_accounts_to_add: map((string), (uint16)),
+  active_accounts_to_remove: set(string),
+
+  owner_accounts_to_add: map((string), (uint16)),
+  owner_accounts_to_remove: set(string),
+
+  active_keys_to_add: map((public_key), (uint16)),
+  active_keys_to_remove: set(public_key),
+
+  owner_keys_to_add: map((public_key), (uint16)),
+  owner_keys_to_remove: set(public_key)
+});
 
 const update_account = new Serializer("update_account", {
   account: string,
@@ -199,10 +213,12 @@ const update_account = new Serializer("update_account", {
   active_overrides: optional(map(uint16, optional(authority))),
   memo_key: optional(public_key),
   json_metadata: optional(string),
-  traits: optional(set(static_variant([
+  traits: optional(set(static_variant([ // deprecated
     research_group
   ]))),
-  extensions: set(future_extensions)
+  update_extensions: set(static_variant([
+    authority_update
+  ]))
 });
 
 
@@ -293,16 +309,16 @@ const change_recovery_account = new Serializer("change_recovery_account", {
 });
 
 
-const join_research_group_membership = new Serializer("join_research_group_membership", {
+const join_research_contract = new Serializer("join_research_contract", {
   member: string,
   research_group: string,
   reward_share: percent,
-  researches: optional(set(string)),
+  researches: optional(set(string)), // deprecated
   extensions: set(future_extensions)
 });
 
 
-const leave_research_group_membership = new Serializer("leave_research_group_membership", {
+const leave_research_contract = new Serializer("leave_research_contract", {
   member: string,
   research_group: string,
   is_exclusion: bool,
@@ -312,7 +328,7 @@ const leave_research_group_membership = new Serializer("leave_research_group_mem
 
 const create_research = new Serializer("create_research", {
   external_id: string,
-  research_group: string,
+  account: string,
   description: string,
   disciplines: set(string),
   is_private: bool,
@@ -323,15 +339,21 @@ const create_research = new Serializer("create_research", {
 }, { entity_external_id: "external_id" });
 
 
+const authority_transfer = new Serializer("authority_transfer", {
+  account: string
+});
+
 const update_research = new Serializer("update_research", {
-  research_group: string,
+  account: string,
   external_id: string,
   description: optional(string),
   is_private: optional(bool),
   review_share: optional(percent),
   compensation_share: optional(percent),
   members: optional(set(string)),
-  extensions: set(future_extensions)
+  update_extensions: set(static_variant([
+    authority_transfer
+  ]))
 });
 
 
@@ -930,8 +952,8 @@ operation.st_operations = [
   recover_account, // 10
   change_recovery_account, // 11
 
-  join_research_group_membership, // 12
-  leave_research_group_membership, // 13
+  join_research_contract, // 12
+  leave_research_contract, // 13
   create_research, // 14
   update_research, // 15
   create_research_content, // 16
