@@ -4,10 +4,10 @@ import { isNumber, isObject, isString } from '@deip/toolbox';
 
 export const assetsMixin = {
   methods: {
-    $$fromAssetUnits(val) {
+    $$fromAssetUnits(val = '') {
       if (val.indexOf('.') === -1) {
-        const [stringAmount, assetId] = val.split(' ');
-        const amount = parseInt(stringAmount, 10);
+        const [stringAmount, assetId = this.$env.ASSET_UNIT] = val.split(' ');
+        const amount = stringAmount ? parseInt(stringAmount, 10) : 0;
         const precision = 0;
 
         return {
