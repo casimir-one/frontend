@@ -25,6 +25,7 @@
   "dependencies": {
     "@deip/assets-module": "1.122.0",
     "@deip/investments-service": "1.122.0",
+    "@deip/platform-fns": "1.121.0",
     "@deip/proxydi": "1.120.0",
     "@deip/toolbox": "1.120.0",
     "@deip/validation-plugin": "1.121.0",
