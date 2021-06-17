@@ -45,6 +45,13 @@ const install = (Vue) => {
           }
         });
 
+        Object.defineProperty($currentUser, 'hasRole', {
+          enumerable: false,
+          value: (roleName, scope) => !!this.$currentUser.roles
+            .find((role) => (role.role === roleName)
+             && ((scope && role[scope.name] === scope.id) || !scope))
+        });
+
         return $currentUser;
       }
     });
