@@ -211,6 +211,8 @@ export const SchemaRenderer = {
                   dotProp.set({}, modelProps.path, value)
                 );
               }
+            } else {
+              vm.internalValue = value;
             }
           }
         }
