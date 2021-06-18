@@ -33,8 +33,8 @@ const GETTERS = {
     }, initialListByScopes);
   },
 
-  map: (state) => (key) => collectionOne(state.settings.map || [], { key }).value,
-  settings: (state) => state.settings
+  settings: (state) => state.settings,
+  mappedId: (state) => (key) => collectionOne(state.settings.map || [], { key })?.value
 };
 
 const ACTIONS = {
@@ -101,10 +101,12 @@ const MUTATIONS = {
   remove: removeFromListMutationFactory({ mergeKey: idKey }),
 
   setSettings(state, payload) {
-    state.settings = {
-      ...state.settings,
-      ...payload
-    };
+    state.settings = state.settings === null
+      ? payload
+      : {
+        ...state.settings,
+        ...payload
+      };
   }
 };
 

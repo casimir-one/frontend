@@ -18,7 +18,8 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     is: 'v-text-field',
     data: {
       props: {
-        label: '{{attributeInfo.title}}'
+        label: '{{attribute.info.title}}',
+        errorMessages: '{{attribute.errors}}'
       }
     },
     model: true
@@ -27,9 +28,10 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     is: 'v-textarea',
     data: {
       props: {
-        label: '{{attributeInfo.title}}',
+        label: '{{attribute.info.title}}',
         rows: 3,
-        autoGrow: true
+        autoGrow: true,
+        errorMessages: '{{attribute.errors}}'
       }
     },
     model: true
@@ -39,23 +41,29 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     is: 'vex-image-input',
     data: {
       props: {
-        label: '{{attributeInfo.title}}',
-        aspectRatio: '{{proxyProps.VexImageInput.aspectRatio}}'
+        label: '{{attribute.info.title}}',
+        aspectRatio: '{{attribute.props.VexImageInput.aspectRatio}}',
+        initialImage: '@getAttributeFileSrc("{{attribute.info._id}}", "{{attribute.value}}")',
+        errorMessages: '{{attribute.errors}}'
       }
     },
-    model: true
+    model: {
+      event: 'change',
+      path: false
+    }
   },
 
   [ATTR_TYPES.AVATAR]: {
     is: 'vex-image-input',
     data: {
       props: {
-        label: '{{attributeInfo.title}}',
+        label: '{{attribute.info.title}}',
         aspectRatio: 1,
         mask: avatarMask,
         noFlip: true,
         noRotate: true,
-        initialImage: '@getAttributeFileSrc("{{attributeInfo._id}}", "{{attributeValue}}")'
+        initialImage: '@getAttributeFileSrc("{{attribute.info._id}}", "{{attribute.value}}")',
+        errorMessages: '{{attribute.errors}}'
       }
     },
     model: {
@@ -68,7 +76,8 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     is: 'vex-places-autocomplete',
     data: {
       props: {
-        label: '{{attributeInfo.title}}'
+        label: '{{attribute.info.title}}',
+        errorMessages: '{{attribute.errors}}'
       }
     },
     model: {

@@ -131,21 +131,28 @@ const AttributeSet = {
   },
 
   methods: {
-    genAttribute(additionalProps) {
+    genAttribute(errors = []) {
       return this.$createElement(SchemaRenderer, {
         props: {
           components,
           schema: this.normalisedSchema,
           schemaData: {
             ...this.schemaData,
+            attribute: {
+              info: this.attributeInfo,
+              value: isFile(this.value) ? this.value.name : this.value,
+              props: Object.keys(components)
+                .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {}),
+              errors
+            },
             attributeInfo: this.attributeInfo,
             attributeValue: isFile(this.value) ? this.value.name : this.value,
+            errors,
             proxyProps: Object.keys(components)
               .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {})
           },
           value: this.value || this.attributeInfo.defaultValue,
-          disabled: this.attributeInfo.isEditable,
-          ...additionalProps
+          disabled: this.attributeInfo.isEditable
         },
         attrs: this.$attrs,
         on: {
@@ -159,12 +166,11 @@ const AttributeSet = {
     genRequiredAttribute() {
       return this.$createElement(ValidationProvider, {
         props: {
+          name: this.attributeInfo.title,
           rules: ATTR_TYPES_SET_RULES[this.attributeInfo.type] || 'required'
         },
         scopedSlots: {
-          default: ({ errors }) => this.genAttribute({
-            errorMessages: errors
-          })
+          default: ({ errors }) => this.genAttribute(errors)
         }
       });
     }
