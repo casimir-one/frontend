@@ -16,9 +16,13 @@ import { proxydi } from '@deip/proxydi';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
-export const username = (value) => {
-  const { valid, error } = validateAccountName(value, '{_field_}');
-  return valid || error;
+export const username = {
+  validate(value) {
+    const { valid, error } = validateAccountName(value, '{_field_}');
+    return valid || error;
+  },
+  computesRequired: true
+
 };
 
 export const minMax = {
