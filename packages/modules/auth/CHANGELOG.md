@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.121.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.120.0...v1.121.0) (2021-06-18)
+
+
+### Features
+
+* **@deip/auth-module:** add slots ([a3e7872](https://gitlab.com/DEIP/deip-client-modules/commit/a3e78720049dbb38513f8d9f9941371b580d6e4c))
+
+
+
+
+
 # [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
 
 
