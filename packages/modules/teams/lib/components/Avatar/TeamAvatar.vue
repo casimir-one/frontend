@@ -30,7 +30,7 @@
       },
 
       initials() {
-        const title = this.$attributes.getGlobal(
+        const title = this.$attributes.getMappedData(
           'teamTitle',
           this.team.researchGroupRef.attributes
         );
@@ -43,7 +43,7 @@
       avatarSrc() {
         if (!this.team) return null;
 
-        const avatar = this.$attributes.getGlobal(
+        const avatar = this.$attributes.getMappedData(
           'teamLogo',
           this.team.researchGroupRef.attributes
         );
