@@ -69,11 +69,17 @@
       },
       cancelLabel: {
         type: String,
-        default() { return this.$t('module.teams.form.cancel'); }
+        default() {
+          return this.$t('module.teams.form.cancel');
+        }
       },
       submitLabel: {
         type: String,
-        default() { return this.$t('module.teams.form.create'); }
+        default() {
+          return this.mode === TEAM_FORM_MODES.CREATE
+            ? this.$t('module.teams.form.create')
+            : this.$t('module.teams.form.update');
+        }
       }
     },
 
@@ -125,12 +131,8 @@
         return this.$store.dispatch(
           'teams/create',
           {
-            // TODO
-            //  attributes,
-            //  formData,
-            ...{
-              creator: this.$currentUser
-            }
+            creator: this.$currentUser,
+            ...this.lazyFormData
           }
         )
           .finally(() => {
@@ -142,16 +144,10 @@
         this.loading = true;
 
         return this.$store.dispatch(
-          'teams/create',
+          'teams/update',
           {
-            // TODO
-            //  attributes,
-            //  formData,
-            // proposalInfo,
-            teamId: this.team.external_id,
-            ...{
-              updater: this.$currentUser
-            }
+            initiator: this.$currentUser,
+            ...this.lazyFormData
           }
         )
           .finally(() => {

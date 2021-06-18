@@ -57,22 +57,8 @@ const ACTIONS = {
   },
 
   create({ dispatch }, payload) {
-    const {
-      attributes,
-      formData,
-      creator
-    } = payload;
-
     return teamService
-      .createTeam(
-        { privKey: creator.privKey },
-        {
-          creator: creator.username,
-          memoKey: creator.account.memo_key,
-          attributes,
-          formData
-        }
-      )
+      .createTeam(payload)
       .then((res) => {
         const { entityId } = res;
 
@@ -115,26 +101,9 @@ const ACTIONS = {
   },
 
   update({ dispatch }, payload) {
-    const {
-      teamId,
-      updater,
-      formData,
-      attributes,
-      proposalInfo: { isProposal, isProposalApproved, proposalLifetime }
-    } = payload;
-
     return teamService
-      .updateTeam(
-        { privKey: updater.privKey },
-        {
-          teamId,
-          creator: updater.username,
-          attributes,
-          formData
-        },
-        { isProposal, isProposalApproved, proposalLifetime }
-      ).then(() => {
-        dispatch('getOne', teamId);
+      .updateTeam(payload).then(() => {
+        dispatch('getOne', payload.entityId);
       });
   }
 };
