@@ -16,6 +16,8 @@
 
         <slot name="fields" v-bind="binds">
           <vex-stack :gutter="8" class="mb-7">
+            <slot name="prepend-fields" v-bind="binds" />
+
             <validation-provider
               v-slot="{ errors }"
               :name="usernameLabel"
@@ -56,6 +58,8 @@
                 v-bind="fieldsProps"
               />
             </validation-provider>
+
+            <slot name="apend-fields" v-bind="binds" />
           </vex-stack>
         </slot>
 
