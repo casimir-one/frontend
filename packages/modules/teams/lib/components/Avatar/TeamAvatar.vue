@@ -32,10 +32,10 @@
       initials() {
         const title = this.$attributes.getMappedData(
           'teamTitle',
-          this.team.researchGroupRef.attributes
+          this.team.attributes
         );
 
-        if (!title) return null;
+        if (!title) return '×';
 
         return title.value[0].toUpperCase();
       },
@@ -45,7 +45,7 @@
 
         const avatar = this.$attributes.getMappedData(
           'teamLogo',
-          this.team.researchGroupRef.attributes
+          this.team.attributes
         );
 
         if (!avatar) return null;

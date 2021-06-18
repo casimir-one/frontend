@@ -15,7 +15,7 @@ export const userHelpersMixin = {
     userInitials(user) {
       const fullName = this.userFullName(user);
 
-      if (!fullName) return null;
+      if (!fullName) return '×';
 
       return fullName
         .split(' ')
