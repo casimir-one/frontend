@@ -1,5 +1,12 @@
 import crypto from '@deip/lib-crypto';
-import { Singleton } from '@deip/toolbox';
+import {
+  createFormData,
+  isArray,
+  isObject,
+  replaceFileWithName,
+  Singleton
+} from '@deip/toolbox';
+
 import { UsersService } from '@deip/users-service';
 import { proxydi } from '@deip/proxydi';
 import { MultipartFormDataMessage } from '@deip/request-models';
@@ -15,6 +22,16 @@ import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
+const createHash = (val) => {
+  let string = val;
+
+  if (isObject(val) || isArray(val)) {
+    string = JSON.stringify(val);
+  }
+
+  return crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(string).buffer));
+};
+
 class TeamService extends Singleton {
   proxydi = proxydi;
 
@@ -22,92 +39,113 @@ class TeamService extends Singleton {
 
   usersService = UsersService.getInstance();
 
-  createTeam({ privKey }, {
-    creator,
-    memoKey,
-    attributes,
-    formData
-  }) {
-    const { TENANT } = this.proxydi.get('env');
+  createTxBuilder() {
     const { PROTOCOL } = this.proxydi.get('env');
+    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
+
+    return protocolRegistry.getTransactionsBuilder();
+  }
+
+  createTeam(payload) {
+    const txBuilder = this.createTxBuilder();
+
+    const { TENANT } = this.proxydi.get('env');
     const { IS_TESTNET } = this.proxydi.get('env');
 
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const {
+      initiator: {
+        memoKey,
+        privKey,
+        username: creator
+      }
+    } = payload;
 
-    let teamId;
+    const authority = {
+      auths: [{ name: TENANT, weight: 1 }, { name: creator, weight: 1 }],
+      weight: 1
+    };
+
+    const formData = createFormData(payload);
+
+    const attributes = replaceFileWithName(payload.attributes);
+    const description = createHash(attributes);
+
+    let entityId;
 
     return txBuilder.begin()
       .then(() => {
         const createAccountCmd = new CreateAccountCmd({
           isTeamAccount: true,
           fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
-          creator,
           authority: {
-            owner: {
-              auths: [{ name: TENANT, weight: 1 }, { name: creator, weight: 1 }],
-              weight: 1
-            },
-            active: {
-              auths: [{ name: TENANT, weight: 1 }, { name: creator, weight: 1 }],
-              weight: 1
-            }
+            owner: authority,
+            active: authority
           },
+          creator,
           memoKey,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+          description,
           attributes
         }, txBuilder.getTxCtx());
 
         txBuilder.addCmd(createAccountCmd);
 
-        teamId = createAccountCmd.getProtocolEntityId();
+        entityId = createAccountCmd.getProtocolEntityId();
 
         return txBuilder.end();
       })
       .then((txEnvelop) => {
         txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': teamId });
+        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': entityId });
         return this.teamHttp.createTeam(msg);
       });
   }
 
-  updateTeam({ privKey }, {
-    teamId,
-    accountOwnerAuth,
-    accountActiveAuth,
-    memoKey,
-    updater,
-    formData,
-    attributes
-  }, proposalInfo) {
-    const { isProposal, isProposalApproved, proposalLifetime } = {
-      isProposal: false,
-      isProposalApproved: true,
-      proposalLifetime: proposalDefaultLifetime,
-      ...proposalInfo
-    };
+  updateTeam(payload) {
+    const txBuilder = this.createTxBuilder();
 
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const {
+      entityId,
 
-    return txBuilder.begin()
+      initiator: {
+        privKey,
+        username: creator
+      },
+
+      proposalInfo: {
+        isProposal = false,
+        isProposalApproved = true,
+        proposalLifetime = proposalDefaultLifetime
+      } = {},
+
+      ownerAuth, // need clarification
+      activeAuth // need clarification
+    } = payload;
+
+    const formData = createFormData(payload);
+
+    const attributes = replaceFileWithName(payload.attributes);
+    const description = createHash(attributes);
+
+    return txBuilder
+      .begin()
       .then(() => {
         const updateAccountCmd = new UpdateAccountCmd({
+          entityId,
+
           isTeamAccount: true,
-          entityId: teamId,
-          ownerAuth: accountOwnerAuth,
-          activeAuth: accountActiveAuth,
-          memoKey,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
-          attributes
+          memoKey: undefined,
+
+          attributes, // need clarification
+          ownerAuth, // need clarification
+          activeAuth, // need clarification
+          description
         }, txBuilder.getTxCtx());
 
         if (isProposal) {
           const createProposalCmd = new CreateProposalCmd({
+            creator,
             type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
-            creator: updater,
-            expirationTime: proposalLifetime || proposalDefaultLifetime,
+            expirationTime: proposalLifetime,
             proposedCmds: [updateAccountCmd]
           }, txBuilder.getTxCtx());
 
@@ -117,7 +155,7 @@ class TeamService extends Singleton {
             const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
             const updateProposalCmd = new UpdateProposalCmd({
               entityId: teamUpdateProposalId,
-              activeApprovalsToAdd: [updater]
+              activeApprovalsToAdd: [creator]
             }, txBuilder.getTxCtx());
 
             txBuilder.addCmd(updateProposalCmd);
@@ -130,7 +168,7 @@ class TeamService extends Singleton {
       })
       .then((txEnvelop) => {
         txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': teamId });
+        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': entityId });
         return this.teamHttp.updateTeam(msg);
       });
   }
