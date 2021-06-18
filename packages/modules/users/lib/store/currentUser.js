@@ -20,7 +20,8 @@ const GETTERS = {
         username: state.username,
         account: state.account,
         profile: state.profile,
-        privKey: state.privKey
+        privKey: state.privKey,
+        memoKey: state.account.memo_key
       };
     }
 
