@@ -325,7 +325,7 @@
       sentenceCase,
 
       teamTitle(team) {
-        const title = this.$attributes.getGlobal(
+        const title = this.$attributes.getMappedData(
           'teamTitle',
           team.researchGroupRef.attributes
         );

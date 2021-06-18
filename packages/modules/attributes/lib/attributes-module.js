@@ -20,9 +20,20 @@ const install = (Vue, options = {}) => {
     Object.defineProperty(Vue.prototype, '$attributes', {
       get() {
         return {
-          getGlobal: (key, attrs) => {
-            const attributeId = this.$store.getters['attributes/map'](key);
-            return attrs.find((attr) => attr.attributeId === attributeId);
+          getMappedData: (key, attrs) => {
+            const attributeId = this.$store.getters['attributes/mappedId'](key);
+
+            return attributeId
+              ? attrs.find((attr) => attr.attributeId === attributeId)
+              : null;
+          },
+
+          getMappedInfo: (key) => {
+            const attributeId = this.$store.getters['attributes/mappedId'](key);
+
+            return attributeId
+              ? this.$store.getters['attributes/one'](attributeId)
+              : null;
           },
 
           getFileSrc: (opts = {}) => getAttributeFileSrc({

@@ -3,8 +3,8 @@ export const userHelpersMixin = {
     userFullName(user) {
       if (!user) return null;
 
-      const firstName = this.$attributes.getGlobal('userFirstName', user.profile.attributes)?.value;
-      const lastName = this.$attributes.getGlobal('userLastName', user.profile.attributes)?.value;
+      const firstName = this.$attributes.getMappedData('userFirstName', user.profile.attributes)?.value;
+      const lastName = this.$attributes.getMappedData('userLastName', user.profile.attributes)?.value;
 
       if (firstName || lastName) {
         return `${firstName} ${lastName}`;
@@ -27,7 +27,7 @@ export const userHelpersMixin = {
     userAvatarSrc(user, opts = {}) {
       if (!user) return null;
 
-      const avatar = this.$attributes.getGlobal(
+      const avatar = this.$attributes.getMappedData(
         'userAvatar',
         user.profile.attributes
       );

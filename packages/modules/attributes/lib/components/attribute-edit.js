@@ -465,7 +465,9 @@ const AttributeEdit = {
   },
 
   render(h) {
-    const children = [];
+    const children = [
+      // this.$createElement('pre', JSON.stringify(this.attributeData, null, 2))
+    ];
 
     if (this.mode !== 'edit') {
       children.push(
