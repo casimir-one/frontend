@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.121.0](https://github.com/DEIPworld/deip-modules/compare/v1.120.0...v1.121.0) (2021-06-18)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** errors for set ([85e8401](https://github.com/DEIPworld/deip-modules/commit/85e8401715cfe51823f07a94661eb837ab627f60))
+* **@deip/schema-renderer:** empty value ([e5453ec](https://github.com/DEIPworld/deip-modules/commit/e5453ec450c07b7aae0ac97b99b9f8d1f9772a35))
+* **@deip/validation-plugin:** username rule ([5f4850a](https://github.com/DEIPworld/deip-modules/commit/5f4850ac5e7ed58f41c2008194fe48123ac8e80d))
+
+
+### Features
+
+* **@deip/auth-module:** add slots ([a3e7872](https://github.com/DEIPworld/deip-modules/commit/a3e78720049dbb38513f8d9f9941371b580d6e4c))
+* **@deip/teams-module:** create update ([3db3ddf](https://github.com/DEIPworld/deip-modules/commit/3db3ddf0f260c8260d87da029920855db9014ce3))
+* **@deip/users-module:** add memo to currentUser ([7ddb67b](https://github.com/DEIPworld/deip-modules/commit/7ddb67ba2ebaa5e502d562789f11ff39843a5225))
+
+
+
+
+
 # [1.120.0](https://github.com/DEIPworld/deip-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
 
 
