@@ -12,7 +12,8 @@ import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
-
+import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
+import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
 
 const APP_CMD = createEnum({
   CREATE_ACCOUNT: 1,
@@ -27,7 +28,9 @@ const APP_CMD = createEnum({
   CREATE_ATTRIBUTE: 10,
   UPDATE_ATTRIBUTE: 11,
   DELETE_ATTRIBUTE: 12,
-  LEAVE_PROJECT_TEAM: 13
+  LEAVE_PROJECT_TEAM: 13,
+  CREATE_PROJECT_TOKEN_SALE: 14,
+  CONTRIBUTE_PROJECT_TOKEN_SALE: 15
 });
 
 
@@ -42,7 +45,8 @@ const APP_PROPOSAL = createEnum({
   ASSET_TRANSFER_PROPOSAL: 8,
   EXPRESS_LICENSE_PROPOSAL: 9,
   ASSET_EXCHANGE_PROPOSAL: 10,
-  PROJECT_NDA_PROPOSAL: 11
+  PROJECT_NDA_PROPOSAL: 11,
+  PROJECT_TOKEN_SALE_PROPOSAL: 12
 });
 
 
@@ -59,7 +63,9 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_ATTRIBUTE]: { class: CreateAttributeCmd },
   [APP_CMD.UPDATE_ATTRIBUTE]: { class: UpdateAttributeCmd },
   [APP_CMD.DELETE_ATTRIBUTE]: { class: DeleteAttributeCmd },
-  [APP_CMD.LEAVE_PROJECT_TEAM]: { class: LeaveProjectTeamCmd }
+  [APP_CMD.LEAVE_PROJECT_TEAM]: { class: LeaveProjectTeamCmd },
+  [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: { class: CreateProjectTokenSaleCmd },
+  [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: { class: ContributeProjectToTokenSaleCmd },
 }
 
 

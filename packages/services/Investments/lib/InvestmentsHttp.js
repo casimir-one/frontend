@@ -4,48 +4,36 @@ import { Singleton } from '@deip/toolbox';
 class InvestmentsHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getResearchTokenSalesByResearch(researchExternalId) {
-    return this.http.get(`/api/fundraising/research/${researchExternalId}`);
+  getProjectTokenSalesByProject(projectId) {
+    return this.http.get(`/api/v2/fundraising/project/${projectId}`);
   }
 
-  getResearchTokenSaleContributions(researchTokenSaleExternalId) {
-    return this.http.get(`/api/fundraising/${researchTokenSaleExternalId}/contributions`);
+  getProjectTokenSaleContributions(projectTokenSaleExternalId) {
+    return this.http.get(`/api/v2/fundraising/${projectTokenSaleExternalId}/contributions`);
   }
 
-  getResearchTokenSaleContributionsByResearch(researchExternalId) {
-    return this.http.get(`/api/fundraising/research/${researchExternalId}/contributions`);
+  getProjectTokenSaleContributionsByProject(projectId) {
+    return this.http.get(`/api/v2/fundraising/project/${projectId}/contributions`);
   }
 
-  createResearchTokenSale({ tx, isProposal, offchainMeta }) {
-    return this.http.post('/api/fundraising', { tx, isProposal, offchainMeta });
+  createProjectTokenSale(req) {
+    return this.http.post('/api/v2/fundraising', req.getRequestBody());
   }
 
-  contributeResearchTokenSale({ tx, isProposal }) {
-    return this.http.post('/api/fundraising/contributions', { tx, isProposal });
-  }
-
-  getInvestmentPortfolio(username) {
-    return this.http.get(`/api/investment-portfolio/${username}`);
-  }
-
-  updateInvestmentPortfolio(username, updated) {
-    return this.http.put(`/api/investment-portfolio/${username}`, updated);
+  contributeProjectTokenSale(req) {
+    return this.http.post('/api/v2/fundraising/contributions', req.getRequestBody());
   }
 
   getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {
-    return this.http.get(`/api/history/account/${account}/${symbol}/${step}/${cursor}/asset/${targetAsset}`);
+    return this.http.get(`/api/v2/history/account/${account}/${symbol}/${step}/${cursor}/asset/${targetAsset}`);
   }
 
   getAccountRevenueHistory(account, cursor) {
-    return this.http.get(`/api/history/account/${account}/${cursor}`);
+    return this.http.get(`/api/v2/history/account/${account}/${cursor}`);
   }
 
   getAssetRevenueHistory(symbol, cursor) {
-    return this.http.get(`/api/history/symbol/${symbol}/${cursor}`);
-  }
-
-  getCurrentTokenSaleByResearch(researchId) {
-    return this.http.get(`/api/contributions/researchId/${researchId}`);
+    return this.http.get(`/api/v2/history/symbol/${symbol}/${cursor}`);
   }
 }
 
