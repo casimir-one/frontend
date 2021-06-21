@@ -131,7 +131,7 @@
         return this.$store.dispatch(
           'teams/create',
           {
-            creator: this.$currentUser,
+            initiator: this.$currentUser,
             ...this.lazyFormData
           }
         )
