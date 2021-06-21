@@ -10,11 +10,7 @@
           :disabled="disabled"
         >
           <div
-            :class="{
-              'amount outlined rounded p-2 d-flex justify-center align-center': true,
-              'amount--disabled text--disabled': disabled || amount > remainingAmount,
-              'amount--active': active,
-            }"
+            :class="getAmountClass(amount, active, disabled)"
             @click="handleSelect(amount)"
           >
             {{ amount }} {{ asset }}
@@ -128,6 +124,15 @@
 
       handleTextFieldBlur() {
         this.internalValue = parseFloat(this.textFieldValue);
+      },
+
+      getAmountClass(amount, active, disabled) {
+        return [
+          'amount outlined rounded p-2 d-flex justify-center align-center',
+          {
+            'amount--disabled text--disabled': disabled || amount > this.remainingAmount,
+            'amount--active': active
+          }];
       }
     }
   };

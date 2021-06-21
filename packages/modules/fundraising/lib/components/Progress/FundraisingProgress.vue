@@ -1,14 +1,13 @@
 <template>
   <div>
-    <div :class="['pos-relative', {'mb-1': small, 'mb-2': !small}]">
+    <div :class="headerWrapperClass">
       <div class="d-flex justify-space-between align-end text-caption ">
-        <div :class="[{ 'd-flex flex-column': !small }]">
-          <span :class="['text--secondary', { 'text-overline': !small }]">
+        <div :class="collectedClass">
+          <span :class="collectedTitleClass">
             {{ $t('module.fundraising.fundraisingProgress.collected') }}:
           </span>
           <span
-            :class="[ 'text--primary font-weight-medium',
-                      { 'text-h3': !small }]"
+            :class="collectedAmountClass"
           >{{ collected.amount }} {{ collected.assetId }}
           </span>
         </div>
@@ -102,6 +101,19 @@
       },
       barHeight() {
         return this.small ? 4 : 8;
+      },
+      headerWrapperClass() {
+        return ['pos-relative', { 'mb-1': this.small, 'mb-2': !this.small }];
+      },
+      collectedClass() {
+        return { 'd-flex flex-column': !this.small };
+      },
+      collectedTitleClass() {
+        return ['text--secondary', { 'text-overline': !this.small }];
+      },
+      collectedAmountClass() {
+        return ['text--primary font-weight-medium',
+                { 'text-h3': !this.small }];
       }
     }
   };
