@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.121.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.121.0...v1.121.1) (2021-06-21)
+
+
+### Bug Fixes
+
+* **@deip/teams-module:** creator -> initiator ([2f2e9a0](https://gitlab.com/DEIP/deip-client-modules/commit/2f2e9a034bdbe77dc5e8527c2264baf0744e4b7b))
+
+
+
+
+
 # [1.121.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.120.0...v1.121.0) (2021-06-18)
 
 
