@@ -96,9 +96,9 @@ Otherwise, it will take a lot of work to roll back.
     spinner.start('Preparing for publication');
     await execa.command(`git checkout -b ${publishBranch}`);
     await execa.command('npx lerna clean --yes');
-    await execa.command('npx lerna bootstrap');
     spinner.stop();
 
+    await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
     await execa.command('npx lerna version --no-push --exact', { stdio: 'inherit', shell: true });
     await execa.command('npx lerna publish from-git', { stdio: 'inherit', shell: true });
     await execa.command(`git push --tags origin ${publishBranch}`);
