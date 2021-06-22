@@ -1,6 +1,6 @@
 {
 	"name": "@deip/assets-module",
-	"version": "1.121.0",
+	"version": "1.121.1",
 	"description": "> TODO: description",
 	"author": "Elena Vlasova <e.vlasova@paralect.com>",
 	"homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,7 +20,7 @@
 		"@deip/assets-service": "1.120.0",
 		"@deip/platform-fns": "1.121.0",
 		"@deip/proxydi": "1.120.0",
-		"@deip/teams-module": "1.121.0",
+		"@deip/teams-module": "1.121.1",
 		"@deip/toolbox": "1.120.0",
 		"@deip/users-module": "1.121.0",
 		"@deip/validation-plugin": "1.121.0",
