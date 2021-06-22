@@ -26,6 +26,9 @@ const install = (Vue, options = {}) => {
     store.registerModule('balances', balancesStore);
     store.registerModule('currentUserBalances', currentUserBalancesStore);
 
+    store.dispatch('assets/getList');
+    store.dispatch('balances/getList');
+
     callForCurrentUser(
       store,
       'currentUserBalances/get',
