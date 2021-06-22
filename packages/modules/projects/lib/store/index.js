@@ -130,6 +130,10 @@ const ACTIONS = {
       });
   },
 
+  getTeamDefaultProject(_, teamId) {
+    return projectService.getTeamDefaultProject(teamId);
+  },
+
   create({ commit }, payload) {
     const {
       creator: { privKey },
