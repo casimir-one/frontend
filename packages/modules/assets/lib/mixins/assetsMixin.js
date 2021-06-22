@@ -2,6 +2,8 @@ import currency from 'currency.js';
 
 import { isNumber, isObject, isString } from '@deip/toolbox';
 
+const DEFAULT_PRECISION = 3;
+
 export const assetsMixin = {
   methods: {
     $$fromAssetUnits(val = '') {
@@ -21,7 +23,7 @@ export const assetsMixin = {
       const matches = val.match(/^(\d+\.\d+)\s([a-zA-Z]+)/);
       const stringAmount = matches[1];
       const amount = stringAmount ? parseFloat(stringAmount) : 0;
-      const precision = stringAmount ? stringAmount.split('.')[1].length : 3;
+      const precision = stringAmount ? stringAmount.split('.')[1].length : DEFAULT_PRECISION;
       const assetId = matches[2] || this.$env.ASSET_UNIT;
 
       return {
@@ -34,7 +36,7 @@ export const assetsMixin = {
 
     $$formatCurrencyOpts(obj = {}, options = {}, formatted = true) {
       const formatOptions = {
-        precision: 3,
+        precision: DEFAULT_PRECISION,
         symbol: this.$env.ASSET_UNIT,
 
         separator: formatted ? ',' : '',
@@ -58,7 +60,7 @@ export const assetsMixin = {
       }
 
       if (isObject(val)) {
-        const { amount, assetId, precision } = val;
+        const { amount, assetId, precision = DEFAULT_PRECISION } = val;
 
         if (!amount && amount !== 0) return null;
         const formattedOpts = this.$$formatCurrencyOpts({
