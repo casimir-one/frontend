@@ -10,6 +10,7 @@ export default {
         startDate: 'Start date',
         endDate: 'End date',
         selectAmounts: 'Select min and max amounts',
+        selectAmount: 'Select amount',
         min: 'Min',
         max: 'Max',
         validations: {
