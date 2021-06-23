@@ -19,7 +19,32 @@ const GETTERS = {
 
 const ACTIONS = {
   create(_, payload) {
-    return investmentsService.createProjectTokenSale(...payload);
+    const {
+      user: { privKey, username },
+      data: {
+        teamId,
+        projectId,
+        startTime,
+        endTime,
+        securityTokensOnSale,
+        softCap,
+        hardCap
+      }, proposalInfo
+    } = payload;
+
+    return investmentsService.createProjectTokenSale(
+      { privKey, username },
+      {
+        teamId,
+        projectId,
+        startTime,
+        endTime,
+        securityTokensOnSale,
+        softCap,
+        hardCap
+      },
+      proposalInfo
+    );
   },
 
   getListByProjectId({ commit }, projectId) {
