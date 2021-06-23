@@ -1,6 +1,6 @@
 {
   "name": "@deip/proposals-service",
-  "version": "1.120.0",
+  "version": "1.122.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "@deip/access-service": "1.120.0",
     "@deip/blockchain-service": "1.120.0",
-    "@deip/command-models": "1.120.0",
+    "@deip/command-models": "1.122.0",
     "@deip/http-service": "1.120.0",
     "@deip/proxydi": "1.120.0",
     "@deip/request-models": "1.120.0",
