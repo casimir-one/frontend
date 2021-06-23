@@ -7,3 +7,4 @@ export * from './changeable';
 // stable
 export * from './attributedForm';
 export * from './userHelpers';
+export * from './teamHelpers';
