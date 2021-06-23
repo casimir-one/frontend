@@ -1,6 +1,6 @@
-import { UsersService } from '@deip/users-service';
+import { UserService } from '@deip/user-service';
 
-const usersService = UsersService.getInstance();
+const userService = UserService.getInstance();
 
 const STATE = {
   data: null
@@ -18,7 +18,7 @@ const ACTIONS = {
 
     const username = rootGetters['auth/username'];
 
-    return usersService.getUser(username)
+    return userService.getUser(username)
       .then((res) => {
         if (res) {
           commit('setData', res);

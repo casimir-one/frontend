@@ -1,4 +1,4 @@
-import { UserService } from '@deip/user-service';
+import { NotificationService } from '@deip/notification-service';
 
 import {
   listGetter,
@@ -6,7 +6,7 @@ import {
   removeFromListMutationFactory
 } from '@deip/platform-fns';
 
-const userService = UserService.getInstance();
+const notificationService = NotificationService.getInstance();
 
 const STATE = {
   data: []
@@ -22,7 +22,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return userService.getNotificationsByUser(rootGetters['auth/username'])
+    return notificationService.getNotificationsByUser(rootGetters['auth/username'])
       .then((notifications) => {
         commit('setList', notifications);
       })
@@ -36,7 +36,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return userService
+    return notificationService
       .markUserNotificationAsRead(rootGetters['auth/username'], notificationId)
       .then(() => {
         commit('remove', notificationId);

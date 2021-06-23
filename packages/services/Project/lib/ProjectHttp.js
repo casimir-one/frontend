@@ -34,7 +34,61 @@ class ProjectHttp extends Singleton {
   deleteProject(req) {
     return this.http.put(`/api/v2/project/delete`, req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
-  
+
+  // change all routes to req msg
+
+  getPublicProjectListing(filter) {
+    let query = qs.stringify({ filter });
+    return this.http.get(`/api/research/listing?${query}`);
+  }
+
+  getUserProjectListing(username) {
+    return this.http.get(`/api/research/user/listing/${username}`);
+  }
+
+  getTeamProjectListing(teamId) {
+    return this.http.get(`/api/research/group/listing/${teamId}`);
+  }
+
+  getTenantProjectListing(tenantId) {
+    return this.http.get(`/api/research/tenant/listing/${tenantId}`);
+  }
+
+  createProjectApplication({ proposalId, formData }) {
+    return this.http.post(`/api/research/application`, formData, {
+      headers: {
+        'Proposal-Id': proposalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
+
+  editProjectApplication({ proposalId, formData }) {
+    return this.http.put(`/api/research/application/${proposalId}`, formData, {
+      headers: {
+        'Proposal-Id': proposalId,
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+  }
+
+  approveProjectApplication({ tx }) {
+    return this.http.post('/api/research/application/approve', { tx });
+  }
+
+  rejectProjectApplication({ tx }) {
+    return this.http.post('/api/research/application/reject', { tx });
+  }
+
+  deleteProjectApplication({ tx }) {
+    return this.http.post('/api/research/application/delete', { tx });
+  }  
+
+  getProjectApplications({ status, project }) {
+    let query = status ? `?status=${status}` : '';
+    query = project ? query ? `${query}&researcher=${project}` : `?researcher=${project}` : query;
+    return this.http.get(`/api/research/application/listing${query}`);
+  }
 }
 
 export {

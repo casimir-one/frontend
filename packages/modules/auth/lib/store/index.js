@@ -6,11 +6,11 @@ import { wrapInArray } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { AccessService } from '@deip/access-service';
 import { AuthService } from '@deip/auth-service';
-import { UsersService } from '@deip/users-service';
+import { UserService } from '@deip/user-service';
 
 const accessService = AccessService.getInstance();
 const authService = AuthService.getInstance();
-const usersService = UsersService.getInstance();
+const userService = UserService.getInstance();
 
 const encodeUint8Arr = (inputString) => new TextEncoder('utf-8').encode(inputString);
 
@@ -59,7 +59,7 @@ const ACTIONS = {
   signIn({ commit, dispatch }, { username, password }) {
     let privateKey;
 
-    return usersService.getUser(username)
+    return userService.getUser(username)
       .then(({ account }) => {
         if (!account) {
           throw new Error('invalid account');
