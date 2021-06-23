@@ -182,12 +182,9 @@
       contribute() {
         this.loading = true;
         this.$store.dispatch('fundraising/contribute', {
-          user: {
-            privKey: this.$currentUser.privKey,
-            username: this.$currentUser.username
-          },
+          user: this.$currentUser,
           data: {
-            tokenSaleExternalId: this.tokenSale.externalId,
+            tokenSaleId: this.tokenSale.externalId,
             contributor: this.$currentUser.username,
             amount: this.formData.amountToContribute
           }

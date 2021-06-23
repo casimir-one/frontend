@@ -19,18 +19,18 @@ const GETTERS = {
 
 const ACTIONS = {
   create(_, payload) {
-    return investmentsService.createResearchTokenSale(...payload);
+    return investmentsService.createProjectTokenSale(...payload);
   },
 
   getListByProjectId({ commit }, projectId) {
-    return investmentsService.getResearchTokenSalesByResearch(projectId)
+    return investmentsService.getProjectTokenSalesByProject(projectId)
       .then((tokenSales) => {
         commit('setList', tokenSales);
       });
   },
 
   getTokenSaleContributions({ commit, getters }, tokenSaleId) {
-    return investmentsService.getResearchTokenSaleContributions(tokenSaleId)
+    return investmentsService.getProjectTokenSaleContributions(tokenSaleId)
       .then((contributions) => {
         const tokenSale = getters.one(tokenSaleId);
         commit('setOne', {
@@ -42,21 +42,20 @@ const ACTIONS = {
 
   contribute(_, payload) {
     const {
-      user: { privKey, username },
+      user: { privKey },
       data: {
-        tokenSaleExternalId,
+        tokenSaleId,
         contributor,
         amount
       }
     } = payload;
 
-    return investmentsService.contributeResearchTokenSale(
-      { privKey, username },
+    return investmentsService.contributeProjectTokenSale(
+      { privKey },
       {
-        tokenSaleExternalId,
+        tokenSaleId,
         contributor,
-        amount,
-        extensions: []
+        amount
       }
     );
   }
