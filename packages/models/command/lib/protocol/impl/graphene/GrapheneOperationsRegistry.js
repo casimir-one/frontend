@@ -279,7 +279,52 @@ const GRAPHENE_OPERATIONS_MAP = (api) => {
       }];
 
       return declineProposalOp;
-    }
+    },
+
+    [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: ({
+      entityId,
+      teamId,
+      projectId,
+      startTime,
+      endTime,
+      securityTokensOnSale,
+      softCap,
+      hardCap
+    }, txContext) => {
+
+      const op = ['create_research_token_sale', {
+        research_group: teamId,
+        research_external_id: projectId,
+        start_time: startTime,
+        end_time: endTime,
+        security_tokens_on_sale: securityTokensOnSale,
+        soft_cap: softCap,
+        hard_cap: hardCap,
+        extensions: []
+      }];
+
+      const [tokenSaleId, createProjectTokenSaleOp] = entityId
+        ? [entityId, op]
+        : api.operations.createEntityOperation(op, txContext);
+
+      return createProjectTokenSaleOp;
+    },
+
+    [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
+      tokenSaleId,
+      contributor,
+      amount,
+    }, txContext) => {
+
+      const contributeToTokenSaleOp = ['contribute_to_token_sale', {
+        token_sale_external_id: tokenSaleId,
+        contributor,
+        amount,
+        extensions: []
+      }];
+
+      return contributeToTokenSaleOp;
+    },
 
   }
 }
