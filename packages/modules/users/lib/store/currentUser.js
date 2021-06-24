@@ -1,32 +1,13 @@
-import { AccessService } from '@deip/access-service';
 import { UsersService } from '@deip/users-service';
 
-const accessService = AccessService.getInstance();
 const usersService = UsersService.getInstance();
 
-const defaultState = () => ({
-  username: null,
-  account: {},
-  profile: {},
-  privKey: null
-});
-
-const STATE = defaultState();
+const STATE = {
+  data: null
+};
 
 const GETTERS = {
-  data: (state) => {
-    if (state.username) {
-      return {
-        username: state.username,
-        account: state.account,
-        profile: state.profile,
-        privKey: state.privKey,
-        memoKey: state.account.memo_key
-      };
-    }
-
-    return null;
-  }
+  data: (state) => state.data
 };
 
 const ACTIONS = {
@@ -40,13 +21,8 @@ const ACTIONS = {
     return usersService.getUser(username)
       .then((res) => {
         if (res) {
-          const { account, profile } = res;
-          const privKey = accessService.getOwnerWif();
-
-          commit('setData', {
-            username, account, profile, privKey
-          });
-          dispatch('auth/setRoles', profile.roles, { root: true });
+          commit('setData', res);
+          dispatch('auth/setRoles', res.roles, { root: true });
         } else {
           console.error('No currentUser data');
           dispatch('auth/signOut', null, { root: true });
@@ -55,18 +31,13 @@ const ACTIONS = {
   },
 
   clear({ commit }) {
-    commit('setData', defaultState());
+    commit('setData', null);
   }
 };
 
 const MUTATIONS = {
-  setData(state, {
-    username, account, profile, privKey
-  }) {
-    state.username = username;
-    state.account = account;
-    state.profile = profile;
-    state.privKey = privKey;
+  setData(state, payload) {
+    state.data = payload;
   }
 };
 

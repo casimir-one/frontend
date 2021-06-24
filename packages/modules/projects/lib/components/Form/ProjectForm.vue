@@ -132,7 +132,7 @@
             // compensationShare,
             // attributes,
             // formData
-            memoKey: this.$currentUser.account.memo_key
+            memoKey: this.$currentUser.memoKey
           },
           proposal: {
             // isProposal

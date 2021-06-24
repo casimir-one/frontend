@@ -3,13 +3,13 @@ export const userHelpersMixin = {
     userFullName(user) {
       if (!user) return null;
 
-      const firstName = this.$attributes.getMappedData('userFirstName', user.profile.attributes)?.value;
-      const lastName = this.$attributes.getMappedData('userLastName', user.profile.attributes)?.value;
+      const firstName = this.$attributes.getMappedData('userFirstName', user.attributes)?.value;
+      const lastName = this.$attributes.getMappedData('userLastName', user.attributes)?.value;
 
       if (firstName || lastName) {
         return `${firstName} ${lastName}`;
       }
-      return user.account.name;
+      return user.username;
     },
 
     userInitials(user) {
@@ -29,7 +29,7 @@ export const userHelpersMixin = {
 
       const avatar = this.$attributes.getMappedData(
         'userAvatar',
-        user.profile.attributes
+        user.attributes
       );
 
       if (!avatar) return null;

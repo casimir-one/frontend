@@ -1,7 +1,10 @@
 import { proxydi } from '@deip/proxydi';
 import { callForCurrentUser } from '@deip/platform-fns';
 import { hasValue } from '@deip/toolbox';
+import { AccessService } from '@deip/access-service';
 import { usersStore, currentUserStore } from './store';
+
+const accessService = AccessService.getInstance();
 
 const install = (Vue) => {
   if (install.installed) return;
@@ -16,23 +19,33 @@ const install = (Vue) => {
     store.registerModule('users', usersStore);
     store.registerModule('currentUser', currentUserStore);
 
-    Vue.mixin({
-      computed: {
-        $currentUser() { return this.$store.getters['currentUser/data']; },
-        $isAdmin() {
-          return this.$currentUser.profile.roles.some((r) => r.role === 'admin');
-        }
-      },
-      methods: {
-        $awaitCurrentUser(cb) {
-          const unwatch = this.$store
-            .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
-              if (hasValue(currentUser)) {
-                cb();
-                unwatch();
-              }
-            });
-        }
+    Object.defineProperty(Vue.prototype, '$currentUser', {
+      get() {
+        const data = this.$store.getters['currentUser/data'];
+
+        if (!data) return null;
+
+        const $currentUser = {
+          ...data,
+          isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
+          memoKey: data.account.memo_key,
+          privKey: accessService.getOwnerWif()
+        };
+
+        Object.defineProperty($currentUser, 'await', {
+          enumerable: false,
+          value: (cb) => {
+            const unwatch = this.$store
+              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
+                if (hasValue(currentUser)) {
+                  cb();
+                  unwatch();
+                }
+              });
+          }
+        });
+
+        return $currentUser;
       }
     });
 
