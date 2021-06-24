@@ -19,16 +19,30 @@
       </vex-grid>
     </v-item-group>
 
-    <v-text-field
-      :value="textFieldValue"
-      autocomplete="off"
-      :placeholder="$t('module.fundraising.amountSelector.enterAmount')"
-      hide-details
-      :suffix="asset"
-      @focus="handleTextFieldFocus"
-      @input="handleTextFieldInput"
-      @blur="handleTextFieldBlur"
-    />
+    <validation-observer ref="amountObserver">
+      <validation-provider
+        v-slot="{ errors }"
+        :name="$t('module.fundraising.amountSelector.amount')"
+        :rules="{
+          number: true,
+          minMaxValue: {
+            min: 1,
+            max: remainingAmount
+          }
+        }"
+      >
+        <v-text-field
+          :value="textFieldValue"
+          autocomplete="off"
+          :placeholder="$t('module.fundraising.amountSelector.enterAmount')"
+          :suffix="asset"
+          :error-messages="errors"
+          @focus="handleTextFieldFocus"
+          @input="handleTextFieldInput"
+          @blur="handleTextFieldBlur"
+        />
+      </validation-provider>
+    </validation-observer>
   </vex-stack>
 </template>
 
@@ -123,7 +137,12 @@
       },
 
       handleTextFieldBlur() {
-        this.internalValue = parseFloat(this.textFieldValue);
+        this.$refs.amountObserver.validate()
+          .then((isValid) => {
+            if (isValid) {
+              this.internalValue = parseFloat(this.textFieldValue);
+            }
+          });
       },
 
       getAmountClass(amount, active, disabled) {

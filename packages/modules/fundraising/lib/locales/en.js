@@ -18,6 +18,7 @@ export default {
         }
       },
       amountSelector: {
+        amount: 'Amount',
         enterAmount: 'Enter amount'
       },
       fundraisingProgress: {
