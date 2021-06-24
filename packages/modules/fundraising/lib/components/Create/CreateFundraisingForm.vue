@@ -76,7 +76,7 @@
         </vex-block>
 
         <vex-block
-          :title="hardCapHidden
+          :title="noHardCap
             ? $t('module.fundraising.createForm.selectAmount')
             : $t('module.fundraising.createForm.selectAmounts')"
           compact
@@ -98,7 +98,7 @@
                 />
               </validation-provider>
             </v-col>
-            <v-col v-if="!hardCapHidden" cols="6">
+            <v-col v-if="!noHardCap" cols="6">
               <validation-provider
                 v-slot="{ errors }"
                 :name="$t('module.fundraising.createForm.max')"
@@ -210,7 +210,7 @@
         type: Boolean,
         default: false
       },
-      hardCapHidden: {
+      noHardCap: {
         type: Boolean,
         default: false
       },
@@ -306,7 +306,7 @@
       },
 
       createFundraising(securityTokensOnSale) {
-        if (this.hardCapHidden) {
+        if (this.noHardCap) {
           this.formData.hardCap = { ...this.formData.softCap };
         }
 
