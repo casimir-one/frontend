@@ -31,7 +31,8 @@
     "@deip/validation-plugin": "1.121.0",
     "@deip/vuetify-extended": "1.120.0",
     "date-fns": "^2.22.1",
-    "maska": "^1.4.2"
+    "maska": "^1.4.2",
+    "randomstring": "^1.2.1"
   },
   "peerDependencies": {
     "vue-i18n": "^8.24.4"

@@ -1,8 +1,9 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
-    <v-form :disabled="loading" @submit.prevent="handleSubmit(createFundraising)">
+    <v-form :disabled="loading" @submit.prevent="handleSubmit(submit)">
       <vex-stack gap="32">
         <vex-block
+          v-if="!autoCreateSecurityToken"
           :title="$t('module.fundraising.createForm.determineNumberOfTokens')"
           compact
         >
@@ -75,7 +76,9 @@
         </vex-block>
 
         <vex-block
-          :title="$t('module.fundraising.createForm.selectAmounts')"
+          :title="noHardCap
+            ? $t('module.fundraising.createForm.selectAmount')
+            : $t('module.fundraising.createForm.selectAmounts')"
           compact
         >
           <v-row>
@@ -83,8 +86,8 @@
               <validation-provider
                 v-slot="{ errors }"
                 :name="$t('module.fundraising.createForm.min')"
-                vid="softCup"
-                rules="assetSmaller:@hardCup"
+                vid="softCap"
+                rules="assetSmaller:@hardCap"
               >
                 <asset-input
                   v-model="formData.softCap"
@@ -95,12 +98,12 @@
                 />
               </validation-provider>
             </v-col>
-            <v-col cols="6">
+            <v-col v-if="!noHardCap" cols="6">
               <validation-provider
                 v-slot="{ errors }"
                 :name="$t('module.fundraising.createForm.max')"
-                vid="hardCup"
-                rules="assetGreater:@softCup"
+                vid="hardCap"
+                rules="assetGreater:@softCap"
               >
                 <asset-input
                   v-model="formData.hardCap"
@@ -152,6 +155,7 @@
     addMinutes,
     format
   } from 'date-fns';
+  import randomstring from 'randomstring';
 
   import { extend } from '@deip/validation-plugin';
   import { VexBlock, VexStack, VexDateTimeInput } from '@deip/vuetify-extended';
@@ -201,6 +205,18 @@
       project: {
         type: Object,
         required: true
+      },
+      autoCreateSecurityToken: {
+        type: Boolean,
+        default: false
+      },
+      noHardCap: {
+        type: Boolean,
+        default: false
+      },
+      isProposal: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -254,35 +270,63 @@
           .split('.')[0];
       },
 
-      createFundraising() {
-        this.loading = true;
-        const isProposal = !this.project.researchGroup.is_personal;
-        const securityTokensOnSale = [
-          this.$$toAssetUnits({
-            ...this.issuedTokens,
-            ...{ amount: this.formData.amount }
+      createSecurityToken() {
+        const DEFAULT_PRECISION = 0;
+        const DEFAULT_AMOUNT = 10000;
+        const assetId = this.generateAssetSymbol();
+
+        const holders = [{
+          account: this.project.researchGroup.external_id,
+          amount: this.$$toAssetUnits({
+            amount: DEFAULT_AMOUNT,
+            assetId,
+            precision: DEFAULT_PRECISION
           }, false)
-        ];
+        }];
 
         const data = [
           {
             privKey: this.$currentUser.privKey,
             username: this.$currentUser.username
           },
-          isProposal,
           {
-            researchGroup: this.project.researchGroup.external_id,
             researchExternalId: this.project.externalId,
+            researchGroup: this.project.researchGroup.external_id,
+            symbol: assetId,
+            precision: DEFAULT_PRECISION,
+            description: '',
+            maxSupply: parseInt(DEFAULT_AMOUNT + '0'.repeat(DEFAULT_PRECISION), 10),
+            holders
+          }
+        ];
+
+        return this.$store.dispatch('assets/createProjectSecurityToken', data)
+          .then(() => this.$store.dispatch('assets/getBySymbol', assetId))
+          .then(() => assetId);
+      },
+
+      createFundraising(securityTokensOnSale) {
+        if (this.noHardCap) {
+          this.formData.hardCap = { ...this.formData.softCap };
+        }
+
+        const payload = {
+          user: this.$currentUser,
+          data: {
+            teamId: this.project.researchGroup.external_id,
+            projectId: this.project.externalId,
             startTime: this.formatDate(this.formData.startDate),
             endTime: this.formatDate(this.formData.endDate),
             securityTokensOnSale,
             softCap: this.$$toAssetUnits(this.formData.softCap, false),
-            hardCap: this.$$toAssetUnits(this.formData.hardCap, false),
-            extensions: []
+            hardCap: this.$$toAssetUnits(this.formData.hardCap, false)
+          },
+          proposalInfo: {
+            isProposal: this.isProposal
           }
-        ];
+        };
 
-        this.$store.dispatch('fundraising/create', data)
+        this.$store.dispatch('fundraising/create', payload)
           .then(() => {
             this.$emit('success');
           })
@@ -292,6 +336,33 @@
           .finally(() => {
             this.loading = false;
           });
+      },
+
+      submit() {
+        this.loading = true;
+
+        if (this.autoCreateSecurityToken) {
+          this.createSecurityToken()
+            .then((assetId) => {
+              const { currentSupply, precision } = this.$store.getters['assets/one'](assetId);
+              const securityTokensOnSale = [
+                this.$$toAssetUnits({
+                  amount: currentSupply,
+                  assetId,
+                  precision
+                }, false)
+              ];
+              this.createFundraising(securityTokensOnSale);
+            });
+        } else {
+          const securityTokensOnSale = [
+            this.$$toAssetUnits({
+              ...this.issuedTokens,
+              amount: this.formData.amount
+            }, false)
+          ];
+          this.createFundraising(securityTokensOnSale);
+        }
       },
 
       amountHint(val) {
@@ -322,6 +393,25 @@
           ...this.formData.hardCap,
           assetId: this.formData.softCap.assetId
         };
+      },
+
+      generateAssetSymbol() {
+        const existingSymbols = this.$store.getters['assets/listKeys']();
+
+        let result = null;
+        while (!result) {
+          const res = randomstring.generate({
+            length: 5,
+            charset: 'alphabetic',
+            capitalization: 'uppercase'
+          });
+
+          if (!existingSymbols.includes(res)) {
+            result = res;
+          }
+        }
+
+        return result;
       },
 
       handleCancelClick() {
