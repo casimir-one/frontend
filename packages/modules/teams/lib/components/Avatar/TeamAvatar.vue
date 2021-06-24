@@ -1,19 +1,22 @@
 <template>
   <vex-avatar
-    :src="avatarSrc"
-    :text="initials"
+    :src="$$teamAvatarSrc(team, avatarOptions)"
+    :text="$$teamInitials(team)"
     v-bind="avatarProps"
   />
 </template>
 
 <script>
   import { VexAvatar } from '@deip/vuetify-extended';
+  import { teamHelpersMixin } from '@deip/platform-fns';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
 
   export default {
     name: 'TeamAvatar',
 
     components: { VexAvatar },
+
+    mixins: [teamHelpersMixin],
 
     props: {
       ...VexAvatar.props,
@@ -28,40 +31,11 @@
       avatarProps() {
         return getBindableProps.call(this, VexAvatar.props);
       },
-
-      initials() {
-        const title = this.$attributes.getMappedData(
-          'teamTitle',
-          this.team.attributes
-        );
-
-        if (!title) return '×';
-
-        return title.value[0].toUpperCase();
-      },
-
-      avatarSrc() {
-        if (!this.team) return null;
-
-        const avatar = this.$attributes.getMappedData(
-          'teamLogo',
-          this.team.attributes
-        );
-
-        if (!avatar) return null;
-
-        const opts = {
+      avatarOptions() {
+        return {
           width: this.$props.size,
           height: this.$props.size
         };
-
-        return this.$attributes.getFileSrc({
-          scope: 'team',
-          scopeId: this.team.externalId,
-          attributeId: avatar.attributeId,
-          filename: avatar.value,
-          ...opts
-        });
       }
     }
   };
