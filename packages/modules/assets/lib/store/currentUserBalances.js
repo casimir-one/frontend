@@ -3,6 +3,7 @@ import { AssetsService } from '@deip/assets-service';
 import {
   clearMutation,
   listGetter,
+  oneGetterFactory,
   setListMutationFactory
 } from '@deip/platform-fns';
 
@@ -13,7 +14,8 @@ const STATE = {
 };
 
 const GETTERS = {
-  list: listGetter
+  list: listGetter,
+  one: oneGetterFactory({ selectorKey: 'assetSymbol' })
 };
 
 const ACTIONS = {

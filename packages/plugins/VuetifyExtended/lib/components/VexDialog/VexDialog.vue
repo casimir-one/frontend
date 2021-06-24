@@ -10,7 +10,7 @@
   >
     <v-card tile>
       <v-toolbar>
-        <v-toolbar-title class="text-h5" v-if="Boolean(title)">
+        <v-toolbar-title v-if="Boolean(title)" class="text-h5">
           {{ title }}
         </v-toolbar-title>
 
@@ -21,7 +21,7 @@
           icon
           @click="closeDialog"
         >
-          <v-icon>close</v-icon>
+          <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
 
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+  /* eslint-disable import/extensions, import/no-unresolved */
   import Toggleable from 'vuetify/lib/mixins/toggleable';
   import {
     VDialog,
@@ -73,6 +74,7 @@
     VIcon,
     VDivider
   } from 'vuetify/lib/components';
+  /* eslint-enable import/extensions, import/no-unresolved */
 
   export default {
     name: 'VexDialog',
@@ -109,7 +111,7 @@
 
       buttonTrueProps: {
         type: Object,
-        default: () => ({ text: true, color: 'primary' })
+        default: () => ({ color: 'primary' })
       },
 
       buttonFalseProps: {
@@ -162,11 +164,11 @@
         this.$emit(eventName, e);
       },
 
-      cancelButtonClick(e) {
+      cancelButtonClick() {
         this.call('click:cancel', false);
       },
 
-      confirmButtonClick(e) {
+      confirmButtonClick() {
         this.call('click:confirm', true);
       },
 

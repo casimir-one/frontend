@@ -16,6 +16,27 @@ export default {
           assetSmaller: '{_field_} should be smaller than {target}',
           assetGreater: '{_field_} should be greater than {target}'
         }
+      },
+      amountSelector: {
+        amount: 'Amount',
+        enterAmount: 'Enter amount'
+      },
+      fundraisingProgress: {
+        goal: 'Goal',
+        collected: 'Collected',
+        untilCompletion: 'Until completion',
+        investors: 'Investors'
+      },
+      contributeForm: {
+        title: 'Your investment',
+        cancel: 'Cancel',
+        invest: 'Invest',
+        amount: 'Amount',
+        agree: 'I have read the terms of the {0} and understand that the investment is associated with the risk of non-return of the invested funds',
+        tos: 'User Agreement',
+        userBalanceIsNotEnough: 'You do not have enough funds in your account',
+        confirmTitle: 'Investment confirmation',
+        doYouConfirm: 'Do you confirm the investment of funds from your account?'
       }
     }
   }

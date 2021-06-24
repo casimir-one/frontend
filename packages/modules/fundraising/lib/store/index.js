@@ -1,4 +1,10 @@
 import { InvestmentsService } from '@deip/investments-service';
+import {
+  listGetter,
+  oneGetter,
+  setListMutation,
+  setOneMutation
+} from '@deip/platform-fns';
 
 const investmentsService = InvestmentsService.getInstance();
 
@@ -6,15 +12,59 @@ const STATE = {
   data: []
 };
 
-const GETTERS = {};
+const GETTERS = {
+  one: oneGetter,
+  list: listGetter
+};
 
 const ACTIONS = {
   create(_, payload) {
-    return investmentsService.createResearchTokenSale(...payload);
+    return investmentsService.createProjectTokenSale(...payload);
+  },
+
+  getListByProjectId({ commit }, projectId) {
+    return investmentsService.getProjectTokenSalesByProject(projectId)
+      .then((tokenSales) => {
+        commit('setList', tokenSales);
+      });
+  },
+
+  getTokenSaleContributions({ commit, getters }, tokenSaleId) {
+    return investmentsService.getProjectTokenSaleContributions(tokenSaleId)
+      .then((contributions) => {
+        const tokenSale = getters.one(tokenSaleId);
+        commit('setOne', {
+          ...tokenSale,
+          contributions
+        });
+      });
+  },
+
+  contribute(_, payload) {
+    const {
+      user: { privKey },
+      data: {
+        tokenSaleId,
+        contributor,
+        amount
+      }
+    } = payload;
+
+    return investmentsService.contributeProjectTokenSale(
+      { privKey },
+      {
+        tokenSaleId,
+        contributor,
+        amount
+      }
+    );
   }
 };
 
-const MUTATIONS = {};
+const MUTATIONS = {
+  setOne: setOneMutation,
+  setList: setListMutation
+};
 
 export const fundraisingStore = {
   state: STATE,

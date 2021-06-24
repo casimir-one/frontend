@@ -9,7 +9,7 @@
         ref="amountValidator"
         v-slot="{ errors }"
         :name="$t('module.assets.input.amount')"
-        :rules="required ? 'required|amount' : ''"
+        :rules="required ? 'required|number' : ''"
       >
         <v-text-field
           v-model="internalValue.amount"
@@ -39,22 +39,11 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/extensions, import/no-unresolved
   import Proxyable from 'vuetify/lib/mixins/proxyable';
-  import { extend, integer, double } from '@deip/validation-plugin';
   import { objectedModel } from '@deip/platform-fns';
-  import { proxydi } from '@deip/proxydi';
 
   import { assetsMixin } from '../../mixins';
-
-  extend('amount', {
-    validate(value) {
-      return integer.validate(value) || double.validate(value);
-    },
-    message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
-      return i18n.t('module.assets.input.errors.validNumber', values);
-    }
-  });
 
   export default {
     name: 'AssetInput',
