@@ -65,6 +65,13 @@ const ACTIONS = {
       });
   },
 
+  getCurrentTokenSaleByProject({ commit }, projectId) {
+    return investmentsService.getCurrentTokenSaleByProject(projectId)
+      .then((tokenSale) => {
+        commit('setOne', tokenSale);
+      });
+  },
+
   contribute(_, payload) {
     const {
       user: { privKey },
