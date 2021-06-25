@@ -1,11 +1,10 @@
 import crypto from '@deip/lib-crypto';
 import { proxydi } from '@deip/proxydi';
-import { MultipartFormDataMessage } from '@deip/request-models';
+import { MultFormDataMsg } from '@deip/message-models';
 import {
-  ProtocolRegistry,
   UpdateAccountCmd
 } from '@deip/command-models';
-
+import { ChainService } from '@deip/chain-service';
 import { Singleton } from '@deip/toolbox';
 import { UserHttp } from './UserHttp';
 
@@ -25,32 +24,33 @@ class UserService extends Singleton {
       accountActiveAuth,
       memoKey
     }) {
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
 
-    return txBuilder.begin()
-      .then(() => {
-        const updateAccountCmd = new UpdateAccountCmd({
-          isTeamAccount: false,
-          entityId: updater,
-          ownerAuth: accountOwnerAuth,
-          activeAuth: accountActiveAuth,
-          memoKey,
-          description: attributes ? crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)) : undefined,
-          attributes,
-          email,
-          status
-        }, txBuilder.getTxCtx());
+        return txBuilder.begin()
+          .then(() => {
+            const updateAccountCmd = new UpdateAccountCmd({
+              isTeamAccount: false,
+              entityId: updater,
+              ownerAuth: accountOwnerAuth,
+              activeAuth: accountActiveAuth,
+              memoKey,
+              description: attributes ? crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)) : undefined,
+              attributes,
+              email,
+              status
+            });
 
-        txBuilder.addCmd(updateAccountCmd);
-
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': updater });
-        return this.userHttp.updateUser(msg);
+            txBuilder.addCmd(updateAccountCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': updater });
+            return this.userHttp.updateUser(msg);
+          });
       });
   }
 

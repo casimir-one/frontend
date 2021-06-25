@@ -1,15 +1,15 @@
 import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { ApplicationJsonMessage } from '@deip/request-models';
+import { JsonDataMsg } from '@deip/message-models';
 import {
   APP_PROPOSAL,
   UpdateProposalCmd,
-  ProtocolRegistry,
   CreateProposalCmd,
   CreateProjectTokenSaleCmd,
   ContributeProjectToTokenSaleCmd
 } from '@deip/command-models';
+import { ChainService } from '@deip/chain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 import { TS_TYPES } from './constants';
 
@@ -20,7 +20,7 @@ class InvestmentsService extends Singleton {
 
   proxydi = proxydi;
 
-  deipRpc = deipRpc;
+  deipRpc = deipRpc; // deprecated
 
   getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
     return this.investmentsHttp.getAccountRevenueHistoryByAsset(
@@ -63,53 +63,52 @@ class InvestmentsService extends Singleton {
       ...proposalInfo
     };
 
-    const { PROTOCOL } = this.proxydi.get('env');
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const сreateProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
+              teamId,
+              projectId,
+              startTime,
+              endTime,
+              securityTokensOnSale,
+              softCap,
+              hardCap,
+              creator: username
+            });
 
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+            if (isProposal) {
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.PROJECT_TOKEN_SALE_PROPOSAL,
+                creator: username,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: [сreateProjectTokenSaleCmd]
+              });
 
-    return txBuilder.begin()
-      .then(() => {
-        const сreateProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
-          teamId,
-          projectId,
-          startTime,
-          endTime,
-          securityTokensOnSale,
-          softCap,
-          hardCap,
-          creator: username
-        }, txBuilder.getTxCtx());
+              txBuilder.addCmd(createProposalCmd);
 
-        if (isProposal) {
-          const createProposalCmd = new CreateProposalCmd({
-            type: APP_PROPOSAL.PROJECT_TOKEN_SALE_PROPOSAL,
-            creator: username,
-            expirationTime: proposalLifetime || proposalDefaultLifetime,
-            proposedCmds: [сreateProjectTokenSaleCmd]
-          }, txBuilder.getTxCtx());
+              if (isProposalApproved) {
+                const updateProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new UpdateProposalCmd({
+                  entityId: updateProposalId,
+                  activeApprovalsToAdd: [username]
+                });
 
-          txBuilder.addCmd(createProposalCmd);
-
-          if (isProposalApproved) {
-            const updateProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: updateProposalId,
-              activeApprovalsToAdd: [username]
-            }, txBuilder.getTxCtx());
-
-            txBuilder.addCmd(updateProposalCmd);
-          }
-        } else {
-          txBuilder.addCmd(сreateProjectTokenSaleCmd);
-        }
-
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new ApplicationJsonMessage({}, txEnvelop);
-        return this.investmentsHttp.createProjectTokenSale(msg);
+                txBuilder.addCmd(updateProposalCmd);
+              }
+            } else {
+              txBuilder.addCmd(сreateProjectTokenSaleCmd);
+            }
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.investmentsHttp.createProjectTokenSale(msg);
+          });
       });
   }
 
@@ -118,25 +117,26 @@ class InvestmentsService extends Singleton {
     contributor,
     amount
   }) {
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const contributeProjectToTokenSaleCmd = new ContributeProjectToTokenSaleCmd({
+              tokenSaleId,
+              contributor,
+              amount
+            });
 
-    return txBuilder.begin()
-      .then(() => {
-        const contributeProjectToTokenSaleCmd = new ContributeProjectToTokenSaleCmd({
-          tokenSaleId,
-          contributor,
-          amount
-        }, txBuilder.getTxCtx());
-
-        txBuilder.addCmd(contributeProjectToTokenSaleCmd);
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new ApplicationJsonMessage({}, txEnvelop);
-        return this.investmentsHttp.contributeProjectTokenSale(msg);
+            txBuilder.addCmd(contributeProjectToTokenSaleCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.investmentsHttp.contributeProjectTokenSale(msg);
+          });
       });
   }
 

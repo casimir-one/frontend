@@ -4,3 +4,4 @@ packages/models/**
 packages/services/Project/**
 packages/utilities/lib-crypto/**
 packages/services/RpcClient/**
+packages/services/Chain/**

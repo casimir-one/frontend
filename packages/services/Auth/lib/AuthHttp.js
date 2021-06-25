@@ -13,7 +13,7 @@ class AuthHttp extends Singleton {
   }
 
   signUp(req) {
-    return this.http.post('/auth/v2/sign-up/', req.getRequestBody());
+    return this.http.post('/auth/v2/sign-up/', req.getHttpBody());
   }
 }
 

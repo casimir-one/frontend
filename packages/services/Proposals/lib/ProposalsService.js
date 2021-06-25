@@ -3,8 +3,9 @@ import { AccessService } from '@deip/access-service';
 import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import { Singleton } from '@deip/toolbox';
-import { ProtocolRegistry, UpdateProposalCmd, DeclineProposalCmd } from '@deip/command-models';
-import { ApplicationJsonMessage } from '@deip/request-models';
+import { UpdateProposalCmd, DeclineProposalCmd } from '@deip/command-models';
+import { JsonDataMsg } from '@deip/message-models';
+import { ChainService } from '@deip/chain-service';
 import { ProposalsHttp } from './ProposalsHttp';
 
 class ProposalsService extends Singleton {
@@ -12,11 +13,11 @@ class ProposalsService extends Singleton {
 
   accessService = AccessService.getInstance();
 
-  blockchainService = BlockchainService.getInstance();
+  blockchainService = BlockchainService.getInstance(); // deprecated
 
   proxydi = proxydi;
 
-  deipRpc = deipRpc;
+  deipRpc = deipRpc; // deprecated
 
   createProposal({ privKey, username }, propagate, {
     creator,
@@ -134,29 +135,30 @@ class ProposalsService extends Singleton {
     keyApprovalsToAdd = [],
     keyApprovalsToRemove = []
   }) {
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: proposalId,
+              activeApprovalsToAdd,
+              activeApprovalsToRemove,
+              ownerApprovalsToAdd,
+              ownerApprovalsToRemove,
+              keyApprovalsToAdd,
+              keyApprovalsToRemove
+            });
 
-    return txBuilder.begin()
-      .then(() => {
-        const updateProposalCmd = new UpdateProposalCmd({
-          entityId: proposalId,
-          activeApprovalsToAdd,
-          activeApprovalsToRemove,
-          ownerApprovalsToAdd,
-          ownerApprovalsToRemove,
-          keyApprovalsToAdd,
-          keyApprovalsToRemove
-        }, txBuilder.getTxCtx());
-
-        txBuilder.addCmd(updateProposalCmd);
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new ApplicationJsonMessage({}, txEnvelop);
-        return this.proposalsHttp.updateProposal(msg);
+            txBuilder.addCmd(updateProposalCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.proposalsHttp.updateProposal(msg);
+          });
       });
   }
 
@@ -165,25 +167,26 @@ class ProposalsService extends Singleton {
     account,
     authorityType
   }) {
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const declineProposalCmd = new DeclineProposalCmd({
+              entityId: proposalId,
+              account,
+              authorityType
+            });
 
-    return txBuilder.begin()
-      .then(() => {
-        const declineProposalCmd = new DeclineProposalCmd({
-          entityId: proposalId,
-          account,
-          authorityType
-        }, txBuilder.getTxCtx());
-
-        txBuilder.addCmd(declineProposalCmd);
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new ApplicationJsonMessage({}, txEnvelop);
-        return this.proposalsHttp.declineProposal(msg);
+            txBuilder.addCmd(declineProposalCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.proposalsHttp.declineProposal(msg);
+          });
       });
   }
 

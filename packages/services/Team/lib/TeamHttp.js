@@ -6,11 +6,11 @@ class TeamHttp extends Singleton {
   http = HttpService.getInstance();
 
   createTeam(req) {
-    return this.http.post('/api/v2/team', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.post('/api/v2/team', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   updateTeam(req) {
-    return this.http.put('/api/v2/team', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.put('/api/v2/team', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   getTeam(teamExternalId) {

@@ -25,9 +25,10 @@
     "@deip/access-service": "1.120.0",
     "@deip/blockchain-service": "1.120.0",
     "@deip/command-models": "1.122.0",
+    "@deip/chain-service": "1.120.0",
     "@deip/http-service": "1.120.0",
     "@deip/proxydi": "1.120.0",
-    "@deip/request-models": "1.120.0",
+    "@deip/message-models": "1.120.0",
     "@deip/rpc-client": "1.120.0",
     "@deip/toolbox": "1.120.0",
     "qs": "^6.10.1"

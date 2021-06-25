@@ -10,11 +10,11 @@ class ProposalsHttp extends Singleton {
   }
 
   updateProposal(req) {
-    return this.http.put('/api/v2/proposals/update', req.getRequestBody());
+    return this.http.put('/api/v2/proposals/update', req.getHttpBody());
   }
 
   declineProposal(req) {
-    return this.http.put('/api/v2/proposals/decline', req.getRequestBody());
+    return this.http.put('/api/v2/proposals/decline', req.getHttpBody());
   }
 
   updateProposalLegacy({ tx }) {

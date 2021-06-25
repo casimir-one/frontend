@@ -6,6 +6,7 @@ const memo = require('./auth/memo');
 const config = require('./config');
 const utils = require('./utils');
 const operations = require('./operations');
+const serializer = require('./auth/serializer');
 
 module.exports = {
     api,
@@ -15,5 +16,6 @@ module.exports = {
     memo,
     config,
     utils,
-    operations
+    operations,
+    serializer
 };
