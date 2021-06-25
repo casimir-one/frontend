@@ -151,6 +151,10 @@ class InvestmentsService extends Singleton {
   getProjectTokenSaleContributionsByProject(projectId) {
     return this.investmentsHttp.getProjectTokenSaleContributionsByProject(projectId);
   }
+
+  getProjectTokenSale(tokenSaleId) {
+    return this.investmentsHttp.getProjectTokenSale(tokenSaleId);
+  }
 }
 
 export {

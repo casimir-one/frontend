@@ -4,6 +4,10 @@ import { Singleton } from '@deip/toolbox';
 class InvestmentsHttp extends Singleton {
   http = HttpService.getInstance();
 
+  getProjectTokenSale(tokenSaleId) {
+    return this.http.get(`/api/v2/fundraising/token-sale/${tokenSaleId}`);
+  }
+
   getProjectTokenSalesByProject(projectId) {
     return this.http.get(`/api/v2/fundraising/project/${projectId}`);
   }
