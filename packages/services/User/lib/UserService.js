@@ -54,32 +54,33 @@ class UserService extends Singleton {
       });
   }
 
-  getNotificationsByUser(username) {
-    return this.userHttp.getNotificationsByUser(username);
-  }
-
-  markUserNotificationAsRead(username, notificationId) {
-    return this.userHttp.markUserNotificationAsRead(username, notificationId);
-  }
-
-  markAllUserNotificationAsRead(username) {
-    return this.userHttp.markAllUserNotificationAsRead(username);
-  }
-
-  getResearchBookmarks(username) {
-    return this.userHttp.getResearchBookmarks(username);
-  }
-
-  createResearchBookmark(username, researchId) {
-    return this.userHttp.createResearchBookmark(username, researchId);
-  }
-
-  removeResearchBookmark(username, bookmarkId) {
-    return this.userHttp.removeResearchBookmark(username, bookmarkId);
-  }
-
   getUserInvites(username) {
     return this.userHttp.getInvitesByUser(username);
+  }
+
+  getUsers(usernames) {
+    return this.userHttp.getUsers(usernames);
+  }
+
+  getUsersByTeam(teamId) {
+    return this.userHttp.getUsersByTeam(teamId);
+  }
+
+  getUsersByTenant(tenantId) {
+    return this.userHttp.getUsersByTenant(tenantId);
+  }
+
+  getUsersListing(query = {}) {
+    return this.userHttp.getUsersListing(query);
+  }
+
+  // ONE
+
+  getUser(username) {
+    if (username.includes('@')) {
+      return this.userHttp.getUserByEmail(username);
+    }
+    return this.userHttp.getUser(username);
   }
 }
 

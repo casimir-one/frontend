@@ -1,6 +1,5 @@
 import { get } from 'lodash/fp';
 
-import { ResearchService } from '@deip/research-service';
 import { ProjectService } from '@deip/project-service';
 import {
   listGetter,
@@ -9,7 +8,6 @@ import {
   setOneMutation
 } from '@deip/platform-fns';
 
-const researchService = ResearchService.getInstance();
 const projectService = ProjectService.getInstance();
 
 const actionsMap = {
@@ -60,7 +58,7 @@ const ACTIONS = {
   // public
 
   getPublicProjects({ commit }, { filter = {} }) {
-    return researchService.getPublicResearchListing(filter)
+    return projectService.getPublicProjectListing(filter)
       .then((result) => {
         commit('setList', result);
       });
@@ -69,35 +67,35 @@ const ACTIONS = {
   // user
 
   getUserProjects({ commit }, { username }) {
-    return researchService.getUserResearchListing(username)
+    return projectService.getUserProjectListing(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
   getUserPublicProjects({ commit }, { username }) {
-    return researchService.getUserPublicProjects(username)
+    return projectService.getUserPublicProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
   getUserTeamsProjects({ commit }, { username }) {
-    return researchService.getUserTeamsProjects(username)
+    return projectService.getUserTeamsProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
   getUserPersonalProjects({ commit }, { username }) {
-    return researchService.getUserPersonalProjects(username)
+    return projectService.getUserPersonalProjects(username)
       .then((result) => {
         commit('setList', result);
       });
   },
 
   getUserFollowingProjects({ commit }, { externalIds }) {
-    return researchService.getResearches(externalIds)
+    return projectService.getProjects(externalIds)
       .then((result) => {
         commit('setList', result);
       });
@@ -106,7 +104,7 @@ const ACTIONS = {
   // team
 
   getTeamProjects({ commit }, { teamId }) {
-    return researchService.getResearchGroupResearchListing(teamId)
+    return projectService.getTeamProjectListing(teamId)
       .then((result) => {
         commit('setList', result);
       });
@@ -115,7 +113,7 @@ const ACTIONS = {
   // tenant
 
   getTenantProjects({ commit }, { tenantId }) {
-    return researchService.getTenantResearchListing(tenantId)
+    return projectService.getTenantProjectListing(tenantId)
       .then((result) => {
         commit('setList', result);
       });

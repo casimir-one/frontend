@@ -7,7 +7,7 @@ import {
   Singleton
 } from '@deip/toolbox';
 
-import { UsersService } from '@deip/users-service';
+import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultipartFormDataMessage } from '@deip/request-models';
 import {
@@ -37,7 +37,7 @@ class TeamService extends Singleton {
 
   teamHttp = TeamHttp.getInstance();
 
-  usersService = UsersService.getInstance();
+  userService = UserService.getInstance();
 
   createTxBuilder() {
     const { PROTOCOL } = this.proxydi.get('env');
@@ -176,7 +176,7 @@ class TeamService extends Singleton {
   getTeam(teamId) {
     return Promise.all([
       this.teamHttp.getTeam(teamId),
-      this.usersService.getUsersByResearchGroup(teamId)
+      this.userService.getUsersByTeam(teamId)
     ]).then(([team, members]) => ({
       ...team,
       members

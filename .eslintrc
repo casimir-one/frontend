@@ -48,7 +48,8 @@
       "error",
       {
         "allow": [
-          "_id"
+          "_id",
+          "delete_"
         ],
         "allowAfterThis": true,
         "enforceInMethodNames": false

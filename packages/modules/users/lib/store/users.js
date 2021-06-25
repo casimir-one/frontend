@@ -1,4 +1,4 @@
-import { UsersService } from '@deip/users-service';
+import { UserService } from '@deip/user-service';
 
 import {
   listGetter,
@@ -8,7 +8,7 @@ import {
 } from '@deip/platform-fns';
 import { createFormData, hasValue } from '@deip/toolbox';
 
-const usersService = UsersService.getInstance();
+const userService = UserService.getInstance();
 
 const STATE = {
   data: []
@@ -38,7 +38,7 @@ const ACTIONS = {
   },
 
   getListByNames({ commit }, { users }) {
-    return usersService.getUsers(users)
+    return userService.getUsers(users)
       .then((data) => {
         commit('setList', data);
       })
@@ -48,7 +48,7 @@ const ACTIONS = {
   },
 
   getListByTeam({ commit }, { teamId }) {
-    return usersService.getUsersByResearchGroup(teamId)
+    return userService.getUsersByTeam(teamId)
       .then((data) => {
         commit('setList', data);
       })
@@ -58,7 +58,7 @@ const ACTIONS = {
   },
 
   getListByTenant({ commit }, { tenantId }) {
-    return usersService.getUsersByTenant(tenantId)
+    return userService.getUsersByTenant(tenantId)
       .then((data) => {
         commit('setList', data);
       })
@@ -68,7 +68,7 @@ const ACTIONS = {
   },
 
   getListByStatus({ commit }, { status = 'approved' }) {
-    return usersService.getUsersListing(status)
+    return userService.getUsersListing(status)
       .then((data) => {
         commit('setList', data);
       })
@@ -80,7 +80,7 @@ const ACTIONS = {
   // one
 
   getOne({ commit }, username) {
-    return usersService.getUser(username)
+    return userService.getUser(username)
       .then(({ account, profile }) => {
         commit('setOne', { username, account, profile });
       })
@@ -93,7 +93,7 @@ const ACTIONS = {
     const { _id: username } = payload;
     const data = createFormData({ profile: payload });
 
-    return usersService.updateUserProfile(username, data)
+    return userService.updateUserProfile(username, data)
       .then(() => {
         dispatch('getOne', username);
       })

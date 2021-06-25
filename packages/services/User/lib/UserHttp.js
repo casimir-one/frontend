@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class UserHttp extends Singleton {
   http = HttpService.getInstance();
@@ -10,38 +11,38 @@ class UserHttp extends Singleton {
     return this.http.put('/api/v2/user/update', req.getRequestBody(), { headers: req.getRequestHeaders() });
   }
 
-  // Notifications
-
-  getNotificationsByUser(username) {
-    return this.http.get(`/api/notifications/user/${username}`);
-  }
-
-  markUserNotificationAsRead(username, notificationId) {
-    return this.http.put(`/api/notifications/${username}/mark-read/${notificationId}`, {});
-  }
-
-  markAllUserNotificationAsRead(username) {
-    return this.http.put(`/api/notifications/${username}/mark-all-read`, {});
-  }
-
-  // Bookmarks
-
-  getResearchBookmarks(username) {
-    return this.http.get(`/api/v2/bookmarks/user/${username}?type=research`);
-  }
-
-  createResearchBookmark(username, researchId) {
-    return this.http.post(`/api/bookmarks/user/${username}`, { type: 'research', researchId });
-  }
-
-  removeResearchBookmark(username, bookmarkId) {
-    return this.http.delete_(`/api/bookmarks/user/${username}/remove/${bookmarkId}`);
-  }
-
   // Invites
 
   getInvitesByUser(username) {
     return this.http.get(`/api/invites/${username}`);
+  }
+
+  getUsers(usernames) {
+    const query = qs.stringify({ usernames });
+    return this.http.get(`/api/v2/users?${query}`);
+  }
+
+  getUsersByTeam(teamId) {
+    return this.http.get(`/api/v2/users/team/${teamId}`);
+  }
+
+  getUsersByTenant(tenantId) {
+    return this.http.get(`/api/v2/users/tenant/${tenantId}`);
+  }
+
+  getUsersListing(query) {
+    const q = qs.stringify(query);
+    return this.http.get(`/api/v2/users/listing?${q}`);
+  }
+
+  // ONE
+
+  getUser(username) {
+    return this.http.get(`/api/v2/user/name/${username}`);
+  }
+
+  getUserByEmail(email) {
+    return this.http.get(`/api/v2/user/email/${email}`);
   }
 }
 
