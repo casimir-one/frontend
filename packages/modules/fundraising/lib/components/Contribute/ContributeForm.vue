@@ -144,7 +144,7 @@
         if (!userBalance) return false;
 
         const userBalanceAmount = this.$$fromAssetUnits(userBalance.amount).amount;
-        return (this.formData.internalAmount || 0) <= userBalanceAmount;
+        return (this.internalAmount || 0) <= userBalanceAmount;
       }
     },
 
@@ -154,7 +154,7 @@
           amount: val,
           assetId: this.hardCap.assetId,
           precision: this.hardCap.precision
-        });
+        }, false);
       }
     },
 
@@ -181,6 +181,7 @@
 
       contribute() {
         this.loading = true;
+
         this.$store.dispatch('fundraising/contribute', {
           user: this.$currentUser,
           data: {
