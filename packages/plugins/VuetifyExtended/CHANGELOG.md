@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.123.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.122.0...v1.123.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix VexDialog ([977cc2c](https://gitlab.com/DEIP/deip-client-modules/commit/977cc2ca5aacecc35ae7d8afb802a2141dee0655))
+
+
+
+
+
 # [1.120.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.119.0...v1.120.0) (2021-06-15)
 
 

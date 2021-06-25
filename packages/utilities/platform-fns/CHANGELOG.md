@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.123.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.122.0...v1.123.0) (2021-06-25)
+
+
+### Features
+
+* **@deip/platform-fns:** add teamHelpersMixin ([3e43d0c](https://gitlab.com/DEIP/deip-client-modules/commit/3e43d0cfa8b10aef48daab03c3f6b9d24fdf0a79))
+* **@deip/users-module:** create $currentUser scope ([5ce7bef](https://gitlab.com/DEIP/deip-client-modules/commit/5ce7befdf706fde668dd4f26ae72a4f4b93a2aaf))
+
+
+
+
+
 # [1.121.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.120.0...v1.121.0) (2021-06-18)
 
 **Note:** Version bump only for package @deip/platform-fns

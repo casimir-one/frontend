@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.123.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.122.0...v1.123.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix amount validation ([97a7447](https://gitlab.com/DEIP/deip-client-modules/commit/97a7447c0476c689e053fccf467ecb822ad9461d))
+* **@deip/fundraising-module:** fix prop name in CreateFundraisingForm ([10cd299](https://gitlab.com/DEIP/deip-client-modules/commit/10cd299d9820a0fb74e10ce3a27802446a04bdf7))
+* **@deip/fundraising-module:** fix service methods names ([aac1098](https://gitlab.com/DEIP/deip-client-modules/commit/aac1098d8642efaea223a4837cc1ac37b9599f90))
+* **@deip/fundraising-module:** fix service methods names and parameters ([b58a346](https://gitlab.com/DEIP/deip-client-modules/commit/b58a3465aa7a20ab83cdd2dd26758d06a2910298))
+* **@deip/fundraising-module:** move classes calculations to methods ([3dd288f](https://gitlab.com/DEIP/deip-client-modules/commit/3dd288fa2a1cc3b4e43f5f721da68b2f89f66a66))
+
+
+### Features
+
+* **@deip/fundraising-module:** auto create asset when creating fundraising ([f3a604d](https://gitlab.com/DEIP/deip-client-modules/commit/f3a604df09cfcdb35ee2f9745621b6ac1d518455))
+* **@deip/fundraising-module:** implement ContributeForm ([43d8373](https://gitlab.com/DEIP/deip-client-modules/commit/43d83735ddc8a3c59ab138a5296f41786b834fd2))
+
+
+
+
+
 # [1.122.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.121.1...v1.122.0) (2021-06-23)
 
 **Note:** Version bump only for package @deip/fundraising-module

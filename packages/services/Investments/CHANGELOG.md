@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.123.0](https://github.com/DEIPworld/deip-modules/compare/v1.122.0...v1.123.0) (2021-06-25)
+
+
+### Features
+
+* **@deip/investments-service:** add method getProjectTokenSale ([8860aac](https://github.com/DEIPworld/deip-modules/commit/8860aac7c69897826531982912dec5032362e5f3))
+
+
+
+
+
 # [1.122.0](https://github.com/DEIPworld/deip-modules/compare/v1.121.1...v1.122.0) (2021-06-23)
 
 
