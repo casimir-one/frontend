@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.123.0](https://github.com/DEIPworld/deip-modules/compare/v1.122.0...v1.123.0) (2021-06-25)
+
+
+### Bug Fixes
+
+* **@deip/assets-module:** fix converting to asset units without precision ([d41754f](https://github.com/DEIPworld/deip-modules/commit/d41754fe208623bb682fd88f55fe60a216af6df4))
+* **@deip/assets-module:** fix fromAssetUnits mixin ([fdd4812](https://github.com/DEIPworld/deip-modules/commit/fdd4812292da4a193bf73ab1f03c1084d0e875d9))
+* **@deip/auth-module:** user service version ([a7be8cf](https://github.com/DEIPworld/deip-modules/commit/a7be8cfbae6008feec68de7cbd4f14040bfe9e04))
+* **@deip/fundraising-module:** fix amount validation ([97a7447](https://github.com/DEIPworld/deip-modules/commit/97a7447c0476c689e053fccf467ecb822ad9461d))
+* **@deip/fundraising-module:** fix prop name in CreateFundraisingForm ([10cd299](https://github.com/DEIPworld/deip-modules/commit/10cd299d9820a0fb74e10ce3a27802446a04bdf7))
+* **@deip/fundraising-module:** fix service methods names ([aac1098](https://github.com/DEIPworld/deip-modules/commit/aac1098d8642efaea223a4837cc1ac37b9599f90))
+* **@deip/fundraising-module:** fix service methods names and parameters ([b58a346](https://github.com/DEIPworld/deip-modules/commit/b58a3465aa7a20ab83cdd2dd26758d06a2910298))
+* **@deip/fundraising-module:** move classes calculations to methods ([3dd288f](https://github.com/DEIPworld/deip-modules/commit/3dd288fa2a1cc3b4e43f5f721da68b2f89f66a66))
+* **@deip/vuetify-extended:** fix VexDialog ([977cc2c](https://github.com/DEIPworld/deip-modules/commit/977cc2ca5aacecc35ae7d8afb802a2141dee0655))
+
+
+### Features
+
+* **@deip/fundraising-module:** auto create asset when creating fundraising ([f3a604d](https://github.com/DEIPworld/deip-modules/commit/f3a604df09cfcdb35ee2f9745621b6ac1d518455))
+* **@deip/fundraising-module:** implement ContributeForm ([43d8373](https://github.com/DEIPworld/deip-modules/commit/43d83735ddc8a3c59ab138a5296f41786b834fd2))
+* **@deip/investments-service:** add method getProjectTokenSale ([8860aac](https://github.com/DEIPworld/deip-modules/commit/8860aac7c69897826531982912dec5032362e5f3))
+* **@deip/platform-fns:** add teamHelpersMixin ([3e43d0c](https://github.com/DEIPworld/deip-modules/commit/3e43d0cfa8b10aef48daab03c3f6b9d24fdf0a79))
+* **@deip/users-module:** create $currentUser scope ([5ce7bef](https://github.com/DEIPworld/deip-modules/commit/5ce7befdf706fde668dd4f26ae72a4f4b93a2aaf))
+
+
+
+
+
 # [1.122.0](https://github.com/DEIPworld/deip-modules/compare/v1.121.1...v1.122.0) (2021-06-23)
 
 
