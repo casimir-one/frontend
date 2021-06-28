@@ -91,9 +91,10 @@
               >
                 <asset-input
                   v-model="formData.softCap"
-                  required
-                  :error-messages="errors"
                   :label="$t('module.fundraising.createForm.min')"
+                  required
+                  :assets-filter="capAssetsFilter"
+                  :error-messages="errors"
                   @change="equalizeAsset"
                 />
               </validation-provider>
@@ -108,9 +109,10 @@
                 <asset-input
                   v-model="formData.hardCap"
                   :label="$t('module.fundraising.createForm.max')"
-                  :error-messages="errors"
                   required
                   disable-assets
+                  :gitassets-filter="capAssetsFilter"
+                  :error-messages="errors"
                 />
               </validation-provider>
             </v-col>
@@ -213,6 +215,10 @@
       noHardCap: {
         type: Boolean,
         default: false
+      },
+      capAssetsFilter: {
+        type: Object,
+        default() { return {}; }
       },
       isProposal: {
         type: Boolean,
