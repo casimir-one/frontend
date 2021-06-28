@@ -391,7 +391,8 @@
       equalizeAsset() {
         this.formData.hardCap = {
           ...this.formData.hardCap,
-          assetId: this.formData.softCap.assetId
+          assetId: this.formData.softCap.assetId,
+          precision: this.formData.softCap.precision
         };
       },
 
