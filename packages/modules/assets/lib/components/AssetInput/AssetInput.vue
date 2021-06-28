@@ -20,7 +20,6 @@
           :error-messages="[...errors, ...errorMessages]"
           :name="$t('module.assets.input.amount')"
           autocomplete="off"
-          @change="update()"
         />
       </validation-provider>
     </v-col>
@@ -32,22 +31,24 @@
         :hide-details="true"
         :disabled="disableAssets"
         outlined
-        @change="update()"
       />
     </v-col>
   </v-row>
 </template>
 
 <script>
-  // eslint-disable-next-line import/extensions, import/no-unresolved
-  import Proxyable from 'vuetify/lib/mixins/proxyable';
-  import { objectedModel } from '@deip/platform-fns';
-
   import { assetsMixin } from '../../mixins';
 
   export default {
     name: 'AssetInput',
-    mixins: [Proxyable, objectedModel, assetsMixin],
+
+    mixins: [assetsMixin],
+
+    model: {
+      prop: 'value',
+      event: 'change'
+    },
+
     props: {
       label: {
         type: String,
@@ -64,38 +65,46 @@
       errorMessages: {
         type: Array,
         default: () => ([])
+      },
+      value: {
+        type: Object,
+        default() { return {}; }
       }
     },
+
     data() {
       const model = {
         amount: undefined,
-        assetId: this.$env.ASSET_UNIT
+        assetId: this.$env.ASSET_UNIT,
+        precision: undefined
       };
 
       return {
-        ...model,
-
-        internalLazyValue: this.value
+        internalValue: this.value
           ? {
             ...model,
             ...this.value
           } : model
       };
     },
-    computed: {
-      assetsListKeys() { return this.$store.getters['assets/listKeys'](); }
-    },
-    methods: {
-      update() {
-        const val = {
-          ...(this.amount ? { amount: parseFloat(this.internalLazyValue.amount) } : {}),
-          assetId: this.internalLazyValue.assetId
-        };
 
-        this.internalValue = {
-          ...this.internalValue,
-          ...val
-        };
+    computed: {
+      assetsListKeys() { return this.$store.getters['assets/listKeys'](); },
+      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.assetId); }
+    },
+    watch: {
+      'selectedAsset.precision': {
+        immediate: true,
+        handler(val) {
+          this.internalValue.precision = val;
+        }
+      },
+      internalValue: {
+        deep: true,
+        immediate: true,
+        handler(val) {
+          this.$emit('change', val);
+        }
       }
     }
   };
