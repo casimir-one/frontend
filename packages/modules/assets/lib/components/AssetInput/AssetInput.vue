@@ -9,7 +9,7 @@
         ref="amountValidator"
         v-slot="{ errors }"
         :name="$t('module.assets.input.amount')"
-        :rules="required ? 'required|number' : ''"
+        :rules="required ? 'required|number' : 'number'"
       >
         <v-text-field
           v-model="internalValue.amount"
@@ -50,6 +50,10 @@
     },
 
     props: {
+      value: {
+        type: Object,
+        default() { return {}; }
+      },
       label: {
         type: String,
         default: null
@@ -62,14 +66,15 @@
         type: Boolean,
         default: false
       },
+      assetsFilter: {
+        type: Object,
+        default() { return {}; }
+      },
       errorMessages: {
         type: Array,
         default: () => ([])
-      },
-      value: {
-        type: Object,
-        default() { return {}; }
       }
+
     },
 
     data() {
@@ -89,7 +94,10 @@
     },
 
     computed: {
-      assetsListKeys() { return this.$store.getters['assets/listKeys'](); },
+      assetsListKeys() {
+        return this.$store.getters['assets/listKeys'](this.assetsFilter);
+      },
+
       selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.assetId); }
     },
     watch: {
