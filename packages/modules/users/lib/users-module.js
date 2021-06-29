@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash/fp';
+
 import { proxydi } from '@deip/proxydi';
 import { callForCurrentUser } from '@deip/platform-fns';
 import { hasValue } from '@deip/toolbox';
@@ -23,14 +25,21 @@ const install = (Vue) => {
       get() {
         const data = this.$store.getters['currentUser/data'];
 
-        if (!data) return null;
+        let $currentUser = {};
 
-        const $currentUser = {
-          ...data,
-          isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
-          memoKey: data.account.memo_key,
-          privKey: accessService.getOwnerWif()
-        };
+        if (data) {
+          $currentUser = {
+            ...data,
+            isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
+            memoKey: data.account.memo_key,
+            privKey: accessService.getOwnerWif()
+          };
+        }
+
+        Object.defineProperty($currentUser, 'exists', {
+          enumerable: false,
+          value: () => !isEmpty($currentUser)
+        });
 
         Object.defineProperty($currentUser, 'await', {
           enumerable: false,
@@ -47,7 +56,7 @@ const install = (Vue) => {
 
         Object.defineProperty($currentUser, 'hasRole', {
           enumerable: false,
-          value: (roleName, scope) => !!this.$currentUser.roles
+          value: (roleName, scope) => !!$currentUser.roles
             .find((role) => (role.role === roleName)
              && ((scope && role[scope.name] === scope.id) || !scope))
         });

@@ -24,7 +24,7 @@
 
       user: {
         type: Object,
-        default() { return {}; }
+        default: null
       }
     },
 
