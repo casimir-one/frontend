@@ -4,10 +4,6 @@ import { Singleton } from '@deip/toolbox';
 class ResearchContentHttp extends Singleton {
   http = HttpService.getInstance();
 
-  constructor() {
-    super();
-  }
-
   getResearchContentRef(refId) {
     return this.http.get(`/api/research-content/ref/${refId}`);
   }
@@ -17,7 +13,7 @@ class ResearchContentHttp extends Singleton {
   }
 
   publishResearchContent({ tx, offchainMeta, isProposal }) {
-    return this.http.post(`/api/research-content/ref/publish`, { tx, offchainMeta, isProposal });
+    return this.http.post('/api/research-content/ref/publish', { tx, offchainMeta, isProposal });
   }
 
   getResearchContentAndDraftsByResearch(researchExternalId) {
@@ -27,7 +23,7 @@ class ResearchContentHttp extends Singleton {
   createResearchContentDraftDar(researchExternalId) {
     return this.http.post(`/api/research-content/texture/${researchExternalId}`, {});
   }
-  
+
   deleteResearchContentDraft(refId) {
     return this.http.delete_(`/api/research-content/ref/${refId}`);
   }
@@ -37,7 +33,7 @@ class ResearchContentHttp extends Singleton {
   }
 
   uploadResearchContentPackage(researchExternalId, formData) {
-    return this.http.post(`/api/research-content/package`, formData, {
+    return this.http.post('/api/research-content/package', formData, {
       headers: {
         'Research-External-Id': researchExternalId,
         'Content-Type': 'multipart/form-data'
@@ -50,13 +46,12 @@ class ResearchContentHttp extends Singleton {
   }
 
   getPublicResearchContentListing() {
-    return this.http.get(`/api/research-content/listing`);
+    return this.http.get('/api/research-content/listing');
   }
 
   getResearchContentReferencesGraph(contentId) {
     return this.http.get(`/api/research-content/ref/graph/${contentId}`);
   }
-  
 }
 
 export {

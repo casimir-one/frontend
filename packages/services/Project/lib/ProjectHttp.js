@@ -50,8 +50,8 @@ class ProjectHttp extends Singleton {
     return this.http.get(`/api/research/group/listing/${teamId}`);
   }
 
-  getTenantProjectListing(tenantId) {
-    return this.http.get(`/api/research/tenant/listing/${tenantId}`);
+  getTenantProjectListing() {
+    return this.http.get(`/api/research/listing`);
   }
 
   createProjectApplication({ proposalId, formData }) {

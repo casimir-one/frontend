@@ -16,8 +16,8 @@ class TenantService extends Singleton {
 
   proxydi = proxydi;
 
-  getTenant(tenantId) {
-    return this.tenantHttp.getTenant(tenantId);
+  getTenant() {
+    return this.tenantHttp.getTenant();
   }
 
   getNetworkTenant(tenantId) {
