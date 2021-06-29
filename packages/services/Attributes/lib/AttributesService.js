@@ -56,8 +56,8 @@ class AttributesService extends Singleton {
     return this.attributesHttp.deleteAttribute(msg);
   }
 
-  getSettings(tenantId) {
-    return this.attributesHttp.getSettings(tenantId);
+  getSettings() {
+    return this.attributesHttp.getSettings();
   }
 
   // temp solution need change to cmd and send msg

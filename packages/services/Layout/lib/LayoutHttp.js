@@ -4,8 +4,8 @@ import { Singleton } from '@deip/toolbox';
 class LayoutHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getLayouts(tenantId) {
-    return this.http.get(`/tenant/settings/layouts/${tenantId}`);
+  getLayouts() {
+    return this.http.get('/tenant/settings/layouts');
   }
 
   // temp solution, need change to msg

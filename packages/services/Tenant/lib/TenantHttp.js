@@ -4,8 +4,8 @@ import { Singleton } from '@deip/toolbox';
 class TenantHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getTenant(tenantId) {
-    return this.http.get(`/tenant/${tenantId}`);
+  getTenant() {
+    return this.http.get('/tenant');
   }
 
   getNetworkTenant(tenantId) {

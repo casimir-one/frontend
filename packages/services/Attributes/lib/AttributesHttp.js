@@ -40,8 +40,8 @@ class AttributesHttp extends Singleton {
     return this.http.put('/api/v2/attribute/delete', req.getRequestBody());
   }
 
-  getSettings(tenantId) {
-    return this.http.get(`/tenant/settings/attribute-settings/${tenantId}`);
+  getSettings() {
+    return this.http.get('/tenant/settings/attribute-settings');
   }
 
   // temp solution, need change to msg

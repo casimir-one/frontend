@@ -336,8 +336,8 @@ class ProjectService extends Singleton {
     return this.projectHttp.getTeamProjectListing(teamId);
   }
 
-  getTenantProjectListing(tenantId) {
-    return this.projectHttp.getTenantProjectListing(tenantId);
+  getTenantProjectListing() {
+    return this.projectHttp.getTenantProjectListing();
   }
 
   createProjectApplication(privKey, formData) {
