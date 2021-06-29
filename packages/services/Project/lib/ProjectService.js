@@ -3,11 +3,9 @@ import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import deipRpc from '@deip/rpc-client';
-import { MultipartFormDataMessage, ApplicationJsonMessage } from '@deip/request-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import {
   APP_PROPOSAL,
-  CmdEnvelope,
-  ProtocolRegistry,
   CreateProjectCmd,
   UpdateProjectCmd,
   DeleteProjectCmd,
@@ -20,6 +18,8 @@ import {
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 import { PROJECT_APPLICATION_STATUS } from './constants';
+import { ChainService } from '@deip/chain-service';
+
 
 // TODO: move to constants
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
@@ -29,8 +29,8 @@ class ProjectService extends Singleton {
   blockchainService = BlockchainService.getInstance();
   proposalsService = ProposalsService.getInstance();
   proxydi = proxydi;
-  deipRpc = deipRpc;
-  
+  deipRpc = deipRpc; // deprecated
+
   
   getProject(projectId) {
     return this.projectHttp.getProject(projectId);
@@ -63,111 +63,110 @@ class ProjectService extends Singleton {
         isProposalApproved: true,
         proposalLifetime: proposalDefaultLifetime
       }, proposalInfo);
+      
+    const env = this.proxydi.get('env');
+    const { TENANT, IS_TESTNET } = env;
 
-    const { TENANT } = this.proxydi.get('env');
-    const { PROTOCOL } = this.proxydi.get('env');
-    const { IS_TESTNET } = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        const isNewProjectTeam = teamId === null;
+        const teamMembers = [];
 
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+        let projectId;
+        return Promise.all([
+          isNewProjectTeam
+            ? Promise.resolve([])
+            : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
+        ])
+          .then(([refs]) => {
+            const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+            teamMembers.push(...list);
+            return txBuilder.begin();
+          })
+          .then(() => {
 
-    const isNewProjectTeam = teamId === null;
-    const teamMembers = [];
+            if (isNewProjectTeam) {
 
-    let projectId;
-    return Promise.all([
-      isNewProjectTeam
-        ? Promise.resolve([])
-        : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
-    ])
-      .then(([refs]) => {
-        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
-        teamMembers.push(...list);
-        return txBuilder.begin();
-      })
-      .then(() => {
+              const authoritySetup = {
+                auths: [],
+                weight: 1
+              };
 
-        if (isNewProjectTeam) {
+              if (isAdmin) {
+                authoritySetup.auths.push({ name: TENANT, weight: 1 })
+              }
 
-          const authoritySetup = {
-            auths: [],
-            weight: 1
-          };
+              const projectTeamMembers = members
+                .filter(member => !teamMembers.some((m) => m === member))
+                .reduce((acc, member) => {
+                  return acc.some(m => m === member) ? acc : [...acc, member];
+                }, [])
+                .map(member => ({ name: member, weight: 1 }));
 
-          if (isAdmin) {
-            authoritySetup.auths.push({ name: TENANT, weight: 1 })
-          }
+              authoritySetup.auths.push(...projectTeamMembers);
 
-          const projectTeamMembers = members
-            .filter(member => !teamMembers.some((m) => m === member))
-            .reduce((acc, member) => {
-              return acc.some(m => m === member) ? acc : [...acc, member];
-            }, [])
-            .map(member => ({ name: member, weight: 1 }));
+              const createAccountCmd = new CreateAccountCmd({
+                isTeamAccount: true,
+                fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+                creator: creator,
+                authority: {
+                  owner: authoritySetup,
+                  active: authoritySetup
+                },
+                memoKey: memoKey,
+                description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({})).buffer)),
+                attributes: []
+              });
 
-          authoritySetup.auths.push(...projectTeamMembers);
+              txBuilder.addCmd(createAccountCmd);
+              teamId = createAccountCmd.getProtocolEntityId();
+            }
 
-          const createAccountCmd = new CreateAccountCmd({
-            isTeamAccount: true,
-            fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
-            creator: creator,
-            authority: {
-              owner: authoritySetup,
-              active: authoritySetup
-            },
-            memoKey: memoKey,
-            description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({})).buffer)),
-            attributes: []
-          }, txBuilder.getTxCtx());
+            const createProjectCmd = new CreateProjectCmd({
+              teamId: teamId,
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              domains: domains,
+              isPrivate: isPrivate,
+              members: undefined,
+              attributes: attributes
+            });
 
-          txBuilder.addCmd(createAccountCmd);
-          teamId = createAccountCmd.getProtocolEntityId();
-        }
+            projectId = createProjectCmd.getProtocolEntityId();
 
-        const createProjectCmd = new CreateProjectCmd({
-          teamId: teamId,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
-          domains: domains,
-          isPrivate: isPrivate,
-          members: undefined,
-          attributes: attributes
-        }, txBuilder.getTxCtx());
+            if (isProposal) {
 
-        projectId = createProjectCmd.getProtocolEntityId();
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.PROJECT_PROPOSAL,
+                creator: creator,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: [createProjectCmd]
+              });
 
-        if (isProposal) {
+              txBuilder.addCmd(createProposalCmd);
 
-          const createProposalCmd = new CreateProposalCmd({
-            type: APP_PROPOSAL.PROJECT_PROPOSAL,
-            creator: creator,
-            expirationTime: proposalLifetime || proposalDefaultLifetime,
-            proposedCmds: [createProjectCmd]
-          }, txBuilder.getTxCtx());
+              if (isProposalApproved) {
+                const projectProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new UpdateProposalCmd({
+                  entityId: projectProposalId,
+                  activeApprovalsToAdd: [creator]
+                });
 
-          txBuilder.addCmd(createProposalCmd);
+                txBuilder.addCmd(updateProposalCmd);
+              }
 
-          if (isProposalApproved) {
-            const projectProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: projectProposalId,
-              activeApprovalsToAdd: [creator]
-            }, txBuilder.getTxCtx());
+            } else {
+              txBuilder.addCmd(createProjectCmd);
+            }
 
-            txBuilder.addCmd(updateProposalCmd);
-          }
-
-        } else {
-          txBuilder.addCmd(createProjectCmd);
-        }
-
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': projectId });
-        return this.projectHttp.createProject(msg);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
+            return this.projectHttp.createProject(msg);
+          });
       });
-
   }
 
 
@@ -189,101 +188,101 @@ class ProjectService extends Singleton {
         proposalLifetime: proposalDefaultLifetime
       }, proposalInfo);
 
-    const { TENANT } = this.proxydi.get('env');
-    const { PROTOCOL } = this.proxydi.get('env');
+    const env = this.proxydi.get('env');
+    const { TENANT } = env;
 
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
 
-    const teamMembers = [];
-    return Promise.all([
-      this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false),
-      txBuilder.begin()
-    ])
-      .then(([refs]) => {
-        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
-        teamMembers.push(...list);
+        const txBuilder = chainService.getChainTxBuilder();
+        const teamMembers = [];
+        return Promise.all([
+          this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false),
+          txBuilder.begin()
+        ])
+          .then(([refs]) => {
+            const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+            teamMembers.push(...list);
 
-        const joinedMembers = members ? members.filter(member => !teamMembers.includes(member)) : [];
-        const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];
+            const joinedMembers = members ? members.filter(member => !teamMembers.includes(member)) : [];
+            const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];
 
-        const invites = joinedMembers.map((invitee) => {
-          const joinProjectTeamCmd = new JoinProjectTeamCmd({
-            member: invitee,
-            teamId: teamId,
-            projectId: projectId
-          }, txBuilder.getTxCtx());
+            const invites = joinedMembers.map((invitee) => {
+              const joinProjectTeamCmd = new JoinProjectTeamCmd({
+                member: invitee,
+                teamId: teamId,
+                projectId: projectId
+              });
 
-          return joinProjectTeamCmd;
-        });
+              return joinProjectTeamCmd;
+            });
 
-        const leavings = leftMembers.map((leaving) => {
-          const leaveProjectTeamCmd = new LeaveProjectTeamCmd({
-            member: leaving,
-            teamId: teamId,
-            projectId: projectId
-          }, txBuilder.getTxCtx());
+            const leavings = leftMembers.map((leaving) => {
+              const leaveProjectTeamCmd = new LeaveProjectTeamCmd({
+                member: leaving,
+                teamId: teamId,
+                projectId: projectId
+              });
 
-          return leaveProjectTeamCmd;
-        });
-
-
-        const updateProjectCmd = new UpdateProjectCmd({
-          entityId: projectId,
-          teamId: teamId,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
-          isPrivate: isPrivate,
-          members: undefined,
-          attributes: attributes
-        }, txBuilder.getTxCtx());
+              return leaveProjectTeamCmd;
+            });
 
 
-        if (isProposal) {
+            const updateProjectCmd = new UpdateProjectCmd({
+              entityId: projectId,
+              teamId: teamId,
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              isPrivate: isPrivate,
+              members: undefined,
+              attributes: attributes
+            });
 
-          const createProposalCmd = new CreateProposalCmd({
-            type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
-            creator: updater,
-            expirationTime: proposalLifetime || proposalDefaultLifetime,
-            proposedCmds: [updateProjectCmd, ...invites, ...leavings]
-          }, txBuilder.getTxCtx());
 
-          txBuilder.addCmd(createProposalCmd);
+            if (isProposal) {
 
-          if (isProposalApproved) {
-            const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: projectUpdateProposalId,
-              activeApprovalsToAdd: [updater]
-            }, txBuilder.getTxCtx());
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
+                creator: updater,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: [updateProjectCmd, ...invites, ...leavings]
+              });
 
-            txBuilder.addCmd(updateProposalCmd);
-          }
+              txBuilder.addCmd(createProposalCmd);
 
-        } else {
-          txBuilder.addCmd(updateProjectCmd);
-          for (let i = 0; i < invites.length; i++) {
-            txBuilder.addCmd(invites[i]);
-          }
-          for (let i = 0; i < leavings.length; i++) {
-            txBuilder.addCmd(leavings[i]);
-          }
-        }
+              if (isProposalApproved) {
+                const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new UpdateProposalCmd({
+                  entityId: projectUpdateProposalId,
+                  activeApprovalsToAdd: [updater]
+                });
 
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': projectId });
-        return this.projectHttp.updateProject(msg);
+                txBuilder.addCmd(updateProposalCmd);
+              }
+
+            } else {
+              txBuilder.addCmd(updateProjectCmd);
+              for (let i = 0; i < invites.length; i++) {
+                txBuilder.addCmd(invites[i]);
+              }
+              for (let i = 0; i < leavings.length; i++) {
+                txBuilder.addCmd(leavings[i]);
+              }
+            }
+
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
+            return this.projectHttp.updateProject(msg);
+          });
       });
-
   }
 
 
   deleteProject(projectId) {
     const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
-    const cmdEnvelope = new CmdEnvelope([deleteProjectCmd]);
-    const msg = new ApplicationJsonMessage({}, cmdEnvelope, { 'entity-id': projectId });
+    const msg = new JsonDataMsg({ appCmds: [deleteProjectCmd] }, { 'entity-id': projectId });
     return this.projectHttp.deleteProject(msg);
   }
 

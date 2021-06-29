@@ -6,18 +6,17 @@ import {
   replaceFileWithName,
   Singleton
 } from '@deip/toolbox';
-
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
-import { MultipartFormDataMessage } from '@deip/request-models';
+import { MultFormDataMsg } from '@deip/message-models';
 import {
   APP_PROPOSAL,
-  ProtocolRegistry,
   CreateProposalCmd,
   CreateAccountCmd,
   UpdateProposalCmd,
   UpdateAccountCmd
 } from '@deip/command-models';
+import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
@@ -39,19 +38,9 @@ class TeamService extends Singleton {
 
   userService = UserService.getInstance();
 
-  createTxBuilder() {
-    const { PROTOCOL } = this.proxydi.get('env');
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-
-    return protocolRegistry.getTransactionsBuilder();
-  }
-
   createTeam(payload) {
-    const txBuilder = this.createTxBuilder();
-
-    const { TENANT } = this.proxydi.get('env');
-    const { IS_TESTNET } = this.proxydi.get('env');
-
+    const env = this.proxydi.get('env');
+    const { TENANT, IS_TESTNET } = env;
     const {
       initiator: {
         memoKey,
@@ -70,39 +59,39 @@ class TeamService extends Singleton {
     const attributes = replaceFileWithName(payload.attributes);
     const description = createHash(attributes);
 
-    let entityId;
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        let entityId;
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const createAccountCmd = new CreateAccountCmd({
+              isTeamAccount: true,
+              fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+              authority: {
+                owner: authority,
+                active: authority
+              },
+              creator,
+              memoKey,
+              description,
+              attributes
+            });
 
-    return txBuilder.begin()
-      .then(() => {
-        const createAccountCmd = new CreateAccountCmd({
-          isTeamAccount: true,
-          fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
-          authority: {
-            owner: authority,
-            active: authority
-          },
-          creator,
-          memoKey,
-          description,
-          attributes
-        }, txBuilder.getTxCtx());
-
-        txBuilder.addCmd(createAccountCmd);
-
-        entityId = createAccountCmd.getProtocolEntityId();
-
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': entityId });
-        return this.teamHttp.createTeam(msg);
+            txBuilder.addCmd(createAccountCmd);
+            entityId = createAccountCmd.getProtocolEntityId();
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
+            return this.teamHttp.createTeam(msg);
+          });
       });
   }
 
   updateTeam(payload) {
-    const txBuilder = this.createTxBuilder();
-
+    const env = this.proxydi.get('env');
     const {
       entityId,
 
@@ -126,50 +115,54 @@ class TeamService extends Singleton {
     const attributes = replaceFileWithName(payload.attributes);
     const description = createHash(attributes);
 
-    return txBuilder
-      .begin()
-      .then(() => {
-        const updateAccountCmd = new UpdateAccountCmd({
-          entityId,
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder
+          .begin()
+          .then(() => {
+            const updateAccountCmd = new UpdateAccountCmd({
+              entityId,
 
-          isTeamAccount: true,
-          memoKey: undefined,
+              isTeamAccount: true,
+              memoKey: undefined,
 
-          attributes, // need clarification
-          ownerAuth, // need clarification
-          activeAuth, // need clarification
-          description
-        }, txBuilder.getTxCtx());
+              attributes, // need clarification
+              ownerAuth, // need clarification
+              activeAuth, // need clarification
+              description
+            });
 
-        if (isProposal) {
-          const createProposalCmd = new CreateProposalCmd({
-            creator,
-            type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
-            expirationTime: proposalLifetime,
-            proposedCmds: [updateAccountCmd]
-          }, txBuilder.getTxCtx());
+            if (isProposal) {
+              const createProposalCmd = new CreateProposalCmd({
+                creator,
+                type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
+                expirationTime: proposalLifetime,
+                proposedCmds: [updateAccountCmd]
+              });
 
-          txBuilder.addCmd(createProposalCmd);
+              txBuilder.addCmd(createProposalCmd);
 
-          if (isProposalApproved) {
-            const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: teamUpdateProposalId,
-              activeApprovalsToAdd: [creator]
-            }, txBuilder.getTxCtx());
+              if (isProposalApproved) {
+                const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new UpdateProposalCmd({
+                  entityId: teamUpdateProposalId,
+                  activeApprovalsToAdd: [creator]
+                });
 
-            txBuilder.addCmd(updateProposalCmd);
-          }
-        } else {
-          txBuilder.addCmd(updateAccountCmd);
-        }
+                txBuilder.addCmd(updateProposalCmd);
+              }
+            } else {
+              txBuilder.addCmd(updateAccountCmd);
+            }
 
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        txEnvelop.sign(privKey);
-        const msg = new MultipartFormDataMessage(formData, txEnvelop, { 'entity-id': entityId });
-        return this.teamHttp.updateTeam(msg);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            packedTx.sign(privKey);
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
+            return this.teamHttp.updateTeam(msg);
+          });
       });
   }
 

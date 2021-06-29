@@ -2,17 +2,15 @@ import { Singleton } from '@deip/toolbox';
 import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
-import {
-  ProtocolRegistry,
-  CreateAccountCmd
-} from '@deip/command-models';
-import { ApplicationJsonMessage } from '@deip/request-models';
+import { CreateAccountCmd } from '@deip/command-models';
+import { ChainService } from '@deip/chain-service';
+import { JsonDataMsg } from '@deip/message-models';
 import { TenantHttp } from './TenantHttp';
 
 class TenantService extends Singleton {
   tenantHttp = TenantHttp.getInstance();
 
-  blockchainService = BlockchainService.getInstance();
+  blockchainService = BlockchainService.getInstance(); // deprecated
 
   proxydi = proxydi;
 
@@ -60,47 +58,48 @@ class TenantService extends Singleton {
     pubKey,
     roles
   }) {
+    const env = this.proxydi.get('env');
     const {
       FAUCET_ACCOUNT_USERNAME,
-      PROTOCOL,
       IS_TESTNET
-    } = this.proxydi.get('env');
+    } = env;
 
-    const protocolRegistry = new ProtocolRegistry(PROTOCOL);
-    const txBuilder = protocolRegistry.getTransactionsBuilder();
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const createAccountCmd = new CreateAccountCmd({
+              isTeamAccount: false,
+              fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+              creator: creator || FAUCET_ACCOUNT_USERNAME,
+              authority: {
+                owner: {
+                  auths: [{ key: pubKey, weight: 1 }],
+                  weight: 1
+                },
+                active: {
+                  auths: [{ key: pubKey, weight: 1 }],
+                  weight: 1
+                }
+              },
+              memoKey: pubKey,
+              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              attributes,
+              email,
+              roles,
+              entityId: username
+            });
 
-    return txBuilder.begin()
-      .then(() => {
-        const createAccountCmd = new CreateAccountCmd({
-          isTeamAccount: false,
-          fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
-          creator: creator || FAUCET_ACCOUNT_USERNAME,
-          authority: {
-            owner: {
-              auths: [{ key: pubKey, weight: 1 }],
-              weight: 1
-            },
-            active: {
-              auths: [{ key: pubKey, weight: 1 }],
-              weight: 1
-            }
-          },
-          memoKey: pubKey,
-          description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
-          attributes,
-          email,
-          roles,
-          entityId: username
-        }, txBuilder.getTxCtx());
+            txBuilder.addCmd(createAccountCmd);
 
-        txBuilder.addCmd(createAccountCmd);
-
-        return txBuilder.end();
-      })
-      .then((txEnvelop) => {
-        // txEnvelop.sign(privKey);
-        const msg = new ApplicationJsonMessage({}, txEnvelop);
-        return this.tenantHttp.postSignUp(msg);
+            return txBuilder.end();
+          })
+          .then((packedTx) => {
+            // txEnvelop.sign(privKey);
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.tenantHttp.postSignUp(msg);
+          });
       });
   }
 

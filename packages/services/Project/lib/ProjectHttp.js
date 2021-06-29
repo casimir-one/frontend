@@ -20,7 +20,7 @@ class ProjectHttp extends Singleton {
   }
 
   createProject(req) {
-    return this.http.post('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.post('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   getProjectPendingInvites(projectId) {
@@ -28,11 +28,11 @@ class ProjectHttp extends Singleton {
   }
 
   updateProject(req) {
-    return this.http.put('/api/v2/project', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.put('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   deleteProject(req) {
-    return this.http.put(`/api/v2/project/delete`, req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.put(`/api/v2/project/delete`, req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   // change all routes to req msg

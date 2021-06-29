@@ -49,7 +49,7 @@ class TenantHttp extends Singleton {
   }
 
   postSignUp(req) {
-    return this.http.post('/tenant/v2/registry/sign-up', req.getRequestBody());
+    return this.http.post('/tenant/v2/registry/sign-up', req.getHttpBody());
   }
 
   getSignUpRequests() {

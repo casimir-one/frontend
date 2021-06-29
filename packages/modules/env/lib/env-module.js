@@ -1,39 +1,35 @@
 import axios from 'axios';
-import deipRpc from '@deip/rpc-client';
 import { proxydi } from '@deip/proxydi';
+import { ChainService } from '@deip/chain-service';
 
 const init = () => axios.get('/env')
   .then((res) => {
     const env = res.data;
-
-    proxydi.register('env', env)
+    proxydi.register('env', env);
     window.env = res.data; // TODO: temp solution
-
-    deipRpc.api.setOptions({
-      url: env.DEIP_FULL_NODE_URL,
-      reconnectTimeout: 3000
+    return ChainService.getInstanceAsync({
+      DEIP_FULL_NODE_URL: env.DEIP_FULL_NODE_URL,
+      CHAIN_ID: env.CHAIN_ID,
+      PROTOCOL: env.PROTOCOL
     });
-
-    deipRpc.config.set('chain_id', env.CHAIN_ID);
-
-    return env;
   })
+  .then(() => proxydi.get('env'));
 
 const install = (Vue, options, envData) => {
   if (install.installed) return;
   install.installed = true;
 
   if (options.proxydi) {
-    proxydi.batchRegister(options.proxydi)
+    proxydi.batchRegister(options.proxydi);
   }
 
   Vue.prototype.$env = envData;
   Vue.$env = envData;
-}
+};
 
 export const EnvModule = {
   name: 'EnvModule',
   deps: [],
   init,
   install
-}
+};

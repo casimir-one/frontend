@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@deip/app-config-service": "1.120.0",
+    "@deip/chain-service": "1.120.0",
     "@deip/proxydi": "1.120.0",
     "@deip/rpc-client": "1.120.0",
     "@deip/vuetify-extended": "1.123.0",

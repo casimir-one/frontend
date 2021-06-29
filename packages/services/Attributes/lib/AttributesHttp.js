@@ -29,15 +29,15 @@ class AttributesHttp extends Singleton {
   }
 
   createAttribute(req) {
-    return this.http.post('/api/v2/attribute', req.getRequestBody());
+    return this.http.post('/api/v2/attribute', req.getHttpBody());
   }
 
   updateAttribute(req) {
-    return this.http.put('/api/v2/attribute', req.getRequestBody());
+    return this.http.put('/api/v2/attribute', req.getHttpBody());
   }
 
   deleteAttribute(req) {
-    return this.http.put('/api/v2/attribute/delete', req.getRequestBody());
+    return this.http.put('/api/v2/attribute/delete', req.getHttpBody());
   }
 
   getSettings() {

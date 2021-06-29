@@ -8,7 +8,7 @@ class UserHttp extends Singleton {
   // Settings [deprecated]
 
   updateUser(req) {
-    return this.http.put('/api/v2/user/update', req.getRequestBody(), { headers: req.getRequestHeaders() });
+    return this.http.put('/api/v2/user/update', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   // Invites

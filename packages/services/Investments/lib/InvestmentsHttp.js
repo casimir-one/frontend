@@ -21,11 +21,11 @@ class InvestmentsHttp extends Singleton {
   }
 
   createProjectTokenSale(req) {
-    return this.http.post('/api/v2/fundraising', req.getRequestBody());
+    return this.http.post('/api/v2/fundraising', req.getHttpBody());
   }
 
   contributeProjectTokenSale(req) {
-    return this.http.post('/api/v2/fundraising/contributions', req.getRequestBody());
+    return this.http.post('/api/v2/fundraising/contributions', req.getHttpBody());
   }
 
   getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {

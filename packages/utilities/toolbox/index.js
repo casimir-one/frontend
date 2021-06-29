@@ -8,3 +8,4 @@ export * from './lib/color';
 export * from './lib/strings';
 export * from './lib/i18n';
 export * from './lib/files';
+export * from './lib/interface';
