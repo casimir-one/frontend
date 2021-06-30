@@ -1,4 +1,6 @@
 import BaseTxBuilder from './../../base/BaseTxBuilder';
+import SubstrateTx from './SubstrateTx';
+
 
 class SubstrateTxBuilder extends BaseTxBuilder {
 
@@ -6,7 +8,20 @@ class SubstrateTxBuilder extends BaseTxBuilder {
     super(chainNodeClient, chainOpsRegistry);
   }
 
-  // TODO: implementation for substrate
+  begin() {
+    super.clear();
+    this._tx = new SubstrateTx();
+    return Promise.resolve(this);
+  }
+
+  end() {
+    return super.finalize({ chainNodeClient: this._chainNodeClient })
+      .then((packedTx) => {
+        super.clear();
+        return packedTx;
+      });
+  }
+
 }
 
 

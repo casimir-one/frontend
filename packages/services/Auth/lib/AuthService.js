@@ -67,7 +67,8 @@ class AuthService extends Singleton {
             return txBuilder.end();
           })
           .then((packedTx) => {
-            // packedTx.sign(privKey);
+            // const chainNodeClient = chainService.getChainNodeClient();
+            // return packedTx.signAsync(privKey, chainNodeClient);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.$http.signUp(msg);
           });

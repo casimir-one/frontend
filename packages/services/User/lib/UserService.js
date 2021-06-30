@@ -41,6 +41,7 @@ class UserService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const txBuilder = chainService.getChainTxBuilder();
+        const chainNodeClient = chainService.getChainNodeClient();
 
         return txBuilder.begin()
           .then(() => {
@@ -59,8 +60,8 @@ class UserService extends Singleton {
             txBuilder.addCmd(updateAccountCmd);
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': updater });
             return this.userHttp.updateUser(msg);
           });

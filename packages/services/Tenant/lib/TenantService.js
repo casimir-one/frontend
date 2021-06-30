@@ -96,7 +96,8 @@ class TenantService extends Singleton {
             return txBuilder.end();
           })
           .then((packedTx) => {
-            // txEnvelop.sign(privKey);
+            // const chainNodeClient = chainService.getChainNodeClient();
+            // return txEnvelop.signAsync(privKey, chainNodeClient);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.tenantHttp.postSignUp(msg);
           });

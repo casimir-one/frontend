@@ -64,6 +64,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return createAccountOp;
     },
 
+
     [PROTOCOL_OPERATIONS_MAP.UPDATE_ACCOUNT]: ({
       entityId,
       description,
@@ -95,10 +96,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       teamId,
       description,
       domains,
-      isPrivate,
-      members,
-      reviewShare,
-      compensationShare
+      isPrivate
     }) => {
 
       const createResearchOp = ['create_research', {
@@ -107,9 +105,9 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         description: description,
         disciplines: domains,
         is_private: isPrivate || false,
-        members: members,
-        review_share: reviewShare || undefined,
-        compensation_share: compensationShare || undefined,
+        members: undefined, // deprecated
+        review_share: undefined, // deprecated
+        compensation_share: undefined, // deprecated
         extensions: []
       }];
 
@@ -121,10 +119,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       entityId,
       teamId,
       description,
-      isPrivate,
-      reviewShare,
-      compensationShare,
-      members
+      isPrivate
     }) => {
 
       const updateProjectOp = ['update_research', {
@@ -132,9 +127,9 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         account: teamId,
         description: description,
         is_private: isPrivate || false,
-        review_share: reviewShare || undefined,
-        compensation_share: compensationShare || undefined,
-        members: members,
+        review_share: undefined, // deprecated
+        compensation_share: undefined, // deprecated
+        members: undefined, // deprecated
         update_extensions: []
       }];
 
@@ -269,6 +264,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return declineProposalOp;
     },
 
+
     [PROTOCOL_OPERATIONS_MAP.CREATE_PROJECT_TOKEN_SALE]: ({
       entityId,
       teamId,
@@ -281,6 +277,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
     }) => {
 
       const createProjectTokenSaleOp = ['create_research_token_sale', {
+        external_id: entityId,
         research_group: teamId,
         research_external_id: projectId,
         start_time: startTime,
@@ -294,6 +291,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return createProjectTokenSaleOp;
     },
 
+    
     [PROTOCOL_OPERATIONS_MAP.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
       tokenSaleId,
       contributor,

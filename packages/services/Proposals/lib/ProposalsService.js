@@ -138,6 +138,7 @@ class ProposalsService extends Singleton {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder.begin()
           .then(() => {
@@ -154,8 +155,8 @@ class ProposalsService extends Singleton {
             txBuilder.addCmd(updateProposalCmd);
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.proposalsHttp.updateProposal(msg);
           });
@@ -170,6 +171,7 @@ class ProposalsService extends Singleton {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder.begin()
           .then(() => {
@@ -182,8 +184,8 @@ class ProposalsService extends Singleton {
             txBuilder.addCmd(declineProposalCmd);
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.proposalsHttp.declineProposal(msg);
           });

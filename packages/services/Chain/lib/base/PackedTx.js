@@ -8,8 +8,11 @@ class PackedTx {
     this._protocolCmds = protocolCmds;
   }
 
-  sign(privKey) {
-    this._tx.sign(privKey);
+  signAsync(signData, chainNodeClient) {
+    return this._tx.signAsync(signData, chainNodeClient)
+      .then((tx) => {
+        return this;
+      })
   }
 
   getPayload() {

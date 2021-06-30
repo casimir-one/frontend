@@ -120,7 +120,7 @@ Auth.signTransaction = function (trx, keys, tenantStamp) {
     let tenantSig = Signature.signBuffer(Buffer.concat([chainId, txBuffer]), tenantPrivKey);
     tenant_signature = {
       tenant: tenant, 
-      signature: tenantSig.toBuffer(),
+      signature: tenantSig.toBuffer().toString('hex'),
       extensions: [] 
     };
   }
@@ -130,7 +130,7 @@ Auth.signTransaction = function (trx, keys, tenantStamp) {
 
   for (var key in keys) {
     var sig = Signature.signBuffer(Buffer.concat([cid, buf]), keys[key]);
-    signatures.push(sig.toBuffer());
+    signatures.push(sig.toBuffer().toString('hex'));
   }
 
   return tenant_signature ? signed_transaction.toObject(Object.assign(trx, { signatures: signatures, tenant_signature: tenant_signature })) : signed_transaction.toObject(Object.assign(trx, { signatures: signatures, tenant_signature: undefined }));

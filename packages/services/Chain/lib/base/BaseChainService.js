@@ -1,5 +1,6 @@
 import { Singleton } from '@deip/toolbox';
 import { assert } from '@deip/toolbox';
+import fetch from 'cross-fetch';
 
 
 class BaseChainService extends Singleton {

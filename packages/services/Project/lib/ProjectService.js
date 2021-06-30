@@ -69,6 +69,7 @@ class ProjectService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         const isNewProjectTeam = teamId === null;
         const teamMembers = [];
@@ -162,7 +163,9 @@ class ProjectService extends Singleton {
             return txBuilder.end();
           })
           .then((packedTx) => {
-            packedTx.sign(privKey);
+            return packedTx.signAsync(privKey, chainNodeClient);
+          })
+          .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
             return this.projectHttp.createProject(msg);
           });
@@ -193,7 +196,7 @@ class ProjectService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         const teamMembers = [];
         return Promise.all([
@@ -272,7 +275,9 @@ class ProjectService extends Singleton {
             return txBuilder.end();
           })
           .then((packedTx) => {
-            packedTx.sign(privKey);
+            return packedTx.signAsync(privKey, chainNodeClient);
+          })
+          .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
             return this.projectHttp.updateProject(msg);
           });

@@ -2,29 +2,43 @@ import { assert } from '@deip/toolbox';
 
 
 class BaseTx {
-  constructor({ operations }) {
-    this._operations = operations || [];
+  _tx;
+  _ops;
+  _isFinalized;
+
+  constructor(tx, ops) {
+    this._tx = tx || null;
+    this._ops = ops || [];
+    this._isFinalized = !!this._tx;
+  }
+
+  getTx() {
+    return this._tx;
+  };
+
+  getOps() {
+    return this._ops;
   }
 
   addOp(op) {
-    assert(!this.isSealed(), "Transaction cannot be modified after it has been sealed");
-    this._operations.push(op);
+    assert(!this.isFinalized(), "Transaction cannot be modified after it has been finalized");
+    this._ops.push(op);
     return this;
   }
 
-  seal() {
-    assert(this._operations.length, "Empty transaction cannot be sealed");
-    this._isSealed = true;
-    return this;
+  isFinalized() {
+    return this._isFinalized;
   }
 
-  isSealed() { return this._isSealed; }
+  finalize(tx) {
+    this._tx = tx;
+    this._isFinalized = true;
+  }
 
   getRawTx() { throw new Error("Not implemented exception!"); };
-
-  sign() { throw new Error("Not implemented exception!"); }
+  signAsync() { throw new Error("Not implemented exception!"); }
+  signByTenantAsync() { throw new Error("Not implemented exception!"); }
   getProtocolChain() { throw new Error("Not implemented exception!"); };
-
   serialize() { throw new Error("Not implemented exception!"); }
   deserialize() { throw new Error("Not implemented exception!"); }
   static Serialize(tx) { throw new Error("Not implemented exception!"); }

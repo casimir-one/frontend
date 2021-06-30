@@ -3,6 +3,7 @@ import { Interface } from '@deip/toolbox';
 /* Keep args in functions to validate interface */
 
 const ChainApi = Interface('ChainApi', {
+  sendTxAsync: async function (tx) { },
   getProjectAsync: async function (projectId) { },
 });
 

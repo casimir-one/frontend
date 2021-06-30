@@ -11,43 +11,19 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       teamId,
       description,
       domains,
-      isPrivate,
-      members,
-      reviewShare,
-      compensationShare
+      isPrivate
     }) => {
 
-      // TODO: Generate project id
-      return chainNodeClient.tx.deip.createProject(
-        teamId,
-        description,
-        domains,
-        isPrivate,
-        members,
-        reviewShare,
-        compensationShare
-      );
-    },
+      const createProjectOp = chainNodeClient.tx.deip.createProject({
+        "is_private": isPrivate,
+        "external_id": `0x${entityId}`,
+        "team_id": teamId,
+        "description": `0x${description}`,
+        "domains": domains.map((domain) => `0x${domain}`),
+        "members": [] // deprecated
+      });
 
-
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROPOSAL]: ({
-      entityId,
-      creator,
-      proposedCmds,
-      expirationTime,
-      reviewPeriodSeconds,
-      extensions
-    }) => {
-
-      // TODO: Generate project id
-      return chainNodeClient.tx.deip.createProposal(
-        entityId,
-        creator,
-        proposedCmds,
-        expirationTime,
-        reviewPeriodSeconds,
-        extensions
-      );
+      return createProjectOp;
     }
 
   }

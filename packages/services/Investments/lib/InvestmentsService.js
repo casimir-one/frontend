@@ -66,6 +66,7 @@ class InvestmentsService extends Singleton {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder.begin()
           .then(() => {
@@ -104,8 +105,8 @@ class InvestmentsService extends Singleton {
             }
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.investmentsHttp.createProjectTokenSale(msg);
           });
@@ -120,6 +121,7 @@ class InvestmentsService extends Singleton {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder.begin()
           .then(() => {
@@ -132,8 +134,8 @@ class InvestmentsService extends Singleton {
             txBuilder.addCmd(contributeProjectToTokenSaleCmd);
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.investmentsHttp.contributeProjectTokenSale(msg);
           });
