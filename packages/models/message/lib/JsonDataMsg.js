@@ -1,15 +1,16 @@
-import BaseMsg from './base/BaseMsg';
+import BaseHttpMsg from './base/BaseHttpMsg';
 
 
-class JsonDataMsg extends BaseMsg {
+class JsonDataMsg extends BaseHttpMsg {
 
   constructor(payload, headers) {
     super(payload, headers);
     this._headers['content-type'] = 'application/json';
+    this._jsonData = { 'envelope': this._envelope.serialize() };
   }
 
   getHttpBody() {
-    return { 'envelope': this._envelope.serialize() };
+    return this._jsonData;
   }
 
 }

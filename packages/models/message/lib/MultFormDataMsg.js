@@ -1,17 +1,17 @@
-import BaseMsg from './base/BaseMsg';
+import BaseHttpMsg from './base/BaseHttpMsg';
 
 
-class MultFormDataMsg extends BaseMsg {
+class MultFormDataMsg extends BaseHttpMsg {
 
   constructor(formData, payload, headers) {
     super(payload, headers);
     this._headers['content-type'] = 'multipart/form-data';
     this._formData = formData || new FormData();
+    this._formData.set('envelope', JSON.stringify(this._envelope.serialize()));
   }
 
-  getHttpBody() {
-    this._formData.set('envelope', JSON.stringify(this._envelope.serialize()));
-    return this._formData;
+  getHttpBody() { 
+    return this._formData; 
   }
 
 }
