@@ -37,6 +37,8 @@ export const getAttributeFileSrc = (opts = {}) => {
     download
   } = opts;
 
+  if (!filename) return null;
+
   const url = [
     serverUrl,
     'api',
