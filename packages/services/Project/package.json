@@ -1,6 +1,6 @@
 {
   "name": "@deip/project-service",
-  "version": "1.123.1",
+  "version": "1.124.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -27,8 +27,8 @@
     "@deip/command-models": "1.123.1",
     "@deip/http-service": "1.123.1",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/message-models": "1.123.1",
-    "@deip/proposals-service": "1.123.1",
+    "@deip/message-models": "1.124.0",
+    "@deip/proposals-service": "1.124.0",
     "@deip/proxydi": "1.123.1",
     "@deip/rpc-client": "1.123.1",
     "@deip/toolbox": "1.123.1",

@@ -1,6 +1,6 @@
 {
   "name": "@deip/express-licensing-service",
-  "version": "1.123.1",
+  "version": "1.124.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,8 +25,8 @@
     "@deip/blockchain-service": "1.123.1",
     "@deip/http-service": "1.123.1",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/project-service": "1.123.1",
-    "@deip/proposals-service": "1.123.1",
+    "@deip/project-service": "1.124.0",
+    "@deip/proposals-service": "1.124.0",
     "@deip/rpc-client": "1.123.1",
     "@deip/toolbox": "1.123.1"
   },
