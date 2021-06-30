@@ -135,6 +135,12 @@
             ...this.lazyFormData
           }
         )
+          .then((res) => {
+            this.$emit('success', res.entityId);
+          })
+          .catch((err) => {
+            this.$emit('error', err);
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -150,6 +156,12 @@
             ...this.lazyFormData
           }
         )
+          .then((res) => {
+            this.$emit('success', res.entityId);
+          })
+          .catch((err) => {
+            this.$emit('error', err);
+          })
           .finally(() => {
             this.loading = false;
           });

@@ -102,8 +102,13 @@ const ACTIONS = {
 
   update({ dispatch }, payload) {
     return teamService
-      .updateTeam(payload).then(() => {
-        dispatch('getOne', payload.entityId);
+      .updateTeam(payload)
+      .then((res) => {
+        const { entityId } = res;
+
+        dispatch('getOne', entityId);
+
+        return res;
       });
   }
 };
