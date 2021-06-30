@@ -1,7 +1,9 @@
+import { isEmpty } from 'lodash/fp';
+
 export const userHelpersMixin = {
   methods: {
     userFullName(user) {
-      if (!user) return null;
+      if (!user || isEmpty(user)) return null;
 
       const firstName = this.$attributes.getMappedData('userFirstName', user.attributes)?.value;
       const lastName = this.$attributes.getMappedData('userLastName', user.attributes)?.value;
@@ -25,7 +27,7 @@ export const userHelpersMixin = {
     },
 
     userAvatarSrc(user, opts = {}) {
-      if (!user) return null;
+      if (!user || isEmpty(user)) return null;
 
       const avatar = this.$attributes.getMappedData(
         'userAvatar',
