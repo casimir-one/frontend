@@ -36,6 +36,10 @@ class InvestmentsHttp extends Singleton {
     return this.http.get(`/api/v2/history/account/${account}/${cursor}`);
   }
 
+  getAccountContributionsHistory(account) {
+    return this.http.get(`/api/v2/history/contributions/account/${account}`);
+  }
+
   getAssetRevenueHistory(symbol, cursor) {
     return this.http.get(`/api/v2/history/symbol/${symbol}/${cursor}`);
   }
