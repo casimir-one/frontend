@@ -89,8 +89,8 @@
         this.loading = true;
 
         const payload = {
-          user: this.$currentUser,
-          data: this.lazyFormData
+          initiator: this.$currentUser,
+          ...this.lazyFormData
         };
 
         this.$store.dispatch('users/update', payload)

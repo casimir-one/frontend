@@ -6,11 +6,7 @@ import {
   setListMutationFactory,
   setOneMutationFactory
 } from '@deip/platform-fns';
-import {
-  createFormData,
-  replaceFileWithName,
-  hasValue
-} from '@deip/toolbox';
+import { hasValue } from '@deip/toolbox';
 
 const userService = UserService.getInstance();
 
@@ -94,31 +90,12 @@ const ACTIONS = {
   },
 
   update({ dispatch, rootGetters }, payload) {
-    const {
-      user,
-      data: {
-        attributes,
-        email,
-        status,
-        memoKey
-      }
-    } = payload;
-    const formData = createFormData(payload.data.attributes);
-    const updatedAttributes = replaceFileWithName(attributes);
-
-    return userService.updateUser(user,
-      {
-        attributes: updatedAttributes,
-        email,
-        status,
-        updater: user.username,
-        memoKey,
-        formData
-      })
+    const { username } = payload;
+    return userService.updateUser(payload)
       .then(() => {
-        dispatch('getOne', user.username);
-        if (rootGetters['auth/username'] === user.username) {
-          dispatch('currentUser/get', user.username, { root: true });
+        dispatch('getOne', username);
+        if (rootGetters['auth/username'] === username) {
+          dispatch('currentUser/get', username, { root: true });
         }
       })
       .catch((err) => {
