@@ -1,11 +1,15 @@
-import crypto from '@deip/lib-crypto';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg } from '@deip/message-models';
 import {
   UpdateAccountCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
-import { Singleton } from '@deip/toolbox';
+import {
+  Singleton,
+  replaceFileWithName,
+  createFormData,
+  createHash
+} from '@deip/toolbox';
 import { UserHttp } from './UserHttp';
 
 class UserService extends Singleton {
@@ -13,18 +17,23 @@ class UserService extends Singleton {
 
   proxydi = proxydi;
 
-  updateUser({ privKey },
-    {
-      attributes,
+  updateUser(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: {
+        privKey,
+        username: updater
+      },
       email,
       status,
-      formData,
-      updater,
       accountOwnerAuth,
       accountActiveAuth,
       memoKey
-    }) {
-    const env = this.proxydi.get('env');
+    } = payload;
+
+    const formData = createFormData(payload);
+    const attributes = replaceFileWithName(payload.attributes);
+
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const txBuilder = chainService.getChainTxBuilder();
@@ -37,7 +46,7 @@ class UserService extends Singleton {
               ownerAuth: accountOwnerAuth,
               activeAuth: accountActiveAuth,
               memoKey,
-              description: attributes ? crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)) : undefined,
+              description: createHash(attributes),
               attributes,
               email,
               status
