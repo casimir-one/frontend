@@ -19,6 +19,7 @@
             :disabled="loading || disabled"
             text
             class="mr-2"
+            @click="handleClick"
           >
             Cancel
           </v-btn>
@@ -87,7 +88,12 @@
         this.disabled = true;
         this.loading = true;
 
-        this.$store.dispatch('users/update', this.lazyFormData)
+        const payload = {
+          initiator: this.$currentUser,
+          ...this.lazyFormData
+        };
+
+        this.$store.dispatch('users/update', payload)
           .then(() => {
             this.$emit('success');
           })
@@ -98,6 +104,10 @@
             this.disabled = false;
             this.loading = false;
           });
+      },
+
+      handleClick() {
+        this.restoreOldValue();
       }
     }
   };

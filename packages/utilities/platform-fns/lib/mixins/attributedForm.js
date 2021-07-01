@@ -65,14 +65,14 @@ const attributedFormFactory = (
     },
 
     untouched() {
-      return this.oldValue && isEqual(this.oldValue, this.value);
+      return this.oldValue && isEqual(this.oldValue, this.lazyFormData);
     }
   },
 
   watch: {
     [prop]: {
       handler(val) {
-        if (val && !isEqual(this.value, this.lazyFormData)) this.lazyFormData = val;
+        if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = val;
       },
       immediate: true,
       deep: true
@@ -80,8 +80,14 @@ const attributedFormFactory = (
   },
 
   created() {
-    if (this.value) {
-      this.oldValue = cloneDeep(this.value);
+    if (this[prop]) {
+      this.oldValue = cloneDeep(this[prop]);
+    }
+  },
+
+  methods: {
+    restoreOldValue() {
+      this.lazyFormData = this.oldValue;
     }
   }
 });
