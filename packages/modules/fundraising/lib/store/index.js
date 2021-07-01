@@ -90,6 +90,10 @@ const ACTIONS = {
         amount
       }
     );
+  },
+
+  getContributionsHistory(_, username) {
+    return investmentsService.getAccountContributionsHistory(username);
   }
 };
 
