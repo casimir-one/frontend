@@ -1,10 +1,8 @@
-import crypto from '@deip/lib-crypto';
 import {
+  Singleton,
   createFormData,
-  isArray,
-  isObject,
   replaceFileWithName,
-  Singleton
+  createHash
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
@@ -20,16 +18,6 @@ import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
-
-const createHash = (val) => {
-  let string = val;
-
-  if (isObject(val) || isArray(val)) {
-    string = JSON.stringify(val);
-  }
-
-  return crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(string).buffer));
-};
 
 class TeamService extends Singleton {
   proxydi = proxydi;
