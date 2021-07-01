@@ -9,3 +9,4 @@ export * from './lib/strings';
 export * from './lib/i18n';
 export * from './lib/files';
 export * from './lib/interface';
+export * from './lib/hash';
