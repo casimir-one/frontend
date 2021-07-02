@@ -1,4 +1,5 @@
 import qs from 'qs';
+import { hasValue } from '@deip/toolbox';
 
 export const expandAttributes = (
   attrs,
@@ -60,4 +61,40 @@ export const getAttributeFileSrc = (opts = {}) => {
   });
 
   return [url, ...(query ? [query] : [])].join('?');
+};
+
+export const attributeMethodsFactory = (ctx, data, scopeData = {}) => {
+  if (!ctx) {
+    throw new Error('[attributeMethodsFactory]: No context provided');
+  }
+
+  return {
+    getAttributeValue(id) {
+      return data?.attributes?.[id]?.value;
+    },
+
+    ifAttributeValue(id) {
+      return hasValue(data?.attributes?.[id]?.value);
+    },
+
+    getAttributeFileSrc(attributeId, filename) {
+      const hasFileName = !!filename && filename !== 'null' && filename !== 'undefined';
+      const { scopeName: scope, scopeId } = scopeData;
+
+      if (!(scope && scopeId)) {
+        throw new Error('No scope data provided');
+      }
+
+      if (hasFileName) {
+        return ctx.$attributes.getFileSrc({
+          scope,
+          scopeId,
+          attributeId,
+          filename
+        });
+      }
+
+      return '';
+    }
+  };
 };

@@ -52,6 +52,10 @@ const formFactory = (
 
     untouched() {
       return this.oldValue && isEqual(this.oldValue, this.lazyFormData);
+    },
+
+    isEditMode() {
+      return this.mode === FORM_MODES.EDIT;
     }
   },
 
