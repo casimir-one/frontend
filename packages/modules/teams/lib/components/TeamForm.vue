@@ -46,7 +46,7 @@
   import { VexStack } from '@deip/vuetify-extended';
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
-  import { attributedFormFactory } from '@deip/platform-fns';
+  import { attributedFormFactory, attributeMethodsFactory } from '@deip/platform-fns';
   import { TEAM_FORM_MODES } from '../constants';
 
   export default {
@@ -60,13 +60,6 @@
     mixins: [attributedFormFactory('team')],
 
     props: {
-      mode: {
-        type: [String, Number],
-        default: TEAM_FORM_MODES.CREATE,
-        validation(value) {
-          return TEAM_FORM_MODES.keys().indexOf(value) !== -1;
-        }
-      },
       cancelLabel: {
         type: String,
         default() {
@@ -97,26 +90,19 @@
     computed: {
       schemaData() {
         return {
-          getAttributeFileSrc: this.getAttributeFileSrc
+          ...attributeMethodsFactory(
+            this,
+            this.formData,
+            {
+              scopeName: 'team',
+              scopeId: this.formData.externalId
+            }
+          )
         };
       }
     },
 
     methods: {
-      getAttributeFileSrc(attributeId, filename) {
-        const hasValue = !!filename && filename !== 'null' && filename !== 'undefined';
-
-        if (hasValue) {
-          return this.$attributes.getFileSrc({
-            scope: 'team',
-            scopeId: this.formData.externalId,
-            attributeId,
-            filename
-          });
-        }
-        return '';
-      },
-
       onSubmit() {
         if (this.mode === TEAM_FORM_MODES.CREATE) {
           this.createTeam();
