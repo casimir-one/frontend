@@ -20,6 +20,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
+    "@deip/constants": "^1.124.0",
     "@deip/platform-fns": "1.124.0",
     "@deip/proxydi": "1.123.1",
     "@deip/tenant-service": "1.124.0"

@@ -20,13 +20,14 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
+    "@deip/constants": "^1.124.0",
     "@deip/notification-service": "1.123.1",
     "@deip/platform-fns": "1.124.0",
     "@deip/proxydi": "1.123.1"
   },
   "peerDependencies": {
-    "@deip/auth-module": "^1.115.0",
-    "@deip/users-module": "^1.116.1",
+    "@deip/auth-module": "^1.124.0",
+    "@deip/users-module": "^1.124.0",
     "vuex": "^3.6.2"
   },
   "devDependencies": {

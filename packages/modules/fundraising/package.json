@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@deip/assets-module": "1.124.0",
+    "@deip/constants": "^1.124.0",
     "@deip/investments-service": "1.124.0",
     "@deip/platform-fns": "1.124.0",
     "@deip/proxydi": "1.123.1",

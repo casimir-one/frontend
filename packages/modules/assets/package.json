@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"@deip/assets-service": "1.123.1",
+		"@deip/constants": "^1.124.0",
 		"@deip/platform-fns": "1.124.0",
 		"@deip/proxydi": "1.123.1",
 		"@deip/teams-module": "1.124.0",
@@ -30,7 +31,7 @@
 		"maska": "^1.4.2"
 	},
 	"peerDependencies": {
-		"@deip/auth-module": "^1.115.0",
+		"@deip/auth-module": "^1.124.0",
 		"vue": "^2.6.14",
 		"vue-i18n": "^8.24.4",
 		"vuetify": "^2.5.3"
