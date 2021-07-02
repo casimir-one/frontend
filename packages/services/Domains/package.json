@@ -24,10 +24,11 @@
   "dependencies": {
     "@deip/access-service": "1.123.1",
     "@deip/blockchain-service": "1.123.1",
+    "@deip/constants": "^1.124.0",
     "@deip/http-service": "1.123.1",
     "@deip/toolbox": "1.123.1"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.112.0"
+    "@deip/app-config-service": "^1.123.1"
   }
 }

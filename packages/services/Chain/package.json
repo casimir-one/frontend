@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
+    "@deip/constants": "^1.124.0",
     "@deip/lib-crypto": "1.118.0",
     "@deip/proxydi": "1.123.1",
     "@deip/rpc-client": "1.123.1",
