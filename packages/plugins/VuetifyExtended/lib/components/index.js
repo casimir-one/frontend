@@ -4,7 +4,7 @@ export * from './VexBlock';
 export * from './VexCroppa';
 export * from './VexDialog';
 export * from './VexDotList';
-export * from './VexGrid';
+export * from './VexGrid'; // rename to autogrid
 export * from './VexHeader';
 export * from './VexImageInput';
 export * from './VexInput';
@@ -17,3 +17,5 @@ export * from './VexTooltip';
 export * from './VexTreeview';
 export * from './VexVideoEmbed';
 export * from './VexPlacesAutocomplete';
+
+export * from './vex-expand';
