@@ -49,11 +49,23 @@ export const camelizeObjectKeys = (obj, exception = ['_id', '__v']) => {
 };
 
 export const genObjectId = (obj, turns = 3) => {
-  const sorted = sortObjectKeys(obj, { deep: true });
+  const sorted = sortObjectKeys(obj);
 
   return new Array(turns)
     .fill(null)
     .map((x, index) => index)
     .reduce((x, index) => x + crc32(`turn-${index + 1}-${JSON.stringify(sorted)}`)
       .toString(16), '');
+};
+
+export const filterObjectKeys = (obj, keys, reverse = false) => {
+  if (!keys) return obj;
+
+  const filterKeys = Object.keys(obj)
+    .filter((key) => keys.includes(key) === !reverse);
+
+  return filterKeys.reduce((acc, key) => ({
+    ...acc,
+    ...({ [key]: obj[key] })
+  }), {});
 };

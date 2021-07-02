@@ -1,3 +1,8 @@
+import dotProp from 'dot-prop';
+import kindOf from 'kind-of';
+import RecursiveIterator from 'recursive-iterator';
+import { find as deepFind } from 'find-keypath';
+
 export * from './lib/collections';
 export * from './lib/enum';
 export * from './lib/form';
@@ -10,3 +15,12 @@ export * from './lib/i18n';
 export * from './lib/files';
 export * from './lib/interface';
 export * from './lib/hash';
+
+export * from 'change-case';
+
+export {
+  dotProp,
+  RecursiveIterator,
+  deepFind,
+  kindOf
+};

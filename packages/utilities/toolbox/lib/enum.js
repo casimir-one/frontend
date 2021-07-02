@@ -46,3 +46,8 @@ export function createEnum(items) {
     }
   };
 }
+
+export const mapListFromEnum = (enumObj, data) => enumObj.values().map((value) => ({
+  value: parseInt(value, 10),
+  text: data[value]
+}));
