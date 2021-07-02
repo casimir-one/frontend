@@ -117,8 +117,7 @@
 </template>
 
 <script>
-  import { isEqual } from 'lodash/fp';
-  import { AttributedForm } from '@deip/platform-fns';
+  import { formMixin } from '@deip/platform-fns';
   import { VexStack } from '@deip/vuetify-extended';
   import draggable from 'vuedraggable';
   import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/attributes-service';
@@ -147,10 +146,7 @@
       draggable
     },
 
-    model: {
-      prop: 'value',
-      event: 'input'
-    },
+    mixins: [formMixin],
 
     props: {
       value: {
@@ -159,36 +155,14 @@
       }
     },
 
-    data(vm) {
+    data() {
       return {
-        lazyFormData: vm.value,
-
-        disabled: false,
-        loading: false,
-
-        oldValue: null,
-
         lazyMap: [],
         activeMap: 0
       };
     },
 
     computed: {
-      formData: {
-        get() {
-          return this.lazyFormData;
-        },
-        set(val) {
-          if (isEqual(val, this.lazyFormData)) return;
-          this.lazyFormData = val;
-
-          this.$emit('input', val);
-        }
-      },
-
-      untouched() {
-        return AttributedForm.computed.untouched.call(this);
-      },
 
       attributes() {
         return ATTR_SCOPES.values().map((scope) => ({
@@ -196,21 +170,6 @@
           attrs: this.$store.getters['attributes/list']({ scope })
         }));
       }
-    },
-
-    watch: {
-      value: {
-        ...AttributedForm.watch.value,
-        ...{
-          handler(val) {
-            AttributedForm.watch.value.handler.call(this, val);
-          }
-        }
-      }
-    },
-
-    created() {
-      AttributedForm.created.call(this);
     },
 
     methods: {
