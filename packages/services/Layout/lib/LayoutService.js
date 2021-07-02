@@ -26,7 +26,7 @@ class LayoutService extends Singleton {
 
         const updated = collectionMerge(res, {
           entityId, ...data
-        }, { key: entityId });
+        }, { key: 'entityId' });
 
         return this.updateLayouts(updated);
       });
@@ -43,7 +43,16 @@ class LayoutService extends Singleton {
 
         const updated = collectionMerge(res, {
           entityId, ...data
-        }, { key: entityId });
+        }, { key: 'entityId' });
+        return this.updateLayouts(updated);
+      });
+  }
+
+  delete(entityId) {
+    return this.getLayouts()
+      .then((res) => {
+        const updated = res.filter((l) => l.entityId !== entityId);
+
         return this.updateLayouts(updated);
       });
   }
