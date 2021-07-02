@@ -1,8 +1,11 @@
-import { cloneDeep, isEqual } from 'lodash/fp';
+import { isEqual } from '@deip/toolbox/lodash';
+
 import {
   compactAttributes,
   expandAttributes
 } from '../helpers';
+
+import { formFactory } from './form';
 
 const attributedFormFactory = (
   prop = 'value',
@@ -10,17 +13,9 @@ const attributedFormFactory = (
 ) => ({
   name: 'AttributedForm',
 
-  model: {
-    prop,
-    event
-  },
+  mixins: [formFactory(prop, event)],
 
   props: {
-    [prop]: {
-      type: Object,
-      default: () => ({})
-    },
-
     schema: {
       type: Array,
       default: () => []
@@ -29,17 +24,6 @@ const attributedFormFactory = (
       type: Object,
       default: () => ({})
     }
-  },
-
-  data() {
-    return {
-      lazyFormData: null,
-
-      disabled: false,
-      loading: false,
-
-      oldValue: null
-    };
   },
 
   computed: {
@@ -54,6 +38,7 @@ const attributedFormFactory = (
       },
       set(val) {
         if (isEqual(val, this.lazyFormData)) return;
+
         this.lazyFormData = {
           ...val,
           ...{
@@ -62,39 +47,12 @@ const attributedFormFactory = (
         };
         this.$emit(event, val);
       }
-    },
-
-    untouched() {
-      return this.oldValue && isEqual(this.oldValue, this.lazyFormData);
-    }
-  },
-
-  watch: {
-    [prop]: {
-      handler(val) {
-        if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = val;
-      },
-      immediate: true,
-      deep: true
-    }
-  },
-
-  created() {
-    if (this[prop]) {
-      this.oldValue = cloneDeep(this[prop]);
-    }
-  },
-
-  methods: {
-    restoreOldValue() {
-      this.lazyFormData = this.oldValue;
     }
   }
 });
 
 const AttributedForm = attributedFormFactory();
 
-export default AttributedForm;
 export {
   AttributedForm,
   attributedFormFactory
