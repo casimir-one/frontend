@@ -21,6 +21,7 @@ export const RENDERER_BLOCK_KEYS = [
   'disabledProps',
   'excludeProps',
 
-  'type',
+  'blockType',
+  'dataType',
   'icon'
 ];
