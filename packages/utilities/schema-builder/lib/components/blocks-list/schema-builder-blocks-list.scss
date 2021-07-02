@@ -1,0 +1,8 @@
+.schema-blocks {
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-gap: 1px;
+    //padding: 1px;
+  }
+}

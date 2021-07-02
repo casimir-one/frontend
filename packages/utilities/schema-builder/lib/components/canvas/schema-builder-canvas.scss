@@ -1,0 +1,72 @@
+$gap: 4px;
+
+@mixin outline($opacity: 1, $type: 'solid') {
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    pointer-events: none;
+    border:1px #{$type} var(--v-primary-base, blue);
+    opacity: $opacity;
+  }
+}
+
+@mixin fly-box($opacity: 1, $type: 'solid') {
+  position: absolute;
+  display: none;
+  z-index: 10;
+  pointer-events: none;
+  border:1px #{$type} var(--v-primary-base, blue);
+  opacity: $opacity;
+}
+
+.schema-composer {
+  border: 1px solid rgba(#000, .12);
+  position: relative;
+
+  &__host {
+    padding: 16px;
+    position: relative;
+    min-height: 100px;
+  }
+
+  &__node {
+    border: 1px dashed rgba(#000, .12);
+    min-width: 0;
+
+    &--active {
+      border-color: blue;
+    }
+  }
+
+  &__node-host {
+    padding: $gap;
+
+    &:empty {
+      min-height: 40px;
+    }
+
+    &--row {
+      display: grid;
+      grid-gap: $gap;
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr))
+    }
+  }
+
+  &__hover-box {
+    @include fly-box(.6, 'dashed');
+  }
+
+  &__focus-box {
+    //position: absolute;
+    //display: none;
+    //z-index: 10;
+    //pointer-events: none;
+    //border:1px solid var(--v-primary-base, blue);
+
+    @include fly-box();
+  }
+}
