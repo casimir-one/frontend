@@ -1,6 +1,7 @@
 module.exports = {
   presets: [
-    '@babel/preset-env'
+    '@babel/preset-env',
+    '@vue/babel-preset-jsx'
   ],
   plugins: [
     ['@babel/plugin-proposal-decorators', { legacy: true }],
