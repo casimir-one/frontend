@@ -2,6 +2,8 @@ import axios from 'axios';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 
+import Clipboard from 'v-clipboard';
+
 const init = () => axios.get('/env')
   .then((res) => {
     const env = res.data;
@@ -25,6 +27,8 @@ const install = (Vue, options, envData) => {
 
   Vue.prototype.$env = envData;
   Vue.$env = envData;
+
+  Vue.use(Clipboard);
 };
 
 export const EnvModule = {
