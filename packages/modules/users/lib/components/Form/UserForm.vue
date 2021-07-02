@@ -40,7 +40,7 @@
 <script>
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
-  import { attributedFormFactory } from '@deip/platform-fns';
+  import { attributedFormFactory, attributeMethodsFactory } from '@deip/platform-fns';
   import { VexStack } from '@deip/vuetify-extended';
 
   export default {
@@ -64,25 +64,19 @@
     computed: {
       schemaData() {
         return {
-          getAttributeFileSrc: this.getAttributeFileSrc
+          ...attributeMethodsFactory(
+            this,
+            this.formData,
+            {
+              scopeName: 'user',
+              scopeId: this.formData._id
+            }
+          )
         };
       }
     },
 
     methods: {
-      getAttributeFileSrc(attributeId, filename) {
-        const hasValue = !!filename && filename !== 'null' && filename !== 'undefined';
-
-        if (hasValue) {
-          return this.$attributes.getFileSrc({
-            scope: 'user',
-            scopeId: this.formData._id,
-            attributeId,
-            filename
-          });
-        }
-        return '';
-      },
 
       updateUser() {
         this.disabled = true;
