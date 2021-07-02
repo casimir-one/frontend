@@ -56,11 +56,11 @@ const ACTIONS = {
     commit('setRoles', roles);
   },
 
-  signIn({ commit, dispatch }, { username, password }) {
+  signIn({ commit, dispatch }, { username: usernameOrEmail, password }) {
     let privateKey;
 
-    return userService.getUser(username)
-      .then(({ account }) => {
+    return userService.getUser(usernameOrEmail)
+      .then(({ account, username }) => {
         if (!account) {
           throw new Error('invalid account');
         }
