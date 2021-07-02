@@ -1,0 +1,42 @@
+{
+  "name": "@deip/layouts-module",
+  "version": "1.124.0",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEIPworld/deip-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
+  },
+  "dependencies": {
+    "@deip/attributes-module": "^1.124.0",
+    "@deip/attributes-service": "^1.124.0",
+    "@deip/constants": "^1.124.0",
+    "@deip/layout-service": "^1.123.1",
+    "@deip/platform-fns": "1.124.0",
+    "@deip/proxydi": "1.123.1",
+    "@deip/schema-builder": "^1.123.1",
+    "@deip/schema-renderer": "^1.123.1",
+    "@deip/toolbox": "^1.123.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/plugin-proposal-class-properties": "^7.14.5",
+    "@babel/plugin-proposal-decorators": "^7.14.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/plugin-proposal-private-methods": "^7.14.5"
+  },
+  "peerDependencies": {
+    "@deip/vuetify-extended": "^1.123.1",
+    "vuetify": "^2.5.5"
+  }
+}
