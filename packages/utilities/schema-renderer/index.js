@@ -1,5 +1,4 @@
-import { SchemaRenderer, SchemaRendererExtended } from './lib/components/SchemaRenderer';
-import { SchemaBuilder } from './lib/components/SchemaBuilder';
+import { SchemaRenderer } from './lib/components/schema-renderer';
 
-export { SchemaRenderer, SchemaBuilder, SchemaRendererExtended };
+export { SchemaRenderer };
 export default SchemaRenderer;

@@ -1,10 +1,17 @@
 import {
-  isArray, isString, isObject, isBoolean, isNumber
+  isArray,
+  isString,
+  isObject,
+  isBoolean,
+  isNumber,
+
+  pascalCase,
+
+  RecursiveIterator,
+  dotProp
 } from '@deip/toolbox';
-import { cloneDeep, merge } from 'lodash/fp/';
-import dotProp from 'dot-prop';
-import RecursiveIterator from 'recursive-iterator';
-import { pascalCase } from 'change-case';
+
+import { cloneDeep, merge } from '@deip/toolbox/lodash';
 
 export const SchemaRenderer = {
   name: 'SchemeRenderer',
