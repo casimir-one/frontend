@@ -39,6 +39,7 @@
           @draw="onDrawDebounce"
           @file-choose="onFileChoose"
           @initial-image-loaded="onInitialImageLoadedDebounce"
+          @image-remove="onImageRemove"
         />
       </v-responsive>
 
@@ -221,6 +222,11 @@
 
       onFileChoose(file) {
         this.chosedFile = file;
+      },
+
+      onImageRemove() {
+        this.chosedFile = null;
+        this.internalValue = null;
       },
 
       onInitialImageLoaded() {
