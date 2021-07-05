@@ -14,7 +14,7 @@ import {
 import { cloneDeep, merge } from '@deip/toolbox/lodash';
 
 export const SchemaRenderer = {
-  name: 'SchemeRenderer',
+  name: 'SchemaRenderer',
 
   model: {
     prop: 'value',
@@ -209,17 +209,13 @@ export const SchemaRenderer = {
           [modelProps.event](event) {
             const value = isNativeInput ? event.target.value : event;
 
-            if (value) {
-              if (!modelProps.path) {
-                vm.internalValue = value;
-              } else {
-                vm.internalValue = merge(
-                  vm.internalValue,
-                  dotProp.set({}, modelProps.path, value)
-                );
-              }
-            } else {
+            if (!modelProps.path) {
               vm.internalValue = value;
+            } else {
+              vm.internalValue = merge(
+                vm.internalValue,
+                dotProp.set({}, modelProps.path, value)
+              );
             }
           }
         }
