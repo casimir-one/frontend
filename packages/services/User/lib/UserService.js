@@ -24,15 +24,19 @@ class UserService extends Singleton {
         privKey,
         username: updater
       },
+      ...data
+    } = payload;
+
+    const {
       email,
       status,
       accountOwnerAuth,
       accountActiveAuth,
       memoKey
-    } = payload;
+    } = data;
 
-    const formData = createFormData(payload);
-    const attributes = replaceFileWithName(payload.attributes);
+    const formData = createFormData(data);
+    const attributes = replaceFileWithName(data.attributes);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
