@@ -56,6 +56,14 @@ class LayoutService extends Singleton {
         return this.updateLayouts(updated);
       });
   }
+
+  getSettings() {
+    return this.layoutHttp.getSettings();
+  }
+
+  updateSettings(data) {
+    return this.layoutHttp.updateSettings(data);
+  }
 }
 
 export {
