@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
+
+
+### Features
+
+* **@deip/layout-service:** add delete emulation ([287ad50](https://github.com/DEIPworld/deip-modules/commit/287ad50fc9525527d724f4969b652d5d10efd59e))
+* **@deip/layout-service:** add methods emulation ([8371042](https://github.com/DEIPworld/deip-modules/commit/83710429c329034e6f79b6616db92bca97ac12b9))
+
+
+
+
+
 ## [1.123.1](https://github.com/DEIPworld/deip-modules/compare/v1.123.0...v1.123.1) (2021-06-29)
 
 **Note:** Version bump only for package @deip/layout-service

@@ -1,6 +1,6 @@
 {
   "name": "@deip/schema-builder",
-  "version": "1.123.1",
+  "version": "1.125.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,8 +27,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "^1.124.0",
-    "@deip/toolbox": "1.123.1",
+    "@deip/constants": "1.125.0",
+    "@deip/toolbox": "1.125.0",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {

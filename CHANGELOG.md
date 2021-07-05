@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** fix setting oldValue in attributedForm ([8dae46e](https://github.com/DEIPworld/deip-modules/commit/8dae46e10a6a96184c8b24c0723bc62bb9f0ccfe))
+* **@deip/platform-fns:** return null in getAttributeFileSrc if filename is empty ([7d77405](https://github.com/DEIPworld/deip-modules/commit/7d7740581c87d7eb03a07df1fdadbbd0dabf2b88))
+* **@deip/users-module:** fix user update ([6c8b299](https://github.com/DEIPworld/deip-modules/commit/6c8b299d127e70af0062d621cfda3d62eb21833b))
+
+
+### Features
+
+* **@deip/attributes-module:** switch to formMixin ([72d13e3](https://github.com/DEIPworld/deip-modules/commit/72d13e3db9575510eb11ad7edcefc7f9cc75f804))
+* **@deip/attributes-service:** add attrs icons ([d735c76](https://github.com/DEIPworld/deip-modules/commit/d735c7605b95492d99921b9fdf8b42e95d5f7f51))
+* **@deip/constants:** add new ([aa2a223](https://github.com/DEIPworld/deip-modules/commit/aa2a223eef1b385161e51f2f652b71a14424799e))
+* **@deip/constants:** new package ([2678569](https://github.com/DEIPworld/deip-modules/commit/26785697683b7c3cb91ec5b561e0f86c86db5a28))
+* **@deip/env-module:** add global clipboard ([92d48ad](https://github.com/DEIPworld/deip-modules/commit/92d48ad41f861570f2fae8de092d2234666c0e12))
+* **@deip/layout-service:** add delete emulation ([287ad50](https://github.com/DEIPworld/deip-modules/commit/287ad50fc9525527d724f4969b652d5d10efd59e))
+* **@deip/layout-service:** add methods emulation ([8371042](https://github.com/DEIPworld/deip-modules/commit/83710429c329034e6f79b6616db92bca97ac12b9))
+* **@deip/layouts-module:** new package ([aa7da28](https://github.com/DEIPworld/deip-modules/commit/aa7da2838c53fa74a266faface1fbb8f904c817f))
+* **@deip/platform-fns:** add formFactory mixin ([aba46c2](https://github.com/DEIPworld/deip-modules/commit/aba46c23a143a9c94ef50df007e3d092cff0409b))
+* **@deip/platform-fns:** add methodFactory ([d5bff4b](https://github.com/DEIPworld/deip-modules/commit/d5bff4be473bb67d74e409477491c6b5a7a3cf6d))
+* **@deip/schema-builder:** new package ([6af7e3a](https://github.com/DEIPworld/deip-modules/commit/6af7e3a0c44f5dcd3a22ec00ae1ba65341c9e406))
+* **@deip/schema-renderer:** clean and update ([8cfb120](https://github.com/DEIPworld/deip-modules/commit/8cfb120398dcd79d29d8f8849f1d550fdd5f57c6))
+* **@deip/teams-module:** add methodFactory ([567bae3](https://github.com/DEIPworld/deip-modules/commit/567bae329141f28d1138c2338e17ac36838b4a5b))
+* **@deip/toolbox:** add common libs to export, add filterObjectKeys method, add mapListFromEnum method ([0b59714](https://github.com/DEIPworld/deip-modules/commit/0b597140a4d9844b68b30e7a6a11a3c9d6797d72))
+* **@deip/toolbox:** add createHash ([a53ce67](https://github.com/DEIPworld/deip-modules/commit/a53ce675dc7c508b952063f21f84ce9f269b6e6a))
+* **@deip/users-module:** add methodFactory ([20c0ac2](https://github.com/DEIPworld/deip-modules/commit/20c0ac2c4fd92af55bdbf3746b5c9bbbdbe16469))
+* **@deip/vuetify-extended:** add vex-expand component ([75eea22](https://github.com/DEIPworld/deip-modules/commit/75eea220da34c4429757494fbf31454d2b815a8c))
+
+
+
+
+
 # [1.124.0](https://github.com/DEIPworld/deip-modules/compare/v1.123.1...v1.124.0) (2021-06-30)
 
 

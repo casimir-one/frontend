@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** fix user update ([6c8b299](https://gitlab.com/DEIP/deip-client-modules/commit/6c8b299d127e70af0062d621cfda3d62eb21833b))
+
+
+### Features
+
+* **@deip/users-module:** add methodFactory ([20c0ac2](https://gitlab.com/DEIP/deip-client-modules/commit/20c0ac2c4fd92af55bdbf3746b5c9bbbdbe16469))
+
+
+
+
+
 # [1.124.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.123.1...v1.124.0) (2021-06-30)
 
 
