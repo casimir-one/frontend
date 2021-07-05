@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
+
+
+### Features
+
+* **@deip/vuetify-extended:** add vex-expand component ([75eea22](https://gitlab.com/DEIP/deip-client-modules/commit/75eea220da34c4429757494fbf31454d2b815a8c))
+
+
+
+
+
 ## [1.123.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.123.0...v1.123.1) (2021-06-29)
 
 **Note:** Version bump only for package @deip/vuetify-extended

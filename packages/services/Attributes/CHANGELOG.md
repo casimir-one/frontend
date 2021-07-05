@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
+
+
+### Features
+
+* **@deip/attributes-service:** add attrs icons ([d735c76](https://github.com/DEIPworld/deip-modules/commit/d735c7605b95492d99921b9fdf8b42e95d5f7f51))
+* **@deip/constants:** add new ([aa2a223](https://github.com/DEIPworld/deip-modules/commit/aa2a223eef1b385161e51f2f652b71a14424799e))
+
+
+
+
+
 # [1.124.0](https://github.com/DEIPworld/deip-modules/compare/v1.123.1...v1.124.0) (2021-06-30)
 
 **Note:** Version bump only for package @deip/attributes-service

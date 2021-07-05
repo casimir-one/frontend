@@ -5,12 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 # [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
-**Note:** Version bump only for package @deip/chain-service
 
+### Features
 
-
-
-
-## [1.123.1](https://github.com/DEIPworld/deip-modules/compare/v1.123.0...v1.123.1) (2021-06-29)
-
-**Note:** Version bump only for package @deip/chain-service
+* **@deip/schema-builder:** new package ([6af7e3a](https://github.com/DEIPworld/deip-modules/commit/6af7e3a0c44f5dcd3a22ec00ae1ba65341c9e406))
