@@ -34,7 +34,8 @@ class TeamService extends Singleton {
         memoKey,
         privKey,
         username: creator
-      }
+      },
+      ...data
     } = payload;
 
     const authority = {
@@ -42,9 +43,9 @@ class TeamService extends Singleton {
       weight: 1
     };
 
-    const formData = createFormData(payload);
+    const formData = createFormData(data);
 
-    const attributes = replaceFileWithName(payload.attributes);
+    const attributes = replaceFileWithName(data.attributes);
     const description = createHash(attributes);
 
     return ChainService.getInstanceAsync(env)
@@ -81,13 +82,15 @@ class TeamService extends Singleton {
   updateTeam(payload) {
     const env = this.proxydi.get('env');
     const {
-      entityId,
-
       initiator: {
         privKey,
         username: creator
       },
+      ...data
+    } = payload;
 
+    const {
+      entityId,
       proposalInfo: {
         isProposal = false,
         isProposalApproved = true,
@@ -96,11 +99,11 @@ class TeamService extends Singleton {
 
       ownerAuth, // need clarification
       activeAuth // need clarification
-    } = payload;
+    } = data;
 
-    const formData = createFormData(payload);
+    const formData = createFormData(data);
 
-    const attributes = replaceFileWithName(payload.attributes);
+    const attributes = replaceFileWithName(data.attributes);
     const description = createHash(attributes);
 
     return ChainService.getInstanceAsync(env)
