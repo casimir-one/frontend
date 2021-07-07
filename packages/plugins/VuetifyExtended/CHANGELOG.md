@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix file remove in VexImageInput ([1c6ec5d](https://gitlab.com/DEIP/deip-client-modules/commit/1c6ec5d8a50c4c9bb80b55c1534db8b9693a94a0))
+
+
+
+
+
 # [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 
