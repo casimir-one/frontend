@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix sign in by email ([f81187b](https://gitlab.com/DEIP/deip-client-modules/commit/f81187b4d084c315c8e805bc52103d4d1a1e2f66))
+
+
+
+
+
 # [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 **Note:** Version bump only for package @deip/auth-module

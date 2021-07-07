@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** add check for attributeId in getAttributeFileSrc ([1f94122](https://gitlab.com/DEIP/deip-client-modules/commit/1f941222cd186153e3995cd41ba05647b623e645))
+
+
+
+
+
 # [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 

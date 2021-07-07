@@ -1,6 +1,6 @@
 {
   "name": "@deip/notifications-module",
-  "version": "1.125.0",
+  "version": "1.126.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@deip/constants": "1.125.0",
     "@deip/notification-service": "1.125.0",
-    "@deip/platform-fns": "1.125.0",
+    "@deip/platform-fns": "1.126.0",
     "@deip/proxydi": "1.125.0"
   },
   "peerDependencies": {

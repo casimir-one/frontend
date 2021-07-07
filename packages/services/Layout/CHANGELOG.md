@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://github.com/DEIPworld/deip-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Features
+
+* **@deip/layout-service:** add settings ([856ccf0](https://github.com/DEIPworld/deip-modules/commit/856ccf0a7e42b4f790258070f646b58d17a571bd))
+
+
+
+
+
 # [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 

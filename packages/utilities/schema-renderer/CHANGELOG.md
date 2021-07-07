@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **@deip/schema-renderer:** fix cleaning form field value ([1a537d9](https://gitlab.com/DEIP/deip-client-modules/commit/1a537d91bedfc1f8082223a936a553e395382a77))
+
+
+
+
+
 # [1.125.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 

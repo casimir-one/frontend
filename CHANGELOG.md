@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.126.0](https://github.com/DEIPworld/deip-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix sign in by email ([f81187b](https://github.com/DEIPworld/deip-modules/commit/f81187b4d084c315c8e805bc52103d4d1a1e2f66))
+* **@deip/platform-fns:** add check for attributeId in getAttributeFileSrc ([1f94122](https://github.com/DEIPworld/deip-modules/commit/1f941222cd186153e3995cd41ba05647b623e645))
+* **@deip/schema-renderer:** fix cleaning form field value ([1a537d9](https://github.com/DEIPworld/deip-modules/commit/1a537d91bedfc1f8082223a936a553e395382a77))
+* **@deip/teams-module:** fix submit button label in TeamForm ([c0a2b87](https://github.com/DEIPworld/deip-modules/commit/c0a2b873dcd0283be0da74a588abefff0e9252a7))
+* **@deip/vuetify-extended:** fix file remove in VexImageInput ([1c6ec5d](https://github.com/DEIPworld/deip-modules/commit/1c6ec5d8a50c4c9bb80b55c1534db8b9693a94a0))
+
+
+### Features
+
+* **@deip/layout-service:** add settings ([856ccf0](https://github.com/DEIPworld/deip-modules/commit/856ccf0a7e42b4f790258070f646b58d17a571bd))
+
+
+
+
+
 # [1.125.0](https://github.com/DEIPworld/deip-modules/compare/v1.124.0...v1.125.0) (2021-07-05)
 
 
