@@ -1,6 +1,6 @@
 {
   "name": "@deip/layouts-module",
-  "version": "1.126.0",
+  "version": "1.127.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -17,8 +17,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-module": "1.126.0",
-    "@deip/attributes-service": "1.125.0",
+    "@deip/attributes-module": "1.127.0",
+    "@deip/attributes-service": "1.127.0",
     "@deip/constants": "1.125.0",
     "@deip/layout-service": "1.126.0",
     "@deip/platform-fns": "1.126.0",
