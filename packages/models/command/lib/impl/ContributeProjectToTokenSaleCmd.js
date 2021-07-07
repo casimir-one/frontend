@@ -1,9 +1,9 @@
-import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
+import ProtocolCmd from './../base/ProtocolCmd';
 import { APP_CMD } from './../constants';
 import { assert } from '@deip/toolbox';
 
 
-class ContributeProjectToTokenSaleCmd extends ProtocolEntityCmd {
+class ContributeProjectToTokenSaleCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 

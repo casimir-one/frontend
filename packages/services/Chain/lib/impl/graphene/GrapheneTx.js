@@ -1,47 +1,71 @@
 import BaseTx from './../../base/BaseTx';
-import deipRpc from '@deip/rpc-client';
 import { PROTOCOL_CHAIN } from './../../constants';
+import { assert } from '@deip/toolbox';
 
 
 class GrapheneTx extends BaseTx {
-  constructor({
-    operations,
-    expiration,
-    refBlockNum,
-    refBlockPrefix,
-    extensions,
-    signatures,
-    tenantSignature
-  }) {
 
-    super({ operations });
-
-    this._impl = {
-      operations: this._operations,
-      ref_block_num: refBlockNum,
-      ref_block_prefix: refBlockPrefix,
-      expiration: expiration || new Date(new Date().getTime() + 3e6).toISOString().split('.')[0], // 1 hour
-      extensions: extensions || [],
-      signatures: signatures || [],
-      tenant_signature: tenantSignature || undefined
-    };
-    
-    if (this._operations.length) // deserialized tx
-      super.seal();
+  constructor(tx) {
+    if (!tx) {
+      super();
+    } else {
+      super(tx, tx.operations);
+    }
   }
 
-  sign(privKey) {
-    this._impl = deipRpc.auth.signTransaction(this._impl, { owner: privKey });
-    return this;
+  signAsync(privKey, chainNodeClient) {
+    assert(super.isFinalized(), 'Transaction is not finalized');
+    chainNodeClient.auth.signTransaction(this.getTx(), { owner: privKey });
+    return Promise.resolve(this);
+  }
+
+  signByTenantAsync({ tenant, tenantPrivKey }, chainNodeClient) {
+    assert(super.isFinalized(), 'Transaction is not finalized');
+    chainNodeClient.auth.signTransaction(this.getTx(), {}, { tenant, tenantPrivKey });
+    return Promise.resolve(this);
   }
 
   getRawTx() {
-    return JSON.parse(JSON.stringify(this._impl));
+    assert(super.isFinalized(), 'Transaction is not finalized');
+    return JSON.parse(JSON.stringify(this.getTx()));
   }
 
-  getProtocolChain() { return PROTOCOL_CHAIN.GRAPHENE; }
+  getProtocolChain() {
+    return PROTOCOL_CHAIN.GRAPHENE; 
+  }
+
+  finalize({ chainNodeClient }) {
+    if (!super.isFinalized()) {
+      let refBlockNum;
+      let refBlockPrefix;
+
+      return chainNodeClient.api.getDynamicGlobalPropertiesAsync()
+        .then((res) => {
+          refBlockNum = (res.last_irreversible_block_num - 1) & 0xFFFF;
+          return chainNodeClient.api.getBlockHeaderAsync(res.last_irreversible_block_num);
+        })
+        .then((res) => {
+          refBlockPrefix = new Buffer(res.previous, 'hex').readUInt32LE(4);
+          const tx = {
+            operations: super.getOps(),
+            ref_block_num: refBlockNum,
+            ref_block_prefix: refBlockPrefix,
+            expiration: new Date(new Date().getTime() + 3e6).toISOString().split('.')[0], // 1 hour
+            extensions: [],
+            signatures: [],
+            tenant_signature: undefined
+          };
+          super.finalize(tx);
+          return this;
+        });
+
+    } else {
+      return Promise.resolve(this);
+    }
+  }
 
   serialize() {
+    assert(super.isFinalized(), 'Transaction is not finalized');
     return GrapheneTx.Serialize(this);
   }
 
@@ -50,21 +74,13 @@ class GrapheneTx extends BaseTx {
   }
 
   static Serialize(tx) {
-    if (!tx || !tx._impl) return null;
-    return JSON.stringify(tx._impl);
+    assert(!!tx, "Transaction is not specified");
+    return JSON.stringify(tx.getRawTx());
   }
 
   static Deserialize(serialized) {
-    const data = JSON.parse(serialized);
-    return new GrapheneTx({
-      operations: data.operations,
-      refBlockNum: data.ref_block_num,
-      refBlockPrefix: data.ref_block_prefix,
-      expiration: data.expiration,
-      extensions: data.extensions,
-      signatures: data.signatures,
-      tenantSignature: data.tenant_signature
-    });
+    const finalized = JSON.parse(serialized);
+    return new GrapheneTx(finalized);
   }
 
 }

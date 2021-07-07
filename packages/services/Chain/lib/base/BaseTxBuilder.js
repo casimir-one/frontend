@@ -10,9 +10,9 @@ class BaseTxBuilder {
   _chainOpsRegistry;
 
   constructor(chainNodeClient, chainOpsRegistry) {
+    this._tx = null;
     this._chainNodeClient = chainNodeClient;
     this._chainOpsRegistry = chainOpsRegistry;
-    this._tx = null;
     this._protocolCmds = [];
   }
 
@@ -37,10 +37,11 @@ class BaseTxBuilder {
   begin(options) { throw new Error("Not implemented exception!"); }
   end(options) { throw new Error("Not implemented exception!"); }
 
-  finalize() {
-    if (!this._tx.isSealed())
-      this._tx.seal();
-    return new PackedTx(this._tx, this._protocolCmds);
+  finalize(opts) {
+    return this._tx.finalize(opts)
+      .then((tx) => {
+        return new PackedTx(tx, this._protocolCmds);
+      })
   }
 
 }

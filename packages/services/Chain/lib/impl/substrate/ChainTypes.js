@@ -1,11 +1,18 @@
 const CHAIN_TYPES = {
+  "InputKeySource": "KeySource",
+  "KeySource": {
+    "signatories": "Vec<AccountId>",
+    "threshold": "u16"
+  },
   "OrgOf": "Org",
   "Org": {
     "key": "AccountId",
+    "key_source": "KeySource",
     "name": "OrgName"
   },
   "OrgName": "H160",
   "DomainId": "H160",
+  "ReviewId": "H160",
   "AccountInfo": {
     "nonce": "Index",
     "consumers": "RefCount",
@@ -79,7 +86,7 @@ const CHAIN_TYPES = {
   "Project": {
     "is_private": "bool",
     "external_id": "ProjectId",
-    "team": "AccountId",
+    "team_id": "AccountId",
     "description": "Hash",
     "domains": "Vec<Domain>",
     "members": "Vec<AccountId>"

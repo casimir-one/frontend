@@ -51,6 +51,7 @@ class TeamService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         let entityId;
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder.begin()
           .then(() => {
@@ -71,8 +72,8 @@ class TeamService extends Singleton {
             entityId = createAccountCmd.getProtocolEntityId();
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
             return this.teamHttp.createTeam(msg);
           });
@@ -108,6 +109,7 @@ class TeamService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
         const txBuilder = chainService.getChainTxBuilder();
         return txBuilder
           .begin()
@@ -149,8 +151,8 @@ class TeamService extends Singleton {
 
             return txBuilder.end();
           })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            packedTx.sign(privKey);
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
             return this.teamHttp.updateTeam(msg);
           });
