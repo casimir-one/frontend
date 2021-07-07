@@ -79,22 +79,22 @@ export const attributeMethodsFactory = (ctx, data, scopeData = {}) => {
 
     getAttributeFileSrc(attributeId, filename) {
       const hasFileName = !!filename && filename !== 'null' && filename !== 'undefined';
+      if (!hasFileName || !attributeId) {
+        return '';
+      }
+
       const { scopeName: scope, scopeId } = scopeData;
 
       if (!(scope && scopeId)) {
         throw new Error('No scope data provided');
       }
 
-      if (hasFileName) {
-        return ctx.$attributes.getFileSrc({
-          scope,
-          scopeId,
-          attributeId,
-          filename
-        });
-      }
-
-      return '';
+      return ctx.$attributes.getFileSrc({
+        scope,
+        scopeId,
+        attributeId,
+        filename
+      });
     }
   };
 };

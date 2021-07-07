@@ -32,7 +32,7 @@
             :disabled="disabled || untouched || invalid"
             :loading="loading"
           >
-            {{ submitLabel }}
+            {{ submitLabelText }}
           </v-btn>
         </div>
       </vex-stack>
@@ -69,9 +69,7 @@
       submitLabel: {
         type: String,
         default() {
-          return this.mode === TEAM_FORM_MODES.CREATE
-            ? this.$t('module.teams.form.create')
-            : this.$t('module.teams.form.update');
+          return null;
         }
       }
     },
@@ -99,6 +97,16 @@
             }
           )
         };
+      },
+
+      submitLabelText() {
+        if (this.submitLabel) {
+          return this.submitLabel;
+        }
+
+        return this.mode === TEAM_FORM_MODES.CREATE
+          ? this.$t('module.teams.form.create')
+          : this.$t('module.teams.form.update');
       }
     },
 
