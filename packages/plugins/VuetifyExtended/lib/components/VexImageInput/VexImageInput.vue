@@ -39,7 +39,6 @@
           @draw="onDrawDebounce"
           @file-choose="onFileChoose"
           @initial-image-loaded="onInitialImageLoadedDebounce"
-          @image-remove="onImageRemove"
         />
       </v-responsive>
 
@@ -81,7 +80,7 @@
             <v-icon>mdi-sync</v-icon>
           </v-btn>
 
-          <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.remove()">
+          <v-btn icon :disabled="!croppa.hasImage()" @click="removeImage">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-sheet>
@@ -172,7 +171,7 @@
         onDrawDebounce: null,
         onInitialImageLoadedDebounce: null,
 
-        chosedFile: null,
+        chosenFile: null,
         checkedInitialImage: ''
       };
     },
@@ -221,17 +220,18 @@
       },
 
       onFileChoose(file) {
-        this.chosedFile = file;
+        this.chosenFile = file;
       },
 
-      onImageRemove() {
-        this.chosedFile = null;
+      removeImage() {
+        this.croppa.remove();
+        this.chosenFile = null;
         this.internalValue = null;
       },
 
       onInitialImageLoaded() {
-        if (!this.chosedFile) {
-          this.chosedFile = {
+        if (!this.chosenFile) {
+          this.chosenFile = {
             name: this.initialImageName || imageNameFromUrl(this.initialImage)
           };
         }
@@ -240,7 +240,11 @@
       onDraw() {
         this.getBlob()
           .then((blob) => {
-            this.internalValue = new File([blob], this.chosedFile.name);
+            if (!blob) {
+              return;
+            }
+
+            this.internalValue = new File([blob], this.chosenFile.name);
           });
       },
 
@@ -253,8 +257,8 @@
           return mimeType;
         }
 
-        if (!mimeType && this.chosedFile.name) {
-          return mime.getType(this.chosedFile.name);
+        if (!mimeType && this.chosenFile?.name) {
+          return mime.getType(this.chosenFile.name);
         }
 
         return 'image/png';
