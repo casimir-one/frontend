@@ -98,6 +98,8 @@
   // eslint-disable-next-line import/extensions,import/no-unresolved
   import { debounce } from 'vuetify/lib/util/helpers';
 
+  import { isNil } from '@deip/toolbox/lodash';
+
   // import VexTooltip from '../VexTooltip/VexTooltip';
   import VexCroppa from '../VexCroppa/VexCroppa';
 
@@ -166,7 +168,7 @@
 
         sliderVal: 0,
         sliderMin: 0,
-        sliderMax: 0,
+        sliderMax: 1,
 
         onDrawDebounce: null,
         onInitialImageLoadedDebounce: null,
@@ -214,9 +216,10 @@
       },
 
       onNewImage() {
-        this.sliderVal = this.croppa.scaleRatio;
-        this.sliderMin = this.croppa.scaleRatio;
-        this.sliderMax = this.croppa.scaleRatio * 4;
+        const scaleRatio = isNil(this.croppa.scaleRatio) ? 0 : this.croppa.scaleRatio;
+        this.sliderVal = scaleRatio;
+        this.sliderMin = scaleRatio;
+        this.sliderMax = scaleRatio > 0 ? scaleRatio * 4 : 4;
       },
 
       onFileChoose(file) {
