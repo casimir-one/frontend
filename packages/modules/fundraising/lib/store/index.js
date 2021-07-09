@@ -92,8 +92,13 @@ const ACTIONS = {
     );
   },
 
-  getContributionsHistory(_, username) {
-    return investmentsService.getAccountContributionsHistory(username);
+  getContributionsHistory({ commit }, username) {
+    return investmentsService.getAccountContributionsHistory(username)
+      .then((res) => {
+        const tokenSales = res.map((item) => item.tokenSale);
+        commit('setList', tokenSales);
+        return res;
+      });
   }
 };
 
