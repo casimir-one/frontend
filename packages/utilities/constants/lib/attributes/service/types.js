@@ -1,35 +1,4 @@
-import { createEnum } from '@deip/toolbox';
-
-const ATTR_TYPES = createEnum({
-  TEXT: 1,
-  TEXTAREA: 2,
-  SELECT: 3,
-  SWITCH: 4,
-  CHECKBOX: 5,
-  DATE: 6,
-  DATE_TIME: 7,
-  FILE: 8,
-  IMAGE: 9,
-  URL: 10,
-  NUMBER: 11,
-  VIDEO_URL: 12,
-  USER: 13,
-  AVATAR: 14,
-  LOCATION: 15,
-
-  STEPPER: 501,
-  DISCIPLINE: 502,
-  RESEARCH_GROUP: 503,
-  EXPRESS_LICENSING: 504,
-  NETWORK_CONTENT_ACCESS: 505,
-  ROADMAP: 506,
-  PARTNERS: 507,
-  EDUCATION: 508,
-  EMPLOYMENT: 509,
-
-  CUSTOM: 1001,
-  FEATURE: 1002
-});
+import { ATTR_TYPES } from '../../../enum';
 
 const ATTR_TYPES_LABELS = {
   [ATTR_TYPES.TEXT]: 'Text field',
