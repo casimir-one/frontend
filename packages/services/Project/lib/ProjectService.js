@@ -17,7 +17,7 @@ import {
 } from '@deip/command-models';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
-import { PROJECT_APPLICATION_STATUS } from './constants';
+import { PROJECT_APPLICATION_STATUS } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
 
 
@@ -31,7 +31,7 @@ class ProjectService extends Singleton {
   proxydi = proxydi;
   deipRpc = deipRpc; // deprecated
 
-  
+
   getProject(projectId) {
     return this.projectHttp.getProject(projectId);
   }
@@ -63,7 +63,7 @@ class ProjectService extends Singleton {
         isProposalApproved: true,
         proposalLifetime: proposalDefaultLifetime
       }, proposalInfo);
-      
+
     const env = this.proxydi.get('env');
     const { TENANT, IS_TESTNET } = env;
 
@@ -355,7 +355,7 @@ class ProjectService extends Singleton {
     const researchTitle = formData.get("researchTitle");
     const researchAbstract = formData.get("researchAbstract");
     const researchDisciplines = JSON.parse(formData.get("researchDisciplines"));
-    
+
     const researchIsPrivate = formData.get("researchIsPrivate") === 'true';
 
     const offchainMeta = {
@@ -490,7 +490,7 @@ class ProjectService extends Singleton {
 
         return this.blockchainService.signOperations([main_proposal_op, update_main_proposal_op], privKey, refBlock)
           .then((signedTx) => {
-            formData.append('tx', JSON.stringify(signedTx));            
+            formData.append('tx', JSON.stringify(signedTx));
             return this.projectHttp.createProjectApplication({ proposalId: main_proposal_external_id, formData })
           });
       });
@@ -557,7 +557,7 @@ class ProjectService extends Singleton {
         return this.projectHttp.deleteProjectApplication({ tx: signedTx })
       });
   }
-  
+
   getPendingProjectApplications() {
     return this.projectHttp.getProjectApplications({ status: PROJECT_APPLICATION_STATUS.PENDING });
   }
