@@ -5,8 +5,8 @@ const PROTOCOL_CHAIN = createEnum({
   SUBSTRATE: 2
 });
 
-
-// TODO: Keep it sync with APP_CMD enum and replace it with APP_CMD enum completely once we have a separate package for constants
+// TODO:  Keep it sync with APP_CMD enum and replace it with APP_CMD enum completely
+//        once we have a separate package for constants
 const PROTOCOL_OPERATIONS_MAP = {
   CREATE_ACCOUNT: 1,
   UPDATE_ACCOUNT: 2,
@@ -25,8 +25,7 @@ const PROTOCOL_OPERATIONS_MAP = {
   CONTRIBUTE_PROJECT_TOKEN_SALE: 15
 };
 
-
 export {
   PROTOCOL_CHAIN,
   PROTOCOL_OPERATIONS_MAP
-}
+};

@@ -1,5 +1,5 @@
 import { Singleton } from '@deip/toolbox';
-import { PROTOCOL_CHAIN } from './constants';
+import { PROTOCOL_CHAIN } from '@deip/constants';
 import SubstrateChainService from './impl/substrate/SubstrateChainService';
 import GrapheneChainService from './impl/graphene/GrapheneChainService';
 

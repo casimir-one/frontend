@@ -1,11 +1,10 @@
 import BaseTx from './../../base/BaseTx';
-import { PROTOCOL_CHAIN } from './../../constants';
+import { PROTOCOL_CHAIN } from '@deip/constants';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a } from '@polkadot/util';
 import { assert } from '@deip/toolbox';
-
 
 class SubstrateTx extends BaseTx {
 
@@ -68,7 +67,7 @@ class SubstrateTx extends BaseTx {
   }
 
   getProtocolChain() {
-    return PROTOCOL_CHAIN.SUBSTRATE; 
+    return PROTOCOL_CHAIN.SUBSTRATE;
   };
 
   finalize({ chainNodeClient }) {
@@ -79,7 +78,7 @@ class SubstrateTx extends BaseTx {
             args: { "calls": super.getOps() },
             callIndex: chainNodeClient.tx.utility.batchAll.callIndex,
           }, chainNodeClient.tx.utility.batchAll.meta);
-          
+
           const tx = chainNodeClient.registry.createType('Extrinsic', batchCall);
           this.chainMetadata = chainMetadata.toHex();
           super.finalize(tx);
@@ -101,7 +100,7 @@ class SubstrateTx extends BaseTx {
 
   static Serialize(tx) {
     assert(!!tx, "Transaction is not specified");
-    const rawTx = tx.getRawTx(); 
+    const rawTx = tx.getRawTx();
     const chainMetadata = tx.getChainMetadata();
     return JSON.stringify({ tx: rawTx, chainMetadata });
   }
@@ -110,7 +109,7 @@ class SubstrateTx extends BaseTx {
     const finalized = JSON.parse(serialized);
     return new SubstrateTx(finalized);
   }
-  
+
 }
 
 

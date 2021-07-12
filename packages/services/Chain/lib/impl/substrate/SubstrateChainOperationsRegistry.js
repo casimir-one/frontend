@@ -1,8 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a } from '@polkadot/util';
-import { PROTOCOL_OPERATIONS_MAP } from './../../constants';
-
+import { PROTOCOL_OPERATIONS_MAP } from '@deip/constants';
 
 const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 

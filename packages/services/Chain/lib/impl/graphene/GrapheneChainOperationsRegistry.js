@@ -1,5 +1,5 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { PROTOCOL_OPERATIONS_MAP } from './../../constants';
+import { PROTOCOL_OPERATIONS_MAP } from '@deip/constants';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
@@ -45,7 +45,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
           activeAuths.key_auths.push([auth.key, auth.weight]);
         }
       }
-      
+
       const createAccountOp = ['create_account', {
         fee: fee,
         creator: creator,
@@ -247,7 +247,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return updateProposalOp;
     },
 
-    
+
     [PROTOCOL_OPERATIONS_MAP.DECLINE_PROPOSAL]: ({
       entityId,
       account,
@@ -291,7 +291,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return createProjectTokenSaleOp;
     },
 
-    
+
     [PROTOCOL_OPERATIONS_MAP.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
       tokenSaleId,
       contributor,
