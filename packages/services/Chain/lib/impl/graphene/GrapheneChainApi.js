@@ -11,7 +11,12 @@ class GrapheneChainApi extends BaseChainApi {
       
       getProjectAsync: (projectId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research", [projectId]]);
+      },
+
+      getProjectsAsync: () => {
+        return chainService.rpcToChainNode("call", ["database_api", "lookup_researches", [0, 10000]]);
       }
+
     };
 
     return super(api);
