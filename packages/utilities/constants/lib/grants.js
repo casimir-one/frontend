@@ -10,7 +10,7 @@ const AWARD_RECIPIENT_STATUS = createEnum({
   UNCONFIRMED: 1,
   CONFIRMED: 2,
   CANCELED: 3
-})
+});
 
 const AWARD_WITHDRAWAL_REQUEST_STATUS = createEnum({
   PENDING: 1,
