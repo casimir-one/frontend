@@ -1,4 +1,5 @@
-import { AttributesService, ATTR_SCOPES } from '@deip/attributes-service';
+import { AttributesService } from '@deip/attributes-service';
+import { ATTR_SCOPES } from '@deip/constants';
 
 import {
   listGetter,

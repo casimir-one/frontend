@@ -181,10 +181,8 @@
     SchemaBuilderBlockSettings
   } from '@deip/schema-builder';
 
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/attributes-service';
+  import { ATTR_SCOPES, ATTR_SCOPES_LABELS, FORM_MODES } from '@deip/constants';
   import { AttributeSet, AttributeRead } from '@deip/attributes-module';
-
-  import { FORM_MODES } from '@deip/constants';
 
   import {
     layoutBlocks,

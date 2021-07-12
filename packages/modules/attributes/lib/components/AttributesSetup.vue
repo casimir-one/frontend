@@ -120,7 +120,7 @@
   import { formMixin } from '@deip/platform-fns';
   import { VexStack } from '@deip/vuetify-extended';
   import draggable from 'vuedraggable';
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/attributes-service';
+  import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/constants';
 
   const defaultKeys = [
     'userAvatar',
