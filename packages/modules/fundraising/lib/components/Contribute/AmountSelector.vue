@@ -48,8 +48,7 @@
 
 <script>
   import { VexGrid, VexStack } from '@deip/vuetify-extended';
-
-  const NUMBER_OF_STEPS = 6;
+  import { NUMBER_OF_STEPS } from '@deip/constants';
 
   export default {
     name: 'AmountSelector',
