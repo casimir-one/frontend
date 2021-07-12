@@ -1,6 +1,6 @@
 import ProtocolCmd from './../base/ProtocolCmd';
 import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
-import { APP_CMD, APP_PROPOSAL } from './../constants';
+import { APP_CMD, APP_PROPOSAL } from '@deip/constants';
 import { assert, isString } from '@deip/toolbox';
 
 

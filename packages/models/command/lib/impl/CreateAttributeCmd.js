@@ -1,5 +1,5 @@
 import AppCmd from './../base/AppCmd';
-import { APP_CMD } from './../constants';
+import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 class CreateAttributeCmd extends AppCmd {
@@ -14,7 +14,7 @@ class CreateAttributeCmd extends AppCmd {
 
     super(APP_CMD.CREATE_ATTRIBUTE, cmdPayload);
   }
-  
+
 }
 
 export default CreateAttributeCmd;

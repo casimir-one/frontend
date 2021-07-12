@@ -1,5 +1,5 @@
 import { assert } from '@deip/toolbox';
-import { APP_CMD } from './../constants';
+import { APP_CMD } from '@deip/constants';
 
 class BaseCmd {
 
@@ -13,7 +13,7 @@ class BaseCmd {
   getCmdName() { return APP_CMD[this._cmdNum]; }
 
   getCmdPayload() { return this._cmdPayload; }
-  
+
   isProtocolOpCmd() { return BaseCmd.IsProtocolOpCmd() };
   static IsProtocolOpCmd() { return false };
 

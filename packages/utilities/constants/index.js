@@ -11,3 +11,4 @@ export * from './lib/access';
 export * from './lib/chain';
 export * from './lib/expertise-contributions';
 export * from './lib/grants';
+export * from './lib/commands';

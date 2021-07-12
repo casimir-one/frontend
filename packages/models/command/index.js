@@ -1,3 +1,6 @@
 export * from './lib/commands';
-export * from './lib/constants';
+export {
+  APP_CMD,
+  APP_PROPOSAL
+} from '@deip/constants';
 export * from './lib/serialization';

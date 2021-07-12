@@ -1,6 +1,5 @@
 import { createEnum } from '@deip/toolbox';
 
-
 const APP_CMD = createEnum({
   CREATE_ACCOUNT: 1,
   UPDATE_ACCOUNT: 2,
@@ -19,7 +18,6 @@ const APP_CMD = createEnum({
   CONTRIBUTE_PROJECT_TOKEN_SALE: 15
 });
 
-
 const APP_PROPOSAL = createEnum({
   PROJECT_PROPOSAL: 1,
   PROJECT_UPDATE_PROPOSAL: 2,
@@ -35,8 +33,7 @@ const APP_PROPOSAL = createEnum({
   PROJECT_TOKEN_SALE_PROPOSAL: 12
 });
 
-
 export {
   APP_CMD,
   APP_PROPOSAL
-}
+};
