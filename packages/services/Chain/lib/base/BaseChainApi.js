@@ -5,6 +5,7 @@ import { Interface } from '@deip/toolbox';
 const ChainApi = Interface('ChainApi', {
   sendTxAsync: async function (tx) { },
   getProjectAsync: async function (projectId) { },
+  getProjectsAsync: async function () { },
 });
 
 

@@ -59,6 +59,13 @@ class SubstrateChainService extends BaseChainService {
     return ALICE;
   }
 
+  getTestAccount2() {
+    const keyring = new Keyring({ type: 'sr25519' });
+    const BOB = keyring.createFromJson({ "encoded": "MFMCAQEwBQYDK2VwBCIEIAgf9pRjPiVRNr20VsIKX8j+0h+LlkwRuxf/U0zoDr1ZQa6I+F0MG/w3vkHJBOHfwB3oyAZ7DW1d8l3RrAiUoyWhIwMhAI6vBBUWh3NjJsn+oX4l/FKHYTaTyRKQnLImqkeU8mpI", "encoding": { "content": ["pkcs8", "sr25519"], "type": ["none"], "version": "3" }, "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", "meta": { "isTesting": true, "name": "bob" } });
+    BOB.unlock();
+    return BOB;
+  }
+
 }
 
 export default SubstrateChainService;

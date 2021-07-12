@@ -1,4 +1,14 @@
 const CHAIN_TYPES = {
+  "OrgProposalBatchItem": {
+    "account": "OrgProposalAccount",
+    "call": "Call"
+  },
+  "OrgProposalAccount": {
+    "_enum": {
+      "Native": "AccountId",
+      "Org": "OrgName"
+    }
+  },
   "InputKeySource": "KeySource",
   "KeySource": {
     "signatories": "Vec<AccountId>",
@@ -6,9 +16,10 @@ const CHAIN_TYPES = {
   },
   "OrgOf": "Org",
   "Org": {
-    "key": "AccountId",
-    "key_source": "KeySource",
-    "name": "OrgName"
+    "members_key": "AccountId",
+    "members_key_source": "KeySource",
+    "name": "OrgName",
+    "org_key": "AccountId"
   },
   "OrgName": "H160",
   "DomainId": "H160",
@@ -23,7 +34,8 @@ const CHAIN_TYPES = {
     "account": "AccountId",
     "call": "Call"
   },
-  "ProposalId": "[u8; 32]",
+  "ProposalBatch": "Vec<ProposalBatchItemOf>",
+  "ProposalId": "H160",
   "PendingProposalsMap": "BTreeMap<ProposalId,AccountId>",
   "DeipProposal": {
     "id": "ProposalId",
@@ -86,7 +98,7 @@ const CHAIN_TYPES = {
   "Project": {
     "is_private": "bool",
     "external_id": "ProjectId",
-    "team_id": "AccountId",
+    "team": "AccountId",
     "description": "Hash",
     "domains": "Vec<Domain>",
     "members": "Vec<AccountId>"
