@@ -47,7 +47,7 @@
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
   import { attributedFormFactory, attributeMethodsFactory } from '@deip/platform-fns';
-  import { TEAM_FORM_MODES } from '../constants';
+  import { TEAM_FORM_MODES } from '@deip/constants';
 
   export default {
     name: 'TeamForm',
