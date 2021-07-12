@@ -5,3 +5,4 @@ export * from './lib/assets';
 export * from './lib/auth';
 export * from './lib/investments';
 export * from './lib/fundraising';
+export * from './lib/projects';
