@@ -9,3 +9,4 @@ export * from './lib/projects';
 export * from './lib/teams';
 export * from './lib/access';
 export * from './lib/chain';
+export * from './lib/expertise-contributions';

@@ -1,2 +1,5 @@
 export * from './lib/ExpertiseContributionsService';
-export * from './lib/constants';
+export {
+  EXPERTISE_CONTRIBUTION_TYPE,
+  ECI_STAT_PERIOD_STEP_TYPE
+} from '@deip/constants';
