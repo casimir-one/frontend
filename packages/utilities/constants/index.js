@@ -13,3 +13,4 @@ export * from './lib/expertise-contributions';
 export * from './lib/grants';
 export * from './lib/commands';
 export * from './lib/project';
+export * from './lib/research-content';

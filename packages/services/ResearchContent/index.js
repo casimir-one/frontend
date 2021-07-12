@@ -1,3 +1,3 @@
 export * from './lib/ResearchContentService';
-export * from './lib/constants';
+export { RESEARCH_CONTENT_TYPES } from '@deip/constants';
 export * from './lib/lists';

@@ -1,4 +1,4 @@
-import { RESEARCH_CONTENT_TYPES } from './constants';
+import { RESEARCH_CONTENT_TYPES } from '@deip/constants';
 
 let contentTypesMap = {
   [RESEARCH_CONTENT_TYPES.ANNOUNCEMENT]: { text: 'Announcement', order: 1 },
@@ -24,12 +24,13 @@ let contentTypesMap = {
 };
 
 contentTypesMap = Object.keys(contentTypesMap).reduce((obj, key) => {
-  obj[key] = {
+  const o = obj;
+  o[key] = {
     id: key,
     type: RESEARCH_CONTENT_TYPES[key].toLowerCase(),
     ...contentTypesMap[key]
   };
-  return obj;
+  return o;
 }, {});
 
 const researchContentTypes = [...Object.values(contentTypesMap)].sort((a, b) => a.order - b.order);
