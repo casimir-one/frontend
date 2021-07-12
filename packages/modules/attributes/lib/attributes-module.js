@@ -2,7 +2,7 @@ import { proxydi } from '@deip/proxydi';
 import { getAttributeFileSrc } from '@deip/platform-fns';
 import {
   ATTR_SCOPES, ATTR_SCOPES_LABELS, ATTR_TYPES, ATTR_TYPES_LABELS
-} from '@deip/attributes-service';
+} from '@deip/constants';
 import { attributesStore } from './store';
 
 // eslint-disable-next-line no-unused-vars

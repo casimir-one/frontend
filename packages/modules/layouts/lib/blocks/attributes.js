@@ -1,6 +1,6 @@
 import { merge } from '@deip/toolbox/lodash';
 import { blocksGenerator } from '@deip/schema-builder';
-import { ATTR_TYPES_ICONS } from '@deip/attributes-service';
+import { ATTR_TYPES_ICONS } from '@deip/constants';
 
 export const attributesBlocksFactory = (attributes, componentObject) => ({
   title: 'Attributes',

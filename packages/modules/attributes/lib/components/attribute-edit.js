@@ -31,7 +31,7 @@ import { wrapInArray } from '@deip/toolbox';
 import {
   ATTR_TYPES, ATTR_TYPES_LABELS,
   ATTR_SCOPES, ATTR_SCOPES_LABELS
-} from '@deip/attributes-service';
+} from '@deip/constants';
 
 const createSelectItems = (labels) => Object.keys(labels).map((key) => ({
   value: parseInt(key, 10),
