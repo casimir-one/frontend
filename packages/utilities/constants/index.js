@@ -7,3 +7,4 @@ export * from './lib/investments';
 export * from './lib/fundraising';
 export * from './lib/projects';
 export * from './lib/teams';
+export * from './lib/access';

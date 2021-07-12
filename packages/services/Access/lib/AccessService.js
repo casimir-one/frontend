@@ -1,10 +1,11 @@
 import decode from 'jwt-decode';
 import { Singleton } from '@deip/toolbox';
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY } from '@deip/constants';
 
 class AccessService extends Singleton {
+  ACCESS_TOKEN_KEY = ACCESS_TOKEN_KEY;
 
-  ACCESS_TOKEN_KEY = 'deip_jwt';
-  OWNER_PRIVATE_KEY = 'deip_owner_wif';
+  OWNER_PRIVATE_KEY = OWNER_PRIVATE_KEY;
 
   decode = decode;
 
@@ -23,7 +24,7 @@ class AccessService extends Singleton {
     return expirationDate < new Date();
   }
 
-  //////////////
+  /// ///////////
 
   getAccessToken() {
     return localStorage.getItem(this.ACCESS_TOKEN_KEY);
@@ -55,14 +56,12 @@ class AccessService extends Singleton {
   getDecodedToken() {
     const jwt = this.getAccessToken();
     if (!jwt) return null;
-    return this.decode(jwt)
+    return this.decode(jwt);
   }
 
-  decodedToken = (jwt) => {
-    return this.decode(jwt)
-  }
+  decodedToken = (jwt) => this.decode(jwt)
 }
 
 export {
   AccessService
-}
+};
