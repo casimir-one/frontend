@@ -9,9 +9,9 @@ import {
   CreateProjectTokenSaleCmd,
   ContributeProjectToTokenSaleCmd
 } from '@deip/command-models';
+import { TS_TYPES } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
-import { TS_TYPES } from './constants';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 

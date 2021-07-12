@@ -1,2 +1,2 @@
 export * from './lib/InvestmentsService';
-export * from './lib/constants';
+export { TS_TYPES } from '@deip/constants';
