@@ -2,14 +2,14 @@ import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
+import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
 import {
-  APP_PROPOSAL,
   UpdateProposalCmd,
   CreateProposalCmd,
   CreateProjectTokenSaleCmd,
   ContributeProjectToTokenSaleCmd
 } from '@deip/command-models';
-import { TS_TYPES } from '@deip/constants';
+
 import { ChainService } from '@deip/chain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 

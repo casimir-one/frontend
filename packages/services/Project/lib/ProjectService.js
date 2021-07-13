@@ -4,8 +4,8 @@ import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import deipRpc from '@deip/rpc-client';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
+import { APP_PROPOSAL } from '@deip/constants'
 import {
-  APP_PROPOSAL,
   CreateProjectCmd,
   UpdateProjectCmd,
   DeleteProjectCmd,

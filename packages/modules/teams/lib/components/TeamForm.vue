@@ -47,7 +47,7 @@
   import { SchemaRenderer } from '@deip/schema-renderer';
   import { AttributeSet } from '@deip/attributes-module';
   import { attributedFormFactory, attributeMethodsFactory } from '@deip/platform-fns';
-  import { TEAM_FORM_MODES } from '@deip/constants';
+  import { FORM_MODES } from '@deip/constants';
 
   export default {
     name: 'TeamForm',
@@ -104,7 +104,7 @@
           return this.submitLabel;
         }
 
-        return this.mode === TEAM_FORM_MODES.CREATE
+        return this.mode === FORM_MODES.CREATE
           ? this.$t('module.teams.form.create')
           : this.$t('module.teams.form.update');
       }
@@ -112,9 +112,9 @@
 
     methods: {
       onSubmit() {
-        if (this.mode === TEAM_FORM_MODES.CREATE) {
+        if (this.mode === FORM_MODES.CREATE) {
           this.createTeam();
-        } else if (this.mode === TEAM_FORM_MODES.EDIT) {
+        } else if (this.mode === FORM_MODES.EDIT) {
           this.updateTeam();
         }
       },

@@ -1,12 +1,9 @@
 import decode from 'jwt-decode';
 import { Singleton } from '@deip/toolbox';
+// eslint-disable-next-line no-unused-vars
 import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY } from '@deip/constants';
 
 class AccessService extends Singleton {
-  ACCESS_TOKEN_KEY = ACCESS_TOKEN_KEY;
-
-  OWNER_PRIVATE_KEY = OWNER_PRIVATE_KEY;
-
   decode = decode;
 
   getTokenExpirationDate(jwt) {

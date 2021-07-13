@@ -7,8 +7,8 @@ import {
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg } from '@deip/message-models';
+import { APP_PROPOSAL } from '@deip/constants';
 import {
-  APP_PROPOSAL,
   CreateProposalCmd,
   CreateAccountCmd,
   UpdateProposalCmd,

@@ -5,11 +5,6 @@ import SubstrateTx from './lib/impl/substrate/SubstrateTx';
 import SubstrateTxBuilder from './lib/impl/substrate/SubstrateTxBuilder';
 
 export {
-  PROTOCOL_CHAIN,
-  PROTOCOL_OPERATIONS_MAP
-} from '@deip/constants';
-
-export {
   ChainService,
 
   GrapheneTx,
