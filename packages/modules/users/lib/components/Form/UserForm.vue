@@ -4,6 +4,7 @@
       <vex-stack gutter="32">
         <schema-renderer
           v-if="schema.length"
+          :key="forceUpdateKey"
           v-model="formData"
           :schema="schema"
           :schema-data="schemaData"
@@ -77,7 +78,6 @@
     },
 
     methods: {
-
       updateUser() {
         this.disabled = true;
         this.loading = true;
@@ -101,7 +101,7 @@
       },
 
       handleClick() {
-        this.restoreOldValue();
+        this.restoreOldValue(true);
       }
     }
   };

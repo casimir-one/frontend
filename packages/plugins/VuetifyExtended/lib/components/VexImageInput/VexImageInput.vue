@@ -39,7 +39,6 @@
           @draw="onDrawDebounce"
           @file-choose="onFileChoose"
           @initial-image-loaded="onInitialImageLoadedDebounce"
-          @image-remove="onImageRemove"
         />
       </v-responsive>
 
@@ -81,7 +80,7 @@
             <v-icon>mdi-sync</v-icon>
           </v-btn>
 
-          <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.remove()">
+          <v-btn icon :disabled="!croppa.hasImage()" @click="removeImage">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-sheet>
@@ -98,6 +97,8 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   // eslint-disable-next-line import/extensions,import/no-unresolved
   import { debounce } from 'vuetify/lib/util/helpers';
+
+  import { isNil } from '@deip/toolbox/lodash';
 
   // import VexTooltip from '../VexTooltip/VexTooltip';
   import VexCroppa from '../VexCroppa/VexCroppa';
@@ -167,12 +168,12 @@
 
         sliderVal: 0,
         sliderMin: 0,
-        sliderMax: 0,
+        sliderMax: 1,
 
         onDrawDebounce: null,
         onInitialImageLoadedDebounce: null,
 
-        chosedFile: null,
+        chosenFile: null,
         checkedInitialImage: ''
       };
     },
@@ -215,23 +216,25 @@
       },
 
       onNewImage() {
-        this.sliderVal = this.croppa.scaleRatio;
-        this.sliderMin = this.croppa.scaleRatio;
-        this.sliderMax = this.croppa.scaleRatio * 4;
+        const scaleRatio = isNil(this.croppa.scaleRatio) ? 0 : this.croppa.scaleRatio;
+        this.sliderVal = scaleRatio;
+        this.sliderMin = scaleRatio;
+        this.sliderMax = scaleRatio > 0 ? scaleRatio * 4 : 4;
       },
 
       onFileChoose(file) {
-        this.chosedFile = file;
+        this.chosenFile = file;
       },
 
-      onImageRemove() {
-        this.chosedFile = null;
+      removeImage() {
+        this.croppa.remove();
+        this.chosenFile = null;
         this.internalValue = null;
       },
 
       onInitialImageLoaded() {
-        if (!this.chosedFile) {
-          this.chosedFile = {
+        if (!this.chosenFile) {
+          this.chosenFile = {
             name: this.initialImageName || imageNameFromUrl(this.initialImage)
           };
         }
@@ -240,7 +243,11 @@
       onDraw() {
         this.getBlob()
           .then((blob) => {
-            this.internalValue = new File([blob], this.chosedFile.name);
+            if (!blob) {
+              return;
+            }
+
+            this.internalValue = new File([blob], this.chosenFile.name);
           });
       },
 
@@ -253,8 +260,8 @@
           return mimeType;
         }
 
-        if (!mimeType && this.chosedFile.name) {
-          return mime.getType(this.chosedFile.name);
+        if (!mimeType && this.chosenFile?.name) {
+          return mime.getType(this.chosenFile.name);
         }
 
         return 'image/png';

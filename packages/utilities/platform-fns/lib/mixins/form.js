@@ -34,7 +34,8 @@ const formFactory = (
       disabled: false,
       loading: false,
 
-      oldValue: null
+      oldValue: null,
+      forceUpdateKey: Date.now()
     };
   },
 
@@ -63,21 +64,19 @@ const formFactory = (
     [prop]: {
       handler(val) {
         if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = val;
+        if (val && !isEqual(val, this.oldValue)) this.oldValue = cloneDeep(this[prop]);
       },
       immediate: true,
       deep: true
     }
   },
 
-  created() {
-    if (this[prop]) {
-      this.oldValue = cloneDeep(this[prop]);
-    }
-  },
-
   methods: {
-    restoreOldValue() {
+    restoreOldValue(forceUpdate = false) {
       this.lazyFormData = this.oldValue;
+      if (forceUpdate) {
+        this.forceUpdateKey = Date.now();
+      }
     }
   }
 });
