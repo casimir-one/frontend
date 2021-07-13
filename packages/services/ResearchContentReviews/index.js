@@ -1,2 +1,2 @@
 export * from './lib/ResearchContentReviewsService';
-export * from './lib/constants';
+export { ASSESSMENT_CRITERIA_TYPE } from '@deip/constants';
