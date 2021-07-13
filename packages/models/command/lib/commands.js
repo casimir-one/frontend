@@ -13,6 +13,7 @@ import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
 import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
 import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
+import AssetTransferCmd from './impl/AssetTransferCmd';
 
 export {
   CreateAccountCmd,
@@ -29,5 +30,6 @@ export {
   DeleteAttributeCmd,
   LeaveProjectTeamCmd,
   CreateProjectTokenSaleCmd,
-  ContributeProjectToTokenSaleCmd
+  ContributeProjectToTokenSaleCmd,
+  AssetTransferCmd
 }

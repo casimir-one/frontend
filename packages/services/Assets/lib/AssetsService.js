@@ -1,59 +1,86 @@
-import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
-import { AccessService } from '@deip/access-service';
-import { AssetsHttp } from './AssetsHttp';
 import { BlockchainService } from '@deip/blockchain-service';
-import { ProposalsService } from '@deip/proposals-service';
+import { proxydi } from '@deip/proxydi';
+import { JsonDataMsg } from '@deip/message-models';
+import {
+  APP_PROPOSAL,
+  UpdateProposalCmd,
+  CreateProposalCmd,
+  AssetTransferCmd
+} from '@deip/command-models';
+import { ChainService } from '@deip/chain-service';
+import { AssetsHttp } from './AssetsHttp';
 
-const proposalExpiration = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
 class AssetsService extends Singleton {
-  accessService = AccessService.getInstance();
-  assetsHttp = AssetsHttp.getInstance();
-  blockchainService = BlockchainService.getInstance();
-  proposalsService = ProposalsService.getInstance();
+  proxydi = proxydi;
 
-  transferAssets({ privKey, username }, isProposal, {
+  assetsHttp = AssetsHttp.getInstance();
+
+  blockchainService = BlockchainService.getInstance();
+
+  transferAssets({ privKey, username }, {
     from,
     to,
     amount,
-    memo,
-    extensions
-  }) {
+    memo
+  }, proposalInfo) {
+    const { isProposal, isProposalApproved, proposalLifetime } = {
+      isProposal: false,
+      isProposalApproved: true,
+      proposalLifetime: proposalDefaultLifetime,
+      ...proposalInfo
+    };
 
-    const transfer_op = ['transfer', {
-      from: from,
-      to: to,
-      amount: amount,
-      memo: memo || "",
-      extensions: extensions || []
-    }];
+    const env = this.proxydi.get('env');
 
-    if (isProposal) {
-      const proposal = {
-        creator: username,
-        proposedOps: [{ "op": transfer_op }],
-        expirationTime: proposalExpiration,
-        reviewPeriodSeconds: undefined,
-        extensions: []
-      }
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const assetTransferCmd = new AssetTransferCmd({
+              from,
+              to,
+              amount,
+              memo: memo || ''
+            });
 
-      return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-        .then(({ tx: signedProposalTx }) => {
-          return this.assetsHttp.createAssetsTransferProposal({ tx: signedProposalTx })
-        });
+            if (isProposal) {
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.ASSET_TRANSFER_PROPOSAL,
+                creator: username,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: [assetTransferCmd]
+              });
 
-    } else {
+              txBuilder.addCmd(createProposalCmd);
 
-      return this.blockchainService.signOperations([transfer_op], privKey)
-        .then((signedTx) => {
-          return this.assetsHttp.transferAssets({ tx: signedTx })
-        });
-    }
+              if (isProposalApproved) {
+                const updateProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new UpdateProposalCmd({
+                  entityId: updateProposalId,
+                  activeApprovalsToAdd: [username]
+                });
 
+                txBuilder.addCmd(updateProposalCmd);
+              }
+            } else {
+              txBuilder.addCmd(assetTransferCmd);
+            }
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.transferAssets(msg);
+          });
+      });
   }
 
-  createSecurityTokenAsset({ privKey, username }, {
+  createSecurityTokenAsset({ privKey }, {
     researchExternalId,
     researchGroup,
     symbol,
@@ -62,14 +89,13 @@ class AssetsService extends Singleton {
     maxSupply,
     holders
   }) {
-
     const ops = [];
 
-    const create_security_token_op = ['create_asset', {
+    const createSecurityTokenOp = ['create_asset', {
       issuer: researchGroup,
-      symbol: symbol,
-      precision: precision,
-      description: description,
+      symbol,
+      precision,
+      description,
       max_supply: maxSupply,
       traits: [
         ['research_security_token', {
@@ -79,37 +105,35 @@ class AssetsService extends Singleton {
         }],
 
         ['research_license_revenue', {
-          holders_share: `100.00 %`,
+          holders_share: '100.00 %',
           extensions: []
         }]
       ],
       extensions: []
     }];
 
-    ops.push(create_security_token_op);
+    ops.push(createSecurityTokenOp);
 
     for (let i = 0; i < holders.length; i++) {
       const { account, amount } = holders[i];
 
-      const issue_security_token_op = ['issue_asset', {
+      const issueSecurityTokenOp = ['issue_asset', {
         issuer: researchGroup,
-        amount: amount,
+        amount,
         recipient: account,
         memo: undefined,
         extensions: []
       }];
 
-      ops.push(issue_security_token_op);
+      ops.push(issueSecurityTokenOp);
     }
 
     return this.blockchainService.signOperations(ops, privKey)
-      .then((signedTx) => {
-        return this.blockchainService.sendTransactionAsync(signedTx)
-      });
+      .then((signedTx) => this.blockchainService.sendTransactionAsync(signedTx));
   }
 
   getAssetById(assetId) {
-    return this.assetsHttp.getAssetById(assetId)
+    return this.assetsHttp.getAssetById(assetId);
   }
 
   getAssetBySymbol(symbol) {
@@ -123,7 +147,7 @@ class AssetsService extends Singleton {
   getAssetsByIssuer(issuer) {
     return this.assetsHttp.getAssetsByIssuer(issuer);
   }
-  
+
   lookupAssets(lowerBoundSymbol, limit) {
     return this.assetsHttp.lookupAssets(lowerBoundSymbol, limit);
   }
@@ -145,37 +169,62 @@ class AssetsService extends Singleton {
     party2,
     asset1,
     asset2,
-    memo,
-    extensions
-  }) {
-    
-    const party1_transfer_op = ['transfer', {
-      from: party1,
-      to: party2,
-      amount: asset1,
-      memo: memo || "",
-      extensions: extensions || []
-    }];
+    memo
+  }, proposalInfo) {
+    const { isProposalApproved, proposalLifetime } = {
+      isProposalApproved: true,
+      proposalLifetime: proposalDefaultLifetime,
+      ...proposalInfo
+    };
 
-    const party2_transfer_op = ['transfer', {
-      from: party2,
-      to: party1,
-      amount: asset2,
-      memo: memo || "",
-      extensions: extensions || []
-    }];
+    const env = this.proxydi.get('env');
 
-    const proposal = {
-      creator: username,
-      proposedOps: [{ "op": party1_transfer_op }, { "op": party2_transfer_op }],
-      expirationTime: proposalExpiration,
-      reviewPeriodSeconds: undefined,
-      extensions: []
-    }
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const txBuilder = chainService.getChainTxBuilder();
+        return txBuilder.begin()
+          .then(() => {
+            const assetTransferCmd1 = new AssetTransferCmd({
+              from: party1,
+              to: party2,
+              amount: asset1,
+              memo: memo || ''
+            });
 
-    return this.proposalsService.createProposal({ privKey, username }, false, proposal)
-      .then(({ tx: signedProposalTx }) => {
-        return this.assetsHttp.createAssetsExchangeProposal({ tx: signedProposalTx })
+            const assetTransferCmd2 = new AssetTransferCmd({
+              from: party2,
+              to: party1,
+              amount: asset2,
+              memo: memo || ''
+            });
+
+            const createProposalCmd = new CreateProposalCmd({
+              type: APP_PROPOSAL.ASSET_EXCHANGE_PROPOSAL,
+              creator: username,
+              expirationTime: proposalLifetime || proposalDefaultLifetime,
+              proposedCmds: [assetTransferCmd1, assetTransferCmd2]
+            });
+
+            txBuilder.addCmd(createProposalCmd);
+
+            const updateProposalId = createProposalCmd.getProtocolEntityId();
+
+            if (isProposalApproved) {
+              const updateProposalCmd = new UpdateProposalCmd({
+                entityId: updateProposalId,
+                activeApprovalsToAdd: [username]
+              });
+
+              txBuilder.addCmd(updateProposalCmd);
+            }
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.createAssetsExchangeProposal(msg);
+          });
       });
   }
 }

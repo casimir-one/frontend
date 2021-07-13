@@ -306,6 +306,24 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
 
       return contributeToTokenSaleOp;
+    },
+
+    [PROTOCOL_OPERATIONS_MAP.ASSET_TRANSFER]: ({
+      from,
+      to,
+      amount,
+      memo
+    }) => {
+    
+      const transferOp = ['transfer', {
+        from: from,
+        to: to,
+        amount: amount,
+        memo: memo || "",
+        extensions: []
+      }];
+    
+      return transferOp;
     }
 
   }
