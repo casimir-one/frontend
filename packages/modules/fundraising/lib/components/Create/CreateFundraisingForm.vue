@@ -164,7 +164,7 @@
   import { AssetInput, assetsMixin } from '@deip/assets-module';
   import { hasValue } from '@deip/toolbox';
   import { proxydi } from '@deip/proxydi';
-  import { MIN_TOKEN_UNITS_TO_SELL, DEFAULT_PRECISION, DEFAULT_AMOUNT } from '@deip/constants';
+  import { MIN_TOKEN_UNITS_TO_SELL, DEFAULT_AMOUNT } from '@deip/constants';
 
   extend('assetSmaller', {
     params: ['target'],
@@ -276,6 +276,7 @@
       },
 
       createSecurityToken() {
+        const DEFAULT_PRECISION = 0;
         const assetId = this.generateAssetSymbol();
 
         const holders = [{
