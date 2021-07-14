@@ -129,6 +129,7 @@ class ProjectService extends Singleton {
               description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
               domains: domains,
               isPrivate: isPrivate,
+              isDefault: false,
               members: undefined,
               attributes: attributes
             });

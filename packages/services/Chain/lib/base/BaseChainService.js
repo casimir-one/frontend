@@ -64,7 +64,13 @@ class BaseChainService extends Singleton {
           );
         }
         return result;
-      });
+      })
+      .catch(error => {
+        console.error(error);
+        throw new Error(
+          `${error.code} ${error.message}: ${JSON.stringify(error.data)}`
+        );
+      })
   }
 }
 
