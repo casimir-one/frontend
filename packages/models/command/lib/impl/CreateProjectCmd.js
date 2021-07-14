@@ -24,7 +24,7 @@ class CreateProjectCmd extends ProtocolEntityCmd {
 
     assert(!!teamId, "'teamId' is required");
     assert(!!description, "'description' is required");
-    assert(!!domains && domains.length, "'domains' list is required");
+    assert(!!domains, "'domains' list is required");
 
     super(APP_CMD.CREATE_PROJECT, cmdPayload);
   }

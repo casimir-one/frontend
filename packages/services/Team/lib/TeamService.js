@@ -8,11 +8,13 @@ import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants';
+import crypto from '@deip/lib-crypto';
 import {
   CreateProposalCmd,
   CreateAccountCmd,
   UpdateProposalCmd,
-  UpdateAccountCmd
+  UpdateAccountCmd,
+  CreateProjectCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
@@ -26,7 +28,7 @@ class TeamService extends Singleton {
 
   userService = UserService.getInstance();
 
-  createTeam(payload) {
+  createTeam(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
     const { TENANT, IS_TESTNET } = env;
     const {
@@ -70,6 +72,17 @@ class TeamService extends Singleton {
 
             txBuilder.addCmd(createAccountCmd);
             entityId = createAccountCmd.getProtocolEntityId();
+
+            if (isCreateDefaultProject) {
+              const createProjectCmd = new CreateProjectCmd({
+                teamId: entityId,
+                description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify([])).buffer)),
+                domains: [],
+                isDefault: true,
+                attributes: []
+              });
+              txBuilder.addCmd(createProjectCmd);
+            }
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
