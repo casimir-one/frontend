@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Features
+
+* **@deip/assets-service:** change to cmd ([dacd9c7](https://github.com/DEIPworld/deip-modules/commit/dacd9c7e60ff60a6831c16e7c78d769fea36c96b))
+* **@deip/assets-service:** deposit history ([03ecfa3](https://github.com/DEIPworld/deip-modules/commit/03ecfa38bc3d7e7732ef373e30ca1cd19531bba8))
+
+
+
+
+
 # [1.127.0](https://github.com/DEIPworld/deip-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 **Note:** Version bump only for package @deip/assets-service

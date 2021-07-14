@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Features
+
+* **@deip/assets-service:** change to cmd ([060b65d](https://github.com/DEIPworld/deip-modules/commit/060b65da210d1ece6011cc1dd8bcb7d5696a610d))
+* **@deip/chain-service:** substrate operations for projects and proposal ([4d450dd](https://github.com/DEIPworld/deip-modules/commit/4d450dd880b97e5b846fc5b51975ab8b2b197cd4))
+* **@deip/chain-service:** substrate proposal operation ([9af9927](https://github.com/DEIPworld/deip-modules/commit/9af99270a7073759a78897c671c90c20219569d9))
+* **@deip/team-service:** default project ([a340c45](https://github.com/DEIPworld/deip-modules/commit/a340c45431b66ebe6fc02240d32fabffd1e5fbe3))
+
+
+
+
+
 # [1.127.0](https://github.com/DEIPworld/deip-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 

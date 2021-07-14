@@ -1,6 +1,6 @@
 {
   "name": "@deip/access-service",
-  "version": "1.125.0",
+  "version": "1.128.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.125.0",
+    "@deip/constants": "1.128.0",
     "@deip/toolbox": "1.125.0",
     "jwt-decode": "^3.1.2"
   },
