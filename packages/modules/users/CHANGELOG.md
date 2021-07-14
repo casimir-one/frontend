@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** fix restore initial data on Cancel click in UserForm ([4ca9f82](https://gitlab.com/DEIP/deip-client-modules/commit/4ca9f82cdf3a15853e6439c4a9cce3181f7da02b))
+
+
+
+
+
 # [1.127.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 **Note:** Version bump only for package @deip/users-module

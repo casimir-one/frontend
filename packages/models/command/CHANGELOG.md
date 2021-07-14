@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Features
+
+* **@deip/assets-service:** change to cmd ([060b65d](https://gitlab.com/DEIP/deip-client-modules/commit/060b65da210d1ece6011cc1dd8bcb7d5696a610d))
+* **@deip/team-service:** default project ([a340c45](https://gitlab.com/DEIP/deip-client-modules/commit/a340c45431b66ebe6fc02240d32fabffd1e5fbe3))
+
+
+
+
+
 # [1.127.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 

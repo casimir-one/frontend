@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix image scale slider in VexImageInput ([8f6bc7e](https://gitlab.com/DEIP/deip-client-modules/commit/8f6bc7e3ff6f6db57bd93ebf292317c9e556baf2))
+* **@deip/vuetify-extended:** fix remove file in VexImageInput ([32014cb](https://gitlab.com/DEIP/deip-client-modules/commit/32014cbb27333f269e0a9df4d96f480bc98d11c3))
+
+
+
+
+
 # [1.126.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.125.0...v1.126.0) (2021-07-07)
 
 

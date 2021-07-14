@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Bug Fixes
+
+* **@deip/constants:** Chmod  assets.js and attributes.js to 644 ([01ec46d](https://github.com/DEIPworld/deip-modules/commit/01ec46deea2d1236e9d7a11bdfe10a80cb6cebc6))
+* **@deip/users-module:** fix restore initial data on Cancel click in UserForm ([4ca9f82](https://github.com/DEIPworld/deip-modules/commit/4ca9f82cdf3a15853e6439c4a9cce3181f7da02b))
+* **@deip/vuetify-extended:** fix image scale slider in VexImageInput ([8f6bc7e](https://github.com/DEIPworld/deip-modules/commit/8f6bc7e3ff6f6db57bd93ebf292317c9e556baf2))
+* **@deip/vuetify-extended:** fix remove file in VexImageInput ([32014cb](https://github.com/DEIPworld/deip-modules/commit/32014cbb27333f269e0a9df4d96f480bc98d11c3))
+
+
+### Features
+
+* **@deip/assets-service:** change to cmd ([060b65d](https://github.com/DEIPworld/deip-modules/commit/060b65da210d1ece6011cc1dd8bcb7d5696a610d))
+* **@deip/assets-service:** change to cmd ([dacd9c7](https://github.com/DEIPworld/deip-modules/commit/dacd9c7e60ff60a6831c16e7c78d769fea36c96b))
+* **@deip/assets-service:** deposit history ([03ecfa3](https://github.com/DEIPworld/deip-modules/commit/03ecfa38bc3d7e7732ef373e30ca1cd19531bba8))
+* **@deip/chain-service:** substrate operations for projects and proposal ([4d450dd](https://github.com/DEIPworld/deip-modules/commit/4d450dd880b97e5b846fc5b51975ab8b2b197cd4))
+* **@deip/chain-service:** substrate proposal operation ([9af9927](https://github.com/DEIPworld/deip-modules/commit/9af99270a7073759a78897c671c90c20219569d9))
+* **@deip/eslint-config:** add package ([bd3cdab](https://github.com/DEIPworld/deip-modules/commit/bd3cdab9afcb1f9842aaec26e8a8a858860159a3))
+* **@deip/team-service:** default project ([a340c45](https://github.com/DEIPworld/deip-modules/commit/a340c45431b66ebe6fc02240d32fabffd1e5fbe3))
+
+
+
+
+
 # [1.127.0](https://github.com/DEIPworld/deip-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 

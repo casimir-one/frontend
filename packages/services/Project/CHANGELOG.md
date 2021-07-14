@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
+
+
+### Features
+
+* **@deip/team-service:** default project ([a340c45](https://github.com/DEIPworld/deip-modules/commit/a340c45431b66ebe6fc02240d32fabffd1e5fbe3))
+
+
+
+
+
 # [1.127.0](https://github.com/DEIPworld/deip-modules/compare/v1.126.0...v1.127.0) (2021-07-07)
 
 
