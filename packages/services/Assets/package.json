@@ -31,7 +31,8 @@
     "@deip/command-models": "1.127.0",
     "@deip/message-models": "1.127.0",
     "@deip/proxydi": "1.125.0",
-    "@deip/blockchain-service": "1.127.0"
+    "@deip/blockchain-service": "1.127.0",
+    "qs": "^6.10.1"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.123.1"
