@@ -22,8 +22,12 @@ import {
   VexPlacesAutocomplete
 } from '@deip/vuetify-extended';
 
-import { ATTR_TYPES } from '@deip/attributes-service';
-import { ATTR_TYPES_SET_RULES, ATTR_TYPES_SET_SCHEMAS } from '../constants';
+import {
+  ATTR_TYPES,
+  ATTR_TYPES_SET_RULES
+} from '@deip/constants';
+
+import { ATTR_TYPES_SET_SCHEMAS } from '../schemas';
 
 const components = {
   VTextField,

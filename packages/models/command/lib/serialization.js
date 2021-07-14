@@ -1,5 +1,5 @@
-import { APP_CMD } from './constants';
-import { PROTOCOL_CHAIN, GrapheneTx, GrapheneTxBuilder, SubstrateTx, SubstrateTxBuilder } from '@deip/chain-service';
+import { APP_CMD, PROTOCOL_CHAIN } from '@deip/constants';
+import { GrapheneTx, GrapheneTxBuilder, SubstrateTx, SubstrateTxBuilder } from '@deip/chain-service';
 import CreateAccountCmd from './impl/CreateAccountCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';

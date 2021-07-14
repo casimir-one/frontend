@@ -3,10 +3,12 @@ import { Singleton } from '@deip/toolbox';
 import organizations from './organizations.json';
 
 class OrganizationsHttp extends Singleton {
+  organizations = organizations
+
   http = HttpService.getInstance();
 
   getAllOrganizations() {
-    return organizations;
+    return this.organizations;
   }
 }
 

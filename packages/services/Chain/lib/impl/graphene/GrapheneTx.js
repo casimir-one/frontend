@@ -1,6 +1,6 @@
 import BaseTx from './../../base/BaseTx';
-import { PROTOCOL_CHAIN } from './../../constants';
 import { assert } from '@deip/toolbox';
+import { PROTOCOL_CHAIN } from '@deip/constants';
 
 
 class GrapheneTx extends BaseTx {
@@ -31,7 +31,7 @@ class GrapheneTx extends BaseTx {
   }
 
   getProtocolChain() {
-    return PROTOCOL_CHAIN.GRAPHENE; 
+    return PROTOCOL_CHAIN.GRAPHENE;
   }
 
   finalize({ chainNodeClient }) {

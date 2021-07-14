@@ -40,7 +40,7 @@
 
   import { hasValue } from '@deip/toolbox';
 
-  import { PROJECT_FORM_MODES } from '../../constants';
+  import { PROJECT_FORM_MODES } from '@deip/constants';
 
   export default {
     name: 'ProjectForm',

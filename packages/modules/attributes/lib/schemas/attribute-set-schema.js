@@ -1,4 +1,6 @@
-import { ATTR_TYPES } from '@deip/attributes-service';
+import {
+  ATTR_TYPES
+} from '@deip/constants';
 
 const avatarMask = `
 <svg
@@ -13,7 +15,7 @@ const avatarMask = `
 </svg>
 `;
 
-export const ATTR_TYPES_SET_SCHEMAS = {
+const ATTR_TYPES_SET_SCHEMAS = {
   [ATTR_TYPES.TEXT]: {
     is: 'v-text-field',
     data: {
@@ -86,3 +88,5 @@ export const ATTR_TYPES_SET_SCHEMAS = {
     }
   }
 };
+
+export { ATTR_TYPES_SET_SCHEMAS };

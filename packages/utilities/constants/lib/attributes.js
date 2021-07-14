@@ -112,8 +112,28 @@ const ATTR_TYPES_ICONS = {
   [ATTR_TYPES.FEATURE]: 'mdi-star-circle-outline'
 };
 
+const ATTR_SCOPES = createEnum({
+  PROJECT: 1,
+  USER: 2,
+  TEAM: 3
+});
+
+const ATTR_SCOPES_LABELS = {
+  [ATTR_SCOPES.PROJECT]: 'Project',
+  [ATTR_SCOPES.USER]: 'User',
+  [ATTR_SCOPES.TEAM]: 'Team'
+};
+
+const ATTR_TYPES_SET_RULES = {
+  [ATTR_TYPES.TEXT]: 'required',
+  [ATTR_TYPES.TEXTAREA]: 'required'
+};
+
 export {
   ATTR_TYPES,
   ATTR_TYPES_LABELS,
-  ATTR_TYPES_ICONS
+  ATTR_TYPES_ICONS,
+  ATTR_SCOPES,
+  ATTR_SCOPES_LABELS,
+  ATTR_TYPES_SET_RULES
 };

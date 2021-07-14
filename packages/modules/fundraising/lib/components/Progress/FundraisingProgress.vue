@@ -53,7 +53,7 @@
 <script>
   import { parseISO } from 'date-fns';
   import { formatDateMixin } from '@deip/platform-fns';
-  import { TS_TYPES } from '@deip/investments-service';
+  import { TS_TYPES } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
 
   export default {

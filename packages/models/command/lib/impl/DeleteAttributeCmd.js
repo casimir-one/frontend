@@ -1,5 +1,5 @@
 import AppCmd from './../base/AppCmd';
-import { APP_CMD } from './../constants';
+import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 class DeleteAttributeCmd extends AppCmd {
@@ -14,7 +14,7 @@ class DeleteAttributeCmd extends AppCmd {
 
     super(APP_CMD.DELETE_ATTRIBUTE, cmdPayload);
   }
-  
+
 }
 
 export default DeleteAttributeCmd;

@@ -1,11 +1,9 @@
 import decode from 'jwt-decode';
 import { Singleton } from '@deip/toolbox';
+// eslint-disable-next-line no-unused-vars
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY } from '@deip/constants';
 
 class AccessService extends Singleton {
-
-  ACCESS_TOKEN_KEY = 'deip_jwt';
-  OWNER_PRIVATE_KEY = 'deip_owner_wif';
-
   decode = decode;
 
   getTokenExpirationDate(jwt) {
@@ -23,7 +21,7 @@ class AccessService extends Singleton {
     return expirationDate < new Date();
   }
 
-  //////////////
+  /// ///////////
 
   getAccessToken() {
     return localStorage.getItem(this.ACCESS_TOKEN_KEY);
@@ -55,14 +53,12 @@ class AccessService extends Singleton {
   getDecodedToken() {
     const jwt = this.getAccessToken();
     if (!jwt) return null;
-    return this.decode(jwt)
+    return this.decode(jwt);
   }
 
-  decodedToken = (jwt) => {
-    return this.decode(jwt)
-  }
+  decodedToken = (jwt) => this.decode(jwt)
 }
 
 export {
   AccessService
-}
+};

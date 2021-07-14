@@ -1,2 +1,2 @@
 export * from './lib/ProjectService';
-export * from './lib/constants';
+export { PROJECT_APPLICATION_STATUS } from '@deip/constants';

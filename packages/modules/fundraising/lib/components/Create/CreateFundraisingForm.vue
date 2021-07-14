@@ -164,8 +164,7 @@
   import { AssetInput, assetsMixin } from '@deip/assets-module';
   import { hasValue } from '@deip/toolbox';
   import { proxydi } from '@deip/proxydi';
-
-  const MIN_TOKEN_UNITS_TO_SELL = 100;
+  import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
   extend('assetSmaller', {
     params: ['target'],

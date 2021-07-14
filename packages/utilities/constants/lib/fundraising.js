@@ -1,0 +1,5 @@
+const MIN_TOKEN_UNITS_TO_SELL = 100;
+
+export {
+  MIN_TOKEN_UNITS_TO_SELL
+};

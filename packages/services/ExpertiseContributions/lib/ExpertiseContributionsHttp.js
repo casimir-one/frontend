@@ -28,7 +28,7 @@ class ExpertiseContributionsHttp extends Singleton {
     const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
     return this.http.get(`/api/expertise/research/${researchExternalId}/stats${query}`);
   }
-  
+
   getResearchesExpertiseStats(filter) {
     const query = `?filter[discipline]=${filter.discipline}&filter[contribution]=${filter.contribution}&filter[criteria]=${filter.criteria}&filter[from]=${filter.from}&filter[to]=${filter.to}`;
     return this.http.get(`/api/expertise/research/stats${query}`);
@@ -60,7 +60,7 @@ class ExpertiseContributionsHttp extends Singleton {
   }
 
   getDisciplinesExpertiseLastStats() {
-    return this.http.get(`/api/expertise/disciplines/stats`);
+    return this.http.get('/api/expertise/disciplines/stats');
   }
 
   getAccountExpertiseTokens(username) {
@@ -74,11 +74,11 @@ class ExpertiseContributionsHttp extends Singleton {
   getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
     return this.http.get(`/api/expertise/content/${contentId}/discipline/${disciplineId}/history`);
   }
-  
+
   getExpertiseContributionsByResearch(researchId) {
     return this.http.get(`/api/expertise/research/${researchId}`);
   }
-  
+
   getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
     return this.http.get(`/api/expertise/research/${researchId}/discipline/${disciplineId}`);
   }

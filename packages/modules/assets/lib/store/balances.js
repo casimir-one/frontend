@@ -5,7 +5,7 @@ import {
   setListMutationFactory
 } from '@deip/platform-fns';
 
-import { ASSET_TYPE } from '../constants';
+import { ASSET_TYPE } from '@deip/constants';
 
 const assetsService = AssetsService.getInstance();
 
