@@ -9,6 +9,9 @@ import SubstrateTxBuilder from './SubstrateTxBuilder';
 import SubstrateChainApi from './SubstrateChainApi';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
+import { u8aToHex, isU8a } from '@polkadot/util';
+import { encodeAddress } from '@polkadot/util-crypto';
+
 
 class SubstrateChainService extends BaseChainService {
 
@@ -52,18 +55,16 @@ class SubstrateChainService extends BaseChainService {
     return new SubstrateTxBuilder(this.getChainNodeClient(), this.getChainOperationsRegistry());
   }
 
-  getTestAccount() { // temp test (wip)
-    const keyring = new Keyring({ type: 'sr25519' });
-    const ALICE = keyring.createFromJson({ "encoded": "MFMCAQEwBQYDK2VwBCIEIJgxnU/4qVCMS7DPC1p412CgsggsAndeboI3CBb+3/9IkloiXZeqAGgtalm5Wxh4DBDXAyM26I80QrQjYfSmYBGhIwMhANQ1k8cV/dMcYRQavQSpn9aCLIVYhUzN45pWhOelbaJ9", "encoding": { "content": ["pkcs8", "sr25519"], "type": ["none"], "version": "3" }, "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", "meta": { "isTesting": true, "name": "alice" } });
-    ALICE.unlock();
-    return ALICE;
+  getAccountFromJson(json, password, options = { type: 'sr25519' }) {
+    const keyring = new Keyring(options);
+    const account = keyring.createFromJson(json);
+    account.unlock(password);
+    return account;
   }
 
-  getTestAccount2() {
-    const keyring = new Keyring({ type: 'sr25519' });
-    const BOB = keyring.createFromJson({ "encoded": "MFMCAQEwBQYDK2VwBCIEIAgf9pRjPiVRNr20VsIKX8j+0h+LlkwRuxf/U0zoDr1ZQa6I+F0MG/w3vkHJBOHfwB3oyAZ7DW1d8l3RrAiUoyWhIwMhAI6vBBUWh3NjJsn+oX4l/FKHYTaTyRKQnLImqkeU8mpI", "encoding": { "content": ["pkcs8", "sr25519"], "type": ["none"], "version": "3" }, "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", "meta": { "isTesting": true, "name": "bob" } });
-    BOB.unlock();
-    return BOB;
+  pubKeyToAddress(pubKey, addressFormat = 42) {
+    const address = encodeAddress(isU8a(pubKey) ? u8aToHex(pubKey) : pubKey, addressFormat);
+    return address;
   }
 
 }
