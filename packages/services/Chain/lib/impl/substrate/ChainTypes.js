@@ -1,9 +1,10 @@
 const CHAIN_TYPES = {
-  "OrgProposalBatchItem": {
-    "account": "OrgProposalAccount",
+  "InputProposalBatch": "Vec<InputProposalBatchItem>",
+  "InputProposalBatchItem": {
+    "account": "DeipAccountId",
     "call": "Call"
   },
-  "OrgProposalAccount": {
+  "DeipAccountId": {
     "_enum": {
       "Native": "AccountId",
       "Org": "OrgName"
@@ -100,8 +101,7 @@ const CHAIN_TYPES = {
     "external_id": "ProjectId",
     "team": "AccountId",
     "description": "Hash",
-    "domains": "Vec<Domain>",
-    "members": "Vec<AccountId>"
+    "domains": "Vec<Domain>"
   },
   "ProjectContentType": {
     "_enum": [
@@ -136,6 +136,25 @@ const CHAIN_TYPES = {
     "content": "Hash",
     "authors": "Vec<AccountId>",
     "references": "Option<Vec<ProjectContentId>>"
+  },
+  "Weight": "u64",
+  "DispatchClass": {
+    "_enum": [
+      "Normal",
+      "Operational",
+      "Mandatory"
+    ]
+  },
+  "Pays": {
+    "_enum": [
+      "Yes",
+      "No"
+    ]
+  },
+  "DispatchInfo": {
+    "weight": "Weight",
+    "class": "DispatchClass",
+    "pays_fee": "Pays"
   }
 };
 

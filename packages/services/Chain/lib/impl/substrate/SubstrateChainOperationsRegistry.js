@@ -14,20 +14,32 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       creator,
       description,
       authority,
-      memoKey,
     }) => {
 
       const signatories = authority.active.auths.map(auth => auth.key);
       const threshold = authority.active.weight;
+      
+      if (!isTeamAccount) {
+        assert(signatories.length === 1 && threshold === 0, `Personal DAO must have a threshold equal to 0 with a single signatory`);
+      } else {
+        assert(signatories.length > 1 && threshold === 1, `Multisig DAO with the threshold that is more than 1 is not supported currently`);
+      }
+
       const createAccountOp = chainNodeClient.tx.deipOrg.create(
-        `0x${entityId}`, // name
-        {
-          "signatories": signatories, // key_source
+        /* dao_id: */ `0x${entityId}`,
+        /* key_source: */ {
+          "signatories": signatories,
           "threshold": threshold
         }
       );
 
-      return createAccountOp;
+      if (!isTeamAccount) {
+        return createAccountOp;
+      } else {
+        return chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`,
+          chainNodeClient.tx.multisig.asMultiThreshold1([signatories[1]], createAccountOp)
+        );
+      }
     },
 
 
@@ -40,14 +52,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     }) => {
 
       const createProjectOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
-        chainNodeClient.tx.deip.createProject({
-          "is_private": isPrivate,
-          "external_id": `0x${entityId}`,
-          "team_id": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", // temp, replace with teamId
-          "description": `0x${description}`,
-          "domains": domains.map((domain) => `0x${domain}`),
-          "members": [] // deprecated
-        })
+        chainNodeClient.tx.deip.createProject(
+          /* "is_private": */ isPrivate,
+          /* "external_id": */ `0x${entityId}`,
+          /* "team_id": */ { Org: teamId },
+          /* "description": */ `0x${description}`,
+          /* "domains": */ domains.map((domain) => `0x${domain}`)
+        )
       );
 
       return createProjectOp;
@@ -68,7 +79,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         const isOnBehalf = op.method.meta === chainNodeClient.tx.deipOrg.onBehalf.meta;
         assert(isOnBehalf, 'Proposal can include onBehalf calls only');
 
-        const daoId = op.method.args[0].toHex();
+        const daoId = op.method.args[0];
         const method = op.method.args[1];
 
         const call = chainNodeClient.registry.createType('Call', hexToU8a(method.toHex()), method.meta);
@@ -76,12 +87,15 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
         return {
           call: extrinsic,
-          account: { Org: daoId }
+          account: { Org: daoId.toHex() }
         }
       });
 
       const createProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`,
-        chainNodeClient.tx.deipOrgProposal.propose(ops, `0x${entityId}`),
+        chainNodeClient.tx.deipProposal.propose(
+          /* batch: */ ops,
+          /* external_id: */ `0x${entityId}`
+        )
       );
 
       return createProposalOp;
@@ -105,12 +119,18 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
       if (approver) {
         const approveProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${approver}`,
-          chainNodeClient.tx.deipProposal.decide(`0x${entityId}`, 'Approve')
+          chainNodeClient.tx.deipProposal.decide(
+           /* external_id: */ `0x${entityId}`, 
+           /* decision: */ 'Approve'
+          )
         );
         return approveProposalOp;
       } else {
         const rejectProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${rejector}`,
-          chainNodeClient.tx.deipProposal.decide(`0x${entityId}`, 'Reject')
+          chainNodeClient.tx.deipProposal.decide(
+            /* external_id: */ `0x${entityId}`,
+            /* decision: */ 'Reject'
+          )
         );
         return rejectProposalOp;
       }
