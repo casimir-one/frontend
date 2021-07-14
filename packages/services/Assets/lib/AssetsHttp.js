@@ -1,5 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
+import qs from 'qs';
 
 class AssetsHttp extends Singleton {
   http = HttpService.getInstance();
@@ -10,6 +11,11 @@ class AssetsHttp extends Singleton {
 
   createAssetsExchangeProposal(req) {
     return this.http.post('/api/v2/assets/exchange', req.getHttpBody());
+  }
+
+  getAccountDepositHistory(account, status) {
+    const query = qs.stringify({ status });
+    return this.http.get(`/api/v2/assets/deposit/history/account/${account}?${query}`);
   }
 
   getAssetById(assetId) {

@@ -132,6 +132,10 @@ class AssetsService extends Singleton {
       .then((signedTx) => this.blockchainService.sendTransactionAsync(signedTx));
   }
 
+  getAccountDepositHistory(account, status) {
+    return this.assetsHttp.getAccountDepositHistory(account, status);
+  }
+
   getAssetById(assetId) {
     return this.assetsHttp.getAssetById(assetId);
   }
