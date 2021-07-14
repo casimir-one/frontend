@@ -4,16 +4,12 @@ import { Singleton } from '@deip/toolbox';
 class AssetsHttp extends Singleton {
   http = HttpService.getInstance();
 
-  transferAssets({ tx }) {
-    return this.http.post('/api/assets/transfer', { tx });
+  transferAssets(req) {
+    return this.http.post('/api/v2/assets/transfer', req.getHttpBody());
   }
 
-  createAssetsTransferProposal({ tx }) {
-    return this.http.post('/api/assets/transfer', { tx });
-  }
-
-  createAssetsExchangeProposal({ tx }) {
-    return this.http.post('/api/assets/exchange', { tx });
+  createAssetsExchangeProposal(req) {
+    return this.http.post('/api/v2/assets/exchange', req.getHttpBody());
   }
 
   getAssetById(assetId) {
