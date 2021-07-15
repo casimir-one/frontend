@@ -1,13 +1,10 @@
 import decode from 'jwt-decode';
 import { Singleton } from '@deip/toolbox';
-// eslint-disable-next-line no-unused-vars
 import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY } from '@deip/constants';
 
 class AccessService extends Singleton {
-  decode = decode;
-
   getTokenExpirationDate(jwt) {
-    const token = this.decode(jwt);
+    const token = decode(jwt);
     if (!token.exp) { return null; }
 
     const date = new Date(0);
@@ -24,24 +21,24 @@ class AccessService extends Singleton {
   /// ///////////
 
   getAccessToken() {
-    return localStorage.getItem(this.ACCESS_TOKEN_KEY);
+    return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
   getOwnerWif() {
-    return localStorage.getItem(this.OWNER_PRIVATE_KEY);
+    return localStorage.getItem(OWNER_PRIVATE_KEY);
   }
 
   setOwnerWif(wif) {
-    return localStorage.setItem(this.OWNER_PRIVATE_KEY, wif);
+    return localStorage.setItem(OWNER_PRIVATE_KEY, wif);
   }
 
   clearAccessToken() {
-    localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-    localStorage.removeItem(this.OWNER_PRIVATE_KEY);
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(OWNER_PRIVATE_KEY);
   }
 
   setAccessToken(jwt, wif) {
-    localStorage.setItem(this.ACCESS_TOKEN_KEY, jwt);
+    localStorage.setItem(ACCESS_TOKEN_KEY, jwt);
     this.setOwnerWif(wif);
   }
 
@@ -53,10 +50,10 @@ class AccessService extends Singleton {
   getDecodedToken() {
     const jwt = this.getAccessToken();
     if (!jwt) return null;
-    return this.decode(jwt);
+    return decode(jwt);
   }
 
-  decodedToken = (jwt) => this.decode(jwt)
+  decodedToken = (jwt) => decode(jwt)
 }
 
 export {
