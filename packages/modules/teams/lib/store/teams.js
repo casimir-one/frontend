@@ -57,8 +57,13 @@ const ACTIONS = {
   },
 
   create({ dispatch }, payload) {
+    const {
+      isCreateDefaultProject,
+      ...data
+    } = payload;
+
     return teamService
-      .createTeam(payload)
+      .createTeam(data, isCreateDefaultProject)
       .then((res) => {
         const { entityId } = res;
 
