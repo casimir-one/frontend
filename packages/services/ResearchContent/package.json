@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-content-service",
-  "version": "1.128.0",
+  "version": "1.128.2",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@deip/constants": "1.128.0",
-    "@deip/http-service": "1.128.0",
+    "@deip/http-service": "1.128.2",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/proposals-service": "1.128.0",
+    "@deip/proposals-service": "1.128.2",
     "@deip/toolbox": "1.125.0"
   },
   "peerDependencies": {

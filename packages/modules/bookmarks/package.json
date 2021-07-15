@@ -1,6 +1,6 @@
 {
   "name": "@deip/bookmarks-module",
-  "version": "1.128.0",
+  "version": "1.128.2",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,7 +24,7 @@
     "@deip/platform-fns": "1.128.0",
     "@deip/proxydi": "1.125.0",
     "@deip/toolbox": "1.125.0",
-    "@deip/user-service": "1.128.0"
+    "@deip/user-service": "1.128.2"
   },
   "peerDependencies": {
     "@deip/auth-module": "^1.124.0",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.128.2](https://github.com/DEIPworld/deip-modules/compare/v1.128.1...v1.128.2) (2021-07-15)
+
+
+### Bug Fixes
+
+* **@deip/access-service:** fix constants ([1925d0e](https://github.com/DEIPworld/deip-modules/commit/1925d0e21fca497a2ee0afec6e67d67502a02b03))
+
+
+
+
+
 # [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
 
 **Note:** Version bump only for package @deip/access-service
