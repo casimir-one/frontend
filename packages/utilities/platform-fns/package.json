@@ -28,6 +28,7 @@
     "qs": "^6.10.1"
   },
   "peerDependencies": {
+    "vue": "^2.6.14",
     "vuetify": "^2.5.3"
   },
   "devDependencies": {
