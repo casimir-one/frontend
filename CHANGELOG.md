@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.128.1](https://github.com/DEIPworld/deip-modules/compare/v1.128.0...v1.128.1) (2021-07-15)
+
+
+### Bug Fixes
+
+* **@deip/assets-service:** const import fixed ([7c9ef41](https://github.com/DEIPworld/deip-modules/commit/7c9ef41c54163826f5678718613c73a01f36073f))
+
+
+
+
+
 # [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
 
 
