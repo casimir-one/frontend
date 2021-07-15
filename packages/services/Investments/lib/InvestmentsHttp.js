@@ -40,6 +40,10 @@ class InvestmentsHttp extends Singleton {
     return this.http.get(`/api/v2/history/contributions/account/${account}`);
   }
 
+  getContributionsHistoryByTokenSale(tokenSaleId) {
+    return this.http.get(`/api/v2/history/contributions/token-sale/${tokenSaleId}`);
+  }
+
   getAssetRevenueHistory(symbol, cursor) {
     return this.http.get(`/api/v2/history/symbol/${symbol}/${cursor}`);
   }
