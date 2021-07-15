@@ -54,6 +54,7 @@ module.exports = {
       'error',
       'never'
     ],
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'class-methods-use-this': 'off'
   }
 };

@@ -55,7 +55,8 @@ module.exports = {
         singleline: 3
       }
     ],
-    'no-plusplus': 'off'
+    'no-plusplus': 'off',
+    'class-methods-use-this': 'off'
   },
   overrides: [
     {
