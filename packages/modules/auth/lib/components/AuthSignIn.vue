@@ -160,7 +160,7 @@
             this.emitSuccess(res);
           })
           .catch((error) => {
-            this.emitError(error);
+            this.emitError(error.message);
           });
       }
     }
