@@ -47,7 +47,7 @@ const formFactory = (
       set(val) {
         if (isEqual(val, this.lazyFormData)) return;
         this.lazyFormData = val;
-        this.$emit('input', val);
+        this.$emit(event, val);
       }
     },
 
@@ -63,15 +63,24 @@ const formFactory = (
   watch: {
     [prop]: {
       handler(val) {
-        if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = val;
-        if (val && !isEqual(val, this.oldValue)) this.oldValue = cloneDeep(this[prop]);
+        if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = { ...val };
       },
       immediate: true,
       deep: true
     }
   },
 
+  created() {
+    if (this[prop]) {
+      this.setOldValue();
+    }
+  },
+
   methods: {
+    setOldValue() {
+      this.oldValue = cloneDeep(this[prop]);
+    },
+
     restoreOldValue(forceUpdate = false) {
       this.lazyFormData = this.oldValue;
       if (forceUpdate) {
