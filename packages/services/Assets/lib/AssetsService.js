@@ -3,11 +3,11 @@ import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import {
-  APP_PROPOSAL,
   UpdateProposalCmd,
   CreateProposalCmd,
   AssetTransferCmd
 } from '@deip/command-models';
+import { APP_PROPOSAL } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
 import { AssetsHttp } from './AssetsHttp';
 
