@@ -1,6 +1,6 @@
 {
 	"name": "@deip/assets-module",
-	"version": "1.128.1",
+	"version": "1.128.2",
 	"description": "> TODO: description",
 	"author": "Elena Vlasova <e.vlasova@paralect.com>",
 	"homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -17,13 +17,13 @@
 		"url": "https://gitlab.com/DEIP/deip-client-modules/issues"
 	},
 	"dependencies": {
-		"@deip/assets-service": "1.128.1",
+		"@deip/assets-service": "1.128.2",
 		"@deip/constants": "1.128.0",
 		"@deip/platform-fns": "1.128.0",
 		"@deip/proxydi": "1.125.0",
-		"@deip/teams-module": "1.128.0",
+		"@deip/teams-module": "1.128.2",
 		"@deip/toolbox": "1.125.0",
-		"@deip/users-module": "1.128.0",
+		"@deip/users-module": "1.128.2",
 		"@deip/validation-plugin": "1.128.0",
 		"@deip/vuetify-extended": "1.128.0",
 		"change-case": "^4.1.2",
