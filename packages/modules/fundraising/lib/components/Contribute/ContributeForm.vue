@@ -140,7 +140,7 @@
       },
 
       isUserBalanceEnough() {
-        const userBalance = this.$store.getters['currentUserBalances/one'](this.assetId);
+        const userBalance = this.$store.getters['wallet/one'](this.assetId);
         if (!userBalance) return false;
 
         const userBalanceAmount = this.$$fromAssetUnits(userBalance.amount).amount;
