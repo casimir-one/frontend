@@ -5,6 +5,13 @@ const ASSET_TYPE = createEnum({
   TOKEN: 2
 });
 
+const DEPOSIT_REQUEST_STATUS = createEnum({
+  PENDING: 1,
+  APPROVED: 2,
+  REJECTED: 3
+});
+
 export {
-  ASSET_TYPE
+  ASSET_TYPE,
+  DEPOSIT_REQUEST_STATUS
 };
