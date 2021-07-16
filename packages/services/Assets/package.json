@@ -28,6 +28,7 @@
     "@deip/command-models": "1.129.0",
     "@deip/constants": "1.129.0",
     "@deip/http-service": "1.129.0",
+    "@deip/lib-crypto": "1.118.0",
     "@deip/message-models": "1.129.0",
     "@deip/proxydi": "1.129.0",
     "@deip/rpc-client": "1.129.0",

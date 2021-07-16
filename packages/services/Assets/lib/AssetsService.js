@@ -8,13 +8,17 @@ import {
   AssetTransferCmd
 } from '@deip/command-models';
 import { APP_PROPOSAL } from '@deip/constants';
+import { AccessService } from '@deip/access-service';
 import { ChainService } from '@deip/chain-service';
+import crypto from '@deip/lib-crypto';
 import { AssetsHttp } from './AssetsHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
 
 class AssetsService extends Singleton {
   proxydi = proxydi;
+
+  accessService = AccessService.getInstance();
 
   assetsHttp = AssetsHttp.getInstance();
 
@@ -230,6 +234,37 @@ class AssetsService extends Singleton {
             return this.assetsHttp.createAssetsExchangeProposal(msg);
           });
       });
+  }
+
+  depositAssets(payload) {
+    const {
+      initiator: { privKey },
+      redirectUrl,
+      amount,
+      currency,
+      account,
+      timestamp
+    } = payload;
+
+    const depositData = {
+      amount,
+      currency,
+      account,
+      timestamp
+    };
+
+    const depositDataStr = JSON.stringify(depositData, Object.keys(depositData).sort());
+    const privateKey = crypto.PrivateKey.from(privKey);
+    const sigBuff = privateKey.sign(new TextEncoder('utf-8').encode(depositDataStr).buffer);
+    const sigHex = crypto.hexify(sigBuff);
+
+    return this.assetsHttp.depositAssets(
+      {
+        ...depositData,
+        sigHex,
+        redirectUrl
+      }
+    );
   }
 }
 

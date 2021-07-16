@@ -49,6 +49,10 @@ class AssetsHttp extends Singleton {
   getAccountsAssetBalancesByAsset(symbol) {
     return this.http.get(`/api/v2/assets/accounts/symbol/${symbol}`);
   }
+
+  depositAssets(payload) {
+    return this.http.post('/webhook/assets/deposit', payload);
+  }
 }
 
 export {
