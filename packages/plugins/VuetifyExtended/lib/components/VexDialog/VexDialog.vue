@@ -111,7 +111,7 @@
 
       buttonTrueProps: {
         type: Object,
-        default: () => ({ color: 'primary' })
+        default: () => ({ text: true, color: 'primary' })
       },
 
       buttonFalseProps: {
