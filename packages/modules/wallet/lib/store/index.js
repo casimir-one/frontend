@@ -39,12 +39,26 @@ const ACTIONS = {
 
   deposit(_, payload) {
     return assetsService.depositAssets(payload);
+  },
+
+  getHistory({ commit }, payload) {
+    const {
+      account,
+      status
+    } = payload;
+    return assetsService.getAccountDepositHistory(account, status)
+      .then((res) => {
+        commit('setHistory', res);
+      });
   }
 };
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  clear: clearMutation
+  clear: clearMutation,
+  setHistory: (state, payload) => {
+    state.history = payload;
+  }
 };
 
 export const walletStore = {
