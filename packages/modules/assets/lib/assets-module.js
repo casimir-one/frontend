@@ -2,8 +2,7 @@ import Maska from 'maska';
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
 
-import { callForCurrentUser } from '@deip/platform-store';
-import { assetsStore, balancesStore, currentUserBalancesStore } from './store';
+import { assetsStore, balancesStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
@@ -24,16 +23,9 @@ const install = (Vue, options = {}) => {
   if (store) {
     store.registerModule('assets', assetsStore);
     store.registerModule('balances', balancesStore);
-    store.registerModule('currentUserBalances', currentUserBalancesStore);
 
     store.dispatch('assets/getList');
     store.dispatch('balances/getList');
-
-    callForCurrentUser(
-      store,
-      'currentUserBalances/get',
-      'currentUserBalances/clear'
-    );
   } else {
     throw Error('[AssetsModule]: storeInstance is not provided');
   }
