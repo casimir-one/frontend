@@ -172,7 +172,8 @@
 
 <script>
   import { mapListFromEnum } from '@deip/toolbox';
-  import { formFactory } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
+  import { formFactory } from '@deip/platform-components';
 
   import {
     SchemaBuilderBlocksList,
@@ -192,7 +193,7 @@
     attributesBlocksFactory
   } from '../../blocks';
 
-  export default {
+  export default defineComponent({
     name: 'LayoutBuilder',
 
     components: {
@@ -244,6 +245,14 @@
         this.activeNode = e;
       },
 
+      onSuccess() {
+        this.$emit('success', this.lazyFormData);
+      },
+
+      onError(err) {
+        this.$emit('error', err);
+      },
+
       createLayout() {
         this.loading = true;
 
@@ -251,6 +260,12 @@
           'layouts/create',
           this.lazyFormData
         )
+          .then(() => {
+            this.onSuccess();
+          })
+          .catch((err) => {
+            this.onError(err);
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -263,6 +278,12 @@
           'layouts/update',
           this.lazyFormData
         )
+          .then(() => {
+            this.onSuccess();
+          })
+          .catch((err) => {
+            this.onError(err);
+          })
           .finally(() => {
             this.loading = false;
           });
@@ -276,7 +297,7 @@
         }
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss" scoped>

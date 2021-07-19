@@ -1,12 +1,9 @@
 import { LayoutService } from '@deip/layout-service';
 
 import {
-  listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory
-} from '@deip/platform-fns';
-import { isObject } from '@deip/toolbox';
+  crudGettersFactory,
+  crudMutationsFactory
+} from '@deip/platform-store';
 
 const layoutService = LayoutService.getInstance();
 
@@ -15,26 +12,22 @@ const STATE = {
 };
 
 const GETTERS = {
-  list: listGetter,
-  one: oneGetterFactory({ selectorKey: 'entityId' })
+  ...crudGettersFactory({ dataKey: '_id' })
 };
 
 const ACTIONS = {
-  getList({ commit }) {
+  getList({ commit }, force) {
     return layoutService.getLayouts()
       .then((res) => {
-        commit(
-          'setList',
-          isObject(res)
-            // temp fallback
-            ? Object.keys(res).map((key) => ({ entityId: key, ...res[key] }))
-            : res
-        );
+        if (force) {
+          commit('clearList');
+        }
+        commit('setList', res);
       });
   },
 
-  getOne({ commit }, entityId) {
-    return layoutService.getOne(entityId)
+  getOne({ commit }, _id) {
+    return layoutService.getOne(_id)
       .then((res) => {
         commit('setOne', res);
       });
@@ -48,18 +41,26 @@ const ACTIONS = {
   },
 
   update({ dispatch }, payload) {
-    const { entityId } = payload;
+    const { _id } = payload;
 
-    return layoutService.update(entityId, payload)
+    return layoutService.update(_id, payload)
       .then(() => {
-        dispatch('getOne', entityId);
+        dispatch('getOne', _id);
+      });
+  },
+
+  remove({ commit }, payload) {
+    const { _id } = payload;
+
+    return layoutService.remove(_id)
+      .then(() => {
+        commit('removeFromList', _id);
       });
   }
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'entityId' }),
-  setOne: setOneMutationFactory({ mergeKey: 'entityId' })
+  ...crudMutationsFactory({ dataKey: '_id' })
 };
 
 export const layoutsStore = {
