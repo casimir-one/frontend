@@ -96,7 +96,7 @@
       },
       passwordRestoreLabel: {
         type: String,
-        default() { return this.$t('module.auth.fogotPasswordQuestion'); }
+        default() { return this.$t('module.auth.forgotPasswordQuestion'); }
       },
       submitLabel: {
         type: String,

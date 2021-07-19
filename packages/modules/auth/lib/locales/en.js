@@ -6,7 +6,7 @@ export default {
       signOut: 'Sign out',
       noAccountQuestion: 'No account?',
       haveAccountQuestion: 'Already have an account?',
-      fogotPasswordQuestion: 'Forgot password?',
+      forgotPasswordQuestion: 'Forgot password?',
       username: 'Username',
       password: 'Password',
       email: 'Email',
