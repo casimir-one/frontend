@@ -55,7 +55,7 @@ const ACTIONS = {
   },
 
   getTokenSaleContributions({ commit, getters }, tokenSaleId) {
-    return investmentsService.getProjectTokenSaleContributions(tokenSaleId)
+    return investmentsService.getContributionsHistoryByTokenSale(tokenSaleId)
       .then((contributions) => {
         const tokenSale = getters.one(tokenSaleId);
         commit('setOne', {

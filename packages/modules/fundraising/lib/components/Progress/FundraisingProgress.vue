@@ -55,6 +55,7 @@
   import { formatDateMixin } from '@deip/platform-components';
   import { TS_TYPES } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
+  import { uniqBy } from '@deip/toolbox/lodash';
 
   export default {
     name: 'FundraisingProgress',
@@ -94,7 +95,10 @@
         return this.formatDistanceToNow(parseISO(this.tokenSale?.endTime));
       },
       contributionsCount() {
-        return this.tokenSale?.contributions?.length || 0;
+        if (!this.tokenSale?.contributions) {
+          return 0;
+        }
+        return uniqBy('contributor', this.tokenSale.contributions).length;
       },
       barColor() {
         return this.tokenSale.status === TS_TYPES.EXPIRED ? 'error' : 'success';
