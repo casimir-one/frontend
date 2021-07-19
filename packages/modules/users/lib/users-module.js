@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash/fp';
 
 import { proxydi } from '@deip/proxydi';
-import { callForCurrentUser } from '@deip/platform-fns';
+import { callForCurrentUser } from '@deip/platform-store';
 import { hasValue } from '@deip/toolbox';
 import { AccessService } from '@deip/access-service';
 import { usersStore, currentUserStore } from './store';

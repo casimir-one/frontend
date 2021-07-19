@@ -1,5 +1,5 @@
 import { proxydi } from '@deip/proxydi';
-import { callForCurrentUser } from '@deip/platform-fns';
+import { callForCurrentUser } from '@deip/platform-store';
 import { notificationsStore } from './store';
 
 // eslint-disable-next-line no-unused-vars

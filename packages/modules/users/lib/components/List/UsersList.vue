@@ -1,6 +1,6 @@
 <template>
   <users-data-provider v-bind="providerProps" ref="dataProvider">
-    <template #default="{ users, disabled, loading, ready}">
+    <template #default="{ users }">
       <component
         :is="listComponent"
         :users="users"
@@ -11,10 +11,9 @@
 </template>
 
 <script>
-  import UsersDataProvider from '../DataProvider/UsersDataProvider';
-
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-  import { componentViewType } from '@deip/platform-fns';
+  import { componentViewType } from '@deip/platform-util';
+  import UsersDataProvider from '../DataProvider/UsersDataProvider';
 
   import UsersListDefault from './UsersListDefault';
   import UsersListStack from './UsersListStack';
@@ -32,7 +31,7 @@
       viewType: {
         type: String,
         default: ''
-      },
+      }
     },
 
     computed: {
@@ -41,20 +40,20 @@
       },
 
       listComponent() {
-        return componentViewType.call(this)
+        return componentViewType.call(this);
       },
 
       componentEvents() {
         return {
-          ...(!!this.$listeners['click-item'] ? { 'click-item': this.onClickItem } : {})
-        }
+          ...(this.$listeners['click-item'] ? { 'click-item': this.onClickItem } : {})
+        };
       }
     },
 
     methods: {
       onClickItem(e) {
-        this.$emit('click-item', e)
+        this.$emit('click-item', e);
       }
     }
-  }
+  };
 </script>

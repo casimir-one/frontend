@@ -1,6 +1,7 @@
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
-import { hasRoles, awaitForStore } from '@deip/platform-fns';
+import { hasRoles } from '@deip/platform-fns';
+import { awaitForStore } from '@deip/platform-store';
 
 import { SYSTEM_ROLE } from '@deip/constants';
 import { authStore } from './store';
