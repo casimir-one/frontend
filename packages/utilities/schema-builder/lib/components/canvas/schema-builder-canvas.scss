@@ -1,26 +1,34 @@
 $gap: 4px;
 
-@mixin outline($opacity: 1, $type: 'solid') {
-  &::before {
-    content: '';
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    position: absolute;
-    pointer-events: none;
-    border:1px #{$type} var(--v-primary-base, blue);
-    opacity: $opacity;
-  }
-}
-
 @mixin fly-box($opacity: 1, $type: 'solid') {
   position: absolute;
   display: none;
   z-index: 10;
   pointer-events: none;
-  border:1px #{$type} var(--v-primary-base, blue);
-  opacity: $opacity;
+
+
+  &::before {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    content: '';
+    border:1px #{$type} var(--v-primary-base, blue);
+    opacity: $opacity;
+  }
+}
+
+@mixin fly-header() {
+  pointer-events: all;
+  position: absolute;
+  bottom: calc(100% - 1px);
+  left: 0;
+
+  padding: 0 6px;
+
+  display: flex;
+  align-items: center;
+  border-radius: 2px 2px 0 0;
 }
 
 .schema-composer {
@@ -56,17 +64,34 @@ $gap: 4px;
     }
   }
 
+  &__box-label {
+    font-size: 10px;
+    line-height: 16px;
+    pointer-events: none;
+
+    &:not(:last-child) {
+      margin-right: 4px;
+    }
+  }
+
   &__hover-box {
     @include fly-box(.6, 'dashed');
   }
 
-  &__focus-box {
-    //position: absolute;
-    //display: none;
-    //z-index: 10;
-    //pointer-events: none;
-    //border:1px solid var(--v-primary-base, blue);
+  &__hover-box-header {
+    @include fly-header();
 
+    color: var(--v-primary-base, blue);
+  }
+
+  &__focus-box {
     @include fly-box();
+  }
+
+  &__focus-box-header {
+    @include fly-header();
+
+    background: var(--v-primary-base, blue);
+    color: #fff;
   }
 }

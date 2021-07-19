@@ -27,9 +27,9 @@ export const SchemaBuilderCanvasTree = {
       this.$set(this.toggleMap, id, state);
     },
 
-    selectNode(id) {
-      this.activeNode = id;
-      this.$emit('select-node', id);
+    selectNode({ uid }) {
+      this.activeNode = uid;
+      this.$emit('select-node', uid);
     },
 
     genItem(item, level = 0) {

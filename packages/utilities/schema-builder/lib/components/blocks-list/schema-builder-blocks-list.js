@@ -11,6 +11,10 @@ import {
   VListItemContent
 } from 'vuetify/lib/components';
 
+import {
+  Ripple
+} from 'vuetify/lib/directives';
+
 import { VexExpand } from '@deip/vuetify-extended';
 /* eslint-enable */
 
@@ -24,6 +28,10 @@ export const SchemaBuilderBlocksList = {
 
   components: {
     draggable
+  },
+
+  directives: {
+    Ripple
   },
 
   props: {
@@ -57,10 +65,7 @@ export const SchemaBuilderBlocksList = {
               VSheet,
               {
                 slot: 'activator',
-                staticClass: 'px-6 py-3 d-flex',
-                props: {
-                  color: 'neutral lighten-5'
-                }
+                staticClass: 'px-6 py-3 d-flex'
               },
               [
                 this.$createElement('div', { staticClass: 'text-subtitle-2 spacer' }, section.title),
@@ -90,7 +95,7 @@ export const SchemaBuilderBlocksList = {
             sort: false,
             group: { name: 'blocks', pull: 'clone', put: false }
           },
-          staticClass: 'schema-blocks__list neutral lighten-4'
+          staticClass: 'schema-blocks__list'
         },
         blocks.map((block) => this.genBlock(block))
       );
@@ -163,8 +168,13 @@ export const SchemaBuilderBlocksList = {
     },
 
     genBlock(block) {
+      // {...{ directives: [Ripple] }}
       return (
-        <VSheet class="pa-4 text-center font-weight-medium pos-relative" style="font-size:11px">
+        <VSheet
+          class="schema-blocks__block pa-4 text-center font-weight-medium pos-relative"
+          style="font-size:11px"
+          vRipple
+        >
           <VIcon class="mb-1">{block.icon || 'mdi-card-outline'}</VIcon>
           <div>{block.name}</div>
           {this.genBlockMenu(block)}
@@ -175,6 +185,7 @@ export const SchemaBuilderBlocksList = {
 
   render(h) {
     if (!this.blocks.length) return h('div', 'No blocks found');
+
     return h(
       'div',
       this.blocks

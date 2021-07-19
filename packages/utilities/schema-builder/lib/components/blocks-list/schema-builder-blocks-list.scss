@@ -3,6 +3,19 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
     grid-gap: 1px;
-    //padding: 1px;
+    background: var(--v-core-color-divider, rgba(#000, .12));
+  }
+
+  &__block {
+    &:hover {
+      cursor: move;
+      color: var(--v-primary-base);
+      transition: color .5s;
+
+      .v-icon {
+        color: var(--v-primary-base);
+      }
+      //background: var(--v-core-color-hover, rgba(#000, .06));
+    }
   }
 }

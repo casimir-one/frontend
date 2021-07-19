@@ -1,12 +1,12 @@
 /* eslint-disable */
 import {
-  VIcon, VSheet, VDivider, VSpacer
+  VIcon, VSheet, VDivider, VSpacer, VBtn
 } from 'vuetify/lib/components';
 /* eslint-enable */
 
 import './schema-builder-canvas.scss';
 
-import { wrapInArray, pascalCase } from '@deip/toolbox';
+import { wrapInArray, pascalCase, deepFindParentByValue } from '@deip/toolbox';
 import draggable from 'vuedraggable';
 import { SchemeView } from '../../mixins';
 
@@ -31,6 +31,8 @@ export const SchemaBuilderCanvas = {
     getNodeBoxData(uid) {
       if (!uid) return false;
 
+      const { id } = deepFindParentByValue(this.lazySchema, uid);
+
       const {
         offsetLeft,
         offsetTop,
@@ -45,7 +47,9 @@ export const SchemaBuilderCanvas = {
           width: `${offsetWidth}px`,
           height: `${offsetHeight}px`,
           display: 'block'
-        }
+        },
+        info: this.getNodeInfo(id),
+        uid
       };
     },
 
@@ -53,17 +57,34 @@ export const SchemaBuilderCanvas = {
       this.hoverBox = this.getNodeBoxData(uid);
     },
 
-    selectNode(uid) {
+    deHoverNode() {
       this.hoverBox = {};
+    },
+
+    selectNode(uid) {
+      this.deHoverNode();
+
       this.focusBox = this.getNodeBoxData(uid);
       this.$emit('select-node', uid);
     },
 
+    deSelectNode() {
+      this.focusBox = {};
+      this.$emit('select-node', null);
+    },
+
+    clearSelection() {
+      this.deHoverNode();
+      this.deSelectNode();
+    },
+
     genHost(nodes, data = {}) {
+      // move={() => {this.clearSelection()}
       return (
         <draggable
           list={nodes}
           group={{ name: 'blocks' }}
+          onStart={() => { this.clearSelection(); }}
           { ...data }
         >
           {nodes.map((node) => this.genNode(node))}
@@ -156,7 +177,7 @@ export const SchemaBuilderCanvas = {
             this.hoverNode(node.uid);
           }}
           vOn:mouseleave_stop={() => {
-            this.hoverNode(null);
+            this.deHoverNode();
           }}
         >{content}</div>
       );
@@ -168,7 +189,13 @@ export const SchemaBuilderCanvas = {
           class="schema-composer__hover-box"
           style={this.hoverBox.styles}
           ref="hover-box"
-        />
+        >
+          <div class="schema-composer__hover-box-header">
+            <div class="schema-composer__box-label">
+              {this.hoverBox?.info?.name}
+            </div>
+          </div>
+        </div>
       );
     },
     genFocusBox() {
@@ -177,7 +204,25 @@ export const SchemaBuilderCanvas = {
           class="schema-composer__focus-box"
           style={this.focusBox.styles}
           ref="focus-box"
-        />
+        >
+          <div class="schema-composer__focus-box-header">
+            <div class="schema-composer__box-label">
+              {this.focusBox?.info?.name}
+            </div>
+            <VBtn
+              icon
+              width={16}
+              height={16}
+              class="mr-n1 mt-n1 mb-n1"
+              color="white"
+              onClick={() => {
+                this.removeNode(this.focusBox?.uid);
+              }}
+            >
+              <VIcon size={12}>mdi-close</VIcon>
+            </VBtn>
+          </div>
+        </div>
       );
     }
   },
