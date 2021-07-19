@@ -61,6 +61,10 @@
     mixins: [attributedFormFactory('team')],
 
     props: {
+      withDefaultProject: {
+        type: Boolean,
+        default: false
+      },
       cancelLabel: {
         type: String,
         default() {
@@ -125,6 +129,7 @@
         return this.$store.dispatch(
           'teams/create',
           {
+            isCreateDefaultProject: this.withDefaultProject,
             initiator: this.$currentUser,
             ...this.lazyFormData
           }
