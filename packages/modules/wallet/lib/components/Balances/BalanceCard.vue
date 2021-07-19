@@ -28,13 +28,13 @@
           <div>
             <v-btn
               v-if="withDeposit"
-              small
+              x-small
               text
               depressed
               plain
               :ripple="false"
               color="white"
-              class="pa-0"
+              class="pa-0 text-body-2 font-weight-medium"
               @click="handleDepositClick"
             >
               <v-icon class="mr-2">
