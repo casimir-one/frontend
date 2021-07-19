@@ -20,14 +20,15 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/assets-module": "^1.128.2",
-    "@deip/assets-service": "^1.128.2",
-    "@deip/constants": "^1.128.0",
-    "@deip/platform-fns": "^1.128.0",
-    "@deip/proxydi": "^1.125.0",
-    "@deip/toolbox": "^1.125.0",
-    "@deip/vuetify-extended": "^1.128.0",
-    "@deip/validation-plugin": "^1.128.0"
+    "@deip/assets-module": "^1.129.0",
+    "@deip/assets-service": "^1.129.0",
+    "@deip/constants": "^1.129.0",
+    "@deip/platform-store": "^1.129.0",
+    "@deip/platform-util": "^1.129.0",
+    "@deip/proxydi": "^1.129.0",
+    "@deip/toolbox": "^1.129.0",
+    "@deip/validation-plugin": "^1.129.0",
+    "@deip/vuetify-extended": "^1.129.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
