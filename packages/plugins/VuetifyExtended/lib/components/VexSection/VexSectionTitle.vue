@@ -1,25 +1,30 @@
 <template>
   <div class="d-flex">
     <div v-if="$slots.prepend" class="mr-6">
-      <slot name="prepend"/>
+      <slot name="prepend" />
     </div>
 
     <template v-if="hasTitle">
-      <div v-if="title" class="text-h3">
+      <div v-if="title || $slots.default" class="text-h3">
         {{ title }}
+        <slot />
 
-        <v-chip v-if="titleBadge" small color="primary" readonly>
+        <v-chip
+          v-if="titleBadge"
+          small
+          color="primary"
+          readonly
+        >
           {{ titleBadge }}
         </v-chip>
-
       </div>
-      <slot name="title"/>
+      <slot name="title" />
     </template>
 
-    <v-spacer/>
+    <v-spacer />
 
     <div v-if="$slots.append" class="ml-6">
-      <slot name="append"/>
+      <slot name="append" />
     </div>
   </div>
 </template>
@@ -29,18 +34,18 @@
     name: 'VexSectionTitle',
     props: {
       title: {
-        type: [ String ],
+        type: [String],
         default: ''
       },
       titleBadge: {
-        type: [ String, Number ],
+        type: [String, Number],
         default: ''
       }
     },
     methods: {
       hasTitle() {
-        return this.title || this.$slots.title
+        return this.title || this.$slots.title;
       }
     }
-  }
+  };
 </script>
