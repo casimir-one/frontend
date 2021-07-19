@@ -1,5 +1,5 @@
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   /* eslint-disable */
   import { VSheet } from 'vuetify/lib/components/VSheet';
   import { convertToUnit } from 'vuetify/lib/util/helpers';

@@ -16,7 +16,7 @@
   // eslint-disable-next-line import/extensions,import/no-unresolved
   import { VAvatar, VListItemAvatar } from 'vuetify/lib/components';
   import { isString } from '@deip/toolbox';
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { getBindableProps } from '../../composables/props';
 
   export default defineComponent({

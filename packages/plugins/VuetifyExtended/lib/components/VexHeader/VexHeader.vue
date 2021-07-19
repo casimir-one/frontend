@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { getDominantColor, isDarkColor } from '@deip/toolbox';
   import { VexSection } from '../VexSection';
 

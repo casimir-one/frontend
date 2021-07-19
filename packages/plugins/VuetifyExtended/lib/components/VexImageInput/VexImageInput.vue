@@ -90,7 +90,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import parsePath from 'parse-path';
   import mime from 'mime';
 

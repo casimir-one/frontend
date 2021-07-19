@@ -5,7 +5,7 @@ import Bootable from 'vuetify/lib/mixins/bootable';
 import ripple from 'vuetify/lib/directives/ripple';
 import { getSlot } from 'vuetify/lib/util/helpers';
 /* eslint-enable */
-import { defineComponent } from '@deip/platform-fns';
+import { defineComponent } from '@deip/platform-util';
 
 export const VexExpand = defineComponent({
   name: 'VexExpand',

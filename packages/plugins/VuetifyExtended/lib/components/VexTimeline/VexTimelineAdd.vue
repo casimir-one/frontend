@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
 
   export default defineComponent({
     name: 'VexTimelineAdd',

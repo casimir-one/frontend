@@ -6,7 +6,7 @@
 
 <script>
   // TODO: refactorin to VSheet renderer
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   /* eslint-disable */
   import { convertToUnit } from 'vuetify/lib/util/helpers';
   /* eslint-enable */

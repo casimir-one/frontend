@@ -13,7 +13,7 @@
   />
 </template>
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { find as deepFind } from 'find-keypath';
   /* eslint-disable */
   import { VTreeview } from 'vuetify/lib';

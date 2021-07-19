@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   /* eslint-disable */
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';

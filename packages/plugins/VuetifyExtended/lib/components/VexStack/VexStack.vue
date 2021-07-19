@@ -3,7 +3,7 @@
   import { convertToUnit } from 'vuetify/lib/util/helpers';
   import { VSheet } from 'vuetify/lib/components';
   /* eslint-enable */
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
 
   export default defineComponent({
     name: 'VexStack',

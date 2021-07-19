@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { isFuture, isToday, parseISO } from 'date-fns';
 
   /* eslint-disable */

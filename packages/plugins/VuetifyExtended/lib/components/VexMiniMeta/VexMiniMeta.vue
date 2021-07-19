@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import VexMiniMetaItem from './VexMiniMetaItem';
   import VexStack from '../VexStack/VexStack';
 

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { VexStack } from '../VexStack';
   import { contextMixin } from '../../composables';
 

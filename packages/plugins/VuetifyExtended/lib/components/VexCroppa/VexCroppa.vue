@@ -1,6 +1,6 @@
 <script>
   // TODO: Perhaps in the future it will be rewritten to own
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   // eslint-disable-next-line import/no-duplicates
   import component from 'vue-croppa/src/cropper?vue&type=script';
   // eslint-disable-next-line import/no-webpack-loader-syntax,import/no-duplicates

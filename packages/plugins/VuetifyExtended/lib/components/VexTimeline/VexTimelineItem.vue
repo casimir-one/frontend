@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import { contextMixin } from '../../composables';
 
   export default defineComponent({

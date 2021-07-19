@@ -61,7 +61,7 @@
 
 <script>
   /* eslint-disable import/extensions, import/no-unresolved */
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   import Toggleable from 'vuetify/lib/mixins/toggleable';
   import {
     VDialog,

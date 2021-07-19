@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-fns';
+  import { defineComponent } from '@deip/platform-util';
   /* eslint-disable */
   import { VIcon } from 'vuetify/lib/components';
   /* eslint-enable */
