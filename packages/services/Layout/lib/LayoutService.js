@@ -8,9 +8,9 @@ class LayoutService extends Singleton {
     return this.layoutHttp.getLayouts();
   }
 
-  getOne(id) {
+  getOne(_id) {
     return this.getLayouts()
-      .then((res) => res.find((l) => l.id === id));
+      .then((res) => res.find((l) => l._id === _id));
   }
 
   // temp solution need change to cmd and send msg
@@ -22,36 +22,36 @@ class LayoutService extends Singleton {
   create(data) {
     return this.getLayouts()
       .then((res) => {
-        const entityId = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
+        const _id = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
 
         const updated = collectionMerge(res, {
-          entityId, ...data
-        }, { key: 'entityId' });
+          _id, ...data
+        }, { key: '_id' });
 
         return this.updateLayouts(updated);
       });
   }
 
-  update(entityId, data) {
+  update(_id, data) {
     return this.getLayouts()
       .then((res) => {
-        const exist = res.find((l) => l.id === entityId);
+        const exist = res.find((l) => l._id === _id);
 
         if (!exist) {
           throw new Error('Layout not found');
         }
 
         const updated = collectionMerge(res, {
-          entityId, ...data
+          _id, ...data
         }, { key: 'entityId' });
         return this.updateLayouts(updated);
       });
   }
 
-  delete(entityId) {
+  remove(_id) {
     return this.getLayouts()
       .then((res) => {
-        const updated = res.filter((l) => l.entityId !== entityId);
+        const updated = res.filter((l) => l._id !== _id);
 
         return this.updateLayouts(updated);
       });
