@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns:** fix form mixin - oldValue set ([f8e357d](https://gitlab.com/DEIP/deip-client-modules/commit/f8e357dd8ce78775585c0c5d9ae370176edf301a))
+
+
+### Features
+
+* **@deip/platform-fns:** add admin page mixin ([3b81dee](https://gitlab.com/DEIP/deip-client-modules/commit/3b81dee2bd9d52a3e78cc0c0c9f6ec3b0b2699b5))
+* **@deip/platform-fns:** new helper defineComponent ([16a00b4](https://gitlab.com/DEIP/deip-client-modules/commit/16a00b46fcbc965f97f1888516df8c30dd89aa74))
+* **@deip/platform-store:** new package ([60a23c2](https://gitlab.com/DEIP/deip-client-modules/commit/60a23c206c18ed3c2d70de9a6ad469a5e108e45c))
+
+
+
+
+
 # [1.128.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
 
 **Note:** Version bump only for package @deip/platform-fns

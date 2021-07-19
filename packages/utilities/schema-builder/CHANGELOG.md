@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **@deip/schema-builder:** fixes ([f255a7a](https://github.com/DEIPworld/deip-modules/commit/f255a7ac6df717e83f8e1f15ce8cbfe40532e556))
+
+
+
+
+
 # [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
 
 **Note:** Version bump only for package @deip/schema-builder
