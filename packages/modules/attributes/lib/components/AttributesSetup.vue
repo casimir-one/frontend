@@ -117,7 +117,7 @@
 </template>
 
 <script>
-  import { formMixin } from '@deip/platform-fns';
+  import { formMixin } from '@deip/platform-components';
   import { VexStack } from '@deip/vuetify-extended';
   import draggable from 'vuedraggable';
   import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/constants';
