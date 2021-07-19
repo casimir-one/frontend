@@ -1,5 +1,6 @@
 export const RENDERER_SCHEME_BLOCK_KEYS = [
   'id',
+  'uid',
   'is',
 
   'data',
