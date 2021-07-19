@@ -25,6 +25,7 @@
   "dependencies": {
     "@deip/attributes-service": "1.129.0",
     "@deip/constants": "1.129.0",
+    "@deip/platform-components": "^1.129.0",
     "@deip/platform-fns": "1.129.0",
     "@deip/platform-store": "1.129.0",
     "@deip/proxydi": "1.129.0",
