@@ -18,7 +18,6 @@
           {{ titleBadge }}
         </v-chip>
       </div>
-
       <slot name="title" />
     </template>
 
