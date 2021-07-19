@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **@deip/constants:** add schema key ([887490b](https://github.com/DEIPworld/deip-modules/commit/887490b7a18606fc579bd7d7fc0762b757aa6d30))
+* **@deip/platform-fns:** fix form mixin - oldValue set ([f8e357d](https://github.com/DEIPworld/deip-modules/commit/f8e357dd8ce78775585c0c5d9ae370176edf301a))
+* **@deip/schema-builder:** fixes ([f255a7a](https://github.com/DEIPworld/deip-modules/commit/f255a7ac6df717e83f8e1f15ce8cbfe40532e556))
+* **@deip/vuetify-extended:** default slot in section title ([4eb81ac](https://github.com/DEIPworld/deip-modules/commit/4eb81ac88670db27af861304c78ce74a227ac160))
+
+
+### Features
+
+* **@deip/investments-service:** add getContributionsHistoryByTokenSale ([f036d3d](https://github.com/DEIPworld/deip-modules/commit/f036d3d45d1859dc052b1c58b4c49bb350de3a5b))
+* **@deip/layouts-module:** admin page ([bc1850d](https://github.com/DEIPworld/deip-modules/commit/bc1850d363f362dc18e6dc3305445dbe1a238b7f))
+* **@deip/platform-components:** new package ([879cfd3](https://github.com/DEIPworld/deip-modules/commit/879cfd356478492ca6507f0af3101829bfffc737))
+* **@deip/platform-components:** new package ([a68d1eb](https://github.com/DEIPworld/deip-modules/commit/a68d1ebe2cd3669f49ed4814374af69f9b36eb84))
+* **@deip/platform-fns:** add admin page mixin ([3b81dee](https://github.com/DEIPworld/deip-modules/commit/3b81dee2bd9d52a3e78cc0c0c9f6ec3b0b2699b5))
+* **@deip/platform-fns:** new helper defineComponent ([16a00b4](https://github.com/DEIPworld/deip-modules/commit/16a00b46fcbc965f97f1888516df8c30dd89aa74))
+* **@deip/platform-store:** new package ([60a23c2](https://github.com/DEIPworld/deip-modules/commit/60a23c206c18ed3c2d70de9a6ad469a5e108e45c))
+* **@deip/platform-util:** new package ([3f1f333](https://github.com/DEIPworld/deip-modules/commit/3f1f3337f2218bb412a084523ae6c1f94aedca33))
+* **@deip/toolbox:** new method deepFindParentByValue ([3f1329e](https://github.com/DEIPworld/deip-modules/commit/3f1329eab19358adef061f68a625a2ec6d9b043f))
+
+
+
+
+
 ## [1.128.2](https://github.com/DEIPworld/deip-modules/compare/v1.128.1...v1.128.2) (2021-07-15)
 
 

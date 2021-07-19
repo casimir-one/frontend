@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+
+### Features
+
+* **@deip/investments-service:** add getContributionsHistoryByTokenSale ([f036d3d](https://github.com/DEIPworld/deip-modules/commit/f036d3d45d1859dc052b1c58b4c49bb350de3a5b))
+
+
+
+
+
 ## [1.128.2](https://github.com/DEIPworld/deip-modules/compare/v1.128.1...v1.128.2) (2021-07-15)
 
 **Note:** Version bump only for package @deip/investments-service

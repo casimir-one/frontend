@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+**Note:** Version bump only for package @deip/tenant-service
+
+
+
+
+
 ## [1.128.2](https://github.com/DEIPworld/deip-modules/compare/v1.128.1...v1.128.2) (2021-07-15)
 
 **Note:** Version bump only for package @deip/tenant-service

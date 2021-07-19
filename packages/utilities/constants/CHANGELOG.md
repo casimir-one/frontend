@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* **@deip/constants:** add schema key ([887490b](https://github.com/DEIPworld/deip-modules/commit/887490b7a18606fc579bd7d7fc0762b757aa6d30))
+
+
+
+
+
 # [1.128.0](https://github.com/DEIPworld/deip-modules/compare/v1.127.0...v1.128.0) (2021-07-14)
 
 
