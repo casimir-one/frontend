@@ -67,7 +67,6 @@
       schemaData() {
         return {
           ...attributeMethodsFactory(
-            this,
             this.formData,
             {
               scopeName: 'user',

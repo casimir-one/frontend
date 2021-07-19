@@ -90,7 +90,6 @@
       schemaData() {
         return {
           ...attributeMethodsFactory(
-            this,
             this.formData,
             {
               scopeName: 'team',

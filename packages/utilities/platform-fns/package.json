@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@deip/constants": "1.128.0",
+    "@deip/proxydi": "^1.125.0",
     "@deip/toolbox": "1.125.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.22.1",
