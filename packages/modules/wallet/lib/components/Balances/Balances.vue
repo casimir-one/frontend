@@ -29,7 +29,7 @@
 
 <script>
   import { VexStack, VexDialog } from '@deip/vuetify-extended';
-  import { componentViewType } from '@deip/platform-fns';
+  import { componentViewType } from '@deip/platform-util';
   import { AssetInput } from '@deip/assets-module';
 
   import BalancesCards from './BalancesCards';
