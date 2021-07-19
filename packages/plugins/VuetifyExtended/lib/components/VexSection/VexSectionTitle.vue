@@ -18,6 +18,7 @@
           {{ titleBadge }}
         </v-chip>
       </div>
+
       <slot name="title" />
     </template>
 
@@ -30,7 +31,9 @@
 </template>
 
 <script>
-  export default {
+  import { defineComponent } from '@deip/platform-fns';
+
+  export default defineComponent({
     name: 'VexSectionTitle',
     props: {
       title: {
@@ -47,5 +50,5 @@
         return this.title || this.$slots.title;
       }
     }
-  };
+  });
 </script>

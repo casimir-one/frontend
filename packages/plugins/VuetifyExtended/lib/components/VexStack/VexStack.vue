@@ -1,8 +1,11 @@
 <script>
+  /* eslint-disable */
   import { convertToUnit } from 'vuetify/lib/util/helpers';
   import { VSheet } from 'vuetify/lib/components';
+  /* eslint-enable */
+  import { defineComponent } from '@deip/platform-fns';
 
-  export default {
+  export default defineComponent({
     name: 'VexStack',
     mixins: [VSheet],
 
@@ -39,7 +42,7 @@
         };
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">

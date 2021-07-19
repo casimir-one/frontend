@@ -5,15 +5,16 @@ import Bootable from 'vuetify/lib/mixins/bootable';
 import ripple from 'vuetify/lib/directives/ripple';
 import { getSlot } from 'vuetify/lib/util/helpers';
 /* eslint-enable */
+import { defineComponent } from '@deip/platform-fns';
 
-export const VexExpand = {
+export const VexExpand = defineComponent({
   name: 'VexExpand',
-
-  mixins: [Toggleable, Bootable],
 
   directives: {
     ripple
   },
+
+  mixins: [Toggleable, Bootable],
 
   props: {
     disabled: {
@@ -89,4 +90,4 @@ export const VexExpand = {
       h(VExpandTransition, [this.genContent()])
     ]);
   }
-};
+});

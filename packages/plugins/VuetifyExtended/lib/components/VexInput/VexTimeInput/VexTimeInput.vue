@@ -11,12 +11,15 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
   import {
     isToday, getHours, getMinutes, parseISO
   } from 'date-fns';
 
+  /* eslint-disable */
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import { createRange } from 'vuetify/lib/util/helpers';
+  /* eslint-enable */
 
   import { padCharsStart } from 'lodash/fp';
 
@@ -27,7 +30,7 @@
     return `${addLeadingZero(h)}:${addLeadingZero(m)}`;
   };
 
-  export default {
+  export default defineComponent({
     name: 'VexTimeInput',
     components: { VexAutocomplete },
     mixins: [Proxyable],
@@ -79,5 +82,5 @@
         return list;
       }
     }
-  };
+  });
 </script>

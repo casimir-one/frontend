@@ -20,9 +20,10 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
   import { contextMixin } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexDotListItem',
     mixins: [contextMixin],
     props: {
@@ -46,5 +47,5 @@
         };
       }
     }
-  };
+  });
 </script>

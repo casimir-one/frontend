@@ -1,6 +1,6 @@
 <script>
   // TODO: Perhaps in the future it will be rewritten to own
-
+  import { defineComponent } from '@deip/platform-fns';
   // eslint-disable-next-line import/no-duplicates
   import component from 'vue-croppa/src/cropper?vue&type=script';
   // eslint-disable-next-line import/no-webpack-loader-syntax,import/no-duplicates
@@ -9,7 +9,7 @@
 
   component.template = template;
 
-  export default {
+  export default defineComponent({
     name: 'VexCroppa',
     extends: component,
     methods: {
@@ -20,7 +20,7 @@
         });
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">
@@ -143,5 +143,5 @@
     40% {
       opacity: 1;
     }
-  }
+  };
 </style>

@@ -30,14 +30,17 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
   import { isFuture, isToday, parseISO } from 'date-fns';
 
+  /* eslint-disable */
   import Validatable from 'vuetify/lib/mixins/validatable';
   import Proxyable from 'vuetify/lib/mixins/proxyable';
+  /* eslint-enable */
 
   import { isArray } from '@deip/toolbox';
 
-  export default {
+  export default defineComponent({
     name: 'VexDateInput',
     mixins: [Proxyable],
     props: {
@@ -121,5 +124,5 @@
         return true;
       }
     }
-  };
+  });
 </script>

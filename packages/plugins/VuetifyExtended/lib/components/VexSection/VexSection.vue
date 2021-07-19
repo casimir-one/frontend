@@ -1,7 +1,10 @@
-<script>
+  <script>
+  import { defineComponent } from '@deip/platform-fns';
+  /* eslint-disable */
   import { VSheet } from 'vuetify/lib/components/VSheet';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexSection',
     mixins: [VSheet],
     props: {
@@ -18,7 +21,7 @@
           'pa-6': true,
           'pa-md-12': true
         };
-      },
+      }
     }
-  };
+  });
 </script>

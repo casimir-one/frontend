@@ -9,7 +9,6 @@
 <script>
   import { VexAvatar } from '@deip/vuetify-extended';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-
   import { userHelpersMixin } from '@deip/platform-fns';
 
   export default {
@@ -20,7 +19,7 @@
     mixins: [userHelpersMixin],
 
     props: {
-      ...VexAvatar.props,
+      ...VexAvatar.options.props,
 
       user: {
         type: Object,
@@ -30,7 +29,7 @@
 
     computed: {
       avatarProps() {
-        return getBindableProps.call(this, VexAvatar.props);
+        return getBindableProps.call(this, VexAvatar.options.props);
       },
 
       avatarSrc() {

@@ -11,10 +11,13 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
+  /* eslint-disable */
   import { VTooltip } from 'vuetify/lib/components';
+  /* eslint-enable */
   import { getBindableProps } from '../../composables/props';
 
-  export default {
+  export default defineComponent({
     name: 'VexTooltip',
     props: {
       tooltip: {
@@ -26,12 +29,12 @@
         default: 'span'
       },
 
-      ...VTooltip.options.props,
+      ...VTooltip.options.props
     },
     computed: {
       componentProps() {
-        return getBindableProps.call(this, VTooltip.options.props)
+        return getBindableProps.call(this, VTooltip.options.props);
       }
     }
-  };
+  });
 </script>

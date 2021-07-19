@@ -30,10 +30,11 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
   import { VexStack } from '../VexStack';
   import { contextMixin } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexBlock',
     components: { VexStack },
     mixins: [contextMixin],
@@ -94,7 +95,7 @@
         };
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss" module>

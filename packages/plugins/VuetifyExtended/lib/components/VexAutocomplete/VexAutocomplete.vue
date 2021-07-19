@@ -1,10 +1,13 @@
 <script>
+  /* eslint-disable */
   import {
     VAutocomplete, VChip, VBtn, VIcon
   } from 'vuetify/lib/components';
   import { convertToUnit } from 'vuetify/lib/util/helpers';
+  /* eslint-enable */
+  import { defineComponent } from '@deip/platform-fns';
 
-  export default {
+  export default defineComponent({
     name: 'VexAutocomplete',
     mixins: [VAutocomplete],
     props: {
@@ -56,7 +59,8 @@
       },
 
       genLegend() {
-        const width = !this.singleLine && (this.labelValue || (!this.multiple && this.isDirty)) ? this.labelWidth : 0;
+        const width = !this.singleLine && (this.labelValue || (!this.multiple && this.isDirty))
+          ? this.labelWidth : 0;
         const span = this.$createElement('span', {
           domProps: { innerHTML: '&#8203;' }
         });
@@ -159,5 +163,5 @@
         ]);
       }
     }
-  };
+  });
 </script>

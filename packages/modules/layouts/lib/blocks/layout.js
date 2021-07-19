@@ -18,13 +18,13 @@ export const layoutBlocks = {
   title: 'Layout',
   blocks: blocksGenerator([
     {
-      ...VexHeader,
+      ...VexHeader.options,
       icon: 'mdi-image-area',
       children: [],
       excludeProps: ['returnDominant']
     },
     {
-      ...VexSection,
+      ...VexSection.options,
       icon: 'mdi-view-agenda-outline',
       children: []
     },
@@ -47,7 +47,7 @@ export const layoutBlocks = {
       children: []
     },
     {
-      ...VexStack,
+      ...VexStack.options,
       icon: 'mdi-view-sequential-outline',
       children: []
     }

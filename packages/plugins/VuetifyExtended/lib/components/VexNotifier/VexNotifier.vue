@@ -20,22 +20,24 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
+  /* eslint-disable */
   import Toggleable from 'vuetify/lib/mixins/toggleable';
-
   import {
     VBtn,
     VSnackbar,
   } from 'vuetify/lib/components';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexNotifier',
-
-    mixins: [Toggleable],
 
     components: {
       VBtn,
-      VSnackbar,
+      VSnackbar
     },
+
+    mixins: [Toggleable],
 
     props: {
       message: {
@@ -49,7 +51,7 @@
       snackbarProps() {
         return Object.keys(VSnackbar.options.props)
           .reduce((props, key) => ({ ...props, ...(this[key] ? { [key]: this[key] } : {}) }), {});
-      },
+      }
     },
 
     methods: {
@@ -58,9 +60,8 @@
 
         setTimeout(() => {
           this.$destroy();
-        }, 150)
-
+        }, 150);
       }
     }
-  };
+  });
 </script>

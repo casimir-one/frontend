@@ -22,12 +22,15 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
+  /* eslint-disable */
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
+  /* eslint-enable */
 
-  import VexDateInput from '../VexDateInput';
-  import VexTimeInput from '../VexTimeInput';
+  import { VexDateInput } from '../VexDateInput';
+  import { VexTimeInput } from '../VexTimeInput';
 
-  export default {
+  export default defineComponent({
     name: 'VexDateTimeInput',
     components: { VexDateInput, VexTimeInput },
     mixins: [BindsAttrs],
@@ -89,5 +92,5 @@
         return `${date}T${time || '00:00'}:00`;
       }
     }
-  };
+  });
 </script>

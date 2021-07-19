@@ -1,7 +1,10 @@
 <script>
+  import { defineComponent } from '@deip/platform-fns';
+  /* eslint-disable */
   import { VFileInput, VChip, VTextField } from 'vuetify/lib/components';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexFileInput',
     mixins: [VFileInput],
     props: {
@@ -64,7 +67,7 @@
         }, [text]));
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">

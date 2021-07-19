@@ -3,7 +3,11 @@
     class="pa-0 reset-height rounded overflow-hidden"
     v-on="$listeners"
   >
-    <v-sheet class="d-flex align-self-stretch flex-column align-center flex-shrink-0" :width="24" :min-height="40">
+    <v-sheet
+      class="d-flex align-self-stretch flex-column align-center flex-shrink-0"
+      :width="24"
+      :min-height="40"
+    >
       <div :style="topLineStyle" class="mb-1" />
       <v-avatar
         :size="dotSize"
@@ -35,11 +39,12 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-fns';
   import { contextMixin } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexTimelineItem',
-    mixins: [ contextMixin ],
+    mixins: [contextMixin],
     props: {
       dotTop: {
         type: Number,
@@ -99,5 +104,5 @@
         this.$emit('click:dot');
       }
     }
-  };
+  });
 </script>

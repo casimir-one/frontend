@@ -28,8 +28,8 @@ const install = (Vue, options = {}) => {
     console.warn('VuetifyExtended needs vuetify instance. Use Vue.use(VuetifyExtended, { vuetify })');
   }
 
-  Vue.use(Confirm, { vuetify, ...vexDialog});
-  Vue.use(Notifier, { vuetify, ...vexNotifier});
+  Vue.use(Confirm, { vuetify, ...vexDialog });
+  Vue.use(Notifier, { vuetify, ...vexNotifier });
 };
 
 export const VuetifyExtended = {
