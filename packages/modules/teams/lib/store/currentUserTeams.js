@@ -3,7 +3,7 @@ import {
   listGetter,
   oneGetter,
   setListMutation
-} from '@deip/platform-fns/lib/store';
+} from '@deip/platform-store';
 
 import { teamsStore } from './teams';
 

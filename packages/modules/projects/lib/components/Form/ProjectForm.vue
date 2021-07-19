@@ -36,7 +36,7 @@
   import { cloneDeep } from 'lodash/fp';
   import { VexStack } from '@deip/vuetify-extended';
 
-  import { changeable, dataReadyMixin } from '@deip/platform-fns';
+  // import { changeable, dataReadyMixin } from '@deip/platform-fns';
 
   import { hasValue } from '@deip/toolbox';
 
@@ -49,7 +49,7 @@
       VexStack
     },
 
-    mixins: [changeable, dataReadyMixin],
+    // mixins: [changeable, dataReadyMixin],
 
     props: {
       mode: {

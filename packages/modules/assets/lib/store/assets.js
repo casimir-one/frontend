@@ -5,7 +5,7 @@ import {
   oneGetterFactory,
   setListMutationFactory,
   setOneMutationFactory
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
 
 const assetsService = AssetsService.getInstance();
 

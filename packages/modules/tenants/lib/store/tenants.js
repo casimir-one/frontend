@@ -5,7 +5,7 @@ import {
   oneGetterFactory,
   setListMutationFactory,
   setOneMutationFactory
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
 
 const tenantService = TenantService.getInstance();
 
@@ -36,7 +36,7 @@ const ACTIONS = {
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  setOne: setOneMutationFactory({ mergeKey: 'id' }),
+  setOne: setOneMutationFactory({ mergeKey: 'id' })
 };
 
 export const tenantsStore = {

@@ -4,7 +4,7 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
 
 const investmentsService = InvestmentsService.getInstance();
 

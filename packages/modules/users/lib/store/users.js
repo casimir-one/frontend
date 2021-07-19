@@ -5,7 +5,8 @@ import {
   oneGetterFactory,
   setListMutationFactory,
   setOneMutationFactory
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
+
 import { hasValue } from '@deip/toolbox';
 
 const userService = UserService.getInstance();

@@ -5,7 +5,7 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-fns/lib/store';
+} from '@deip/platform-store';
 
 const teamService = TeamService.getInstance();
 

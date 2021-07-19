@@ -7,7 +7,7 @@ import {
   setListMutationFactory,
   setOneMutationFactory,
   removeFromListMutationFactory
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
 import { collectionOne } from '@deip/toolbox';
 
 const attributesService = AttributesService.getInstance();

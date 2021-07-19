@@ -3,7 +3,7 @@ import { AssetsService } from '@deip/assets-service';
 import {
   listGetter,
   setListMutationFactory
-} from '@deip/platform-fns';
+} from '@deip/platform-store';
 
 import { ASSET_TYPE } from '@deip/constants';
 

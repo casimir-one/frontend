@@ -22,6 +22,7 @@
   "dependencies": {
     "@deip/constants": "1.128.0",
     "@deip/platform-fns": "1.128.0",
+    "@deip/platform-store": "^1.128.2",
     "@deip/proxydi": "1.125.0",
     "@deip/tenant-service": "1.128.2"
   },
