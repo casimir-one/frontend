@@ -1,8 +1,8 @@
-import Maska from 'maska';
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
 
-import { assetsStore, balancesStore } from './store';
+import { callForCurrentUser } from '@deip/platform-fns';
+import { walletStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
@@ -17,31 +17,29 @@ const install = (Vue, options = {}) => {
   if (i18n) {
     setLocalesMessages(i18n, locales);
   } else {
-    throw Error('[AssetsModule]: i18nInstance is not provided');
+    throw Error('[WalletModule]: i18nInstance is not provided');
   }
 
   if (store) {
-    store.registerModule('assets', assetsStore);
-    store.registerModule('balances', balancesStore);
+    store.registerModule('wallet', walletStore);
 
-    store.dispatch('assets/getList');
-    store.dispatch('balances/getList');
+    callForCurrentUser(
+      store,
+      'wallet/get',
+      'wallet/clear'
+    );
   } else {
-    throw Error('[AssetsModule]: storeInstance is not provided');
+    throw Error('[WalletModule]: storeInstance is not provided');
   }
-
-  Vue.use(Maska);
 };
 
-export const AssetsModule = {
-  name: 'AssetsModule',
+export const WalletModule = {
+  name: 'WalletModule',
   deps: [
     'EnvModule',
-    'ValidationPlugin',
-    'VuetifyExtended',
     'AuthModule',
-    'UsersModule',
-    'TeamsModule'
+    'VuetifyExtended',
+    'ValidationPlugin'
   ],
   install
 };

@@ -85,6 +85,7 @@
       };
 
       return {
+        defaultValue: { ...model },
         internalValue: this.value
           ? {
             ...model,
@@ -106,6 +107,12 @@
         handler(val) {
           this.internalValue.precision = val;
         }
+      },
+      value: {
+        handler(val) {
+          this.internalValue = val || { ...this.defaultValue };
+        },
+        deep: true
       },
       internalValue: {
         deep: true,

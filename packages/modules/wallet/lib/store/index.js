@@ -5,17 +5,19 @@ import {
   listGetter,
   oneGetterFactory,
   setListMutationFactory
-} from '@deip/platform-store';
+} from '@deip/platform-fns';
 
 const assetsService = AssetsService.getInstance();
 
 const STATE = {
-  data: []
+  data: [],
+  history: []
 };
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: 'assetSymbol' })
+  one: oneGetterFactory({ selectorKey: 'assetSymbol' }),
+  history: (state) => state.history
 };
 
 const ACTIONS = {
@@ -33,15 +35,33 @@ const ACTIONS = {
 
   clear({ commit }) {
     commit('clear');
+  },
+
+  deposit(_, payload) {
+    return assetsService.depositAssets(payload);
+  },
+
+  getHistory({ commit }, payload) {
+    const {
+      account,
+      status
+    } = payload;
+    return assetsService.getAccountDepositHistory(account, status)
+      .then((res) => {
+        commit('setHistory', res);
+      });
   }
 };
 
 const MUTATIONS = {
   setList: setListMutationFactory({ mergeKey: 'id' }),
-  clear: clearMutation
+  clear: clearMutation,
+  setHistory: (state, payload) => {
+    state.history = payload;
+  }
 };
 
-export const currentUserBalancesStore = {
+export const walletStore = {
   namespaced: true,
   state: STATE,
   getters: GETTERS,
