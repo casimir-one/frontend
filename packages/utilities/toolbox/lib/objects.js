@@ -1,6 +1,8 @@
 import { camelCase } from 'change-case';
 import crc32 from 'crc/crc32';
 import { cloneDeep, sortBy } from 'lodash/fp';
+import { find as deepFind } from 'find-keypath';
+import dotProp from 'dot-prop';
 import { isArray, isObject } from './validation';
 
 export const sortObjectKeys = (obj, comparator) => {
@@ -68,4 +70,9 @@ export const filterObjectKeys = (obj, keys, reverse = false) => {
     ...acc,
     ...({ [key]: obj[key] })
   }), {});
+};
+
+export const deepFindParentByValue = (obj, value) => {
+  const path = deepFind(obj, value).slice(0, -1);
+  return dotProp.get(obj, path.join('.'));
 };
