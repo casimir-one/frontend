@@ -4,7 +4,14 @@ const ora = require('ora');
 const execa = require('execa');
 const { crc32 } = require('crc');
 const chalk = require('chalk');
+
+const argv = require('yargs/yargs')(process.argv.slice(2)).argv
 /* eslint-enable */
+
+const {
+  boostrap = true,
+  clean = true
+} = argv;
 
 const prompt = inquirer.createPromptModule();
 
@@ -95,10 +102,14 @@ Otherwise, it will take a lot of work to roll back.
 
     spinner.start('Preparing for publication');
     await execa.command(`git checkout -b ${publishBranch}`);
-    await execa.command('npx lerna clean --yes');
+    if (clean) {
+      await execa.command('npx lerna clean --yes');
+    }
     spinner.stop();
 
-    await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
+    if (boostrap) {
+      await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
+    }
     await execa.command('npx lerna version --no-push --exact', { stdio: 'inherit', shell: true });
     await execa.command('npx lerna publish from-git', { stdio: 'inherit', shell: true });
     await execa.command(`git push --tags origin ${publishBranch}`);
