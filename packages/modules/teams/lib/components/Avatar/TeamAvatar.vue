@@ -19,7 +19,7 @@
     mixins: [teamHelpersMixin],
 
     props: {
-      ...VexAvatar.props,
+      ...VexAvatar.options.props,
 
       team: {
         type: Object,
@@ -29,7 +29,7 @@
 
     computed: {
       avatarProps() {
-        return getBindableProps.call(this, VexAvatar.props);
+        return getBindableProps.call(this, VexAvatar.options.props);
       },
       avatarOptions() {
         return {

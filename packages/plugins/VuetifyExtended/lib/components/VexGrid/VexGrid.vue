@@ -6,17 +6,18 @@
 
 <script>
   // TODO: refactorin to VSheet renderer
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import { convertToUnit } from 'vuetify/lib/util/helpers';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexGrid',
     props: {
       itemMaxWidth: {
         type: [Number, String],
         default: 0
-      },
-
-
+      }
     },
     computed: {
       cssVars() {
@@ -28,7 +29,7 @@
         return false;
       }
     }
-  };
+  });
 </script>
 
 <style module lang="scss">

@@ -1,8 +1,11 @@
 <script>
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import { VSheet } from 'vuetify/lib/components/VSheet';
   import { convertToUnit } from 'vuetify/lib/util/helpers';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'DLayoutSectionSplit',
     mixins: [VSheet],
     props: {
@@ -25,7 +28,7 @@
       classes() {
         return {
           ...VSheet.options.computed.classes.call(this),
-          'vex-section__split': true,
+          'vex-section__split': true
         };
       },
 
@@ -37,7 +40,7 @@
         };
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">

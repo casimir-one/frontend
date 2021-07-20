@@ -30,13 +30,15 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
-
   import { wrapInArray } from 'vuetify/lib/util/helpers';
+  /* eslint-enable */
 
-  import VexFileInput from '../VexFileInput';
-  import VexStack from '../../VexStack';
+  import { VexFileInput } from '../VexFileInput';
+  import { VexStack } from '../../VexStack';
 
   const iconsMap = [
     { icon: 'mdi-file-image-outline', ext: ['jpg', 'jpeg', 'png', 'svg', 'bmp', 'gif'] },
@@ -47,7 +49,7 @@
     { icon: 'mdi-file-powerpoint-outline', ext: ['ppt', 'pptx'] }
   ];
 
-  export default {
+  export default defineComponent({
     name: 'VexFileInputExtended',
     components: { VexStack, VexFileInput },
     mixins: [Proxyable, BindsAttrs],
@@ -105,7 +107,7 @@
         if (!target) return 'mdi-file-outline';
 
         return target.icon;
-      },
+      }
     }
-  };
+  });
 </script>

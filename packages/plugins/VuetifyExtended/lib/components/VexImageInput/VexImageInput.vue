@@ -90,6 +90,7 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
   import parsePath from 'parse-path';
   import mime from 'mime';
 
@@ -108,7 +109,7 @@
     return pathname.split('/').pop();
   };
 
-  export default {
+  export default defineComponent({
     name: 'VexImageInput',
 
     components: {
@@ -281,7 +282,7 @@
         );
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">

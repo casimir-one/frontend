@@ -61,6 +61,7 @@
 
 <script>
   /* eslint-disable import/extensions, import/no-unresolved */
+  import { defineComponent } from '@deip/platform-util';
   import Toggleable from 'vuetify/lib/mixins/toggleable';
   import {
     VDialog,
@@ -76,7 +77,7 @@
   } from 'vuetify/lib/components';
   /* eslint-enable import/extensions, import/no-unresolved */
 
-  export default {
+  export default defineComponent({
     name: 'VexDialog',
     components: {
       VDialog,
@@ -187,5 +188,5 @@
         this.$emit('close', e);
       }
     }
-  };
+  });
 </script>

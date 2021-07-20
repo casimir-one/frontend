@@ -25,11 +25,12 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
   import VexDotListItem from './VexDotListItem';
   import { VexStack } from '../VexStack';
   import { contextMixin } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexDotList',
     components: {
       VexStack,
@@ -46,5 +47,5 @@
         default: null
       }
     }
-  };
+  });
 </script>

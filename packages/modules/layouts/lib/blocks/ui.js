@@ -27,17 +27,17 @@ export const uiBlocks = {
       children: []
     },
     {
-      ...VexMiniMetaItem,
+      ...VexMiniMetaItem.options,
       icon: 'mdi-tag-text-outline',
       children: []
     },
     {
-      ...VexTooltip,
+      ...VexTooltip.options,
       icon: 'mdi-tooltip-text-outline',
       children: []
     },
     {
-      ...VexVideoEmbed,
+      ...VexVideoEmbed.options,
       icon: 'mdi-video-outline',
       excludeProps: ['params'],
       children: []

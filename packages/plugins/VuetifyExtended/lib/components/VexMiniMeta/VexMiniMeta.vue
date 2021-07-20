@@ -9,12 +9,13 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
   import VexMiniMetaItem from './VexMiniMetaItem';
   import VexStack from '../VexStack/VexStack';
 
   import { getBindableProps } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexMiniMeta',
     components: { VexStack, VexMiniMetaItem },
     props: {
@@ -23,12 +24,12 @@
         default: () => ([])
       },
 
-      ...VexStack.props
+      ...VexStack.options.props
     },
     computed: {
       stackProps() {
-        return getBindableProps.call(this, VexStack.props)
+        return getBindableProps.call(this, VexStack.options.props);
       }
     }
-  };
+  });
 </script>

@@ -22,7 +22,9 @@
 </template>
 
 <script>
-  export default {
+  import { defineComponent } from '@deip/platform-util';
+
+  export default defineComponent({
     name: 'VexTimelineAdd',
     props: {
       icon: {
@@ -39,7 +41,7 @@
         this.$emit('click');
       }
     }
-  };
+  });
 </script>
 
 <style module lang="scss">

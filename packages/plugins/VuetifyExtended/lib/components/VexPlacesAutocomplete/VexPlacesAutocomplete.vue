@@ -17,10 +17,11 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
   import VexAutocomplete from '../VexAutocomplete/VexAutocomplete';
   import { getBindableProps } from '../../composables';
 
-  export default {
+  export default defineComponent({
     name: 'VexPlacesAutocomplete',
     components: { VexAutocomplete },
 
@@ -35,7 +36,7 @@
         default: ''
       },
 
-      ...VexAutocomplete.props
+      ...VexAutocomplete.options.props
     },
 
     data(vm) {
@@ -80,7 +81,7 @@
       },
 
       autocompleteProps() {
-        return getBindableProps.call(this, VexAutocomplete.props);
+        return getBindableProps.call(this, VexAutocomplete.options.props);
       }
     },
 
@@ -117,5 +118,5 @@
         this.searchResults = predictions.map((prediction) => prediction.description);
       }
     }
-  };
+  });
 </script>

@@ -21,9 +21,12 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import { VIcon } from 'vuetify/lib/components';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexMiniMetaItem',
     components: { VIcon },
     props: {
@@ -47,14 +50,14 @@
     },
     computed: {
       internalIcon() {
-        return this.meta.icon || this.icon
+        return this.meta.icon || this.icon;
       },
       internalTitle() {
-        return this.meta.title || this.title
+        return this.meta.title || this.title;
       },
       internalLabel() {
-        return this.meta.label || this.label
+        return this.meta.label || this.label;
       }
     }
-  };
+  });
 </script>

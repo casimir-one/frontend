@@ -30,7 +30,9 @@
 </template>
 
 <script>
-  export default {
+  import { defineComponent } from '@deip/platform-util';
+
+  export default defineComponent({
     name: 'VexSectionTitle',
     props: {
       title: {
@@ -47,5 +49,5 @@
         return this.title || this.$slots.title;
       }
     }
-  };
+  });
 </script>

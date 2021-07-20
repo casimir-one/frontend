@@ -1,7 +1,10 @@
 <script>
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import { VTextField } from 'vuetify/lib/components';
+  /* eslint-enable */
 
-  export default {
+  export default defineComponent({
     name: 'VexPasswordInput',
 
     mixins: [VTextField],
@@ -26,9 +29,9 @@
       this.$on('click:append', this.listeners$['click:append']);
     },
 
-    beforeCreate(){
+    beforeCreate() {
       this.$delete(this.$options.props, 'appendIcon');
       this.$delete(this.$options.props, 'type');
-    },
-  };
+    }
+  });
 </script>

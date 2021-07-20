@@ -15,12 +15,11 @@
 <script>
   // eslint-disable-next-line import/extensions,import/no-unresolved
   import { VAvatar, VListItemAvatar } from 'vuetify/lib/components';
-
   import { isString } from '@deip/toolbox';
-
+  import { defineComponent } from '@deip/platform-util';
   import { getBindableProps } from '../../composables/props';
 
-  export default {
+  export default defineComponent({
     name: 'VexAvatar',
     props: {
       ...VAvatar.options.props,
@@ -72,5 +71,5 @@
         return 'text-body-1';
       }
     }
-  };
+  });
 </script>

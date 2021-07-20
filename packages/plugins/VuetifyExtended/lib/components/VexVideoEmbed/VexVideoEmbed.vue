@@ -14,11 +14,15 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
+  /* eslint-disable */
   import Measurable from 'vuetify/lib/mixins/measurable';
+  /* eslint-enable */
 
   export const allowedVideoServices = [
     {
       key: 'youtube',
+      // eslint-disable-next-line no-useless-escape
       reg: /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/i,
       url: 'https://www.youtube.com/embed/$5',
       params: {
@@ -58,7 +62,7 @@
     }
   ];
 
-  export default {
+  export default defineComponent({
     name: 'VexVideoEmbed',
     props: {
       aspectRatio: {
@@ -101,5 +105,5 @@
         return null;
       }
     }
-  };
+  });
 </script>

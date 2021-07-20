@@ -1,6 +1,6 @@
 <template>
   <v-sheet class="vex-header">
-    <div 
+    <div
       v-if="backgroundImage"
       class="vex-header__image-wrapper"
     >
@@ -14,16 +14,17 @@
       :style="overlayStyles"
     />
     <vex-section class="vex-header__content" dark>
-      <slot v-bind="slotBinds"/>
+      <slot v-bind="slotBinds" />
     </vex-section>
   </v-sheet>
 </template>
 
 <script>
-  import { VexSection } from '../VexSection';
+  import { defineComponent } from '@deip/platform-util';
   import { getDominantColor, isDarkColor } from '@deip/toolbox';
+  import { VexSection } from '../VexSection';
 
-  export default {
+  export default defineComponent({
     name: 'VexHeader',
 
     components: {
@@ -52,7 +53,7 @@
     data() {
       return {
         dominantColor: null
-      }
+      };
     },
 
     computed: {
@@ -61,25 +62,25 @@
           ...(this.overlay ? {
             background: this.overlay
           } : {})
-        }
+        };
       },
 
       imageIsDark() {
         return this.dominantColor
           ? isDarkColor(this.dominantColor)
-          : false
+          : false;
       },
 
       slotBinds() {
         return {
           ...(this.dominantColor && this.returnDominant
             ? {
-                imageDominant: this.dominantColor,
-                imageIsDark: this.imageIsDark,
-              }
+              imageDominant: this.dominantColor,
+              imageIsDark: this.imageIsDark
+            }
             : {}
           )
-        }
+        };
       }
     },
 
@@ -92,13 +93,12 @@
         if (this.backgroundImage && this.returnDominant) {
           getDominantColor(this.backgroundImage)
             .then((color) => {
-              console.log(1)
               this.dominantColor = color;
-            })
+            });
         }
       }
     }
-  }
+  });
 </script>
 
 <style lang="scss">

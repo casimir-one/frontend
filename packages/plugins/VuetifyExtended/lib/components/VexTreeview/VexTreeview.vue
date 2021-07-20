@@ -13,13 +13,16 @@
   />
 </template>
 <script>
+  import { defineComponent } from '@deip/platform-util';
   import { find as deepFind } from 'find-keypath';
+  /* eslint-disable */
   import { VTreeview } from 'vuetify/lib';
+  /* eslint-enable */
   import { isNil, get, difference } from 'lodash/fp';
 
   import { getBindableProps } from '../../composables/props';
 
-  export default {
+  export default defineComponent({
     name: 'VexTreeview',
     components: { VTreeview },
 
@@ -147,7 +150,7 @@
         this.internalValue = [...new Set(this.internalValue)];
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss">
