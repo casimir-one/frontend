@@ -51,8 +51,7 @@
 </template>
 
 <script>
-  import { parseISO } from 'date-fns';
-  import { formatDateMixin } from '@deip/platform-components';
+  import { dateMixin } from '@deip/platform-components';
   import { TS_TYPES } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
   import { uniqBy } from '@deip/toolbox/lodash';
@@ -60,7 +59,7 @@
   export default {
     name: 'FundraisingProgress',
 
-    mixins: [formatDateMixin, assetsMixin],
+    mixins: [dateMixin, assetsMixin],
 
     props: {
       tokenSale: {
@@ -92,7 +91,7 @@
         return (this.collected.amount * 100) / this.hardCap.amount;
       },
       remainingTime() {
-        return this.formatDistanceToNow(parseISO(this.tokenSale?.endTime));
+        return this.$$formatDistanceToNow(this.$$parseISO(this.tokenSale?.endTime, true));
       },
       contributionsCount() {
         if (!this.tokenSale?.contributions) {
