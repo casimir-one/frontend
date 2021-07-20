@@ -24,11 +24,11 @@
         default: () => ([])
       },
 
-      ...VexStack.props
+      ...VexStack.options.props
     },
     computed: {
       stackProps() {
-        return getBindableProps.call(this, VexStack.props);
+        return getBindableProps.call(this, VexStack.options.props);
       }
     }
   });

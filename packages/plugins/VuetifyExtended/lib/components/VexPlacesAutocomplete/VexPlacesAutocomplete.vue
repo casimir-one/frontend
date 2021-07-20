@@ -36,7 +36,7 @@
         default: ''
       },
 
-      ...VexAutocomplete.props
+      ...VexAutocomplete.options.props
     },
 
     data(vm) {
@@ -81,7 +81,7 @@
       },
 
       autocompleteProps() {
-        return getBindableProps.call(this, VexAutocomplete.props);
+        return getBindableProps.call(this, VexAutocomplete.options.props);
       }
     },
 
