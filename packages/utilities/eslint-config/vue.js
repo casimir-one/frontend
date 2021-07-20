@@ -55,6 +55,9 @@ module.exports = {
         singleline: 3
       }
     ],
+    'vue/valid-v-slot': ['error', {
+      allowModifiers: true
+    }],
     'no-plusplus': 'off',
     'class-methods-use-this': 'off'
   },
