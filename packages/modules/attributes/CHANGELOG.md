@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** fix formMixin import ([4f1afd3](https://gitlab.com/DEIP/deip-client-modules/commit/4f1afd3de33a87a41b2c1cbf5574d024fd5daa54))
+
+
+
+
+
 # [1.129.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
 
 **Note:** Version bump only for package @deip/attributes-module

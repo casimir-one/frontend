@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* **@deip/assets-module:** add default value to AssetInput ([b6f7b6b](https://github.com/DEIPworld/deip-modules/commit/b6f7b6be9b194cf96f5db65956a9058735106154))
+* **@deip/attributes-module:** fix formMixin import ([4f1afd3](https://github.com/DEIPworld/deip-modules/commit/4f1afd3de33a87a41b2c1cbf5574d024fd5daa54))
+* **@deip/fundraising-module:** fix investors count in fundraising progress ([146b5c4](https://github.com/DEIPworld/deip-modules/commit/146b5c4002bec942e774cac866a9ca1be466df03))
+* **@deip/fundraising-module:** fix wallet store name ([e95dd6c](https://github.com/DEIPworld/deip-modules/commit/e95dd6c60d64cb8cf9b7662cd38a30bcd5e1adaa))
+* **@deip/teams-module:** add param isCreateDefaultProject to create team action ([17cfebd](https://github.com/DEIPworld/deip-modules/commit/17cfebd7b27ddcd0e9c845ca54361f55d67a92f9))
+* **@deip/vuetify-extended:** default slot in section title ([8738f9d](https://github.com/DEIPworld/deip-modules/commit/8738f9de050a5a83f8d777638584b93a5fdc85ce))
+* **@deip/vuetify-extended:** fix button color in VexDialog ([ed49c3c](https://github.com/DEIPworld/deip-modules/commit/ed49c3cdca5f5632965f019715761ef682679f22))
+* **@deip/wallet-module:** fix card button markup ([a9d1299](https://github.com/DEIPworld/deip-modules/commit/a9d1299bde3c18a0b5952766ab831ccfb397766f))
+* **@deip/wallet-module:** fix platform fns imports ([5cd5dfb](https://github.com/DEIPworld/deip-modules/commit/5cd5dfb4a67eb451b340f0da3057e6ef98261774))
+
+
+### Features
+
+* **@deip/assets-module:** remove currentUserBalances store module ([e196996](https://github.com/DEIPworld/deip-modules/commit/e1969967faf6d4b30d116f132a4ab9f7cb418674))
+* **@deip/assets-service:** add deposit asset method ([afa89b8](https://github.com/DEIPworld/deip-modules/commit/afa89b85a2092ca18d31273fee3b88e5d1adcc0e))
+* **@deip/vuetify-extended:** add VexColorShadow ([5f7fde2](https://github.com/DEIPworld/deip-modules/commit/5f7fde2da35e4e82d9c754d9db7bd94305b62e71))
+* **@deip/wallet-module:** add Balances component ([b454e9d](https://github.com/DEIPworld/deip-modules/commit/b454e9d28daf219e2f735971df25d5dd920d3a37))
+* **@deip/wallet-module:** add package ([dd5a1e4](https://github.com/DEIPworld/deip-modules/commit/dd5a1e4690a5b7d0ac8eb88093456118612bdd84))
+
+
+
+
+
 # [1.129.0](https://github.com/DEIPworld/deip-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
 
 

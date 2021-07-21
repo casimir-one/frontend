@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix investors count in fundraising progress ([146b5c4](https://gitlab.com/DEIP/deip-client-modules/commit/146b5c4002bec942e774cac866a9ca1be466df03))
+* **@deip/fundraising-module:** fix wallet store name ([e95dd6c](https://gitlab.com/DEIP/deip-client-modules/commit/e95dd6c60d64cb8cf9b7662cd38a30bcd5e1adaa))
+
+
+
+
+
 # [1.129.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
 
 **Note:** Version bump only for package @deip/fundraising-module
