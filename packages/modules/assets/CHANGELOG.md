@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* **@deip/assets-module:** add default value to AssetInput ([b6f7b6b](https://gitlab.com/DEIP/deip-client-modules/commit/b6f7b6be9b194cf96f5db65956a9058735106154))
+
+
+### Features
+
+* **@deip/assets-module:** remove currentUserBalances store module ([e196996](https://gitlab.com/DEIP/deip-client-modules/commit/e1969967faf6d4b30d116f132a4ab9f7cb418674))
+
+
+
+
+
 # [1.129.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
 
 **Note:** Version bump only for package @deip/assets-module

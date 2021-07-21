@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** default slot in section title ([8738f9d](https://gitlab.com/DEIP/deip-client-modules/commit/8738f9de050a5a83f8d777638584b93a5fdc85ce))
+* **@deip/vuetify-extended:** fix button color in VexDialog ([ed49c3c](https://gitlab.com/DEIP/deip-client-modules/commit/ed49c3cdca5f5632965f019715761ef682679f22))
+
+
+### Features
+
+* **@deip/vuetify-extended:** add VexColorShadow ([5f7fde2](https://gitlab.com/DEIP/deip-client-modules/commit/5f7fde2da35e4e82d9c754d9db7bd94305b62e71))
+
+
+
+
+
 # [1.129.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.128.2...v1.129.0) (2021-07-19)
 
 
