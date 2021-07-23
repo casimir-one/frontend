@@ -35,7 +35,8 @@ export const FundraisingModule = {
     'EnvModule',
     'ValidationPlugin',
     'VuetifyExtended',
-    'AssetsModule'
+    'AssetsModule',
+    'ProjectsModule'
   ],
   install
 };

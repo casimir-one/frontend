@@ -69,6 +69,7 @@ const ACTIONS = {
     return investmentsService.getCurrentTokenSaleByProject(projectId)
       .then((tokenSale) => {
         commit('setOne', tokenSale);
+        return tokenSale;
       });
   },
 

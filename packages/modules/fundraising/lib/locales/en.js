@@ -26,6 +26,7 @@ export default {
         goal: 'Goal',
         collected: 'Collected',
         untilCompletion: 'Until completion',
+        beforeStart: 'Before start',
         investors: 'Investors'
       },
       contributeForm: {
@@ -38,6 +39,12 @@ export default {
         userBalanceIsNotEnough: 'You do not have enough funds in your account',
         confirmTitle: 'Investment confirmation',
         doYouConfirm: 'Do you confirm the investment of funds from your account?'
+      },
+      fundraisingWidget: {
+        yourInvestment: 'Your investment',
+        invest: 'Invest',
+        startFundraising: 'Start fundraising',
+        noFundraising: 'Fundraising has never started'
       }
     }
   }
