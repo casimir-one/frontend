@@ -20,6 +20,7 @@
     "@deip/attributes-module": "1.130.0",
     "@deip/attributes-service": "1.130.0",
     "@deip/constants": "1.130.0",
+    "@deip/fundraising-module": "^1.130.0",
     "@deip/layout-service": "1.130.0",
     "@deip/platform-components": "1.130.0",
     "@deip/platform-fns": "1.130.0",

@@ -190,7 +190,8 @@
     typographyBlocks,
     tableBlocks,
     uiBlocks,
-    attributesBlocksFactory
+    attributesBlocksFactory,
+    fundraisingBlocks
   } from '../../blocks';
 
   export default defineComponent({
@@ -235,7 +236,8 @@
           attributesBlocksFactory(
             this.$store.getters['attributes/list']({ scope: this.formData.scope }),
             this.formData.isForm ? AttributeSet : AttributeRead
-          )
+          ),
+          fundraisingBlocks
         ];
       }
     },
