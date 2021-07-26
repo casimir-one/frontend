@@ -29,6 +29,8 @@
     "@deip/platform-components": "1.130.0",
     "@deip/platform-fns": "1.130.0",
     "@deip/platform-store": "1.129.0",
+    "@deip/platform-util": "^1.129.0",
+    "@deip/projects-module": "^1.129.0",
     "@deip/proxydi": "1.129.0",
     "@deip/toolbox": "1.129.0",
     "@deip/validation-plugin": "1.130.0",

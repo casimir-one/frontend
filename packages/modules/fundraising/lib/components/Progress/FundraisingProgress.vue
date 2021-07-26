@@ -40,6 +40,13 @@
         <span>{{ remainingTime }}</span>
       </div>
 
+      <div v-else-if="tokenSale.status === TS_TYPES.INACTIVE">
+        <span class="font-weight-medium">
+          {{ $t('module.fundraising.fundraisingProgress.beforeStart') }}:
+        </span>
+        <span>{{ beforeStartTime }}</span>
+      </div>
+
       <div>
         <span class="font-weight-medium">
           {{ $t('module.fundraising.fundraisingProgress.investors') }}:
@@ -54,6 +61,7 @@
   import { dateMixin } from '@deip/platform-components';
   import { TS_TYPES } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
+  import { isString } from '@deip/toolbox';
   import { uniqBy } from '@deip/toolbox/lodash';
 
   export default {
@@ -91,7 +99,10 @@
         return (this.collected.amount * 100) / this.hardCap.amount;
       },
       remainingTime() {
-        return this.$$formatDistanceToNow(this.$$parseISO(this.tokenSale?.endTime, true));
+        return this.formatTimeToNow(this.tokenSale?.endTime);
+      },
+      beforeStartTime() {
+        return this.formatTimeToNow(this.tokenSale?.startTime);
       },
       contributionsCount() {
         if (!this.tokenSale?.contributions) {
@@ -117,6 +128,17 @@
       collectedAmountClass() {
         return ['text--primary font-weight-medium',
                 { 'text-h3': !this.small }];
+      }
+    },
+
+    methods: {
+      formatTimeToNow(time) {
+        let timeToFormat = time;
+        if (isString(time)) {
+          timeToFormat = this.$$parseISO(time, true);
+        }
+
+        return this.$$formatDistanceToNow(timeToFormat);
       }
     }
   };
