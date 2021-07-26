@@ -8,10 +8,12 @@ import {
   pascalCase,
 
   RecursiveIterator,
-  dotProp
+  objectPath
 } from '@deip/toolbox';
 
 import { cloneDeep, merge } from '@deip/toolbox/lodash';
+
+import { TemplateStringParser } from '../../template-string-parser';
 
 export const SchemaRenderer = {
   name: 'SchemaRenderer',
@@ -89,32 +91,11 @@ export const SchemaRenderer = {
       if (!isArray(schema)) throw Error('Schema mus be an Array');
 
       const clone = cloneDeep(schema);
+      const templateStringParser = new TemplateStringParser(this.schemaData);
 
       for (const { parent, node, key } of new RecursiveIterator(clone, 1, true)) {
         if (isString(node)) {
-          let nodeString = node;
-
-          const stringPattern = /{{\s*(.*?)\s*}}/gm;
-          const stringMatches = [...nodeString.matchAll(stringPattern)];
-          if (stringMatches && stringMatches.length) {
-            nodeString = node
-              .replace(stringPattern, (...args) => dotProp.get(this.schemaData, args[1]));
-          }
-
-          const modelPattern = /^@([a-zA-Z0-9_.-]*)$/;
-          const modelMatches = nodeString.match(modelPattern);
-          if (modelMatches && modelMatches.length) {
-            nodeString = dotProp.get(this.schemaData, modelMatches[1]);
-          }
-
-          const methodPattern = /^@([a-zA-Z0-9_.-]*\((['"]?[a-zA-Z0-9_,.-]*['"]?[,]?[ ]?)*\))$/;
-          const methodMatches = nodeString.match(methodPattern);
-          if (methodMatches && methodMatches.length) {
-            // eslint-disable-next-line no-eval
-            nodeString = eval(`this.schemaData.${methodMatches[1]}`);
-          }
-
-          parent[key] = nodeString;
+          parent[key] = templateStringParser.parse(node);
         }
       }
 
@@ -142,6 +123,10 @@ export const SchemaRenderer = {
         condition = true,
         text
       } = node;
+
+      if (data.proxyProps) {
+        objectPath.set(data, ['props', 'proxyProps'], data.proxyProps);
+      }
 
       const nodeChildren = text || this.getChildren(children);
       let nodeData = merge(data, this.getNodeModelData(node));
@@ -203,7 +188,7 @@ export const SchemaRenderer = {
 
       return {
         [isNativeInput ? 'attrs' : 'props']: {
-          [modelProps.prop]: dotProp.get(vm.internalValue, modelProps.path)
+          [modelProps.prop]: objectPath.get(vm.internalValue, modelProps.path)
         },
         on: {
           [modelProps.event](event) {
@@ -214,7 +199,7 @@ export const SchemaRenderer = {
             } else {
               vm.internalValue = merge(
                 vm.internalValue,
-                dotProp.set({}, modelProps.path, value)
+                objectPath.set({}, modelProps.path, value)
               );
             }
           }
