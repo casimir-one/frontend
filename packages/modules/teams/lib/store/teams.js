@@ -1,8 +1,7 @@
 import { TeamService } from '@deip/team-service';
 
 import {
-  listGetter,
-  oneGetter,
+  crudGettersFactory,
   setListMutation,
   setOneMutation
 } from '@deip/platform-store';
@@ -14,8 +13,9 @@ const STATE = {
 };
 
 const GETTERS = {
-  list: listGetter,
-  one: oneGetter
+  ...crudGettersFactory({ dataKey: 'entityId' })
+  // list: listGetter,
+  // one: oneGetter
 };
 
 const ACTIONS = {

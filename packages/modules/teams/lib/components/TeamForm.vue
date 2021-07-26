@@ -45,9 +45,9 @@
 <script>
   import { VexStack } from '@deip/vuetify-extended';
   import { SchemaRenderer } from '@deip/schema-renderer';
-  import { AttributeSet } from '@deip/attributes-module';
+  import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
-  import { attributedFormFactory } from '@deip/platform-components';
+  import { attributedFormFactory } from '@deip/layouts-module';
   import { FORM_MODES } from '@deip/constants';
 
   export default {
