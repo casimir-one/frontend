@@ -3,25 +3,43 @@ import { hasValue } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 
 export const expandAttributes = (
-  attrs,
+  obj,
   idKey = 'attributeId',
   valueKey = 'value'
-) => (attrs || []).reduce((acc, attr) => ({
-  ...acc,
-  ...{
-    [attr[idKey]]: attr[valueKey]
-  }
-}), {});
+) => {
+  const { attributes = [] } = obj;
+
+  return {
+    ...obj,
+    ...{
+      attributes: (attributes).reduce((acc, attr) => ({
+        ...acc,
+        ...{
+          [attr[idKey]]: attr[valueKey]
+        }
+      }), {})
+    }
+  };
+};
 
 export const compactAttributes = (
-  attrs,
+  obj,
   idKey = 'attributeId',
   valueKey = 'value'
-) => Object.keys(attrs || {})
-  .map((id) => ({
-    [idKey]: id,
-    [valueKey]: attrs[id]
-  }));
+) => {
+  const { attributes = {} } = obj;
+
+  return {
+    ...obj,
+    ...{
+      attributes: Object.keys(attributes)
+        .map((id) => ({
+          [idKey]: id,
+          [valueKey]: attributes[id]
+        }))
+    }
+  };
+};
 
 export const getAttributeFileSrc = (opts = {}) => {
   const {
@@ -68,6 +86,8 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
   const { DEIP_SERVER_URL } = proxydi.get('env');
 
   return {
+    data,
+
     getAttributeValue(id) {
       return data?.attributes?.[id]?.value;
     },
@@ -76,7 +96,9 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
       return hasValue(data?.attributes?.[id]?.value);
     },
 
-    getAttributeFileSrc(attributeId, filename) {
+    getAttributeFileSrc(attributeId, file) {
+      const filename = file || data?.attributes?.[attributeId];
+
       const hasFileName = !!filename && filename !== 'null' && filename !== 'undefined';
       if (!hasFileName || !attributeId) {
         return '';
