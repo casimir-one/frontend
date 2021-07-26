@@ -3,7 +3,7 @@ import {
   listGetterFactory,
   oneGetter,
   oneGetterFactory
-} from '../lib/store';
+} from '../lib/getters';
 
 const state = {
   data: [
