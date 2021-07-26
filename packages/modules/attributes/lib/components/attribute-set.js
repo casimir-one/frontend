@@ -149,9 +149,9 @@ const AttributeSet = {
                 .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {}),
               errors
             },
-            attributeInfo: this.attributeInfo,
-            attributeValue: isFile(this.value) ? this.value.name : this.value,
-            errors,
+            // attributeInfo: this.attributeInfo,
+            // attributeValue: isFile(this.value) ? this.value.name : this.value,
+            // errors,
             proxyProps: Object.keys(components)
               .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {})
           },

@@ -45,7 +45,7 @@ const ATTR_TYPES_SET_SCHEMAS = {
       props: {
         label: '{{attribute.info.title}}',
         aspectRatio: '{{attribute.props.VexImageInput.aspectRatio}}',
-        initialImage: '@getAttributeFileSrc("{{attribute.info._id}}", "{{attribute.value}}")',
+        initialImage: '{{(attribute.info._id)::getAttributeFileSrc}}',
         errorMessages: '{{attribute.errors}}'
       }
     },
@@ -64,7 +64,7 @@ const ATTR_TYPES_SET_SCHEMAS = {
         mask: avatarMask,
         noFlip: true,
         noRotate: true,
-        initialImage: '@getAttributeFileSrc("{{attribute.info._id}}", "{{attribute.value}}")',
+        initialImage: '{{(attribute.info._id)::getAttributeFileSrc}}',
         errorMessages: '{{attribute.errors}}'
       }
     },

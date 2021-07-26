@@ -1,10 +1,16 @@
-const AttributeRead = {
+import { defineComponent } from '@deip/platform-util';
+import { abstractAttributeFactory } from '../mixins/attribute';
+import { ATTR_TYPES_READ_SCHEMAS } from '../schemas/attribute-read-schema';
+
+const AttributeRead = defineComponent({
   name: 'AttributeRead',
 
-  render(h) {
-    return h('div', 'AttributeRead');
-  }
-};
+  mixins: [
+    abstractAttributeFactory(
+      ATTR_TYPES_READ_SCHEMAS
+    )
+  ]
+});
 
 export default AttributeRead;
 export { AttributeRead };
