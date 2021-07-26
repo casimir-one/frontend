@@ -2,7 +2,7 @@ import { isEmpty } from 'lodash/fp';
 
 export const userHelpersMixin = {
   methods: {
-    userFullName(user) {
+    $$userFullName(user) {
       if (!user || isEmpty(user)) return null;
 
       const firstName = this.$attributes.getMappedData('userFirstName', user.attributes)?.value;
@@ -14,8 +14,8 @@ export const userHelpersMixin = {
       return user.username;
     },
 
-    userInitials(user) {
-      const fullName = this.userFullName(user);
+    $$userInitials(user) {
+      const fullName = this.$$userFullName(user);
 
       if (!fullName) return '×';
 
@@ -26,7 +26,7 @@ export const userHelpersMixin = {
         .toUpperCase();
     },
 
-    userAvatarSrc(user, opts = {}) {
+    $$userAvatarSrc(user, opts = {}) {
       if (!user || isEmpty(user)) return null;
 
       const avatar = this.$attributes.getMappedData(

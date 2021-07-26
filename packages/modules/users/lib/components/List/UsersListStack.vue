@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import { userHelpersMixin } from '@deip/platform-fns';
+  import { userHelpersMixin } from '../../mixins';
   import UserAvatar from '../Avatar/UserAvatar';
 
   export default {
