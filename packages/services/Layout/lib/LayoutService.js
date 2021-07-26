@@ -36,14 +36,12 @@ class LayoutService extends Singleton {
     return this.getLayouts()
       .then((res) => {
         const exist = res.find((l) => l._id === _id);
-
         if (!exist) {
           throw new Error('Layout not found');
         }
-
         const updated = collectionMerge(res, {
           _id, ...data
-        }, { key: 'entityId' });
+        }, { key: '_id' });
         return this.updateLayouts(updated);
       });
   }
