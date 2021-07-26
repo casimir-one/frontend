@@ -1,9 +1,9 @@
 import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
-import { hasRoles } from '@deip/platform-fns';
 import { awaitForStore } from '@deip/platform-store';
-
 import { SYSTEM_ROLE } from '@deip/constants';
+
+import { hasRoles } from './util/roles';
 import { authStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
