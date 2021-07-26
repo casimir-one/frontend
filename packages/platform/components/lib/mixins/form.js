@@ -4,7 +4,8 @@ import { FORM_MODES } from '@deip/constants';
 const formFactory = (
   prop = 'value',
   event = 'input',
-  defaultPropValue = () => ({})
+  defaultPropValue = () => ({}),
+  initialFormData = {}
 ) => ({
   name: 'FormFactory',
 
@@ -29,7 +30,7 @@ const formFactory = (
 
   data() {
     return {
-      lazyFormData: {},
+      lazyFormData: initialFormData,
 
       disabled: false,
       loading: false,
@@ -63,7 +64,9 @@ const formFactory = (
   watch: {
     [prop]: {
       handler(val) {
-        if (val && !isEqual(val, this.lazyFormData)) this.lazyFormData = { ...val };
+        if (val && !isEqual(val, this.lazyFormData)) {
+          this.lazyFormData = cloneDeep(val);
+        }
       },
       immediate: true,
       deep: true
