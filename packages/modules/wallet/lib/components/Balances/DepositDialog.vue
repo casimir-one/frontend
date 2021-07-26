@@ -152,6 +152,7 @@
 
         if (e.data === 'stripe-payment-processed') {
           this.closeDialog();
+          this.$emit('payment-processed');
           this.$notifier.showSuccess(this.$t('module.wallet.balances.paymentProcessed'));
         }
 
