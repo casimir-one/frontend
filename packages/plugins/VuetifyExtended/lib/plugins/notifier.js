@@ -1,4 +1,4 @@
-import { VexNotifier } from "./../components";
+import { VexNotifier } from '../components';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
@@ -14,18 +14,17 @@ const install = (Vue, options = {}) => {
   Vue.delete(options, 'property');
   Vue.delete(options, 'vuetify');
 
-  const Ctor = Vue.extend({ vuetify, ...VexNotifier });
-
   function createNotifierCmp(opts) {
     const container = document.querySelector('[data-app=true]') || document.body;
 
     return new Promise((resolve) => {
-      const cmp = new Ctor({
+      const cmp = new VexNotifier({
+        vuetify,
         propsData: { ...Vue.prototype[property].options, ...opts },
         created() {
           this.$nextTick(() => {
             this.isActive = true;
-          })
+          });
         },
         destroyed() {
           container.removeChild(cmp.$el);
@@ -50,18 +49,18 @@ const install = (Vue, options = {}) => {
     show: showNotifier,
 
     showError: (message, opts = {}) => {
-      const defMessage = 'Something wrong. Please try later.'
-      return showNotifier(message || defMessage, { ...opts, ...{ color: 'error' } })
+      const defMessage = 'Something wrong. Please try later.';
+      return showNotifier(message || defMessage, { ...opts, ...{ color: 'error' } });
     },
 
     showSuccess: (message, opts = {}) => {
-      const defMessage = 'Successful!'
-      return showNotifier(message || defMessage, { ...opts, ...{ color: 'success' } })
+      const defMessage = 'Successful!';
+      return showNotifier(message || defMessage, { ...opts, ...{ color: 'success' } });
     }
-  }
+  };
 
   // Vue.component('VexNotifier', { vuetify, ...VexNotifier });
-}
+};
 
 export const Notifier = {
   install
