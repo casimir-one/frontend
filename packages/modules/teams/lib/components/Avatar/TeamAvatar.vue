@@ -8,8 +8,8 @@
 
 <script>
   import { VexAvatar } from '@deip/vuetify-extended';
-  import { teamHelpersMixin } from '@deip/platform-fns';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
+  import { teamHelpersMixin } from '../../mixins';
 
   export default {
     name: 'TeamAvatar',
