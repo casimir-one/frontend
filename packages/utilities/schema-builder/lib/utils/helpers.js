@@ -8,7 +8,7 @@ import {
   capitalCase,
   paramCase,
 
-  RecursiveIterator
+  RecursiveIterator, objectPath
 } from '@deip/toolbox';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
@@ -25,9 +25,19 @@ export const ifValidBlock = (node) => (
 
 export const convertBlockProps = (props) => Object.keys(props)
   .reduce((acc, prop) => {
-    const propVal = isObject(props[prop])
-      ? props[prop].default
-      : props[prop];
+    let propVal = props[prop];
+
+    // if (isString(props[prop])) {
+    //   propVal = props[prop];
+    // }
+
+    if (props[prop].type) {
+      propVal = props[prop].type();
+    }
+
+    if (props[prop].default) {
+      propVal = props[prop].default;
+    }
 
     return {
       ...acc,
@@ -35,14 +45,30 @@ export const convertBlockProps = (props) => Object.keys(props)
     };
   }, {});
 
+export const normalizeProps = (node) => {
+  const res = cloneDeep(node);
+  const props = node?.data?.props;
+  const proxyProps = node?.data?.proxyProps;
+
+  if (props) {
+    objectPath.set(res, ['data', 'props'], convertBlockProps(props));
+    // res.data.props = convertBlockProps(res.data.props);
+  }
+
+  if (proxyProps) {
+    objectPath.set(res, ['data', 'proxyProps'], convertBlockProps(Object.keys(proxyProps)
+      .reduce((acc, component) => ({
+        ...acc,
+        ...{ [component]: convertBlockProps(proxyProps[component]) }
+      }), {})));
+  }
+  return res;
+};
+
 export const clearBlock = (node) => {
   const res = filterObjectKeys(cloneDeep(node), RENDERER_SCHEME_BLOCK_KEYS);
 
   res.uid = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
-
-  if (res?.data?.props) {
-    res.data.props = convertBlockProps(res.data.props);
-  }
 
   if (res.children) {
     if (isArray(res.children)) {
@@ -52,7 +78,7 @@ export const clearBlock = (node) => {
     }
   }
 
-  return res;
+  return normalizeProps(res);
 };
 
 export const generateBlockName = (name) => {
@@ -72,25 +98,35 @@ export const normalizeBlocksObject = (obj) => {
       }
     }
   }
-
   return obj;
 };
 
 export const blocksGenerator = (blocks) => wrapInArray(blocks)
-  .map((componentOptions) => {
-    const res = cloneDeep(componentOptions);
+  .map((block) => {
+    const { component } = block;
+    const componentOptions = component.options || component;
 
-    res.is = res.name;
+    const componentProps = componentOptions?.props || {};
+    const blockProps = block?.data?.props || {};
+    const proxyProps = block?.data?.proxyProps || {};
 
-    res.name = res.blockName || generateBlockName(res.name);
-    delete res.blockName;
-
-    if (res.props) {
-      res.data = { props: filterObjectKeys(res.props, res.excludeProps, true) };
-      delete res.props;
-    }
-
-    return normalizeBlocksObject(
-      filterObjectKeys(res, RENDERER_BLOCK_KEYS)
+    const resultProps = filterObjectKeys(
+      { ...componentProps, ...blockProps },
+      block.excludeProps,
+      true
     );
+
+    const data = {
+      ...(Object.keys(resultProps).length ? { props: resultProps } : {}),
+      ...(Object.keys(proxyProps).length ? { proxyProps } : {})
+    };
+
+    return normalizeBlocksObject({
+      ...filterObjectKeys(block, RENDERER_BLOCK_KEYS),
+      ...{
+        is: componentOptions.name,
+        name: block.blockName || generateBlockName(componentOptions.name),
+        ...(Object.keys(data).length ? { data } : {})
+      }
+    });
   });

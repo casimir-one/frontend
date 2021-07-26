@@ -120,32 +120,33 @@ export const SchemaBuilderBlocksList = {
           )
         };
 
-        const { id, dataType } = block;
+        const { dataType } = block;
+        const { attributeId } = block.data.props;
 
         const menu = [
           {
             icon: 'mdi-pound-box-outline',
             label: 'Copy attribute ID',
-            action: () => { this.$clipboard(id); }
+            action: () => { this.$clipboard(attributeId); }
           },
 
           {
             icon: 'mdi-text-box-multiple-outline',
             label: 'Copy attribute value',
-            action: () => { this.$clipboard(`@getAttributeValue('${id}')`); }
+            action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeValue}}`); }
           },
 
-          {
-            icon: 'mdi-checkbox-multiple-marked-outline',
-            label: 'Copy attribute condition',
-            action: () => { this.$clipboard(`@ifAttributeValue('${id}')`); }
-          },
+          // {
+          //   icon: 'mdi-checkbox-multiple-marked-outline',
+          //   label: 'Copy attribute condition',
+          //   action: () => { this.$clipboard(`@ifAttributeValue('${attributeId}')`); }
+          // },
 
           ...(dataType === ATTR_TYPES.IMAGE
             ? [{
               icon: 'mdi-image-multiple-outline',
               label: 'Copy image url',
-              action: () => { this.$clipboard(`@getAttributeFileSrc('${id}')`); }
+              action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeFileSrc}}`); }
             }] : [])
 
         ].map((item) => (

@@ -1,7 +1,7 @@
 import {
   isArray,
   kindOf,
-  dotProp,
+  objectPath,
   deepFind,
   capitalCase
 } from '@deip/toolbox';
@@ -15,6 +15,9 @@ import { VexStack } from '@deip/vuetify-extended';
 /* eslint-enable */
 
 import { SchemeView } from '../../mixins';
+import { normalizeProps } from '../../utils/helpers';
+
+const PERM_DISABLED = ['proxyProps'];
 
 export const SchemaBuilderBlockSettings = {
   name: 'SchemaBuilderBlockSettings',
@@ -25,31 +28,39 @@ export const SchemaBuilderBlockSettings = {
     nodePath() {
       if (!this.activeNode) return '';
 
-      return deepFind(this.internalSchema, this.activeNode).slice(0, -1).join('.');
+      return deepFind(this.internalSchema, this.activeNode).slice(0, -1);
     },
 
     propsPath() {
       if (!this.activeNode) return '';
 
-      return [this.nodePath, 'data', 'props'].join('.');
+      return {
+        main: [...this.nodePath, 'data', 'props'],
+        proxy: [...this.nodePath, 'data', 'proxyProps']
+      };
     },
 
     nodeProps() {
-      if (!this.activeNode) return {};
+      if (!this.activeNode) return false;
 
-      return dotProp.get(this.internalSchema, this.propsPath);
+      const normalized = normalizeProps(this.nodeInfo);
+
+      return {
+        main: objectPath.get(normalized, ['data', 'props'], {}),
+        proxy: objectPath.get(normalized, ['data', 'proxyProps'], {})
+      };
     },
 
     nodeInfo() {
-      const { id } = dotProp.get(this.internalSchema, this.nodePath);
+      const { id } = objectPath.get(this.internalSchema, this.nodePath);
       return this.getNodeInfo(id);
     }
   },
 
   methods: {
 
-    checkPropType(key) {
-      const type = this.nodeInfo.data.props[key]?.type;
+    checkPropType(key, path) {
+      const type = path[key]?.type;
 
       if (!type) return kindOf(String());
 
@@ -64,13 +75,19 @@ export const SchemaBuilderBlockSettings = {
       return kindOf(type());
     },
 
-    genField(key, val) {
-      const propType = this.checkPropType(key);
-      const disabled = (this.nodeInfo.disabledProps || []).includes(key);
+    genField(path, key, val) {
+      const propType = this.checkPropType(key, path);
+
+      const disabled = ([
+        ...PERM_DISABLED,
+        ...(this.nodeInfo.disabledProps || [])
+      ]).includes(key);
 
       const setVal = (value) => {
-        dotProp.set(this.internalSchema, `${this.propsPath}.${key}`, value);
+        objectPath.set(this.internalSchema, [...path, key], value);
       };
+
+      const initVal = objectPath.get(this.internalSchema, [...path, key], val);
 
       if (disabled) return null;
 
@@ -85,7 +102,7 @@ export const SchemaBuilderBlockSettings = {
           <VCheckbox
             {...{ props }}
             class="ma-0 pa-0"
-            value={val}
+            value={initVal}
             onChange={setVal}
           />
         );
@@ -95,7 +112,7 @@ export const SchemaBuilderBlockSettings = {
         <VTextField
           {...{ props }}
           class="ma-0"
-          value={val === false ? '' : val}
+          value={initVal === false ? '' : initVal}
           onInput={setVal}
         />
       );
@@ -109,17 +126,28 @@ export const SchemaBuilderBlockSettings = {
       );
     },
 
-    genFields() {
-      if (!this.nodeProps) return [this.genPlaceholder()];
-
-      const fields = Object.keys(this.nodeProps)
+    mapFields(obj = {}, path = this.propsPath.main) {
+      return Object.keys(obj)
         .filter((prop) => prop !== 'tag')
-        .map((prop) => this.genField(prop, this.nodeProps[prop]))
+        .map((prop) => this.genField(path, prop, obj[prop]))
         .filter((f) => f);
+    },
 
-      if (!fields.length) return [this.genPlaceholder()];
+    genFields() {
+      const mainProps = this.mapFields(this.nodeProps.main, this.propsPath.main);
 
-      return fields;
+      const proxyProps = Object.keys(this.nodeProps.proxy)
+        .map((component) => this.mapFields(
+          this.nodeProps.proxy[component],
+          [...this.propsPath.proxy, component]
+        ));
+
+      if (!mainProps.length && !proxyProps.length) return [this.genPlaceholder()];
+
+      return [
+        mainProps,
+        proxyProps
+      ];
     }
   },
 

@@ -1,4 +1,4 @@
-import { dotProp, deepFind } from '@deip/toolbox';
+import { objectPath, deepFind, deepFindParentByValue } from '@deip/toolbox';
 import { isEqual } from '@deip/toolbox/lodash';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import { factory as ProxyableFactory } from 'vuetify/lib/mixins/proxyable';
@@ -27,7 +27,7 @@ export const SchemeView = {
   data(vm) {
     return {
       lazySchema: vm.schema || [],
-      lazyActiveNode: vm.activeNode || null
+      lazyActiveNode: vm.activeNode || false
     };
   },
 
@@ -79,7 +79,7 @@ export const SchemeView = {
     },
 
     getNodeInfo(id) {
-      return dotProp.get(
+      return objectPath.get(
         this.normalizedBlocks,
         deepFind(this.normalizedBlocks, id).slice(0, -1).join('.')
       );
@@ -96,10 +96,9 @@ export const SchemeView = {
     },
 
     removeNode(id) {
-      const targetPath = deepFind(this.internalSchema, id).slice(0, -1).join('.');
-
+      const { path } = deepFindParentByValue(this.internalSchema, id, true);
       this.selectNode(null);
-      dotProp.delete(this.internalSchema, targetPath);
+      objectPath.del(this.internalSchema, path);
     }
   }
 };
