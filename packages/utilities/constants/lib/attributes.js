@@ -112,6 +112,17 @@ const ATTR_TYPES_ICONS = {
   [ATTR_TYPES.FEATURE]: 'mdi-star-circle-outline'
 };
 
+const ATTR_TYPES_PROPS = {
+  [ATTR_TYPES.AVATAR]: {
+    VexAvatar: {
+      size: {
+        type: Number,
+        default: 48
+      }
+    }
+  }
+};
+
 const ATTR_SCOPES = createEnum({
   PROJECT: 1,
   USER: 2,
@@ -133,6 +144,8 @@ export {
   ATTR_TYPES,
   ATTR_TYPES_LABELS,
   ATTR_TYPES_ICONS,
+  ATTR_TYPES_PROPS,
+
   ATTR_SCOPES,
   ATTR_SCOPES_LABELS,
   ATTR_TYPES_SET_RULES
