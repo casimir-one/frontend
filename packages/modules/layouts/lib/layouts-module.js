@@ -10,10 +10,19 @@ const install = (Vue) => {
   if (store) {
     store.registerModule('layouts', layoutsStore);
     store.dispatch('layouts/getList');
+    store.dispatch('layouts/getSettings');
 
     Object.defineProperty(Vue.prototype, '$layouts', {
       get() {
-        return {};
+        return {
+          getMappedData: (key) => {
+            const id = this.$store.getters['layouts/mappedId'](key);
+
+            return id
+              ? this.$store.getters['layouts/one'](id)
+              : null;
+          }
+        };
       }
     });
   } else {

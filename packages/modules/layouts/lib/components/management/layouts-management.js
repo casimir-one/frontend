@@ -4,7 +4,7 @@ import { ATTR_SCOPES_LABELS } from '@deip/constants';
 import { LayoutsDataProvider } from '../data-provider';
 
 export default defineComponent({
-  name: 'LayoutsManagementTable',
+  name: 'LayoutsManagement',
   mixins: [AdminListPage],
 
   props: {

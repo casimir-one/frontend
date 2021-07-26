@@ -4,15 +4,20 @@ import {
   crudGettersFactory,
   crudMutationsFactory
 } from '@deip/platform-store';
+import { collectionOne } from '@deip/toolbox';
 
 const layoutService = LayoutService.getInstance();
 
 const STATE = {
-  data: []
+  data: [],
+  settings: {}
 };
 
 const GETTERS = {
-  ...crudGettersFactory({ dataKey: '_id' })
+  ...crudGettersFactory({ dataKey: '_id' }),
+
+  settings: (state) => state.settings,
+  mappedId: (state) => (key) => collectionOne(state.settings.mapping || [], { key })?.value
 };
 
 const ACTIONS = {
@@ -56,11 +61,34 @@ const ACTIONS = {
       .then(() => {
         commit('removeFromList', _id);
       });
+  },
+
+  getSettings({ commit }) {
+    return layoutService.getSettings(window.env.TENANT)
+      .then((res) => {
+        commit('setSettings', res);
+      });
+  },
+
+  updateSettings({ dispatch }, payload) {
+    return layoutService.updateSettings(payload)
+      .then(() => {
+        dispatch('getSettings');
+      });
   }
 };
 
 const MUTATIONS = {
-  ...crudMutationsFactory({ dataKey: '_id' })
+  ...crudMutationsFactory({ dataKey: '_id' }),
+
+  setSettings(state, payload) {
+    state.settings = state.settings === null
+      ? { ...payload }
+      : {
+        ...state.settings,
+        ...payload
+      };
+  }
 };
 
 export const layoutsStore = {

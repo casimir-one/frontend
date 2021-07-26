@@ -1,53 +1,55 @@
-import {
+import { blocksGenerator } from '@deip/schema-builder';
+import { defaultLayoutComponents } from '../default-layouts-components';
+
+const {
   VexHeader,
   VexSection,
-  VexStack
-// eslint-disable-next-line import/extensions,import/no-unresolved
-} from '@deip/vuetify-extended';
-
-import {
+  VexSectionSplit,
+  VexStack,
   VRow,
   VCol,
   VSheet
-// eslint-disable-next-line import/extensions,import/no-unresolved
-} from 'vuetify/lib/components';
-
-import { blocksGenerator } from '@deip/schema-builder';
+} = defaultLayoutComponents;
 
 export const layoutBlocks = {
   title: 'Layout',
   blocks: blocksGenerator([
     {
-      ...VexHeader.options,
+      component: VexHeader,
       icon: 'mdi-image-area',
       children: [],
       excludeProps: ['returnDominant']
     },
     {
-      ...VexSection.options,
+      component: VexSection,
       icon: 'mdi-view-agenda-outline',
       children: []
     },
     {
-      ...VSheet.options,
+      component: VexSectionSplit,
+      icon: 'mdi-view-week-outline',
+      children: []
+    },
+    {
+      component: VSheet,
       blockName: 'Container',
       icon: 'mdi-card-outline',
       children: [],
       excludeProps: ['shaped', 'tile', 'elevation']
     },
     {
-      ...VRow.options,
+      component: VRow,
       icon: 'mdi-view-grid-outline',
       children: [],
       blockType: 'row'
     },
     {
-      ...VCol.options,
+      component: VCol,
       icon: 'mdi-view-grid-plus-outline',
       children: []
     },
     {
-      ...VexStack.options,
+      component: VexStack,
       icon: 'mdi-view-sequential-outline',
       children: []
     }

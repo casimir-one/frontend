@@ -1,25 +1,31 @@
-import { merge } from '@deip/toolbox/lodash';
 import { blocksGenerator } from '@deip/schema-builder';
-import { ATTR_TYPES_ICONS } from '@deip/constants';
+import { ATTR_TYPES_ICONS, ATTR_TYPES_PROPS } from '@deip/constants';
 
-export const attributesBlocksFactory = (attributes, componentObject) => ({
-  title: 'Attributes',
-  blocks: blocksGenerator(attributes.map((attr) => ({
-    ...merge(
-      componentObject,
-      {
+export const attributesBlocksFactory = (attributes, component) => {
+  const acc = attributes.map((attr) => {
+    const icon = ATTR_TYPES_ICONS[attr.type];
+    const proxyProps = ATTR_TYPES_PROPS[attr.type];
+
+    return {
+      component,
+      data: {
         props: {
           attributeId: attr._id
-        }
-      }
-    ),
-    id: attr._id,
-    blockName: attr.shortTitle || attr.title,
-    icon: ATTR_TYPES_ICONS[attr.type],
-    blockType: 'attribute',
-    dataType: attr.type,
-    model: `attributes.${attr._id}`,
-    excludeProps: ['value', 'schemaData', 'proxyProps'],
-    disabledProps: ['attributeId']
-  })))
-});
+        },
+        ...(proxyProps ? { proxyProps } : {})
+      },
+      blockName: attr.shortTitle || attr.title,
+      icon,
+      blockType: 'attribute',
+      dataType: attr.type,
+      model: `attributes.${attr._id}`,
+      excludeProps: ['value', 'schemaData', 'components'],
+      disabledProps: ['attributeId']
+    };
+  });
+
+  return {
+    title: 'Attributes',
+    blocks: blocksGenerator(acc)
+  };
+};

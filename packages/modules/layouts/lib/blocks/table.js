@@ -1,16 +1,16 @@
-import {
-  VSimpleTable
-// eslint-disable-next-line import/extensions,import/no-unresolved
-} from 'vuetify/lib/components';
-
 import { blocksGenerator, normalizeBlocksObject } from '@deip/schema-builder';
+import { defaultLayoutComponents } from '../default-layouts-components';
+
+const {
+  VSimpleTable
+} = defaultLayoutComponents;
 
 export const tableBlocks = {
   title: 'Table',
   blocks: [
     ...blocksGenerator([
       {
-        ...VSimpleTable.options,
+        component: VSimpleTable,
         icon: 'mdi-table',
         children: []
       }
