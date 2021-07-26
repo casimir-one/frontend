@@ -4,7 +4,8 @@ import { merge } from 'lodash/fp';
 import { isArray } from './validation';
 
 const defaultOpts = { // as object for future extensions
-  key: 'id'
+  key: 'id',
+  mergeItem: false
 };
 
 export const wrapInArray = (v) => {
@@ -20,13 +21,13 @@ export const collectionMerge = (
   const col1 = wrapInArray(c1);
   const col2 = wrapInArray(c2);
 
-  const { key } = opts;
+  const { key, mergeItem } = opts;
   const result = [...col1];
 
   for (const item of col2) {
     const idx = col1.findIndex((i) => i[key] && item[key] && i[key] === item[key]);
     if (idx >= 0) {
-      result[idx] = merge(result[idx], item);
+      result[idx] = mergeItem ? merge(result[idx], item) : item;
     } else {
       result.push(item);
     }

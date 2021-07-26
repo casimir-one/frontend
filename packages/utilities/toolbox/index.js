@@ -1,4 +1,6 @@
 import dotProp from 'dot-prop';
+import objectPath from 'object-path'; // switch to this from dotprop
+
 import kindOf from 'kind-of';
 import RecursiveIterator from 'recursive-iterator';
 import { find as deepFind } from 'find-keypath';
@@ -20,6 +22,8 @@ export * from 'change-case';
 
 export {
   dotProp,
+  objectPath,
+
   RecursiveIterator,
   deepFind,
   kindOf
