@@ -1,5 +1,5 @@
 import { blocksGenerator } from '@deip/schema-builder';
-import { FundraisingWidget } from '@deip/fundraising-module';
+import { FundraisingWidget } from '../components/Widget/FundraisingWidget';
 
 export const fundraisingBlocks = {
   title: 'Fundraising',
