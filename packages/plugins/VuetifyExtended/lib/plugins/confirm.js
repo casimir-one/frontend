@@ -1,4 +1,4 @@
-import { VexDialog } from './../components';
+import { VexDialog } from '../components';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
@@ -14,13 +14,12 @@ const install = (Vue, options = {}) => {
   Vue.delete(options, 'property');
   Vue.delete(options, 'vuetify');
 
-  const Ctor = Vue.extend({ vuetify, ...VexDialog });
-
   function createDialogCmp(opts) {
     const container = document.querySelector('[data-app=true]') || document.body;
 
     return new Promise((resolve) => {
-      const cmp = new Ctor({
+      const cmp = new VexDialog({
+        vuetify,
         propsData: { ...Vue.prototype[property].options, ...opts },
         destroyed: () => {
           container.removeChild(cmp.$el);
