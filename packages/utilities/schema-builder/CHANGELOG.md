@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Features
+
+* **@deip/schema-builder:** add local observable store ([1e3b5df](https://github.com/DEIPworld/deip-modules/commit/1e3b5dfaf7c10039dc1ed5e4603f238f84078962))
+
+
+
+
+
 # [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/schema-builder

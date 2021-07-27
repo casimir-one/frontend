@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Features
+
+* **@deip/layout-module:** add Fundraising widget block ([917e581](https://github.com/DEIPworld/deip-modules/commit/917e581b0267ce25fe5bdcbae9db6ec4906c10d2))
+* **@deip/layouts-module:** rebuild ([6adc7ea](https://github.com/DEIPworld/deip-modules/commit/6adc7eab39437d188c9779ba947fcc56a5fc0406))
+
+
+
+
+
 # [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/layouts-module

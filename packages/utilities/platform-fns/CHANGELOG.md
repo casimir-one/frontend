@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Features
+
+* **@deip/platfrom-fns:** remove methods ([87cf7e1](https://gitlab.com/DEIP/deip-client-modules/commit/87cf7e19891cd1bc95bb5b726099cf578a7117d2))
+* **@deip/teams-module:** add teamHelpersMixin ([84d9313](https://gitlab.com/DEIP/deip-client-modules/commit/84d931362106c0db6d5689ba364ae6785e1f5e14))
+* **@deip/users-module:** add userHelpersMixin ([d3b11cf](https://gitlab.com/DEIP/deip-client-modules/commit/d3b11cfb7e53530735a0cdf440a7648f53801c44))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/platform-fns

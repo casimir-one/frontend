@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix time until completion in fundraising progress ([2ad1f89](https://github.com/DEIPworld/deip-modules/commit/2ad1f891bab86097e123d6303325b926b2e877bb))
+* **@deip/layout-service:** fix merge key ([43d3db2](https://github.com/DEIPworld/deip-modules/commit/43d3db2977078010ef371560c3fb133b5c9ca117))
+* **@deip/users-module:** add package ([825ad12](https://github.com/DEIPworld/deip-modules/commit/825ad12c3bb8a6b0324b09b16eda23bc3c7a1d10))
+* **@deip/vuetify-extended:** fix confirm and notifier ([3bec10a](https://github.com/DEIPworld/deip-modules/commit/3bec10a4bbb1a1b1f26cfc17b90778440374a92c))
+
+
+### Features
+
+* **@deip/attributes-module:** extend and add read schemas ([41a5ad7](https://github.com/DEIPworld/deip-modules/commit/41a5ad7bf7e366e0cd2a88d764d6500a5d5c7e1e))
+* **@deip/constants:** axtend attributes constants ([345deb8](https://github.com/DEIPworld/deip-modules/commit/345deb8b869beb8ef5889e1ead93332ab30e1843))
+* **@deip/fundraising-module:** add fundraising widget block ([bbb66ab](https://github.com/DEIPworld/deip-modules/commit/bbb66ab72dfc4fa2af5c82ca5a5060a637a34dcf))
+* **@deip/fundraising-module:** implement FundraisingWidget ([b8aabad](https://github.com/DEIPworld/deip-modules/commit/b8aabad73054705db1a8f5761f5ded4588e4924c))
+* **@deip/layout-module:** add Fundraising widget block ([917e581](https://github.com/DEIPworld/deip-modules/commit/917e581b0267ce25fe5bdcbae9db6ec4906c10d2))
+* **@deip/layouts-module:** rebuild ([6adc7ea](https://github.com/DEIPworld/deip-modules/commit/6adc7eab39437d188c9779ba947fcc56a5fc0406))
+* **@deip/platform-util:** add router methods ([4dab5f9](https://github.com/DEIPworld/deip-modules/commit/4dab5f987bfeae602f3c7578b4361b5f0f0d728d))
+* **@deip/platfrom-fns:** remove methods ([87cf7e1](https://github.com/DEIPworld/deip-modules/commit/87cf7e19891cd1bc95bb5b726099cf578a7117d2))
+* **@deip/schema-builder:** add local observable store ([1e3b5df](https://github.com/DEIPworld/deip-modules/commit/1e3b5dfaf7c10039dc1ed5e4603f238f84078962))
+* **@deip/teams-module:** add renderer to details ([c04bd7e](https://github.com/DEIPworld/deip-modules/commit/c04bd7ec651c6797ff114cbf5542b17440fba7f6))
+* **@deip/teams-module:** add teamHelpersMixin ([84d9313](https://github.com/DEIPworld/deip-modules/commit/84d931362106c0db6d5689ba364ae6785e1f5e14))
+* **@deip/users-module:** add userHelpersMixin ([d3b11cf](https://github.com/DEIPworld/deip-modules/commit/d3b11cfb7e53530735a0cdf440a7648f53801c44))
+
+
+
+
+
 # [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 

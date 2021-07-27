@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Features
+
+* **@deip/attributes-module:** extend and add read schemas ([41a5ad7](https://gitlab.com/DEIP/deip-client-modules/commit/41a5ad7bf7e366e0cd2a88d764d6500a5d5c7e1e))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 

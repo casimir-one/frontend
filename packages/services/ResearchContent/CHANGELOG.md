@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+**Note:** Version bump only for package @deip/research-content-service
+
+
+
+
+
 # [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/research-content-service

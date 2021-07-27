@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* **@deip/layout-service:** fix merge key ([43d3db2](https://github.com/DEIPworld/deip-modules/commit/43d3db2977078010ef371560c3fb133b5c9ca117))
+
+
+
+
+
 # [1.130.0](https://github.com/DEIPworld/deip-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/layout-service
