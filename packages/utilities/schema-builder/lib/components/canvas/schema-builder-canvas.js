@@ -9,6 +9,7 @@ import './schema-builder-canvas.scss';
 import { wrapInArray, pascalCase, deepFindParentByValue } from '@deip/toolbox';
 import draggable from 'vuedraggable';
 import { SchemeView } from '../../mixins';
+import { getters } from '../../store';
 
 export const SchemaBuilderCanvas = {
   name: 'SchemaBuilderCanvas',
@@ -20,6 +21,10 @@ export const SchemaBuilderCanvas = {
       hoverBox: {},
       focusBox: {}
     };
+  },
+
+  computed: {
+    ...getters
   },
 
   methods: {
