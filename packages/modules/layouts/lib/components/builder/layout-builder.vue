@@ -148,31 +148,21 @@
                 watch-delete-key
                 @select-node="onSelectNode"
               />
-              <pre>{{ JSON.stringify(formData.schema, null, 2) }}</pre>
             </v-col>
           </v-row>
         </div>
 
         <v-btn
           color="primary"
-          absolute
-          bottom
-          right
-          fab
-          style="right: 124px;bottom:24px"
-          @click="reset()"
-        >
-          <v-icon>mdi-content-save-outline</v-icon>
-        </v-btn>
-
-        <v-btn
-          color="primary"
-          absolute
+          fixed
           bottom
           right
           fab
           type="submit"
-          style="right: 24px;bottom:24px"
+          :style="{
+            right: `${$vuetify.application.right + 24}px`,
+            bottom: '24px'
+          }"
           :disabled="disabled || untouched || invalid"
           :loading="loading"
         >
