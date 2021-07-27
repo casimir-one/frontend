@@ -25,18 +25,18 @@ export const ifValidBlock = (node) => (
 
 export const convertBlockProps = (props) => Object.keys(props)
   .reduce((acc, prop) => {
-    let propVal = props[prop];
+    let propVal;
+    const {
+      type,
+      default: defaultValue
+    } = props[prop];
 
-    // if (isString(props[prop])) {
-    //   propVal = props[prop];
-    // }
-
-    if (props[prop].type) {
-      propVal = props[prop].type();
-    }
-
-    if (props[prop].default) {
-      propVal = props[prop].default;
+    if (type) {
+      propVal = isArray(type) ? type[0]() : type();
+    } else if (defaultValue) {
+      propVal = defaultValue;
+    } else {
+      propVal = props[prop];
     }
 
     return {
