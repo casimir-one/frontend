@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@deip/constants": "1.130.0",
-    "@deip/platform-util": "^1.128.2",
+    "@deip/platform-util": "^1.129.0",
     "@deip/toolbox": "1.129.0",
     "date-fns": "^2.22.1",
     "find-keypath": "^1.0.0",

@@ -39,7 +39,7 @@
     "@babel/plugin-proposal-private-methods": "^7.14.5"
   },
   "peerDependencies": {
-    "@deip/vuetify-extended": "^1.123.1",
+    "@deip/vuetify-extended": "^1.130.0",
     "vuetify": "^2.5.5"
   }
 }

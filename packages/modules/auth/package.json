@@ -34,7 +34,7 @@
     "@deip/vuetify-extended": "1.130.0"
   },
   "peerDependencies": {
-    "@deip/users-module": "^1.124.0",
+    "@deip/users-module": "^1.130.0",
     "vue-i18n": "^8.24.4",
     "vuetify": "^2.5.3",
     "vuex": "^3.6.2"

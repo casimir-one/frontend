@@ -22,7 +22,7 @@
   "dependencies": {
     "@deip/attributes-module": "1.130.0",
     "@deip/constants": "1.130.0",
-    "@deip/layouts-module": "^1.129.0",
+    "@deip/layouts-module": "^1.130.0",
     "@deip/platform-components": "1.130.0",
     "@deip/platform-fns": "1.130.0",
     "@deip/platform-store": "1.129.0",
@@ -34,7 +34,7 @@
     "@deip/vuetify-extended": "1.130.0"
   },
   "peerDependencies": {
-    "@deip/auth-module": "^1.124.0",
+    "@deip/auth-module": "^1.130.0",
     "vue": "^2.6.14",
     "vuetify": "^2.5.3"
   },

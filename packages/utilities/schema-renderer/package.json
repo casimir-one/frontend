@@ -31,7 +31,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@deip/vuetify-extended": "^1.123.1",
+    "@deip/vuetify-extended": "^1.130.0",
     "vuetify": "^2.5.3"
   },
   "devDependencies": {
