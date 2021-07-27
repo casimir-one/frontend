@@ -58,17 +58,15 @@ export const SchemaBuilderBlockSettings = {
   },
 
   methods: {
-
-    checkPropType(key, path) {
-      const type = path[key]?.type;
+    checkPropType(key) {
+      const type = this.nodeInfo?.data?.props?.[key]?.type;
 
       if (!type) return kindOf(String());
 
       if (isArray(type)) {
         const acc = type.map((t) => kindOf(t()));
-
         if (acc.includes('number')) return kindOf(Number());
-
+        if (acc.includes('boolean')) return kindOf(Boolean());
         return acc[0];
       }
 
