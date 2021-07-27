@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Features
+
+* **@deip/teams-module:** add renderer to details ([c04bd7e](https://gitlab.com/DEIP/deip-client-modules/commit/c04bd7ec651c6797ff114cbf5542b17440fba7f6))
+* **@deip/teams-module:** add teamHelpersMixin ([84d9313](https://gitlab.com/DEIP/deip-client-modules/commit/84d931362106c0db6d5689ba364ae6785e1f5e14))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 

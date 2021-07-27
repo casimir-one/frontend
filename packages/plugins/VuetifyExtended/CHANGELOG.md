@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix confirm and notifier ([3bec10a](https://gitlab.com/DEIP/deip-client-modules/commit/3bec10a4bbb1a1b1f26cfc17b90778440374a92c))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** add package ([825ad12](https://gitlab.com/DEIP/deip-client-modules/commit/825ad12c3bb8a6b0324b09b16eda23bc3c7a1d10))
+
+
+### Features
+
+* **@deip/users-module:** add userHelpersMixin ([d3b11cf](https://gitlab.com/DEIP/deip-client-modules/commit/d3b11cfb7e53530735a0cdf440a7648f53801c44))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 **Note:** Version bump only for package @deip/users-module

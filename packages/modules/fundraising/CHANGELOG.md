@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix time until completion in fundraising progress ([2ad1f89](https://gitlab.com/DEIP/deip-client-modules/commit/2ad1f891bab86097e123d6303325b926b2e877bb))
+
+
+### Features
+
+* **@deip/fundraising-module:** add fundraising widget block ([bbb66ab](https://gitlab.com/DEIP/deip-client-modules/commit/bbb66ab72dfc4fa2af5c82ca5a5060a637a34dcf))
+* **@deip/fundraising-module:** implement FundraisingWidget ([b8aabad](https://gitlab.com/DEIP/deip-client-modules/commit/b8aabad73054705db1a8f5761f5ded4588e4924c))
+
+
+
+
+
 # [1.130.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.129.0...v1.130.0) (2021-07-21)
 
 
