@@ -1,7 +1,7 @@
 <template>
   <vex-avatar
     :src="avatarSrc"
-    :text="userInitials(user)"
+    :text="$$userInitials(user)"
     v-bind="avatarProps"
   />
 </template>
@@ -9,7 +9,7 @@
 <script>
   import { VexAvatar } from '@deip/vuetify-extended';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-  import { userHelpersMixin } from '@deip/platform-fns';
+  import { userHelpersMixin } from '../../mixins';
 
   export default {
     name: 'UserAvatar',
@@ -37,7 +37,7 @@
           width: this.$props.size,
           height: this.$props.size
         };
-        return this.userAvatarSrc(this.user, opts);
+        return this.$$userAvatarSrc(this.user, opts);
       }
     }
   };

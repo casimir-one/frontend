@@ -10,7 +10,7 @@
         :label="label"
         :items="users"
 
-        :item-text="userFullName"
+        :item-text="$$userFullName"
         :item-value="userExternalId"
 
         :name="label"
@@ -26,7 +26,7 @@
               color="neutral lighten-5"
             />
             <v-list-item-content class="text-body-2">
-              {{ userFullName(item) }}
+              {{ $$userFullName(item) }}
             </v-list-item-content>
           </slot>
         </template>
@@ -46,7 +46,7 @@
                 class="mr-2 ml-n2"
               />
               <div class="text-truncate spacer">
-                {{ userFullName(item) }}
+                {{ $$userFullName(item) }}
               </div>
 
               <v-btn
@@ -72,7 +72,7 @@
                 class="mr-2"
               />
               <div class="text-truncate">
-                {{ userFullName(item) }}
+                {{ $$userFullName(item) }}
               </div>
             </div>
           </slot>
@@ -89,11 +89,11 @@
   /* eslint-enable import/extensions, import/no-unresolved */
 
   import { hasValue } from '@deip/toolbox';
-  import { userHelpersMixin } from '@deip/platform-fns';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import { VexAutocomplete } from '@deip/vuetify-extended';
   import UsersDataProvider from '../DataProvider/UsersDataProvider';
   import UserAvatar from '../Avatar/UserAvatar';
+  import { userHelpersMixin } from '../../mixins';
 
   export default {
     name: 'UsersSelector',
