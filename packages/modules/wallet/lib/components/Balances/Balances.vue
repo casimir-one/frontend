@@ -23,6 +23,7 @@
     <deposit-dialog
       v-model="isDialogOpened"
       :asset-balance="selectedAssetBalance"
+      @payment-processed="handlePaymentProcessed"
     />
   </vex-stack>
 </template>
@@ -84,6 +85,10 @@
       handleDeposit(balance) {
         this.selectedAssetBalance = balance;
         this.isDialogOpened = true;
+      },
+      handlePaymentProcessed() {
+        this.$store.dispatch('wallet/get');
+        this.$emit('payment-processed');
       }
     }
   };
