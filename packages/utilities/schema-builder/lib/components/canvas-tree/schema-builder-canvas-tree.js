@@ -140,6 +140,6 @@ export const SchemaBuilderCanvasTree = {
   },
 
   render(h) {
-    return h('div', [this.genDragger(this.internalSchema)]);
+    return h('div', { staticClass: 'schema-tree' }, [this.genDragger(this.internalSchema)]);
   }
 };

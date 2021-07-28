@@ -2,6 +2,11 @@
 import {
   VIcon, VSheet, VDivider, VSpacer, VBtn
 } from 'vuetify/lib/components';
+
+import {
+  ClickOutside
+} from 'vuetify/lib/directives';
+
 /* eslint-enable */
 
 import './schema-builder-canvas.scss';
@@ -15,6 +20,10 @@ export const SchemaBuilderCanvas = {
   name: 'SchemaBuilderCanvas',
 
   mixins: [SchemeView],
+
+  directives: {
+    ClickOutside
+  },
 
   data() {
     return {
@@ -240,8 +249,17 @@ export const SchemaBuilderCanvas = {
       }
     );
 
+    // vClickOutside={{
+    //   handler: () => { this.setActiveNode(null) },
+    //     include: () => [
+    //     document.querySelector('.schema-builder__tree')
+    //   ]
+    // }}
+
     return (
-      <div class="schema-composer">
+      <div
+        class="schema-composer"
+      >
         {this.genHoverBox()}
         {this.genFocusBox()}
         {composer}

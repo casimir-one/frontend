@@ -98,7 +98,7 @@ export const SchemeView = {
 
     removeNode(id) {
       const { path } = deepFindParentByValue(this.internalSchema, id, true);
-      this.selectNode(null);
+      this.setActiveNode(null);
       objectPath.del(this.internalSchema, path);
     }
   }
