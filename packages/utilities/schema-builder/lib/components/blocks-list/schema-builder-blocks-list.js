@@ -22,6 +22,7 @@ import draggable from 'vuedraggable';
 
 import { ATTR_TYPES } from '@deip/constants';
 import { convertBlockForSchema } from '../../utils/helpers';
+import { mutations } from '../../store';
 
 export const SchemaBuilderBlocksList = {
   name: 'SchemaBuilderBlocksList',
@@ -50,6 +51,7 @@ export const SchemaBuilderBlocksList = {
   methods: {
     onClone(block) {
       this.$emit('clone');
+      mutations.setActiveNode(null);
       return convertBlockForSchema(block);
     },
 
