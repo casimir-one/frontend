@@ -197,9 +197,12 @@ export const SchemaRenderer = {
             if (!modelProps.path) {
               vm.internalValue = value;
             } else {
+              const updatedValue = {};
+              objectPath.set(updatedValue, modelProps.path, value);
+
               vm.internalValue = merge(
                 vm.internalValue,
-                objectPath.set({}, modelProps.path, value)
+                updatedValue
               );
             }
           }
