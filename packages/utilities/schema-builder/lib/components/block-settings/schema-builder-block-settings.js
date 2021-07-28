@@ -15,7 +15,7 @@ import { VexStack } from '@deip/vuetify-extended';
 /* eslint-enable */
 
 import { SchemeView } from '../../mixins';
-import { normalizeProps } from '../../utils/helpers';
+import { convertBlockPropsForCanvas } from '../../utils/helpers';
 
 const PERM_DISABLED = ['proxyProps'];
 
@@ -43,7 +43,7 @@ export const SchemaBuilderBlockSettings = {
     nodeProps() {
       if (!this.activeNode) return false;
 
-      const normalized = normalizeProps(this.nodeInfo);
+      const normalized = convertBlockPropsForCanvas(this.nodeInfo);
 
       return {
         main: objectPath.get(normalized, ['data', 'props'], {}),

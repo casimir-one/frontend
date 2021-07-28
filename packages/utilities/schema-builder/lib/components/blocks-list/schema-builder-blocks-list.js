@@ -21,7 +21,7 @@ import { VexExpand } from '@deip/vuetify-extended';
 import draggable from 'vuedraggable';
 
 import { ATTR_TYPES } from '@deip/constants';
-import { clearBlock } from '../../utils/helpers';
+import { convertBlockForSchema } from '../../utils/helpers';
 
 export const SchemaBuilderBlocksList = {
   name: 'SchemaBuilderBlocksList',
@@ -50,7 +50,7 @@ export const SchemaBuilderBlocksList = {
   methods: {
     onClone(block) {
       this.$emit('clone');
-      return clearBlock(block);
+      return convertBlockForSchema(block);
     },
 
     genSection(section) {

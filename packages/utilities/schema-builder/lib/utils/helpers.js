@@ -8,7 +8,7 @@ import {
   capitalCase,
   paramCase,
 
-  RecursiveIterator, objectPath
+  RecursiveIterator, objectPath, isFunction
 } from '@deip/toolbox';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
@@ -23,18 +23,19 @@ export const ifValidBlock = (node) => (
   && Object.prototype.hasOwnProperty.call(node, 'is')
 );
 
-export const convertBlockProps = (props) => Object.keys(props)
+export const setBlockPropsValueForCanvas = (props) => Object.keys(props)
   .reduce((acc, prop) => {
     let propVal;
+
     const {
       type,
       default: defaultValue
     } = props[prop];
 
-    if (type) {
-      propVal = isArray(type) ? type[0]() : type();
-    } else if (defaultValue) {
+    if (defaultValue) {
       propVal = defaultValue;
+    } else if (!defaultValue && type) {
+      propVal = undefined;
     } else {
       propVal = props[prop];
     }
@@ -45,40 +46,40 @@ export const convertBlockProps = (props) => Object.keys(props)
     };
   }, {});
 
-export const normalizeProps = (node) => {
+export const convertBlockPropsForCanvas = (node) => {
   const res = cloneDeep(node);
   const props = node?.data?.props;
   const proxyProps = node?.data?.proxyProps;
 
   if (props) {
-    objectPath.set(res, ['data', 'props'], convertBlockProps(props));
-    // res.data.props = convertBlockProps(res.data.props);
+    objectPath.set(res, ['data', 'props'], setBlockPropsValueForCanvas(props));
+    // res.data.props = setBlockPropsValueForCanvas(res.data.props);
   }
 
   if (proxyProps) {
-    objectPath.set(res, ['data', 'proxyProps'], convertBlockProps(Object.keys(proxyProps)
+    objectPath.set(res, ['data', 'proxyProps'], setBlockPropsValueForCanvas(Object.keys(proxyProps)
       .reduce((acc, component) => ({
         ...acc,
-        ...{ [component]: convertBlockProps(proxyProps[component]) }
+        ...{ [component]: setBlockPropsValueForCanvas(proxyProps[component]) }
       }), {})));
   }
   return res;
 };
 
-export const clearBlock = (node) => {
+export const convertBlockForSchema = (node) => {
   const res = filterObjectKeys(cloneDeep(node), RENDERER_SCHEME_BLOCK_KEYS);
 
   res.uid = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
 
   if (res.children) {
     if (isArray(res.children)) {
-      res.children = res.children.map((ch) => clearBlock(ch));
+      res.children = res.children.map((ch) => convertBlockForSchema(ch));
     } else {
       delete res.children;
     }
   }
 
-  return normalizeProps(res);
+  return convertBlockPropsForCanvas(res);
 };
 
 export const generateBlockName = (name) => {
@@ -101,14 +102,57 @@ export const normalizeBlocksObject = (obj) => {
   return obj;
 };
 
+const normalizeBlockProps = (props) => {
+  if (!props || !Object.keys(props).length) return {};
+
+  if (isArray(props)) {
+    return props
+      .reduce((acc, prop) => ({
+        ...acc,
+        ...{
+          [prop]: {
+            type: String,
+            default: undefined
+          }
+        }
+      }), {});
+  }
+
+  return Object.keys(props)
+    .reduce((acc, prop) => {
+      let propVal;
+
+      if (isFunction(props[prop])) {
+        propVal = {
+          type: props[prop],
+          default: undefined
+        };
+      } else {
+        propVal = props[prop];
+      }
+
+      return {
+        ...acc,
+        ...{
+          [prop]: propVal
+        }
+      };
+    }, {});
+};
+
 export const blocksGenerator = (blocks) => wrapInArray(blocks)
   .map((block) => {
     const { component } = block;
+
+    if (!component) {
+      throw new Error('[blocksGenerator]: component not defined');
+    }
+
     const componentOptions = component.options || component;
 
-    const componentProps = componentOptions?.props || {};
-    const blockProps = block?.data?.props || {};
-    const proxyProps = block?.data?.proxyProps || {};
+    const componentProps = normalizeBlockProps(componentOptions?.props);
+    const blockProps = normalizeBlockProps(block?.data?.props);
+    const proxyProps = normalizeBlockProps(block?.data?.proxyProps);
 
     const resultProps = filterObjectKeys(
       { ...componentProps, ...blockProps },
