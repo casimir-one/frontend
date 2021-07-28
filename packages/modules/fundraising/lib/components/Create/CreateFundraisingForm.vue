@@ -47,7 +47,7 @@
                 v-slot="{ errors }"
                 :name="$t('module.fundraising.createForm.startDate')"
                 vid="startDate"
-                rules="required|dateBefore:@endDate"
+                rules="required|dateBefore:@endDate|dateAfterNow"
               >
                 <vex-date-time-input
                   v-model="formData.startDate"
