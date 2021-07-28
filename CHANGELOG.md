@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.131.1](https://github.com/DEIPworld/deip-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix block schema ([3e37558](https://github.com/DEIPworld/deip-modules/commit/3e37558dd614db69f48a111d12320087ca7729e1))
+* **@deip/schema-builder:** create/clone block fixes ([917e72a](https://github.com/DEIPworld/deip-modules/commit/917e72a7a8126b1d9c5ef92c43c1fb26e74d2cf9))
+* **@deip/schema-builder:** deselect on clone ([2984c99](https://github.com/DEIPworld/deip-modules/commit/2984c99e93f5d2e66f3bb4fdb3f0fd4a93cacc21))
+* **@deip/schema-builder:** fix blocks prop type ([0798c45](https://github.com/DEIPworld/deip-modules/commit/0798c459e731299f9215d682252e900c413f38a0))
+* **@deip/schema-renderer:** fix form internalValue change ([7dff561](https://github.com/DEIPworld/deip-modules/commit/7dff561f50fe50d1b2a61bca45cf219ed809c8b6))
+
+
+
+
+
 # [1.131.0](https://github.com/DEIPworld/deip-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
 
 
