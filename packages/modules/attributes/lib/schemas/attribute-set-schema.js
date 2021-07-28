@@ -31,8 +31,8 @@ const ATTR_TYPES_SET_SCHEMAS = {
     data: {
       props: {
         label: '{{attribute.info.title}}',
-        rows: 3,
-        autoGrow: true,
+        rows: 10,
+        noResize: false,
         errorMessages: '{{attribute.errors}}'
       }
     },
