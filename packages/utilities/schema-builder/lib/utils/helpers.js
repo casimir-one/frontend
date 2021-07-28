@@ -23,7 +23,7 @@ export const ifValidBlock = (node) => (
   && Object.prototype.hasOwnProperty.call(node, 'is')
 );
 
-export const setBlockPropsValueForCanvas = (props) => Object.keys(props)
+export const convertBlockPropsValueForCanvas = (props) => Object.keys(props)
   .reduce((acc, prop) => {
     let propVal;
 
@@ -52,15 +52,15 @@ export const convertBlockPropsForCanvas = (node) => {
   const proxyProps = node?.data?.proxyProps;
 
   if (props) {
-    objectPath.set(res, ['data', 'props'], setBlockPropsValueForCanvas(props));
-    // res.data.props = setBlockPropsValueForCanvas(res.data.props);
+    objectPath.set(res, ['data', 'props'], convertBlockPropsValueForCanvas(props));
+    // res.data.props = convertBlockPropsValueForCanvas(res.data.props);
   }
 
   if (proxyProps) {
-    objectPath.set(res, ['data', 'proxyProps'], setBlockPropsValueForCanvas(Object.keys(proxyProps)
+    objectPath.set(res, ['data', 'proxyProps'], convertBlockPropsValueForCanvas(Object.keys(proxyProps)
       .reduce((acc, component) => ({
         ...acc,
-        ...{ [component]: setBlockPropsValueForCanvas(proxyProps[component]) }
+        ...{ [component]: convertBlockPropsValueForCanvas(proxyProps[component]) }
       }), {})));
   }
   return res;
@@ -85,8 +85,7 @@ export const convertBlockForSchema = (node) => {
 export const generateBlockName = (name) => {
   let res = paramCase(name);
 
-  if (/^v-/.test(res)) res = res.replace('v-', '');
-  if (/^vex-/.test(res)) res = res.replace('vex-', '');
+  res = res.replace(/^v-|^vex-/, '');
 
   return capitalCase(res);
 };
