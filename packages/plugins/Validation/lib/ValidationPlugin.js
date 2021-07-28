@@ -20,7 +20,8 @@ import {
   unique,
   username,
   dateBefore,
-  dateAfter
+  dateAfter,
+  dateAfterNow
 } from './rules';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
@@ -60,6 +61,7 @@ const install = (Vue, options = {}) => {
   extend('username', username);
   extend('dateBefore', dateBefore);
   extend('dateAfter', dateAfter);
+  extend('dateAfterNow', dateAfterNow);
 };
 
 export const ValidationPlugin = {

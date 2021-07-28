@@ -6,8 +6,9 @@ export default {
       minMax: '{_field_} length should be from {min} to {max} characters in length',
       minMaxValue: '{_field_} should be from {min} to {max}',
       unique: '{_field_} must be unique',
-      dateBefore: '{_field_} should be smaller than {target}',
-      dateAfter: '{_field_} should be greater than {target}',
+      dateBefore: '{_field_} should be before {target}',
+      dateAfter: '{_field_} should be after {target}',
+      dateAfterNow: '{_field_} should be later than now',
       dateBetween: {
         after: '{_field_} should be after {date}',
         before: '{_field_} should be before {date}',
