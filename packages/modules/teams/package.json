@@ -1,6 +1,6 @@
 {
   "name": "@deip/teams-module",
-  "version": "1.131.0",
+  "version": "1.131.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,14 +20,14 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-module": "1.131.0",
+    "@deip/attributes-module": "1.131.1",
     "@deip/constants": "1.131.0",
-    "@deip/layouts-module": "1.131.0",
+    "@deip/layouts-module": "1.131.1",
     "@deip/platform-components": "1.131.0",
     "@deip/platform-fns": "1.131.0",
     "@deip/platform-store": "1.131.0",
     "@deip/proxydi": "1.131.0",
-    "@deip/schema-renderer": "1.131.0",
+    "@deip/schema-renderer": "1.131.1",
     "@deip/team-service": "1.131.0",
     "@deip/toolbox": "1.131.0",
     "@deip/validation-plugin": "1.131.0",

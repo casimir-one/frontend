@@ -1,6 +1,6 @@
 {
   "name": "@deip/fundraising-module",
-  "version": "1.131.0",
+  "version": "1.131.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/assets-module": "1.131.0",
+    "@deip/assets-module": "1.131.1",
     "@deip/constants": "1.131.0",
     "@deip/investments-service": "1.131.0",
     "@deip/platform-components": "1.131.0",
@@ -32,7 +32,7 @@
     "@deip/platform-util": "1.131.0",
     "@deip/projects-module": "1.131.0",
     "@deip/proxydi": "1.131.0",
-    "@deip/schema-builder": "1.131.0",
+    "@deip/schema-builder": "1.131.1",
     "@deip/toolbox": "1.131.0",
     "@deip/validation-plugin": "1.131.0",
     "@deip/vuetify-extended": "1.131.0",

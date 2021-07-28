@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.131.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
+
+
+### Bug Fixes
+
+* **@deip/schema-renderer:** fix form internalValue change ([7dff561](https://gitlab.com/DEIP/deip-client-modules/commit/7dff561f50fe50d1b2a61bca45cf219ed809c8b6))
+
+
+
+
+
 # [1.131.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.130.0...v1.131.0) (2021-07-27)
 
 **Note:** Version bump only for package @deip/schema-renderer
