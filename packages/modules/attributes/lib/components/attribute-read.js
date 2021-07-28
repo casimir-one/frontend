@@ -1,6 +1,6 @@
 import { defineComponent } from '@deip/platform-util';
 import { abstractAttributeFactory } from '../mixins/attribute';
-import { ATTR_TYPES_READ_SCHEMAS } from '../schemas/attribute-read-schema';
+import { ATTR_TYPES_READ_SCHEMAS } from '../schemas';
 
 const AttributeRead = defineComponent({
   name: 'AttributeRead',

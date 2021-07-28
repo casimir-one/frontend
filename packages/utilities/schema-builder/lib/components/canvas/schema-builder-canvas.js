@@ -201,7 +201,7 @@ export const SchemaBuilderCanvas = {
       return (
         <div
           class="schema-composer__hover-box"
-          style={this.hoverBox.styles}
+          style={this.hoverBox?.styles || {}}
           ref="hover-box"
         >
           <div class="schema-composer__hover-box-header">
@@ -216,7 +216,7 @@ export const SchemaBuilderCanvas = {
       return (
         <div
           class="schema-composer__focus-box"
-          style={this.focusBox.styles}
+          style={this.focusBox?.styles || {}}
           ref="focus-box"
         >
           <div class="schema-composer__focus-box-header">

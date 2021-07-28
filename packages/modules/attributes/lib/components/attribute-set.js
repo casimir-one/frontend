@@ -1,7 +1,12 @@
 import { SchemaRenderer } from '@deip/schema-renderer';
 import { isEqual, merge } from 'lodash/fp';
-import { isFile, wrapInArray } from '@deip/toolbox';
+import { wrapInArray } from '@deip/toolbox';
 import { ValidationProvider } from '@deip/validation-plugin';
+
+import {
+  ATTR_TYPES,
+  ATTR_TYPES_SET_RULES
+} from '@deip/constants';
 
 import {
   VTextField,
@@ -22,57 +27,37 @@ import {
   VexPlacesAutocomplete
 } from '@deip/vuetify-extended';
 
-import {
-  ATTR_TYPES,
-  ATTR_TYPES_SET_RULES
-} from '@deip/constants';
-
+import { defineComponent } from '@deip/platform-util';
+import { abstractAttributeFactory } from '../mixins/attribute';
 import { ATTR_TYPES_SET_SCHEMAS } from '../schemas';
 
-const components = {
-  VTextField,
-  VTextarea,
-  VSelect,
-  VSwitch,
-  VCheckbox,
-
-  VexImageInput,
-  VexDateInput,
-  VexTimeInput,
-  VexDateTimeInput,
-  VexFileInput,
-  VexFileInputExtended,
-  VexPlacesAutocomplete
-};
-
-const AttributeSet = {
+const AttributeSet = defineComponent({
   name: 'AttributeSet',
+
+  mixins: [
+    abstractAttributeFactory(
+      ATTR_TYPES_SET_SCHEMAS,
+      {
+        VTextField,
+        VTextarea,
+        VSelect,
+        VSwitch,
+        VCheckbox,
+
+        VexImageInput,
+        VexDateInput,
+        VexTimeInput,
+        VexDateTimeInput,
+        VexFileInput,
+        VexFileInputExtended,
+        VexPlacesAutocomplete
+      }
+    )
+  ],
 
   model: {
     prop: 'value',
     event: 'input'
-  },
-
-  props: {
-    attributeId: {
-      type: String,
-      required: true
-    },
-
-    value: {
-      type: [String, Number, Array, Object, Boolean, File],
-      default: null
-    },
-
-    schemaData: {
-      type: Object,
-      default: () => ({})
-    },
-
-    proxyProps: {
-      type: Object,
-      default: () => ({})
-    }
   },
 
   data() {
@@ -93,16 +78,6 @@ const AttributeSet = {
       }
     },
 
-    attributeInfo() {
-      return this.$store.getters['attributes/one'](this.attributeId);
-    },
-
-    renderSchema() {
-      return this.attributeInfo?.schemas?.set
-        || ATTR_TYPES_SET_SCHEMAS[this.attributeInfo.type]
-        || { is: 'div', text: `${this.attributeInfo.title} need [SET] schema` };
-    },
-
     normalisedSchema() {
       const optionsPropsData = this.attributeInfo.valueOptions.length
         ? {
@@ -117,10 +92,10 @@ const AttributeSet = {
         : {};
 
       if (this.attributeInfo.type === ATTR_TYPES.SELECT) {
-        return wrapInArray(merge(this.renderSchema, optionsPropsData));
+        return wrapInArray(merge(this.internalSchema, optionsPropsData));
       }
 
-      return wrapInArray(this.renderSchema);
+      return wrapInArray(this.internalSchema);
     }
   },
 
@@ -136,36 +111,42 @@ const AttributeSet = {
 
   methods: {
     genAttribute(errors = []) {
-      return this.$createElement(SchemaRenderer, {
-        props: {
-          components,
-          schema: this.normalisedSchema,
-          schemaData: {
-            ...this.schemaData,
-            attribute: {
-              info: this.attributeInfo,
-              value: isFile(this.value) ? this.value.name : this.value,
-              props: Object.keys(components)
-                .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {}),
-              errors
-            },
-            // attributeInfo: this.attributeInfo,
-            // attributeValue: isFile(this.value) ? this.value.name : this.value,
-            // errors,
-            proxyProps: Object.keys(components)
-              .reduce((acc, key) => ({ ...acc, ...{ [key]: this.proxyProps[key] || {} } }), {})
-          },
-          value: this.value || this.attributeInfo.defaultValue,
-          disabled: this.attributeInfo.isEditable
-        },
-        attrs: this.$attrs,
-        on: {
-          input: (val) => {
-            this.internalValue = val;
+      const schemaData = merge(
+        this.internalSchemaData,
+        {
+          attribute: {
+            errors
           }
         }
-      });
+      );
+
+      return (
+        <SchemaRenderer
+          schema={this.normalisedSchema}
+          schemaData={schemaData}
+          components={this.internalComponents}
+          value={this.value || this.attributeInfo.defaultValue}
+          onInput={(val) => {
+            this.internalValue = val;
+          }}
+        />
+      );
     },
+
+    // genAttribute(errors = []) {
+    //   return this.$createElement(SchemaRenderer, {
+    //     props: {
+    //       value: this.value || this.attributeInfo.defaultValue,
+    //       disabled: this.attributeInfo.isEditable
+    //     },
+    //     attrs: this.$attrs,
+    //     on: {
+    //       input: (val) => {
+    //         this.internalValue = val;
+    //       }
+    //     }
+    //   });
+    // },
 
     genRequiredAttribute() {
       return this.$createElement(ValidationProvider, {
@@ -186,7 +167,7 @@ const AttributeSet = {
     }
     return false;
   }
-};
+});
 
 export default AttributeSet;
 export { AttributeSet };
