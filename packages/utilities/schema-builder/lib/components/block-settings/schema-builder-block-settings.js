@@ -150,6 +150,14 @@ export const SchemaBuilderBlockSettings = {
   },
 
   render(h) {
-    return h(VexStack, this.genFields());
+    if (this.activeNode) {
+      return h(VexStack, this.genFields());
+    }
+
+    return (
+      <div class="text-caption text--secondary">
+        Select an element on the canvas to activate this panel.
+      </div>
+    );
   }
 };

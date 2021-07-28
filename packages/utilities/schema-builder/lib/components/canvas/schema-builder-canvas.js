@@ -19,7 +19,9 @@ export const SchemaBuilderCanvas = {
   data() {
     return {
       hoverBox: {},
-      focusBox: {}
+      focusBox: {},
+
+      isMoved: false
     };
   },
 
@@ -59,37 +61,35 @@ export const SchemaBuilderCanvas = {
     },
 
     hoverNode(uid) {
-      this.hoverBox = this.getNodeBoxData(uid);
+      if (!uid || this.isMoved) {
+        this.hoverBox = {};
+      } else {
+        this.hoverBox = this.getNodeBoxData(uid);
+      }
     },
 
-    deHoverNode() {
-      this.hoverBox = {};
-    },
+    selectNode() {
+      this.hoverNode(null);
 
-    selectNode(uid) {
-      this.deHoverNode();
-
-      this.focusBox = this.getNodeBoxData(uid);
-      this.$emit('select-node', uid);
-    },
-
-    deSelectNode() {
-      this.focusBox = {};
-      this.$emit('select-node', null);
-    },
-
-    clearSelection() {
-      this.deHoverNode();
-      this.deSelectNode();
+      if (!this.activeNode) {
+        this.focusBox = {};
+      } else {
+        this.focusBox = this.getNodeBoxData(this.activeNode);
+      }
     },
 
     genHost(nodes, data = {}) {
-      // move={() => {this.clearSelection()}
       return (
         <draggable
           list={nodes}
           group={{ name: 'blocks' }}
-          onStart={() => { this.clearSelection(); }}
+          onStart={() => {
+            this.isMoved = true;
+            this.setActiveNode(null);
+          }}
+          onEnd={() => {
+            this.isMoved = false;
+          }}
           { ...data }
         >
           {nodes.map((node) => this.genNode(node))}
@@ -161,7 +161,7 @@ export const SchemaBuilderCanvas = {
 
       const generator = this[`genNodeContent${pascalCase(blockType)}`]
         ? this[`genNodeContent${pascalCase(blockType)}`]
-        : this.genNodeContentBlock;
+        : this.genNodeContentCommon();
 
       const content = wrapInArray(generator(node));
 
@@ -176,13 +176,13 @@ export const SchemaBuilderCanvas = {
           class={classList}
           ref={`node-${node.uid}`}
           vOn:click_stop={() => {
-            this.selectNode(node.uid);
+            this.setActiveNode(node.uid);
           }}
           vOn:mouseover_stop={() => {
             this.hoverNode(node.uid);
           }}
           vOn:mouseleave_stop={() => {
-            this.deHoverNode();
+            this.hoverNode(null);
           }}
         >{content}</div>
       );

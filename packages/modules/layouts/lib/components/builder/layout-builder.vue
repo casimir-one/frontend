@@ -60,7 +60,6 @@
               <schema-builder-blocks-list
                 :blocks="blocks"
                 class="spacer"
-                @clone="onSelectNode(null)"
               />
             </v-navigation-drawer>
 
@@ -80,9 +79,7 @@
                 ref="navigator"
                 :schema="formData.schema"
                 :blocks="blocks"
-                :active-node="activeNode"
                 class="pa-4"
-                @select-node="onSelectNode"
               />
             </v-navigation-drawer>
           </div>
@@ -102,17 +99,10 @@
           </template>
           <div class="pa-6">
             <schema-builder-block-settings
-              v-if="activeNode"
               ref="blockSettings"
               :schema="formData.schema"
               :blocks="blocks"
-              :active-node="activeNode"
             />
-            <template v-else>
-              <div class="text-caption text--secondary">
-                Select an element on the canvas to activate this panel.
-              </div>
-            </template>
           </div>
         </v-navigation-drawer>
 
@@ -144,9 +134,7 @@
                 ref="canvas"
                 :schema="formData.schema"
                 :blocks="blocks"
-                :active-node="activeNode"
                 watch-delete-key
-                @select-node="onSelectNode"
               />
             </v-col>
           </v-row>
@@ -246,10 +234,6 @@
     methods: {
       reset() {
         this.formData.schema = [];
-      },
-
-      onSelectNode(e) {
-        this.activeNode = e;
       },
 
       onSuccess() {

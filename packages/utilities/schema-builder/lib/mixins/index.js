@@ -3,6 +3,7 @@ import { isEqual } from '@deip/toolbox/lodash';
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import { factory as ProxyableFactory } from 'vuetify/lib/mixins/proxyable';
 import { normalizeBlocksObject } from '../utils/helpers';
+import { getters, mutations } from '../store';
 
 export const SchemeView = {
   name: 'SchemeView',
@@ -14,10 +15,6 @@ export const SchemeView = {
       type: Array,
       default: () => []
     },
-    activeNode: {
-      type: String,
-      default: null
-    },
     watchDeleteKey: {
       type: Boolean,
       default: false
@@ -26,12 +23,13 @@ export const SchemeView = {
 
   data(vm) {
     return {
-      lazySchema: vm.schema || [],
-      lazyActiveNode: vm.activeNode || false
+      lazySchema: vm.schema || []
     };
   },
 
   computed: {
+    ...getters,
+
     normalizedBlocks() {
       return normalizeBlocksObject(this.blocks);
     },
@@ -49,8 +47,11 @@ export const SchemeView = {
   },
 
   watch: {
-    activeNode(val) {
-      this.selectNode(val);
+    activeNode(val, oldVal) {
+      if (val !== oldVal) {
+        this.selectNode(val);
+        this.$emit('select-node', val);
+      }
     },
 
     schema: {
@@ -74,9 +75,9 @@ export const SchemeView = {
   },
 
   methods: {
-    selectNode(val) {
-      this.$emit('select-node', val);
-    },
+    ...mutations,
+
+    selectNode() {},
 
     getNodeInfo(id) {
       return objectPath.get(

@@ -6,7 +6,7 @@ const state = Vue.observable({ // this is the magic
 });
 
 export const getters = {
-  activeNodeRe: () => state.activeNode
+  activeNode: () => state.activeNode
 };
 
 export const mutations = {
