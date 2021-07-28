@@ -6,7 +6,7 @@ export const fundraisingBlocks = {
   blocks: [
     ...blocksGenerator([
       {
-        ...FundraisingWidget, // TODO: remove options
+        component: FundraisingWidget,
         icon: 'mdi-cash',
         children: [],
         disabledProps: [
