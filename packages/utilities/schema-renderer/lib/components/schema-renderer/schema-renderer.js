@@ -76,16 +76,18 @@ export const SchemaRenderer = {
   },
 
   beforeCreate() {
-    const externals = this.$options.propsData.components;
-
-    for (const name in externals) {
-      if (Object.hasOwnProperty.call(externals, name) && name !== this.$options.name) {
-        this.$options.components[name] = externals[name];
-      }
-    }
+    this.$options.methods.registerComponents.call(this, this.$options.propsData.components);
   },
 
   methods: {
+    registerComponents(components = {}) {
+      for (const key of Object.keys(components)) {
+        if (key !== this.$options.name) {
+          this.$options.components[key] = components[key];
+        }
+      }
+    },
+
     normalizeSchema(schema) {
       if (!schema) return false;
       if (!isArray(schema)) throw Error('Schema mus be an Array');
