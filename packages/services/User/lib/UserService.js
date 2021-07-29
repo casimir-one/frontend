@@ -40,11 +40,11 @@ class UserService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-        const txBuilder = chainService.getChainTxBuilder();
+        const chainTxBuilder = chainService.getChainTxBuilder();
         const chainNodeClient = chainService.getChainNodeClient();
 
-        return txBuilder.begin()
-          .then(() => {
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const updateAccountCmd = new UpdateAccountCmd({
               isTeamAccount: false,
               entityId: updater,

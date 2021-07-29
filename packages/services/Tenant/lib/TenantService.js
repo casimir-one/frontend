@@ -66,9 +66,9 @@ class TenantService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
               isTeamAccount: false,
               fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
@@ -90,7 +90,6 @@ class TenantService extends Singleton {
               roles,
               entityId: username
             });
-
             txBuilder.addCmd(createAccountCmd);
 
             return txBuilder.end();

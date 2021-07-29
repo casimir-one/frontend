@@ -1,12 +1,12 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { PROTOCOL_OPERATIONS_MAP } from '@deip/constants';
+import { APP_CMD } from '@deip/constants';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
 
   return {
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_ACCOUNT]: ({
+    [APP_CMD.CREATE_ACCOUNT]: ({
       entityId,
       isTeamAccount,
       fee,
@@ -61,11 +61,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return createAccountOp;
+      return [createAccountOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.UPDATE_ACCOUNT]: ({
+    [APP_CMD.UPDATE_ACCOUNT]: ({
       entityId,
       description,
       isTeamAccount,
@@ -87,11 +87,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         update_extensions: []
       }];
 
-      return updateAccountOp;
+      return [updateAccountOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROJECT]: ({
+    [APP_CMD.CREATE_PROJECT]: ({
       entityId,
       teamId,
       description,
@@ -111,11 +111,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return createResearchOp;
+      return [createResearchOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.UPDATE_PROJECT]: ({
+    [APP_CMD.UPDATE_PROJECT]: ({
       entityId,
       teamId,
       description,
@@ -133,11 +133,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         update_extensions: []
       }];
 
-      return updateProjectOp;
+      return [updateProjectOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.JOIN_PROJECT_TEAM]: ({
+    [APP_CMD.JOIN_PROJECT_TEAM]: ({
       member,
       teamId
     }) => {
@@ -166,11 +166,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         ]
       }];
 
-      return joinProjectOp;
+      return [joinProjectOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.LEAVE_PROJECT_TEAM]: ({
+    [APP_CMD.LEAVE_PROJECT_TEAM]: ({
       member,
       teamId
     }) => {
@@ -199,31 +199,38 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         ]
       }];
 
-      return leaveProjectOp;
+      return [leaveProjectOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROPOSAL]: ({
+    [APP_CMD.CREATE_PROPOSAL]: ({
       entityId,
       creator,
       proposedCmds,
       expirationTime,
       reviewPeriodSeconds
-    }, { cmdToOp }) => {
+    }, { cmdToOps }) => {
 
       const createProposalOp = ['create_proposal', {
         external_id: entityId,
         creator: creator,
-        proposed_ops: proposedCmds.map((cmd) => ({ op: cmdToOp(cmd) })),
+        proposed_ops: proposedCmds.reduce((arr, cmd) => { 
+          const ops = cmdToOps(cmd);
+          for (let i = 0; i < ops.length; i++) {
+            const op = ops[i];
+            arr.push({ op });
+          }
+          return arr;
+        }, []),
         expiration_time: expirationTime,
         review_period_seconds: reviewPeriodSeconds || undefined
       }];
 
-      return createProposalOp;
+      return [createProposalOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.UPDATE_PROPOSAL]: ({
+    [APP_CMD.UPDATE_PROPOSAL]: ({
       entityId,
       activeApprovalsToAdd,
       activeApprovalsToRemove,
@@ -244,11 +251,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return updateProposalOp;
+      return [updateProposalOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.DECLINE_PROPOSAL]: ({
+    [APP_CMD.DECLINE_PROPOSAL]: ({
       entityId,
       account,
       authorityType,
@@ -261,11 +268,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return declineProposalOp;
+      return [declineProposalOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: ({
       entityId,
       teamId,
       projectId,
@@ -288,11 +295,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return createProjectTokenSaleOp;
+      return [createProjectTokenSaleOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
       tokenSaleId,
       contributor,
       amount,
@@ -305,10 +312,10 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return contributeToTokenSaleOp;
+      return [contributeToTokenSaleOp];
     },
 
-    [PROTOCOL_OPERATIONS_MAP.ASSET_TRANSFER]: ({
+    [APP_CMD.ASSET_TRANSFER]: ({
       from,
       to,
       amount,
@@ -323,7 +330,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
     
-      return transferOp;
+      return [transferOp];
     }
 
   }
