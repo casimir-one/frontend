@@ -42,9 +42,9 @@ class AssetsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const assetTransferCmd = new AssetTransferCmd({
               from,
               to,
@@ -190,9 +190,9 @@ class AssetsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const assetTransferCmd1 = new AssetTransferCmd({
               from: party1,
               to: party2,

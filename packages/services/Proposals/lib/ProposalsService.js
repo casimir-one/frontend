@@ -139,9 +139,9 @@ class ProposalsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const updateProposalCmd = new UpdateProposalCmd({
               entityId: proposalId,
               activeApprovalsToAdd,
@@ -172,9 +172,9 @@ class ProposalsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const declineProposalCmd = new DeclineProposalCmd({
               entityId: proposalId,
               account,

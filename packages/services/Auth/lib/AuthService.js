@@ -35,11 +35,11 @@ class AuthService extends Singleton {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-        const txBuilder = chainService.getChainTxBuilder();
+        const chainTxBuilder = chainService.getChainTxBuilder();
         const userAttributes = attributes || [];
 
-        return txBuilder.begin()
-          .then(() => {
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
               isTeamAccount: false,
               fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,

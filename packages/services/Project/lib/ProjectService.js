@@ -66,29 +66,26 @@ class ProjectService extends Singleton {
 
     const env = this.proxydi.get('env');
     const { TENANT, IS_TESTNET } = env;
+    const isNewProjectTeam = teamId === null;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        const isNewProjectTeam = teamId === null;
+    return Promise.all([
+      ChainService.getInstanceAsync(env),
+      isNewProjectTeam ? Promise.resolve([]) : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
+    ])
+      .then(([chainService, refs]) => {
+
         const teamMembers = [];
+        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        teamMembers.push(...list);
+
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
 
         let projectId;
-        return Promise.all([
-          isNewProjectTeam
-            ? Promise.resolve([])
-            : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
-        ])
-          .then(([refs]) => {
-            const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
-            teamMembers.push(...list);
-            return txBuilder.begin();
-          })
-          .then(() => {
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
 
             if (isNewProjectTeam) {
-
               const authoritySetup = {
                 auths: [],
                 weight: 1
@@ -195,18 +192,20 @@ class ProjectService extends Singleton {
     const env = this.proxydi.get('env');
     const { TENANT } = env;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
+    return Promise.all([
+      ChainService.getInstanceAsync(env),
+      this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
+    ])
+      .then(([chainService, refs]) => {
         const teamMembers = [];
-        return Promise.all([
-          this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false),
-          txBuilder.begin()
-        ])
-          .then(([refs]) => {
-            const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
-            teamMembers.push(...list);
+        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        teamMembers.push(...list);
+
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
 
             const joinedMembers = members ? members.filter(member => !teamMembers.includes(member)) : [];
             const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];

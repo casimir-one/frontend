@@ -54,9 +54,9 @@ class TeamService extends Singleton {
       .then((chainService) => {
         let entityId;
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
               isTeamAccount: true,
               fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
@@ -123,10 +123,9 @@ class TeamService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder
-          .begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const updateAccountCmd = new UpdateAccountCmd({
               entityId,
 

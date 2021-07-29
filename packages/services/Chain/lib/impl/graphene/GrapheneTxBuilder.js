@@ -9,17 +9,12 @@ class GrapheneTxBuilder extends BaseTxBuilder {
   }
 
   begin() {
-    super.clear();
     this._tx = new GrapheneTx();
-    return Promise.resolve(this);
+    return super.begin();
   }
 
-  end() { 
-    return super.finalize({ chainNodeClient: this._chainNodeClient })
-      .then((packedTx) => {
-        super.clear();
-        return packedTx;
-      });
+  end() {
+    return super.end({ chainNodeClient: this._chainNodeClient });
   }
 
 }
