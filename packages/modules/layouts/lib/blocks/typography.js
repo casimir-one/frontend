@@ -18,7 +18,37 @@ export const typographyBlocks = {
       })),
     {
       is: 'div',
-      name: 'Base text',
+      name: 'Subtitle 1',
+      icon: 'mdi-format-title',
+      data: {
+        class: 'text-subtitle-1'
+      },
+      children: [],
+      blockType: 'typography'
+    },
+    {
+      is: 'div',
+      name: 'Subtitle 2',
+      icon: 'mdi-format-text',
+      data: {
+        class: 'text-subtitle-2'
+      },
+      children: [],
+      blockType: 'typography'
+    },
+    {
+      is: 'div',
+      name: 'Base text 1',
+      icon: 'mdi-text-subject',
+      data: {
+        class: 'text-body-1'
+      },
+      children: [],
+      blockType: 'typography'
+    },
+    {
+      is: 'div',
+      name: 'Base text 2',
       icon: 'mdi-text-subject',
       data: {
         class: 'text-body-2'
