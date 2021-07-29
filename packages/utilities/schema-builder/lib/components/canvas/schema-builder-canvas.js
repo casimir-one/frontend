@@ -143,7 +143,7 @@ export const SchemaBuilderCanvas = {
       );
     },
 
-    genNodeContentAttribute(node) {
+    genNodeContentSimple(node) {
       const nodeInfo = this.getNodeInfo(node.id);
 
       return (
@@ -155,6 +155,10 @@ export const SchemaBuilderCanvas = {
           <div class="text-caption font-weight-medium">{nodeInfo.name}</div>
         </VSheet>
       );
+    },
+
+    genNodeContentAttribute(node) {
+      return this.genNodeContentSimple(node);
     },
 
     genNodeContentRow(node) {

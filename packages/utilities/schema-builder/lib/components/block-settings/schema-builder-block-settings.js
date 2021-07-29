@@ -149,7 +149,7 @@ export const SchemaBuilderBlockSettings = {
 
       const additionalFields = [
         this.genTextField(
-          [...this.nodePath, 'data', 'attrs', 'staticClass'],
+          [...this.nodePath, 'data', 'staticClass'],
           'Additional class'
         )
       ];
