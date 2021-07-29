@@ -2,7 +2,7 @@
   <layout-renderer
     :value="team"
     :schema="internalSchema"
-    :schema-data="schemaData"
+    :schema-data="internalSchemaData"
   />
 </template>
 
@@ -23,7 +23,7 @@
     ],
 
     computed: {
-      schemaData() {
+      internalSchemaData() {
         return {
           canEdit: this.$currentUser.hasRole(
             SYSTEM_ROLE.TEAM_ADMIN,
@@ -35,7 +35,8 @@
               scopeName: 'team',
               scopeId: this.team.entityId
             }
-          )
+          ),
+          ...this.schemaData
         };
       }
     }
