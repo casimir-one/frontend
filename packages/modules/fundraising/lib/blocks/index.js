@@ -7,6 +7,12 @@ export const fundraisingBlocks = {
     ...blocksGenerator([
       {
         component: FundraisingWidget,
+        data: {
+          props: {
+            projectId: '{{data.entityId}}',
+            canUserStartFundraising: '{{canEdit}}'
+          }
+        },
         icon: 'mdi-cash',
         children: [],
         disabledProps: [
@@ -14,7 +20,8 @@ export const fundraisingBlocks = {
           'contributeLink',
           'startFundraisingLink',
           'canUserStartFundraising'
-        ]
+        ],
+        blockType: 'simple'
       }
     ])
   ]
