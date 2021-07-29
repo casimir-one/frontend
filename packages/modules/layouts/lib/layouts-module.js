@@ -1,9 +1,41 @@
 import { proxydi } from '@deip/proxydi';
 import { layoutsStore } from './store';
+import { LayoutsRegistry } from './registry';
 
-const install = (Vue) => {
+import {
+  layoutBlocks,
+  typographyBlocks,
+  tableBlocks,
+  uiBlocks
+} from './blocks';
+
+const layoutsRegistry = LayoutsRegistry.getInstance();
+
+const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
+
+  const {
+    blocks = [],
+    blockSections = [],
+    blockObjects = [],
+    components = []
+  } = options;
+
+  layoutsRegistry
+    .registerBlocksObjects([
+      layoutBlocks,
+      typographyBlocks,
+      tableBlocks,
+      uiBlocks,
+      {
+        title: 'Components',
+        blocks
+      }
+    ])
+    .registerBlocksSections(blockSections)
+    .registerBlocksObjects(blockObjects)
+    .registerComponents(components);
 
   const store = proxydi.get('storeInstance');
 
