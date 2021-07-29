@@ -79,7 +79,7 @@ export const SchemaRenderer = {
     const externals = this.$options.propsData.components;
 
     for (const name in externals) {
-      if (Object.hasOwnProperty.call(externals, name)) {
+      if (Object.hasOwnProperty.call(externals, name) && name !== this.$options.name) {
         this.$options.components[name] = externals[name];
       }
     }
@@ -126,6 +126,10 @@ export const SchemaRenderer = {
 
       if (data.proxyProps) {
         objectPath.set(data, ['props', 'proxyProps'], data.proxyProps);
+      }
+
+      if (this.$options.components?.[nodeComponent]?.options?.props?.components) {
+        objectPath.set(data, ['props', 'components'], this.$options.components);
       }
 
       const nodeChildren = text || this.getChildren(children);
