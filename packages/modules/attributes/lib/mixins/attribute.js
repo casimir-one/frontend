@@ -67,7 +67,10 @@ export const abstractAttributeFactory = (
     },
 
     internalComponents() {
-      return components;
+      return {
+        ...components,
+        ...this.components
+      };
     },
 
     normalisedSchema() {
