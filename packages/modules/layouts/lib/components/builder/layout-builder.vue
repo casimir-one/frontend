@@ -138,6 +138,7 @@
               />
             </v-col>
           </v-row>
+          <pre>{{ JSON.stringify(formData.schema, null, 2) }}</pre>
         </div>
 
         <v-btn

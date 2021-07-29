@@ -28,6 +28,7 @@ export const layoutBlocks = {
     {
       component: VexSectionSplit,
       icon: 'mdi-view-week-outline',
+      blockType: 'row',
       children: []
     },
     {

@@ -19,7 +19,7 @@ const install = (Vue, options = {}) => {
     blocks = [],
     blockSections = [],
     blockObjects = [],
-    components = []
+    components = {}
   } = options;
 
   layoutsRegistry

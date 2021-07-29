@@ -56,10 +56,9 @@ export class LayoutsRegistry extends Singleton {
 
   // /////////////////////////////
 
-  registerComponents(components) {
-    for (const component of wrapInArray(components)) {
-      const { name } = component.options;
-      this._componentsRegistry[name] = component;
+  registerComponents(components = {}) {
+    for (const key of Object.keys(components)) {
+      this._componentsRegistry[key] = components[key];
     }
 
     return this;
