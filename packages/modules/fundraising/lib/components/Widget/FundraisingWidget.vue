@@ -73,12 +73,12 @@
       },
 
       contributeLink: {
-        type: [String, Object],
+        type: Object,
         default: null
       },
 
       startFundraisingLink: {
-        type: [String, Object],
+        type: Object,
         default: null
       },
 
