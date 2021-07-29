@@ -6,7 +6,7 @@
   /* eslint-enable */
 
   export default defineComponent({
-    name: 'DLayoutSectionSplit',
+    name: 'VexSectionSplit',
     mixins: [VSheet],
     props: {
       template: {

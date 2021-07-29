@@ -5,11 +5,11 @@ import VexSectionTitle from './VexSectionTitle';
 export {
   VexSection,
   VexSectionSplit,
-  VexSectionTitle,
+  VexSectionTitle
 };
 
 export default {
   VexSection,
   VexSectionSplit,
-  VexSectionTitle,
+  VexSectionTitle
 };
