@@ -10,7 +10,9 @@ export const fundraisingBlocks = {
         data: {
           props: {
             projectId: '{{data.entityId}}',
-            canUserStartFundraising: '{{canEdit}}'
+            canUserStartFundraising: '{{canEdit}}',
+            contributeLink: '{{@contributeLink}}',
+            startFundraisingLink: '{{@startFundraisingLink}}'
           }
         },
         icon: 'mdi-cash',
