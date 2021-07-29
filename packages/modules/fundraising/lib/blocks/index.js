@@ -9,10 +9,10 @@ export const fundraisingBlocks = {
         component: FundraisingWidget,
         data: {
           props: {
-            projectId: '{{data.entityId}}',
+            projectId: '{{projectId}}',
             canUserStartFundraising: '{{canEdit}}',
-            contributeLink: '{{@contributeLink}}',
-            startFundraisingLink: '{{@startFundraisingLink}}'
+            contributeLink: '{{contributeLink}}',
+            startFundraisingLink: '{{startFundraisingLink}}'
           }
         },
         icon: 'mdi-cash',
