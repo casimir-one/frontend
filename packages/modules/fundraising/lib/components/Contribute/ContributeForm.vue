@@ -46,7 +46,7 @@
             >
               <template #label>
                 <i18n path="module.fundraising.contributeForm.agree" class="text-body-2">
-                  <a :href="tosUrl" target="_blank">
+                  <a :href="tosUrl" target="_blank" @click.stop>
                     {{ $t('module.fundraising.contributeForm.tos') }}
                   </a>
                 </i18n>
