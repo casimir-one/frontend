@@ -5,7 +5,7 @@ const formFactory = (
   prop = 'value',
   event = 'input',
   defaultPropValue = () => ({}),
-  initialFormData = {}
+  lazyFormData = {}
 ) => ({
   name: 'FormFactory',
 
@@ -30,7 +30,7 @@ const formFactory = (
 
   data() {
     return {
-      lazyFormData: initialFormData,
+      lazyFormData,
 
       disabled: false,
       loading: false,

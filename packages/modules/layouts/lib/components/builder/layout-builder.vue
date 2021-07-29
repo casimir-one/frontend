@@ -77,7 +77,7 @@
 
               <schema-builder-canvas-tree
                 ref="navigator"
-                :schema="formData.schema"
+                v-model="formData.schema"
                 :blocks="blocks"
                 class="pa-4"
               />
@@ -100,7 +100,7 @@
           <div class="pa-6">
             <schema-builder-block-settings
               ref="blockSettings"
-              :schema="formData.schema"
+              v-model="formData.schema"
               :blocks="blocks"
             />
           </div>
@@ -132,7 +132,7 @@
             <v-col cols="12">
               <schema-builder-canvas
                 ref="canvas"
-                :schema="formData.schema"
+                v-model="formData.schema"
                 :blocks="blocks"
                 watch-delete-key
               />
@@ -177,12 +177,12 @@
   import { AttributeSet, AttributeRead } from '@deip/attributes-module';
 
   import {
-    layoutBlocks,
-    typographyBlocks,
-    tableBlocks,
-    uiBlocks,
     attributesBlocksFactory
   } from '../../blocks';
+
+  import { LayoutsRegistry } from '../../registry';
+
+  const layoutsRegistry = LayoutsRegistry.getInstance();
 
   export default defineComponent({
     name: 'LayoutBuilder',
@@ -219,10 +219,7 @@
     computed: {
       blocks() {
         return [
-          layoutBlocks,
-          tableBlocks,
-          typographyBlocks,
-          uiBlocks,
+          ...layoutsRegistry.getBlocks(),
           attributesBlocksFactory(
             this.$store.getters['attributes/list']({ scope: this.formData.scope }),
             this.formData.isForm ? AttributeSet : AttributeRead

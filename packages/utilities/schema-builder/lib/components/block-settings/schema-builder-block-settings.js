@@ -6,6 +6,8 @@ import {
   capitalCase
 } from '@deip/toolbox';
 
+import { cloneDeep } from '@deip/toolbox/lodash';
+
 /* eslint-disable */
 import {
   VTextField,
@@ -31,26 +33,6 @@ export const SchemaBuilderBlockSettings = {
       return deepFind(this.internalSchema, this.activeNode).slice(0, -1);
     },
 
-    propsPath() {
-      if (!this.activeNode) return '';
-
-      return {
-        main: [...this.nodePath, 'data', 'props'],
-        proxy: [...this.nodePath, 'data', 'proxyProps']
-      };
-    },
-
-    nodeProps() {
-      if (!this.activeNode) return false;
-
-      const normalized = convertBlockPropsForCanvas(this.nodeInfo);
-
-      return {
-        main: objectPath.get(normalized, ['data', 'props'], {}),
-        proxy: objectPath.get(normalized, ['data', 'proxyProps'], {})
-      };
-    },
-
     nodeInfo() {
       const { id } = objectPath.get(this.internalSchema, this.nodePath);
       return this.getNodeInfo(id);
@@ -73,6 +55,48 @@ export const SchemaBuilderBlockSettings = {
       return kindOf(type());
     },
 
+    setFieldVal(path, value) {
+      const updated = cloneDeep(this.internalSchema);
+
+      objectPath.set(updated, path, value);
+      this.internalSchema = updated;
+    },
+
+    genFieldProps(label) {
+      return {
+        hideDetails: true,
+        label: capitalCase(label)
+      };
+    },
+
+    genTextField(path, label, value) {
+      const initVal = objectPath.get(this.internalSchema, path, value);
+      const props = this.genFieldProps(label);
+
+      return (
+        <VTextField
+          {...{ props }}
+          class="ma-0"
+          value={initVal === false ? '' : initVal}
+          onInput={(v) => this.setFieldVal(path, v)}
+        />
+      );
+    },
+
+    genCheckbox(path, label, value) {
+      const initVal = objectPath.get(this.internalSchema, path, value);
+      const props = this.genFieldProps(label);
+
+      return (
+        <VCheckbox
+          {...{ props }}
+          class="ma-0 pa-0"
+          value={initVal}
+          onChange={(v) => this.setFieldVal(path, v)}
+        />
+      );
+    },
+
     genField(path, key, val) {
       const propType = this.checkPropType(key, path);
 
@@ -81,50 +105,24 @@ export const SchemaBuilderBlockSettings = {
         ...(this.nodeInfo.disabledProps || [])
       ]).includes(key);
 
-      const setVal = (value) => {
-        objectPath.set(this.internalSchema, [...path, key], value);
-      };
-
-      const initVal = objectPath.get(this.internalSchema, [...path, key], val);
-
       if (disabled) return null;
 
-      const props = {
-        hideDetails: true,
-        label: capitalCase(key),
-        disabled
-      };
-
       if (propType === 'boolean') {
-        return (
-          <VCheckbox
-            {...{ props }}
-            class="ma-0 pa-0"
-            value={initVal}
-            onChange={setVal}
-          />
-        );
+        return this.genCheckbox([...path, key], key, val);
       }
 
-      return (
-        <VTextField
-          {...{ props }}
-          class="ma-0"
-          value={initVal === false ? '' : initVal}
-          onInput={setVal}
-        />
-      );
+      return this.genTextField([...path, key], key, val);
     },
 
-    genPlaceholder() {
-      return (
-        <div class="text-caption text--secondary">
-          This block has no settings
-        </div>
-      );
-    },
+    // genPlaceholder() {
+    //   return (
+    //     <div class="text-caption text--secondary">
+    //       This block has no settings
+    //     </div>
+    //   );
+    // },
 
-    mapFields(obj = {}, path = this.propsPath.main) {
+    mapPropsFields(obj, path) {
       return Object.keys(obj)
         .filter((prop) => prop !== 'tag')
         .map((prop) => this.genField(path, prop, obj[prop]))
@@ -132,19 +130,36 @@ export const SchemaBuilderBlockSettings = {
     },
 
     genFields() {
-      const mainProps = this.mapFields(this.nodeProps.main, this.propsPath.main);
+      const info = convertBlockPropsForCanvas(this.nodeInfo);
+      const mainProps = objectPath.get(info, ['data', 'props'], {});
+      const proxyProps = objectPath.get(info, ['data', 'proxyProps'], {});
 
-      const proxyProps = Object.keys(this.nodeProps.proxy)
-        .map((component) => this.mapFields(
-          this.nodeProps.proxy[component],
-          [...this.propsPath.proxy, component]
-        ));
+      const mainPropsFields = this
+        .mapPropsFields(
+          mainProps,
+          [...this.nodePath, 'data', 'props']
+        );
 
-      if (!mainProps.length && !proxyProps.length) return [this.genPlaceholder()];
+      const proxyPropsFields = Object.keys(proxyProps)
+        .map((component) => this
+          .mapPropsFields(
+            proxyProps[component],
+            [...this.nodePath, 'data', 'proxyProps', component]
+          ));
+
+      const additionalFields = [
+        this.genTextField(
+          [...this.nodePath, 'data', 'attrs', 'staticClass'],
+          'Additional class'
+        )
+      ];
+
+      // if (!mainProps.length && !proxyProps.length) return [this.genPlaceholder()];
 
       return [
-        mainProps,
-        proxyProps
+        mainPropsFields,
+        proxyPropsFields,
+        additionalFields
       ];
     }
   },

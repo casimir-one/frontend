@@ -8,7 +8,7 @@ import { getters, mutations } from '../store';
 export const SchemeView = {
   name: 'SchemeView',
 
-  mixins: [ProxyableFactory('schema')],
+  mixins: [ProxyableFactory('schema', 'input')],
 
   props: {
     blocks: {

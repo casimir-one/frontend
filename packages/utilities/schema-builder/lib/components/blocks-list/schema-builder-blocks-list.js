@@ -191,7 +191,7 @@ export const SchemaBuilderBlocksList = {
 
     return h(
       'div',
-      this.blocks
+      this.blocks.filter((b) => b?.blocks?.length)
         .map((section) => this.genSection(section))
     );
   }
