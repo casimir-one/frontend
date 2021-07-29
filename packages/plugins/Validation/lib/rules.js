@@ -99,6 +99,19 @@ export const dateAfter = {
   }
 };
 
+export const dateAfterNow = {
+  validate(value) {
+    const { currentDate } = normalizeDates(value, null, null);
+
+    return currentDate > Date.now();
+  },
+
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.dateAfterNow', values);
+  }
+};
+
 export const dateBetween = {
   params: ['prev', 'next'],
   validate(value, { prev, next }) {
