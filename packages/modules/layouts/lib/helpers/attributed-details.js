@@ -4,7 +4,7 @@ import { defaultLayoutComponents } from '../default-layouts-components';
 const attributedDetailsFactory = (
   prop = 'value',
 ) => (defineComponent({
-  name: 'AttributedForm',
+  name: 'AttributedDetails',
 
   props: {
     [prop]: {
