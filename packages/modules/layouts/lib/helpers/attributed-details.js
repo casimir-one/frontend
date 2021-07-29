@@ -16,6 +16,12 @@ const attributedDetailsFactory = (
       type: Array,
       default: () => []
     },
+
+    schemaData: {
+      type: Object,
+      default: () => {}
+    },
+
     components: {
       type: Object,
       default: () => ({})
