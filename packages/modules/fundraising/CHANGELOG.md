@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.132.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** add validation for start date in creation form ([bc362bc](https://gitlab.com/DEIP/deip-client-modules/commit/bc362bc2f4ee04bd9e429c5360585802c8d01fa8))
+* **@deip/fundraising-module:** fix user agreement link click ([afa1870](https://gitlab.com/DEIP/deip-client-modules/commit/afa1870a1abc17ed090701b7f32bbeeb790b62b1))
+* **@deip/fundraising-module:** fix widget block props ([57780ec](https://gitlab.com/DEIP/deip-client-modules/commit/57780ec969f4a75103cb2701c3dce3a432341328))
+
+
+
+
+
 ## [1.131.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
 
 
