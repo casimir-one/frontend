@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.132.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** fix internal components value ([b2cba37](https://gitlab.com/DEIP/deip-client-modules/commit/b2cba377644ea3b58ad587ce8fc5824e011ef917))
+
+
+
+
+
 ## [1.131.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
 
 **Note:** Version bump only for package @deip/attributes-module

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.132.0](https://github.com/DEIPworld/deip-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** fix internal components value ([b2cba37](https://github.com/DEIPworld/deip-modules/commit/b2cba377644ea3b58ad587ce8fc5824e011ef917))
+* **@deip/fundraising-module:** add validation for start date in creation form ([bc362bc](https://github.com/DEIPworld/deip-modules/commit/bc362bc2f4ee04bd9e429c5360585802c8d01fa8))
+* **@deip/fundraising-module:** fix user agreement link click ([afa1870](https://github.com/DEIPworld/deip-modules/commit/afa1870a1abc17ed090701b7f32bbeeb790b62b1))
+* **@deip/fundraising-module:** fix widget block props ([57780ec](https://github.com/DEIPworld/deip-modules/commit/57780ec969f4a75103cb2701c3dce3a432341328))
+* **@deip/schema-builder, @deip/layout-module:** event emmiter fix ([8f61e38](https://github.com/DEIPworld/deip-modules/commit/8f61e38b0780118ea033907b97ef4187d74ac903))
+
+
+### Features
+
+* **@deip/layouts-module:** add layout renderer and components/blocks registry ([c0dcc09](https://github.com/DEIPworld/deip-modules/commit/c0dcc098d668b8b8b3978f491088f254ba190088))
+* **@deip/layouts-module:** add typography blocks ([d8673fe](https://github.com/DEIPworld/deip-modules/commit/d8673fee383c3461c7bf7693dd0179703c68642a))
+* **@deip/layouts-module:** global components registry ([3694f4c](https://github.com/DEIPworld/deip-modules/commit/3694f4cf9653916abb62df8c7a6e9699a48aba07))
+* **@deip/validation-plugin:** add rule dateAfterNow ([5eee101](https://github.com/DEIPworld/deip-modules/commit/5eee101956efb3e17fdd88dff533ddfd099661e6))
+
+
+
+
+
 ## [1.131.1](https://github.com/DEIPworld/deip-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
 
 
