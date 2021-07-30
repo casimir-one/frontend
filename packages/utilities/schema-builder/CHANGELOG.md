@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.132.0](https://github.com/DEIPworld/deip-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
+
+
+### Bug Fixes
+
+* **@deip/schema-builder, @deip/layout-module:** event emmiter fix ([8f61e38](https://github.com/DEIPworld/deip-modules/commit/8f61e38b0780118ea033907b97ef4187d74ac903))
+
+
+
+
+
 ## [1.131.1](https://github.com/DEIPworld/deip-modules/compare/v1.131.0...v1.131.1) (2021-07-28)
 
 
