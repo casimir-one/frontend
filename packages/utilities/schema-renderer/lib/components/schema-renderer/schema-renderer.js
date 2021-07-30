@@ -139,8 +139,8 @@ export const SchemaRenderer = {
       if (Object.keys(this.schemaData).length) {
         nodeData = merge(nodeData, { props: { schemaData: this.schemaData } });
       }
-      // eslint-disable-next-line no-eval
-      return eval(`${condition}`) ? this.$createElement(
+
+      return condition ? this.$createElement(
         nodeComponent,
         nodeData,
         nodeChildren

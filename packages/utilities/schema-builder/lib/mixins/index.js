@@ -72,6 +72,8 @@ export const SchemeView = {
     if (this.watchDeleteKey) {
       window.removeEventListener('keydown', this.deleteListener);
     }
+
+    this.setActiveNode(null);
   },
 
   methods: {

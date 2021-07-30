@@ -88,14 +88,17 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
   return {
     data,
 
+    // attrValue
     getAttributeValue(id) {
       return data?.attributes?.[id]?.value;
     },
 
-    ifAttributeValue(id) {
+    // attrHasValue
+    attributeHasValue(id) {
       return hasValue(data?.attributes?.[id]?.value);
     },
 
+    // attrFileSrc
     getAttributeFileSrc(attributeId, file) {
       const filename = file || data?.attributes?.[attributeId];
 

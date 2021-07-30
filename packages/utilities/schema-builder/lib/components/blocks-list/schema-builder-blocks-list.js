@@ -138,11 +138,11 @@ export const SchemaBuilderBlocksList = {
             action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeValue}}`); }
           },
 
-          // {
-          //   icon: 'mdi-checkbox-multiple-marked-outline',
-          //   label: 'Copy attribute condition',
-          //   action: () => { this.$clipboard(`@ifAttributeValue('${attributeId}')`); }
-          // },
+          {
+            icon: 'mdi-checkbox-multiple-marked-outline',
+            label: 'Copy attribute condition',
+            action: () => { this.$clipboard(`{{('${attributeId}')::attributeHasValue}}`); }
+          },
 
           ...(dataType === ATTR_TYPES.IMAGE
             ? [{
