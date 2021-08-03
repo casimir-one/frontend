@@ -48,7 +48,7 @@
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory } from '@deip/layouts-module';
-  import { FORM_MODES } from '@deip/constants';
+  import { VIEW_MODE } from '@deip/constants';
 
   export default {
     name: 'TeamForm',
@@ -108,7 +108,7 @@
           return this.submitLabel;
         }
 
-        return this.mode === FORM_MODES.CREATE
+        return this.mode === VIEW_MODE.CREATE
           ? this.$t('module.teams.form.create')
           : this.$t('module.teams.form.update');
       }
@@ -116,9 +116,9 @@
 
     methods: {
       onSubmit() {
-        if (this.mode === FORM_MODES.CREATE) {
+        if (this.mode === VIEW_MODE.CREATE) {
           this.createTeam();
-        } else if (this.mode === FORM_MODES.EDIT) {
+        } else if (this.mode === VIEW_MODE.EDIT) {
           this.updateTeam();
         }
       },

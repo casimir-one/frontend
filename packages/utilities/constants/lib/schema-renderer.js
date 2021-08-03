@@ -1,4 +1,4 @@
-export const RENDERER_SCHEME_BLOCK_KEYS = [
+export const RENDERER_SCHEMA_BLOCK_KEYS = [
   'id',
   'uid',
   'is',

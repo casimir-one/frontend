@@ -1,5 +1,5 @@
 import { cloneDeep, isEqual } from '@deip/toolbox/lodash';
-import { FORM_MODES } from '@deip/constants';
+import { VIEW_MODE } from '@deip/constants';
 
 const formFactory = (
   prop = 'value',
@@ -21,9 +21,9 @@ const formFactory = (
 
     mode: {
       type: [String, Number],
-      default: FORM_MODES.CREATE,
+      default: VIEW_MODE.CREATE,
       validation(value) {
-        return FORM_MODES.keys().indexOf(value) !== -1;
+        return VIEW_MODE.keys().indexOf(value) !== -1;
       }
     }
   },
@@ -57,7 +57,7 @@ const formFactory = (
     },
 
     isEditMode() {
-      return this.mode === FORM_MODES.EDIT;
+      return this.mode === VIEW_MODE.EDIT;
     }
   },
 
