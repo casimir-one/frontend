@@ -18,5 +18,6 @@ export * from './VexTreeview';
 export * from './VexVideoEmbed';
 export * from './VexPlacesAutocomplete';
 export * from './VexColorShadow';
+export * from './VexMarkdown';
 
 export * from './vex-expand';
