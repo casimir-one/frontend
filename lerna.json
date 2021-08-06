@@ -5,7 +5,8 @@
     "packages/plugins/*",
     "packages/services/*",
     "packages/utilities/*",
-    "packages/models/*"
+    "packages/models/*",
+    "packages/components/*"
   ],
   "version": "1.132.0",
   "npmClient": "npm",
