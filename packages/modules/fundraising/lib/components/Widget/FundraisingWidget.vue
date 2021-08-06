@@ -111,7 +111,7 @@
           endTime: this.$$parseISO(s.endTime, true)
         }));
 
-        const sorted = orderBy(['startTime'], ['desc'], tokenSales);
+        const sorted = orderBy(tokenSales, ['startTime'], ['desc']);
 
         return sorted[0];
       },
