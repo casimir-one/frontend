@@ -44,6 +44,7 @@
     "find-keypath": "^1.0.0",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "object-path": "^0.11.5",
     "recursive-iterator": "^3.3.0"
   }
