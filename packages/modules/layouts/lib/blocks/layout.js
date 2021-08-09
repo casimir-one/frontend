@@ -18,7 +18,11 @@ export const layoutBlocks = {
       component: VexHeader,
       icon: 'mdi-image-area',
       children: [],
-      excludeProps: ['returnDominant']
+      excludeProps: ['returnDominant'],
+      allowedFor: {
+        mode: [],
+        scope: []
+      }
     },
     {
       component: VexSection,

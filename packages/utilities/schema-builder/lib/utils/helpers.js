@@ -14,7 +14,7 @@ import {
 import { cloneDeep } from '@deip/toolbox/lodash';
 
 import {
-  RENDERER_SCHEME_BLOCK_KEYS,
+  RENDERER_SCHEMA_BLOCK_KEYS,
   RENDERER_BLOCK_KEYS
 } from '@deip/constants';
 
@@ -67,7 +67,7 @@ export const convertBlockPropsForCanvas = (node) => {
 };
 
 export const convertBlockForSchema = (node) => {
-  const res = filterObjectKeys(cloneDeep(node), RENDERER_SCHEME_BLOCK_KEYS);
+  const res = filterObjectKeys(cloneDeep(node), RENDERER_SCHEMA_BLOCK_KEYS);
 
   res.uid = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
 

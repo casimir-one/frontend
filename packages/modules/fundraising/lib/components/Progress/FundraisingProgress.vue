@@ -108,7 +108,7 @@
         if (!this.tokenSale?.contributions) {
           return 0;
         }
-        return uniqBy('contributor', this.tokenSale.contributions).length;
+        return uniqBy(this.tokenSale.contributions, 'contributor').length;
       },
       barColor() {
         return this.tokenSale.status === TS_TYPES.EXPIRED ? 'error' : 'success';

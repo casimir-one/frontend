@@ -40,7 +40,7 @@
 
   import { hasValue } from '@deip/toolbox';
 
-  import { PROJECT_FORM_MODES } from '@deip/constants';
+  import { VIEW_MODE } from '@deip/constants';
 
   export default {
     name: 'ProjectForm',
@@ -54,9 +54,9 @@
     props: {
       mode: {
         type: [String, Number],
-        default: PROJECT_FORM_MODES.CREATE,
+        default: VIEW_MODE.CREATE,
         validation(value) {
-          return PROJECT_FORM_MODES.keys().indexOf(value) !== -1;
+          return VIEW_MODE.keys().indexOf(value) !== -1;
         }
       },
       project: {
@@ -110,9 +110,9 @@
     methods: {
       onSubmit() {
         this.isLoading = true;
-        if (this.mode === PROJECT_FORM_MODES.CREATE) {
+        if (this.mode === VIEW_MODE.CREATE) {
           this.createProject();
-        } else if (this.mode === PROJECT_FORM_MODES.EDIT) {
+        } else if (this.mode === VIEW_MODE.EDIT) {
           this.updateProject();
         }
       },

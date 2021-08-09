@@ -1,1 +1,1 @@
-export * from 'lodash/fp';
+export * from 'lodash-es';

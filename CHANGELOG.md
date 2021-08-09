@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.133.0](https://github.com/DEIPworld/deip-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
+
+
+### Bug Fixes
+
+* intersectionWith ([5c5b36b](https://github.com/DEIPworld/deip-modules/commit/5c5b36b38fd27fe842fe6ec32c4d48ebc4cc004e))
+* **@deip/fundraising-module:** fix Your investment amount in fundraising widget ([81a7e5f](https://github.com/DEIPworld/deip-modules/commit/81a7e5f37ef9d1f1d9e6244dc526572679774c17))
+
+
+### Features
+
+* vex-markdown component ([f40667b](https://github.com/DEIPworld/deip-modules/commit/f40667b708dd97c61dd7718f0e092483209ac90b))
+* **@deip/chain-service:** add graphene chain api ([a6bab65](https://github.com/DEIPworld/deip-modules/commit/a6bab6527d36c54357cef03877d2ec6a785a4476))
+* **@deip/vue-editorjs:** new package ([38d1258](https://github.com/DEIPworld/deip-modules/commit/38d12584b9f7ea1f866f892723cfc575251837b6))
+
+
+
+
+
 # [1.132.0](https://github.com/DEIPworld/deip-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
 
 

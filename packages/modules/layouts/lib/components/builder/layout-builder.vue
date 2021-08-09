@@ -174,7 +174,7 @@
     SchemaBuilderBlockSettings
   } from '@deip/schema-builder';
 
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS, FORM_MODES } from '@deip/constants';
+  import { ATTR_SCOPES, ATTR_SCOPES_LABELS, VIEW_MODE } from '@deip/constants';
   import { AttributeSet, AttributeRead } from '@deip/attributes-module';
 
   import {
@@ -279,9 +279,9 @@
       },
 
       onSubmit() {
-        if (this.mode === FORM_MODES.CREATE) {
+        if (this.mode === VIEW_MODE.CREATE) {
           this.createLayout();
-        } else if (this.mode === FORM_MODES.EDIT) {
+        } else if (this.mode === VIEW_MODE.EDIT) {
           this.updateLayout();
         }
       }
