@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.133.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
+
+
+### Features
+
+* vex-markdown component ([f40667b](https://gitlab.com/DEIP/deip-client-modules/commit/f40667b708dd97c61dd7718f0e092483209ac90b))
+
+
+
+
+
 # [1.132.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
 
 **Note:** Version bump only for package @deip/vuetify-extended

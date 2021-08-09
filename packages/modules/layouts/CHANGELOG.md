@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.133.0](https://github.com/DEIPworld/deip-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
+
+**Note:** Version bump only for package @deip/layouts-module
+
+
+
+
+
 # [1.132.0](https://github.com/DEIPworld/deip-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
 
 

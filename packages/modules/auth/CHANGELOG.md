@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.133.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
+
+
+### Bug Fixes
+
+* intersectionWith ([5c5b36b](https://gitlab.com/DEIP/deip-client-modules/commit/5c5b36b38fd27fe842fe6ec32c4d48ebc4cc004e))
+
+
+
+
+
 # [1.132.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
 
 **Note:** Version bump only for package @deip/auth-module
