@@ -16,6 +16,7 @@ const ATTR_TYPES = createEnum({
   USER: 13,
   AVATAR: 14,
   LOCATION: 15,
+  RICHTEXT: 16,
 
   STEPPER: 501,
   DISCIPLINE: 502,
@@ -34,6 +35,7 @@ const ATTR_TYPES = createEnum({
 const ATTR_TYPES_LABELS = {
   [ATTR_TYPES.TEXT]: 'Text field',
   [ATTR_TYPES.TEXTAREA]: 'Textarea',
+  [ATTR_TYPES.RICHTEXT]: 'Rich text',
 
   [ATTR_TYPES.SELECT]: 'Dropdown select',
 
@@ -74,6 +76,7 @@ const ATTR_TYPES_LABELS = {
 const ATTR_TYPES_ICONS = {
   [ATTR_TYPES.TEXT]: 'mdi-form-textbox',
   [ATTR_TYPES.TEXTAREA]: 'mdi-form-textarea',
+  [ATTR_TYPES.RICHTEXT]: 'mdi-file-document-edit-outline',
 
   [ATTR_TYPES.SELECT]: 'mdi-form-select',
 
