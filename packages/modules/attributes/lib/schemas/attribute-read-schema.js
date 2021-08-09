@@ -11,7 +11,14 @@ const ATTR_TYPES_READ_SCHEMAS = {
   // [ATTR_TYPES.TEXT]: {},
   //
   // [ATTR_TYPES.TEXT]: {},
-  // [ATTR_TYPES.TEXTAREA]: {},
+  [ATTR_TYPES.TEXTAREA]: {
+    is: 'VexMarkdown',
+    data: {
+      props: {
+        source: '{{attribute.value}}'
+      }
+    }
+  },
   // [ATTR_TYPES.SELECT]: {},
   // [ATTR_TYPES.SWITCH]: {},
   // [ATTR_TYPES.CHECKBOX]: {},
