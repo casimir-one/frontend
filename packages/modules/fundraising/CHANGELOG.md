@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.133.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix Your investment amount in fundraising widget ([81a7e5f](https://gitlab.com/DEIP/deip-client-modules/commit/81a7e5f37ef9d1f1d9e6244dc526572679774c17))
+
+
+
+
+
 # [1.132.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.131.1...v1.132.0) (2021-07-30)
 
 
