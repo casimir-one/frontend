@@ -1,28 +1,32 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a } from '@polkadot/util';
-import { PROTOCOL_OPERATIONS_MAP } from '@deip/constants';
+import { APP_CMD } from '@deip/constants';
+import { daoIdToAddress } from './utils';
+
 
 const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
   return {
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_ACCOUNT]: ({
+    [APP_CMD.CREATE_ACCOUNT]: ({
       entityId,
       isTeamAccount,
       fee,
       creator,
       description,
-      authority,
+      authority
     }) => {
 
-      const signatories = authority.active.auths.map(auth => auth.key);
+      const signatories = authority.active.auths.map((auth) => {
+        return auth.name ? daoIdToAddress(`0x${auth.name}`, chainNodeClient.registry) : auth.key;
+      });
       const threshold = authority.active.weight;
-      
+
       if (!isTeamAccount) {
-        assert(signatories.length === 1 && threshold === 0, `Personal DAO must have a threshold equal to 0 with a single signatory`);
+        assert(signatories.length === 1 && threshold === 0, `User DAO must have a threshold equal to 0 with a single signatory`);
       } else {
-        assert(signatories.length > 1 && threshold === 1, `Multisig DAO with the threshold that is more than 1 is not supported currently`);
+        assert(signatories.length > 1 && threshold !== 0, `Multisig DAO threshold must be more than 1`);
       }
 
       const createAccountOp = chainNodeClient.tx.deipOrg.create(
@@ -33,17 +37,11 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         }
       );
 
-      if (!isTeamAccount) {
-        return createAccountOp;
-      } else {
-        return chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`,
-          chainNodeClient.tx.multisig.asMultiThreshold1([signatories[1]], createAccountOp)
-        );
-      }
+      return [createAccountOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROJECT]: ({
+    [APP_CMD.CREATE_PROJECT]: ({
       entityId,
       teamId,
       description,
@@ -55,54 +53,57 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         chainNodeClient.tx.deip.createProject(
           /* "is_private": */ isPrivate,
           /* "external_id": */ `0x${entityId}`,
-          /* "team_id": */ { Org: teamId },
+          /* "team_id": */ { Org: `0x${teamId}` },
           /* "description": */ `0x${description}`,
           /* "domains": */ domains.map((domain) => `0x${domain}`)
         )
       );
 
-      return createProjectOp;
+      return [createProjectOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.CREATE_PROPOSAL]: ({
+    [APP_CMD.CREATE_PROPOSAL]: ({
       entityId,
       creator,
       proposedCmds,
       expirationTime,
       reviewPeriodSeconds
-    }, { cmdToOp }) => {
+    }, { cmdToOps }) => {
 
 
-      const ops = proposedCmds.map((cmd) => {
-        const op = cmdToOp(cmd);
-        const isOnBehalf = op.method.meta === chainNodeClient.tx.deipOrg.onBehalf.meta;
-        assert(isOnBehalf, 'Proposal can include onBehalf calls only');
+      const calls = proposedCmds.reduce((arr, cmd) => {
+        const ops = cmdToOps(cmd);
+        for (let i = 0; i < ops.length; i++) {
+          const op = ops[i];
 
-        const daoId = op.method.args[0];
-        const method = op.method.args[1];
+          const isOnBehalf = op.method.meta.toHex() === chainNodeClient.tx.deipOrg.onBehalf.meta.toHex();
+          assert(isOnBehalf, `Proposal can include 'onBehalf' calls only and cannot include account initialization`);
 
-        const call = chainNodeClient.registry.createType('Call', hexToU8a(method.toHex()), method.meta);
-        const extrinsic = chainNodeClient.registry.createType('Extrinsic', call);
+          const daoId = op.method.args[0];
+          const method = op.method.args[1];
 
-        return {
-          call: extrinsic,
-          account: { Org: daoId.toHex() }
+          const call = chainNodeClient.registry.createType('Call', hexToU8a(method.toHex()), method.meta);
+          const extrinsic = chainNodeClient.registry.createType('Extrinsic', call);
+
+          arr.push({ call: extrinsic, account: { Org: daoId.toHex() } });
         }
-      });
+
+        return arr;
+      }, []);
 
       const createProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`,
         chainNodeClient.tx.deipProposal.propose(
-          /* batch: */ ops,
+          /* batch: */ calls,
           /* external_id: */ `0x${entityId}`
         )
       );
 
-      return createProposalOp;
+      return [createProposalOp];
     },
 
 
-    [PROTOCOL_OPERATIONS_MAP.UPDATE_PROPOSAL]: ({
+    [APP_CMD.UPDATE_PROPOSAL]: ({
       entityId,
       activeApprovalsToAdd,
       activeApprovalsToRemove,
@@ -112,28 +113,45 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       keyApprovalsToRemove
     }) => {
 
-      const approver = activeApprovalsToAdd && activeApprovalsToAdd.length ? activeApprovalsToAdd[0] : null;
-      const rejector = activeApprovalsToRemove && activeApprovalsToRemove.length ? activeApprovalsToRemove[0] : null;
+      const approvers = [...(activeApprovalsToAdd || []), ...(ownerApprovalsToAdd || []), ...(keyApprovalsToAdd || [])].reduce((arr, approver) => {
+        if (!arr.includes(approver))
+          arr.push(approver);
+        return arr;
+      }, []);
 
-      assert(approver || rejector, "Proposal can be either approved or rejected");
+      const rejectors = [...(activeApprovalsToRemove || []), ...(ownerApprovalsToRemove || []), ...(keyApprovalsToRemove || [])].reduce((arr, rejector) => {
+        if (!arr.includes(rejector))
+          arr.push(rejector);
+        return arr;
+      }, []);
 
-      if (approver) {
+
+      assert(approvers.length || rejectors.length, "Proposal can be either approved or rejected");
+
+      const ops = [];
+      for (let i = 0; i < approvers.length; i++) {
+        const approver = approvers[i];
         const approveProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${approver}`,
           chainNodeClient.tx.deipProposal.decide(
-           /* external_id: */ `0x${entityId}`, 
+           /* external_id: */ `0x${entityId}`,
            /* decision: */ 'Approve'
           )
         );
-        return approveProposalOp;
-      } else {
+        ops.push(approveProposalOp);
+      }
+
+      for (let i = 0; i < rejectors.length; i++) {
+        const rejector = rejectors[i];
         const rejectProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${rejector}`,
           chainNodeClient.tx.deipProposal.decide(
             /* external_id: */ `0x${entityId}`,
             /* decision: */ 'Reject'
           )
         );
-        return rejectProposalOp;
+        ops.push(rejectProposalOp);
       }
+
+      return ops;
     },
 
   }

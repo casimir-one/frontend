@@ -67,9 +67,9 @@ class InvestmentsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const сreateProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
               teamId,
               projectId,
@@ -122,15 +122,15 @@ class InvestmentsService extends Singleton {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder.begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const contributeProjectToTokenSaleCmd = new ContributeProjectToTokenSaleCmd({
               tokenSaleId,
               contributor,
               amount
             });
-
             txBuilder.addCmd(contributeProjectToTokenSaleCmd);
             return txBuilder.end();
           })
