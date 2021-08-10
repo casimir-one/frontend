@@ -16,6 +16,9 @@ import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
 import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
 import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
 import AssetTransferCmd from './impl/AssetTransferCmd';
+import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
+import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
+import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 
 
 const APP_CMD_INFO = {
@@ -35,6 +38,9 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: { class: CreateProjectTokenSaleCmd },
   [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: { class: ContributeProjectToTokenSaleCmd },
   [APP_CMD.ASSET_TRANSFER]: { class: AssetTransferCmd },
+  [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
+  [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
+  [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
 }
 
 const APP_PROTOCOL_CHAIN_INFO = {
