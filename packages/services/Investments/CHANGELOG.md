@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.134.0](https://github.com/DEIPworld/deip-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
+
+
+### Features
+
+* **@deip/chain-service:** add substrate tx builder ([c4446bf](https://github.com/DEIPworld/deip-modules/commit/c4446bf3deb77235a0078c8307ac9efd9d5d5f0a))
+
+
+
+
+
 # [1.133.0](https://github.com/DEIPworld/deip-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
 
 **Note:** Version bump only for package @deip/investments-service

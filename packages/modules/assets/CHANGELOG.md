@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.134.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
+
+**Note:** Version bump only for package @deip/assets-module
+
+
+
+
+
 # [1.133.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
 
 **Note:** Version bump only for package @deip/assets-module
