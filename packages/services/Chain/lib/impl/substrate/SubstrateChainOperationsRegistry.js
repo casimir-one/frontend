@@ -151,6 +151,117 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       return ops;
     },
 
+
+    [APP_CMD.CREATE_ASSET]: ({
+      entityId,
+      issuer,
+      symbol,
+      precision,
+      maxSupply,
+      minBalance,
+      maxZombies,
+      projectTokenOption
+    }) => {
+
+      const createAssetOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.deipAssets.createAsset(
+          /* assetId: */ `0x${entityId}`,
+          /* admin: */ { Org: `0x${issuer}` },
+          /* max_zombies: */ maxZombies,
+          /* min_balance: */ minBalance,
+          /* project_id: */ projectTokenOption ? `0x${projectTokenOption.projectId}` : null
+        )
+      );
+
+      const setAssetMetaOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.deipAssets.setMetadata(
+          /* assetId: */ `0x${entityId}`,
+          /* name */ symbol,
+          /* symbol */ symbol,
+          /* decimals */ precision
+        )
+      );
+
+      const setAssetTeamOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.deipAssets.setTeam(
+          /* assetId: */ `0x${entityId}`,
+          /* issuer */ { Org: `0x${issuer}` },
+          /* admin */ { Org: `0x${issuer}` },
+          /* freezer */ { Org: `0x${issuer}` }
+        )
+      );
+
+      return [createAssetOp, setAssetMetaOp, setAssetTeamOp];
+    },
+
+
+    [APP_CMD.ISSUE_ASSET]: ({
+      assetId,
+      issuer,
+      amount,
+      recipient,
+      memo
+    }) => {
+
+      const issueAssetOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.deipAssets.issueAsset(
+          /* assetId: */ `0x${assetId}`,
+          /* beneficiary */ { Org: `0x${recipient}` },
+          /* amount */ amount
+        )
+      );
+
+      return [issueAssetOp];
+    },
+
+
+    [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: ({
+      entityId,
+      teamId,
+      projectId,
+      startTime,
+      endTime,
+      securityTokensOnSale,
+      softCap,
+      hardCap
+    }) => {
+
+      const createInvestmentOpportunityOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
+        chainNodeClient.tx.deip.createInvestmentOpportunity(
+          /* external_id: */ `0x${entityId}`,
+          /* project_id: */ `0x${projectId}`,
+          /* investment_type: */ {
+            ProjectTokenSale: {
+              start_time: startTime,
+              end_time: endTime,
+              soft_cap: softCap,
+              hard_cap: hardCap,
+              security_tokens_on_sale: securityTokensOnSale
+            }
+          }
+        )
+      );
+
+      return [createInvestmentOpportunityOp];
+    },
+
+
+    [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
+      tokenSaleId,
+      contributor,
+      amount
+    }) => {
+      
+      const investOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${contributor}`,
+        chainNodeClient.tx.deip.invest(
+          /* investment_opportunity_id: */ `0x${tokenSaleId}`,
+          /* amount: */ amount
+        )
+      );
+
+      return [investOp];
+    }
+
   }
 }
 

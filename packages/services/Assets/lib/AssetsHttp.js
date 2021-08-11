@@ -5,6 +5,14 @@ import qs from 'qs';
 class AssetsHttp extends Singleton {
   http = HttpService.getInstance();
 
+  createAsset(req) {
+    return this.http.post('/api/v2/asset/create', req.getHttpBody());
+  }
+
+  issueAsset(req) {
+    return this.http.post('/api/v2/asset/issue', req.getHttpBody());
+  }
+
   transferAssets(req) {
     return this.http.post('/api/v2/assets/transfer', req.getHttpBody());
   }

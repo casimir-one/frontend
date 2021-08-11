@@ -7,6 +7,7 @@ import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
 import { assert } from '@deip/toolbox';
 import { pubKeyToAddress, daoIdToAddress, getMultiAddress } from './utils';
 
+
 class SubstrateTx extends BaseTx {
 
   chainMetadata;
