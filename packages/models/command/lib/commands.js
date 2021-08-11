@@ -14,6 +14,9 @@ import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
 import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
 import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
 import AssetTransferCmd from './impl/AssetTransferCmd';
+import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
+import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
+import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 
 export {
   CreateAccountCmd,
@@ -31,5 +34,8 @@ export {
   LeaveProjectTeamCmd,
   CreateProjectTokenSaleCmd,
   ContributeProjectToTokenSaleCmd,
-  AssetTransferCmd
+  AssetTransferCmd,
+  CreateDocumentTemplateCmd,
+  UpdateDocumentTemplateCmd,
+  DeleteDocumentTemplateCmd
 }
