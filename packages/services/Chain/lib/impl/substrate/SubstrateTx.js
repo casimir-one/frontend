@@ -216,8 +216,6 @@ class SubstrateTx extends BaseTx {
       });
   }
 
-
-
   signAsync(keyring, api, options = { override: false }) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(options.override || !this.getSignedInvariant(), `Transaction is already signed. Set 'override=true' option to override the current signer`);
@@ -340,6 +338,10 @@ class SubstrateTx extends BaseTx {
       });
   }
 
+  isSigned() {
+    return !!this.getSignedInvariant();
+  }
+
   signByTenantAsync({ tenant, tenantPrivKey }, api) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     // TODO: add extension
@@ -353,7 +355,7 @@ class SubstrateTx extends BaseTx {
 
   sendAsync(chainApi) {
     assert(super.isFinalized(), 'Transaction is not finalized');
-    assert(!!this.getSignedInvariant(), `Transaction is not signed for sending`);
+    assert(!!this.isSigned(), `Transaction is not signed for sending`);
     return chainApi.sendTxAsync(this.getSignedInvariant());
   }
 
