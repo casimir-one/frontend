@@ -10,6 +10,7 @@ export * from './VexImageInput';
 export * from './VexInput';
 export * from './VexMiniMeta';
 export * from './VexNotifier';
+export * from './VexRichedit';
 export * from './VexSection';
 export * from './VexStack';
 export * from './VexTimeline';
