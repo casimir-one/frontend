@@ -1,6 +1,6 @@
 {
   "name": "@deip/http-service",
-  "version": "1.134.0",
+  "version": "1.135.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,8 +22,8 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/access-service": "1.134.0",
-    "@deip/constants": "1.134.0",
+    "@deip/access-service": "1.135.0",
+    "@deip/constants": "1.135.0",
     "@deip/proxydi": "1.133.0",
     "@deip/toolbox": "1.133.0",
     "axios": "^0.21.1"
