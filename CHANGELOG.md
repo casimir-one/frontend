@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.135.0](https://github.com/DEIPworld/deip-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
+
+
+### Bug Fixes
+
+* **@deip/schema-renderer:** fix update attributes with object value ([29cadbb](https://github.com/DEIPworld/deip-modules/commit/29cadbbef73571ad8e5529afca836c67b2a70b4e))
+
+
+### Features
+
+* **@deip/attributes-module:** add richedit attribute ([a77e873](https://github.com/DEIPworld/deip-modules/commit/a77e87314ca4fa102dc9120b22407067c9285fa0))
+* **@deip/chain-service:** 'isSigned' tx flag ([1f9303f](https://github.com/DEIPworld/deip-modules/commit/1f9303f90c47a31f065a8ad2f72898eab824bfcd))
+* **@deip/document-templates-service:** add new service ([921ae0f](https://github.com/DEIPworld/deip-modules/commit/921ae0fdd3a2a68fe841b18f3ff7e28d3aec569f))
+* **@deip/layouts-module:** add richedit attribute ([9512258](https://github.com/DEIPworld/deip-modules/commit/9512258400c1bc1a8dd7d13738d21e368594b6b2))
+* **@deip/vuetify-extended:** add VexRichedit component ([2dee706](https://github.com/DEIPworld/deip-modules/commit/2dee706f5204264386f58558aef7ac90a934d1bc))
+
+
+
+
+
 # [1.134.0](https://github.com/DEIPworld/deip-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
 
 

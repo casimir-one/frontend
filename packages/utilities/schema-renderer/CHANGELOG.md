@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.135.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
+
+
+### Bug Fixes
+
+* **@deip/schema-renderer:** fix update attributes with object value ([29cadbb](https://gitlab.com/DEIP/deip-client-modules/commit/29cadbbef73571ad8e5529afca836c67b2a70b4e))
+
+
+
+
+
 # [1.134.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
 
 **Note:** Version bump only for package @deip/schema-renderer

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.135.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
+
+
+### Features
+
+* **@deip/vuetify-extended:** add VexRichedit component ([2dee706](https://gitlab.com/DEIP/deip-client-modules/commit/2dee706f5204264386f58558aef7ac90a934d1bc))
+
+
+
+
+
 # [1.134.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
 
 **Note:** Version bump only for package @deip/vuetify-extended
