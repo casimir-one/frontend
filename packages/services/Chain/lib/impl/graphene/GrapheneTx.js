@@ -23,6 +23,10 @@ class GrapheneTx extends BaseTx {
     return Promise.resolve(this);
   }
 
+  isSigned() {
+    return !!this.getTx() && !!this.getTx().signatures.length;
+  }
+
   signByTenantAsync({ tenant, tenantPrivKey }, chainNodeClient) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     chainNodeClient.auth.signTransaction(this.getTx(), {}, { tenant, tenantPrivKey });
@@ -36,7 +40,7 @@ class GrapheneTx extends BaseTx {
 
   sendAsync(chainApi) {
     assert(super.isFinalized(), 'Transaction is not finalized');
-    assert(this.getTx().signatures.length, `Transaction is not signed for sending`);
+    assert(!!this.isSigned(), `Transaction is not signed for sending`);
     return chainApi.sendTxAsync(this.getRawTx());
   }
 

@@ -37,6 +37,7 @@ class BaseTx {
 
   getRawTx() { throw new Error("Not implemented exception!"); };
   signAsync() { throw new Error("Not implemented exception!"); }
+  isSigned() { throw new Error("Not implemented exception!"); }
   signByTenantAsync() { throw new Error("Not implemented exception!"); }
   getProtocolChain() { throw new Error("Not implemented exception!"); };
   serialize() { throw new Error("Not implemented exception!"); }
