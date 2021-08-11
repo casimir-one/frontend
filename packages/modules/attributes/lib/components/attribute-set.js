@@ -24,7 +24,8 @@ import {
   VexDateTimeInput,
   VexFileInput,
   VexFileInputExtended,
-  VexPlacesAutocomplete
+  VexPlacesAutocomplete,
+  VexRichedit
 } from '@deip/vuetify-extended';
 
 import { defineComponent } from '@deip/platform-util';
@@ -50,7 +51,8 @@ const AttributeSet = defineComponent({
         VexDateTimeInput,
         VexFileInput,
         VexFileInputExtended,
-        VexPlacesAutocomplete
+        VexPlacesAutocomplete,
+        VexRichedit
       }
     )
   ],
