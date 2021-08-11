@@ -38,6 +38,15 @@ const ATTR_TYPES_SET_SCHEMAS = {
     },
     model: true
   },
+  [ATTR_TYPES.RICHTEXT]: {
+    is: 'vex-richedit',
+    data: {
+      props: {
+        label: '{{attribute.info.title}}'
+      }
+    },
+    model: true
+  },
 
   [ATTR_TYPES.IMAGE]: {
     is: 'vex-image-input',

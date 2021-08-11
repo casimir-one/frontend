@@ -19,6 +19,17 @@ const ATTR_TYPES_READ_SCHEMAS = {
       }
     }
   },
+
+  [ATTR_TYPES.RICHTEXT]: {
+    is: 'VueEditorjs',
+    data: {
+      props: {
+        value: '{{attribute.value}}',
+        readonly: true,
+        placeholder: null
+      }
+    }
+  },
   // [ATTR_TYPES.SELECT]: {},
   // [ATTR_TYPES.SWITCH]: {},
   // [ATTR_TYPES.CHECKBOX]: {},

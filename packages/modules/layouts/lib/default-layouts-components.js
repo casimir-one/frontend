@@ -8,7 +8,8 @@ import {
   VexMiniMetaItem,
   VexTooltip,
   VexVideoEmbed,
-  VexAvatar
+  VexAvatar,
+  VexRichedit
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from '@deip/vuetify-extended';
 
@@ -21,6 +22,8 @@ import {
   VDivider
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
+
+import VueEditorjs from '@deip/vue-editorjs';
 
 export const defaultLayoutComponents = {
   // attributes
@@ -47,5 +50,9 @@ export const defaultLayoutComponents = {
   VexVideoEmbed,
 
   // other
-  VexAvatar
+  VexAvatar,
+
+  // text
+  VueEditorjs,
+  VexRichedit
 };

@@ -23,7 +23,7 @@ import { isEqual } from '@deip/toolbox/lodash';
 //   </svg>
 // `;
 
-const VueEditorjs = Vue.extend({
+export default Vue.extend({
   name: 'VueEditorjs',
 
   model: {
@@ -77,6 +77,20 @@ const VueEditorjs = Vue.extend({
 
   mounted() {
     this.initEditor();
+
+    const editorElement = document.getElementById(this.internalEditorId);
+    if (editorElement) {
+      editorElement.addEventListener('focusin', this.focus);
+      editorElement.addEventListener('focusout', this.blur);
+    }
+  },
+
+  beforeDestroy() {
+    const editorElement = document.getElementById(this.internalEditorId);
+    if (editorElement) {
+      editorElement.removeEventListener('focusin', this.focus);
+      editorElement.removeEventListener('focusout', this.blur);
+    }
   },
 
   methods: {
@@ -160,6 +174,14 @@ const VueEditorjs = Vue.extend({
             this.$emit('change', data);
           }
         });
+    },
+
+    focus() {
+      this.$emit('focus');
+    },
+
+    blur() {
+      this.$emit('blur');
     }
   },
   render() {
@@ -171,6 +193,3 @@ const VueEditorjs = Vue.extend({
     );
   }
 });
-
-export default VueEditorjs;
-export { VueEditorjs };
