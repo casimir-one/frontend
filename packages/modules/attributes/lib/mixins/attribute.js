@@ -48,7 +48,7 @@ export const abstractAttributeFactory = (
     },
 
     internalSchemaData() {
-      const value = this.schemaData.data.attributes[this.attributeId];
+      const value = this.schemaData?.data?.attributes?.[this.attributeId];
 
       // if (Object.prototype.hasOwnProperty.call(this, 'value')) {
       //   value = isFile(this.value) ? this.value.name : this.value;
