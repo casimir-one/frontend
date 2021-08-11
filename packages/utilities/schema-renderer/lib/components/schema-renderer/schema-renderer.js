@@ -203,13 +203,10 @@ export const SchemaRenderer = {
             if (!modelProps.path) {
               vm.internalValue = value;
             } else {
-              const updatedValue = {};
+              const updatedValue = cloneDeep(vm.internalValue);
               objectPath.set(updatedValue, modelProps.path, value);
 
-              vm.internalValue = merge(
-                vm.internalValue,
-                updatedValue
-              );
+              vm.internalValue = updatedValue;
             }
           }
         }
