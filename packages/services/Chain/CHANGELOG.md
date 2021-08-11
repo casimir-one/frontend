@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.135.0](https://github.com/DEIPworld/deip-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
+
+
+### Features
+
+* **@deip/chain-service:** 'isSigned' tx flag ([1f9303f](https://github.com/DEIPworld/deip-modules/commit/1f9303f90c47a31f065a8ad2f72898eab824bfcd))
+
+
+
+
+
 # [1.134.0](https://github.com/DEIPworld/deip-modules/compare/v1.133.0...v1.134.0) (2021-08-10)
 
 
