@@ -30,7 +30,8 @@ import { VexStack } from '@deip/vuetify-extended';
 import { wrapInArray } from '@deip/toolbox';
 import {
   ATTR_TYPES, ATTR_TYPES_LABELS,
-  ATTR_SCOPES, ATTR_SCOPES_LABELS
+  ATTR_SCOPES, ATTR_SCOPES_LABELS,
+  VIEW_MODE
 } from '@deip/constants';
 
 const createSelectItems = (labels) => Object.keys(labels).map((key) => ({
@@ -94,10 +95,10 @@ const AttributeEdit = {
 
   props: {
     mode: {
-      type: String,
-      default: 'create',
+      type: Number,
+      default: VIEW_MODE.CREATE,
       validator(value) {
-        return ['create', 'edit'].includes(value);
+        return [VIEW_MODE.CREATE, VIEW_MODE.EDIT].includes(value);
       }
     },
     value: {
@@ -121,7 +122,7 @@ const AttributeEdit = {
 
   computed: {
     isEditMode() {
-      return this.mode === 'edit';
+      return this.mode === VIEW_MODE.EDIT;
     },
 
     canHasOptions() {
@@ -469,7 +470,7 @@ const AttributeEdit = {
       // this.$createElement('pre', JSON.stringify(this.attributeData, null, 2))
     ];
 
-    if (this.mode !== 'edit') {
+    if (this.mode !== VIEW_MODE.EDIT) {
       children.push(
         this.genAttrSetup(),
         this.$createElement(VDivider)
