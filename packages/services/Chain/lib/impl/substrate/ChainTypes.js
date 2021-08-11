@@ -65,10 +65,13 @@ const CHAIN_TYPES = {
   "ProjectContentId": "H160",
   "NdaAccessRequestId": "H160",
   "NdaId": "H160",
+  "InvestmentId": "H160",
   "NdaOf": "Nda",
   "NdaAccessRequestOf": "NdaAccessRequest",
   "ProjectOf": "Project",
   "ProjectContentOf": "ProjectContent",
+  "ProjectTokenSaleOf": "ProjectTokenSale",
+  "ProjectTokenSaleContributionOf": "ProjectTokenSaleContribution",
   "Nda": {
     "contract_creator": "AccountId",
     "external_id": "NdaId",
@@ -155,7 +158,81 @@ const CHAIN_TYPES = {
     "weight": "Weight",
     "class": "DispatchClass",
     "pays_fee": "Pays"
+  },
+  "ProjectTokenSaleStatus": {
+    "_enum": [
+      "Active",
+      "Finished",
+      "Expired",
+      "Inactive"
+    ]
+  },
+  "ProjectTokenSaleAssetPair": {
+    "id": "AssetId",
+    "amount": "AssetsBalanceOf"
+  },
+  "ProjectTokenSale": {
+    "external_id": "InvestmentId",
+    "project_id": "ProjectId",
+    "start_time": "Moment",
+    "end_time": "Moment",
+    "status": "ProjectTokenSaleStatus",
+    "total_amount": "Balance",
+    "soft_cap": "Balance",
+    "hard_cap": "Balance",
+    "security_tokens_on_sale": "Vec<ProjectTokenSaleAssetPair>"
+  },
+  "ProjectTokenSaleContribution": {
+    "sale_id": "InvestmentId",
+    "owner": "AccountId",
+    "amount": "Balance",
+    "time": "Moment"
+  },
+  "InvestmentOpportunity": {
+    "_enum": {
+      "ProjectTokenSale": {
+        "start_time": "Moment",
+        "end_time": "Moment",
+        "soft_cap": "Balance",
+        "hard_cap": "Balance",
+        "security_tokens_on_sale": "Vec<ProjectTokenSaleAssetPair>"
+      }
+    }
+  },
+  "AssetsBalanceOf": "u64",
+  "AssetBalance": {
+    "balance": "AssetsBalanceOf",
+    "is_frozen": "bool",
+    "is_zombie": "bool"
+  },
+  "AssetMetadata": {
+    "deposit": "Balance",
+    "name": "Vec<u8>",
+    "symbol": "Vec<u8>",
+    "decimals": "u8"
+  },
+  "AssetDetails": {
+    "owner": "AccountId",
+    "issuer": "AccountId",
+    "admin": "AccountId",
+    "freezer": "AccountId",
+    "supply": "AssetsBalanceOf",
+    "deposit": "Balance",
+    "max_zombies": "u32",
+    "min_balance": "AssetsBalanceOf",
+    "zombies": "u32",
+    "accounts": "u32",
+    "is_frozen": "bool"
+  },
+  "DeipProjectIdOf": "H160",
+  "AssetId": {
+    "0": "H160"
+  },
+  "AssetsAssetIdOf": "AssetId",
+  "Compact<AssetId>": {
+    "0": "AssetId"
   }
 };
+
 
 export default CHAIN_TYPES;

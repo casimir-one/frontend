@@ -8,8 +8,8 @@ class ProtocolEntityCmd extends ProtocolCmd {
   constructor(cmdNum, cmdPayload) {
     super(cmdNum, cmdPayload);
     this._cmdPayload.entityId = cmdPayload.entityId 
-      ? cmdPayload.entityId // Deserialization
-      : ProtocolEntityCmd.GeneraterateProtocolEntityId(cmdPayload); // New
+      ? cmdPayload.entityId // Set
+      : ProtocolEntityCmd.GeneraterateProtocolEntityId(cmdPayload); // Auto-Generated
   }
 
   getProtocolEntityId() { return this._cmdPayload.entityId; }

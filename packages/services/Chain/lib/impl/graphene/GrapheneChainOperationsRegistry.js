@@ -315,6 +315,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       return [investOp];
     },
 
+
     [APP_CMD.ASSET_TRANSFER]: ({
       from,
       to,
@@ -331,6 +332,70 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
     
       return [transferOp];
+    },
+
+
+    [APP_CMD.CREATE_ASSET]: ({
+      issuer,
+      symbol,
+      precision,
+      description,
+      maxSupply,
+      projectTokenOption
+    }) => {
+
+      const traits = [];
+      if (projectTokenOption) {
+        const { projectId, teamId, licenseRevenue } = projectTokenOption;
+        traits.push(
+          ['research_security_token', {
+            research_external_id: projectId,
+            research_group: teamId,
+            extensions: []
+          }]
+        );
+
+        if (licenseRevenue) {
+          const { holdersShare } = licenseRevenue;
+          traits.push(
+            ['research_license_revenue', {
+              holders_share: holdersShare,
+              extensions: []
+            }]
+          );
+        }
+      }
+
+      const createAssetOp = ['create_asset', {
+        issuer: issuer,
+        symbol: symbol,
+        precision: precision,
+        description: description,
+        max_supply: maxSupply,
+        traits: traits,
+        extensions: []
+      }];
+
+      return [createAssetOp];
+    },
+
+
+    [APP_CMD.ISSUE_ASSET]: ({
+      issuer,
+      amount,
+      recipient,
+      memo
+    }) => {
+
+      const issueAssetOp = ['issue_asset', {
+        issuer: issuer,
+        amount: amount,
+        recipient: recipient,
+        memo: memo || undefined,
+        extensions: []
+      }];
+
+      return [issueAssetOp];
     }
 
   }
