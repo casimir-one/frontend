@@ -1,6 +1,6 @@
 import { camelCase } from 'change-case';
 import crc32 from 'crc/crc32';
-import { cloneDeep, sortBy } from 'lodash/fp';
+import { cloneDeep, sortBy } from 'lodash-es';
 import { find as deepFind } from 'find-keypath';
 import objectPath from 'object-path';
 import { isArray, isObject } from './validation';
@@ -14,8 +14,8 @@ export const sortObjectKeys = (obj, comparator) => {
 
   if (isObject(clone)) {
     const keys = sortBy(
-      (key) => (comparator ? comparator(obj[key], key) : key),
-      Object.keys(clone)
+      Object.keys(clone),
+      (key) => (comparator ? comparator(obj[key], key) : key)
     );
 
     return keys.reduce((acc, key) => ({

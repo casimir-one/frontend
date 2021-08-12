@@ -1,4 +1,4 @@
-import { isEqual, merge } from 'lodash/fp';
+import { isEqual, merge } from '@deip/toolbox/lodash';
 
 import dotProp from 'dot-prop';
 import draggable from 'vuedraggable';

@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash/fp';
+import { isEmpty } from '@deip/toolbox/lodash';
 
 export const userHelpersMixin = {
   methods: {

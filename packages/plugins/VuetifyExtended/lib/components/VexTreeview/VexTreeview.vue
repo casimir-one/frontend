@@ -18,7 +18,7 @@
   /* eslint-disable */
   import { VTreeview } from 'vuetify/lib';
   /* eslint-enable */
-  import { isNil, get, difference } from 'lodash/fp';
+  import { isNil, get, difference } from '@deip/toolbox/lodash';
 
   import { getBindableProps } from '../../composables/props';
 
@@ -134,7 +134,7 @@
       },
 
       getItemObject(id) {
-        return get(this.getItemPath(id), this.items);
+        return get(this.items, this.getItemPath(id));
       },
 
       removeItem(id) {
