@@ -21,12 +21,12 @@
   import { createRange } from 'vuetify/lib/util/helpers';
   /* eslint-enable */
 
-  import { padCharsStart } from 'lodash/fp';
+  import { padStart } from '@deip/toolbox/lodash';
 
   import { VexAutocomplete } from '../../VexAutocomplete';
 
   const formatTime = (h, m) => {
-    const addLeadingZero = padCharsStart('0')(2);
+    const addLeadingZero = (s) => padStart(s, 2, '0');
     return `${addLeadingZero(h)}:${addLeadingZero(m)}`;
   };
 

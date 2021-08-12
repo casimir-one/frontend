@@ -35,7 +35,6 @@
     "@deip/validation-plugin": "1.135.0",
     "@deip/vuetify-extended": "1.135.0",
     "dot-prop": "^6.0.1",
-    "lodash": "^4.17.21",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },
