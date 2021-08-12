@@ -105,19 +105,32 @@ const ACTIONS = {
   },
 
   signUp(_, payload) {
-    const { ownerPubkey: pubKey } = deipRpc.auth.getPrivateKeys(
-      payload.username,
-      payload.password,
-      ['owner']
-    );
+    const { username, email, password } = payload;
 
-    return authService.signUp({
-      pubKey,
-      ...payload,
-      ...{
-        roles: wrapInArray(payload.roles)
-      }
-    });
+    return Promise.all([userService.getUser(username), userService.getUser(email)])
+      .then(([usernameResponse, emailResponse]) => {
+        if (usernameResponse) {
+          throw new Error('User with such username exists');
+        }
+        if (emailResponse) {
+          throw new Error('User with such email exists');
+        }
+      })
+      .then(() => {
+        const { ownerPubkey: pubKey } = deipRpc.auth.getPrivateKeys(
+          username,
+          password,
+          ['owner']
+        );
+
+        return authService.signUp({
+          pubKey,
+          ...payload,
+          ...{
+            roles: wrapInArray(payload.roles)
+          }
+        });
+      });
   },
 
   signOut({ dispatch }) {
