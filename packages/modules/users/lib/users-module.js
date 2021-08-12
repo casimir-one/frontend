@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash/fp';
+import { isEmpty } from '@deip/toolbox/lodash';
 
 import { proxydi } from '@deip/proxydi';
 import { callForCurrentUser } from '@deip/platform-store';

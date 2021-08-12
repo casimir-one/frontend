@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import { cloneDeep } from 'lodash/fp';
+  import { cloneDeep } from '@deip/toolbox/lodash';
   import { VexStack } from '@deip/vuetify-extended';
 
   // import { changeable, dataReadyMixin } from '@deip/platform-fns';

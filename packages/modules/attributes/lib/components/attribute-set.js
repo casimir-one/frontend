@@ -1,5 +1,5 @@
 import { SchemaRenderer } from '@deip/schema-renderer';
-import { isEqual, merge } from 'lodash/fp';
+import { isEqual, merge } from '@deip/toolbox/lodash';
 import { wrapInArray } from '@deip/toolbox';
 import { ValidationProvider } from '@deip/validation-plugin';
 

@@ -1,4 +1,4 @@
-import { get } from 'lodash/fp';
+import { get } from '@deip/toolbox/lodash';
 
 import { ProjectService } from '@deip/project-service';
 import {
@@ -52,7 +52,7 @@ const ACTIONS = {
 
     target.push(payload.type || 'all');
 
-    return dispatch(get(target, actionsMap), payload);
+    return dispatch(get(actionsMap, target), payload);
   },
 
   // public

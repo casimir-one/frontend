@@ -33,8 +33,7 @@
     "@deip/toolbox": "1.133.0",
     "@deip/user-service": "1.135.0",
     "@deip/validation-plugin": "1.135.0",
-    "@deip/vuetify-extended": "1.135.0",
-    "lodash": "^4.17.21"
+    "@deip/vuetify-extended": "1.135.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.130.0",
