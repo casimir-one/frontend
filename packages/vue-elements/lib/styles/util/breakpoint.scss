@@ -1,0 +1,61 @@
+@use 'sass:map';
+@use '../settings';
+
+@function is-min(
+  $name,
+  $breakpoints: settings.$breakpoints
+) {
+  $min: map.get($breakpoints, $name);
+  @return if($min != 0, false, true);
+}
+
+@function get-infix(
+  $name,
+  $breakpoints: settings.$breakpoints
+) {
+  @return if(is-min($name, $breakpoints) == true, "", "-#{$name}");
+}
+
+@mixin gen-css-vars-queries(
+  $var,
+  $default,
+  $mq-vars: false,
+  $breakpoints: settings.$breakpoints
+) {
+  $bp-keys: map.keys($breakpoints);
+  $in-var: --inst-#{$var};
+  $ext-var: --this-#{$var};
+  $glob-var: #{$in-var}-glob;
+
+  @each $bp in $bp-keys {
+    $index: index($bp-keys, $bp);
+    $prev-index: $index - 1;
+
+    $infix: get-infix($bp, $breakpoints);
+    $fallback: $default;
+
+    @if $prev-index != 0 {
+      $prev-infix: get-infix(nth($bp-keys, $prev-index), $breakpoints);
+      $fallback: var(#{$in-var}#{$prev-infix});
+    }
+
+    #{$in-var}#{$infix}: var(#{$ext-var}#{$infix}, #{$fallback});
+  }
+
+  @if $mq-vars == true {
+    @content(var(#{$glob-var}, $default));
+  }
+
+  @each $bp, $value in $breakpoints {
+    $infix: get-infix($bp, $breakpoints);
+
+    @media all and (min-width: #{$value}) {
+      @if $mq-vars == true {
+        #{$glob-var}: var(#{$in-var}#{$infix});
+      } @else {
+        @content(var(#{$in-var}#{$infix}));
+      }
+
+    }
+  }
+}
