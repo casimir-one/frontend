@@ -203,7 +203,7 @@
             }
           })
           .catch((error) => {
-            this.emitError(error.response.data);
+            this.emitError(error.response?.data || error.message);
           });
       }
     }
