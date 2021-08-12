@@ -6,7 +6,9 @@
     "packages/services/*",
     "packages/utilities/*",
     "packages/models/*",
-    "packages/components/*"
+    "packages/components/*",
+
+    "packages/vue-elements"
   ],
   "version": "1.135.0",
   "npmClient": "npm",

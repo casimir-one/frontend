@@ -1,0 +1,13 @@
+@use '../../styles/util/breakpoint';
+
+.ve-auto-grid {
+  @include breakpoint.gen-css-vars-queries(gap, 1.5rem) using ($value) {
+    grid-gap: $value;
+  };
+
+  @include breakpoint.gen-css-vars-queries(item-width, 280px, true) using ($value) {
+    grid-template-columns: repeat(auto-fill, minmax(#{$value}, 1fr));
+  };
+
+  display: grid;
+}
