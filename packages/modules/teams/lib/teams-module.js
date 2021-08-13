@@ -39,7 +39,8 @@ export const TeamsModule = {
     'EnvModule',
     'ValidationPlugin',
     'VuetifyExtended',
-    'AuthModule'
+    'AuthModule',
+    'UsersModule'
   ],
   install
 };
