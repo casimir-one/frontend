@@ -68,6 +68,7 @@ const ACTIONS = {
         const { entityId } = res;
 
         dispatch('getOne', entityId);
+        dispatch('currentUser/get', null, { root: true }); // update current user roles
 
         return res;
 
