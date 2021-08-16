@@ -1,5 +1,5 @@
 {
-  "name": "@deip/document-templates-service",
+  "name": "@deip/document-template-service",
   "version": "1.135.0",
   "description": "",
   "main": "index.js",
