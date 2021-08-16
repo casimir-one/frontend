@@ -12,9 +12,6 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     [APP_CMD.CREATE_ACCOUNT]: ({
       entityId,
       isTeamAccount,
-      fee,
-      creator,
-      description,
       authority
     }) => {
 
