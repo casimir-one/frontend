@@ -1,4 +1,3 @@
-import deipRpc from '@deip/rpc-client';
 import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
@@ -19,8 +18,6 @@ class InvestmentsService extends Singleton {
   investmentsHttp = InvestmentsHttp.getInstance();
 
   proxydi = proxydi;
-
-  deipRpc = deipRpc; // deprecated
 
   getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
     return this.investmentsHttp.getAccountRevenueHistoryByAsset(
@@ -54,7 +51,9 @@ class InvestmentsService extends Singleton {
     endTime,
     securityTokensOnSale,
     softCap,
-    hardCap
+    hardCap,
+    title,
+    metadata
   }, proposalInfo) {
     const { isProposal, isProposalApproved, proposalLifetime } = {
       isProposal: false,
@@ -70,7 +69,7 @@ class InvestmentsService extends Singleton {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const сreateProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
+            const createProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
               teamId,
               projectId,
               startTime,
@@ -78,7 +77,9 @@ class InvestmentsService extends Singleton {
               securityTokensOnSale,
               softCap,
               hardCap,
-              creator: username
+              creator: username,
+              title,
+              metadata
             });
 
             if (isProposal) {
@@ -86,7 +87,7 @@ class InvestmentsService extends Singleton {
                 type: APP_PROPOSAL.PROJECT_TOKEN_SALE_PROPOSAL,
                 creator: username,
                 expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [сreateProjectTokenSaleCmd]
+                proposedCmds: [createProjectTokenSaleCmd]
               });
 
               txBuilder.addCmd(createProposalCmd);
@@ -101,7 +102,7 @@ class InvestmentsService extends Singleton {
                 txBuilder.addCmd(updateProposalCmd);
               }
             } else {
-              txBuilder.addCmd(сreateProjectTokenSaleCmd);
+              txBuilder.addCmd(createProjectTokenSaleCmd);
             }
             return txBuilder.end();
           })

@@ -15,7 +15,9 @@ class CreateProjectTokenSaleCmd extends ProtocolEntityCmd {
       endTime,
       securityTokensOnSale,
       softCap,
-      hardCap
+      hardCap,
+      title,
+      metadata
     } = cmdPayload;
 
     assert(!!teamId, "'teamId' is required");
