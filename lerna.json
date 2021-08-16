@@ -7,10 +7,9 @@
     "packages/utilities/*",
     "packages/models/*",
     "packages/components/*",
-
     "packages/vue-elements"
   ],
-  "version": "1.135.0",
+  "version": "1.334.0",
   "npmClient": "npm",
   "command": {
     "version": {
