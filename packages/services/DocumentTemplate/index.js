@@ -1,1 +1,1 @@
-export * from './lib/DocumentTemplatesService';
+export * from './lib/DocumentTemplateService';
