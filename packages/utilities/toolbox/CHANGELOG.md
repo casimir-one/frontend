@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.334.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
+
+
+### Features
+
+* **@deip/toolbox:** convertToUnit helper ([249d811](https://gitlab.com/DEIP/deip-client-modules/commit/249d81126c6f85043428e6998e64e4fae73dfd10))
+
+
+
+
+
 # [1.133.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.132.0...v1.133.0) (2021-08-09)
 
 **Note:** Version bump only for package @deip/toolbox

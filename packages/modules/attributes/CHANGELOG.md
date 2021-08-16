@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.334.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
+
+
+### Bug Fixes
+
+* **@deip/atributes-module:** fix attribute update ([c98d099](https://gitlab.com/DEIP/deip-client-modules/commit/c98d099c54fecf86ca42d9c245313d99cf81168f))
+* **@deip/attributes-module:** fix attribute render when schemaData is empty ([409532f](https://gitlab.com/DEIP/deip-client-modules/commit/409532f63bca0989b1bc6802a5e8087aecaacf89))
+
+
+
+
+
 # [1.135.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.334.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
+
+
+### Bug Fixes
+
+* **@deip/teams-module:** update current user roles after team creation ([8de53a7](https://gitlab.com/DEIP/deip-client-modules/commit/8de53a7bebd82a4a74eac4f5def4f6e9c3194ed5))
+
+
+
+
+
 # [1.135.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
 
 **Note:** Version bump only for package @deip/teams-module

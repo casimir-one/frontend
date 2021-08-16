@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.334.0](https://github.com/DEIPworld/deip-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
+
+
+### Bug Fixes
+
+* **@deip/atributes-module:** fix attribute update ([c98d099](https://github.com/DEIPworld/deip-modules/commit/c98d099c54fecf86ca42d9c245313d99cf81168f))
+* **@deip/attributes-module:** fix attribute render when schemaData is empty ([409532f](https://github.com/DEIPworld/deip-modules/commit/409532f63bca0989b1bc6802a5e8087aecaacf89))
+* **@deip/auth-module:** add message about non-inuque username and email on sign up ([a2dc473](https://github.com/DEIPworld/deip-modules/commit/a2dc473f136778d2ba001df462ef370cd8dd8a51))
+* **@deip/teams-module:** update current user roles after team creation ([8de53a7](https://github.com/DEIPworld/deip-modules/commit/8de53a7bebd82a4a74eac4f5def4f6e9c3194ed5))
+* **@deip/users-module:** fix current user hasRole check ([dfeef9b](https://github.com/DEIPworld/deip-modules/commit/dfeef9bba509914abedc177879aeb8468c7625c5))
+
+
+### Features
+
+* **@deip/chain-service:** version bump ([878c3d1](https://github.com/DEIPworld/deip-modules/commit/878c3d13cdae74c1a7b74a8f32b793a34c592475))
+* **@deip/toolbox:** convertToUnit helper ([249d811](https://github.com/DEIPworld/deip-modules/commit/249d81126c6f85043428e6998e64e4fae73dfd10))
+* **@deip/vue-elements:** new package ([7dc6ec0](https://github.com/DEIPworld/deip-modules/commit/7dc6ec094a17dd3727f6d6548a32c6a033c43fab))
+
+
+
+
+
 # [1.135.0](https://github.com/DEIPworld/deip-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
 
 
