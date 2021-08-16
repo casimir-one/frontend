@@ -5,38 +5,38 @@ import {
   DeleteDocumentTemplateCmd
 } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
-import { DocumentTemplatesHttp } from './DocumentTemplatesHttp';
+import { DocumentTemplateHttp } from './DocumentTemplateHttp';
 
-class DocumentTemplatesService extends Singleton {
-  documentTemplatesHttp = DocumentTemplatesHttp.getInstance();
+class DocumentTemplateService extends Singleton {
+  documentTemplateHttp = DocumentTemplateHttp.getInstance();
 
   getDocumentTemplate(id) {
-    return this.documentTemplatesHttp.getDocumentTemplate(id);
+    return this.documentTemplateHttp.getDocumentTemplate(id);
   }
 
   getDocumentTemplatesByAccount(account) {
-    return this.documentTemplatesHttp.getDocumentTemplatesByAccount(account);
+    return this.documentTemplateHttp.getDocumentTemplatesByAccount(account);
   }
 
   createDocumentTemplate(documentTemplate) {
     const createDocumentTemplateCmd = new CreateDocumentTemplateCmd(documentTemplate);
     const msg = new JsonDataMsg({ appCmds: [createDocumentTemplateCmd] });
-    return this.documentTemplatesHttp.createDocumentTemplate(msg);
+    return this.documentTemplateHttp.createDocumentTemplate(msg);
   }
 
   updateDocumentTemplate(documentTemplate) {
     const updateDocumentTemplateCmd = new UpdateDocumentTemplateCmd(documentTemplate);
     const msg = new JsonDataMsg({ appCmds: [updateDocumentTemplateCmd] });
-    return this.documentTemplatesHttp.updateDocumentTemplate(msg);
+    return this.documentTemplateHttp.updateDocumentTemplate(msg);
   }
 
   deleteDocumentTemplate(documentTemplateId) {
     const deleteDocumentTemplateCmd = new DeleteDocumentTemplateCmd({ documentTemplateId });
     const msg = new JsonDataMsg({ appCmds: [deleteDocumentTemplateCmd] });
-    return this.documentTemplatesHttp.deleteDocumentTemplate(msg);
+    return this.documentTemplateHttp.deleteDocumentTemplate(msg);
   }
 }
 
 export {
-  DocumentTemplatesService
+  DocumentTemplateService
 };

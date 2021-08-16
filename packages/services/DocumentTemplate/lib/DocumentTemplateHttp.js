@@ -1,7 +1,7 @@
 import { HttpService } from '@deip/http-service';
 import { Singleton } from '@deip/toolbox';
 
-class DocumentTemplatesHttp extends Singleton {
+class DocumentTemplateHttp extends Singleton {
   http = HttpService.getInstance();
 
   getDocumentTemplate(id) {
@@ -26,5 +26,5 @@ class DocumentTemplatesHttp extends Singleton {
 }
 
 export {
-  DocumentTemplatesHttp
+  DocumentTemplateHttp
 };
