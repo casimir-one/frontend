@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.334.0](https://github.com/DEIPworld/deip-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
+
+
+### Features
+
+* **@deip/chain-service:** version bump ([878c3d1](https://github.com/DEIPworld/deip-modules/commit/878c3d13cdae74c1a7b74a8f32b793a34c592475))
+
+
+
+
+
 # [1.135.0](https://github.com/DEIPworld/deip-modules/compare/v1.134.0...v1.135.0) (2021-08-11)
 
 
