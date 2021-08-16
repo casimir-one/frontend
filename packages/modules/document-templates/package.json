@@ -1,0 +1,35 @@
+{
+  "name": "@deip/document-templates-module",
+  "version": "1.334.0",
+  "description": "> TODO: description",
+  "author": "Elena Vlasova <e.vlasova@paralect.com>",
+  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+  },
+  "dependencies": {
+    "@deip/document-template-service": "^1.334.0",
+    "@deip/platform-components": "^1.334.0",
+    "@deip/platform-store": "^1.334.0",
+    "@deip/proxydi": "^1.334.0",
+    "@deip/toolbox": "^1.334.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
+    "@babel/plugin-proposal-private-methods": "^7.13.0",
+    "@vue/babel-preset-jsx": "^1.2.4"
+  }
+}
