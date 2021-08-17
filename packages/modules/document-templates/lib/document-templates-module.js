@@ -27,7 +27,9 @@ const install = () => {
 export const DocumentTemplatesModule = {
   name: 'DocumentTemplatesModule',
   deps: [
-    'EnvModule'
+    'EnvModule',
+    'ValidationPlugin',
+    'VuetifyExtended'
   ],
   install
 };
