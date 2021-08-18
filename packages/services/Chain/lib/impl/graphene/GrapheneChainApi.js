@@ -542,11 +542,11 @@ class GrapheneChainApi extends BaseChainApi {
       getContentHistoryByProjectAndHashAsync: (projectId, contentHash) => {
         return chainService.rpcToChainNode("call", ["ip_protection_history_api", "get_content_history_by_research_and_hash", [projectId, contentHash]])
       },
-      getContributionsHistoryByContributorAsync: (contributor) => {
-        return chainService.rpcToChainNode("call", ["tsc_history_api", "get_contributions_history_by_contributor", [contributor]])
+      getContributionsHistoryByContributorAsync: (investor) => {
+        return chainService.rpcToChainNode("call", ["tsc_history_api", "get_contributions_history_by_contributor", [investor]])
       },
-      getContributionsHistoryByContributorAndProjectAsync: (contributor, projectId) => {
-        return chainService.rpcToChainNode("call", ["tsc_history_api", "get_contributions_history_by_contributor_and_research", [contributor, projectId]])
+      getContributionsHistoryByContributorAndProjectAsync: (investor, projectId) => {
+        return chainService.rpcToChainNode("call", ["tsc_history_api", "get_contributions_history_by_contributor_and_research", [investor, projectId]])
       },
       getContributionsHistoryByProjectAsync: (projectId) => {
         return chainService.rpcToChainNode("call", ["tsc_history_api", "get_contributions_history_by_research", [projectId]])

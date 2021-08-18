@@ -1,9 +1,9 @@
 import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
 import { APP_CMD } from '@deip/constants';
-import { assert, isBoolean } from '@deip/toolbox';
+import { assert } from '@deip/toolbox';
 
 
-class CreateProjectTokenSaleCmd extends ProtocolEntityCmd {
+class CreateInvestmentOpportunityCmd extends ProtocolEntityCmd {
 
   constructor(cmdPayload) {
 
@@ -29,10 +29,10 @@ class CreateProjectTokenSaleCmd extends ProtocolEntityCmd {
     assert(!!softCap, "'softCap' is required");
     assert(!!hardCap, "'hardCap' is required");
 
-    super(APP_CMD.CREATE_PROJECT_TOKEN_SALE, cmdPayload);
+    super(APP_CMD.CREATE_INVESTMENT_OPPORTUNITY, cmdPayload);
   }
 
 }
 
 
-export default CreateProjectTokenSaleCmd;
+export default CreateInvestmentOpportunityCmd;

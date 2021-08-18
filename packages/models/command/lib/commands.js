@@ -11,8 +11,8 @@ import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
-import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
-import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
+import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
+import InvestCmd from './impl/InvestCmd';
 import AssetTransferCmd from './impl/AssetTransferCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
@@ -32,8 +32,8 @@ export {
   UpdateAttributeCmd,
   DeleteAttributeCmd,
   LeaveProjectTeamCmd,
-  CreateProjectTokenSaleCmd,
-  ContributeProjectToTokenSaleCmd,
+  CreateInvestmentOpportunityCmd,
+  InvestCmd,
   AssetTransferCmd,
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,

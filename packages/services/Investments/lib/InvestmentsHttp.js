@@ -12,11 +12,11 @@ class InvestmentsHttp extends Singleton {
     return this.http.get(`/api/v2/investments/project/${projectId}`);
   }
 
-  getProjectTokenSaleContributions(projectTokenSaleExternalId) {
+  getProjectTokenSaleInvestments(projectTokenSaleExternalId) {
     return this.http.get(`/api/v2/investments/${projectTokenSaleExternalId}/contributions`);
   }
 
-  getProjectTokenSaleContributionsByProject(projectId) {
+  getProjectTokenSaleInvestmentsByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}/contributions`);
   }
 
@@ -24,7 +24,7 @@ class InvestmentsHttp extends Singleton {
     return this.http.post('/api/v2/investments', req.getHttpBody());
   }
 
-  contributeProjectTokenSale(req) {
+  investProjectTokenSale(req) {
     return this.http.post('/api/v2/investments/contributions', req.getHttpBody());
   }
 
@@ -36,11 +36,11 @@ class InvestmentsHttp extends Singleton {
     return this.http.get(`/api/v2/investments/history/account/${account}/${cursor}`);
   }
 
-  getAccountContributionsHistory(account) {
+  getAccountInvestmentsHistory(account) {
     return this.http.get(`/api/v2/investments/history/contributions/account/${account}`);
   }
 
-  getContributionsHistoryByTokenSale(tokenSaleId) {
+  getInvestmentsHistoryByTokenSale(tokenSaleId) {
     return this.http.get(`/api/v2/investments/history/contributions/token-sale/${tokenSaleId}`);
   }
 
