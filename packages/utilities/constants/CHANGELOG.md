@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.335.0](https://github.com/DEIPworld/deip-modules/compare/v1.334.0...v1.335.0) (2021-08-18)
+
+
+### Bug Fixes
+
+* **@deip/investments-service:** Investment commands renamed ([578dd99](https://github.com/DEIPworld/deip-modules/commit/578dd998dce10485ba0e5aec1e110c09b0eb099b))
+
+
+
+
+
 # [1.334.0](https://github.com/DEIPworld/deip-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
 
 **Note:** Version bump only for package @deip/constants

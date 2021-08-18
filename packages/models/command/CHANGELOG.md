@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.335.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.334.0...v1.335.0) (2021-08-18)
+
+
+### Bug Fixes
+
+* **@deip/investments-service:** Investment commands renamed ([578dd99](https://gitlab.com/DEIP/deip-client-modules/commit/578dd998dce10485ba0e5aec1e110c09b0eb099b))
+
+
+### Features
+
+* **@deip/investments-service:** add investment opportunity metadata ([8480ae9](https://gitlab.com/DEIP/deip-client-modules/commit/8480ae9197892f9872f1cc7e9e0249c40c90cae0))
+
+
+
+
+
 # [1.334.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
 
 **Note:** Version bump only for package @deip/command-models
