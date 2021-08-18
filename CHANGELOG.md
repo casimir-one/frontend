@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.335.0](https://github.com/DEIPworld/deip-modules/compare/v1.334.0...v1.335.0) (2021-08-18)
+
+
+### Bug Fixes
+
+* **@deip/investments-service:** Investment commands renamed ([578dd99](https://github.com/DEIPworld/deip-modules/commit/578dd998dce10485ba0e5aec1e110c09b0eb099b))
+
+
+### Features
+
+* **@deip/document-templates-module:** add document templates table component ([c4bcc8a](https://github.com/DEIPworld/deip-modules/commit/c4bcc8a2b1d9a237afa054aa2eefb98b73681037))
+* **@deip/document-templates-module:** add module ([d10be90](https://github.com/DEIPworld/deip-modules/commit/d10be906832afa40f8469b6024c3178524bb1d02))
+* **@deip/document-templates-module:** add template form component ([adb0a0d](https://github.com/DEIPworld/deip-modules/commit/adb0a0d6901aa400757ccf4b1b0e4648b0ff51ba))
+* **@deip/investments-service:** add investment opportunity metadata ([8480ae9](https://github.com/DEIPworld/deip-modules/commit/8480ae9197892f9872f1cc7e9e0249c40c90cae0))
+* **@deip/vuetify-extended:** add Message component ([27ae32d](https://github.com/DEIPworld/deip-modules/commit/27ae32d401957a474a799bcdab8d6a4d6d8c4e0b))
+
+
+
+
+
 # [1.334.0](https://github.com/DEIPworld/deip-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
 
 
