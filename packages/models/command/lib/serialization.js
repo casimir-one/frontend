@@ -13,8 +13,8 @@ import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import LeaveProjectTeamCmd from './impl/LeaveProjectTeamCmd';
-import CreateProjectTokenSaleCmd from './impl/CreateProjectTokenSaleCmd';
-import ContributeProjectToTokenSaleCmd from './impl/ContributeProjectToTokenSaleCmd';
+import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
+import InvestCmd from './impl/InvestCmd';
 import AssetTransferCmd from './impl/AssetTransferCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
@@ -35,8 +35,8 @@ const APP_CMD_INFO = {
   [APP_CMD.UPDATE_ATTRIBUTE]: { class: UpdateAttributeCmd },
   [APP_CMD.DELETE_ATTRIBUTE]: { class: DeleteAttributeCmd },
   [APP_CMD.LEAVE_PROJECT_TEAM]: { class: LeaveProjectTeamCmd },
-  [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: { class: CreateProjectTokenSaleCmd },
-  [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: { class: ContributeProjectToTokenSaleCmd },
+  [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: { class: CreateInvestmentOpportunityCmd },
+  [APP_CMD.INVEST]: { class: InvestCmd },
   [APP_CMD.ASSET_TRANSFER]: { class: AssetTransferCmd },
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },

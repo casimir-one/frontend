@@ -5,10 +5,9 @@ import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
 import {
   UpdateProposalCmd,
   CreateProposalCmd,
-  CreateProjectTokenSaleCmd,
-  ContributeProjectToTokenSaleCmd
+  CreateInvestmentOpportunityCmd,
+  InvestCmd
 } from '@deip/command-models';
-
 import { ChainService } from '@deip/chain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
@@ -69,7 +68,7 @@ class InvestmentsService extends Singleton {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const createProjectTokenSaleCmd = new CreateProjectTokenSaleCmd({
+            const createInvestmentOpportunityCmd = new CreateInvestmentOpportunityCmd({
               teamId,
               projectId,
               startTime,
@@ -87,7 +86,7 @@ class InvestmentsService extends Singleton {
                 type: APP_PROPOSAL.PROJECT_TOKEN_SALE_PROPOSAL,
                 creator: username,
                 expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [createProjectTokenSaleCmd]
+                proposedCmds: [createInvestmentOpportunityCmd]
               });
 
               txBuilder.addCmd(createProposalCmd);
@@ -102,7 +101,7 @@ class InvestmentsService extends Singleton {
                 txBuilder.addCmd(updateProposalCmd);
               }
             } else {
-              txBuilder.addCmd(createProjectTokenSaleCmd);
+              txBuilder.addCmd(createInvestmentOpportunityCmd);
             }
             return txBuilder.end();
           })
@@ -114,9 +113,9 @@ class InvestmentsService extends Singleton {
       });
   }
 
-  contributeProjectTokenSale({ privKey }, {
+  investProjectTokenSale({ privKey }, {
     tokenSaleId,
-    contributor,
+    investor,
     amount
   }) {
     const env = this.proxydi.get('env');
@@ -127,18 +126,18 @@ class InvestmentsService extends Singleton {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const contributeProjectToTokenSaleCmd = new ContributeProjectToTokenSaleCmd({
+            const investCmd = new InvestCmd({
               tokenSaleId,
-              contributor,
+              investor,
               amount
             });
-            txBuilder.addCmd(contributeProjectToTokenSaleCmd);
+            txBuilder.addCmd(investCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.investmentsHttp.contributeProjectTokenSale(msg);
+            return this.investmentsHttp.investProjectTokenSale(msg);
           });
       });
   }
@@ -147,20 +146,20 @@ class InvestmentsService extends Singleton {
     return this.investmentsHttp.getProjectTokenSalesByProject(projectId);
   }
 
-  getProjectTokenSaleContributions(projectTokenSaleId) {
-    return this.investmentsHttp.getProjectTokenSaleContributions(projectTokenSaleId);
+  getProjectTokenSaleInvestments(tokenSaleId) {
+    return this.investmentsHttp.getProjectTokenSaleInvestments(tokenSaleId);
   }
 
-  getProjectTokenSaleContributionsByProject(projectId) {
-    return this.investmentsHttp.getProjectTokenSaleContributionsByProject(projectId);
+  getProjectTokenSaleInvestmentsByProject(projectId) {
+    return this.investmentsHttp.getProjectTokenSaleInvestmentsByProject(projectId);
   }
 
-  getAccountContributionsHistory(account) {
-    return this.investmentsHttp.getAccountContributionsHistory(account);
+  getAccountInvestmentsHistory(account) {
+    return this.investmentsHttp.getAccountInvestmentsHistory(account);
   }
 
-  getContributionsHistoryByTokenSale(tokenSaleId) {
-    return this.investmentsHttp.getContributionsHistoryByTokenSale(tokenSaleId);
+  getInvestmentsHistoryByTokenSale(tokenSaleId) {
+    return this.investmentsHttp.getInvestmentsHistoryByTokenSale(tokenSaleId);
   }
 
   getProjectTokenSale(tokenSaleId) {

@@ -3,24 +3,24 @@ import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 
-class ContributeProjectToTokenSaleCmd extends ProtocolCmd {
+class InvestCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 
     const {
       tokenSaleId,
-      contributor,
+      investor,
       amount,
     } = cmdPayload;
 
     assert(!!tokenSaleId, "'tokenSaleId' is required");
-    assert(!!contributor, "'contributor' is required");
+    assert(!!investor, "'investor' is required");
     assert(!!amount, "'amount' is required");
 
-    super(APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE, cmdPayload);
+    super(APP_CMD.INVEST, cmdPayload);
   }
 
 }
 
 
-export default ContributeProjectToTokenSaleCmd;
+export default InvestCmd;
