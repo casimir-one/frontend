@@ -176,9 +176,6 @@ class GrapheneChainApi extends BaseChainApi {
       getTeamByPermlinkAsync: (permlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_group_by_permlink", [permlink]])
       },
-      getTeamByIdAsync: (id) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_group_by_id", [id]])
-      },
       getReviewVotesByReviewIdAsync: (reviewId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review_id", [reviewId]])
       },
@@ -251,9 +248,6 @@ class GrapheneChainApi extends BaseChainApi {
       getProjectContentsAsync: (ids) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_contents", [ids]])
       },
-      getProjectContentByIdAsync: (id) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_content_by_id", [id]])
-      },
       getProjectContentByTypeAsync: (projectId, type) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_content_by_type", [projectId, type]])
       },
@@ -284,23 +278,14 @@ class GrapheneChainApi extends BaseChainApi {
       getProjectTokenSaleAsync: (tokenSaleExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale", [tokenSaleExternalId]])
       },
-      getProjectTokenSaleByIdAsync: (tokenSaleId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_by_id", [tokenSaleId]])
-      },
       getProjectTokenSalesByProjectAsync: (projectExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales_by_research", [projectExternalId]])
-      },
-      getProjectTokenSalesByProjectIdAsync: (projectId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales_by_research_id", [projectId]])
       },
       getProjectTokenSalesAsync: (from, limit) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales", [from, limit]])
       },
       getProjectTokenSaleContributionsByProjectTokenSaleAsync: (tokenSaleExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_research_token_sale", [tokenSaleExternalId]])
-      },
-      getProjectTokenSaleContributionsByProjectTokenSaleIdAsync: (tokenSaleId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_research_token_sale_id", [tokenSaleId]])
       },
       getProjectTokenSaleContributionsByContributorAsync: (owner) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_contributor", [owner]])
@@ -341,17 +326,11 @@ class GrapheneChainApi extends BaseChainApi {
       getReviewsAsync: (ids) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_reviews", [ids]])
       },
-      getReviewByIdAsync: (reviewId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_review_by_id", [reviewId]])
-      },
       getReviewsByProjectContentAsync: (projectContentExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research_content", [projectContentExternalId]])
       },
       getReviewsByProjectAsync: (projectExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research", [projectExternalId]])
-      },
-      getProjectTokenByIdAsync: (projectTokenId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_by_id", [projectTokenId]])
       },
       getProjectTokensByAccountNameAsync: (accountName) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_tokens_by_account_name", [accountName]])
