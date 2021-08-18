@@ -55,7 +55,7 @@ const ACTIONS = {
   },
 
   getTokenSaleContributions({ commit, getters }, tokenSaleId) {
-    return investmentsService.getContributionsHistoryByTokenSale(tokenSaleId)
+    return investmentsService.getInvestmentsHistoryByTokenSale(tokenSaleId)
       .then((contributions) => {
         const tokenSale = getters.one(tokenSaleId);
         commit('setOne', {
@@ -83,18 +83,18 @@ const ACTIONS = {
       }
     } = payload;
 
-    return investmentsService.contributeProjectTokenSale(
+    return investmentsService.investProjectTokenSale(
       { privKey },
       {
         tokenSaleId,
-        contributor,
+        investor: contributor,
         amount
       }
     );
   },
 
   getContributionsHistory({ commit }, username) {
-    return investmentsService.getAccountContributionsHistory(username)
+    return investmentsService.getAccountInvestmentsHistory(username)
       .then((res) => {
         const tokenSales = res.map((item) => item.tokenSale);
         commit('setList', tokenSales);

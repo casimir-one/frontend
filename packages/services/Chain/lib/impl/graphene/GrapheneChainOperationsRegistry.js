@@ -272,7 +272,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
-    [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: ({
       entityId,
       teamId,
       projectId,
@@ -283,7 +283,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       hardCap
     }) => {
 
-      const createProjectTokenSaleOp = ['create_research_token_sale', {
+      const createInvestmentOppOp = ['create_research_token_sale', {
         external_id: entityId,
         research_group: teamId,
         research_external_id: projectId,
@@ -295,24 +295,24 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         extensions: []
       }];
 
-      return [createProjectTokenSaleOp];
+      return [createInvestmentOppOp];
     },
 
 
-    [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.INVEST]: ({
       tokenSaleId,
-      contributor,
-      amount,
+      investor,
+      amount
     }) => {
 
-      const contributeToTokenSaleOp = ['contribute_to_token_sale', {
+      const investOp = ['contribute_to_token_sale', {
         token_sale_external_id: tokenSaleId,
-        contributor,
-        amount,
+        contributor: investor,
+        amount: amount,
         extensions: []
       }];
 
-      return [contributeToTokenSaleOp];
+      return [investOp];
     },
 
     [APP_CMD.ASSET_TRANSFER]: ({
