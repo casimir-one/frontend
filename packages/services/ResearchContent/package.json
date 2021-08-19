@@ -1,6 +1,6 @@
 {
   "name": "@deip/research-content-service",
-  "version": "1.335.0",
+  "version": "1.335.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,10 +22,10 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.335.0",
-    "@deip/http-service": "1.335.0",
+    "@deip/constants": "1.335.1",
+    "@deip/http-service": "1.335.1",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/proposals-service": "1.335.0",
+    "@deip/proposals-service": "1.335.1",
     "@deip/toolbox": "1.334.0"
   },
   "peerDependencies": {
