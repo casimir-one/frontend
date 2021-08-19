@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@deip/command-models": "1.335.0",
-    "@deip/toolbox": "1.334.0",
+    "@deip/toolbox": "1.133.0",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },
