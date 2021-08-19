@@ -1,0 +1,38 @@
+.blocks-renderer {
+  --border-color: #1E1D231F;
+
+  .de-block {
+    padding: 8px 0;
+  }
+
+  .de-delimiter {
+    line-height: 1.6em;
+    width: 100%;
+    text-align: center;
+    
+    &:before {
+      display: inline-block;
+      content: "***";
+      font-size: 30px;
+      line-height: 65px;
+      height: 30px;
+      letter-spacing: 0.2em;
+    }
+  }
+
+  .de-table {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    .de-head {
+      font-weight: 500;
+    }
+
+    .de-cell {
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+    }
+  }
+}
