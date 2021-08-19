@@ -17,7 +17,8 @@ module.exports = {
   },
   testPathIgnorePatterns: [
     'packages/utilities/lib-crypto',
-    'packages/services/RpcClient'
+    'packages/services/RpcClient',
+    'packages/models'
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
 };
