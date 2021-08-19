@@ -82,8 +82,6 @@ export const AdminListPage = defineComponent({
   },
 
   methods: {
-    onClickEdit() {},
-
     genCtrl(data) {
       const {
         icon,
@@ -94,7 +92,9 @@ export const AdminListPage = defineComponent({
         props
       } = data;
 
-      const onClick = () => {
+      const onClick = (e) => {
+        e.stopPropagation(); // .stop didn't work
+
         if (action && isFunction(action)) {
           action();
         } else {
@@ -128,7 +128,17 @@ export const AdminListPage = defineComponent({
 
     // BLOCKS GENERATORS
 
+    onRowClick(item) {
+      this.$emit('click-row', item)
+    },
+
     genTable(items, scopedSlots) {
+      const listeners = {
+        on: {
+          'click:row': this.onRowClick
+        }
+      };
+
       return (
         <VDataTable
           scopedSlots={scopedSlots}
@@ -138,6 +148,7 @@ export const AdminListPage = defineComponent({
           hideDefaultFooter={items.length < this.tableProps.itemsPerPage}
           footerProps={this.tableProps.footerProps}
           itemsPerPage={this.itemsPerPage}
+          { ...listeners }
         />
       );
     },
