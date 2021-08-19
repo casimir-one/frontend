@@ -49,7 +49,7 @@ export default Vue.extend({
 
     placeholder: {
       type: String,
-      default: 'Let`s write an awesome story!'
+      default: 'Start typing here...'
     },
 
     minHeight: {
