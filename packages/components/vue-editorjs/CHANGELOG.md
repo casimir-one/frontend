@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.336.0](https://github.com/DEIPworld/deip-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
+
+
+### Features
+
+* **@deip/vue-editorjs:** add editorjs renderer ([7f12758](https://github.com/DEIPworld/deip-modules/commit/7f12758e25d9d96821b9571606c7eb0693a0bf4d))
+
+
+
+
+
 # [1.334.0](https://github.com/DEIPworld/deip-modules/compare/v1.135.0...v1.334.0) (2021-08-16)
 
 **Note:** Version bump only for package @deip/vue-editorjs

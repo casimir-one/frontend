@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.336.0](https://github.com/DEIPworld/deip-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
+
+
+### Features
+
+* **@deip/command-models:** assets cmds are added ([e0cd22b](https://github.com/DEIPworld/deip-modules/commit/e0cd22b058f753d11bb3ba3f15cbfb645878c6a0))
+* **@deip/document-templates-module:** add document template details component ([cb38bc6](https://github.com/DEIPworld/deip-modules/commit/cb38bc6fc245e0cd1f4450644e25ed3a1980ff03))
+* **@deip/editorjs-parser:** add editorjs parser ([6be5cea](https://github.com/DEIPworld/deip-modules/commit/6be5ceaca2d3abc9560cde493f00061d2380106f))
+* **@deip/vue-editorjs:** add editorjs renderer ([7f12758](https://github.com/DEIPworld/deip-modules/commit/7f12758e25d9d96821b9571606c7eb0693a0bf4d))
+
+
+
+
+
 ## [1.335.1](https://github.com/DEIPworld/deip-modules/compare/v1.335.0...v1.335.1) (2021-08-19)
 
 
