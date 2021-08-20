@@ -1,5 +1,5 @@
 import RecursiveIterator from 'recursive-iterator';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'lodash';
 import { isFile } from './validation';
 
 export const toBase64 = (url) => fetch(url)

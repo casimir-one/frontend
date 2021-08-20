@@ -1,6 +1,6 @@
 import { camelCase } from 'change-case';
 import crc32 from 'crc/crc32';
-import { cloneDeep, sortBy } from 'lodash-es';
+import { cloneDeep, sortBy } from 'lodash';
 import { find as deepFind } from 'find-keypath';
 import objectPath from 'object-path';
 import { isArray, isObject } from './validation';

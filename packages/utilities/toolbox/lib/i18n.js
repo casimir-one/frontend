@@ -1,4 +1,4 @@
-import { merge } from 'lodash-es';
+import { merge } from 'lodash';
 
 const getMessagesByLocales = (locales) => {
   const messages = {};
