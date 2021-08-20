@@ -19,7 +19,7 @@
           />
         </validation-provider>
 
-        <vex-message>
+        <vex-message expandable>
           <span>{{ $t('module.documentTemplates.form.placeholdersMessage') }}</span>
           <ul>
             <li v-for="placeholder in placeholders" :key="placeholder">
