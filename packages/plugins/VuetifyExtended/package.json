@@ -20,7 +20,6 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "peerDependencies": {
-    "lodash": "^4.17.21",
     "vuetify": "^2.5.3"
   },
   "dependencies": {

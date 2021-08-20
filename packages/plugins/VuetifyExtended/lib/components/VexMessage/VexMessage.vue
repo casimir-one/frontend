@@ -1,8 +1,10 @@
 <template>
-  <v-sheet rounded class="pa-6 text-body-2 message">
-    <vex-text-expand max-height="80">
+  <v-sheet rounded class="text-body-2 message pa-6">
+    <vex-text-expand v-if="expandable" max-height="80">
       <slot />
     </vex-text-expand>
+
+    <slot v-else />
   </v-sheet>
 </template>
 
@@ -11,25 +13,19 @@
 
   export default {
     name: 'VexMessage',
-    components: { VexTextExpand }
+    components: { VexTextExpand },
+
+    props: {
+      expandable: {
+        type: Boolean,
+        default: false
+      }
+    }
   };
 </script>
 
 <style lang="scss" scoped>
   .message {
-    position: relative;
-
-    &:before {
-      opacity: 0.08;
-      background-color: var(--v-primary-base);
-      border-radius: inherit;
-      bottom: 0;
-      color: inherit;
-      content: "";
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
+    background-color: var(--v-primary-hover); // custom var --v-primary-hover
   }
 </style>

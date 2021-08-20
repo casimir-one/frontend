@@ -8,10 +8,12 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
+
   import { VeStack } from '@deip/vue-elements';
   import VueEditorjsRenderer from '@deip/vue-editorjs/renderer';
 
-  export default {
+  export default defineComponent({
     name: 'DocumentTemplateDetails',
 
     components: { VeStack, VueEditorjsRenderer },
@@ -22,5 +24,5 @@
         default: () => {}
       }
     }
-  };
+  });
 </script>
