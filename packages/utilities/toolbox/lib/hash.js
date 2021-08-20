@@ -1,4 +1,4 @@
-import { isNil } from 'lodash-es';
+import { isNil } from 'lodash';
 import crypto from '@deip/lib-crypto';
 import {
   isArray,
