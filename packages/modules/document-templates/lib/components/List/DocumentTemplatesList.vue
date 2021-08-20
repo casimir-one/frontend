@@ -1,8 +1,10 @@
 <script>
+  import { defineComponent } from '@deip/platform-util';
+
   import { AdminListPage, dateMixin } from '@deip/platform-components';
   import DocumentTemplatesDataProvider from '../DataProvider/DocumentTemplatesDataProvider';
 
-  export default {
+  export default defineComponent({
     name: 'DocumentTemplatesList',
 
     components: { DocumentTemplatesDataProvider },
@@ -61,5 +63,5 @@
         );
       }
     }
-  };
+  });
 </script>

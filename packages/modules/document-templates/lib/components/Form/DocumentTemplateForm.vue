@@ -61,12 +61,14 @@
 </template>
 
 <script>
+  import { defineComponent } from '@deip/platform-util';
+
   import { VexMessage } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
   import VueEditorjs from '@deip/vue-editorjs';
   import { formFactory } from '@deip/platform-components';
 
-  export default {
+  export default defineComponent({
     name: 'DocumentTemplateForm',
 
     components: { VeStack, VexMessage, VueEditorjs },
@@ -137,5 +139,5 @@
           });
       }
     }
-  };
+  });
 </script>
