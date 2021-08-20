@@ -5,7 +5,9 @@ import { JsonDataMsg } from '@deip/message-models';
 import {
   UpdateProposalCmd,
   CreateProposalCmd,
-  AssetTransferCmd
+  AssetTransferCmd,
+  CreateAssetCmd,
+  IssueAssetCmd
 } from '@deip/command-models';
 import { APP_PROPOSAL } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
@@ -84,56 +86,89 @@ class AssetsService extends Singleton {
       });
   }
 
-  createSecurityTokenAsset({ privKey }, {
-    researchExternalId,
-    researchGroup,
+  createAsset({ privKey }, {
     symbol,
+    issuer,
     precision,
-    description,
     maxSupply,
+    description,
+    projectTokenOption,
     holders
   }) {
-    const ops = [];
+    const env = this.proxydi.get('env');
 
-    const createSecurityTokenOp = ['create_asset', {
-      issuer: researchGroup,
-      symbol,
-      precision,
-      description,
-      max_supply: maxSupply,
-      traits: [
-        ['research_security_token', {
-          research_external_id: researchExternalId,
-          research_group: researchGroup,
-          extensions: []
-        }],
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
 
-        ['research_license_revenue', {
-          holders_share: '100.00 %',
-          extensions: []
-        }]
-      ],
-      extensions: []
-    }];
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const entityId = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(symbol).buffer));
+            const createAssetCmd = new CreateAssetCmd({
+              entityId,
+              issuer,
+              symbol,
+              precision,
+              maxSupply,
+              description,
+              projectTokenOption
+            });
+            txBuilder.addCmd(createAssetCmd);
+            const tokenId = createAssetCmd.getProtocolEntityId();
 
-    ops.push(createSecurityTokenOp);
+            if (holders && holders.length) {
+              for (let i = 0; i < holders.length; i++) {
+                const { account, amount } = holders[i];
+                const issueAssetCmd = new IssueAssetCmd({
+                  assetId: tokenId,
+                  issuer,
+                  amount,
+                  recipient: account
+                });
+                txBuilder.addCmd(issueAssetCmd);
+              }
+            }
 
-    for (let i = 0; i < holders.length; i++) {
-      const { account, amount } = holders[i];
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.createAsset(msg); // TODO add endpoint !
+          });
+      });
+  }
 
-      const issueSecurityTokenOp = ['issue_asset', {
-        issuer: researchGroup,
-        amount,
-        recipient: account,
-        memo: undefined,
-        extensions: []
-      }];
+  issueAsset({ privKey }, {
+    assetId,
+    issuer,
+    amount,
+    recipient
+  }) {
+    const env = this.proxydi.get('env');
 
-      ops.push(issueSecurityTokenOp);
-    }
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
 
-    return this.blockchainService.signOperations(ops, privKey)
-      .then((signedTx) => this.blockchainService.sendTransactionAsync(signedTx));
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const issueAssetCmd = new IssueAssetCmd({
+              assetId,
+              issuer,
+              amount,
+              recipient
+            });
+            txBuilder.addCmd(issueAssetCmd);
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.issueAsset(msg); // TODO add endpoint !
+          });
+      });
   }
 
   getAccountDepositHistory(account, status) {

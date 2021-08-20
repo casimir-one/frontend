@@ -17,6 +17,9 @@ import AssetTransferCmd from './impl/AssetTransferCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
+import CreateAssetCmd from './impl/CreateAssetCmd';
+import IssueAssetCmd from './impl/IssueAssetCmd';
+
 
 export {
   CreateAccountCmd,
@@ -37,5 +40,7 @@ export {
   AssetTransferCmd,
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
-  DeleteDocumentTemplateCmd
+  DeleteDocumentTemplateCmd,
+  CreateAssetCmd,
+  IssueAssetCmd
 }

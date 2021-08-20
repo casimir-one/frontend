@@ -295,12 +295,18 @@
             username: this.$currentUser.username
           },
           {
-            researchExternalId: this.project.externalId,
-            researchGroup: this.project.researchGroup.external_id,
+            issuer: this.project.researchGroup.external_id,
             symbol: assetId,
             precision: DEFAULT_PRECISION,
-            description: '',
             maxSupply: parseInt(DEFAULT_AMOUNT + '0'.repeat(DEFAULT_PRECISION), 10),
+            description: '',
+            projectTokenOption: {
+              projectId: this.project.externalId,
+              teamId: this.project.researchGroup.external_id,
+              licenseRevenue: {
+                holdersShare: '100.00 %'
+              }
+            },
             holders
           }
         ];

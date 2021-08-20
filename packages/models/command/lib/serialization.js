@@ -19,6 +19,8 @@ import AssetTransferCmd from './impl/AssetTransferCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
+import CreateAssetCmd from './impl/CreateAssetCmd';
+import IssueAssetCmd from './impl/IssueAssetCmd';
 
 
 const APP_CMD_INFO = {
@@ -41,6 +43,8 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
+  [APP_CMD.CREATE_ASSET]: { class: CreateAssetCmd },
+  [APP_CMD.ISSUE_ASSET]: { class: IssueAssetCmd },
 }
 
 const APP_PROTOCOL_CHAIN_INFO = {
