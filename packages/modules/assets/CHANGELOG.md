@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.336.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
+
+
+### Features
+
+* **@deip/command-models:** assets cmds are added ([e0cd22b](https://gitlab.com/DEIP/deip-client-modules/commit/e0cd22b058f753d11bb3ba3f15cbfb645878c6a0))
+
+
+
+
+
 ## [1.335.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.335.0...v1.335.1) (2021-08-19)
 
 **Note:** Version bump only for package @deip/assets-module
