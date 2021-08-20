@@ -1,5 +1,5 @@
 import where from 'filter-where';
-import { merge } from 'lodash-es';
+import { merge } from 'lodash';
 
 import { isArray } from './validation';
 
