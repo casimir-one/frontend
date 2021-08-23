@@ -17,6 +17,8 @@ import {
   number,
   minMax,
   minMaxValue,
+  minValue,
+  maxValue,
   unique,
   username,
   dateBefore,
@@ -56,6 +58,8 @@ const install = (Vue, options = {}) => {
 
   extend('minMax', minMax);
   extend('minMaxValue', minMaxValue);
+  extend('minValue', minValue);
+  extend('maxValue', maxValue);
   extend('unique', unique);
   extend('number', number);
   extend('username', username);
