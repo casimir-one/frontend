@@ -4,6 +4,8 @@ export default {
       createForm: {
         cancel: 'Cancel',
         start: 'Start',
+        titleBlock: 'Enter title of fundraise',
+        title: 'Title',
         determineNumberOfTokens: 'Determine the number of security token units',
         units: 'Units',
         selectDates: 'Select start and end dates of fundraise',
@@ -11,8 +13,11 @@ export default {
         endDate: 'End date',
         selectAmounts: 'Select min and max amounts',
         selectAmount: 'Select amount',
+        selectISA: 'Select amount',
         min: 'Min',
         max: 'Max',
+        isaAmountPerItem: 'How much is one ISA?',
+        isaQuantity: 'How many ISAs do you want to fund?',
         validations: {
           assetSmaller: '{_field_} should be smaller than {target}',
           assetGreater: '{_field_} should be greater than {target}'
