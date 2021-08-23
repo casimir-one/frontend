@@ -28,7 +28,9 @@ const ACTIONS = {
         endTime,
         securityTokensOnSale,
         softCap,
-        hardCap
+        hardCap,
+        title,
+        metadata
       }, proposalInfo
     } = payload;
 
@@ -41,7 +43,9 @@ const ACTIONS = {
         endTime,
         securityTokensOnSale,
         softCap,
-        hardCap
+        hardCap,
+        title,
+        metadata
       },
       proposalInfo
     );
