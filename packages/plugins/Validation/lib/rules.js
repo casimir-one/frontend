@@ -47,6 +47,34 @@ export const minMaxValue = {
   }
 };
 
+export const minValue = {
+  params: ['target'],
+
+  validate(value, { target }) {
+    const v = parseFloat(value);
+    return v >= target;
+  },
+
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.minValue', values);
+  }
+};
+
+export const maxValue = {
+  params: ['target'],
+
+  validate(value, { target }) {
+    const v = parseFloat(value);
+    return v <= target;
+  },
+
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.maxValue', values);
+  }
+};
+
 export const unique = {
   params: ['list', 'caseSensitive'],
   validate(value, { list, caseSensitive }) {

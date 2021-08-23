@@ -2,122 +2,29 @@
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form :disabled="loading" @submit.prevent="handleSubmit(submit)">
       <vex-stack gap="32">
-        <vex-block
+        <fundraising-title-input v-model="formData.title" />
+
+        <fundraising-tokens-input
           v-if="!autoCreateSecurityToken"
-          :title="$t('module.fundraising.createForm.determineNumberOfTokens')"
-          compact
-        >
-          <v-row>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                :name="$t('module.fundraising.createForm.units')"
-                :rules="{
-                  required: true,
-                  minMaxValue: {
-                    min: MIN_TOKEN_UNITS_TO_SELL,
-                    max: issuedTokens.amount
-                  }
-                }"
-              >
-                <v-text-field
-                  v-model="formData.amount"
-                  outlined
-                  persistent-hint
-                  :error-messages="errors"
-                  :suffix="issuedTokens.assetId"
-                  :hint="amountHint(formData.amount)"
-                >
-                  <template #message="{ message }">
-                    <div class="text-caption" v-html="message" />
-                  </template>
-                </v-text-field>
-              </validation-provider>
-            </v-col>
-          </v-row>
-        </vex-block>
+          v-model="formData.tokens"
+          :issued-tokens="issuedTokens"
+          :available-tokens="availableTokens"
+        />
 
-        <vex-block
-          :title="$t('module.fundraising.createForm.selectDates')"
-          compact
-        >
-          <v-row>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                :name="$t('module.fundraising.createForm.startDate')"
-                vid="startDate"
-                rules="required|dateBefore:@endDate|dateAfterNow"
-              >
-                <vex-date-time-input
-                  v-model="formData.startDate"
-                  :error-messages="errors"
-                  :label="$t('module.fundraising.createForm.startDate')"
-                  only-future
-                />
-              </validation-provider>
-            </v-col>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                :name="$t('module.fundraising.createForm.endDate')"
-                vid="endDate"
-                rules="required|dateAfter:@startDate"
-              >
-                <vex-date-time-input
-                  v-model="formData.endDate"
-                  :error-messages="errors"
-                  :label="$t('module.fundraising.createForm.endDate')"
-                  only-future
-                />
-              </validation-provider>
-            </v-col>
-          </v-row>
-        </vex-block>
+        <fundraising-dates-input v-model="formData.dates" />
 
-        <vex-block
-          :title="noHardCap
-            ? $t('module.fundraising.createForm.selectAmount')
-            : $t('module.fundraising.createForm.selectAmounts')"
-          compact
-        >
-          <v-row>
-            <v-col cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                :name="$t('module.fundraising.createForm.min')"
-                vid="softCap"
-                rules="assetSmaller:@hardCap"
-              >
-                <asset-input
-                  v-model="formData.softCap"
-                  :label="$t('module.fundraising.createForm.min')"
-                  required
-                  :assets-filter="capAssetsFilter"
-                  :error-messages="errors"
-                  @change="equalizeAsset"
-                />
-              </validation-provider>
-            </v-col>
-            <v-col v-if="!noHardCap" cols="6">
-              <validation-provider
-                v-slot="{ errors }"
-                :name="$t('module.fundraising.createForm.max')"
-                vid="hardCap"
-                rules="assetGreater:@softCap"
-              >
-                <asset-input
-                  v-model="formData.hardCap"
-                  :label="$t('module.fundraising.createForm.max')"
-                  required
-                  disable-assets
-                  :gitassets-filter="capAssetsFilter"
-                  :error-messages="errors"
-                />
-              </validation-provider>
-            </v-col>
-          </v-row>
-        </vex-block>
+        <fundraising-isa-input
+          v-if="isaFundraise"
+          v-model="formData.isa"
+          :cap-assets-filter="capAssetsFilter"
+        />
+
+        <fundraising-caps-input
+          v-else
+          v-model="formData.caps"
+          :no-hard-cap="noHardCap"
+          :cap-assets-filter="capAssetsFilter"
+        />
 
         <v-divider />
 
@@ -159,45 +66,28 @@
   } from 'date-fns';
   import randomstring from 'randomstring';
 
-  import { extend } from '@deip/validation-plugin';
-  import { VexBlock, VexStack, VexDateTimeInput } from '@deip/vuetify-extended';
-  import { AssetInput, assetsMixin } from '@deip/assets-module';
+  import { defineComponent } from '@deip/platform-util';
+  import { VexStack } from '@deip/vuetify-extended';
+  import { assetsMixin } from '@deip/assets-module';
   import { hasValue } from '@deip/toolbox';
-  import { proxydi } from '@deip/proxydi';
+  import { isNil } from '@deip/toolbox/lodash';
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
-  extend('assetSmaller', {
-    params: ['target'],
-    validate(value, { target }) {
-      if (!(target && target.amount) || !(value && value.amount)) return true;
-      return parseFloat(value.amount) < parseFloat(target.amount);
-    },
-    message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
-      return i18n.t('module.fundraising.createForm.validations.assetSmaller', values);
-    }
-  });
+  import FundraisingTitleInput from './FundraisingTitleInput';
+  import FundraisingTokensInput from './FundraisingTokensInput';
+  import FundraisingDatesInput from './FundraisingDatesInput';
+  import FundraisingCapsInput from './FundraisingCapsInput';
+  import FundraisingIsaInput from './FundraisingIsaInput';
 
-  extend('assetGreater', {
-    params: ['target'],
-    validate(value, { target }) {
-      if (!(target && target.amount) || !(value && value.amount)) return true;
-
-      return parseFloat(value.amount) > parseFloat(target.amount);
-    },
-    message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
-      return i18n.t('module.fundraising.createForm.validations.assetGreater', values);
-    }
-  });
-
-  export default {
+  export default defineComponent({
     name: 'CreateFundraisingForm',
     components: {
-      AssetInput,
-      VexBlock,
       VexStack,
-      VexDateTimeInput
+      FundraisingTitleInput,
+      FundraisingTokensInput,
+      FundraisingDatesInput,
+      FundraisingCapsInput,
+      FundraisingIsaInput
     },
 
     mixins: [assetsMixin],
@@ -208,6 +98,10 @@
         required: true
       },
       autoCreateSecurityToken: {
+        type: Boolean,
+        default: false
+      },
+      isaFundraise: {
         type: Boolean,
         default: false
       },
@@ -235,11 +129,17 @@
         MIN_TOKEN_UNITS_TO_SELL,
 
         formData: {
-          amount: undefined,
-          startDate: format(startDate, 'yyyy-MM-dd\'T\'HH:mm'),
-          endDate: undefined,
-          softCap: {},
-          hardCap: {}
+          title: null,
+          tokens: undefined,
+          dates: {
+            start: format(startDate, 'yyyy-MM-dd\'T\'HH:mm'),
+            end: undefined
+          },
+          caps: {
+            soft: {},
+            hard: {}
+          },
+          isa: {}
         },
 
         loading: false
@@ -249,7 +149,8 @@
     computed: {
       issuedTokens() {
         if (hasValue(this.project.securityTokens)) {
-          return this.$$fromAssetUnits(this.project.securityTokens[0]);
+          const lastIndex = this.project.securityTokens.length - 1;
+          return this.$$fromAssetUnits(this.project.securityTokens[lastIndex]);
         }
 
         return null;
@@ -258,7 +159,7 @@
       availableTokens() {
         const teamBalance = this.$store.getters['balances/list']({
           owner: this.project.researchGroup.external_id,
-          assetSymbol: this.issuedTokens.assetId
+          assetSymbol: this.issuedTokens?.assetId
         });
 
         if (teamBalance.length > 0) {
@@ -266,6 +167,21 @@
         }
 
         return null;
+      }
+    },
+
+    watch: {
+      'formData.isa': {
+        handler(value) {
+          if (isNil(value.amountPerItem) || isNil(value.quantity)) return;
+
+          const cap = {
+            ...value.amountPerItem,
+            amount: value.amountPerItem.amount * parseInt(value.quantity, 10)
+          };
+          this.formData.caps.soft = cap;
+          this.formData.caps.hard = cap;
+        }
       }
     },
 
@@ -279,11 +195,14 @@
         const DEFAULT_PRECISION = 0;
         const DEFAULT_AMOUNT = 10000;
         const assetId = this.generateAssetSymbol();
+        const amount = this.isaFundraise
+          ? parseInt(this.formData.isa.quantity, 10) * DEFAULT_AMOUNT
+          : DEFAULT_AMOUNT;
 
         const holders = [{
           account: this.project.researchGroup.external_id,
           amount: this.$$toAssetUnits({
-            amount: DEFAULT_AMOUNT,
+            amount,
             assetId,
             precision: DEFAULT_PRECISION
           }, false)
@@ -298,7 +217,7 @@
             issuer: this.project.researchGroup.external_id,
             symbol: assetId,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseInt(DEFAULT_AMOUNT + '0'.repeat(DEFAULT_PRECISION), 10),
+            maxSupply: parseInt(amount + '0'.repeat(DEFAULT_PRECISION), 10),
             description: '',
             projectTokenOption: {
               projectId: this.project.externalId,
@@ -317,25 +236,31 @@
       },
 
       createFundraising(securityTokensOnSale) {
-        if (this.noHardCap) {
-          this.formData.hardCap = { ...this.formData.softCap };
-        }
-
         const payload = {
           user: this.$currentUser,
           data: {
+            title: this.formData.title,
             teamId: this.project.researchGroup.external_id,
             projectId: this.project.externalId,
-            startTime: this.formatDate(this.formData.startDate),
-            endTime: this.formatDate(this.formData.endDate),
+            startTime: this.formatDate(this.formData.dates.start),
+            endTime: this.formatDate(this.formData.dates.end),
             securityTokensOnSale,
-            softCap: this.$$toAssetUnits(this.formData.softCap, false),
-            hardCap: this.$$toAssetUnits(this.formData.hardCap, false)
+            softCap: this.$$toAssetUnits(this.formData.caps.soft, false),
+            hardCap: this.$$toAssetUnits(this.formData.caps.hard, false)
           },
           proposalInfo: {
             isProposal: this.isProposal
           }
         };
+
+        if (this.isaFundraise) {
+          payload.data.metadata = {
+            isa: {
+              amountPerItem: this.$$toAssetUnits(this.formData.isa.amountPerItem, false),
+              quantity: parseInt(this.formData.isa.quantity, 10)
+            }
+          };
+        }
 
         this.$store.dispatch('fundraising/create', payload)
           .then(() => {
@@ -369,42 +294,11 @@
           const securityTokensOnSale = [
             this.$$toAssetUnits({
               ...this.issuedTokens,
-              amount: this.formData.amount
+              amount: this.formData.tokens
             }, false)
           ];
           this.createFundraising(securityTokensOnSale);
         }
-      },
-
-      amountHint(val) {
-        if (!val) return '';
-
-        const messages = [
-          `${this.toPercent(val)} of ${this.$$toAssetUnits(this.issuedTokens)} issued tokens`
-        ];
-        if (this.issuedTokens.amount > this.availableTokens.amount) {
-          messages.push(
-            `${this.toPercent(val, this.availableTokens)} of ${this.$$toAssetUnits(this.availableTokens)} team's tokens`
-          );
-        }
-
-        return messages.join('<br>');
-      },
-
-      toPercent(val, from) {
-        if (!val) return '';
-        const target = from || this.issuedTokens;
-        const pc = (val / target.amount) * 100;
-
-        return `${Math.round(pc * 100) / 100}%`;
-      },
-
-      equalizeAsset() {
-        this.formData.hardCap = {
-          ...this.formData.hardCap,
-          assetId: this.formData.softCap.assetId,
-          precision: this.formData.softCap.precision
-        };
       },
 
       generateAssetSymbol() {
@@ -430,5 +324,5 @@
         this.$emit('cancel');
       }
     }
-  };
+  });
 </script>
