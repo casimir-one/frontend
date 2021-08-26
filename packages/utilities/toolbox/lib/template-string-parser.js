@@ -1,6 +1,7 @@
-import { objectPath } from '@deip/toolbox';
+import objectPath from 'object-path';
+import { isNil } from 'lodash';
 
-const mainPattern = /^{{\s*([\w\d.:,()'"\s]*?)\s*}}$/g;
+const mainPattern = /{{\s*([\w\d.:,()'"\s]*?)\s*}}/g;
 const fnSubPattern = /^\(([\w\d.,_\s'"]*)\)(::[\w\d]+)+/g;
 
 const isSingleMatch = (str, matches) => {
@@ -16,6 +17,10 @@ const isFunctionMatch = (str) => !![...str.matchAll(fnSubPattern)].length;
 
 class TemplateStringParser {
   constructor(ctx) {
+    this.ctx = ctx;
+  }
+
+  setCtx(ctx) {
     this.ctx = ctx;
   }
 
@@ -81,7 +86,10 @@ class TemplateStringParser {
 
       return this.parseChainMatch(chain, match, ...parsedParams);
     }
-    return this.getValueFromContext(match);
+
+    const value = this.getValueFromContext(match);
+
+    return !isNil(value) ? value : `{{${match}}}`;
   }
 }
 
