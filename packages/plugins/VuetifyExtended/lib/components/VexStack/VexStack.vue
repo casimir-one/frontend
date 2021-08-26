@@ -4,6 +4,7 @@
   import { VSheet } from 'vuetify/lib/components';
   /* eslint-enable */
   import { defineComponent } from '@deip/platform-util';
+  import { isNil } from '@deip/toolbox/lodash';
 
   export default defineComponent({
     name: 'VexStack',
@@ -38,7 +39,7 @@
       styles() {
         return {
           ...this.measurableStyles,
-          '--vex-stack-gutter': convertToUnit(this.gutter || 24)
+          '--vex-stack-gutter': convertToUnit(!isNil(this.gutter) ? this.gutter : 24)
         };
       }
     }
