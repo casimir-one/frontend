@@ -17,6 +17,7 @@ export * from './lib/i18n';
 export * from './lib/files';
 export * from './lib/interface';
 export * from './lib/hash';
+export * from './lib/template-string-parser';
 
 export * from 'change-case';
 

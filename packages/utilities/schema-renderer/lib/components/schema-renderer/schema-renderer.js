@@ -8,12 +8,12 @@ import {
   pascalCase,
 
   RecursiveIterator,
-  objectPath
+  objectPath,
+
+  TemplateStringParser
 } from '@deip/toolbox';
 
 import { cloneDeep, merge } from '@deip/toolbox/lodash';
-
-import { TemplateStringParser } from '../../template-string-parser';
 
 export const SchemaRenderer = {
   name: 'SchemaRenderer',
