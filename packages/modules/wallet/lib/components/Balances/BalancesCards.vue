@@ -1,31 +1,26 @@
 <template>
-  <v-row>
-    <v-col
+  <ve-auto-grid>
+    <balance-card
       v-for="(balance, index) of balances"
       :key="balance.assetId"
-      cols="12"
-      sm="6"
-      md="4"
-    >
-      <balance-card
-        :balance="balance"
-        :background-color="colorsPallete[index].background"
-        :with-deposit="withDeposit"
-        @deposit="handleDeposit"
-      />
-    </v-col>
-  </v-row>
+      :balance="balance"
+      :background-color="colorsPallete[index].background"
+      :with-deposit="withDeposit"
+      @deposit="handleDeposit"
+    />
+  </ve-auto-grid>
 </template>
 
 <script>
   import { genColorsPalette } from '@deip/toolbox';
-
+  import { VeAutoGrid } from '@deip/vue-elements';
   import BalanceCard from './BalanceCard';
 
   export default {
     name: 'BalancesCards',
 
     components: {
+      VeAutoGrid,
       BalanceCard
     },
 
