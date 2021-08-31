@@ -5,7 +5,7 @@ import {
   isObject
 } from './validation';
 
-export const createHash = (val) => {
+export const genSha256Hash = (val) => {
   if (isNil(val)) return undefined;
 
   let string = val;
@@ -15,4 +15,16 @@ export const createHash = (val) => {
   }
 
   return crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(string).buffer));
+};
+
+export const genRipemd160Hash = (val) => {
+  if (isNil(val)) return undefined;
+
+  let string = val;
+
+  if (isObject(val) || isArray(val)) {
+    string = JSON.stringify(val);
+  }
+
+  return crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(string).buffer));
 };

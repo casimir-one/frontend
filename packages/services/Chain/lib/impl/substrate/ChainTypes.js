@@ -70,8 +70,8 @@ const CHAIN_TYPES = {
   "NdaAccessRequestOf": "NdaAccessRequest",
   "ProjectOf": "Project",
   "ProjectContentOf": "ProjectContent",
-  "ProjectTokenSaleOf": "ProjectTokenSale",
-  "ProjectTokenSaleContributionOf": "ProjectTokenSaleContribution",
+  "SimpleCrowdfundingOf": "SimpleCrowdfunding",
+  "InvestmentOf": "Investment",
   "Nda": {
     "contract_creator": "AccountId",
     "external_id": "NdaId",
@@ -159,7 +159,7 @@ const CHAIN_TYPES = {
     "class": "DispatchClass",
     "pays_fee": "Pays"
   },
-  "ProjectTokenSaleStatus": {
+  "SimpleCrowdfundingStatus": {
     "_enum": [
       "Active",
       "Finished",
@@ -167,39 +167,41 @@ const CHAIN_TYPES = {
       "Inactive"
     ]
   },
-  "ProjectTokenSaleAssetPair": {
+  "TokenSaleAssetPair": {
     "id": "AssetId",
     "amount": "AssetsBalanceOf"
   },
-  "ProjectTokenSale": {
+  "SimpleCrowdfunding": {
     "external_id": "InvestmentId",
     "project_id": "ProjectId",
     "start_time": "Moment",
     "end_time": "Moment",
-    "status": "ProjectTokenSaleStatus",
-    "total_amount": "Balance",
-    "soft_cap": "Balance",
-    "hard_cap": "Balance",
-    "security_tokens_on_sale": "Vec<ProjectTokenSaleAssetPair>"
+    "status": "SimpleCrowdfundingStatus",
+    "asset_id": "AssetId",
+    "total_amount": "AssetsBalanceOf",
+    "soft_cap": "AssetsBalanceOf",
+    "hard_cap": "AssetsBalanceOf",
+    "shares": "Vec<TokenSaleAssetPair>"
   },
-  "ProjectTokenSaleContribution": {
+  "Investment": {
     "sale_id": "InvestmentId",
     "owner": "AccountId",
-    "amount": "Balance",
+    "amount": "AssetsBalanceOf",
     "time": "Moment"
   },
-  "InvestmentOpportunity": {
+  "FundingModel": {
     "_enum": {
-      "ProjectTokenSale": {
+      "SimpleCrowdfunding": {
         "start_time": "Moment",
         "end_time": "Moment",
-        "soft_cap": "Balance",
-        "hard_cap": "Balance",
-        "security_tokens_on_sale": "Vec<ProjectTokenSaleAssetPair>"
+        "asset_id": "AssetId",
+        "soft_cap": "AssetsBalanceOf",
+        "hard_cap": "AssetsBalanceOf"
       }
     }
   },
   "AssetsBalanceOf": "u64",
+  "DeipAssetBalanceOf": "AssetsBalanceOf",
   "AssetBalance": {
     "balance": "AssetsBalanceOf",
     "is_frozen": "bool",
@@ -229,9 +231,28 @@ const CHAIN_TYPES = {
     "0": "H160"
   },
   "AssetsAssetIdOf": "AssetId",
+  "DeipAssetIdOf": "AssetId",
   "Compact<AssetId>": {
     "0": "AssetId"
-  }
+  },
+  "DeipReviewVoteId": "H160",
+  "DeipReviewVote": {
+    "dao": "AccountId",
+    "review_id": "ReviewId",
+    "domain_id": "DomainId",
+    "voting_time": "Moment"
+  },
+  "DeipReviewVoteOf": "DeipReviewVote",
+  "Review": {
+    "external_id": "ReviewId",
+    "author": "AccountId",
+    "content": "Hash",
+    "domains": "Vec<DomainId>",
+    "assessment_model": "u32",
+    "weight": "Vec<u8>",
+    "project_content_external_id": "ProjectContentId"
+  },
+  "ReviewOf": "Review"
 };
 
 

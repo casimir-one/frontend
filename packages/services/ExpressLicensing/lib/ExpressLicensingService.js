@@ -1,6 +1,5 @@
 import deipRpc from '@deip/rpc-client';
-import crypto from '@deip/lib-crypto';
-import { Singleton } from '@deip/toolbox';
+import { Singleton, genRipemd160Hash } from '@deip/toolbox';
 import { BlockchainService } from '@deip/blockchain-service';
 import { ProposalsService } from '@deip/proposals-service';
 import { ProjectService } from '@deip/project-service';
@@ -24,7 +23,7 @@ class ExpressLicensingService extends Singleton {
     expirationDate
   }, { licensePlan }) {
     const offchainMeta = { licensePlan };
-    const termsHash = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(terms).buffer));
+    const termsHash = genRipemd160Hash(terms);
 
     return Promise.all([
       this.blockchainService.getRefBlockSummary(),

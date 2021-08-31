@@ -8,7 +8,7 @@ import {
   Singleton,
   replaceFileWithName,
   createFormData,
-  createHash
+  genSha256Hash
 } from '@deip/toolbox';
 import { UserHttp } from './UserHttp';
 
@@ -51,7 +51,7 @@ class UserService extends Singleton {
               ownerAuth: accountOwnerAuth,
               activeAuth: accountActiveAuth,
               memoKey,
-              description: createHash(attributes),
+              description: genSha256Hash(attributes),
               attributes,
               email,
               status
