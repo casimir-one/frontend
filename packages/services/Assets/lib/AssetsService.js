@@ -1,4 +1,4 @@
-import { Singleton } from '@deip/toolbox';
+import { Singleton, genRipemd160Hash } from '@deip/toolbox';
 import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
@@ -104,7 +104,7 @@ class AssetsService extends Singleton {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const entityId = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(symbol).buffer));
+            const entityId = genRipemd160Hash(symbol);
             const createAssetCmd = new CreateAssetCmd({
               entityId,
               issuer,
@@ -135,7 +135,7 @@ class AssetsService extends Singleton {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createAsset(msg); // TODO add endpoint !
+            return this.assetsHttp.createAsset(msg);
           });
       });
   }
@@ -166,7 +166,7 @@ class AssetsService extends Singleton {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.issueAsset(msg); // TODO add endpoint !
+            return this.assetsHttp.issueAsset(msg);
           });
       });
   }
