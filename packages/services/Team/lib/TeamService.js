@@ -2,7 +2,7 @@ import {
   Singleton,
   createFormData,
   replaceFileWithName,
-  createHash
+  genSha256Hash
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
@@ -48,7 +48,7 @@ class TeamService extends Singleton {
     const formData = createFormData(data);
 
     const attributes = replaceFileWithName(data.attributes);
-    const description = createHash(attributes);
+    const description = genSha256Hash(attributes);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -118,7 +118,7 @@ class TeamService extends Singleton {
     const formData = createFormData(data);
 
     const attributes = replaceFileWithName(data.attributes);
-    const description = createHash(attributes);
+    const description = genSha256Hash(attributes);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {

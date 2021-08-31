@@ -215,28 +215,30 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
-    [APP_CMD.CREATE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: ({
       entityId,
       teamId,
-      projectId,
       startTime,
       endTime,
-      securityTokensOnSale,
+      shares,
       softCap,
       hardCap
     }) => {
 
+      assert(softCap.id === hardCap.id, `User DAO must have a threshold equal to 0 with a single signatory`);
+
       const createInvestmentOpportunityOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deip.createInvestmentOpportunity(
           /* external_id: */ `0x${entityId}`,
-          /* project_id: */ `0x${projectId}`,
-          /* investment_type: */ {
-            ProjectTokenSale: {
+          /* creator: */ { Org: `0x${teamId}` },
+          /* shares */ shares,
+          /* funding_model: */ {
+            SimpleCrowdfunding: {
               start_time: startTime,
               end_time: endTime,
-              soft_cap: softCap,
-              hard_cap: hardCap,
-              security_tokens_on_sale: securityTokensOnSale
+              asset_id: softCap.id,
+              soft_cap: softCap.amount,
+              hard_cap: hardCap.amount
             }
           }
         )
@@ -246,13 +248,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
-    [APP_CMD.CONTRIBUTE_PROJECT_TOKEN_SALE]: ({
+    [APP_CMD.INVEST]: ({
       tokenSaleId,
-      contributor,
+      investor,
       amount
     }) => {
       
-      const investOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${contributor}`,
+      const investOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${investor}`,
         chainNodeClient.tx.deip.invest(
           /* investment_opportunity_id: */ `0x${tokenSaleId}`,
           /* amount: */ amount

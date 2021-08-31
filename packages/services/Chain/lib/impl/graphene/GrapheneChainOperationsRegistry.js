@@ -278,7 +278,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       projectId,
       startTime,
       endTime,
-      securityTokensOnSale,
+      shares,
       softCap,
       hardCap
     }) => {
@@ -289,7 +289,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         research_external_id: projectId,
         start_time: startTime,
         end_time: endTime,
-        security_tokens_on_sale: securityTokensOnSale,
+        security_tokens_on_sale: shares,
         soft_cap: softCap,
         hard_cap: hardCap,
         extensions: []

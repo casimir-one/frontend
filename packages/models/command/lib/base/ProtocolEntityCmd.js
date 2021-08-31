@@ -1,6 +1,5 @@
 import ProtocolCmd from './ProtocolCmd';
-import { assert } from '@deip/toolbox';
-import crypto from '@deip/lib-crypto';
+import { genRipemd160Hash } from '@deip/toolbox';
 
 
 class ProtocolEntityCmd extends ProtocolCmd {
@@ -15,7 +14,7 @@ class ProtocolEntityCmd extends ProtocolCmd {
   getProtocolEntityId() { return this._cmdPayload.entityId; }
 
   static GeneraterateProtocolEntityId(payload) {
-    const entityId = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(JSON.stringify({ ...payload, __timestamp: new Date().getTime() })).buffer));
+    const entityId = genRipemd160Hash({ ...payload, __timestamp: new Date().getTime() });
     return entityId;
   }
   

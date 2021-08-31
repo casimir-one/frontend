@@ -235,7 +235,7 @@
           .then(() => assetId);
       },
 
-      createFundraising(securityTokensOnSale) {
+      createFundraising(shares) {
         const payload = {
           user: this.$currentUser,
           data: {
@@ -244,7 +244,7 @@
             projectId: this.project.externalId,
             startTime: this.formatDate(this.formData.dates.start),
             endTime: this.formatDate(this.formData.dates.end),
-            securityTokensOnSale,
+            shares,
             softCap: this.$$toAssetUnits(this.formData.caps.soft, false),
             hardCap: this.$$toAssetUnits(this.formData.caps.hard, false)
           },
@@ -281,23 +281,23 @@
           this.createSecurityToken()
             .then((assetId) => {
               const { currentSupply, precision } = this.$store.getters['assets/one'](assetId);
-              const securityTokensOnSale = [
+              const shares = [
                 this.$$toAssetUnits({
                   amount: currentSupply,
                   assetId,
                   precision
                 }, false)
               ];
-              this.createFundraising(securityTokensOnSale);
+              this.createFundraising(shares);
             });
         } else {
-          const securityTokensOnSale = [
+          const shares = [
             this.$$toAssetUnits({
               ...this.issuedTokens,
               amount: this.formData.tokens
             }, false)
           ];
-          this.createFundraising(securityTokensOnSale);
+          this.createFundraising(shares);
         }
       },
 

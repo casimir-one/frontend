@@ -13,7 +13,7 @@ class CreateInvestmentOpportunityCmd extends ProtocolEntityCmd {
       projectId,
       startTime,
       endTime,
-      securityTokensOnSale,
+      shares,
       softCap,
       hardCap,
       title,
@@ -21,11 +21,10 @@ class CreateInvestmentOpportunityCmd extends ProtocolEntityCmd {
     } = cmdPayload;
 
     assert(!!teamId, "'teamId' is required");
-    assert(!!projectId, "'projectId' is required");
     assert(!!startTime, "'startTime' is required");
     assert(!!endTime, "'endTime' is required");
     assert(new Date(endTime) > new Date(startTime), "'endTime' must be greater than 'startTime'");
-    assert(!!securityTokensOnSale, "'securityTokensOnSale' is required");
+    assert(!!shares, "'shares' is required");
     assert(!!softCap, "'softCap' is required");
     assert(!!hardCap, "'hardCap' is required");
 
