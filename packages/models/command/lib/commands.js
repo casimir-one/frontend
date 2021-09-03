@@ -19,7 +19,10 @@ import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 import CreateAssetCmd from './impl/CreateAssetCmd';
 import IssueAssetCmd from './impl/IssueAssetCmd';
-
+import CreateDraftCmd from './impl/CreateDraftCmd';
+import DeleteDraftCmd from './impl/DeleteDraftCmd';
+import UpdateDraftCmd from './impl/UpdateDraftCmd';
+import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
 
 export {
   CreateAccountCmd,
@@ -42,5 +45,9 @@ export {
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,
   CreateAssetCmd,
-  IssueAssetCmd
+  IssueAssetCmd,
+  CreateDraftCmd,
+  DeleteDraftCmd,
+  UpdateDraftCmd,
+  CreateProjectContentCmd,
 }
