@@ -23,6 +23,11 @@ import CreateDraftCmd from './impl/CreateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
 import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
+import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
+import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
+import CreateReviewCmd from './impl/CreateReviewCmd';
+import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
+
 
 export {
   CreateAccountCmd,
@@ -50,4 +55,8 @@ export {
   DeleteDraftCmd,
   UpdateDraftCmd,
   CreateProjectContentCmd,
+  CreateReviewRequestCmd,
+  DeclineReviewRequestCmd,
+  CreateReviewCmd,
+  UpvoteReviewCmd
 }

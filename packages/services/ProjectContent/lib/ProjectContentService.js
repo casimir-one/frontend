@@ -1,11 +1,12 @@
 import {
   Singleton,
-  createFormData
+  createFormData,
+  genRipemd160Hash,
+  genSha256Hash
 } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants';
-import crypto from '@deip/lib-crypto';
 import {
   CreateProposalCmd,
   UpdateProposalCmd,
@@ -61,7 +62,7 @@ class ProjectContentService extends Singleton {
               projectId,
               teamId,
               type,
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({ researchContent: { title } })).buffer)),
+              description: genSha256Hash({ researchContent: { title } }),
               content,
               authors,
               references,
@@ -104,10 +105,6 @@ class ProjectContentService extends Singleton {
     return this.projectContentHttp.getProjectContent(externalId);
   }
 
-  getProjectContentAndDraftsByProject(projectId) {
-    return this.projectContentHttp.getProjectContentAndDraftsByProject(projectId);
-  }
-
   getDraftsByProject(projectId) {
     return this.projectContentHttp.getDraftsByProject(projectId);
   }
@@ -129,7 +126,9 @@ class ProjectContentService extends Singleton {
   }
 
   createProjectContentDraft(payload) {
-    const draftId = crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(JSON.stringify({ ...payload, __timestamp: new Date().getTime() })).buffer)).slice(0, 24);
+    const draftId = genRipemd160Hash({
+      ...payload, __timestamp: new Date().getTime()
+    }).slice(0, 24);
     const draftData = {
       ...payload,
       draftId

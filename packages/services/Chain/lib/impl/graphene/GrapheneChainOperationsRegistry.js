@@ -414,7 +414,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         research_external_id: projectId,
         research_group: teamId,
         type: type,
-        description: description,
+        description: JSON.stringify({ description }),
         content: content,
         authors: authors,
         references: references,
@@ -422,6 +422,50 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
     
       return [createResearchContentOp];
+    },
+
+    [APP_CMD.CREATE_REVIEW]: ({
+      entityId,
+      author,
+      projectContentId,
+      content,
+      weight,
+      assessment,
+      disciplines
+    }) => {
+    
+      const createReviewOp = ['create_review', {
+        external_id: entityId,
+        author,
+        research_content_external_id: projectContentId,
+        content: JSON.stringify({ content }),
+        weight,
+        assessment_model: assessment,
+        disciplines,
+        extensions: []
+      }];
+    
+      return [createReviewOp];
+    },
+
+    [APP_CMD.UPVOTE_REVIEW]: ({
+      entityId,
+      voter,
+      reviewId,
+      disciplineId,
+      weight
+    }) => {
+    
+      const upvoteReviewOp = ['vote_for_review', {
+        external_id: entityId,
+        voter,
+        review_external_id: reviewId,
+        discipline_external_id: disciplineId,
+        weight,
+        extensions: []
+      }];
+    
+      return [upvoteReviewOp];
     }
 
   }

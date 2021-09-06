@@ -24,10 +24,6 @@ class ProjectContentHttp extends Singleton {
     return this.http.post('/api/v2/project-content/ref/publish', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  getProjectContentAndDraftsByProject(projectExternalId) {
-    return this.http.get(`/api/v2/project-content/project/${projectExternalId}`);
-  }
-
   getDraftsByProject(projectId) {
     return this.http.get(`/api/v2/project-content/drafts/project/${projectId}`);
   }
