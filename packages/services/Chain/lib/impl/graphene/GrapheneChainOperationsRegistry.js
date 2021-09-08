@@ -396,6 +396,32 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
 
       return [issueAssetOp];
+    },
+
+    [APP_CMD.CREATE_PROJECT_CONTENT]: ({
+      entityId,
+      projectId,
+      teamId,
+      type,
+      description,
+      content,
+      authors,
+      references
+    }) => {
+    
+      const createResearchContentOp = ['create_research_content', {
+        external_id: entityId,
+        research_external_id: projectId,
+        research_group: teamId,
+        type: type,
+        description: description,
+        content: content,
+        authors: authors,
+        references: references,
+        extensions: []
+      }];
+    
+      return [createResearchContentOp];
     }
 
   }

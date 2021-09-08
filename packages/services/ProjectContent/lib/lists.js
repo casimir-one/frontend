@@ -33,8 +33,8 @@ contentTypesMap = Object.keys(contentTypesMap).reduce((obj, key) => {
   return o;
 }, {});
 
-const researchContentTypes = [...Object.values(contentTypesMap)].sort((a, b) => a.order - b.order);
+const projectContentTypes = [...Object.values(contentTypesMap)].sort((a, b) => a.order - b.order);
 
 export {
-  researchContentTypes
+  projectContentTypes
 };
