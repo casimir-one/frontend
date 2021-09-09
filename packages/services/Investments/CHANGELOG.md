@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.337.0](https://github.com/DEIPworld/deip-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** investment opportunity commands for substrate fixed ([7e7a25f](https://github.com/DEIPworld/deip-modules/commit/7e7a25fd9f2aaccb3fa98588416aafadc834f5c2))
+
+
+
+
+
 # [1.336.0](https://github.com/DEIPworld/deip-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
 
 **Note:** Version bump only for package @deip/investments-service

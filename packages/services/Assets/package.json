@@ -1,6 +1,6 @@
 {
   "name": "@deip/assets-service",
-  "version": "1.336.0",
+  "version": "1.337.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,17 +22,17 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/access-service": "1.336.0",
-    "@deip/blockchain-service": "1.336.0",
-    "@deip/chain-service": "1.336.0",
-    "@deip/command-models": "1.336.0",
-    "@deip/constants": "1.336.0",
-    "@deip/http-service": "1.336.0",
+    "@deip/access-service": "1.337.0",
+    "@deip/blockchain-service": "1.337.0",
+    "@deip/chain-service": "1.337.0",
+    "@deip/command-models": "1.337.0",
+    "@deip/constants": "1.337.0",
+    "@deip/http-service": "1.337.0",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/message-models": "1.336.0",
-    "@deip/proxydi": "1.334.0",
-    "@deip/rpc-client": "1.336.0",
-    "@deip/toolbox": "1.334.0",
+    "@deip/message-models": "1.337.0",
+    "@deip/proxydi": "1.337.0",
+    "@deip/rpc-client": "1.337.0",
+    "@deip/toolbox": "1.337.0",
     "qs": "^6.10.1"
   },
   "peerDependencies": {
