@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.337.0](https://github.com/DEIPworld/deip-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
+
+
+### Features
+
+* **@deip/project-content-service:** create service ([4b60b5d](https://github.com/DEIPworld/deip-modules/commit/4b60b5deaeafb78efbc1d5471fdb28321175d888))
+
+
+
+
+
 # [1.336.0](https://github.com/DEIPworld/deip-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
 
 
