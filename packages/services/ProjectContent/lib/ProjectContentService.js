@@ -1,4 +1,3 @@
-import { ProposalsService } from '@deip/proposals-service';
 import {
   Singleton,
   createFormData
@@ -25,8 +24,6 @@ class ProjectContentService extends Singleton {
   proxydi = proxydi;
 
   projectContentHttp = ProjectContentHttp.getInstance();
-
-  proposalsService = ProposalsService.getInstance();
 
   createProjectContent(payload) {
     const env = this.proxydi.get('env');
