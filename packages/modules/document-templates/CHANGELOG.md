@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.337.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
+
+
+### Bug Fixes
+
+* **@deip/document-templates-module:** make message expandable in template form ([21ffaa2](https://gitlab.com/DEIP/deip-client-modules/commit/21ffaa257a963c50a1ee26040595436fa477e96d))
+
+
+
+
+
 # [1.336.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
 
 

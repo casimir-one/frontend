@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.337.0](https://github.com/DEIPworld/deip-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** investment opportunity commands for substrate fixed ([7e7a25f](https://github.com/DEIPworld/deip-modules/commit/7e7a25fd9f2aaccb3fa98588416aafadc834f5c2))
+* **@deip/document-templates-module:** make message expandable in template form ([21ffaa2](https://github.com/DEIPworld/deip-modules/commit/21ffaa257a963c50a1ee26040595436fa477e96d))
+* **@deip/project-content-service:** versions fix ([220a5ab](https://github.com/DEIPworld/deip-modules/commit/220a5ab3323974cfd88e81b5afb3cd9ec8cb006f))
+* **@deip/vuetify-extended:** fix text expand in Message ([c044f7d](https://github.com/DEIPworld/deip-modules/commit/c044f7d1cff153693e37f2332efddebfffe17680))
+* **@deip/vuetify-extended:** fix zero gutter in VexStack ([e2d3649](https://github.com/DEIPworld/deip-modules/commit/e2d3649b004de1693eeeda24765f0f5aef2892b0))
+
+
+### Features
+
+* **@deip/project-content-service:** create service ([4b60b5d](https://github.com/DEIPworld/deip-modules/commit/4b60b5deaeafb78efbc1d5471fdb28321175d888))
+
+
+
+
+
 # [1.336.0](https://github.com/DEIPworld/deip-modules/compare/v1.335.1...v1.336.0) (2021-08-20)
 
 
