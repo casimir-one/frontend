@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.337.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.337.0...v1.337.1) (2021-09-10)
+
+**Note:** Version bump only for package @deip/fundraising-module
+
+
+
+
+
 # [1.337.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
 
 

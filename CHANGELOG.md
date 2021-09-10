@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.337.1](https://github.com/DEIPworld/deip-modules/compare/v1.337.0...v1.337.1) (2021-09-10)
+
+
+### Bug Fixes
+
+* **@deip/command-models:** toolbox version fix ([c1285ba](https://github.com/DEIPworld/deip-modules/commit/c1285ba4e1f664ee4fd5c1566ef7c172c702e6b1))
+
+
+
+
+
 # [1.337.0](https://github.com/DEIPworld/deip-modules/compare/v1.336.0...v1.337.0) (2021-09-09)
 
 

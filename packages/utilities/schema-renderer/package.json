@@ -1,6 +1,6 @@
 {
   "name": "@deip/schema-renderer",
-  "version": "1.337.0",
+  "version": "1.337.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.337.0",
+    "@deip/constants": "1.337.1",
     "@deip/toolbox": "1.337.0",
     "crc": "^3.8.0",
     "dot-prop": "^6.0.1",
