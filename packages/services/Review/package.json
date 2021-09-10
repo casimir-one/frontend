@@ -1,6 +1,6 @@
 {
   "name": "@deip/review-service",
-  "version": "1.337.0",
+  "version": "1.337.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,8 +22,8 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.337.0",
-    "@deip/http-service": "1.337.0",
+    "@deip/constants": "1.337.1",
+    "@deip/http-service": "1.337.1",
     "@deip/toolbox": "1.337.0"
   },
   "peerDependencies": {

@@ -9,7 +9,7 @@
     "packages/components/*",
     "packages/vue-elements"
   ],
-  "version": "1.337.0",
+  "version": "1.337.1",
   "npmClient": "npm",
   "command": {
     "version": {
