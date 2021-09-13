@@ -1,5 +1,4 @@
-import { APP_CMD, PROTOCOL_CHAIN } from '@deip/constants';
-import { GrapheneTx, GrapheneTxBuilder, SubstrateTx, SubstrateTxBuilder } from '@deip/chain-service';
+import { APP_CMD } from '@deip/constants';
 import CreateAccountCmd from './impl/CreateAccountCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';
@@ -55,13 +54,7 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_PROJECT_CONTENT]: { class: CreateProjectContentCmd }
 }
 
-const APP_PROTOCOL_CHAIN_INFO = {
-  [PROTOCOL_CHAIN.GRAPHENE]: { txClass: GrapheneTx, txBuilderClass: GrapheneTxBuilder },
-  [PROTOCOL_CHAIN.SUBSTRATE]: { txClass: SubstrateTx, txBuilderClass: SubstrateTxBuilder }
-}
-
 
 export {
-  APP_CMD_INFO,
-  APP_PROTOCOL_CHAIN_INFO
+  APP_CMD_INFO
 };
