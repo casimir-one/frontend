@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.338.0](https://github.com/DEIPworld/deip-modules/compare/v1.337.2...v1.338.0) (2021-09-13)
+
+**Note:** Version bump only for package @deip/attributes-service
+
+
+
+
+
 ## [1.337.2](https://github.com/DEIPworld/deip-modules/compare/v1.337.1...v1.337.2) (2021-09-13)
 
 **Note:** Version bump only for package @deip/attributes-service

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.338.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.337.2...v1.338.0) (2021-09-13)
+
+
+### Features
+
+* **@deip/command-models:** TxClass as param ([075adb3](https://gitlab.com/DEIP/deip-client-modules/commit/075adb3cbe9669c2c6d5219edc7b9741e849f165))
+
+
+
+
+
 ## [1.337.2](https://gitlab.com/DEIP/deip-client-modules/compare/v1.337.1...v1.337.2) (2021-09-13)
 
 **Note:** Version bump only for package @deip/message-models
