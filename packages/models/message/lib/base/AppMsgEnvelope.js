@@ -1,6 +1,6 @@
 import { assert } from '@deip/toolbox';
 import AppMsg from './AppMsg';
-import { APP_PROTOCOL_CHAIN_INFO, APP_CMD_INFO } from '@deip/command-models';
+import { APP_CMD_INFO } from '@deip/command-models';
 
 
 class AppMsgEnvelope {
@@ -27,12 +27,12 @@ class AppMsgEnvelope {
     };
   }
 
-  static Deserialize(serialized) {
+  static Deserialize(serialized, TxClass) {
     const { PROTOCOL_CHAIN, MESSAGE } = serialized;
     const msg = JSON.parse(MESSAGE);
     let tx;
     if (PROTOCOL_CHAIN) {
-      const TxClass = APP_PROTOCOL_CHAIN_INFO[PROTOCOL_CHAIN].txClass;
+      assert(!!TxClass, "Chain Protocol Transaction class is not specified");
       tx = TxClass.Deserialize(msg.tx);
     }
     const appCmds = msg.commands.map((cmd) => {
