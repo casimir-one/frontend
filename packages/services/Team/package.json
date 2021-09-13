@@ -1,6 +1,6 @@
 {
   "name": "@deip/team-service",
-  "version": "1.337.2",
+  "version": "1.338.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,15 +23,15 @@
   },
   "dependencies": {
     "@deip/chain-service": "1.337.2",
-    "@deip/command-models": "1.337.2",
+    "@deip/command-models": "1.338.0",
     "@deip/constants": "1.337.1",
     "@deip/http-service": "1.337.1",
     "@deip/lib-crypto": "1.118.0",
-    "@deip/message-models": "1.337.2",
+    "@deip/message-models": "1.338.0",
     "@deip/proxydi": "1.337.0",
     "@deip/rpc-client": "1.337.1",
     "@deip/toolbox": "1.337.0",
-    "@deip/user-service": "1.337.2",
+    "@deip/user-service": "1.338.0",
     "qs": "^6.10.1"
   },
   "peerDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@deip/users-module",
-  "version": "1.337.2",
+  "version": "1.338.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@deip/access-service": "1.337.1",
-    "@deip/attributes-module": "1.337.2",
+    "@deip/attributes-module": "1.338.0",
     "@deip/constants": "1.337.1",
-    "@deip/layouts-module": "1.337.2",
+    "@deip/layouts-module": "1.338.0",
     "@deip/platform-components": "1.337.1",
     "@deip/platform-fns": "1.337.1",
     "@deip/platform-store": "1.337.0",
@@ -31,7 +31,7 @@
     "@deip/proxydi": "1.337.0",
     "@deip/schema-renderer": "1.337.1",
     "@deip/toolbox": "1.337.0",
-    "@deip/user-service": "1.337.2",
+    "@deip/user-service": "1.338.0",
     "@deip/validation-plugin": "1.337.1",
     "@deip/vuetify-extended": "1.337.1"
   },
