@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD, PROTOCOL_CHAIN } from '@deip/constants';
 import CreateAccountCmd from './impl/CreateAccountCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';
@@ -24,6 +24,10 @@ import CreateDraftCmd from './impl/CreateDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
+import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
+import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
+import CreateReviewCmd from './impl/CreateReviewCmd';
+import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
 
 
 const APP_CMD_INFO = {
@@ -51,7 +55,11 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_DRAFT]: { class: CreateDraftCmd },
   [APP_CMD.DELETE_DRAFT]: { class: DeleteDraftCmd },
   [APP_CMD.UPDATE_DRAFT]: { class: UpdateDraftCmd },
-  [APP_CMD.CREATE_PROJECT_CONTENT]: { class: CreateProjectContentCmd }
+  [APP_CMD.CREATE_PROJECT_CONTENT]: { class: CreateProjectContentCmd },
+  [APP_CMD.CREATE_REVIEW_REQUEST]: { class: CreateReviewRequestCmd },
+  [APP_CMD.DECLINE_REVIEW_REQUEST]: { class: DeclineReviewRequestCmd },
+  [APP_CMD.CREATE_REVIEW]: { class: CreateReviewCmd },
+  [APP_CMD.UPVOTE_REVIEW]: { class: UpvoteReviewCmd },
 }
 
 
