@@ -1,6 +1,6 @@
 {
   "name": "@deip/tenants-module",
-  "version": "1.337.1",
+  "version": "1.337.2",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -24,7 +24,7 @@
     "@deip/platform-fns": "1.337.1",
     "@deip/platform-store": "1.337.0",
     "@deip/proxydi": "1.337.0",
-    "@deip/tenant-service": "1.337.1"
+    "@deip/tenant-service": "1.337.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

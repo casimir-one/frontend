@@ -1,6 +1,6 @@
 {
   "name": "@deip/command-models",
-  "version": "1.337.1",
+  "version": "1.337.2",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/chain-service": "1.337.1",
+    "@deip/chain-service": "1.337.2",
     "@deip/lib-crypto": "1.118.0",
     "@deip/rpc-client": "1.337.1",
     "@deip/toolbox": "1.337.0",
