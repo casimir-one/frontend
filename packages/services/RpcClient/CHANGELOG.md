@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.339.0](https://gitlab.com/DEIP/deip-rpc/compare/v1.338.0...v1.339.0) (2021-09-13)
+
+**Note:** Version bump only for package @deip/rpc-client
+
+
+
+
+
 ## [1.337.1](https://gitlab.com/DEIP/deip-rpc/compare/v1.337.0...v1.337.1) (2021-09-10)
 
 **Note:** Version bump only for package @deip/rpc-client
