@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.337.2",
+  "version": "1.339.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -26,13 +26,13 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/app-config-service": "1.337.1",
-    "@deip/chain-service": "1.337.2",
-    "@deip/constants": "1.337.1",
+    "@deip/app-config-service": "1.339.0",
+    "@deip/chain-service": "1.339.0",
+    "@deip/constants": "1.339.0",
     "@deip/platform-store": "1.337.0",
     "@deip/proxydi": "1.337.0",
-    "@deip/rpc-client": "1.337.1",
-    "@deip/vuetify-extended": "1.337.1",
+    "@deip/rpc-client": "1.339.0",
+    "@deip/vuetify-extended": "1.339.0",
     "axios": "^0.21.1",
     "v-clipboard": "^2.2.3",
     "vue-deepset": "^0.6.3"
