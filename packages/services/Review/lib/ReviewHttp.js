@@ -23,11 +23,11 @@ class ReviewHttp extends Singleton {
   }
 
   createReview(req) {
-    return this.http.post('/api/v2/review', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.post('/api/v2/review', req.getHttpBody());
   }
 
   upvoteReview(req) {
-    return this.http.post('/api/v2/review/upvote', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.post('/api/v2/review/upvote', req.getHttpBody());
   }
 
   getReview(reviewId) {
