@@ -466,6 +466,29 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
     
       return [upvoteReviewOp];
+    },
+
+    [APP_CMD.CREATE_PROJECT_NDA]: ({
+      entityId,
+      creator,
+      parties,
+      description,
+      projectId,
+      startTime,
+      endTime
+    }) => {
+      const createProjectNdaOp = ['create_research_nda', {
+        external_id: entityId,
+        creator,
+        parties,
+        description,
+        researches: [projectId],
+        start_time: startTime,
+        end_time: endTime,
+        extensions: []
+      }];
+    
+      return [createProjectNdaOp];
     }
 
   }
