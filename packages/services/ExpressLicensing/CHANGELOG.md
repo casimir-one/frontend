@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.341.0](https://github.com/DEIPworld/deip-modules/compare/v1.340.0...v1.341.0) (2021-09-21)
+
+
+### Features
+
+* **@deip/project-service:** obsolete services removed ([83f1296](https://github.com/DEIPworld/deip-modules/commit/83f12968141ff288bf8e526ddcef961505a16ea3))
+
+
+
+
+
 # [1.340.0](https://github.com/DEIPworld/deip-modules/compare/v1.339.0...v1.340.0) (2021-09-15)
 
 **Note:** Version bump only for package @deip/express-licensing-service
