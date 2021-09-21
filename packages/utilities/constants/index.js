@@ -9,7 +9,6 @@ export * from './lib/expertise-contributions';
 export * from './lib/fundraising';
 export * from './lib/grants';
 export * from './lib/investments';
-export * from './lib/project';
 export * from './lib/research-content';
 export * from './lib/research-content-reviews';
 export * from './lib/schema-renderer';
