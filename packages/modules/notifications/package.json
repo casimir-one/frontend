@@ -27,8 +27,8 @@
     "@deip/proxydi": "1.337.0"
   },
   "peerDependencies": {
-    "@deip/auth-module": "^1.340.0",
-    "@deip/users-module": "^1.340.0",
+    "@deip/auth-module": "^1.341.0",
+    "@deip/users-module": "^1.341.0",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
