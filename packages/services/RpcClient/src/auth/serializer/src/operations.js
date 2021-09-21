@@ -913,6 +913,25 @@ const create_research_license = new Serializer("create_research_license", {
 }, { entity_external_id: "external_id" });
 
 
+const create_contract_agreement = new Serializer("create_contract_agreement", {
+  external_id: string,
+  creator: string,
+  parties: set(string),
+  hash: string,
+  start_time: optional(time_point_sec),
+  end_time: optional(time_point_sec),
+  terms: set(future_extensions),
+  extensions: set(future_extensions)
+}, { entity_external_id: "external_id" });
+
+
+const accept_contract_agreement = new Serializer("accept_contract_agreement", {
+  external_id: string,
+  party: string,
+  extensions: set(future_extensions)
+});
+
+
 // virtual operations
 
 const fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -1001,6 +1020,8 @@ operation.st_operations = [
   fulfill_nda_content_access_request, // 50
   create_assessment, // 51
   create_research_license, // 52
+  create_contract_agreement, // 53
+  accept_contract_agreement, // 54
 
   // virtual operations
   fill_common_tokens_withdraw,

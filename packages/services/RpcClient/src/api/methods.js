@@ -85,7 +85,16 @@ export default [{
   "method": "get_transaction_hex",
   "params": ["trx"]
 },
-
+{
+  "api": "database_api",
+  "method": "get_contract_agreement",
+  "params": ["id"]
+},
+{
+  "api": "database_api",
+  "method": "get_contract_agreement_by_creator",
+  "params": ["creator"]
+},
 // account_by_key_api
 {
   "api": "account_by_key_api",

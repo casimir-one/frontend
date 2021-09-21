@@ -14,3 +14,4 @@ export * from './lib/research-content-reviews';
 export * from './lib/schema-renderer';
 export * from './lib/user';
 export * from './lib/view';
+export * from './lib/contract-agreement';
