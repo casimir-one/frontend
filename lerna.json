@@ -6,7 +6,7 @@
     "packages/services/*",
     "packages/utilities/*",
     "packages/models/*",
-    "packages/components/*",
+    "packages/vue-adapters/*",
     "packages/vue-elements"
   ],
   "version": "1.340.0",
