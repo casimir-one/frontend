@@ -1,12 +1,12 @@
 import { Singleton } from '@deip/toolbox';
 import { ExpertiseContributionsHttp } from './ExpertiseContributionsHttp';
-import deipRpc from '@deip/rpc-client';
 
 class ExpertiseContributionsService extends Singleton {
   expertiseContributionsHttp = ExpertiseContributionsHttp.getInstance();
 
   getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
-    return this.expertiseContributionsHttp.getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId);
+    return this.expertiseContributionsHttp
+      .getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
   getExpertiseContributionsByResearch(researchId) {
@@ -14,11 +14,13 @@ class ExpertiseContributionsService extends Singleton {
   }
 
   getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
-    return this.expertiseContributionsHttp.getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId);
+    return this.expertiseContributionsHttp
+      .getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId);
   }
 
   getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
-    return this.expertiseContributionsHttp.getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId);
+    return this.expertiseContributionsHttp
+      .getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
   getExpertiseContributionsByResearchContent(contentId) {
@@ -32,13 +34,12 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getAccountExpertiseHistory(username, filter);
@@ -51,13 +52,12 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getAccountExpertiseStats(username, filter);
@@ -71,38 +71,35 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      searchTerm: searchTerm || "",
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      searchTerm: searchTerm || '',
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
   }
 
-  getResearchExpertiseHistory(researchExternalId, { 
+  getResearchExpertiseHistory(researchExternalId, {
     discipline,
     from,
     to,
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getResearchExpertiseHistory(researchExternalId, filter);
   }
-
 
   getResearchExpertiseStats(researchExternalId, {
     discipline,
@@ -111,18 +108,16 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getResearchExpertiseStats(researchExternalId, filter);
   }
-
 
   getResearchesExpertiseStats({
     discipline,
@@ -131,18 +126,16 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getResearchesExpertiseStats(filter);
   }
-
 
   getResearchContentExpertiseHistory(researchContentExternalId, {
     discipline,
@@ -151,18 +144,17 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchContentExpertiseHistory(researchContentExternalId, filter);
+    return this.expertiseContributionsHttp
+      .getResearchContentExpertiseHistory(researchContentExternalId, filter);
   }
-
 
   getResearchContentExpertiseStats(researchContentExternalId, {
     discipline,
@@ -171,18 +163,17 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchContentExpertiseStats(researchContentExternalId, filter);
+    return this.expertiseContributionsHttp
+      .getResearchContentExpertiseStats(researchContentExternalId, filter);
   }
-
 
   getResearchContentsExpertiseStats({
     discipline,
@@ -191,18 +182,16 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getResearchContentsExpertiseStats(filter);
   }
-
 
   getDisciplineExpertiseHistory({
     discipline,
@@ -211,13 +200,12 @@ class ExpertiseContributionsService extends Singleton {
     contribution,
     criteria
   }) {
-
     const filter = {
-      discipline: discipline || "",
-      from: from || "",
-      to: to || "",
-      contribution: contribution || "",
-      criteria: criteria || ""
+      discipline: discipline || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
     };
 
     return this.expertiseContributionsHttp.getDisciplineExpertiseHistory(filter);
@@ -228,11 +216,10 @@ class ExpertiseContributionsService extends Singleton {
     to,
     step
   }) {
-
     const filter = {
-      from: from || "",
-      to: to || "",
-      step: step || ""
+      from: from || '',
+      to: to || '',
+      step: step || ''
     };
 
     return this.expertiseContributionsHttp.getDisciplinesExpertiseStatsHistory(filter);
@@ -249,7 +236,6 @@ class ExpertiseContributionsService extends Singleton {
   getDisciplineExpertiseTokens(disciplineExternalId) {
     return this.expertiseContributionsHttp.getDisciplineExpertiseTokens(disciplineExternalId);
   }
-  
 }
 
 export {

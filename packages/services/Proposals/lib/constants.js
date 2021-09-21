@@ -1,15 +1,15 @@
 import { createEnum } from '@deip/toolbox';
-import deipRpc from '@deip/rpc-client';
 
+// TODO: Use APP_PROPOSAL const
 const PROPOSAL_TYPES = createEnum({
-  CREATE_RESEARCH: deipRpc.operations.getOperationTag('create_research'),
-  INVITE_MEMBER: deipRpc.operations.getOperationTag('join_research_contract'),
-  EXCLUDE_MEMBER: deipRpc.operations.getOperationTag('leave_research_contract'),
-  TRANSFER: deipRpc.operations.getOperationTag('transfer'),
-  CREATE_RESEARCH_TOKEN_SALE: deipRpc.operations.getOperationTag('create_research_token_sale'),
-  CREATE_RESEARCH_MATERIAL: deipRpc.operations.getOperationTag('create_research_content'),
-  UPDATE_RESEARCH_GROUP: deipRpc.operations.getOperationTag('update_account'),
-  UPDATE_RESEARCH: deipRpc.operations.getOperationTag('update_research')
+  CREATE_RESEARCH: 14,
+  INVITE_MEMBER: 12,
+  EXCLUDE_MEMBER: 13,
+  TRANSFER: 2,
+  CREATE_RESEARCH_TOKEN_SALE: 19,
+  CREATE_RESEARCH_MATERIAL: 16,
+  UPDATE_RESEARCH_GROUP: 1,
+  UPDATE_RESEARCH: 15
 });
 
 const PROPOSAL_STATUS = createEnum({

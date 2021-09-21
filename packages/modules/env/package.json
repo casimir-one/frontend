@@ -31,7 +31,6 @@
     "@deip/constants": "1.340.0",
     "@deip/platform-store": "1.337.0",
     "@deip/proxydi": "1.337.0",
-    "@deip/rpc-client": "1.340.0",
     "@deip/vuetify-extended": "1.340.0",
     "axios": "^0.21.1",
     "v-clipboard": "^2.2.3",
