@@ -1,5 +1,4 @@
 import { Singleton, genRipemd160Hash } from '@deip/toolbox';
-import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import {
@@ -23,8 +22,6 @@ class AssetsService extends Singleton {
   accessService = AccessService.getInstance();
 
   assetsHttp = AssetsHttp.getInstance();
-
-  blockchainService = BlockchainService.getInstance();
 
   transferAssets({ privKey, username }, {
     from,

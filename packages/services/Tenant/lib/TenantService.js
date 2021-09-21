@@ -1,5 +1,4 @@
 import { Singleton } from '@deip/toolbox';
-import { BlockchainService } from '@deip/blockchain-service';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import { CreateAccountCmd } from '@deip/command-models';
@@ -9,8 +8,6 @@ import { TenantHttp } from './TenantHttp';
 
 class TenantService extends Singleton {
   tenantHttp = TenantHttp.getInstance();
-
-  blockchainService = BlockchainService.getInstance(); // deprecated
 
   proxydi = proxydi;
 

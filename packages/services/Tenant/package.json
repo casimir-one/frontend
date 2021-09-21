@@ -22,7 +22,6 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/blockchain-service": "1.340.0",
     "@deip/chain-service": "1.340.0",
     "@deip/command-models": "1.340.0",
     "@deip/constants": "1.340.0",

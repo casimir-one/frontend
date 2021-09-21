@@ -63,14 +63,6 @@ class TenantHttp extends Singleton {
   rejectSignUpRequest(username) {
     return this.http.put('/tenant/registry/sign-ups/reject', { username });
   }
-
-  addAdminTenant({ tx }) {
-    return this.http.put('/tenant/admins/add', { tx });
-  }
-
-  removeAdminTenant({ tx }) {
-    return this.http.put('/tenant/admins/remove', { tx });
-  }
 }
 
 export {
