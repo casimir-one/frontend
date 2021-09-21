@@ -20,7 +20,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
     assert(!!expirationTime, "'expirationTime' is required");
     assert(isString(expirationTime), "'expirationTime' must be in stringified 'yyyy-MM-ddTHH:mm:ss' format");
     assert(!!type, "'type' is required");
-    assert(!!APP_PROPOSAL[type], "'type' is unknown");
+    assert(APP_PROPOSAL[type] !== undefined, "'type' is unknown");
     assert(!!creator, "'creator' is required");
 
     assert(!!proposedCmds && proposedCmds.length, "Protocol proposal must contain at least 1 ProtocolCmd");
