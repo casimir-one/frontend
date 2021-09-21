@@ -13,11 +13,11 @@ class ProposalsHttp extends Singleton {
   }
 
   getAccountProposals(account, status) {
-    return this.http.get(`/api/proposals/${account}/${status}`);
+    return this.http.get(`/api/v2/proposals/${account}/${status}`);
   }
 
   getProposal(externalId) {
-    return this.http.get(`/api/proposals/${externalId}`);
+    return this.http.get(`/api/v2/proposals/${externalId}`);
   }
 }
 

@@ -533,6 +533,12 @@ class GrapheneChainApi extends BaseChainApi {
       getSubscriptionsByOwnerAsync: (owner) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_subscriptions_by_owner", [owner]])
       },
+      getContractAgreementAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_contract_agreement", [id]])
+      },
+      getContractAgreementsByCreatorAsync: (creator) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_contract_agreement_by_creator", [creator]])
+      },
       getOrganisationHistoryAsync: (organisationId) => {
         return chainService.rpcToChainNode("call", ["nsf_history_api", "get_organisation_history", [organisationId]])
       },

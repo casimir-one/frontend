@@ -217,9 +217,10 @@ class SubstrateChainApi extends BaseChainApi {
       getProposalsBySignersAsync: async function (accounts) { throw Error(`Not implemented exception`); },
       getProposalStateAsync: async function (externalId) { throw Error(`Not implemented exception`); },
       getProposalsStatesAsync: async function (externalIds) { throw Error(`Not implemented exception`); },
-      lookupProposalsStatesAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); }
-    };
-
+      lookupProposalsStatesAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
+      getContractAgreementAsync: (id) => { throw Error(`Not implemented exception`); },
+      getContractAgreementsByCreatorAsync: (creator) => { throw Error(`Not implemented exception`); }
+    }
     return super(api);
   }
 }

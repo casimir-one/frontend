@@ -1,7 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a } from '@polkadot/util';
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
 import { daoIdToAddress } from './utils';
 
 
@@ -263,7 +263,53 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       );
 
       return [investOp];
-    }
+    },
+
+
+    [APP_CMD.CREATE_CONTRACT_AGREEMENT]: ({
+      entityId,
+      creator,
+      parties,
+      hash,
+      startTime,
+      endTime,
+      type,
+      terms
+    }) => {
+
+      const contractTerms = type === CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE ? {
+        TechnologyLicenseAgreementTerms: {
+          source: `0x${terms.projectId}`,
+          price: { id: terms.fee.assetId, amount: terms.fee.amount }
+        } 
+      } : null;
+
+      const createContractAgreementOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`, chainNodeClient.tx.deip.createContractAgreement(
+        /* contractAgreementId: */ `0x${entityId}`,
+        /* creator: */ { Org: `0x${creator}` },
+        /* parties: */ parties.map((party) => `0x${party}`),
+        /* hash: */ `0x${hash}`,
+        /* start_time: */ startTime || null,
+        /* end_time: */ endTime || null,
+        /* terms: */ contractTerms
+      ));
+
+      return [createContractAgreementOp];
+    },
+
+
+    [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: ({
+      entityId,
+      party
+    }) => {
+
+      const acceptContractAgreementOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${party}`, chainNodeClient.tx.deip.acceptContractAgreement(
+        /* contractAgreementId: */ `0x${entityId}`,
+        /* party: */ { Org: `0x${party}` }
+      ));
+
+      return [acceptContractAgreementOp];
+    },
 
   }
 }

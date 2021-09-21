@@ -206,7 +206,9 @@ const ChainApi = Interface('ChainApi', {
   getProposalsBySignersAsync: async function (accounts) { },
   getProposalStateAsync: async function (externalId) { },
   getProposalsStatesAsync: async function (externalIds) { },
-  lookupProposalsStatesAsync: async function (lowerBound, limit) { }
+  lookupProposalsStatesAsync: async function (lowerBound, limit) { },
+  getContractAgreementAsync: (id) => { },
+  getContractAgreementsByCreatorAsync: (creator) => { }
 });
 
 
