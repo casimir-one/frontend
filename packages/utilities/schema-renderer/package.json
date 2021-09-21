@@ -30,7 +30,7 @@
     "find-keypath": "^1.0.0"
   },
   "peerDependencies": {
-    "@deip/vuetify-extended": "^1.340.0",
+    "@deip/vuetify-extended": "^1.341.0",
     "vuetify": "^2.5.3"
   },
   "devDependencies": {

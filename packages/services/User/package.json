@@ -32,6 +32,6 @@
     "qs": "^6.10.1"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.340.0"
+    "@deip/app-config-service": "^1.341.0"
   }
 }
