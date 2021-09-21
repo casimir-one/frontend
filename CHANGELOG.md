@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.342.0](https://github.com/DEIPworld/deip-modules/compare/v1.341.0...v1.342.0) (2021-09-21)
+
+
+### Features
+
+* **@deip/constants:** reference fixed ([13b23e3](https://github.com/DEIPworld/deip-modules/commit/13b23e36031ca020c5bb697480a68214460278d4))
+
+
+
+
+
 # [1.341.0](https://github.com/DEIPworld/deip-modules/compare/v1.340.0...v1.341.0) (2021-09-21)
 
 
