@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.342.0](https://github.com/DEIPworld/deip-modules/compare/v1.341.0...v1.342.0) (2021-09-21)
+
+**Note:** Version bump only for package @deip/expertise-contributions-service
+
+
+
+
+
 # [1.341.0](https://github.com/DEIPworld/deip-modules/compare/v1.340.0...v1.341.0) (2021-09-21)
 
 
