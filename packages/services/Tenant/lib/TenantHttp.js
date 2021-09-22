@@ -52,12 +52,12 @@ class TenantHttp extends Singleton {
     return this.http.post('/tenant/v2/registry/sign-up', req.getHttpBody());
   }
 
-  getSignUpRequests() {
-    return this.http.get('/tenant/registry/sign-ups');
+  approveSignUpRequest(req) {
+    return this.http.post('/tenant/v2/registry/sign-ups/approve', req.getHttpBody());
   }
 
-  approveSignUpRequest(username) {
-    return this.http.put('/tenant/registry/sign-ups/approve', { username });
+  getSignUpRequests() {
+    return this.http.get('/tenant/registry/sign-ups');
   }
 
   rejectSignUpRequest(username) {
