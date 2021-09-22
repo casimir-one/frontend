@@ -35,23 +35,21 @@ class ProjectHttp extends Singleton {
     return this.http.put(`/api/v2/project/delete`, req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  // change all routes to req msg
-
   getPublicProjectListing(filter) {
     let query = qs.stringify({ filter });
-    return this.http.get(`/api/research/listing?${query}`);
+    return this.http.get(`/api/v2/projects/listing?${query}`);
   }
 
   getUserProjectListing(username) {
-    return this.http.get(`/api/research/user/listing/${username}`);
+    return this.http.get(`/api/v2/projects/user/listing/${username}`);
   }
 
   getTeamProjectListing(teamId) {
-    return this.http.get(`/api/research/group/listing/${teamId}`);
+    return this.http.get(`/api/v2/projects/team/listing/${teamId}`);
   }
 
   getTenantProjectListing() {
-    return this.http.get(`/api/research/listing`);
+    return this.http.get(`/api/v2/projects/tenant/listing`);
   }
 }
 
