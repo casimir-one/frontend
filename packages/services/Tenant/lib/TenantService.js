@@ -105,10 +105,58 @@ class TenantService extends Singleton {
   }
 
   approveSignUpRequest(username) {
-    return this.tenantHttp.approveSignUpRequest(username);
+    // TODO: replace with a specific command
+    return this.getSignUpRequests()
+      .then((signupRequests) => {
+        const signupRequest = signupRequests.find((r) => r._id === username);
+
+        const env = this.proxydi.get('env');
+        const {
+          FAUCET_ACCOUNT_USERNAME,
+          IS_TESTNET
+        } = env;
+
+        return ChainService.getInstanceAsync(env)
+          .then((chainService) => {
+            const chainTxBuilder = chainService.getChainTxBuilder();
+            return chainTxBuilder.begin()
+              .then((txBuilder) => {
+                const createAccountCmd = new CreateAccountCmd({
+                  isTeamAccount: false,
+                  fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+                  creator: FAUCET_ACCOUNT_USERNAME,
+                  authority: {
+                    owner: {
+                      auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
+                      weight: 1
+                    },
+                    active: {
+                      auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
+                      weight: 1
+                    }
+                  },
+                  memoKey: signupRequest.signUpPubKey,
+                  description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(signupRequest.attributes)).buffer)),
+                  attributes: signupRequest.attributes,
+                  email: signupRequest.email,
+                  roles: signupRequest.roles,
+                  entityId: username
+                });
+                txBuilder.addCmd(createAccountCmd);
+                return txBuilder.end();
+              })
+              .then((packedTx) => {
+                // const chainNodeClient = chainService.getChainNodeClient();
+                // return txEnvelop.signAsync(privKey, chainNodeClient);
+                const msg = new JsonDataMsg(packedTx.getPayload());
+                return this.tenantHttp.approveSignUpRequest(msg);
+              });
+          });
+      });
   }
 
   rejectSignUpRequest(username) {
+    // TODO: replace with a specific command
     return this.tenantHttp.rejectSignUpRequest(username);
   }
 }
