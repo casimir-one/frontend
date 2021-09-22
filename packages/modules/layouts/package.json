@@ -1,6 +1,6 @@
 {
   "name": "@deip/layouts-module",
-  "version": "1.342.0",
+  "version": "1.342.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -17,17 +17,17 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-module": "1.342.0",
-    "@deip/attributes-service": "1.342.0",
+    "@deip/attributes-module": "1.342.1",
+    "@deip/attributes-service": "1.342.1",
     "@deip/constants": "1.342.0",
-    "@deip/layout-service": "1.342.0",
+    "@deip/layout-service": "1.342.1",
     "@deip/platform-components": "1.342.0",
     "@deip/platform-fns": "1.342.0",
     "@deip/platform-store": "1.337.0",
     "@deip/platform-util": "1.337.0",
     "@deip/proxydi": "1.337.0",
-    "@deip/schema-builder": "1.342.0",
-    "@deip/schema-renderer": "1.342.0",
+    "@deip/schema-builder": "1.342.1",
+    "@deip/schema-renderer": "1.342.1",
     "@deip/toolbox": "1.337.0",
     "@deip/vue-editorjs": "1.342.0"
   },

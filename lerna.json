@@ -9,7 +9,7 @@
     "packages/vue-adapters/*",
     "packages/vue-elements"
   ],
-  "version": "1.342.0",
+  "version": "1.342.1",
   "npmClient": "npm",
   "command": {
     "version": {

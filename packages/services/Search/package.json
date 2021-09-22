@@ -1,6 +1,6 @@
 {
   "name": "@deip/search-service",
-  "version": "1.342.0",
+  "version": "1.342.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@deip/constants": "1.342.0",
-    "@deip/http-service": "1.342.0",
+    "@deip/http-service": "1.342.1",
     "@deip/toolbox": "1.337.0"
   },
   "peerDependencies": {

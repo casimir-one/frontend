@@ -1,6 +1,6 @@
 {
   "name": "@deip/project-nda-service",
-  "version": "1.342.0",
+  "version": "1.342.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,7 +25,7 @@
     "@deip/chain-service": "1.342.0",
     "@deip/command-models": "1.341.0",
     "@deip/constants": "1.342.0",
-    "@deip/http-service": "1.342.0",
+    "@deip/http-service": "1.342.1",
     "@deip/message-models": "1.341.0",
     "@deip/proxydi": "1.337.0",
     "@deip/toolbox": "1.337.0"
