@@ -13,6 +13,8 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from '@deip/vuetify-extended';
 
+import { VeStack, VeLineClamp } from '@deip/vue-elements';
+
 import {
   VRow,
   VCol,
@@ -35,6 +37,7 @@ export const defaultLayoutComponents = {
   VexSection,
   VexSectionSplit,
   VexStack,
+  VeStack,
   VRow,
   VCol,
   VSheet,
@@ -53,6 +56,7 @@ export const defaultLayoutComponents = {
   VexAvatar,
 
   // text
+  VeLineClamp,
   VueEditorjs,
   VexRichedit
 };
