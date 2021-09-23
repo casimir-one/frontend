@@ -5,7 +5,7 @@ import { convertToUnit } from '@deip/toolbox';
 import { genBreakpointCssVarsStyles, genBreakpointProps } from '../../util/breakpoint';
 
 const VeStack = defineComponent({
-  name: 'VeAutoGrid',
+  name: 'VeStack',
 
   props: {
     ...genBreakpointProps('gap', [Number, String]),
@@ -13,7 +13,8 @@ const VeStack = defineComponent({
       'flow',
       [Number, String],
       (val) => ['column', 'row'].includes(val)
-    )
+    ),
+    ...genBreakpointProps('templateColumns', [String])
   },
 
   computed: {
@@ -21,7 +22,8 @@ const VeStack = defineComponent({
       const transformer = (val) => convertToUnit(val);
       return {
         ...genBreakpointCssVarsStyles.call(this, 'gap', transformer),
-        ...genBreakpointCssVarsStyles.call(this, 'flow')
+        ...genBreakpointCssVarsStyles.call(this, 'flow'),
+        ...genBreakpointCssVarsStyles.call(this, 'templateColumns')
       };
     }
   },
