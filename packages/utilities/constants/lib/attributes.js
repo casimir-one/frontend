@@ -116,6 +116,14 @@ const ATTR_TYPES_ICONS = {
 };
 
 const ATTR_TYPES_PROPS = {
+  [ATTR_TYPES.TEXT]: {
+    VeLineClamp: {
+      lines: {
+        type: String,
+        default: null
+      }
+    }
+  },
   [ATTR_TYPES.AVATAR]: {
     VexAvatar: {
       size: {

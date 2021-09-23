@@ -8,9 +8,16 @@ const ATTR_TYPES_READ_SCHEMAS = {
     text: '{{attribute.value}}'
   },
 
-  // [ATTR_TYPES.TEXT]: {},
-  //
-  // [ATTR_TYPES.TEXT]: {},
+  [ATTR_TYPES.TEXT]: {
+    is: 'VeLineClamp',
+    text: '{{attribute.value}}',
+    data: {
+      props: {
+        lines: '{{proxyProps.VeLineClamp.lines}}'
+      }
+    }
+  },
+
   [ATTR_TYPES.TEXTAREA]: {
     is: 'VexMarkdown',
     data: {
