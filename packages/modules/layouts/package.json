@@ -29,7 +29,8 @@
     "@deip/schema-builder": "1.342.1",
     "@deip/schema-renderer": "1.342.1",
     "@deip/toolbox": "1.337.0",
-    "@deip/vue-editorjs": "1.342.0"
+    "@deip/vue-editorjs": "1.342.0",
+    "@deip/vue-elements": "^1.337.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
