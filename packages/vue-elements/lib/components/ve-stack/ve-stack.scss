@@ -10,6 +10,11 @@
     grid-auto-flow: $value;
   };
 
+  @include breakpoint.gen-css-vars-queries(template-columns, none) using ($value) {
+    grid-template-columns: $value;
+  };
+
+
   display: grid;
 
   &[style*='column'] {
