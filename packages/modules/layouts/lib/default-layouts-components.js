@@ -9,7 +9,8 @@ import {
   VexTooltip,
   VexVideoEmbed,
   VexAvatar,
-  VexRichedit
+  VexRichedit,
+  VexTextExpand
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from '@deip/vuetify-extended';
 
@@ -56,6 +57,7 @@ export const defaultLayoutComponents = {
   VexAvatar,
 
   // text
+  VexTextExpand,
   VeLineClamp,
   VueEditorjs,
   VexRichedit
