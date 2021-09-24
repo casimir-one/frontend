@@ -78,9 +78,9 @@ class SubstrateTx extends BaseTx {
         const daoId = daoSigner.daoId;
         const address = daoIdToAddress(daoId, api.registry);
         const createDaoOp = ops.find(op => op.method.meta.toHex() === api.tx.deipOrg.create.meta.toHex() && daoId === op.method.args[0].toHex());
-        const membersKeySource = createDaoOp.method.args[1];
-        const threshold = membersKeySource.threshold.toBn().toNumber();
-        const signatories = membersKeySource.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
+        const authority = createDaoOp.method.args[1];
+        const threshold = authority.threshold.toBn().toNumber();
+        const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
         const isUserDao = threshold === 0;
         const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
 
@@ -88,7 +88,7 @@ class SubstrateTx extends BaseTx {
           address: address,
           daoId: daoId,
           isNewDao: true,
-          membersKeySource: {
+          authority: {
             threshold: threshold,
             signatories: signatories
           },
@@ -106,9 +106,9 @@ class SubstrateTx extends BaseTx {
             assert(opt.isSome, `DAO actor is not found`);
             const daoId = u8aToHex(opt.value.name);
             const address = daoIdToAddress(daoId, api.registry);
-            const membersKeySource = opt.value.members_key_source;
-            const threshold = membersKeySource.threshold.toBn().toNumber();
-            const signatories = membersKeySource.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
+            const authority = opt.value.authority;
+            const threshold = authority.threshold.toBn().toNumber();
+            const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
             const isUserDao = threshold === 0;
             const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
 
@@ -116,7 +116,7 @@ class SubstrateTx extends BaseTx {
               address: address,
               daoId: daoId,
               isNewDao: false,
-              membersKeySource: {
+              authority: {
                 threshold: threshold,
                 signatories: signatories
               },
@@ -139,10 +139,10 @@ class SubstrateTx extends BaseTx {
                 if (opt.isSome) {
                   api.query.deipOrg.orgRepository(opt.value)
                     .then((daoOpt) => {
-                      const membersKeySource = daoOpt.value.members_key_source;
+                      const authority = daoOpt.value.authority;
                       const daoId = u8aToHex(daoOpt.value.name);
-                      const threshold = membersKeySource.threshold.toBn().toNumber();
-                      const signatories = membersKeySource.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
+                      const threshold = authority.threshold.toBn().toNumber();
+                      const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
                       const isUserDao = threshold === 0;
                       const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
 
@@ -150,7 +150,7 @@ class SubstrateTx extends BaseTx {
                         address: address,
                         daoId: daoId,
                         isNewDao: false,
-                        membersKeySource: {
+                        authority: {
                           threshold: threshold,
                           signatories: signatories
                         },
@@ -181,9 +181,9 @@ class SubstrateTx extends BaseTx {
         }
 
         return Promise.all(signers.reduce((arr, daoSigner) => {
-          for (let i = 0; i < daoSigner.membersKeySource.signatories.length; i++) {
+          for (let i = 0; i < daoSigner.authority.signatories.length; i++) {
             const flatTree = [daoSigner];
-            const signatory = daoSigner.membersKeySource.signatories[i];
+            const signatory = daoSigner.authority.signatories[i];
             arr.push(buildFlatTree(signatory, flatTree));
           }
           return arr;
@@ -196,7 +196,7 @@ class SubstrateTx extends BaseTx {
                 if (Object.keys(parent.children).length) {
                   setChildren(Object.values(parent.children), leaf);
                 }
-                if (leaf.membersKeySource.signatories.includes(parent.address)) {
+                if (leaf.authority.signatories.includes(parent.address)) {
                   parent.children[leaf.address] = leaf;
                 }
               }
@@ -293,7 +293,7 @@ class SubstrateTx extends BaseTx {
             else if (dao.isThreshold1) {
               return chainPromise.then((opChain) => {
                 const topDao = signersVector[(i + 1)];
-                const others = dao.membersKeySource.signatories.filter((signatory) => signatory != topDao.address).sort();
+                const others = dao.authority.signatories.filter((signatory) => signatory != topDao.address).sort();
                 const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipOrg.onBehalf.meta.toHex();
                 return api.tx.multisig.asMultiThreshold1(others, dao.isNewDao || isOnBehalf ? opChain : api.tx.deipOrg.onBehalf(dao.daoId, opChain));
               });
@@ -307,15 +307,15 @@ class SubstrateTx extends BaseTx {
                 ])
                   .then(([multisigInfo, paymentInfo]) => {
                     const topDao = signersVector[(i + 1)];
-                    const others = dao.membersKeySource.signatories.filter((signatory) => signatory != topDao.address).sort();
+                    const others = dao.authority.signatories.filter((signatory) => signatory != topDao.address).sort();
                     const { weight } = paymentInfo;
                     const approvalsCount = multisigInfo.isSome ? multisigInfo.unwrap().approvals.length : 0;
                     const timepoint = multisigInfo.isSome ? multisigInfo.unwrap().when : null;
-                    const isLastApproval = (approvalsCount + 1) === dao.membersKeySource.threshold;
+                    const isLastApproval = (approvalsCount + 1) === dao.authority.threshold;
 
                     return !isLastApproval
-                      ? api.tx.multisig.approveAsMulti(dao.membersKeySource.threshold, others, timepoint, operation.method.hash, weight)
-                      : api.tx.multisig.asMulti(dao.membersKeySource.threshold, others, timepoint, operation.method.toHex(), true, weight);
+                      ? api.tx.multisig.approveAsMulti(dao.authority.threshold, others, timepoint, operation.method.hash, weight)
+                      : api.tx.multisig.asMulti(dao.authority.threshold, others, timepoint, operation.method.toHex(), true, weight);
                   });
               });
             }

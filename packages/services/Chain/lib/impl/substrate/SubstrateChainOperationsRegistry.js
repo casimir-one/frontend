@@ -12,7 +12,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     [APP_CMD.CREATE_ACCOUNT]: ({
       entityId,
       isTeamAccount,
-      authority
+      authority,
+      description
     }) => {
 
       const signatories = authority.active.auths.map((auth) => {
@@ -28,10 +29,11 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
       const createAccountOp = chainNodeClient.tx.deipOrg.create(
         /* dao_id: */ `0x${entityId}`,
-        /* key_source: */ {
+        /* authority: */ {
           "signatories": signatories,
           "threshold": threshold
-        }
+        },
+        /* metadata: */ description ? `0x${description}` : null
       );
 
       return [createAccountOp];
@@ -225,20 +227,19 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       hardCap
     }) => {
 
-      assert(softCap.id === hardCap.id, `User DAO must have a threshold equal to 0 with a single signatory`);
+      assert(softCap.id === hardCap.id, `Asset of 'softCap' and 'hardCap' should be the same`);
 
       const createInvestmentOpportunityOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deip.createInvestmentOpportunity(
           /* external_id: */ `0x${entityId}`,
           /* creator: */ { Org: `0x${teamId}` },
-          /* shares */ shares,
+          /* shares: */ shares,
           /* funding_model: */ {
             SimpleCrowdfunding: {
               start_time: startTime,
               end_time: endTime,
-              asset_id: softCap.id,
-              soft_cap: softCap.amount,
-              hard_cap: hardCap.amount
+              soft_cap: softCap,
+              hard_cap: hardCap
             }
           }
         )

@@ -10,17 +10,32 @@ const CHAIN_TYPES = {
       "Org": "OrgName"
     }
   },
-  "InputKeySource": "KeySource",
-  "KeySource": {
+  "AlterAuthority": {
+    "_enum": {
+      "AddMember": {
+        "member": "AccountId"
+      },
+      "RemoveMember": {
+        "member": "AccountId"
+      },
+      "ReplaceAuthority": {
+        "authority_key": "AccountId",
+        "authority": "Authority"
+      }
+    }
+  },
+  "InputAuthority": "Authority",
+  "Authority": {
     "signatories": "Vec<AccountId>",
     "threshold": "u16"
   },
   "OrgOf": "Org",
   "Org": {
-    "members_key": "AccountId",
-    "members_key_source": "KeySource",
+    "authority_key": "AccountId",
+    "authority": "Authority",
     "name": "OrgName",
-    "org_key": "AccountId"
+    "org_key": "AccountId",
+    "metadata": "Option<H256>"
   },
   "OrgName": "H160",
   "DomainId": "H160",
@@ -60,12 +75,15 @@ const CHAIN_TYPES = {
       "Reject"
     ]
   },
-  "Domain": "H160",
+  "Domain": {
+    "external_id": "DomainId"
+  },
   "ProjectId": "H160",
   "ProjectContentId": "H160",
   "NdaAccessRequestId": "H160",
   "NdaId": "H160",
   "InvestmentId": "H160",
+  "DeipInvestmentIdOf": "InvestmentId",
   "NdaOf": "Nda",
   "NdaAccessRequestOf": "NdaAccessRequest",
   "ProjectOf": "Project",
@@ -167,10 +185,11 @@ const CHAIN_TYPES = {
       "Inactive"
     ]
   },
-  "TokenSaleAssetPair": {
+  "DeipAsset": {
     "id": "AssetId",
     "amount": "AssetsBalanceOf"
   },
+  "DeipAssetOf": "DeipAsset",
   "SimpleCrowdfunding": {
     "external_id": "InvestmentId",
     "project_id": "ProjectId",
@@ -181,7 +200,7 @@ const CHAIN_TYPES = {
     "total_amount": "AssetsBalanceOf",
     "soft_cap": "AssetsBalanceOf",
     "hard_cap": "AssetsBalanceOf",
-    "shares": "Vec<TokenSaleAssetPair>"
+    "shares": "Vec<DeipAsset>"
   },
   "Investment": {
     "sale_id": "InvestmentId",
@@ -194,12 +213,12 @@ const CHAIN_TYPES = {
       "SimpleCrowdfunding": {
         "start_time": "Moment",
         "end_time": "Moment",
-        "asset_id": "AssetId",
-        "soft_cap": "AssetsBalanceOf",
-        "hard_cap": "AssetsBalanceOf"
+        "soft_cap": "DeipAsset",
+        "hard_cap": "DeipAsset"
       }
     }
   },
+  "FundingModelOf": "FundingModel",
   "AssetsBalanceOf": "u64",
   "DeipAssetBalanceOf": "AssetsBalanceOf",
   "AssetBalance": {
@@ -252,7 +271,56 @@ const CHAIN_TYPES = {
     "weight": "Vec<u8>",
     "project_content_external_id": "ProjectContentId"
   },
-  "ReviewOf": "Review"
+  "ReviewOf": "Review",
+  "HashOf": "Hash",
+  "ContractAgreementId": "H160",
+  "ContractAgreementTerms": {
+    "_enum": {
+      "TechnologyLicenseAgreementTerms": {
+        "source": "ProjectId",
+        "price": "DeipAsset"
+      }
+    }
+  },
+  "ContractAgreementTermsOf": "ContractAgreementTerms",
+  "ContractAgreementIndexTerms": {
+    "_enum": [
+      "TechnologyLicenseAgreement"
+    ]
+  },
+  "TechnologyLicense": {
+    "id": "ContractAgreementId",
+    "licenser": "AccountId",
+    "licensee": "AccountId",
+    "hash": "Hash",
+    "start_time": "Option<Moment>",
+    "end_time": "Option<Moment>",
+    "project_id": "ProjectId",
+    "price": "DeipAsset"
+  },
+  "TechnologyLicenseStatus": {
+    "_enum": {
+      "Unsigned": {
+        "0": "TechnologyLicense"
+      },
+      "SignedByLicenser": {
+        "0": "TechnologyLicense"
+      },
+      "Signed": {
+        "0": "TechnologyLicense"
+      }
+    }
+  },
+  "ContractAgreement": {
+    "_enum": {
+      "None": {
+      },
+      "TechnologyLicense": {
+        "0": "TechnologyLicenseStatus"
+      }
+    }
+  },
+  "ContractAgreementOf": "ContractAgreement"
 };
 
 
