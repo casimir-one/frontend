@@ -6,7 +6,8 @@ const {
   VDivider,
   VexMiniMetaItem,
   VexTooltip,
-  VexVideoEmbed
+  VexVideoEmbed,
+  VexTextExpand
 } = defaultLayoutComponents;
 
 export const uiBlocks = {
@@ -36,6 +37,11 @@ export const uiBlocks = {
       component: VexVideoEmbed,
       icon: 'mdi-video-outline',
       excludeProps: ['params'],
+      children: []
+    },
+    {
+      component: VexTextExpand,
+      icon: 'mdi-text-short',
       children: []
     }
   ])
