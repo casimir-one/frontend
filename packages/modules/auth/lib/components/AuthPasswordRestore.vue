@@ -10,19 +10,6 @@
         <vex-stack :gutter="fieldsGutter">
           <validation-provider
             v-slot="{ errors }"
-            :name="usernameLabel"
-            rules="required"
-          >
-            <v-text-field
-              v-model="formModel.username"
-              :label="usernameLabel"
-              :error-messages="errors"
-              v-bind="fieldsProps"
-            />
-          </validation-provider>
-
-          <validation-provider
-            v-slot="{ errors }"
             :name="emailLabel"
             rules="required"
           >
@@ -78,10 +65,6 @@
     components: { VexStack },
 
     props: {
-      usernameLabel: {
-        type: String,
-        default() { return this.$t('module.auth.username'); }
-      },
       emailLabel: {
         type: String,
         default() { return this.$t('module.auth.email'); }
@@ -122,7 +105,6 @@
       return {
         loading: false,
         formModel: {
-          username: '',
           email: '',
           message: ''
         }

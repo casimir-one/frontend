@@ -1,7 +1,7 @@
 import deipRpc from '@deip/rpc-client';
 import crypto from '@deip/lib-crypto';
 
-import { wrapInArray } from '@deip/toolbox';
+import { wrapInArray, genRipemd160Hash } from '@deip/toolbox';
 
 import { proxydi } from '@deip/proxydi';
 import { AccessService } from '@deip/access-service';
@@ -62,7 +62,7 @@ const ACTIONS = {
     return userService.getUser(usernameOrEmail)
       .then(({ account, username }) => {
         if (!account) {
-          throw new Error('invalid account');
+          throw new Error('No such user exists');
         }
 
         if (deipRpc.auth.isWif(password) && getPrivateKeyRole(password, account)) {
@@ -105,18 +105,16 @@ const ACTIONS = {
   },
 
   signUp(_, payload) {
-    const { username, email, password } = payload;
+    const { email, password } = payload;
 
-    return Promise.all([userService.getUser(username), userService.getUser(email)])
-      .then(([usernameResponse, emailResponse]) => {
-        if (usernameResponse) {
-          throw new Error('User with such username exists');
-        }
+    return userService.getUser(email)
+      .then((emailResponse) => {
         if (emailResponse) {
           throw new Error('User with such email exists');
         }
       })
       .then(() => {
+        const username = genRipemd160Hash(email);
         const { ownerPubkey: pubKey } = deipRpc.auth.getPrivateKeys(
           username,
           password,
@@ -125,6 +123,7 @@ const ACTIONS = {
 
         return authService.signUp({
           pubKey,
+          username,
           ...payload,
           ...{
             roles: wrapInArray(payload.roles)

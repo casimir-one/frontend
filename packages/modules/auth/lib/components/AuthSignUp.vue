@@ -20,20 +20,6 @@
 
             <validation-provider
               v-slot="{ errors }"
-              :name="usernameLabel"
-              rules="username"
-              :debounce="1000"
-            >
-              <v-text-field
-                v-model="formModel.username"
-                :label="usernameLabel"
-                :error-messages="errors"
-                v-bind="fieldsProps"
-              />
-            </validation-provider>
-
-            <validation-provider
-              v-slot="{ errors }"
               :name="emailLabel"
               rules="required|email"
               :debounce="1000"
@@ -109,12 +95,6 @@
     },
 
     props: {
-      usernameLabel: {
-        type: String,
-        default() {
-          return this.$t('module.auth.username');
-        }
-      },
       passwordLabel: {
         type: String,
         default() {
@@ -159,7 +139,6 @@
         disabled: false,
 
         formModel: {
-          username: '',
           email: '',
           password: ''
         }
