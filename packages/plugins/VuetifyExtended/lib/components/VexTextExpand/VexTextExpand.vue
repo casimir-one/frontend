@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="text-truncate" :style="textStyles">
+    <div :class="textClasses" :style="textStyles">
       <slot />
     </div>
 
     <span
-      class="primary--text font-weight-medium d-inline-block cursor-pointer mt-2 cursor-pointer"
+      class="primary--text font-weight-medium d-inline-block mt-2 cursor-pointer"
       @click="handleClick"
     >
       {{ isExpanded ? 'Hide' : 'Show all' }}
@@ -32,6 +32,12 @@
     },
 
     computed: {
+      textClasses() {
+        return {
+          'overflow-hidden': true,
+          gradient: !this.isExpanded
+        };
+      },
       textStyles() {
         const maxHeight = this.isExpanded ? 'none' : convertToUnit(this.maxHeight);
         return { maxHeight };
@@ -49,5 +55,10 @@
 <style lang="scss" scoped>
   .cursor-pointer {
     cursor: pointer;
+  }
+
+  .gradient {
+    -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
 </style>
