@@ -16,8 +16,10 @@ const isSingleMatch = (str, matches) => {
 const isFunctionMatch = (str) => !![...str.matchAll(fnSubPattern)].length;
 
 class TemplateStringParser {
-  constructor(ctx) {
+  constructor(ctx, options = { isTemplateShown: false }) {
     this.ctx = ctx;
+    const { isTemplateShown } = options;
+    this.isTemplateShown = isTemplateShown;
   }
 
   setCtx(ctx) {
@@ -58,7 +60,12 @@ class TemplateStringParser {
     const fn = chain.pop();
 
     const isFnExist = this.isCtxHas(fn);
-    const result = isFnExist ? this.getValueFromContext(fn)(...params) : `{{${match}}}`;
+    let result = null;
+    if (isFnExist) {
+      result = this.getValueFromContext(fn)(...params);
+    } else if (this.isTemplateShown) {
+      result = `{{${match}}}`;
+    }
 
     if (chain.length && isFnExist) {
       return this.parseChainMatch(
@@ -89,7 +96,7 @@ class TemplateStringParser {
 
     const value = this.getValueFromContext(match);
 
-    return !isNil(value) ? value : `{{${match}}}`;
+    return !isNil(value) || !this.isTemplateShown ? value : `{{${match}}}`;
   }
 }
 
