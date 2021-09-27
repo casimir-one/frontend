@@ -12,7 +12,11 @@
               <template v-for="(item, index) of formData.map">
                 <v-row :key="index" class="pa-4">
                   <v-col cols="3">
-                    <v-text-field v-model="item.key" hide-details disabled />
+                    <v-text-field
+                      v-model="item.key"
+                      hide-details
+                      :disabled="isDefaultKey(item.key)"
+                    />
                   </v-col>
                   <v-col class="d-flex">
                     <v-sheet class="spacer d-flex" outlined rounded>
@@ -42,7 +46,7 @@
                   text
                   small
                   color="primary"
-                  @click="addMapKey()"
+                  @click="addMapKey"
                 >
                   Add key
                 </v-btn>
@@ -183,6 +187,10 @@
 
       getAttrTitle(id) {
         return this.$store.getters['attributes/one'](id).title;
+      },
+
+      isDefaultKey(key) {
+        return defaultKeys.includes(key);
       },
 
       addMapKey() {
