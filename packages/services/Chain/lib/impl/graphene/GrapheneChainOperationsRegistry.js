@@ -1,5 +1,5 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
@@ -489,6 +489,47 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
     
       return [createProjectNdaOp];
+    },
+
+
+    [APP_CMD.CREATE_CONTRACT_AGREEMENT]: ({
+      entityId,
+      creator,
+      parties,
+      hash,
+      startTime,
+      endTime,
+      type,
+      terms
+    }) => {
+
+      const createContractAgreementOp = ['create_contract_agreement', {
+        external_id: entityId,
+        creator: creator,
+        parties: parties,
+        hash: hash,
+        start_time: startTime || undefined,
+        end_time: endTime || undefined,
+        terms: [], // will be populated with terms meta
+        extensions: []
+      }];
+
+      return [createContractAgreementOp];
+    },
+
+
+    [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: ({
+      entityId,
+      party
+    }) => {
+
+      const acceptContractAgreementOp = ['accept_contract_agreement', {
+        external_id: entityId,
+        party: party,
+        extensions: []
+      }];
+
+      return [acceptContractAgreementOp];
     }
 
   }

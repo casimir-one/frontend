@@ -589,8 +589,28 @@ module.exports = [{
       "license_conditions",
       "extensions"
     ]
-},
-
+}, {
+    "roles": ["active", "owner"],
+    "operation": "create_contract_agreement",
+    "params": [
+      "external_id",
+      "creator",
+      "parties",
+      "hash",
+      "start_time",
+      "end_time",
+      "terms",
+      "extensions"
+    ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "accept_contract_agreement",
+    "params": [
+      "external_id",
+      "party",
+      "extensions"
+    ]
+  },
 // virtual operations
 {
   "roles": ["active", "owner"],
