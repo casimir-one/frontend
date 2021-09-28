@@ -1,5 +1,5 @@
 import { defineComponent } from '@deip/platform-util';
-import { SchemaRenderer } from '@deip/schema-renderer';
+import { VlsParser } from '@deip/vue-layout-schema';
 import { isFile, wrapInArray } from '@deip/toolbox';
 
 export const abstractAttributeFactory = (
@@ -81,7 +81,7 @@ export const abstractAttributeFactory = (
   methods: {
     genAttribute() {
       return (
-        <SchemaRenderer
+        <VlsParser
           schema={this.normalisedSchema}
           schemaData={this.internalSchemaData}
           components={this.internalComponents}

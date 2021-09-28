@@ -57,7 +57,7 @@
                 <v-divider />
               </template>
 
-              <schema-builder-blocks-list
+              <vls-builder-blocks-list
                 :blocks="blocks"
                 class="spacer"
               />
@@ -75,7 +75,7 @@
                 <v-divider />
               </template>
 
-              <schema-builder-canvas-tree
+              <vls-builder-canvas-tree
                 ref="navigator"
                 v-model="formData.schema"
                 :blocks="blocks"
@@ -98,7 +98,7 @@
             <v-divider />
           </template>
           <div class="pa-6">
-            <schema-builder-block-settings
+            <vls-builder-block-settings
               ref="blockSettings"
               v-model="formData.schema"
               :blocks="blocks"
@@ -130,7 +130,7 @@
               />
             </v-col>
             <v-col cols="12">
-              <schema-builder-canvas
+              <vls-builder-canvas
                 ref="canvas"
                 v-model="formData.schema"
                 :blocks="blocks"
@@ -168,11 +168,11 @@
   import { formFactory } from '@deip/platform-components';
 
   import {
-    SchemaBuilderBlocksList,
-    SchemaBuilderCanvas,
-    SchemaBuilderCanvasTree,
-    SchemaBuilderBlockSettings
-  } from '@deip/schema-builder';
+    VlsBuilderBlocksList,
+    VlsBuilderCanvas,
+    VlsBuilderCanvasTree,
+    VlsBuilderBlockSettings
+  } from '@deip/vue-layout-schema';
 
   import { ATTR_SCOPES, ATTR_SCOPES_LABELS, VIEW_MODE } from '@deip/constants';
   import { AttributeSet, AttributeRead } from '@deip/attributes-module';
@@ -189,10 +189,10 @@
     name: 'LayoutBuilder',
 
     components: {
-      SchemaBuilderBlocksList,
-      SchemaBuilderCanvas,
-      SchemaBuilderCanvasTree,
-      SchemaBuilderBlockSettings
+      VlsBuilderBlocksList,
+      VlsBuilderCanvas,
+      VlsBuilderCanvasTree,
+      VlsBuilderBlockSettings
     },
 
     mixins: [

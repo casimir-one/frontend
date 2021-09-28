@@ -2,7 +2,8 @@
 **/dist/**
 packages/models/**
 packages/services/Project/**
-packages/utilities/lib-crypto/**
+packages/common/lib-crypto/**
 packages/services/RpcClient/**
 packages/services/Chain/**
 packages/services/Grants/**
+packages/common/platform-fns/lib/helpers/_temp.js

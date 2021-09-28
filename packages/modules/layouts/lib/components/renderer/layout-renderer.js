@@ -1,4 +1,4 @@
-import { SchemaRenderer } from '@deip/schema-renderer';
+import { VlsParser } from '@deip/vue-layout-schema';
 import { defineComponent } from '@deip/platform-util';
 import { defaultLayoutComponents } from '../../default-layouts-components';
 
@@ -14,7 +14,7 @@ export const LayoutRenderer = defineComponent({
     ...layoutsRegistry.getComponents()
   },
 
-  mixins: [SchemaRenderer],
+  mixins: [VlsParser],
 
   beforeCreate() {
     this.$options.methods.registerComponents.call(this, layoutsRegistry.getComponents());

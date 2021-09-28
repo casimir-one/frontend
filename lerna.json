@@ -1,13 +1,13 @@
 {
   "packages": [
+    "packages/common/*",
+
     "packages/modules/*",
     "packages/platform/*",
     "packages/plugins/*",
     "packages/services/*",
     "packages/utilities/*",
-    "packages/models/*",
-    "packages/vue-adapters/*",
-    "packages/vue-elements"
+    "packages/models/*"
   ],
   "version": "1.342.1",
   "npmClient": "npm",
