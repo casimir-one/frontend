@@ -1,4 +1,4 @@
-.blocks-renderer {
+.editorjs-parser {
   --border-color: #1E1D231F;
 
   .de-block {
@@ -9,7 +9,7 @@
     line-height: 1.6em;
     width: 100%;
     text-align: center;
-    
+
     &:before {
       display: inline-block;
       content: "***";
