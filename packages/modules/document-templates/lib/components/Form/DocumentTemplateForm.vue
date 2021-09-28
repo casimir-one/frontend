@@ -65,7 +65,7 @@
 
   import { VexMessage } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
-  import VueEditorjs from '@deip/vue-editorjs';
+  import { VueEditorjs } from '@deip/vue-editorjs';
   import { formFactory } from '@deip/platform-components';
 
   export default defineComponent({

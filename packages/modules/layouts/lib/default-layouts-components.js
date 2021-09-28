@@ -14,6 +14,7 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from '@deip/vuetify-extended';
 
+// eslint-disable-next-line import/no-unresolved
 import { VeStack, VeLineClamp } from '@deip/vue-elements';
 
 import {
@@ -26,7 +27,7 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import VueEditorjs from '@deip/vue-editorjs';
+import { VueEditorjs } from '@deip/vue-editorjs';
 
 export const defaultLayoutComponents = {
   // attributes
