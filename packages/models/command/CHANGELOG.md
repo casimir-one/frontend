@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.343.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.342.1...v1.343.0) (2021-09-28)
+
+
+### Features
+
+* **@deip/contract-agreement-service:** create service ([640e353](https://gitlab.com/DEIP/deip-client-modules/commit/640e35372fe6e42b73d8d25cc5bb620820dc5a5c))
+
+
+
+
+
 # [1.341.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.340.0...v1.341.0) (2021-09-21)
 
 
