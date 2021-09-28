@@ -1,4 +1,4 @@
-import { blocksGenerator } from '@deip/schema-builder';
+import { blocksGenerator } from '@deip/vue-layout-schema';
 import FundraisingWidget from '../components/Widget/FundraisingWidget';
 
 export const fundraisingBlocks = {

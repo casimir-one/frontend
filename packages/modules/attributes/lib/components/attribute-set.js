@@ -1,4 +1,4 @@
-import { SchemaRenderer } from '@deip/schema-renderer';
+import { VlsParser } from '@deip/vue-layout-schema';
 import { isEqual, merge } from '@deip/toolbox/lodash';
 import { wrapInArray } from '@deip/toolbox';
 import { ValidationProvider } from '@deip/validation-plugin';
@@ -123,7 +123,7 @@ const AttributeSet = defineComponent({
       );
 
       return (
-        <SchemaRenderer
+        <VlsParser
           schema={this.normalisedSchema}
           schemaData={schemaData}
           components={this.internalComponents}
@@ -136,7 +136,7 @@ const AttributeSet = defineComponent({
     },
 
     // genAttribute(errors = []) {
-    //   return this.$createElement(SchemaRenderer, {
+    //   return this.$createElement(VlsParser, {
     //     props: {
     //       value: this.value || this.attributeInfo.defaultValue,
     //       disabled: this.attributeInfo.isEditable

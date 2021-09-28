@@ -1,4 +1,4 @@
-import { blocksGenerator } from '@deip/schema-builder';
+import { blocksGenerator } from '@deip/vue-layout-schema';
 import { ATTR_TYPES_ICONS, ATTR_TYPES_PROPS } from '@deip/constants';
 
 export const attributesBlocksFactory = (attributes, component) => {

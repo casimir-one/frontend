@@ -1,4 +1,4 @@
-import { blocksGenerator, normalizeBlocksObject } from '@deip/schema-builder';
+import { blocksGenerator, normalizeBlocksObject } from '@deip/vue-layout-schema';
 import { defaultLayoutComponents } from '../default-layouts-components';
 
 const {

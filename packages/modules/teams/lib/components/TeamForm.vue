@@ -5,7 +5,7 @@
       @submit.prevent="handleSubmit(onSubmit)"
     >
       <vex-stack gutter="32">
-        <schema-renderer
+        <vls-parser
           v-if="schema.length"
           v-model="formData"
           :schema="schema"
@@ -44,7 +44,7 @@
 
 <script>
   import { VexStack } from '@deip/vuetify-extended';
-  import { SchemaRenderer } from '@deip/schema-renderer';
+  import { VlsParser } from '@deip/vue-layout-schema';
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory } from '@deip/layouts-module';
@@ -55,7 +55,7 @@
 
     components: {
       VexStack,
-      SchemaRenderer
+      VlsParser
     },
 
     mixins: [attributedFormFactory('team')],

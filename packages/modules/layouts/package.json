@@ -26,8 +26,7 @@
     "@deip/platform-store": "1.337.0",
     "@deip/platform-util": "1.337.0",
     "@deip/proxydi": "1.337.0",
-    "@deip/schema-builder": "1.342.1",
-    "@deip/schema-renderer": "1.342.1",
+    "@deip/vue-layout-schema": "1.342.1",
     "@deip/toolbox": "1.337.0",
     "@deip/vue-editorjs": "1.342.0",
     "@deip/vue-elements": "^1.337.0"
