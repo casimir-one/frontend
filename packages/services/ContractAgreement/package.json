@@ -1,6 +1,6 @@
 {
   "name": "@deip/contract-agreement-service",
-  "version": "1.340.0",
+  "version": "1.343.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -27,8 +27,8 @@
     "@deip/constants": "1.340.0",
     "@deip/http-service": "1.340.0",
     "@deip/message-models": "1.340.0",
-    "@deip/proxydi": "1.337.0",
-    "@deip/toolbox": "1.337.0"
+    "@deip/proxydi": "1.343.0",
+    "@deip/toolbox": "1.343.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.130.0"
