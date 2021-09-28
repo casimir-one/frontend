@@ -12,7 +12,7 @@ import draggable from 'vuedraggable';
 import { SchemeView } from '../../mixins';
 
 export const VlsBuilderCanvasTree = {
-  name: 'SchemaBuilderCanvasTree',
+  name: 'VlsBuilderCanvasTree',
 
   mixins: [SchemeView],
 
