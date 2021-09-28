@@ -1,7 +1,6 @@
 {
   "packages": [
     "packages/common/*",
-
     "packages/modules/*",
     "packages/platform/*",
     "packages/plugins/*",
@@ -9,7 +8,7 @@
     "packages/utilities/*",
     "packages/models/*"
   ],
-  "version": "1.342.1",
+  "version": "1.343.0",
   "npmClient": "npm",
   "command": {
     "version": {
