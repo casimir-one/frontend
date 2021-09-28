@@ -1,4 +1,4 @@
-import { paragraph } from '../lib/parsers/paragraph';
+import { paragraph } from '../lib/parser/parsers/paragraph';
 
 describe('paragraph editorjs block parser', () => {
   it('should return empty paragraph', () => {

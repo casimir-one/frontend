@@ -1,4 +1,4 @@
-import { header } from '../lib/parsers/header';
+import { header } from '../lib/parser/parsers/header';
 
 describe('header editorjs block parser', () => {
   it('should return empty header', () => {

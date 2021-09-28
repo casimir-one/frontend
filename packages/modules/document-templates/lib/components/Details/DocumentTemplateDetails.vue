@@ -3,7 +3,7 @@
     <h2 class="text-h2">
       {{ template.title }}
     </h2>
-    <vue-editorjs-renderer :value="template.body" />
+    <vue-editorjs-parser :value="template.body" />
   </ve-stack>
 </template>
 
@@ -11,12 +11,12 @@
   import { defineComponent } from '@deip/platform-util';
 
   import { VeStack } from '@deip/vue-elements';
-  import VueEditorjsRenderer from '@deip/vue-editorjs/renderer';
+  import { VueEditorjsParser } from '@deip/vue-editorjs';
 
   export default defineComponent({
     name: 'DocumentTemplateDetails',
 
-    components: { VeStack, VueEditorjsRenderer },
+    components: { VeStack, VueEditorjsParser },
 
     props: {
       template: {

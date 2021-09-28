@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serializer from 'jest-serializer-html';
-import EditorjsParser from '../lib/editorjs-parser';
+import EditorjsParser from '../lib/parser/editorjs-parser';
 
 expect.addSnapshotSerializer(serializer);
 

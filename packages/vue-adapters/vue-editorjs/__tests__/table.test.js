@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import serializer from 'jest-serializer-html';
-import { table } from '../lib/parsers/table';
+import { table } from '../lib/parser/parsers/table';
 
 expect.addSnapshotSerializer(serializer);
 

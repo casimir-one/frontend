@@ -7,7 +7,7 @@
   /* eslint-enable import/extensions, import/no-unresolved */
 
   import { defineComponent } from '@deip/platform-util';
-  import VueEditorjs from '@deip/vue-editorjs';
+  import { VueEditorjs } from '@deip/vue-editorjs';
   import { isEqual } from '@deip/toolbox/lodash';
 
   import { getBindableProps } from '../../composables';

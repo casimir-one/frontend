@@ -1,14 +1,14 @@
-import './vue-editorjs-renderer.scss';
+import './vue-editorjs-parser.scss';
 
 // eslint-disable-next-line import/no-unresolved
 import Vue from 'vue';
-import EditorjsParser from '@deip/editorjs-parser';
 import { TemplateStringParser } from '@deip/toolbox';
+import EditorjsParser from './editorjs-parser';
 
 const parser = new EditorjsParser();
 
 export default Vue.extend({
-  name: 'VueEditorjsRenderer',
+  name: 'VueEditorjsParser',
 
   props: {
     value: {
@@ -48,7 +48,7 @@ export default Vue.extend({
 
   render() {
     return <div
-      class="blocks-renderer"
+      class="editorjs-parser"
       domPropsInnerHTML={this.parsedTemplate}
     />;
   }

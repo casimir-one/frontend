@@ -20,7 +20,6 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/editorjs-parser": "1.336.0",
     "@deip/toolbox": "1.337.0",
     "@editorjs/delimiter": "^1.2.0",
     "@editorjs/editorjs": "^2.22.2",
@@ -31,7 +30,8 @@
     "@editorjs/quote": "^2.4.0",
     "@editorjs/table": "^2.0.1",
     "@editorjs/underline": "^1.0.0",
-    "@mdi/js": "^5.9.55"
+    "@mdi/js": "^5.9.55",
+    "jest-serializer-html": "^7.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

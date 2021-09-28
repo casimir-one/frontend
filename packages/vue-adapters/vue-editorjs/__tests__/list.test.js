@@ -1,4 +1,4 @@
-import { list } from '../lib/parsers/list';
+import { list } from '../lib/parser/parsers/list';
 
 describe('list editorjs block parser', () => {
   it('should return empty list', () => {

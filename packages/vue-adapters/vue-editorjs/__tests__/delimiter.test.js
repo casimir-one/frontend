@@ -1,4 +1,4 @@
-import { delimiter } from '../lib/parsers/delimiter';
+import { delimiter } from '../lib/parser/parsers/delimiter';
 
 describe('delimiter editorjs block parser', () => {
   it('should return delimiter', () => {
