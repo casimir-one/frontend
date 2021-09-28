@@ -1,6 +1,6 @@
 {
   "name": "@deip/contract-agreement-service",
-  "version": "1.343.0",
+  "version": "1.343.1",
   "description": "",
   "main": "index.js",
   "directories": {
