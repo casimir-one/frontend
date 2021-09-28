@@ -1,45 +1,40 @@
 {
-  "name": "@deip/users-module",
+  "name": "@deip/vue-layout-schema",
   "version": "1.342.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
-  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
   "publishConfig": {
     "registry": "https://npm-registry.deip.world/"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+    "url": "git+https://github.com/DEIPworld/deip-modules.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.342.1",
-    "@deip/attributes-module": "1.342.1",
     "@deip/constants": "1.342.0",
-    "@deip/layouts-module": "1.342.1",
-    "@deip/platform-components": "1.342.0",
-    "@deip/platform-fns": "1.342.0",
-    "@deip/platform-store": "1.337.0",
-    "@deip/platform-util": "1.337.0",
-    "@deip/proxydi": "1.337.0",
-    "@deip/vue-layout-schema": "1.342.1",
     "@deip/toolbox": "1.337.0",
-    "@deip/user-service": "1.342.1",
-    "@deip/validation-plugin": "1.342.0",
-    "@deip/vuetify-extended": "1.342.0"
+    "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.341.0",
-    "@deip/auth-module": "^1.341.0",
-    "vuetify": "^2.5.3",
-    "vuex": "^3.6.2"
+    "@deip/vuetify-extended": "^1.341.0",
+    "vue": "^2.6.14",
+    "vuetify": "^2.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
