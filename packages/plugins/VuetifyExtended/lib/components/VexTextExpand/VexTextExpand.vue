@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="hasSlot('default')">
     <div :class="textClasses" :style="textStyles">
       <slot />
     </div>
@@ -15,9 +15,12 @@
 
 <script>
   import { convertToUnit } from '@deip/toolbox';
+  import { contextMixin } from '../../composables';
 
   export default {
     name: 'VexTextExpand',
+
+    mixins: [contextMixin],
     props: {
       maxHeight: {
         type: [String, Number],
