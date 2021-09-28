@@ -22,7 +22,7 @@ import { convertBlockPropsForCanvas } from '../../utils/helpers';
 const PERM_DISABLED = ['proxyProps'];
 
 export const VlsBuilderBlockSettings = {
-  name: 'SchemaBuilderBlockSettings',
+  name: 'VlsBuilderBlockSettings',
 
   mixins: [SchemeView],
 
