@@ -17,7 +17,7 @@ import { SchemeView } from '../../mixins';
 import { getters } from '../../store';
 
 export const VlsBuilderCanvas = {
-  name: 'SchemaBuilderCanvas',
+  name: 'VlsBuilderCanvas',
 
   mixins: [SchemeView],
 

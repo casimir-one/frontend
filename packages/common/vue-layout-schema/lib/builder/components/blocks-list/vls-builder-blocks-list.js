@@ -25,7 +25,7 @@ import { convertBlockForSchema } from '../../utils/helpers';
 import { mutations } from '../../store';
 
 export const VlsBuilderBlocksList = {
-  name: 'SchemaBuilderBlocksList',
+  name: 'VlsBuilderBlocksList',
 
   components: {
     draggable
