@@ -11,7 +11,7 @@
   import { defineComponent } from '@deip/platform-util';
 
   import { VeStack } from '@deip/vue-elements';
-  import VueEditorjsParser from '@deip/vue-editorjs';
+  import { VueEditorjsParser } from '@deip/vue-editorjs';
 
   export default defineComponent({
     name: 'DocumentTemplateDetails',
