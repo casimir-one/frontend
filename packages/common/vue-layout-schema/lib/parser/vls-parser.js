@@ -16,7 +16,7 @@ import {
 import { cloneDeep, merge } from '@deip/toolbox/lodash';
 
 export const VlsParser = {
-  name: 'VueLayoutSchemaParser',
+  name: 'VlsParser',
 
   model: {
     prop: 'value',
