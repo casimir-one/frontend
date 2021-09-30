@@ -173,22 +173,20 @@
         if (!this.tokenSale) return null;
         const { status } = this.tokenSale;
         const {
-          INACTIVE, ACTIVE, EXPIRED, FINISHED
+          INACTIVE, EXPIRED, FINISHED
         } = TS_TYPES;
 
         if (status === INACTIVE) {
-          this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+          return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
             .catch((error) => { console.error(error); });
         }
 
-        if (status === ACTIVE) this.getProjectTokenSaleData();
-
         if ([FINISHED, EXPIRED].includes(status)) {
-          this.getProjectTokenSaleData();
           this.cancelAutoUpdate();
+          return this.getProjectTokenSaleData();
         }
-
-        return null;
+        
+        return this.getProjectTokenSaleData();
       },
 
       getProjectTokenSaleData() {
