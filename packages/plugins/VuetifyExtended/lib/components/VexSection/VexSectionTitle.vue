@@ -6,18 +6,19 @@
 
     <template v-if="hasTitle">
       <div v-if="title || $slots.default" class="text-h3">
-        {{ title }}
-        <slot />
-
-        <v-chip
-          v-if="titleBadge"
-          small
+        <v-badge
           color="primary"
-          readonly
+          offset-y="12"
+          offset-x="0"
+          :content="titleBadge"
+          :value="Boolean(titleBadge)"
         >
-          {{ titleBadge }}
-        </v-chip>
+          {{ title }}
+        </v-badge>
+
+        <slot />
       </div>
+
       <slot name="title" />
     </template>
 
