@@ -5,6 +5,7 @@ import {
   parseISO
 } from 'date-fns';
 import { enGB } from 'date-fns/locale';
+import { isString } from '@deip/toolbox';
 
 const languages = {
   en: enGB
@@ -42,6 +43,15 @@ export const dateMixin = {
       }
 
       return convertToUtc ? parseISO(`${dateString}Z`, options) : parseISO(dateString, options);
+    },
+
+    $$formatISO(date) {
+      let dateToParse = date;
+      if (isString(date)) {
+        dateToParse = new Date(date);
+      }
+
+      return `${dateToParse.toISOString().split('.')[0]}`;
     }
   }
 };
