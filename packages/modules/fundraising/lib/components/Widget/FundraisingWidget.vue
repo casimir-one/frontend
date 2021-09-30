@@ -6,7 +6,6 @@
           <fundraising-progress
             :token-sale="tokenSale"
           />
-
           <v-card
             v-if="tokenSale.status != TS_TYPES.INACTIVE"
             outlined
@@ -32,7 +31,6 @@
         <span v-else>
           {{ $t('module.fundraising.fundraisingWidget.noFundraising') }}
         </span>
-
         <v-btn
           v-if="isFundraisingCanBeStarted"
           :to="startFundraisingLink"
@@ -85,13 +83,19 @@
       canUserStartFundraising: {
         type: Boolean,
         default: false
+      },
+
+      autoUpdateTime: {
+        type: Number,
+        default: 60000 // 1 minute
       }
     },
 
     data() {
       return {
         loading: false,
-        TS_TYPES
+        TS_TYPES,
+        timerId: ''
       };
     },
 
@@ -150,21 +154,49 @@
     },
 
     created() {
-      this.loading = true;
-      this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
-        .then(() => {
-          if (this.tokenSale) {
-            this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
-          }
+      this.timerId = setInterval(this.updateComponentData, this.autoUpdateTime);
 
-          this.loading = false;
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      this.loading = true;
+      this.getProjectTokenSaleData();
+      this.loading = false;
+    },
+
+    destroyed() {
+      this.cancelAutoUpdate();
+    },
+
+    methods: {
+      updateComponentData() {
+        if (!this.tokenSale) return null;
+        const { status } = this.tokenSale;
+
+        if (status === TS_TYPES.INACTIVE) this.$store.dispatch('fundraising/getListByProjectId', this.projectId);
+        if (status === TS_TYPES.ACTIVE) this.getProjectTokenSaleData();
+        if ([TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(status)) {
+          this.getProjectTokenSaleData();
+          this.cancelAutoUpdate();
+        }
+        return null;
+      },
+
+      getProjectTokenSaleData() {
+        this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+          .then(() => {
+            if (this.tokenSale) {
+              this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            if (this.loading) this.loading = false;
+          });
+      },
+
+      cancelAutoUpdate() {
+        clearInterval(this.timerId);
+      }
     }
   });
 </script>
