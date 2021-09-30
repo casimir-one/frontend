@@ -6,6 +6,7 @@
           <fundraising-progress
             :token-sale="tokenSale"
           />
+
           <v-card
             v-if="tokenSale.status != TS_TYPES.INACTIVE"
             outlined
@@ -31,6 +32,7 @@
         <span v-else>
           {{ $t('module.fundraising.fundraisingWidget.noFundraising') }}
         </span>
+
         <v-btn
           v-if="isFundraisingCanBeStarted"
           :to="startFundraisingLink"
@@ -154,11 +156,10 @@
     },
 
     created() {
-      this.timerId = setInterval(this.updateComponentData, this.autoUpdateTime);
+      this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
       this.loading = true;
       this.getProjectTokenSaleData();
-      this.loading = false;
     },
 
     destroyed() {
@@ -169,13 +170,22 @@
       updateComponentData() {
         if (!this.tokenSale) return null;
         const { status } = this.tokenSale;
+        const {
+          INACTIVE, ACTIVE, EXPIRED, FINISHED
+        } = TS_TYPES;
 
-        if (status === TS_TYPES.INACTIVE) this.$store.dispatch('fundraising/getListByProjectId', this.projectId);
-        if (status === TS_TYPES.ACTIVE) this.getProjectTokenSaleData();
-        if ([TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(status)) {
+        if (status === INACTIVE) {
+          this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+            .catch((error) => { console.error(error); });
+        }
+
+        if (status === ACTIVE) this.getProjectTokenSaleData();
+
+        if ([FINISHED, EXPIRED].includes(status)) {
           this.getProjectTokenSaleData();
           this.cancelAutoUpdate();
         }
+
         return null;
       },
 
