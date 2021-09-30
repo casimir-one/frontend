@@ -159,9 +159,9 @@
       this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
       this.loading = true;
-      this.getProjectTokenSaleData().then(()=>{
-        this.loading = false;
-      });
+      this.getProjectTokenSaleData().finally(() => { 
+        this.loading = false; 
+        });
     },
 
     destroyed() {
