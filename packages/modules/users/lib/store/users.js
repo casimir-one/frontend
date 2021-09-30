@@ -82,8 +82,8 @@ const ACTIONS = {
 
   getOne({ commit }, username) {
     return userService.getUser(username)
-      .then(({ account, profile }) => {
-        commit('setOne', { username, account, profile });
+      .then((user) => {
+        commit('setOne', user);
       })
       .catch((err) => {
         console.error(err);
