@@ -27,7 +27,7 @@
 
     model: {
       prop: 'value',
-      event: 'input'
+      event: 'change'
     },
 
     props: {
@@ -59,7 +59,7 @@
           if (val === this.lazyLocation) return;
 
           this.lazyLocation = val;
-          this.$emit('input', val);
+          this.$emit('change', val);
         }
       },
 
@@ -71,12 +71,8 @@
           if (!val || val === this.lazySearch) return;
 
           this.lazySearch = val;
-          this.isLoading = true;
 
-          this.apiService.getPlacePredictions({
-            input: this.lazySearch,
-            types: ['address']
-          }, this.displaySuggestions);
+          this.searchLocations(this.lazySearch);
         }
       },
 
@@ -85,30 +81,23 @@
       }
     },
 
-    watch: {
-      // value(val) {
-      //   this.lazyLocation = val;
-      // },
-
-      // search: {
-      //   handler(val) {
-      //     this.isLoading = true
-      //
-      //     this.apiService.getPlacePredictions({
-      //       input: this.location,
-      //       types: ['address']
-      //     }, this.displaySuggestions);
-      //   }
-      // }
-    },
-
     created() {
       if (window.google.maps.places) {
         this.apiService = new window.google.maps.places.AutocompleteService();
+
+        this.searchLocations(this.search);
       }
     },
 
     methods: {
+      searchLocations(val) {
+        this.isLoading = true;
+
+        this.apiService.getPlacePredictions({
+          input: val,
+          types: ['address']
+        }, this.displaySuggestions);
+      },
       displaySuggestions(predictions, status) {
         if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
           this.searchResults = [];
