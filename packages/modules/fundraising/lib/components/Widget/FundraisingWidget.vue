@@ -159,7 +159,9 @@
       this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
       this.loading = true;
-      this.getProjectTokenSaleData();
+      this.getProjectTokenSaleData().then(()=>{
+        this.loading = false;
+      });
     },
 
     destroyed() {
@@ -190,7 +192,7 @@
       },
 
       getProjectTokenSaleData() {
-        this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+        return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
           .then(() => {
             if (this.tokenSale) {
               this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
@@ -199,9 +201,7 @@
           .catch((error) => {
             console.error(error);
           })
-          .finally(() => {
-            if (this.loading) this.loading = false;
-          });
+          
       },
 
       cancelAutoUpdate() {
