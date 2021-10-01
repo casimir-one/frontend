@@ -85,13 +85,19 @@
       canUserStartFundraising: {
         type: Boolean,
         default: false
+      },
+
+      autoUpdateTime: {
+        type: Number,
+        default: 60000 // 1 minute
       }
     },
 
     data() {
       return {
         loading: false,
-        TS_TYPES
+        TS_TYPES,
+        timerId: ''
       };
     },
 
@@ -150,21 +156,55 @@
     },
 
     created() {
-      this.loading = true;
-      this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
-        .then(() => {
-          if (this.tokenSale) {
-            this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
-          }
+      this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
-          this.loading = false;
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.loading = false;
+      this.loading = true;
+      this.getProjectTokenSaleData().finally(() => { 
+        this.loading = false; 
         });
+    },
+
+    destroyed() {
+      this.cancelAutoUpdate();
+    },
+
+    methods: {
+      updateComponentData() {
+        if (!this.tokenSale) return null;
+        const { status } = this.tokenSale;
+        const {
+          INACTIVE, EXPIRED, FINISHED
+        } = TS_TYPES;
+
+        if (status === INACTIVE) {
+          return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+            .catch((error) => { console.error(error); });
+        }
+
+        if ([FINISHED, EXPIRED].includes(status)) {
+          this.cancelAutoUpdate();
+          return this.getProjectTokenSaleData();
+        }
+        
+        return this.getProjectTokenSaleData();
+      },
+
+      getProjectTokenSaleData() {
+        return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
+          .then(() => {
+            if (this.tokenSale) {
+              this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          
+      },
+
+      cancelAutoUpdate() {
+        clearInterval(this.timerId);
+      }
     }
   });
 </script>
