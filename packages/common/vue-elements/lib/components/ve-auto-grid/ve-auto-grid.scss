@@ -5,9 +5,15 @@
     grid-gap: $value;
   };
 
-  @include breakpoint.gen-css-vars-queries(item-width, 280px, true) using ($value) {
-    grid-template-columns: repeat(auto-fill, minmax(#{$value}, 1fr));
+  @include breakpoint.gen-css-vars-queries(cols, 4, true) using ($value) {
+    grid-template-columns: repeat(#{$value}, 1fr);
   };
 
   display: grid;
+
+  &--auto-fill {
+    @include breakpoint.gen-css-vars-queries(item-width, 280px, true) using ($value) {
+      grid-template-columns: repeat(auto-fill, minmax(#{$value}, 1fr));
+    };
+  }
 }
