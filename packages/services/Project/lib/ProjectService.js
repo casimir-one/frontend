@@ -11,9 +11,9 @@ import {
   DeleteProjectCmd,
   CreateProposalCmd,
   CreateAccountCmd,
-  JoinProjectTeamCmd,
+  JoinTeamCmd,
   UpdateProposalCmd,
-  LeaveProjectTeamCmd
+  LeaveTeamCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 
@@ -206,23 +206,23 @@ class ProjectService extends Singleton {
             const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];
 
             const invites = joinedMembers.map((invitee) => {
-              const joinProjectTeamCmd = new JoinProjectTeamCmd({
+              const joinTeamCmd = new JoinTeamCmd({
                 member: invitee,
                 teamId: teamId,
                 projectId: projectId
               });
 
-              return joinProjectTeamCmd;
+              return joinTeamCmd;
             });
 
             const leavings = leftMembers.map((leaving) => {
-              const leaveProjectTeamCmd = new LeaveProjectTeamCmd({
+              const leaveTeamCmd = new LeaveTeamCmd({
                 member: leaving,
                 teamId: teamId,
                 projectId: projectId
               });
 
-              return leaveProjectTeamCmd;
+              return leaveTeamCmd;
             });
 
 

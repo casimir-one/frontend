@@ -6,7 +6,7 @@ import {
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
-import { MultFormDataMsg } from '@deip/message-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants';
 import crypto from '@deip/lib-crypto';
 import {
@@ -14,7 +14,9 @@ import {
   CreateAccountCmd,
   UpdateProposalCmd,
   UpdateAccountCmd,
-  CreateProjectCmd
+  CreateProjectCmd,
+  JoinTeamCmd,
+  LeaveTeamCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
@@ -83,6 +85,33 @@ class TeamService extends Singleton {
               });
               txBuilder.addCmd(createProjectCmd);
             }
+
+            const invites = data.members.map((invitee) => {
+              const joinTeamCmd = new JoinTeamCmd({
+                member: invitee,
+                teamId: entityId
+              });
+
+              return joinTeamCmd;
+            });
+
+            const createProposalCmd = new CreateProposalCmd({
+              creator,
+              type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
+              expirationTime: proposalDefaultLifetime,
+              proposedCmds: [...invites]
+            });
+
+            txBuilder.addCmd(createProposalCmd);
+
+            const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: joinTeamProposalId,
+              activeApprovalsToAdd: [creator]
+            });
+
+            txBuilder.addCmd(updateProposalCmd);
+
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -167,6 +196,104 @@ class TeamService extends Singleton {
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
             return this.teamHttp.updateTeam(msg);
+          });
+      });
+  }
+
+  joinTeam(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: {
+        privKey,
+        username: creator
+      },
+      teamId,
+      member
+    } = payload;
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const joinTeamCmd = new JoinTeamCmd({
+              member,
+              teamId
+            });
+
+            const createProposalCmd = new CreateProposalCmd({
+              creator,
+              type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
+              expirationTime: proposalDefaultLifetime,
+              proposedCmds: [joinTeamCmd]
+            });
+
+            txBuilder.addCmd(createProposalCmd);
+
+            const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: joinTeamProposalId,
+              activeApprovalsToAdd: [creator]
+            });
+
+            txBuilder.addCmd(updateProposalCmd);
+
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+            return this.teamHttp.joinTeam(msg);
+          });
+      });
+  }
+
+  leaveTeam(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: {
+        privKey,
+        username: creator
+      },
+      teamId,
+      member
+    } = payload;
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const leaveTeamCmd = new LeaveTeamCmd({
+              member,
+              teamId
+            });
+
+            const createProposalCmd = new CreateProposalCmd({
+              creator,
+              type: APP_PROPOSAL.LEAVE_TEAM_PROPOSAL,
+              expirationTime: proposalDefaultLifetime,
+              proposedCmds: [leaveTeamCmd]
+            });
+
+            txBuilder.addCmd(createProposalCmd);
+
+            const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
+            const updateProposalCmd = new UpdateProposalCmd({
+              entityId: leaveTeamProposalId,
+              activeApprovalsToAdd: [creator]
+            });
+
+            txBuilder.addCmd(updateProposalCmd);
+
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+            return this.teamHttp.leaveTeam(msg);
           });
       });
   }
