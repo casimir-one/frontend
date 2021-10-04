@@ -1,6 +1,6 @@
 {
   "name": "@deip/bookmark-service",
-  "version": "1.343.0",
+  "version": "1.344.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,8 +22,8 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.343.0",
-    "@deip/http-service": "1.343.0",
+    "@deip/constants": "1.344.0",
+    "@deip/http-service": "1.344.0",
     "@deip/toolbox": "1.343.0"
   },
   "peerDependencies": {

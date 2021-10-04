@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.344.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix VexPlacesAutocomplete value change event emitting ([a307149](https://gitlab.com/DEIP/deip-client-modules/commit/a30714954d15052e4bfd766e9c22c79c44529f0f))
+
+
+
+
+
 # [1.343.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.342.1...v1.343.0) (2021-09-28)
 
 **Note:** Version bump only for package @deip/vuetify-extended
