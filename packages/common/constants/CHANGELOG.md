@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.344.0](https://github.com/DEIPworld/deip-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
+
+
+### Features
+
+* **@deip/contract-agreement-service:** add routes ([9554164](https://github.com/DEIPworld/deip-modules/commit/955416498b310c778045204c7c7cdfc1ba6c4e91))
+
+
+
+
+
 # [1.343.0](https://github.com/DEIPworld/deip-modules/compare/v1.342.1...v1.343.0) (2021-09-28)
 
 

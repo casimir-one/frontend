@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.344.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fixed data auto update on the fundraising widget ([#204](https://gitlab.com/DEIP/deip-client-modules/issues/204)) ([250bd54](https://gitlab.com/DEIP/deip-client-modules/commit/250bd54552f4a6cdd17cb35babfd31cd277aacbc))
+
+
+
+
+
 # [1.343.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.342.1...v1.343.0) (2021-09-28)
 
 

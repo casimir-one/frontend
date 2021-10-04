@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.344.0](https://github.com/DEIPworld/deip-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
+
+
+### Features
+
+* **@deip/vue-elements:** extend ve-auto-grid ([24d9fb2](https://github.com/DEIPworld/deip-modules/commit/24d9fb2a56c5dcaf35a7ca5fec2011c79806ab21))
+
+
+
+
+
 # [1.343.0](https://github.com/DEIPworld/deip-modules/compare/v1.342.1...v1.343.0) (2021-09-28)
 
 
