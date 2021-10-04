@@ -48,9 +48,16 @@ const GETTERS = {
 
 const ACTIONS = {
   getOne({ commit }, id) {
-    return contractAgreementService.getIncomeShareAgreement(id) // TODO rename
+    return contractAgreementService.getContractAgreement(id)
       .then((res) => {
         commit('setOne', res);
+      });
+  },
+
+  getList({ commit }, query) {
+    return contractAgreementService.getContractAgreements(query)
+      .then((res) => {
+        commit('setList', res);
       });
   },
 
