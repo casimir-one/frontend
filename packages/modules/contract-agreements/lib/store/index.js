@@ -6,9 +6,11 @@ import {
 } from '@deip/platform-store';
 
 import { ContractAgreementService } from '@deip/contract-agreement-service';
+import { ProposalsService } from '@deip/proposals-service';
 import { genSha256Hash } from '@deip/toolbox';
 
 const contractAgreementService = ContractAgreementService.getInstance();
+const proposalsService = ProposalsService.getInstance();
 
 const convertPayloadForCreation = (payload) => {
   const {
@@ -67,6 +69,22 @@ const ACTIONS = {
   propose(_, payload) {
     const data = convertPayloadForCreation(payload);
     return contractAgreementService.proposeContractAgreement(data);
+  },
+
+  discard(_, payload) {
+    const {
+      initiator,
+      data: {
+        proposalId,
+        account
+      }
+    } = payload;
+
+    return proposalsService.declineProposal(initiator, {
+      proposalId,
+      account,
+      authorityType: 2
+    });
   }
 };
 
