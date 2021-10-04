@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.344.0](https://github.com/DEIPworld/deip-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fixed data auto update on the fundraising widget ([#204](https://github.com/DEIPworld/deip-modules/issues/204)) ([250bd54](https://github.com/DEIPworld/deip-modules/commit/250bd54552f4a6cdd17cb35babfd31cd277aacbc))
+* **@deip/users-module:** fix getOne action ([67ce1e2](https://github.com/DEIPworld/deip-modules/commit/67ce1e21380b07e190058c1b93886aab854e58c8))
+* **@deip/vuetify-extended:** fix VexPlacesAutocomplete value change event emitting ([a307149](https://github.com/DEIPworld/deip-modules/commit/a30714954d15052e4bfd766e9c22c79c44529f0f))
+
+
+### Features
+
+* **@deip/contract-agreement-service:** add routes ([9554164](https://github.com/DEIPworld/deip-modules/commit/955416498b310c778045204c7c7cdfc1ba6c4e91))
+* **@deip/contract-agreements-module:** add module ([6b2c137](https://github.com/DEIPworld/deip-modules/commit/6b2c13721cc26cc2df63b63652198779cbd780a0))
+* **@deip/vue-elements:** extend ve-auto-grid ([24d9fb2](https://github.com/DEIPworld/deip-modules/commit/24d9fb2a56c5dcaf35a7ca5fec2011c79806ab21))
+
+
+
+
+
 ## [1.343.1](https://github.com/DEIPworld/deip-modules/compare/v1.343.0...v1.343.1) (2021-09-28)
 
 
