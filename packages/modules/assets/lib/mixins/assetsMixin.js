@@ -1,5 +1,6 @@
 import currency from 'currency.js';
 
+import { isNil } from '@deip/toolbox/lodash';
 import { isNumber, isObject, isString } from '@deip/toolbox';
 
 const DEFAULT_PRECISION = 3;
@@ -52,7 +53,7 @@ export const assetsMixin = {
     },
 
     $$toAssetUnits(val, formatted = true, options = {}) {
-      if (!val) return null;
+      if (isNil(val)) return null;
 
       if (isString(val) || isNumber(val)) {
         const formattedOpts = this.$$formatCurrencyOpts({}, options, formatted);
@@ -60,9 +61,8 @@ export const assetsMixin = {
       }
 
       if (isObject(val)) {
-        const { amount, assetId, precision = DEFAULT_PRECISION } = val;
+        const { amount = 0, assetId, precision = DEFAULT_PRECISION } = val;
 
-        if (!amount && amount !== 0) return null;
         const formattedOpts = this.$$formatCurrencyOpts({
           precision,
           symbol: assetId
