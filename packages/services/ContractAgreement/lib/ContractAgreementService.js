@@ -5,9 +5,9 @@ import {
   CreateContractAgreementCmd,
   AcceptContractAgreementCmd,
   CreateProposalCmd,
-  UpdateProposalCmd,
+  UpdateProposalCmd
 } from '@deip/command-models';
-import { APP_PROPOSAL, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
+import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
@@ -15,8 +15,8 @@ import { ContractAgreementHttp } from './ContractAgreementHttp';
 
 class ContractAgreementService extends Singleton {
   contractAgreementHttp = ContractAgreementHttp.getInstance();
-  proxydi = proxydi;
 
+  proxydi = proxydi;
 
   createContractAgreement(payload) {
     const env = this.proxydi.get('env');
@@ -40,7 +40,6 @@ class ContractAgreementService extends Singleton {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-
             const createContractAgreementCmd = new CreateContractAgreementCmd({
               creator,
               parties,
@@ -62,7 +61,6 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-
   acceptContractAgreement(payload) {
     const env = this.proxydi.get('env');
 
@@ -71,9 +69,8 @@ class ContractAgreementService extends Singleton {
         privKey,
         username: party
       },
-      contractAgreementId,
+      contractAgreementId
     } = payload;
-
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -81,10 +78,9 @@ class ContractAgreementService extends Singleton {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-
             const acceptContractAgreementCmd = new AcceptContractAgreementCmd({
               entityId: contractAgreementId,
-              party: party
+              party
             });
             txBuilder.addCmd(acceptContractAgreementCmd);
 
@@ -97,7 +93,6 @@ class ContractAgreementService extends Singleton {
           });
       });
   }
-
 
   proposeContractAgreement(payload) {
     const env = this.proxydi.get('env');
@@ -121,7 +116,6 @@ class ContractAgreementService extends Singleton {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-
             const createContractAgreementCmd = new CreateContractAgreementCmd({
               creator,
               parties,
@@ -133,18 +127,16 @@ class ContractAgreementService extends Singleton {
             });
             const contractAgreementId = createContractAgreementCmd.getProtocolEntityId();
 
-            const acceptContractAgreementCmds = parties.map((party) => {
-              return new AcceptContractAgreementCmd({
-                entityId: contractAgreementId,
-                party: party
-              });
-            });
+            const acceptContractsCmds = parties.map((party) => new AcceptContractAgreementCmd({
+              entityId: contractAgreementId,
+              party
+            }));
 
             const createProposalCmd = new CreateProposalCmd({
               creator,
               type: APP_PROPOSAL.CONTRACT_AGREEMENT_PROPOSAL,
               expirationTime: endTime,
-              proposedCmds: [createContractAgreementCmd, ...acceptContractAgreementCmds]
+              proposedCmds: [createContractAgreementCmd, ...acceptContractsCmds]
             });
 
             txBuilder.addCmd(createProposalCmd);
@@ -157,7 +149,6 @@ class ContractAgreementService extends Singleton {
 
             txBuilder.addCmd(updateProposalCmd);
 
-
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -168,40 +159,25 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-  getProjectLicense(licenseId) {
-    return this.contractAgreementHttp.getProjectLicense(licenseId);
-  }
-
-  getProjectLicensesByLicensee(licensee) {
-    return this.contractAgreementHttp.getProjectLicensesByLicensee(licensee);
-  }
-
-  getProjectLicensesByLicenser(licenser) {
-    return this.contractAgreementHttp.getProjectLicensesByLicenser(licenser);
-  }
-
-  getProjectLicensesByProject(projectId) {
-    return this.contractAgreementHttp.getProjectLicensesByProject(projectId);
-  }
-
-  getProjectLicensesByLicenseeAndProject(licensee, projectId) {
-    return this.contractAgreementHttp.getProjectLicensesByLicenseeAndProject(licensee, projectId);
-  }
-
-  getProjectLicensesByLicenseeAndLicenser(licensee, licenser) {
-    return this.contractAgreementHttp.getProjectLicensesByLicenseeAndLicenser(licensee, licenser);
-  }
-
   getContractAgreementsListByCreator(creator) {
     return this.contractAgreementHttp.getContractAgreementsListByCreator(creator);
   }
 
-  getIncomeShareAgreement(incomeShareAgreementId) {
-    return this.contractAgreementHttp.getIncomeShareAgreement(incomeShareAgreementId);
+  getContractAgreements({
+    parties,
+    type,
+    status
+  } = {}) {
+    const query = {
+      parties: parties || [],
+      type: type || '',
+      status: status || ''
+    };
+    return this.contractAgreementHttp.getContractAgreements(query);
   }
 
-  getIncomeShareAgreementsListByCreator(creator) {
-    return this.contractAgreementHttp.getIncomeShareAgreementsListByCreator(creator);
+  getContractAgreement(contractAgreementId) {
+    return this.contractAgreementHttp.getIncomeShareAgreement(contractAgreementId);
   }
 }
 
