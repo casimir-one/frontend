@@ -1,5 +1,6 @@
 import {
-  Singleton
+  Singleton,
+  createFormData
 } from '@deip/toolbox';
 import {
   CreateContractAgreementCmd,
@@ -10,7 +11,7 @@ import {
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
 import { ContractAgreementHttp } from './ContractAgreementHttp';
 
 class ContractAgreementService extends Singleton {
@@ -26,13 +27,19 @@ class ContractAgreementService extends Singleton {
         privKey,
         username: creator
       },
-      hash,
+      ...data
+    } = payload;
+
+    const {
       terms,
+      hash,
       parties,
       startTime,
       endTime,
       type
-    } = payload;
+    } = data;
+
+    const formData = createFormData(data);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -55,7 +62,7 @@ class ContractAgreementService extends Singleton {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload());
             return this.contractAgreementHttp.createContractAgreement(msg);
           });
       });
@@ -102,13 +109,19 @@ class ContractAgreementService extends Singleton {
         privKey,
         username: creator
       },
+      ...data
+    } = payload;
+
+    const {
       terms,
       hash,
       parties,
       startTime,
       endTime,
       type
-    } = payload;
+    } = data;
+
+    const formData = createFormData(data);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -153,7 +166,7 @@ class ContractAgreementService extends Singleton {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload());
             return this.contractAgreementHttp.createContractAgreement(msg);
           });
       });
