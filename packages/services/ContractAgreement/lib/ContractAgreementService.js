@@ -177,7 +177,7 @@ class ContractAgreementService extends Singleton {
   }
 
   getContractAgreement(contractAgreementId) {
-    return this.contractAgreementHttp.getIncomeShareAgreement(contractAgreementId);
+    return this.contractAgreementHttp.getContractAgreement(contractAgreementId);
   }
 }
 
