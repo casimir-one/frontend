@@ -92,6 +92,30 @@ const ACTIONS = {
       account,
       authorityType: 2
     });
+  },
+
+  accept(_, payload) {
+    const {
+      initiator,
+      data: {
+        contractAgreementId
+      }
+    } = payload;
+
+    return contractAgreementService.acceptContractAgreement({ initiator, contractAgreementId });
+  },
+
+  acceptProposed(_, payload) {
+    const {
+      initiator,
+      data: {
+        proposalId,
+        contractParty
+      }
+    } = payload;
+
+    return proposalsService
+      .updateProposal(initiator, { proposalId, activeApprovalsToAdd: [contractParty] });
   }
 };
 
