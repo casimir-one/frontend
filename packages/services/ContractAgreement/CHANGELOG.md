@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.345.0](https://github.com/DEIPworld/deip-modules/compare/v1.344.0...v1.345.0) (2021-10-07)
+
+
+### Bug Fixes
+
+* **@deip/contract-agreement-service:** fix getContractAgreement method ([fd231db](https://github.com/DEIPworld/deip-modules/commit/fd231db1206a5447f3ff6495e3e77176481e0727))
+
+
+### Features
+
+* **@deip/contract-agreement-service:** upload contract file ([306e543](https://github.com/DEIPworld/deip-modules/commit/306e543e88b12f5f3a8b61fe0604d4fd8970719c))
+
+
+
+
+
 # [1.344.0](https://github.com/DEIPworld/deip-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
 
 

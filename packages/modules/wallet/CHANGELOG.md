@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.345.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.344.0...v1.345.0) (2021-10-07)
+
+**Note:** Version bump only for package @deip/wallet-module
+
+
+
+
+
 # [1.344.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
 
 **Note:** Version bump only for package @deip/wallet-module
