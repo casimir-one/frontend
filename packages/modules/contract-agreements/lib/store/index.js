@@ -54,7 +54,15 @@ const ACTIONS = {
       });
   },
 
-  getList({ commit }, query) {
+  getList({ dispatch }, query) {
+    const { creator } = query;
+    if (creator) {
+      return dispatch('getListByCreator', creator);
+    }
+    return dispatch('getListByQuery', query);
+  },
+
+  getListByQuery({ commit }, query) {
     return contractAgreementService.getContractAgreements(query)
       .then((res) => {
         commit('setList', res);
