@@ -6,9 +6,11 @@ import {
 } from '@deip/platform-store';
 
 import { ContractAgreementService } from '@deip/contract-agreement-service';
+import { ProposalsService } from '@deip/proposals-service';
 import { genSha256Hash } from '@deip/toolbox';
 
 const contractAgreementService = ContractAgreementService.getInstance();
+const proposalsService = ProposalsService.getInstance();
 
 const convertPayloadForCreation = (payload) => {
   const {
@@ -46,9 +48,16 @@ const GETTERS = {
 
 const ACTIONS = {
   getOne({ commit }, id) {
-    return contractAgreementService.getIncomeShareAgreement(id) // TODO rename
+    return contractAgreementService.getContractAgreement(id)
       .then((res) => {
         commit('setOne', res);
+      });
+  },
+
+  getList({ commit }, query) {
+    return contractAgreementService.getContractAgreements(query)
+      .then((res) => {
+        commit('setList', res);
       });
   },
 
@@ -67,6 +76,46 @@ const ACTIONS = {
   propose(_, payload) {
     const data = convertPayloadForCreation(payload);
     return contractAgreementService.proposeContractAgreement(data);
+  },
+
+  discard(_, payload) {
+    const {
+      initiator,
+      data: {
+        proposalId,
+        account
+      }
+    } = payload;
+
+    return proposalsService.declineProposal(initiator, {
+      proposalId,
+      account,
+      authorityType: 2
+    });
+  },
+
+  accept(_, payload) {
+    const {
+      initiator,
+      data: {
+        contractAgreementId
+      }
+    } = payload;
+
+    return contractAgreementService.acceptContractAgreement({ initiator, contractAgreementId });
+  },
+
+  acceptProposed(_, payload) {
+    const {
+      initiator,
+      data: {
+        proposalId,
+        contractParty
+      }
+    } = payload;
+
+    return proposalsService
+      .updateProposal(initiator, { proposalId, activeApprovalsToAdd: [contractParty] });
   }
 };
 
