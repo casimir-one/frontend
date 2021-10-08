@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.347.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.346.0...v1.347.0) (2021-10-08)
+
+
+### Features
+
+* **@deip/team-service:** add join/leave team methods ([2bde6cb](https://gitlab.com/DEIP/deip-client-modules/commit/2bde6cb523eaa65fe4e12c5f2edcb795e25694f7))
+
+
+
+
+
 # [1.346.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.345.0...v1.346.0) (2021-10-08)
 
 
