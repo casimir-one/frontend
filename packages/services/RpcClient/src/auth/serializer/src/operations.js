@@ -932,6 +932,13 @@ const accept_contract_agreement = new Serializer("accept_contract_agreement", {
 });
 
 
+const reject_contract_agreement = new Serializer("reject_contract_agreement", {
+  external_id: string,
+  party: string,
+  extensions: set(future_extensions)
+});
+
+
 // virtual operations
 
 const fill_common_tokens_withdraw = new Serializer("fill_common_tokens_withdraw", {
@@ -1022,7 +1029,8 @@ operation.st_operations = [
   create_research_license, // 52
   create_contract_agreement, // 53
   accept_contract_agreement, // 54
-
+  reject_contract_agreement, // 55
+  
   // virtual operations
   fill_common_tokens_withdraw,
   shutdown_witness,

@@ -1,4 +1,4 @@
-import { APP_CMD, PROTOCOL_CHAIN } from '@deip/constants';
+import { APP_CMD } from '@deip/constants';
 import CreateAccountCmd from './impl/CreateAccountCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';
@@ -31,6 +31,7 @@ import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
 import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
 import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd'
 import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd'
+import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd'
 
 
 const APP_CMD_INFO = {
@@ -65,7 +66,8 @@ const APP_CMD_INFO = {
   [APP_CMD.UPVOTE_REVIEW]: { class: UpvoteReviewCmd },
   [APP_CMD.CREATE_PROJECT_NDA]: { class: CreateProjectNdaCmd },
   [APP_CMD.CREATE_CONTRACT_AGREEMENT]: { class: CreateContractAgreementCmd },
-  [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: { class: AcceptContractAgreementCmd }
+  [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: { class: AcceptContractAgreementCmd },
+  [APP_CMD.REJECT_CONTRACT_AGREEMENT]: { class: RejectContractAgreementCmd }
 }
 
 

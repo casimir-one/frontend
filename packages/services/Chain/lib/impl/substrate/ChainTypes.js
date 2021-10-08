@@ -7,7 +7,7 @@ const CHAIN_TYPES = {
   "DeipAccountId": {
     "_enum": {
       "Native": "AccountId",
-      "Org": "OrgName"
+      "Dao": "DaoId"
     }
   },
   "AlterAuthority": {
@@ -29,15 +29,15 @@ const CHAIN_TYPES = {
     "signatories": "Vec<AccountId>",
     "threshold": "u16"
   },
-  "OrgOf": "Org",
-  "Org": {
+  "DaoOf": "Dao",
+  "Dao": {
     "authority_key": "AccountId",
     "authority": "Authority",
-    "name": "OrgName",
-    "org_key": "AccountId",
+    "id": "DaoId",
+    "dao_key": "AccountId",
     "metadata": "Option<H256>"
   },
-  "OrgName": "H160",
+  "DaoId": "H160",
   "DomainId": "H160",
   "ReviewId": "H160",
   "AccountInfo": {
@@ -276,20 +276,24 @@ const CHAIN_TYPES = {
   "ContractAgreementId": "H160",
   "ContractAgreementTerms": {
     "_enum": {
-      "TechnologyLicenseAgreementTerms": {
+      "LicenseAgreement": {
         "source": "ProjectId",
         "price": "DeipAsset"
+      },
+      "GeneralContractAgreement": {
       }
     }
   },
   "ContractAgreementTermsOf": "ContractAgreementTerms",
   "ContractAgreementIndexTerms": {
     "_enum": [
-      "TechnologyLicenseAgreement"
+      "LicenseAgreement",
+      "GeneralContractAgreement"
     ]
   },
-  "TechnologyLicense": {
+  "License": {
     "id": "ContractAgreementId",
+    "creator": "AccountId",
     "licenser": "AccountId",
     "licensee": "AccountId",
     "hash": "Hash",
@@ -298,16 +302,19 @@ const CHAIN_TYPES = {
     "project_id": "ProjectId",
     "price": "DeipAsset"
   },
-  "TechnologyLicenseStatus": {
+  "LicenseStatus": {
     "_enum": {
       "Unsigned": {
-        "0": "TechnologyLicense"
+        "0": "License"
       },
       "SignedByLicenser": {
-        "0": "TechnologyLicense"
+        "0": "License"
       },
       "Signed": {
-        "0": "TechnologyLicense"
+        "0": "License"
+      },
+      "Rejected": {
+        "0": "License"
       }
     }
   },
@@ -315,12 +322,37 @@ const CHAIN_TYPES = {
     "_enum": {
       "None": {
       },
-      "TechnologyLicense": {
-        "0": "TechnologyLicenseStatus"
+      "License": {
+        "0": "LicenseStatus"
+      },
+      "GeneralContract": {
+        "0": "GeneralContractStatus"
       }
     }
   },
-  "ContractAgreementOf": "ContractAgreement"
+  "ContractAgreementOf": "ContractAgreement",
+  "GeneralContract": {
+    "id": "ContractAgreementId",
+    "creator": "AccountId",
+    "parties": "Vec<AccountId>",
+    "hash": "Hash",
+    "start_time": "Option<Moment>",
+    "end_time": "Option<Moment>"
+  },
+  "GeneralContractStatus": {
+    "_enum": {
+      "PartiallyAccepted": {
+        "contract": "GeneralContract",
+        "accepted_by": "Vec<AccountId>"
+      },
+      "Accepted": {
+        "0": "GeneralContract"
+      },
+      "Rejected": {
+        "0": "GeneralContract"
+      }
+    }
+  }
 };
 
 

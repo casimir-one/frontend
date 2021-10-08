@@ -610,6 +610,14 @@ module.exports = [{
       "party",
       "extensions"
     ]
+  }, {
+    "roles": ["active", "owner"],
+    "operation": "reject_contract_agreement",
+    "params": [
+      "external_id",
+      "party",
+      "extensions"
+    ]
   },
 // virtual operations
 {
