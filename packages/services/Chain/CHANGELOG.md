@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.346.0](https://github.com/DEIPworld/deip-modules/compare/v1.345.0...v1.346.0) (2021-10-08)
+
+
+### Features
+
+* **@deip/chain-service:** metadata update for DAO and Project, naming conventions ([4503bef](https://github.com/DEIPworld/deip-modules/commit/4503bef72a8ebe90f2f587119d29446483b478c9))
+
+
+
+
+
 # [1.344.0](https://github.com/DEIPworld/deip-modules/compare/v1.343.1...v1.344.0) (2021-10-04)
 
 **Note:** Version bump only for package @deip/chain-service
