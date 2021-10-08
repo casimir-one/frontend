@@ -14,6 +14,8 @@ import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
 import { ContractAgreementHttp } from './ContractAgreementHttp';
 
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+
 class ContractAgreementService extends Singleton {
   contractAgreementHttp = ContractAgreementHttp.getInstance();
 
@@ -35,7 +37,7 @@ class ContractAgreementService extends Singleton {
       hash,
       parties,
       startTime,
-      endTime,
+      endTime = proposalDefaultLifetime,
       type
     } = data;
 
@@ -117,7 +119,7 @@ class ContractAgreementService extends Singleton {
       hash,
       parties,
       startTime,
-      endTime,
+      endTime = proposalDefaultLifetime,
       type
     } = data;
 
