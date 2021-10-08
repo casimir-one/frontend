@@ -48,7 +48,7 @@
         v-else-if="canPerformActionsWithContract(item)"
         icon
         small
-        :title="$t('module.contractAgreements.table.discard')"
+        :title="$t('module.contractAgreements.discard')"
         :loading="discardLoadingContractId === item._id"
         :disabled="!isPendingStatus(item.status)"
         @click.stop="handleDiscardContract(item)"
@@ -170,8 +170,8 @@
       },
 
       handleDiscardContract(contract) {
-        this.$confirm(this.$t('module.contractAgreements.discard.confirm.message'),
-                      { title: this.$t('module.contractAgreements.discard.confirm.title') })
+        this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),
+                      { title: this.$t('module.contractAgreements.discardAction.confirm.title') })
           .then((confirm) => {
             if (confirm) {
               this.discardLoadingContractId = contract._id;
@@ -185,13 +185,14 @@
               this.$store.dispatch('contractAgreements/discard', payload)
                 .then(() => this.$store.dispatch('contractAgreements/getOne', contract._id))
                 .then(() => {
-                  this.$notifier.showSuccess(this.$t('module.contractAgreements.discard.success'));
-                })
-                .finally(() => {
-                  this.discardLoadingContractId = null;
+                  this.$notifier.showSuccess(this.$t('module.contractAgreements.discardAction.success'));
                 })
                 .catch((error) => {
                   console.error(error);
+                  this.$notifier.showError(error.message);
+                })
+                .finally(() => {
+                  this.discardLoadingContractId = null;
                 });
             }
           });
