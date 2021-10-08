@@ -530,7 +530,23 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }];
 
       return [acceptContractAgreementOp];
-    }
+    },
+
+
+    [APP_CMD.REJECT_CONTRACT_AGREEMENT]: ({
+      entityId,
+      party
+    }) => {
+
+      const rejectContractAgreementOp = ['reject_contract_agreement', {
+        external_id: entityId,
+        party: party,
+        extensions: []
+      }];
+
+      return [rejectContractAgreementOp];
+    },
+    
 
   }
 }

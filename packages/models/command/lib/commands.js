@@ -30,6 +30,7 @@ import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
 import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
 import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd';
 import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
+import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
 
 
 export {
@@ -64,5 +65,6 @@ export {
   UpvoteReviewCmd,
   CreateProjectNdaCmd,
   CreateContractAgreementCmd,
-  AcceptContractAgreementCmd
+  AcceptContractAgreementCmd,
+  RejectContractAgreementCmd
 }

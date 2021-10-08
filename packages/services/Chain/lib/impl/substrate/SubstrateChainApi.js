@@ -10,11 +10,11 @@ class SubstrateChainApi extends BaseChainApi {
       },
       
       getProjectAsync: (projectId) => {
-        return chainService.rpcToChainNode("deipStorage_getProject", [null, `0x${projectId}`]);
+        return chainService.rpcToChainNode("deip_getProject", [null, `0x${projectId}`]);
       },
 
       getProjectsListAsync: () => {
-        return chainService.rpcToChainNode("deipStorage_getProjects", [null]);
+        return chainService.rpcToChainNode("deip_getProjectList", [null]);
       },
 
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },

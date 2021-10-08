@@ -52,10 +52,10 @@ class SubstrateTx extends BaseTx {
     const daoSigners = [];
     for (let i = 0; i < ops.length; i++) {
       const op = ops[i];
-      const isOnBehalf = op.method.meta.toHex() === api.tx.deipOrg.onBehalf.meta.toHex();
+      const isOnBehalf = op.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
 
       if (!isOnBehalf) {
-        assert(op.method.meta.toHex() === api.tx.deipOrg.create.meta.toHex(), `All operations except DAO initialization must be sent via the "onBehalf" call.`);
+        assert(op.method.meta.toHex() === api.tx.deipDao.create.meta.toHex(), `All operations except DAO initialization must be sent via the "onBehalf" call.`);
         const daoId = op.method.args[0].toHex();
         daoSigners.push({ daoId: daoId, isNewDao: true });
       } else {
@@ -77,7 +77,7 @@ class SubstrateTx extends BaseTx {
       if (daoSigner.isNewDao) {
         const daoId = daoSigner.daoId;
         const address = daoIdToAddress(daoId, api.registry);
-        const createDaoOp = ops.find(op => op.method.meta.toHex() === api.tx.deipOrg.create.meta.toHex() && daoId === op.method.args[0].toHex());
+        const createDaoOp = ops.find(op => op.method.meta.toHex() === api.tx.deipDao.create.meta.toHex() && daoId === op.method.args[0].toHex());
         const authority = createDaoOp.method.args[1];
         const threshold = authority.threshold.toBn().toNumber();
         const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
@@ -101,12 +101,12 @@ class SubstrateTx extends BaseTx {
 
       } else {
 
-        return api.query.deipOrg.orgRepository(daoSigner.daoId)
-          .then((opt) => {
-            assert(opt.isSome, `DAO actor is not found`);
-            const daoId = u8aToHex(opt.value.name);
+        return api.query.deipDao.daoRepository(daoSigner.daoId)
+          .then((daoOpt) => {
+            assert(daoOpt.isSome, `DAO actor is not found`);
+            const daoId = u8aToHex(daoOpt.value.id);
             const address = daoIdToAddress(daoId, api.registry);
-            const authority = opt.value.authority;
+            const authority = daoOpt.value.authority;
             const threshold = authority.threshold.toBn().toNumber();
             const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
             const isUserDao = threshold === 0;
@@ -133,14 +133,14 @@ class SubstrateTx extends BaseTx {
 
         const buildFlatTree = (address, arr) => {
           return new Promise((resolve) => {
-            api.query.deipOrg.orgLookup(address)
+            api.query.deipDao.daoLookup(address)
               .then((opt) => {
 
                 if (opt.isSome) {
-                  api.query.deipOrg.orgRepository(opt.value)
+                  api.query.deipDao.daoRepository(opt.value)
                     .then((daoOpt) => {
                       const authority = daoOpt.value.authority;
-                      const daoId = u8aToHex(daoOpt.value.name);
+                      const daoId = u8aToHex(daoOpt.value.id);
                       const threshold = authority.threshold.toBn().toNumber();
                       const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
                       const isUserDao = threshold === 0;
@@ -267,9 +267,9 @@ class SubstrateTx extends BaseTx {
           const call = registry.createType('Call', batchAll.method.args[0][i].toU8a(), batchAll.method.args[0][i].meta);
           const extrinsic = registry.createType('Extrinsic', call);
 
-          const isOnBehalf = extrinsic.method.meta.toHex() === api.tx.deipOrg.onBehalf.meta.toHex();
+          const isOnBehalf = extrinsic.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
           if (!isOnBehalf) {
-            assert(extrinsic.method.meta.toHex() === api.tx.deipOrg.create.meta.toHex(), "All operations except account initialization must be send via 'onBehalf' call");
+            assert(extrinsic.method.meta.toHex() === api.tx.deipDao.create.meta.toHex(), "All operations except account initialization must be send via 'onBehalf' call");
           }
 
           const daoId = isOnBehalf ? extrinsic.method.args[0].toHex() : extrinsic.method.args[0].toHex();
@@ -287,20 +287,20 @@ class SubstrateTx extends BaseTx {
             }
             else if (dao.isUserDao) {
               return chainPromise.then((opChain) => {
-                return dao.isNewDao ? opChain : api.tx.deipOrg.onBehalf(dao.daoId, opChain);
+                return dao.isNewDao ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain);
               });
             }
             else if (dao.isThreshold1) {
               return chainPromise.then((opChain) => {
                 const topDao = signersVector[(i + 1)];
                 const others = dao.authority.signatories.filter((signatory) => signatory != topDao.address).sort();
-                const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipOrg.onBehalf.meta.toHex();
-                return api.tx.multisig.asMultiThreshold1(others, dao.isNewDao || isOnBehalf ? opChain : api.tx.deipOrg.onBehalf(dao.daoId, opChain));
+                const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
+                return api.tx.multisig.asMultiThreshold1(others, dao.isNewDao || isOnBehalf ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain));
               });
             }
             else {
               return chainPromise.then((opChain) => {
-                const operation = dao.isNewDao ? opChain : api.tx.deipOrg.onBehalf(dao.daoId, opChain);
+                const operation = dao.isNewDao ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain);
                 return Promise.all([
                   api.query.multisig.multisigs(dao.multiAddress, operation.method.hash),
                   operation.paymentInfo ? operation.paymentInfo(dao.multiAddress) : { weight: 1000000 } // todo: add fallback
