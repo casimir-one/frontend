@@ -27,7 +27,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         assert(signatories.length > 1 && threshold !== 0, `Multisig DAO threshold must be more than 1`);
       }
 
-      const createAccountOp = chainNodeClient.tx.deipOrg.create(
+      const createAccountOp = chainNodeClient.tx.deipDao.create(
         /* dao_id: */ `0x${entityId}`,
         /* authority: */ {
           "signatories": signatories,
@@ -40,6 +40,21 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
+    [APP_CMD.UPDATE_ACCOUNT]: ({
+      entityId,
+      description
+    }) => {
+      
+      const updateAccountOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
+        chainNodeClient.tx.deipDao.updateDao(
+          /* "new_metadata": */ description ? `0x${description}` : null
+        )
+      );
+
+      return [updateAccountOp];
+    },
+
+
     [APP_CMD.CREATE_PROJECT]: ({
       entityId,
       teamId,
@@ -48,17 +63,36 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       isPrivate
     }) => {
 
-      const createProjectOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
+      const createProjectOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deip.createProject(
           /* "is_private": */ isPrivate,
           /* "external_id": */ `0x${entityId}`,
-          /* "team_id": */ { Org: `0x${teamId}` },
+          /* "team_id": */ { Dao: `0x${teamId}` },
           /* "description": */ `0x${description}`,
           /* "domains": */ domains.map((domain) => `0x${domain}`)
         )
       );
 
       return [createProjectOp];
+    },
+
+
+    [APP_CMD.UPDATE_PROJECT]: ({
+      entityId,
+      teamId,
+      description,
+      isPrivate
+    }) => {
+
+      const updateProjectOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
+        chainNodeClient.tx.deip.updateProject(
+          /* "project_id": */ `0x${entityId}`,
+          /* "description": */ description ? `0x${description}` : null,
+          /* "is_private": */ isPrivate != undefined ? isPrivate : null
+        )
+      );
+
+      return [updateProjectOp];
     },
 
 
@@ -76,7 +110,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         for (let i = 0; i < ops.length; i++) {
           const op = ops[i];
 
-          const isOnBehalf = op.method.meta.toHex() === chainNodeClient.tx.deipOrg.onBehalf.meta.toHex();
+          const isOnBehalf = op.method.meta.toHex() === chainNodeClient.tx.deipDao.onBehalf.meta.toHex();
           assert(isOnBehalf, `Proposal can include 'onBehalf' calls only and cannot include account initialization`);
 
           const daoId = op.method.args[0];
@@ -85,13 +119,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
           const call = chainNodeClient.registry.createType('Call', hexToU8a(method.toHex()), method.meta);
           const extrinsic = chainNodeClient.registry.createType('Extrinsic', call);
 
-          arr.push({ call: extrinsic, account: { Org: daoId.toHex() } });
+          arr.push({ call: extrinsic, account: { Dao: daoId.toHex() } });
         }
 
         return arr;
       }, []);
 
-      const createProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`,
+      const createProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`,
         chainNodeClient.tx.deipProposal.propose(
           /* batch: */ calls,
           /* external_id: */ `0x${entityId}`
@@ -130,7 +164,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       const ops = [];
       for (let i = 0; i < approvers.length; i++) {
         const approver = approvers[i];
-        const approveProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${approver}`,
+        const approveProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${approver}`,
           chainNodeClient.tx.deipProposal.decide(
            /* external_id: */ `0x${entityId}`,
            /* decision: */ 'Approve'
@@ -141,7 +175,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
       for (let i = 0; i < rejectors.length; i++) {
         const rejector = rejectors[i];
-        const rejectProposalOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${rejector}`,
+        const rejectProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${rejector}`,
           chainNodeClient.tx.deipProposal.decide(
             /* external_id: */ `0x${entityId}`,
             /* decision: */ 'Reject'
@@ -161,21 +195,19 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       precision,
       maxSupply,
       minBalance,
-      maxZombies,
       projectTokenOption
     }) => {
 
-      const createAssetOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+      const createAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.createAsset(
           /* assetId: */ `0x${entityId}`,
-          /* admin: */ { Org: `0x${issuer}` },
-          /* max_zombies: */ maxZombies,
+          /* admin: */ { Dao: `0x${issuer}` },
           /* min_balance: */ minBalance,
           /* project_id: */ projectTokenOption ? `0x${projectTokenOption.projectId}` : null
         )
       );
 
-      const setAssetMetaOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+      const setAssetMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.setMetadata(
           /* assetId: */ `0x${entityId}`,
           /* name */ symbol,
@@ -184,12 +216,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         )
       );
 
-      const setAssetTeamOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+      const setAssetTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.setTeam(
           /* assetId: */ `0x${entityId}`,
-          /* issuer */ { Org: `0x${issuer}` },
-          /* admin */ { Org: `0x${issuer}` },
-          /* freezer */ { Org: `0x${issuer}` }
+          /* issuer */ { Dao: `0x${issuer}` },
+          /* admin */ { Dao: `0x${issuer}` },
+          /* freezer */ { Dao: `0x${issuer}` }
         )
       );
 
@@ -205,10 +237,10 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       memo
     }) => {
 
-      const issueAssetOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${issuer}`,
+      const issueAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.issueAsset(
           /* assetId: */ `0x${assetId}`,
-          /* beneficiary */ { Org: `0x${recipient}` },
+          /* beneficiary */ { Dao: `0x${recipient}` },
           /* amount */ amount
         )
       );
@@ -229,10 +261,10 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
       assert(softCap.id === hardCap.id, `Asset of 'softCap' and 'hardCap' should be the same`);
 
-      const createInvestmentOpportunityOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${teamId}`,
+      const createInvestmentOpportunityOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deip.createInvestmentOpportunity(
           /* external_id: */ `0x${entityId}`,
-          /* creator: */ { Org: `0x${teamId}` },
+          /* creator: */ { Dao: `0x${teamId}` },
           /* shares: */ shares,
           /* funding_model: */ {
             SimpleCrowdfunding: {
@@ -255,7 +287,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       amount
     }) => {
       
-      const investOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${investor}`,
+      const investOp = chainNodeClient.tx.deipDao.onBehalf(`0x${investor}`,
         chainNodeClient.tx.deip.invest(
           /* investment_opportunity_id: */ `0x${tokenSaleId}`,
           /* amount: */ amount
@@ -284,9 +316,9 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         } 
       } : null;
 
-      const createContractAgreementOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${creator}`, chainNodeClient.tx.deip.createContractAgreement(
+      const createContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`, chainNodeClient.tx.deip.createContractAgreement(
         /* contractAgreementId: */ `0x${entityId}`,
-        /* creator: */ { Org: `0x${creator}` },
+        /* creator: */ { Dao: `0x${creator}` },
         /* parties: */ parties.map((party) => `0x${party}`),
         /* hash: */ `0x${hash}`,
         /* start_time: */ startTime || null,
@@ -303,13 +335,27 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       party
     }) => {
 
-      const acceptContractAgreementOp = chainNodeClient.tx.deipOrg.onBehalf(`0x${party}`, chainNodeClient.tx.deip.acceptContractAgreement(
+      const acceptContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, chainNodeClient.tx.deip.acceptContractAgreement(
         /* contractAgreementId: */ `0x${entityId}`,
-        /* party: */ { Org: `0x${party}` }
+        /* party: */ { Dao: `0x${party}` }
       ));
 
       return [acceptContractAgreementOp];
     },
+
+
+    [APP_CMD.REJECT_CONTRACT_AGREEMENT]: ({
+      entityId,
+      party
+    }) => {
+
+      const rejectContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, chainNodeClient.tx.deip.rejectContractAgreement(
+        /* contractAgreementId: */ `0x${entityId}`,
+        /* party: */ { Dao: `0x${party}` }
+      ));
+
+      return [rejectContractAgreementOp];
+    }
 
   }
 }
