@@ -1,9 +1,9 @@
-import ProtocolCmd from './../base/ProtocolCmd';
+import ProtocolCmd from '../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 
-class JoinProjectTeamCmd extends ProtocolCmd {
+class LeaveTeamCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 
@@ -11,7 +11,6 @@ class JoinProjectTeamCmd extends ProtocolCmd {
       // onchain
       member,
       teamId,
-      projectId,
 
       // offchain
       notes
@@ -19,11 +18,10 @@ class JoinProjectTeamCmd extends ProtocolCmd {
 
     assert(!!member, "'member' is required");
     assert(!!teamId, "'teamId' is required");
-    assert(!!projectId, "'projectId' is required");
 
-    super(APP_CMD.JOIN_PROJECT_TEAM, cmdPayload);
+    super(APP_CMD.LEAVE_TEAM, cmdPayload);
   }
 }
 
 
-export default JoinProjectTeamCmd;
+export default LeaveTeamCmd;

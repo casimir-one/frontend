@@ -137,7 +137,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
-    [APP_CMD.JOIN_PROJECT_TEAM]: ({
+    [APP_CMD.JOIN_TEAM]: ({
       member,
       teamId
     }) => {
@@ -170,7 +170,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
     },
 
 
-    [APP_CMD.LEAVE_PROJECT_TEAM]: ({
+    [APP_CMD.LEAVE_TEAM]: ({
       member,
       teamId
     }) => {
