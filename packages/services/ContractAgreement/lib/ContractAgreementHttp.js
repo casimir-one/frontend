@@ -17,10 +17,6 @@ class ContractAgreementHttp extends Singleton {
     return this.http.post('/api/v2/contract-agreement', req.getHttpBody());
   }
 
-  getContractAgreementsListByCreator(creator) {
-    return this.http.get(`/api/v2/contract-agreements/creator/${creator}`);
-  }
-
   getContractAgreements(query) {
     const q = qs.stringify({ ...query });
     return this.http.get(`/api/v2/contract-agreements?${q}`);

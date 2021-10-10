@@ -172,19 +172,17 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-  getContractAgreementsListByCreator(creator) {
-    return this.contractAgreementHttp.getContractAgreementsListByCreator(creator);
-  }
-
   getContractAgreements({
     parties,
     type,
-    status
+    status,
+    creator
   } = {}) {
     const query = {
       parties: parties || [],
       type: type || '',
-      status: status || ''
+      status: status || '',
+      creator: creator || ''
     };
     return this.contractAgreementHttp.getContractAgreements(query);
   }
