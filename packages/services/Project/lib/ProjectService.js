@@ -2,7 +2,6 @@ import { Singleton } from '@deip/toolbox';
 import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
-import deipRpc from '@deip/rpc-client'; // Remove this dependency ASAP
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants'
 import {
@@ -16,6 +15,7 @@ import {
   LeaveTeamCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
+import { TeamService } from '@deip/team-service';
 
 
 // TODO: move to constants
@@ -24,7 +24,7 @@ const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 *
 class ProjectService extends Singleton {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
-  deipRpc = deipRpc; // deprecated
+  teamService = TeamService.getInstance();
 
 
   getProject(projectId) {
@@ -65,12 +65,12 @@ class ProjectService extends Singleton {
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
-      isNewProjectTeam ? Promise.resolve([]) : this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
+      isNewProjectTeam ? Promise.resolve({}) : this.teamService.getTeam(teamId),
     ])
-      .then(([chainService, refs]) => {
+      .then(([chainService, team]) => {
 
         const teamMembers = [];
-        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        const list = team.members ? team.members.map((m) => m.username) : [];
         teamMembers.push(...list);
 
         const chainNodeClient = chainService.getChainNodeClient();
@@ -189,11 +189,11 @@ class ProjectService extends Singleton {
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
-      this.deipRpc.api.getTeamMemberReferencesAsync([teamId], false)
+      this.teamService.getTeam(teamId)
     ])
-      .then(([chainService, refs]) => {
+      .then(([chainService, team]) => {
         const teamMembers = [];
-        const [list] = refs.length ? refs.map((g) => g.map(m => m.account)) : [[]];
+        const list = team.members ? team.members.map((m) => m.username) : [];
         teamMembers.push(...list);
 
         const chainNodeClient = chainService.getChainNodeClient();
