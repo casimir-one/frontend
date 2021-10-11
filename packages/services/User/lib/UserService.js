@@ -96,6 +96,18 @@ class UserService extends Singleton {
     }
     return this.userHttp.getUser(username);
   }
+
+  checkIfUserExists(username) {
+    return new Promise((resolve) => this.getUser(username)
+      .then(() => resolve(true))
+      .catch((error) => {
+        if (error.response.status === 404) {
+          resolve(false);
+        } else {
+          throw error;
+        }
+      }));
+  }
 }
 
 export {
