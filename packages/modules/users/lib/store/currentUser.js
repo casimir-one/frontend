@@ -23,10 +23,11 @@ const ACTIONS = {
         if (res) {
           commit('setData', res);
           dispatch('auth/setRoles', res.roles, { root: true });
-        } else {
-          console.error('No currentUser data');
-          dispatch('auth/signOut', null, { root: true });
         }
+      })
+      .catch(() => {
+        console.error('No currentUser data');
+        dispatch('auth/signOut', null, { root: true });
       });
   },
 
