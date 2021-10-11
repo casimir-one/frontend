@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.348.0](https://github.com/DEIPworld/deip-modules/compare/v1.347.0...v1.348.0) (2021-10-11)
+
+
+### Features
+
+* **@deip/contract-agreement-service:** add creator to propose/create contractAgreement ([33d58c4](https://github.com/DEIPworld/deip-modules/commit/33d58c4ec5548cef205bbce21302594293b5a259))
+* **@deip/contract-agreements-module:** add ContractPdfDetails ([f5cf294](https://github.com/DEIPworld/deip-modules/commit/f5cf294b720f2a9fd3fd81cf44f88dd898897850))
+* **@deip/contract-agreements-module:** add provider and table components ([0678242](https://github.com/DEIPworld/deip-modules/commit/0678242c6988552e44fdbf1d24d19700a3975baa))
+
+
+
+
+
 # [1.347.0](https://github.com/DEIPworld/deip-modules/compare/v1.346.0...v1.347.0) (2021-10-08)
 
 

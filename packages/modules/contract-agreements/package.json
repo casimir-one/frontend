@@ -1,6 +1,6 @@
 {
   "name": "@deip/contract-agreements-module",
-  "version": "1.347.0",
+  "version": "1.348.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@deip/constants": "^1.344.0",
-    "@deip/contract-agreement-service": "1.347.0",
+    "@deip/contract-agreement-service": "1.348.0",
     "@deip/platform-components": "^1.344.0",
     "@deip/platform-store": "^1.343.0",
     "@deip/proposals-service": "1.347.0",
