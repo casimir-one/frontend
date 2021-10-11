@@ -25,14 +25,12 @@ class ContractAgreementService extends Singleton {
     const env = this.proxydi.get('env');
 
     const {
-      initiator: {
-        privKey,
-        username: creator
-      },
+      initiator: { privKey },
       ...data
     } = payload;
 
     const {
+      creator,
       terms,
       hash,
       parties,
@@ -107,14 +105,12 @@ class ContractAgreementService extends Singleton {
     const env = this.proxydi.get('env');
 
     const {
-      initiator: {
-        privKey,
-        username: creator
-      },
+      initiator: { privKey },
       ...data
     } = payload;
 
     const {
+      creator,
       terms,
       hash,
       parties,
