@@ -59,12 +59,14 @@ const ACTIONS = {
   signIn({ commit, dispatch }, { username: usernameOrEmail, password }) {
     let privateKey;
 
-    return userService.getUser(usernameOrEmail)
-      .then(({ account, username }) => {
-        if (!account) {
+    return userService.checkIfUserExists(usernameOrEmail)
+      .then((exists) => {
+        if (!exists) {
           throw new Error('No such user exists');
         }
-
+        return userService.getUser(usernameOrEmail);
+      })
+      .then(({ account, username }) => {
         if (deipRpc.auth.isWif(password) && getPrivateKeyRole(password, account)) {
           privateKey = password;
         } else {
@@ -107,9 +109,9 @@ const ACTIONS = {
   signUp(_, payload) {
     const { email, password } = payload;
 
-    return userService.getUser(email)
-      .then((emailResponse) => {
-        if (emailResponse) {
+    return userService.checkIfUserExists(email)
+      .then((exists) => {
+        if (exists) {
           throw new Error('User with such email exists');
         }
       })

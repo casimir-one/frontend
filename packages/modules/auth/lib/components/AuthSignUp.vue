@@ -84,7 +84,6 @@
 
 <script>
   import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
-  import AuthSignIn from './AuthSignIn';
 
   export default {
     name: 'AuthSignUp',
@@ -176,7 +175,9 @@
         this.$store.dispatch('auth/signUp', { ...this.formModel, ...{ roles: this.roles } })
           .then((res) => {
             if (this.autologin) {
-              AuthSignIn.methods.signIn.call(this);
+              const { email: username, password } = this.formModel;
+              this.$store.dispatch('auth/signIn', { username, password })
+                .then(() => this.emitSuccess(res));
             } else {
               this.emitSuccess(res);
             }
