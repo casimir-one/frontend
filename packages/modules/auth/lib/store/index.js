@@ -151,6 +151,58 @@ const ACTIONS = {
       ...(signInRedirectRouteName ? { signInRedirectRouteName } : {}),
       ...(signUpRouteName ? { signUpRouteName } : {})
     });
+  },
+
+  changePassword({ dispatch }, payload) {
+    const { auth } = deipRpc;
+    let oldPrivateKey;
+
+    try {
+      if (auth.isWif(payload.oldPassword)
+      && auth.wifToPublic(payload.privKey) === payload.signUpPubKey) {
+        // if old private key is entered
+
+        oldPrivateKey = payload.privKey;
+      } else {
+        // if old password is entered or old password is in private key format
+        oldPrivateKey = auth.toWif(payload.username, payload.oldPassword, 'owner');
+        const oldPublicKey = auth.wifToPublic(oldPrivateKey);
+
+        // return if the public key from the password is not equal to the public key of the account
+        if (payload.signUpPubKey !== oldPublicKey) throw new Error('Old password is invalid');
+      }
+    } catch (err) {
+      return Promise.reject(new Error(err));
+    }
+
+    const {
+      owner: newPrivateKey,
+      ownerPubkey
+    } = auth.getPrivateKeys(payload.username, payload.newPassword, ['owner']);
+
+    const accountActiveAuth = {
+      weight_threshold: 1,
+      account_auths: [],
+      key_auths: [[ownerPubkey, 1]]
+    };
+    const accountOwnerAuth = {
+      weight_threshold: 1,
+      account_auths: [],
+      key_auths: [[ownerPubkey, 1]]
+    };
+
+    return userService.updateUser({
+      initiator: { privKey: oldPrivateKey, username: payload.username },
+      ...payload,
+      accountOwnerAuth,
+      accountActiveAuth
+    })
+      .then(() => dispatch('currentUser/get', null, { root: true })
+        .then(() => accessService.setOwnerWif(newPrivateKey))
+        .then(() => Promise.resolve({ privKey: newPrivateKey, pubKey: ownerPubkey })))
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 };
 
