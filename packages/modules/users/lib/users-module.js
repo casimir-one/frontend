@@ -1,9 +1,9 @@
 import { isEmpty } from '@deip/toolbox/lodash';
-
 import { proxydi } from '@deip/proxydi';
 import { callForCurrentUser } from '@deip/platform-store';
 import { hasValue } from '@deip/toolbox';
 import { AccessService } from '@deip/access-service';
+import deipRpc from '@deip/rpc-client';
 import { usersStore, currentUserStore } from './store';
 
 const accessService = AccessService.getInstance();
@@ -32,7 +32,8 @@ const install = (Vue) => {
             ...data,
             isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
             memoKey: data.account.memo_key,
-            privKey: accessService.getOwnerWif()
+            privKey: accessService.getOwnerWif(),
+            signUpPubKey: deipRpc.auth.wifToPublic(accessService.getOwnerWif())
           };
         }
 

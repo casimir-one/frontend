@@ -154,22 +154,22 @@ const ACTIONS = {
   },
 
   changePassword({ dispatch }, payload) {
-    const { auth } = deipRpc;
+    const { initiator, data: formPass } = payload;
     let oldPrivateKey;
 
     try {
-      if (auth.isWif(payload.oldPassword)
-      && auth.wifToPublic(payload.privKey) === payload.signUpPubKey) {
+      if (deipRpc.auth.isWif(formPass.oldPassword)
+      && deipRpc.auth.wifToPublic(initiator.privKey) === initiator.signUpPubKey) {
         // if old private key is entered
 
-        oldPrivateKey = payload.privKey;
+        oldPrivateKey = initiator.privKey;
       } else {
         // if old password is entered or old password is in private key format
-        oldPrivateKey = auth.toWif(payload.username, payload.oldPassword, 'owner');
-        const oldPublicKey = auth.wifToPublic(oldPrivateKey);
+        oldPrivateKey = deipRpc.auth.toWif(initiator.username, formPass.oldPassword, 'owner');
+        const oldPublicKey = deipRpc.auth.wifToPublic(oldPrivateKey);
 
         // return if the public key from the password is not equal to the public key of the account
-        if (payload.signUpPubKey !== oldPublicKey) throw new Error('Old password is invalid');
+        if (initiator.signUpPubKey !== oldPublicKey) throw new Error('Old password is invalid');
       }
     } catch (err) {
       return Promise.reject(new Error(err));
@@ -178,7 +178,7 @@ const ACTIONS = {
     const {
       owner: newPrivateKey,
       ownerPubkey
-    } = auth.getPrivateKeys(payload.username, payload.newPassword, ['owner']);
+    } = deipRpc.auth.getPrivateKeys(initiator.username, formPass.newPassword, ['owner']);
 
     const accountActiveAuth = {
       weight_threshold: 1,
@@ -191,12 +191,13 @@ const ACTIONS = {
       key_auths: [[ownerPubkey, 1]]
     };
 
-    return userService.updateUser({
-      initiator: { privKey: oldPrivateKey, username: payload.username },
-      ...payload,
+    const data = {
+      ...initiator,
       accountOwnerAuth,
       accountActiveAuth
-    })
+    };
+
+    return userService.updateUser({ initiator, ...data })
       .then(() => dispatch('currentUser/get', null, { root: true })
         .then(() => accessService.setOwnerWif(newPrivateKey))
         .then(() => Promise.resolve({ privKey: newPrivateKey, pubKey: ownerPubkey })))

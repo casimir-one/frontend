@@ -1,130 +1,138 @@
 <template>
-  <vex-section>
-    <vex-stack gutter="32">
-      <vex-section-title :title="title" />
-      <v-sheet max-width="400">
-        <v-form
-          ref="changePasswordForm"
-          v-model="isFormValid"
-          @submit.prevent
+  <v-form ref="changePasswordForm" v-model="isFormValid" @submit.prevent>
+    <!-- original password -->
+    <v-text-field
+      v-model="oldPassword"
+      outlined
+      :label="oldPasswordLabel"
+      :append-icon="!isHidden.oldPass ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="isHidden.oldPass ? 'password' : 'text'"
+      :rules="[rules.required]"
+      :disabled="loading"
+      @click:append="isHidden.oldPass = !isHidden.oldPass"
+    />
+
+    <!-- new password -->
+    <v-text-field
+      v-model="newPassword"
+      outlined
+      :label="newPasswordLabel"
+      :append-icon="!isHidden.newPass ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="isHidden.newPass ? 'password' : 'text'"
+      :rules="[rules.required, rules.newPassword]"
+      :disabled="loading"
+      @click:append="isHidden.newPass = !isHidden.newPass"
+    />
+
+    <!-- repeat new password -->
+    <v-text-field
+      v-model="repeatPassword"
+      outlined
+      :label="$t('module.auth.resetPassword.repeatPasswordLabel')"
+      :append-icon="!isHidden.repeatPass ? 'mdi-eye' : 'mdi-eye-off'"
+      :type="isHidden.repeatPass ? 'password' : 'text'"
+      :rules="[rules.required, rules.repeatPassword]"
+      :disabled="loading"
+      @click:append="isHidden.repeatPass = !isHidden.repeatPass"
+    />
+
+    <div class="d-flex align-center">
+      <v-spacer />
+      <vex-stack horizontal gap="8">
+        <v-btn
+          text
+          type="button"
+          color="primary"
+          :disabled="loading"
+          @click="cleanForm"
         >
-          <!-- original password -->
-          <v-text-field
-            v-model="oldPassword"
-            outlined
-            :label="$t('module.resetpass.oldPasswordLabel')"
-            :append-icon="!isHidden.old ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="isHidden.old ? 'password' : 'text'"
-            :rules="[rules.required]"
-            :disabled="loading"
-            @click:append="isHidden.old = !isHidden.old"
-          />
+          {{ cancelBtn }}
+        </v-btn>
 
-          <!-- new password -->
-          <v-text-field
-            v-model="newPassword"
-            outlined
-            :label="$t('module.resetpass.newPasswordLabel')"
-            :append-icon="!isHidden.new ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="isHidden.new ? 'password' : 'text'"
-            :rules="[rules.required, rules.newPassword]"
-            :disabled="loading"
-            @click:append="isHidden.new = !isHidden.new"
-          />
-
-          <!-- repeat new password -->
-          <v-text-field
-            v-model="repeatPassword"
-            outlined
-            :label="$t('module.resetpass.repeatPasswordLabel')"
-            :append-icon="!isHidden.rep ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="isHidden.rep ? 'password' : 'text'"
-            :rules="[rules.required, rules.repeatPassword]"
-            :disabled="loading"
-            @click:append="isHidden.rep = !isHidden.rep"
-          />
-
-          <div class="d-flex align-center">
-            <v-spacer />
-            <vex-stack horizontal gap="8">
-              <v-btn
-                text
-                type="button"
-                color="primary"
-                :disabled="!isFormValid || loading"
-                @click="cleanForm"
-              >
-                {{ $t('module.resetpass.cancelBtn') }}
-              </v-btn>
-
-              <v-btn
-                type="submit"
-                color="primary"
-                class="ml-2"
-                :loading="loading"
-                :disabled="!isFormValid || loading"
-                @click="updatePassword"
-              >
-                {{ $t('module.resetpass.submitBtn') }}
-              </v-btn>
-            </vex-stack>
-          </div>
-        </v-form>
-      </v-sheet>
-    </vex-stack>
-  </vex-section>
+        <v-btn
+          type="submit"
+          color="primary"
+          class="ml-2"
+          :loading="loading"
+          :disabled="!isFormValid || loading"
+          @click="updatePassword"
+        >
+          {{ submitBtn }}
+        </v-btn>
+      </vex-stack>
+    </div>
+  </v-form>
 </template>
 
 <script>
-  import { VexSection, VexSectionTitle, VexStack } from '@deip/vuetify-extended';
+  import { VexStack } from '@deip/vuetify-extended';
 
   export default {
     name: 'AuthChangePassword',
 
     components: {
-      VexStack,
-      VexSection,
-      VexSectionTitle
+      VexStack
     },
 
     props: {
-      title: {
+      oldPasswordLabel: {
         type: String,
-        default() {
-          return this.$t('module.resetpass.title');
-        }
+        default() { return this.$t('module.auth.resetPassword.oldPasswordLabel'); }
+      },
+      newPasswordLabel: {
+        type: String,
+        default() { return this.$t('module.auth.resetPassword.newPasswordLabel'); }
+      },
+      repeatPasswordLabel: {
+        type: String,
+        default() { return this.$t('module.auth.resetPassword.repeatPasswordLabel'); }
+      },
+      submitBtn: {
+        type: String,
+        default() { return this.$t('module.auth.resetPassword.submitBtn'); }
+      },
+      cancelBtn: {
+        type: String,
+        default() { return this.$t('module.auth.resetPassword.cancelBtn'); }
       }
-
     },
 
     data() {
       return {
-
         oldPassword: '',
         newPassword: '',
         repeatPassword: '',
 
         isHidden: {
-          new: true,
-          old: true,
-          rep: true
+          oldPass: true,
+          newPass: true,
+          repeatPass: true
         },
 
         loading: false,
         isFormValid: false,
 
         rules: {
-          required: (value) => !!value || this.$t('module.resetpass.fieldRules.required'),
+          required: (value) => !!value || this.$t('module.auth.resetPassword.fieldRules.required'),
           newPassword: (value) => {
             if (!value) return false;
 
-            if (value.length < this.MASTER_PASSWORD_MIN_LENGTH) return this.$t('module.resetpass.fieldRules.masterPasswordMinLength');
+            if (value.length < this.MASTER_PASSWORD_MIN_LENGTH) {
+              return this.$t(
+                'module.auth.resetPassword.fieldRules.masterPasswordMinLength'
+              );
+            }
 
-            if (value.length > this.MASTER_PASSWORD_MAX_LENGTH) return this.$t('module.resetpass.fieldRules.masterPasswordMaxLength');
+            if (value.length > this.MASTER_PASSWORD_MAX_LENGTH) {
+              return this.$t(
+                'module.auth.resetPassword.fieldRules.masterPasswordMaxLength'
+              );
+            }
 
             return true;
           },
-          repeatPassword: (value) => value === this.newPassword || this.$t('module.resetpass.fieldRules.repeatMasterPassword')
+          repeatPassword: (value) => value === this.newPassword
+            || this.$t('module.auth.resetPassword.fieldRules.repeatMasterPassword')
         }
       };
     },
@@ -156,23 +164,20 @@
 
         this.setLoading(true);
 
-        return this.$store.dispatch('auth/changePassword', { ...passwordData, ...this.$currentUser })
+        return this.$store.dispatch('auth/changePassword', {
+          initiator: this.$currentUser,
+          data: passwordData
+        })
           .then((data) => {
             this.emitSuccess(data);
-
-          // let logoutTimer = setTimeout(()=>{
-          //     clearTimeout(logoutTimer)
-          //     this.$store.dispatch('auth/signOut');
-          // },3000)
-          }).catch((err) => {
+          })
+          .catch((err) => {
             this.emitError(err);
-          }).finally(() => {
+          })
+          .finally(() => {
             this.cleanForm();
-            this.setLoading(false);
           });
       }
-
     }
-
   };
 </script>
