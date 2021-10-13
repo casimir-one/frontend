@@ -19,14 +19,26 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  getList({ commit }, payload = {}) {
-    let getListPromise = teamService.getTeamsListing();
-
+  getList({ dispatch }, payload = {}) {
     if (payload.teams && payload.teams.length > 0) {
-      getListPromise = teamService.getTeams(payload.teams);
+      return dispatch('getTeamsByIds', payload.teams);
     }
 
-    return getListPromise
+    return dispatch('getAllTeams');
+  },
+
+  getAllTeams({ commit }) {
+    return teamService.getTeamsListing()
+      .then((res) => {
+        commit('setList', res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  },
+
+  getTeamsByIds({ commit }, ids) {
+    teamService.getTeams(ids)
       .then((res) => {
         commit('setList', res);
       })
