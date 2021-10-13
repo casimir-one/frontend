@@ -26,9 +26,20 @@
       {{ formatDate(item.createdAt) }}
     </template>
 
-    <!-- <template #item.signedAt="{ item }">
-            <span v-if="item.signedAt">{{ formatDate(item.signedAt) }}</span>
-          </template> -->
+    <template #item.signedAt="{ item }">
+      <vex-tooltip
+        v-for="(signer, index) of item.signers"
+        :key="index"
+        tag="div"
+        left
+      >
+        {{ formatDate(signer.date) }}
+
+        <template #tooltip>
+          {{ getPartyNameById(signer.id) }}
+        </template>
+      </vex-tooltip>
+    </template>
 
     <template #item.status="{ item }">
       <v-chip
@@ -66,7 +77,7 @@
   import { dateMixin } from '@deip/platform-components';
   import { userHelpersMixin } from '@deip/users-module';
   import { teamHelpersMixin } from '@deip/teams-module';
-  import { contextMixin } from '@deip/vuetify-extended';
+  import { contextMixin, VexTooltip } from '@deip/vuetify-extended';
 
   const colorByStatus = {
     [CONTRACT_AGREEMENT_STATUS.PROPOSED]: 'neutral',
@@ -77,6 +88,10 @@
 
   export default {
     name: 'ContractsTable',
+
+    components: {
+      VexTooltip
+    },
 
     mixins: [
       dateMixin,
