@@ -30,11 +30,14 @@ export const replaceFileWithName = (obj) => {
 export const extractFilesFromModel = (obj) => { // TODO: fix and make more universal
   const res = [];
 
-  for (const { node, parent } of new RecursiveIterator(obj, 1, true)) {
-    const attrId = parent.attributeId || 'xxx';
-
+  for (const { node, key, parent } of new RecursiveIterator(obj, 1, true)) {
+    const attrId = parent.attributeId;
     if (isFile(node)) {
-      res.push([attrId, node, `${attrId}-${node.name}`]);
+      if (attrId) {
+        res.push([attrId, node, `${attrId}-${node.name}`]);
+      } else {
+        res.push([key, node]);
+      }
     }
   }
 
