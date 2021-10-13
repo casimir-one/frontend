@@ -33,7 +33,8 @@
     "@deip/user-service": "1.347.0",
     "@deip/validation-plugin": "1.347.0",
     "@deip/vue-layout-schema": "1.347.0",
-    "@deip/vuetify-extended": "1.347.0"
+    "@deip/vuetify-extended": "1.347.0",
+    "@deip/rpc-client": "1.347.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.341.0",
