@@ -1,11 +1,11 @@
 <template>
-  <div class="d-flex">
-    <div v-if="$slots.prepend" class="mr-6">
+  <div class="d-flex flex-wrap mt-n2">
+    <div v-if="$slots.prepend" class="mt-2">
       <slot name="prepend" />
     </div>
 
     <template v-if="hasTitle">
-      <div v-if="title || $slots.default" class="text-h3">
+      <div v-if="title || $slots.default" class="text-h3 mt-2">
         <v-badge
           color="primary"
           offset-y="12"
@@ -24,7 +24,7 @@
 
     <v-spacer />
 
-    <div v-if="$slots.append" class="ml-6">
+    <div v-if="$slots.append" class="mt-2">
       <slot name="append" />
     </div>
   </div>
