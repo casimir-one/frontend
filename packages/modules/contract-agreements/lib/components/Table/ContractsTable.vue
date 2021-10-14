@@ -1,9 +1,8 @@
 <template>
   <v-data-table
+    v-bind="tableProps"
     :items="mappedContracts"
     :headers="tableHeaders"
-    hide-default-footer
-    disable-sort
     @click:row="handleContractRowClick"
   >
     <template #item.partyNames="{ item }">
@@ -73,11 +72,17 @@
 </template>
 
 <script>
+  // eslint-disable-next-line import/extensions,import/no-unresolved
+  import { VDataTable } from 'vuetify/lib/components';
   import { CONTRACT_AGREEMENT_STATUS } from '@deip/constants';
   import { dateMixin } from '@deip/platform-components';
   import { userHelpersMixin } from '@deip/users-module';
   import { teamHelpersMixin } from '@deip/teams-module';
-  import { contextMixin, VexTooltip } from '@deip/vuetify-extended';
+  import {
+    VexTooltip,
+    contextMixin,
+    getBindableProps
+  } from '@deip/vuetify-extended';
 
   const colorByStatus = {
     [CONTRACT_AGREEMENT_STATUS.PROPOSED]: 'neutral',
@@ -101,6 +106,8 @@
     ],
 
     props: {
+      ...VDataTable.options.props,
+
       contracts: {
         type: Array,
         default: () => []
@@ -127,16 +134,19 @@
       return {
         discardLoadingContractId: null,
         tableHeaders: [
-          { value: 'partyNames', text: this.$t('module.contractAgreements.table.parties'), width: '40%' },
+          { value: 'partyNames', text: this.$t('module.contractAgreements.table.parties') },
           { value: 'createdAt', text: this.$t('module.contractAgreements.table.created') },
           { value: 'signedAt', text: this.$t('module.contractAgreements.table.signed') },
           { value: 'status', text: this.$t('module.contractAgreements.table.status') },
-          { value: 'actions', align: 'end' }
+          { value: 'actions', align: 'end', sortable: false }
         ]
       };
     },
 
     computed: {
+      tableProps() {
+        return getBindableProps.call(this, VDataTable.options.props);
+      },
       mappedContracts() {
         return this.contracts
           .map((c) => ({
