@@ -1,6 +1,24 @@
 <template>
   <vex-stack v-if="!loading">
-    <pdf src="" />
+    <div class="pdf-container d-flex flex-column justify-center">
+      <v-progress-circular
+        v-if="fileLoading"
+        indeterminate
+        color="primary"
+        class="align-self-center"
+      />
+      <pdf
+        v-for="i in pageCount"
+        :key="i"
+        :page="i"
+        :src="pdfSrc"
+        @error="handlePdfError"
+      />
+      <span
+        v-if="!contractFileUrl && !fileLoading"
+        class="align-self-center"
+      >{{ $t('module.contractAgreements.details.noFile') }}</span>
+    </div>
 
     <template v-if="canDiscard || canSign">
       <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
@@ -75,6 +93,7 @@
 <script>
   import pdf from 'vue-pdf';
 
+  import { proxydi } from '@deip/proxydi';
   import { VexStack } from '@deip/vuetify-extended';
 
   export default {
@@ -115,13 +134,24 @@
         },
         loading: false,
         discardLoading: false,
-        signLoading: false
+        signLoading: false,
+
+        pageCount: 0,
+        fileLoading: false,
+        pdfSrc: null
       };
     },
 
     computed: {
       contract() {
         return this.$store.getters['contractAgreements/one'](this.contractId);
+      },
+      contractFileUrl() {
+        if (!this.contract?.terms?.filename) {
+          return null;
+        }
+        const { DEIP_SERVER_URL } = proxydi.get('env');
+        return `${DEIP_SERVER_URL}/api/contract-agreement/file/${this.contract.terms.filename}`;
       }
     },
 
@@ -130,6 +160,14 @@
       this.getContract()
         .then(() => {
           this.$emit('contract-loaded', this.contract);
+          if (this.contractFileUrl) {
+            this.fileLoading = true;
+            this.pdfSrc = pdf.createLoadingTask(this.contractFileUrl);
+            this.pdfSrc.promise.then((pdfFile) => {
+              this.fileLoading = false;
+              this.pageCount = pdfFile.numPages;
+            });
+          }
         })
         .catch((error) => {
           console.error(error);
@@ -142,6 +180,10 @@
     methods: {
       getContract() {
         return this.$store.dispatch('contractAgreements/getOne', this.contractId);
+      },
+
+      handlePdfError(error) {
+        console.error(error);
       },
 
       handleDiscardContract() {
@@ -204,3 +246,9 @@
     }
   };
 </script>
+
+<style lang="scss" scoped>
+  .pdf-container {
+    min-height: 50vh;
+  }
+</style>

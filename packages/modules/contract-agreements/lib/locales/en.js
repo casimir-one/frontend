@@ -31,7 +31,8 @@ export default {
       details: {
         sign: 'Accept and sign',
         agreementMessage: 'I have read the terms of the {0}',
-        tos: 'User Agreement'
+        tos: 'User Agreement',
+        noFile: 'No file'
       }
     }
   }

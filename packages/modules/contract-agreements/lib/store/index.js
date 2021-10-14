@@ -7,7 +7,6 @@ import {
 
 import { ContractAgreementService } from '@deip/contract-agreement-service';
 import { ProposalsService } from '@deip/proposals-service';
-import { genSha256Hash } from '@deip/toolbox';
 
 const contractAgreementService = ContractAgreementService.getInstance();
 const proposalsService = ProposalsService.getInstance();
@@ -16,7 +15,8 @@ const convertPayloadForCreation = (payload) => {
   const {
     initiator: { privKey, username },
     data: {
-      file,
+      creator,
+      hash,
       terms,
       parties,
       startTime,
@@ -24,12 +24,11 @@ const convertPayloadForCreation = (payload) => {
       type
     }
   } = payload;
-  const hash = genSha256Hash(file.name);
-
   return {
     initiator: { privKey, username },
     hash,
-    terms: { ...terms, filename: file.name },
+    creator,
+    terms,
     parties,
     startTime,
     endTime,
