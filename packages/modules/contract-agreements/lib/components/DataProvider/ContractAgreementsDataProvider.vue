@@ -35,16 +35,22 @@
 
       partyIds() {
         const parties = this.contracts
-          .reduce((acc, current) => [...acc, ...current.parties], []);
+          .reduce((acc, current) => {
+                    const signers = current.signers?.map((s) => s.id) || [];
+                    return [...acc, ...current.parties, ...signers];
+                  },
+                  []);
+
         return [...new Set(parties)];
       },
 
       parties() {
         const users = this.$store.getters['users/list']({ username: this.partyIds });
         const teams = this.$store.getters['teams/list']({ entityId: this.partyIds });
+
         return [
           ...users.map((u) => ({ ...u, type: 'user' })),
-          ...teams.map((t) => ({ ...t, type: 'team' }))
+          ...teams.filter((t) => !t.isPersonal).map((t) => ({ ...t, type: 'team' }))
         ];
       },
 
