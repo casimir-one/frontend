@@ -4,12 +4,12 @@
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {
-        "prepublish": "./scripts/build.js",
-        "clean": "rm -Rf lib",
+        "prepublish": "node ./scripts/build.js",
+        "clean": "shx rm -rf lib",
         "fmt": "prettier --write '{src,scripts}/**/*.js' && eslint '{src,scripts}/**/*.js'",
-        "build": "./scripts/build.js",
-        "sjcl-test": "./scripts/test.js",
-        "test": "./scripts/build.js && ./scripts/test.js && ./scripts/test.js && tape 'test/*.test.js'"
+        "build": "node ./scripts/build.js",
+        "sjcl-test": "node ./scripts/test.js",
+        "test": "node ./scripts/build.js && node ./scripts/test.js && node ./scripts/test.js && tape 'test/*.test.js'"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
@@ -20,6 +20,7 @@
         "@babel/plugin-proposal-private-methods": "^7.13.0",
         "eslint": "^7.28.0",
         "prettier": "~2.3.1",
+        "shx": "^0.3.3",
         "tape": "^5.2.2"
     }
 }
