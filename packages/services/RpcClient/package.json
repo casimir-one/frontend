@@ -6,9 +6,10 @@
     "scripts": {
         "test": "eslint --quiet src test; mocha -t 40000 --require babel-polyfill --require babel-register",
         "test-auth": "npm test -- --grep 'deip.auth'",
+        "clear": "shx rm -rf dist",
         "build": "npm run build-browser && npm run build-node",
-        "build-browser": "rm -rf dist && NODE_ENV=production node ./node_modules/webpack/bin/webpack.js && gzip -k -f ./dist/*.js && du -h ./dist/*",
-        "build-node": "mkdir -p ./lib && cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
+        "build-browser": "npm run clear && cross-env NODE_ENV=production && node ./node_modules/webpack/bin/webpack.js && 7z a ./dist/dist.zip ./dist/*.js",
+        "build-node": "shx mkdir -p ./lib && shx cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
         "prepublish": "npm run build"
     },
     "browser": {
@@ -36,7 +37,6 @@
         "bytebuffer": "^5.0.1",
         "create-hash": "^1.1.2",
         "create-hmac": "^1.1.4",
-        "cross-env": "^5.0.0",
         "cross-fetch": "^1.1.1",
         "debug": "^2.6.8",
         "detect-node": "^2.0.3",
@@ -46,6 +46,7 @@
         "ws": "^3.3.2"
     },
     "devDependencies": {
+        "7zip": "0.0.6",
         "babel-cli": "^6.16.0",
         "babel-eslint": "^7.1.1",
         "babel-loader": "^6.2.5",
@@ -54,12 +55,14 @@
         "babel-preset-es2017": "^6.16.0",
         "babel-register": "^6.14.0",
         "bluebird": "^3.4.6",
+        "cross-env": "^5.2.1",
         "eslint": "^3.5.0",
         "eslint-plugin-import": "^1.15.0",
         "eslint-plugin-jsx-a11y": "^2.2.2",
         "eslint-plugin-react": "^6.2.1",
         "json-loader": "^0.5.4",
         "should": "^11.1.0",
+        "shx": "^0.3.3",
         "webpack": "^1.13.2",
         "webpack-visualizer-plugin": "^0.1.5"
     }
