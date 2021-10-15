@@ -308,8 +308,8 @@ class TeamService extends Singleton {
     }));
   }
 
-  getTeams(externalIds) {
-    return Promise.all(externalIds.map((externalId) => this.getTeam(externalId)));
+  getTeams(teamsIds) {
+    return this.teamHttp.getTeams(teamsIds);
   }
 
   getTeamsListing(personal = false) {
