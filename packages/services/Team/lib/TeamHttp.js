@@ -25,6 +25,11 @@ class TeamHttp extends Singleton {
     return this.http.get(`/api/v2/team/${teamExternalId}`);
   }
 
+  getTeams(teamsIds) {
+    const query = qs.stringify({ teamsIds });
+    return this.http.get(`/api/v2/teams?${query}`);
+  }
+
   getTeamsByUser(username) {
     return this.http.get(`/api/v2/teams/member/${username}`);
   }
