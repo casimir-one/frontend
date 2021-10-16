@@ -1,145 +1,167 @@
 <template>
-  <v-form ref="changePasswordForm" v-model="isFormValid" @submit.prevent>
-    <!-- original password -->
-    <v-text-field
-      v-model="oldPassword"
-      outlined
-      :label="oldPasswordLabel"
-      :append-icon="!isHidden.oldPass ? 'mdi-eye' : 'mdi-eye-off'"
-      :type="isHidden.oldPass ? 'password' : 'text'"
-      :rules="[rules.required]"
+  <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
+    <v-form
+      ref="changePasswordForm"
       :disabled="loading"
-      @click:append="isHidden.oldPass = !isHidden.oldPass"
-    />
+      @submit.prevent="handleSubmit(updatePassword)"
+    >
+      <slot v-bind="binds">
+        <slot name="prepend" v-bind="binds" />
 
-    <!-- new password -->
-    <v-text-field
-      v-model="newPassword"
-      outlined
-      :label="newPasswordLabel"
-      :append-icon="!isHidden.newPass ? 'mdi-eye' : 'mdi-eye-off'"
-      :type="isHidden.newPass ? 'password' : 'text'"
-      :rules="[rules.required, rules.newPassword]"
-      :disabled="loading"
-      @click:append="isHidden.newPass = !isHidden.newPass"
-    />
+        <slot name="fields" v-bind="binds">
+          <vex-stack :gutter="8" class="mb-7">
+            <!-- original password -->
 
-    <!-- repeat new password -->
-    <v-text-field
-      v-model="repeatPassword"
-      outlined
-      :label="$t('module.auth.resetPassword.repeatPasswordLabel')"
-      :append-icon="!isHidden.repeatPass ? 'mdi-eye' : 'mdi-eye-off'"
-      :type="isHidden.repeatPass ? 'password' : 'text'"
-      :rules="[rules.required, rules.repeatPassword]"
-      :disabled="loading"
-      @click:append="isHidden.repeatPass = !isHidden.repeatPass"
-    />
+            <validation-provider
+              v-slot="{ errors }"
+              :name="oldPasswordLabel"
+              rules="required"
+            >
+              <vex-password-input
+                v-model="formModel.oldPassword"
+                :label="oldPasswordLabel"
+                :error-messages="errors"
+                v-bind="fieldsProps"
+                counter
+              />
+            </validation-provider>
 
-    <div class="d-flex align-center">
-      <v-spacer />
-      <vex-stack horizontal gap="8">
-        <v-btn
-          text
-          type="button"
-          color="primary"
-          :disabled="loading"
-          @click="cleanForm"
-        >
-          {{ cancelBtn }}
-        </v-btn>
+            <!-- new password -->
 
-        <v-btn
-          type="submit"
-          color="primary"
-          class="ml-2"
-          :loading="loading"
-          :disabled="!isFormValid || loading"
-          @click="updatePassword"
-        >
-          {{ submitBtn }}
-        </v-btn>
-      </vex-stack>
-    </div>
-  </v-form>
+            <vex-password-repeat-input
+              :password-label="newPasswordLabel"
+              :repeat-password-label="repeatPasswordLabel"
+              :password-min-lentgh="newPasswordMinLentgh"
+              :password-max-lentgh="newPasswordMaxLentgh"
+              @passwordValue="updateNewPasswordModel($event)"
+            />
+          </vex-stack>
+        </slot>
+
+        <div class="d-flex align-center">
+          <v-spacer />
+          <slot name="submit" v-bind="binds">
+            <vex-stack horizontal gap="8">
+              <v-btn
+                text
+                color="primary"
+                :disabled="loading"
+                @click="cleanForm"
+              >
+                {{ cancelBtn }}
+              </v-btn>
+              <v-btn
+                type="submit"
+                color="primary"
+                block
+                depressed
+                :disabled="invalid || loading || disabled"
+                :loading="loading"
+              >
+                {{ submitLabel }}
+              </v-btn>
+            </vex-stack>
+          </slot>
+        </div>
+        <slot name="append" v-bind="binds" />
+      </slot>
+    </v-form>
+  </validation-observer>
 </template>
-
 <script>
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VexStack, VexPasswordInput, VexPasswordRepeatInput } from '@deip/vuetify-extended';
 
   export default {
     name: 'AuthChangePassword',
 
     components: {
-      VexStack
+      VexStack,
+      VexPasswordInput,
+      VexPasswordRepeatInput
     },
 
     props: {
       oldPasswordLabel: {
         type: String,
-        default() { return this.$t('module.auth.resetPassword.oldPasswordLabel'); }
+        default() {
+          return this.$t('module.auth.resetPassword.oldPasswordLabel');
+        }
       },
       newPasswordLabel: {
         type: String,
-        default() { return this.$t('module.auth.resetPassword.newPasswordLabel'); }
+        default() {
+          return this.$t('module.auth.resetPassword.newPasswordLabel');
+        }
       },
+
       repeatPasswordLabel: {
         type: String,
-        default() { return this.$t('module.auth.resetPassword.repeatPasswordLabel'); }
+        default() {
+          return this.$t('module.auth.resetPassword.repeatPasswordLabel');
+        }
       },
-      submitBtn: {
+
+      submitLabel: {
         type: String,
-        default() { return this.$t('module.auth.resetPassword.submitBtn'); }
+        default() {
+          return this.$t('module.auth.resetPassword.submitBtn');
+        }
       },
+
       cancelBtn: {
         type: String,
-        default() { return this.$t('module.auth.resetPassword.cancelBtn'); }
+        default() {
+          return this.$t('module.auth.resetPassword.cancelBtn');
+        }
+      },
+
+      fieldsProps: {
+        type: Object,
+        default: () => ({
+          outlined: true
+        })
+      },
+
+      newPasswordMinLentgh: {
+        type: Number,
+        default: 10
+      },
+
+      newPasswordMaxLentgh: {
+        type: Number,
+        default: 64
       }
     },
 
     data() {
       return {
-        oldPassword: '',
-        newPassword: '',
-        repeatPassword: '',
-
-        isHidden: {
-          oldPass: true,
-          newPass: true,
-          repeatPass: true
-        },
-
         loading: false,
-        isFormValid: false,
+        disabled: false,
 
-        rules: {
-          required: (value) => !!value || this.$t('module.auth.resetPassword.fieldRules.required'),
-          newPassword: (value) => {
-            if (!value) return false;
-
-            if (value.length < this.MASTER_PASSWORD_MIN_LENGTH) {
-              return this.$t(
-                'module.auth.resetPassword.fieldRules.masterPasswordMinLength'
-              );
-            }
-
-            if (value.length > this.MASTER_PASSWORD_MAX_LENGTH) {
-              return this.$t(
-                'module.auth.resetPassword.fieldRules.masterPasswordMaxLength'
-              );
-            }
-
-            return true;
-          },
-          repeatPassword: (value) => value === this.newPassword
-            || this.$t('module.auth.resetPassword.fieldRules.repeatMasterPassword')
+        formModel: {
+          oldPassword: '',
+          newPassword: ''
         }
       };
+    },
+
+    computed: {
+      binds() {
+        return {
+          formModel: this.formModel,
+          updatePassword: this.updatePassword
+        };
+      }
+    },
+
+    mounted() {
+      document.body.click();
     },
 
     methods: {
       setLoading(state) {
         this.loading = state;
+        this.disabled = state;
       },
 
       emitSuccess(data) {
@@ -153,20 +175,21 @@
       },
 
       cleanForm() {
-        return this.$refs.changePasswordForm.reset();
+        this.$emit('cancel');
+        this.$refs.changePasswordForm.reset();
+        this.$refs.observer.reset();
+      },
+
+      updateNewPasswordModel(value) {
+        this.formModel.newPassword = value;
       },
 
       updatePassword() {
-        const passwordData = {
-          oldPassword: this.oldPassword,
-          newPassword: this.newPassword
-        };
-
         this.setLoading(true);
 
         return this.$store.dispatch('auth/changePassword', {
           initiator: this.$currentUser,
-          data: passwordData
+          data: this.formModel
         })
           .then((data) => {
             this.emitSuccess(data);

@@ -89,6 +89,17 @@ export const unique = {
   }
 };
 
+export const sameAsPassword = {
+  params: ['field'],
+  validate(value, { field }) {
+    return value === field;
+  },
+  message(_, values) {
+    const i18n = proxydi.get('i18nInstance');
+    return i18n.t('plugin.validation.sameAsPassword', values);
+  }
+};
+
 const normalizeDates = (curr, prev, next) => ({
   currentDate: new Date(curr),
   prevDates: prev ? wrapInArray(prev).map((d) => new Date(d)) : [],
