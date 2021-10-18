@@ -1,5 +1,10 @@
 <template>
-  <ve-auto-grid>
+  <ve-auto-grid
+    cols="1"
+    cols-md="2"
+    cols-lg="3"
+    cols-xl="4"
+  >
     <balance-card
       v-for="(balance, index) of balances"
       :key="balance.assetId"
