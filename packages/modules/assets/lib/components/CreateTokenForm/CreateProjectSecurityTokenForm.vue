@@ -350,9 +350,7 @@
 
       shareholdersFilter(keepUser) {
         return {
-          profile: {
-            '!_id': this.formModel.holders.map((h) => h.account).filter((u) => u !== keepUser)
-          }
+          '!_id': this.formModel.holders.map((h) => h.account).filter((u) => u !== keepUser)
         };
       },
 
