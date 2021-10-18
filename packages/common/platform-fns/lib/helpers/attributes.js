@@ -62,11 +62,11 @@ export const getAttributeFileSrc = (opts = {}) => {
   const url = [
     serverUrl,
     'api',
+    'attribute',
+    'file',
     scope,
     scopeId,
-    'attribute',
     attributeId,
-    'file',
     filename
   ].join('/');
 
