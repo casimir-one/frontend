@@ -44,6 +44,7 @@
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory } from '@deip/layouts-module';
   import { VexStack } from '@deip/vuetify-extended';
+  import { ATTR_SCOPES } from '@deip/constants';
 
   export default {
     name: 'UserForm',
@@ -69,7 +70,7 @@
           ...attributeMethodsFactory(
             this.formData,
             {
-              scopeName: 'user',
+              scopeName: ATTR_SCOPES.USER,
               scopeId: this.formData._id
             }
           )
