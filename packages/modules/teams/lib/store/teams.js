@@ -71,11 +71,12 @@ const ACTIONS = {
   create({ dispatch }, payload) {
     const {
       isCreateDefaultProject,
+      members = [],
       ...data
     } = payload;
 
     return teamService
-      .createTeam(data, isCreateDefaultProject)
+      .createTeam({ ...data, members }, isCreateDefaultProject)
       .then((res) => {
         const { entityId } = res;
 
@@ -83,38 +84,6 @@ const ACTIONS = {
         dispatch('currentUser/get', null, { root: true }); // update current user roles
 
         return res;
-
-        // XXX: invites functionality is not ready
-        // const invites = members
-        //   .filter((m) => m.account.name !== creator.username)
-        //   .map((m) => ({
-        //     account: m.account.name,
-        //     rgt: m.stake * DEIP_1_PERCENT,
-        //     notes: ''
-        //   }));
-
-        // const invitesPromises = invites.map((invitee) => teamService.createResearchGroupInvite(
-        //   { privKey: this.user.privKey, username: this.user.username },
-        //   {
-        //     researchGroup: teamId,
-        //     member: invitee.account,
-        //     rewardShare: '0.00 %',
-        //     researches: [],
-        //     extensions: []
-        //   },
-        //   {
-        //     notes: `${name} invites you to join them`
-        //   }
-        // ));
-
-        // return Promise.all(invitesPromises)
-        //   .then((result) => ({
-        //     team,
-        //     invites: result
-        //   }))
-        //   .catch((err) => {
-        //     console.error(err);
-        //   });
       });
   },
 
