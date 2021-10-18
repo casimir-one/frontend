@@ -29,11 +29,11 @@
             <!-- new password -->
 
             <vex-password-repeat-input
+              v-model="formModel.newPassword"
               :password-label="newPasswordLabel"
               :repeat-password-label="repeatPasswordLabel"
               :password-min-lentgh="newPasswordMinLentgh"
               :password-max-lentgh="newPasswordMaxLentgh"
-              @passwordValue="updateNewPasswordModel($event)"
             />
           </vex-stack>
         </slot>
@@ -178,10 +178,6 @@
         this.$emit('cancel');
         this.$refs.changePasswordForm.reset();
         this.$refs.observer.reset();
-      },
-
-      updateNewPasswordModel(value) {
-        this.formModel.newPassword = value;
       },
 
       updatePassword() {

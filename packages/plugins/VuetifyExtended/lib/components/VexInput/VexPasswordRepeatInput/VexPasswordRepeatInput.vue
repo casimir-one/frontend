@@ -10,7 +10,7 @@
         minMax: { min: passwordMinLentgh, max: passwordMaxLentgh }}"
     >
       <vex-password-input
-        v-model="password"
+        v-model="internalPassword"
         :label="passwordLabel"
         :error-messages="errors"
         v-bind="fieldsProps"
@@ -26,7 +26,7 @@
       :rules="{
         required: true,
         minMax: { min: passwordMinLentgh, max: passwordMaxLentgh },
-        sameAsPassword: { field: password },
+        sameAsPassword: { field: internalPassword },
       }"
     >
       <vex-password-input
@@ -43,14 +43,17 @@
   import { VexStack } from '../../VexStack';
   import { VexPasswordInput } from '../VexPasswordInput';
 
-  let unwatch;
-
   export default {
     name: 'VexPasswordRepeatInput',
 
     components: {
       VexStack,
       VexPasswordInput
+    },
+
+    model: {
+      prop: 'password',
+      event: 'change'
     },
 
     props: {
@@ -79,30 +82,29 @@
       passwordMaxLentgh: {
         type: Number,
         default: 64
+      },
+
+      password: {
+        type: String,
+        default: ''
       }
 
     },
 
     data() {
       return {
-        password: '',
         repeatePassword: ''
       };
     },
 
-    mounted() {
-      unwatch = this.$watch('password',
-                            this.sendNewPasswordValue,
-                            { immediate: true });
-    },
-
-    beforeDestroy() {
-      unwatch();
-    },
-
-    methods: {
-      sendNewPasswordValue(val) {
-        this.$emit('passwordValue', val);
+    computed: {
+      internalPassword: {
+        get() {
+          return this.password;
+        },
+        set(value) {
+          this.$emit('change', value);
+        }
       }
     }
 
