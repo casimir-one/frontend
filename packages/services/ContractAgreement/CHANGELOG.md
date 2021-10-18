@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.348.1](https://github.com/DEIPworld/deip-modules/compare/v1.348.0...v1.348.1) (2021-10-18)
+
+
+### Bug Fixes
+
+* **@deip/contract-agreement-service:** set default creator ([010ecf0](https://github.com/DEIPworld/deip-modules/commit/010ecf0c4a472fd85128fb096363d98d4c4d1458))
+
+
+
+
+
 # [1.348.0](https://github.com/DEIPworld/deip-modules/compare/v1.347.0...v1.348.0) (2021-10-11)
 
 
