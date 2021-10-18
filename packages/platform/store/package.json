@@ -1,6 +1,6 @@
 {
   "name": "@deip/platform-store",
-  "version": "1.343.0",
+  "version": "1.348.1",
   "description": "Helpers for platform applications store",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,7 +20,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/toolbox": "1.343.0"
+    "@deip/toolbox": "1.348.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

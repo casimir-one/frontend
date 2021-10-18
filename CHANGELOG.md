@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.348.1](https://github.com/DEIPworld/deip-modules/compare/v1.348.0...v1.348.1) (2021-10-18)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix sign up ([226e7a3](https://github.com/DEIPworld/deip-modules/commit/226e7a34c683a42b6053c79f0589f2993d9c1909))
+* **@deip/contract-agreement-service:** set default creator ([010ecf0](https://github.com/DEIPworld/deip-modules/commit/010ecf0c4a472fd85128fb096363d98d4c4d1458))
+* **@deip/contract-agreements-module:** add VDataTable props to contracts table ([0886ff2](https://github.com/DEIPworld/deip-modules/commit/0886ff26cf7e168cf05ce6054fd037b958d680d2))
+* **@deip/team-service:** fix getTeams method ([5ffa20d](https://github.com/DEIPworld/deip-modules/commit/5ffa20d63c62b97d8e6213806a1122965df3374c))
+* **@deip/vuetify-extended:** add wrap to VexSectionTitle ([fbdd58b](https://github.com/DEIPworld/deip-modules/commit/fbdd58bf90ed93e515088833894067f420928353))
+
+
+
+
+
 # [1.348.0](https://github.com/DEIPworld/deip-modules/compare/v1.347.0...v1.348.0) (2021-10-11)
 
 
