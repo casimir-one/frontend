@@ -14,7 +14,6 @@
         :label="passwordLabel"
         :error-messages="errors"
         v-bind="fieldsProps"
-        counter
       />
     </validation-provider>
 
@@ -34,7 +33,6 @@
         :label="repeatPasswordLabel"
         :error-messages="errors"
         v-bind="fieldsProps"
-        counter
       />
     </validation-provider>
   </vex-stack>
@@ -70,7 +68,8 @@
       fieldsProps: {
         type: Object,
         default: () => ({
-          outlined: true
+          outlined: true,
+          counter: true
         })
       },
 

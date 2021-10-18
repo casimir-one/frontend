@@ -41,7 +41,7 @@
         <div class="d-flex align-center">
           <v-spacer />
           <slot name="submit" v-bind="binds">
-            <vex-stack horizontal gap="8">
+            <vex-stack horizontal :gutter="8">
               <v-btn
                 text
                 color="primary"
@@ -152,10 +152,6 @@
           updatePassword: this.updatePassword
         };
       }
-    },
-
-    mounted() {
-      document.body.click();
     },
 
     methods: {
