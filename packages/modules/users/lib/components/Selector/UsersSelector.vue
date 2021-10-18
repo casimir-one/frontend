@@ -141,7 +141,7 @@
     methods: {
       userExternalId(data) {
         if (!hasValue(data)) return false;
-        return data.account.name;
+        return data.username;
       }
     }
   };

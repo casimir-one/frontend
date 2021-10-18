@@ -30,7 +30,7 @@ const install = (Vue) => {
         if (data) {
           $currentUser = {
             ...data,
-            isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
+            isAdmin: data.roles.some((r) => r.role === 'admin'),
             memoKey: data.account.memo_key,
             privKey: accessService.getOwnerWif()
           };
