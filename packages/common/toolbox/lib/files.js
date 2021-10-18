@@ -18,7 +18,7 @@ export const toBase64 = (url) => fetch(url)
 export const replaceFileWithName = (obj) => {
   const clone = cloneDeep(obj);
 
-  for (const { node, parent, key } of new RecursiveIterator(clone)) {
+  for (const { node, parent, key } of new RecursiveIterator(clone, 1, true)) {
     if (isFile(node)) {
       parent[key] = node.name;
     }

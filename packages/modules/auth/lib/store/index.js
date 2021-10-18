@@ -181,12 +181,7 @@ const ACTIONS = {
       ownerPubkey
     } = deipRpc.auth.getPrivateKeys(initiator.username, newPassword, ['owner']);
 
-    const accountActiveAuth = {
-      weight_threshold: 1,
-      account_auths: [],
-      key_auths: [[ownerPubkey, 1]]
-    };
-    const accountOwnerAuth = {
+    const ownerAuth = {
       weight_threshold: 1,
       account_auths: [],
       key_auths: [[ownerPubkey, 1]]
@@ -194,8 +189,8 @@ const ACTIONS = {
 
     const data = {
       ...initiator,
-      accountOwnerAuth,
-      accountActiveAuth
+      accountOwnerAuth: ownerAuth,
+      accountActiveAuth: ownerAuth
     };
 
     return userService.updateUser({ initiator, ...data })
