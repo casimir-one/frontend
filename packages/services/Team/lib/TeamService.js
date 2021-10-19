@@ -86,31 +86,34 @@ class TeamService extends Singleton {
               txBuilder.addCmd(createProjectCmd);
             }
 
-            const invites = data.members.map((invitee) => {
-              const joinTeamCmd = new JoinTeamCmd({
-                member: invitee,
-                teamId: entityId
+            const members = data.members.filter((m) => m !== creator);
+            if (members.length > 0) {
+              const invites = members.map((invitee) => {
+                const joinTeamCmd = new JoinTeamCmd({
+                  member: invitee,
+                  teamId: entityId
+                });
+
+                return joinTeamCmd;
               });
 
-              return joinTeamCmd;
-            });
+              const createProposalCmd = new CreateProposalCmd({
+                creator,
+                type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
+                expirationTime: proposalDefaultLifetime,
+                proposedCmds: [...invites]
+              });
 
-            const createProposalCmd = new CreateProposalCmd({
-              creator,
-              type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
-              expirationTime: proposalDefaultLifetime,
-              proposedCmds: [...invites]
-            });
+              txBuilder.addCmd(createProposalCmd);
 
-            txBuilder.addCmd(createProposalCmd);
+              const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+              const updateProposalCmd = new UpdateProposalCmd({
+                entityId: joinTeamProposalId,
+                activeApprovalsToAdd: [creator]
+              });
 
-            const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: joinTeamProposalId,
-              activeApprovalsToAdd: [creator]
-            });
-
-            txBuilder.addCmd(updateProposalCmd);
+              txBuilder.addCmd(updateProposalCmd);
+            }
 
             return txBuilder.end();
           })
