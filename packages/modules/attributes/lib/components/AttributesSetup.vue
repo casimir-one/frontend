@@ -37,6 +37,17 @@
                       </draggable>
                     </v-sheet>
                   </v-col>
+                  <v-col cols="1" class="d-flex justify-end">
+                    <v-btn
+                      icon
+                      :disabled="isDefaultKey(item.key)"
+                      @click="handleRemoveKeyBtnClick(index)"
+                    >
+                      <v-icon dark>
+                        mdi-delete
+                      </v-icon>
+                    </v-btn>
+                  </v-col>
                 </v-row>
                 <v-divider :key="`dv-${index}`" />
               </template>
@@ -169,10 +180,11 @@
     computed: {
 
       attributes() {
-        return ATTR_SCOPES.values().map((scope) => ({
-          title: ATTR_SCOPES_LABELS[scope],
-          attrs: this.$store.getters['attributes/list']({ scope })
-        }));
+        return ATTR_SCOPES.values()
+          .map((scope) => ({
+            title: ATTR_SCOPES_LABELS[scope],
+            attrs: this.$store.getters['attributes/list']({ scope })
+          }));
       }
     },
 
@@ -194,7 +206,10 @@
       },
 
       addMapKey() {
-        this.formData.map.push({ key: '', value: '' });
+        this.formData.map.push({
+          key: '',
+          value: ''
+        });
       },
 
       removeMapKey(index) {
@@ -216,6 +231,12 @@
             this.disabled = false;
             this.loading = false;
           });
+      },
+      /**
+       * @param {number} index item index
+       */
+      handleRemoveKeyBtnClick(index) {
+        this.removeMapKey(index);
       }
     }
   };
