@@ -1,3 +1,5 @@
+import { ATTR_SCOPES } from '@deip/constants';
+
 export const teamHelpersMixin = {
   methods: {
     $$teamTitle(team) {
@@ -32,7 +34,7 @@ export const teamHelpersMixin = {
       if (!avatar) return null;
 
       return this.$attributes.getFileSrc({
-        scope: 'team',
+        scope: ATTR_SCOPES.TEAM,
         scopeId: team.externalId,
         attributeId: avatar.attributeId,
         filename: avatar.value,

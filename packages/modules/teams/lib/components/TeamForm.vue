@@ -48,7 +48,7 @@
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory } from '@deip/layouts-module';
-  import { VIEW_MODE } from '@deip/constants';
+  import { VIEW_MODE, ATTR_SCOPES } from '@deip/constants';
 
   export default {
     name: 'TeamForm',
@@ -96,7 +96,7 @@
           ...attributeMethodsFactory(
             this.formData,
             {
-              scopeName: 'team',
+              scopeName: ATTR_SCOPES.TEAM,
               scopeId: this.formData.externalId
             }
           )
