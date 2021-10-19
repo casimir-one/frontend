@@ -29,7 +29,7 @@ cd deip-app
 ```
 
 Add needed Casimir modules: 
-* [vuetify](https://vuetifyjs.com/en/getting-started/installation/) - is an UI framework built on top of Vue.js
+* [vuetify](https://vuetifyjs.com/en/getting-started/installation/) - is a components library
 * [vue-i18n](https://kazupon.github.io/vue-i18n/) - is internationalization plugin for Vue.js
 * [vuex](https://vuex.vuejs.org/) - is a data storage for Vue.js applications
 * [router](https://router.vuejs.org/) - is an application navigation
@@ -116,7 +116,7 @@ Explore another example of a Casimir-based application by the [link](https://you
 
 ## DEIP-Modules
 
-DEIP Modules is a monorepository implemented based on [Lerna](https://github.com/lerna/lerna) with many npm packages used as a building material for the portal. The repository already contains all the necessary tools for development. Install some modules globally, if you want to manage some processes more subtly.
+The DEIP Modules is a monorepository implemented based on [Lerna](https://github.com/lerna/lerna) with many npm packages used as a building material for the portal. The repository already contains all the necessary tools for development. Install some modules globally, if you want to manage some processes more subtly.
 
 ```
 npm install -g npm-check-updates lerna
