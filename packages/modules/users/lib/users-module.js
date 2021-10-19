@@ -33,7 +33,7 @@ const install = (Vue) => {
             isAdmin: data.profile.roles.some((r) => r.role === 'admin'),
             memoKey: data.account.memo_key,
             privKey: accessService.getOwnerWif(),
-            signUpPubKey: deipRpc.auth.wifToPublic(accessService.getOwnerWif())
+            pubKey: deipRpc.auth.wifToPublic(accessService.getOwnerWif())
           };
         }
 

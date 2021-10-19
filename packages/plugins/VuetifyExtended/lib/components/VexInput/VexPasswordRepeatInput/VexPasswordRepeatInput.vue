@@ -25,7 +25,7 @@
       :rules="{
         required: true,
         minMax: { min: passwordMinLentgh, max: passwordMaxLentgh },
-        sameAsPassword: { field: internalPassword },
+        equal: { target: internalPassword, label:passwordLabel },
       }"
     >
       <vex-password-input

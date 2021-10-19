@@ -160,7 +160,7 @@ const ACTIONS = {
 
     try {
       if (deipRpc.auth.isWif(oldPassword)
-      && deipRpc.auth.wifToPublic(initiator.privKey) === initiator.signUpPubKey) {
+      && deipRpc.auth.wifToPublic(initiator.privKey) === initiator.pubKey) {
         // if old private key is entered
 
         oldPrivateKey = initiator.privKey;
@@ -170,7 +170,7 @@ const ACTIONS = {
         const oldPublicKey = deipRpc.auth.wifToPublic(oldPrivateKey);
 
         // return if the public key from the password is not equal to the public key of the account
-        if (initiator.signUpPubKey !== oldPublicKey) throw new Error('Old password is invalid');
+        if (initiator.pubKey !== oldPublicKey) throw new Error('Old password is invalid');
       }
     } catch (err) {
       return Promise.reject(err);

@@ -20,7 +20,7 @@ import {
   minValue,
   maxValue,
   unique,
-  sameAsPassword,
+  equal,
   username,
   dateBefore,
   dateAfter,
@@ -62,7 +62,7 @@ const install = (Vue, options = {}) => {
   extend('minValue', minValue);
   extend('maxValue', maxValue);
   extend('unique', unique);
-  extend('sameAsPassword', sameAsPassword);
+  extend('equal', equal);
   extend('number', number);
   extend('username', username);
   extend('dateBefore', dateBefore);

@@ -89,14 +89,15 @@ export const unique = {
   }
 };
 
-export const sameAsPassword = {
-  params: ['field'],
-  validate(value, { field }) {
-    return value === field;
+export const equal = {
+  params: ['target', 'label'],
+  validate(value, { target }) {
+    return value === target;
   },
   message(_, values) {
     const i18n = proxydi.get('i18nInstance');
-    return i18n.t('plugin.validation.sameAsPassword', values);
+    if (values.label) return i18n.t('plugin.validation.equalWithLabel', values);
+    return i18n.t('plugin.validation.equal', values);
   }
 };
 

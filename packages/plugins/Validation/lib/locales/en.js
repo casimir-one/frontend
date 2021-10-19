@@ -17,7 +17,9 @@ export default {
         between: '{_field_} should be between {prev} and {next}'
       },
       number: '{_field_} must be valid number',
-      sameAsPassword: 'Passwords must be identical'
+      equal: '{_field_} must be identical',
+      equalWithLabel: '{_field_} must be equal to field {label}'
+
     }
   }
 };
