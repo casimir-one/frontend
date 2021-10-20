@@ -8,7 +8,8 @@
         "test-auth": "npm test -- --grep 'deip.auth'",
         "clear": "shx rm -rf dist",
         "build": "npm run build-browser && npm run build-node",
-        "build-browser": "npm run clear && cross-env NODE_ENV=production && node ./node_modules/webpack/bin/webpack.js && 7z a ./dist/dist.zip ./dist/*.js",
+        "archive-dist": "npx gzip ./dist/*.js --output=./dist",
+        "build-browser": "npm run clear && cross-env NODE_ENV=production && node ./node_modules/webpack/bin/webpack.js && npm run archive-dist",
         "build-node": "shx mkdir -p ./lib && shx cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
         "prepublish": "npm run build"
     },
@@ -46,7 +47,6 @@
         "ws": "^3.3.2"
     },
     "devDependencies": {
-        "7zip": "0.0.6",
         "babel-cli": "^6.16.0",
         "babel-eslint": "^7.1.1",
         "babel-loader": "^6.2.5",
@@ -60,6 +60,7 @@
         "eslint-plugin-import": "^1.15.0",
         "eslint-plugin-jsx-a11y": "^2.2.2",
         "eslint-plugin-react": "^6.2.1",
+        "gzip-cli": "^1.2.0",
         "json-loader": "^0.5.4",
         "should": "^11.1.0",
         "shx": "^0.3.3",
