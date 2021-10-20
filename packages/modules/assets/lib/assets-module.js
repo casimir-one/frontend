@@ -8,6 +8,7 @@ const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
 // eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
+  const { withBalances = true } = options;
   if (install.installed) return;
   install.installed = true;
 
@@ -24,8 +25,12 @@ const install = (Vue, options = {}) => {
     store.registerModule('assets', assetsStore);
     store.registerModule('balances', balancesStore);
 
-    store.dispatch('assets/getList');
-    store.dispatch('balances/getList');
+    store.dispatch('assets/getList')
+      .then(() => {
+        if (withBalances) {
+          store.dispatch('balances/getList', { withAssetsFetch: false });
+        }
+      });
   } else {
     throw Error('[AssetsModule]: storeInstance is not provided');
   }

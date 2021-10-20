@@ -18,18 +18,26 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  getList({ commit }) {
-    assetsService.lookupAssets('', 10000)
-      .then((assets) => {
-        const balancesPromises = assets
-          .filter((asset) => asset.type === ASSET_TYPE.TOKEN)
-          .map((asset) => assetsService.getAccountsAssetBalancesByAsset(asset.string_symbol));
+  getList({ commit, rootGetters, dispatch }, payload = {}) {
+    const { withAssetsFetch = true } = payload;
 
-        return Promise.all(balancesPromises)
-          .then((balances) => {
-            commit('setList', balances.flat(1));
-          });
-      });
+    const loadBalances = (assets) => {
+      const balancesPromises = assets
+        .filter((asset) => asset.type === ASSET_TYPE.TOKEN)
+        .map((asset) => assetsService
+          .getAccountsAssetBalancesByAsset(asset.stringSymbol));
+
+      return Promise.all(balancesPromises)
+        .then((balances) => {
+          commit('setList', balances.flat(1));
+        });
+    };
+
+    if (withAssetsFetch) {
+      return dispatch('assets/getList', null, { root: true })
+        .then(() => loadBalances(rootGetters['assets/list']()));
+    }
+    return loadBalances(rootGetters['assets/list']());
   }
 };
 
