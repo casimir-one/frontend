@@ -15,7 +15,7 @@ import Marker from '@editorjs/marker';
 
 // import { mdiAccount } from '@mdi/js';
 
-import { isEqual } from '@deip/toolbox/lodash';
+import { isEqual, debounce } from '@deip/toolbox/lodash';
 
 // const genIcon = (path) => `
 //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="v-icon__svg">
@@ -150,7 +150,7 @@ export default Vue.extend({
         },
 
         onReady: this.onReady,
-        onChange: this.onChange,
+        onChange: debounce(this.onChange, 50),
         logLevel: 'ERROR'
       });
     },
@@ -173,6 +173,9 @@ export default Vue.extend({
             this.lazyValue = data;
             this.$emit('change', data);
           }
+        })
+        .catch((error) => {
+          console.error(error);
         });
     },
 
