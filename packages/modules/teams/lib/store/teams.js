@@ -37,8 +37,9 @@ const ACTIONS = {
       });
   },
 
+  /** @return {Promise<object[]>} */
   getTeamsByIds({ commit }, ids) {
-    teamService.getTeams(ids)
+    return teamService.getTeams(ids)
       .then((res) => {
         commit('setList', res);
       })
