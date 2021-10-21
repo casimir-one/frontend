@@ -22,7 +22,6 @@ const ACTIONS = {
       .then((res) => {
         if (res) {
           commit('setData', res);
-          dispatch('auth/setRoles', res.roles, { root: true });
         }
       })
       .catch(() => {
@@ -34,12 +33,14 @@ const ACTIONS = {
   clear({ commit }) {
     commit('setData', null);
   }
+
 };
 
 const MUTATIONS = {
   setData(state, payload) {
     state.data = payload;
   }
+
 };
 
 export const currentUserStore = {

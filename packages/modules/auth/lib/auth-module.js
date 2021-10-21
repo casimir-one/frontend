@@ -1,11 +1,16 @@
+import deipRpc from '@deip/rpc-client';
+
 import { proxydi } from '@deip/proxydi';
-import { setLocalesMessages } from '@deip/toolbox';
-import { awaitForStore } from '@deip/platform-store';
+import { isEmpty } from '@deip/toolbox/lodash';
 import { SYSTEM_ROLE } from '@deip/constants';
+import { AccessService } from '@deip/access-service';
+import { setLocalesMessages, hasValue } from '@deip/toolbox';
+import { awaitForStore, callForCurrentUser } from '@deip/platform-store';
 
 import { hasRoles } from './util/roles';
-import { authStore } from './store';
+import { authStore, currentUserStore } from './store';
 
+const accessService = AccessService.getInstance();
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
 const install = (Vue, options = {}) => {
@@ -48,8 +53,8 @@ const install = (Vue, options = {}) => {
         }
       }
 
-      awaitForStore(store, 'auth/roles').then(() => {
-        const userRoles = store.getters['auth/roles'];
+      awaitForStore(store, 'currentUser/data').then((userData) => {
+        const userRoles = userData.roles;
 
         // admin has full access
         if (hasRoles(userRoles, SYSTEM_ROLE.ADMIN)) {
@@ -86,6 +91,9 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('auth', authStore);
+    store.registerModule('currentUser', currentUserStore);
+
+    // authModule
     store.dispatch('auth/setup', options);
 
     Vue.mixin({
@@ -96,6 +104,58 @@ const install = (Vue, options = {}) => {
     });
 
     store.dispatch('auth/restoreData');
+
+    // currentUserModule
+    Object.defineProperty(Vue.prototype, '$currentUser', {
+      get() {
+        const data = this.$store.getters['currentUser/data'];
+
+        let $currentUser = {};
+
+        if (data) {
+          $currentUser = {
+            ...data,
+            isAdmin: data.roles.some((r) => r.role === 'admin'),
+            memoKey: data.account.memo_key,
+            privKey: accessService.getOwnerWif(),
+            pubKey: deipRpc.auth.wifToPublic(accessService.getOwnerWif())
+          };
+        }
+
+        Object.defineProperty($currentUser, 'exists', {
+          enumerable: false,
+          value: () => !isEmpty($currentUser)
+        });
+
+        Object.defineProperty($currentUser, 'await', {
+          enumerable: false,
+          value: (cb) => {
+            const unwatch = this.$store
+              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
+                if (hasValue(currentUser)) {
+                  cb();
+                  unwatch();
+                }
+              });
+          }
+        });
+
+        Object.defineProperty($currentUser, 'hasRole', {
+          enumerable: false,
+          value: (roleName, scope) => !!$currentUser.roles
+            ?.find((role) => (role.role === roleName)
+             && ((scope && role[scope.name] === scope.id) || !scope))
+        });
+
+        return $currentUser;
+      }
+    });
+
+    callForCurrentUser(
+      store,
+      'currentUser/get',
+      'currentUser/clear'
+    );
   } else {
     throw Error('[AuthModule]: storeInstance is not provided');
   }

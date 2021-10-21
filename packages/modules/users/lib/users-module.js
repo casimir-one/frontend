@@ -1,12 +1,5 @@
-import { isEmpty } from '@deip/toolbox/lodash';
-
 import { proxydi } from '@deip/proxydi';
-import { callForCurrentUser } from '@deip/platform-store';
-import { hasValue } from '@deip/toolbox';
-import { AccessService } from '@deip/access-service';
-import { usersStore, currentUserStore } from './store';
-
-const accessService = AccessService.getInstance();
+import { usersStore } from './store';
 
 const install = (Vue) => {
   if (install.installed) return;
@@ -19,57 +12,6 @@ const install = (Vue) => {
 
   if (store) {
     store.registerModule('users', usersStore);
-    store.registerModule('currentUser', currentUserStore);
-
-    Object.defineProperty(Vue.prototype, '$currentUser', {
-      get() {
-        const data = this.$store.getters['currentUser/data'];
-
-        let $currentUser = {};
-
-        if (data) {
-          $currentUser = {
-            ...data,
-            isAdmin: data.roles.some((r) => r.role === 'admin'),
-            memoKey: data.account.memo_key,
-            privKey: accessService.getOwnerWif()
-          };
-        }
-
-        Object.defineProperty($currentUser, 'exists', {
-          enumerable: false,
-          value: () => !isEmpty($currentUser)
-        });
-
-        Object.defineProperty($currentUser, 'await', {
-          enumerable: false,
-          value: (cb) => {
-            const unwatch = this.$store
-              .watch((_, getters) => getters['currentUser/data'], (currentUser) => {
-                if (hasValue(currentUser)) {
-                  cb();
-                  unwatch();
-                }
-              });
-          }
-        });
-
-        Object.defineProperty($currentUser, 'hasRole', {
-          enumerable: false,
-          value: (roleName, scope) => !!$currentUser.roles
-            ?.find((role) => (role.role === roleName)
-             && ((scope && role[scope.name] === scope.id) || !scope))
-        });
-
-        return $currentUser;
-      }
-    });
-
-    callForCurrentUser(
-      store,
-      'currentUser/get',
-      'currentUser/clear'
-    );
   } else {
     throw Error('[UsersModule]: storeInstance is not provided');
   }
