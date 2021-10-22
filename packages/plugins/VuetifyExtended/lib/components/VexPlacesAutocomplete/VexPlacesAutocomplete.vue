@@ -1,18 +1,16 @@
 <template>
-  <div>
-    <template v-if="apiService">
-      <vex-autocomplete
-        v-model="location"
-        :search-input.sync="search"
-        :items="searchResults"
-        hide-no-data
-        :loading="isLoading"
-        v-bind="autocompleteProps"
-      />
-    </template>
-    <template v-else>
-      You need enable goole maps api
-    </template>
+  <vex-autocomplete
+    v-if="apiService"
+    v-model="location"
+    class="vex-places-autocomplete"
+    :search-input.sync="search"
+    :items="searchResults"
+    hide-no-data
+    :loading="isLoading"
+    v-bind="autocompleteProps"
+  />
+  <div v-else>
+    You need enable goole maps api
   </div>
 </template>
 
@@ -45,6 +43,7 @@
         lazySearch: vm.value,
 
         searchResults: [],
+        /** @type {object | null} */
         apiService: null,
         isLoading: false
       };
@@ -82,29 +81,37 @@
     },
 
     created() {
-      if (window.google.maps.places) {
-        this.apiService = new window.google.maps.places.AutocompleteService();
-
-        this.searchLocations(this.search);
-      }
+      this.makeAutocompleteService();
+      this.searchLocations(this.search);
     },
 
     methods: {
-      searchLocations(val) {
-        this.isLoading = true;
-
-        this.apiService.getPlacePredictions({
-          input: val,
-          types: ['address']
-        }, this.displaySuggestions);
+      makeAutocompleteService() {
+        try {
+          this.apiService = new window.google.maps.places.AutocompleteService();
+        } catch (e) {
+          this.apiService = null;
+        }
       },
-      displaySuggestions(predictions, status) {
-        if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
+
+      /**
+       * @param {string} val search query
+       * @return {Promise<void>}
+       */
+      async searchLocations(val) {
+        this.isLoading = true;
+        try {
+          const {
+            predictions = []
+          } = await this.apiService.getPlacePredictions({
+            input: val,
+            types: ['address']
+          });
+          this.searchResults = predictions.map((p) => p.description);
+        } catch (e) {
           this.searchResults = [];
-          return;
         }
         this.isLoading = false;
-        this.searchResults = predictions.map((prediction) => prediction.description);
       }
     }
   });
