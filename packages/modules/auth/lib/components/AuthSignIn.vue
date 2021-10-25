@@ -1,6 +1,7 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form
+      ref="formRef"
       :disabled="loading"
       @submit.prevent="handleSubmit(signIn)"
     >
@@ -15,6 +16,7 @@
               rules="required"
             >
               <v-text-field
+                ref="usernameFieldRef"
                 v-model="formModel.username"
                 :label="usernameLabel"
                 :error-messages="errors"
@@ -28,6 +30,7 @@
               rules="required"
             >
               <vex-password-input
+                ref="passwordFieldRef"
                 v-model="formModel.password"
                 :label="passwordLabel"
                 :error-messages="errors"
@@ -102,7 +105,6 @@
         type: String,
         default() { return this.$t('module.auth.signIn'); }
       },
-
       fieldsProps: {
         type: Object,
         default: () => ({
@@ -133,7 +135,8 @@
     },
 
     mounted() {
-      document.body.click();
+      // selected delay 500ms is a magic number
+      setTimeout(this.activateFieldWhenHasAutofill, 500);
     },
 
     methods: {
@@ -143,25 +146,38 @@
       },
 
       emitSuccess(data) {
-        this.setLoading(false);
         this.$emit('success', data);
       },
 
       emitError(error) {
-        this.setLoading(false);
         this.$emit('error', error);
       },
 
-      signIn() {
+      async signIn() {
         this.setLoading(true);
+        try {
+          const res = await this.$store.dispatch('auth/signIn', this.formModel);
+          this.emitSuccess(res);
+        } catch (e) {
+          this.emitError(e.message);
+        }
+        this.setLoading(false);
+      },
 
-        return this.$store.dispatch('auth/signIn', this.formModel)
-          .then((res) => {
-            this.emitSuccess(res);
-          })
-          .catch((error) => {
-            this.emitError(error.message);
-          });
+      /**
+       * Solving the problem with displaying a text field
+       * when the field has autocomplete for browsers on chromium
+       */
+      activateFieldWhenHasAutofill() {
+        [
+          this.$refs.usernameFieldRef,
+          this.$refs.passwordFieldRef
+        ].forEach((c) => {
+          if (c.$el.querySelector(':-webkit-autofill')) {
+            // eslint-disable-next-line no-param-reassign
+            c.isFocused = true;
+          }
+        });
       }
     }
   };
