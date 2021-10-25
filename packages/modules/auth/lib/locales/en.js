@@ -10,7 +10,15 @@ export default {
       password: 'Password',
       email: 'Email',
       message: 'Message',
-      restore: 'Restore'
+      restore: 'Restore',
+      resetPassword: {
+        oldPasswordLabel: 'Old password',
+        newPasswordLabel: 'New password',
+        repeatPasswordLabel: 'Repeat new password',
+        submitBtn: 'Change Password',
+        cancelBtn: 'Cancel'
+      }
+
     }
   }
 };
