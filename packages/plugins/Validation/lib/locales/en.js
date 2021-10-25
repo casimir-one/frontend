@@ -16,7 +16,9 @@ export default {
         before: '{_field_} should be before {date}',
         between: '{_field_} should be between {prev} and {next}'
       },
-      number: '{_field_} must be valid number'
+      number: '{_field_} must be valid number',
+      equal: '{_field_} must be equal to field {label}'
+
     }
   }
 };
