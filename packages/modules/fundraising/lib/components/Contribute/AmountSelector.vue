@@ -106,7 +106,8 @@
           rounding = 1;
         }
 
-        for (let i = NUMBER_OF_STEPS; i > 0; i -= 1) {
+        result.push(this.goalAmount);
+        for (let i = NUMBER_OF_STEPS - 1; i > 0; i -= 1) {
           const value = rounding * Math.floor((step * i) / rounding);
           if (value > 0) {
             result.push(value);
