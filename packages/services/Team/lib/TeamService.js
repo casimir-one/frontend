@@ -315,16 +315,16 @@ class TeamService extends Singleton {
     return this.teamHttp.getTeams(teamsIds);
   }
 
-  getTeamsListing(personal = false) {
-    return this.teamHttp.getTeamsListing(personal);
+  getTeamsListing(withTenantTeam = false) {
+    return this.teamHttp.getTeamsListing(withTenantTeam);
   }
 
-  getTeamsByUser(user) {
-    return this.teamHttp.getTeamsByUser(user);
+  getTeamsByUser(user, withTenantTeam = false) {
+    return this.teamHttp.getTeamsByUser(user, withTenantTeam);
   }
 
-  getTeamsByTenant(tenantId) {
-    return this.teamHttp.getTeamsByTenant(tenantId);
+  getTeamsByTenant(tenantId, withTenantTeam = false) {
+    return this.teamHttp.getTeamsByTenant(tenantId, withTenantTeam);
   }
 }
 
