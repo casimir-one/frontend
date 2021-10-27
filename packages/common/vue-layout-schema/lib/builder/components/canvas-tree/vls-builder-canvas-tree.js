@@ -9,12 +9,12 @@ import {
 /* eslint-enable */
 
 import draggable from 'vuedraggable';
-import { SchemeView } from '../../mixins';
+import { BuilderMixin } from '../../mixins';
 
 export const VlsBuilderCanvasTree = {
   name: 'VlsBuilderCanvasTree',
 
-  mixins: [SchemeView],
+  mixins: [BuilderMixin],
 
   data() {
     return {
@@ -23,123 +23,90 @@ export const VlsBuilderCanvasTree = {
   },
 
   methods: {
-    toggle(id, state) {
-      this.$set(this.toggleMap, id, state);
-    },
-
-    genItem(item, level = 0) {
-      const node = this.getNodeInfo(item.id);
-      const lines = new Array(level).fill(
-        this.$createElement(VDivider, { props: { vertical: true }, style: { marginRight: '15px' } })
-      );
-
-      return this.$createElement(
-        'div',
-        { class: 'd-flex' },
-        [
-          ...lines,
-          this.$createElement(VIcon, { class: 'mr-2', props: { size: 16 } }, node.icon),
-          this.$createElement(VSpacer, { class: 'text-caption' }, node.name)
-        ]
-      );
-    },
-
-    genNodeSpace(child) {
-      return this.$createElement(
-        VSheet,
-        {
-          props: {
-            width: 18,
-            height: 18,
-            color: 'transparent'
-          },
-          class: 'd-flex justify-center'
-        },
-        [child]
-      );
-    },
-
-    genNodeToggler(id) {
-      return this.$createElement(
-        VBtn,
-        {
-          props: { icon: true, width: 18, height: 18 },
-          on: {
-            click: (e) => {
-              e.stopPropagation();
-              this.toggle(id, !this.toggleMap[id]);
-            }
-          }
-        },
-        [
-          this.$createElement(
-            VIcon,
-            { props: { size: 16 } },
-            this.toggleMap[id] ? 'mdi-chevron-down' : 'mdi-chevron-right'
-          )
-        ],
-      );
-    },
-
     genNode(item, level = 0) {
-      const { icon, name } = this.getNodeInfo(item.id);
-      const { uid } = item;
+      const { icon, name } = this.getContainerNodeInfo(item.id);
+      const { uid, children } = item;
+      const active = !!this.toggleMap[uid];
 
-      const lines = new Array(level).fill(
-        this.genNodeSpace(this.$createElement(VDivider, { props: { vertical: true } }))
+      const toggleNode = (e) => {
+        e.stopPropagation();
+        this.$set(this.toggleMap, uid, !active);
+      };
+
+      const nodeShift = (child = null) => (
+        <VSheet
+          class="d-flex justify-center"
+          color="transparent"
+          width={18}
+          height={18}
+        >
+          {child}
+        </VSheet>
       );
 
-      lines.push(this.genNodeSpace(item?.children?.length ? this.genNodeToggler(uid) : ''));
-
-      const head = this.$createElement(
-        VSheet, {
-          class: {
-            'd-flex': true
-          },
-          props: {
-            color: this.activeNode === uid ? 'primary lighten-4' : 'transparent'
-          },
-          on: {
-            click: () => {
-              this.setActiveNode(uid);
-            }
-          }
-        },
-        [
-          ...lines,
-          this.$createElement(VIcon, { class: 'mr-2', props: { size: 16 } }, icon),
-          this.$createElement(VSpacer, { class: 'text-caption' }, name)
-        ]
+      const nodeToggle = (
+        <VBtn
+          icon
+          width={18}
+          height={18}
+          onClick={toggleNode}
+        >
+          <VIcon size={16}>
+            {active ? 'mdi-chevron-down' : 'mdi-chevron-right'}
+          </VIcon>
+        </VBtn>
       );
 
-      const deepLevel = level + 1;
-      const els = [head];
+      const head = (
+        <VSheet
+          class="d-flex"
+          color={this.containerActiveNode === uid ? 'primary lighten-4' : 'transparent'}
+          onClick={() => this.setContainerActiveNode(uid)}
+        >
+          {new Array(level).fill(nodeShift(<VDivider vertical />))}
+          {nodeShift(children?.length ? nodeToggle : '')}
+          <VIcon size={16} class="mr-2">{icon}</VIcon>
+          <VSpacer class="text-caption">{name}</VSpacer>
+        </VSheet>
+      );
 
-      if (item.children) {
-        els.push(this.genDragger(item.children, deepLevel, !!this.toggleMap[uid]));
-      }
-
-      return this.$createElement('div', els);
+      return (
+        <div>
+          {head}
+          {children ? this.genDragger(children, level + 1, active) : null}
+        </div>
+      );
     },
 
     genDragger(list, level = 0, visible = true) {
-      return this.$createElement(
-        draggable,
-        {
-          props: { list },
-          class: {
-            'd-none': !visible
-          },
-          attrs: {
-            group: { name: 'blocksTree' }
-          }
+      const data = {
+        props: { list },
+        class: {
+          'd-none': !visible
         },
-        list.map((el) => this.genNode(el, level))
+        attrs: {
+          group: { name: 'blocksTree' }
+        },
+        on: {
+          start: () => {
+            this.setContainerActiveNode(null);
+          }
+        }
+      };
+
+      return (
+        <draggable { ...data }>
+          {list.map((el) => this.genNode(el, level))}
+        </draggable>
       );
     }
   },
 
-  render(h) {
-    return h('div', { staticClass: 'schema-tree' }, [this.genDragger(this.internalSchema)]);
+  render() {
+    return (
+      <div class="schema-tree">
+        {this.genDragger(this.containerSchema)}
+      </div>
+    );
   }
 };
