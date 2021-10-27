@@ -1,9 +1,9 @@
 import dotProp from 'dot-prop';
 import objectPath from 'object-path'; // switch to this from dotprop
-
 import kindOf from 'kind-of';
 import RecursiveIterator from 'recursive-iterator';
 import { find as deepFind } from 'find-keypath';
+import { v4 as uuidv4 } from 'uuid';
 
 export * from './lib/collections';
 export * from './lib/enum';
@@ -27,5 +27,6 @@ export {
 
   RecursiveIterator,
   deepFind,
-  kindOf
+  kindOf,
+  uuidv4
 };
