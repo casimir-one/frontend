@@ -20,17 +20,28 @@ class CreateInvestmentOpportunityCmd extends ProtocolEntityCmd {
       metadata
     } = cmdPayload;
 
+    const checkAsset = (asset, fieldName) => assert(
+      !!asset
+      && asset.id
+      && asset.symbol
+      && !isNaN(asset.precision)
+      && asset.amount,
+      `'${fieldName}' is required and should contains 'id', 'symbol', 'precision', 'amount' fields`
+    );
+
     assert(!!teamId, "'teamId' is required");
-    assert(!!startTime, "'startTime' is required");
-    assert(!!endTime, "'endTime' is required");
+    assert(!!startTime && !isNaN(startTime), "'startTime' required and should be in milliseconds");
+    assert(!!endTime && !isNaN(endTime), "'endTime' required and should be in milliseconds");
     assert(new Date(endTime) > new Date(startTime), "'endTime' must be greater than 'startTime'");
-    assert(!!shares, "'shares' is required");
-    assert(!!softCap, "'softCap' is required");
-    assert(!!hardCap, "'hardCap' is required");
+    assert(!!shares && Array.isArray(shares), "'shares' is required and must be an array");
+    shares.forEach(share => {
+      checkAsset(share, 'share')
+    })
+    checkAsset(softCap, 'softCap')
+    checkAsset(hardCap, 'hardCap')
 
     super(APP_CMD.CREATE_INVESTMENT_OPPORTUNITY, cmdPayload);
   }
-
 }
 
 

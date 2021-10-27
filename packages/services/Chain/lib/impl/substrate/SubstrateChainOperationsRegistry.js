@@ -282,14 +282,16 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
 
     [APP_CMD.INVEST]: ({
-      tokenSaleId,
+      investmentOpportunityId,
       investor,
-      amount
+      asset: {
+        amount
+      }
     }) => {
-      
+
       const investOp = chainNodeClient.tx.deipDao.onBehalf(`0x${investor}`,
         chainNodeClient.tx.deip.invest(
-          /* investment_opportunity_id: */ `0x${tokenSaleId}`,
+          /* investment_opportunity_id: */ `0x${investmentOpportunityId}`,
           /* amount: */ amount
         )
       );
