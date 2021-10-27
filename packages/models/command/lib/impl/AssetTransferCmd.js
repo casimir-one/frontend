@@ -10,13 +10,20 @@ class AssetTransferCmd extends ProtocolCmd {
     const {
       from,
       to,
-      amount,
+      asset,
       memo
     } = cmdPayload;
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(!!amount, "'amount' is required");
+    assert(
+      !!asset
+      && asset.id
+      && asset.symbol
+      && !isNaN(asset.precision)
+      && asset.amount,
+      "'asset' is required and should contains 'id', 'symbol', 'precision', 'amount' fields"
+    )
 
     super(APP_CMD.ASSET_TRANSFER, cmdPayload);
   }

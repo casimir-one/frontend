@@ -4,16 +4,12 @@ import { Singleton } from '@deip/toolbox';
 class InvestmentsHttp extends Singleton {
   http = HttpService.getInstance();
 
-  getProjectTokenSale(tokenSaleId) {
-    return this.http.get(`/api/v2/investments/token-sale/${tokenSaleId}`);
+  getProjectTokenSale(investmentOpportunityId) {
+    return this.http.get(`/api/v2/investments/investment-opportunity/${investmentOpportunityId}`);
   }
 
   getProjectTokenSalesByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}`);
-  }
-
-  getProjectTokenSaleInvestments(projectTokenSaleExternalId) {
-    return this.http.get(`/api/v2/investments/${projectTokenSaleExternalId}/contributions`);
   }
 
   getProjectTokenSaleInvestmentsByProject(projectId) {
@@ -41,7 +37,7 @@ class InvestmentsHttp extends Singleton {
   }
 
   getInvestmentsHistoryByTokenSale(tokenSaleId) {
-    return this.http.get(`/api/v2/investments/history/contributions/token-sale/${tokenSaleId}`);
+    return this.http.get(`/api/v2/investments/history/contributions/investment-opportunity/${tokenSaleId}`);
   }
 
   getAssetRevenueHistory(symbol, cursor) {

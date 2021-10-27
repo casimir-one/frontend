@@ -1,5 +1,6 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
+import { toAssetUnits, millisecToIso } from './../../helpers';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
@@ -283,15 +284,21 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       hardCap
     }) => {
 
+      const tokensOnSale = shares.map(s => toAssetUnits(s));
+      const softCapUnits = toAssetUnits(softCap);
+      const hardCapUnits = toAssetUnits(hardCap);
+      const isoStartTime = millisecToIso(startTime);
+      const isoEndTime = millisecToIso(endTime);
+
       const createInvestmentOppOp = ['create_research_token_sale', {
         external_id: entityId,
         research_group: teamId,
         research_external_id: projectId,
-        start_time: startTime,
-        end_time: endTime,
-        security_tokens_on_sale: shares,
-        soft_cap: softCap,
-        hard_cap: hardCap,
+        start_time: isoStartTime,
+        end_time: isoEndTime,
+        security_tokens_on_sale: tokensOnSale,
+        soft_cap: softCapUnits,
+        hard_cap: hardCapUnits,
         extensions: []
       }];
 
@@ -300,15 +307,16 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
 
 
     [APP_CMD.INVEST]: ({
-      tokenSaleId,
+      investmentOpportunityId,
       investor,
-      amount
+      asset
     }) => {
+      const amountUnits = toAssetUnits(asset);
 
       const investOp = ['contribute_to_token_sale', {
-        token_sale_external_id: tokenSaleId,
+        token_sale_external_id: investmentOpportunityId,
         contributor: investor,
-        amount: amount,
+        amount: amountUnits,
         extensions: []
       }];
 
@@ -319,14 +327,15 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
     [APP_CMD.ASSET_TRANSFER]: ({
       from,
       to,
-      amount,
+      asset,
       memo
     }) => {
-    
+      const amountUnits = toAssetUnits(asset);
+
       const transferOp = ['transfer', {
         from: from,
         to: to,
-        amount: amount,
+        amount: amountUnits,
         memo: memo || "",
         extensions: []
       }];

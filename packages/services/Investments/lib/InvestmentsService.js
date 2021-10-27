@@ -88,7 +88,6 @@ class InvestmentsService extends Singleton {
                 expirationTime: proposalLifetime || proposalDefaultLifetime,
                 proposedCmds: [createInvestmentOpportunityCmd]
               });
-
               txBuilder.addCmd(createProposalCmd);
 
               if (isProposalApproved) {
@@ -97,7 +96,6 @@ class InvestmentsService extends Singleton {
                   entityId: updateProposalId,
                   activeApprovalsToAdd: [username]
                 });
-
                 txBuilder.addCmd(updateProposalCmd);
               }
             } else {
@@ -114,9 +112,9 @@ class InvestmentsService extends Singleton {
   }
 
   investProjectTokenSale({ privKey }, {
-    tokenSaleId,
+    investmentOpportunityId,
     investor,
-    amount
+    asset
   }) {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
@@ -127,9 +125,9 @@ class InvestmentsService extends Singleton {
         return chainTxBuilder.begin()
           .then((txBuilder) => {
             const investCmd = new InvestCmd({
-              tokenSaleId,
+              investmentOpportunityId,
               investor,
-              amount
+              asset
             });
             txBuilder.addCmd(investCmd);
             return txBuilder.end();
@@ -146,10 +144,6 @@ class InvestmentsService extends Singleton {
     return this.investmentsHttp.getProjectTokenSalesByProject(projectId);
   }
 
-  getProjectTokenSaleInvestments(tokenSaleId) {
-    return this.investmentsHttp.getProjectTokenSaleInvestments(tokenSaleId);
-  }
-
   getProjectTokenSaleInvestmentsByProject(projectId) {
     return this.investmentsHttp.getProjectTokenSaleInvestmentsByProject(projectId);
   }
@@ -162,8 +156,8 @@ class InvestmentsService extends Singleton {
     return this.investmentsHttp.getInvestmentsHistoryByTokenSale(tokenSaleId);
   }
 
-  getProjectTokenSale(tokenSaleId) {
-    return this.investmentsHttp.getProjectTokenSale(tokenSaleId);
+  getProjectTokenSale(investmentOpportunityId) {
+    return this.investmentsHttp.getProjectTokenSale(investmentOpportunityId);
   }
 }
 

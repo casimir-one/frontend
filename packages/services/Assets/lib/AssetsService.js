@@ -26,7 +26,7 @@ class AssetsService extends Singleton {
   transferAssets({ privKey, username }, {
     from,
     to,
-    amount,
+    asset,
     memo
   }, proposalInfo) {
     const { isProposal, isProposalApproved, proposalLifetime } = {
@@ -47,7 +47,7 @@ class AssetsService extends Singleton {
             const assetTransferCmd = new AssetTransferCmd({
               from,
               to,
-              amount,
+              asset,
               memo: memo || ''
             });
 
@@ -228,14 +228,14 @@ class AssetsService extends Singleton {
             const assetTransferCmd1 = new AssetTransferCmd({
               from: party1,
               to: party2,
-              amount: asset1,
+              asset: asset1,
               memo: memo || ''
             });
 
             const assetTransferCmd2 = new AssetTransferCmd({
               from: party2,
               to: party1,
-              amount: asset2,
+              asset: asset2,
               memo: memo || ''
             });
 
