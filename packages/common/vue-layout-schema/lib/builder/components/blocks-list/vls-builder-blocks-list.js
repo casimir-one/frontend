@@ -22,24 +22,16 @@ import draggable from 'vuedraggable';
 
 import { ATTR_TYPES } from '@deip/constants';
 import { convertBlockForSchema } from '../../utils/helpers';
-import { mutations } from '../../store';
+
+import { BuilderMixin } from '../../mixins';
 
 export const VlsBuilderBlocksList = {
   name: 'VlsBuilderBlocksList',
 
-  components: {
-    draggable
-  },
+  mixins: [BuilderMixin],
 
   directives: {
     Ripple
-  },
-
-  props: {
-    blocks: {
-      type: Array,
-      default: () => []
-    }
   },
 
   data() {
@@ -51,55 +43,45 @@ export const VlsBuilderBlocksList = {
   methods: {
     onClone(block) {
       this.$emit('clone');
-      mutations.setActiveNode(null);
+      this.setContainerActiveNode(null);
+
       return convertBlockForSchema(block);
     },
 
     genSection(section) {
-      const sect = this.$createElement(
-        VexExpand,
-        {
-          props: {
-            value: true
-          },
-          scopedSlots: {
-            activator: ({ active }) => this.$createElement(
-              VSheet,
-              {
-                slot: 'activator',
-                staticClass: 'px-6 py-3 d-flex'
-              },
-              [
-                this.$createElement('div', { staticClass: 'text-subtitle-2 spacer' }, section.title),
-                this.$createElement(VIcon, { props: { size: 16 } }, active ? 'mdi-chevron-down' : 'mdi-chevron-up')
-              ]
-            )
-          }
-        },
-        [
-          this.$createElement(VDivider),
-          this.genDragOut(section.blocks)
-        ]
-      );
+      const expandActivatorSlots = {
+        scopedSlots: {
+          activator: ({ active }) => (
+            <VSheet class="px-6 py-3 d-flex">
+              <div class="text-subtitle-2 spacer">{section.title}</div>
+              <VIcon size={16}>{active ? 'mdi-chevron-down' : 'mdi-chevron-up'}</VIcon>
+            </VSheet>
+          )
+        }
+      };
 
-      return this.$createElement('div', [
-        sect,
-        this.$createElement(VDivider)
-      ]);
+      return (
+        <div>
+          <VexExpand value={true} { ...expandActivatorSlots }>
+            <VDivider />
+            {this.genDragOut(section.blocks)}
+          </VexExpand>
+          <VDivider />
+        </div>
+      );
     },
 
     genDragOut(blocks) {
-      return this.$createElement(
-        draggable,
-        {
-          props: { list: blocks, clone: this.onClone },
-          attrs: {
-            sort: false,
-            group: { name: 'blocks', pull: 'clone', put: false }
-          },
-          staticClass: 'schema-blocks__list'
-        },
-        blocks.map((block) => this.genBlock(block))
+      return (
+        <draggable
+          class="schema-blocks__list"
+          list={blocks}
+          clone={this.onClone}
+          sort={false}
+          group={{ name: 'blocks', pull: 'clone', put: false }}
+        >
+          {blocks.map((block) => this.genBlock(block))}
+        </draggable>
       );
     },
 
@@ -171,7 +153,6 @@ export const VlsBuilderBlocksList = {
     },
 
     genBlock(block) {
-      // {...{ directives: [Ripple] }}
       return (
         <VSheet
           class="schema-blocks__block pa-4 text-center font-weight-medium pos-relative"
@@ -186,13 +167,17 @@ export const VlsBuilderBlocksList = {
     }
   },
 
-  render(h) {
-    if (!this.blocks.length) return h('div', 'No blocks found');
+  render() {
+    if (!this.containerBlocks.length) return <div>No blocks found</div>;
 
-    return h(
-      'div',
-      this.blocks.filter((b) => b?.blocks?.length)
-        .map((section) => this.genSection(section))
+    const blocksList = this.containerBlocks
+      .filter((b) => b?.blocks?.length)
+      .map((section) => this.genSection(section));
+
+    return (
+      <div>
+        {blocksList}
+      </div>
     );
   }
 };

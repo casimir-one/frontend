@@ -1,3 +1,5 @@
+import './vls-builder-canvas.scss';
+
 /* eslint-disable */
 import {
   VIcon, VSheet, VDivider, VSpacer, VBtn
@@ -9,17 +11,20 @@ import {
 
 /* eslint-enable */
 
-import './vls-builder-canvas.scss';
-
-import { wrapInArray, pascalCase, deepFindParentByValue } from '@deip/toolbox';
+import {
+  wrapInArray,
+  pascalCase,
+  deepFindParentByValue,
+  objectPath
+} from '@deip/toolbox';
 import draggable from 'vuedraggable';
-import { SchemeView } from '../../mixins';
-import { getters } from '../../store';
+
+import { BuilderMixin } from '../../mixins';
 
 export const VlsBuilderCanvas = {
   name: 'VlsBuilderCanvas',
 
-  mixins: [SchemeView],
+  mixins: [BuilderMixin],
 
   directives: {
     ClickOutside
@@ -34,20 +39,17 @@ export const VlsBuilderCanvas = {
     };
   },
 
-  computed: {
-    ...getters
-  },
-
   methods: {
+
     getBlockType(id) {
-      const { blockType = 'common' } = this.getNodeInfo(id);
+      const { blockType = 'common' } = this.getContainerNodeInfo(id);
       return blockType;
     },
 
     getNodeBoxData(uid) {
       if (!uid) return false;
 
-      const { id } = deepFindParentByValue(this.lazySchema, uid);
+      const { id } = deepFindParentByValue(this.containerSchema, uid);
 
       const {
         offsetLeft,
@@ -64,7 +66,7 @@ export const VlsBuilderCanvas = {
           height: `${offsetHeight}px`,
           display: 'block'
         },
-        info: this.getNodeInfo(id),
+        info: this.getContainerNodeInfo(id),
         uid
       };
     },
@@ -80,34 +82,58 @@ export const VlsBuilderCanvas = {
     selectNode() {
       this.hoverNode(null);
 
-      if (!this.activeNode) {
+      if (!this.containerActiveNode) {
         this.focusBox = {};
       } else {
-        this.focusBox = this.getNodeBoxData(this.activeNode);
+        this.focusBox = this.getNodeBoxData(this.containerActiveNode);
       }
     },
 
-    genHost(nodes, data = {}) {
-      return (
-        <draggable
-          list={nodes}
-          group={{ name: 'blocks' }}
-          onStart={() => {
+    genHost(
+      additionData = {},
+      target = null
+    ) {
+      const nodes = objectPath.get(this.containerSchema, target);
+
+      const data = {
+        props: {
+          value: nodes
+        },
+        attrs: {
+          group: { name: 'blocks' }
+        },
+        on: {
+          input: (val) => {
+            if (target) {
+              const updated = this.containerSchema;
+              objectPath.set(updated, target, val);
+              this.updateContainerSchema(updated);
+            } else {
+              this.updateContainerSchema(val);
+            }
+          },
+          start: () => {
             this.isMoved = true;
-            this.setActiveNode(null);
-          }}
-          onEnd={() => {
+            this.setContainerActiveNode(null);
+          },
+          end: () => {
             this.isMoved = false;
-          }}
-          { ...data }
-        >
-          {nodes.map((node) => this.genNode(node))}
+          }
+        },
+        ...additionData
+      };
+
+      return (
+        <draggable {...data }>
+          {this.genNodes(nodes)}
         </draggable>
       );
     },
 
     genChildrenHost(node) {
       if (!node?.children) return [];
+
+      const { path: nodePath } = deepFindParentByValue(this.containerSchema, node.uid, true);
 
       const data = {
         class: [
@@ -116,7 +142,7 @@ export const VlsBuilderCanvas = {
         ]
       };
 
-      return this.genHost(node.children, data);
+      return this.genHost(data, [...nodePath, 'children']);
     },
 
     // //////////////////////////
@@ -128,7 +154,7 @@ export const VlsBuilderCanvas = {
     },
 
     genNodeContentTypography(node) {
-      const nodeInfo = this.getNodeInfo(node.id);
+      const nodeInfo = this.getContainerNodeInfo(node.id);
 
       return (
         <VSheet class="d-flex align-center">
@@ -144,7 +170,7 @@ export const VlsBuilderCanvas = {
     },
 
     genNodeContentSimple(node) {
-      const nodeInfo = this.getNodeInfo(node.id);
+      const nodeInfo = this.getContainerNodeInfo(node.id);
 
       return (
         <VSheet class="d-flex align-center">
@@ -169,36 +195,38 @@ export const VlsBuilderCanvas = {
 
     // //////////////////////////
 
-    genNode(node) {
-      const blockType = this.getBlockType(node.id);
+    genNodes(nodes) {
+      return nodes.map((node) => {
+        const blockType = this.getBlockType(node.id);
 
-      const generator = this[`genNodeContent${pascalCase(blockType)}`]
-        ? this[`genNodeContent${pascalCase(blockType)}`]
-        : this.genNodeContentCommon();
+        const generator = this[`genNodeContent${pascalCase(blockType)}`]
+          ? this[`genNodeContent${pascalCase(blockType)}`]
+          : this.genNodeContentCommon();
 
-      const content = wrapInArray(generator(node));
+        const content = wrapInArray(generator(node));
 
-      const classList = {
-        'schema-composer__node': true,
-        'schema-composer__node--active': this.activeNode === node.uid,
-        [`schema-composer__node--${blockType}`]: true
-      };
+        const classList = {
+          'schema-composer__node': true,
+          'schema-composer__node--active': this.containerActiveNode === node.uid,
+          [`schema-composer__node--${blockType}`]: true
+        };
 
-      return (
-        <div
-          class={classList}
-          ref={`node-${node.uid}`}
-          vOn:click_stop={() => {
-            this.setActiveNode(node.uid);
-          }}
-          vOn:mouseover_stop={() => {
-            this.hoverNode(node.uid);
-          }}
-          vOn:mouseleave_stop={() => {
-            this.hoverNode(null);
-          }}
-        >{content}</div>
-      );
+        return (
+          <div
+            class={classList}
+            ref={`node-${node.uid}`}
+            vOn:click_stop={() => {
+              this.setContainerActiveNode(node.uid);
+            }}
+            vOn:mouseover_stop={() => {
+              this.hoverNode(node.uid);
+            }}
+            vOn:mouseleave_stop={() => {
+              this.hoverNode(null);
+            }}
+          >{content}</div>
+        );
+      });
     },
 
     genHoverBox() {
@@ -246,20 +274,9 @@ export const VlsBuilderCanvas = {
   },
 
   render() {
-    const composer = this.genHost(
-      this.internalSchema,
-      {
-        class: ['schema-composer__host']
-      }
-    );
-
-    // vClickOutside={{
-    //   handler: () => { this.setActiveNode(null) },
-    //     include: () => [
-    //     document.querySelector('.schema-builder__tree')
-    //   ]
-    // }}
-
+    const composer = this.genHost({
+      class: ['schema-composer__host']
+    });
     return (
       <div
         class="schema-composer"

@@ -2,8 +2,7 @@ import {
   isArray,
   kindOf,
   objectPath,
-  deepFind,
-  capitalCase
+  capitalCase, deepFindParentByValue
 } from '@deip/toolbox';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
@@ -16,26 +15,25 @@ import {
 import { VexStack } from '@deip/vuetify-extended';
 /* eslint-enable */
 
-import { SchemeView } from '../../mixins';
 import { convertBlockPropsForCanvas } from '../../utils/helpers';
+import { BuilderMixin } from '../../mixins';
 
 const PERM_DISABLED = ['proxyProps'];
 
 export const VlsBuilderBlockSettings = {
   name: 'VlsBuilderBlockSettings',
 
-  mixins: [SchemeView],
+  mixins: [BuilderMixin],
 
   computed: {
     nodePath() {
-      if (!this.activeNode) return '';
-
-      return deepFind(this.internalSchema, this.activeNode).slice(0, -1);
+      if (!this.containerActiveNode) return '';
+      return deepFindParentByValue(this.containerSchema, this.containerActiveNode, true).path;
     },
 
     nodeInfo() {
-      const { id } = objectPath.get(this.internalSchema, this.nodePath);
-      return this.getNodeInfo(id);
+      const { id } = objectPath.get(this.containerSchema, this.nodePath);
+      return this.getContainerNodeInfo(id);
     }
   },
 
@@ -56,10 +54,10 @@ export const VlsBuilderBlockSettings = {
     },
 
     setFieldVal(path, value) {
-      const updated = cloneDeep(this.internalSchema);
-
+      const updated = cloneDeep(this.containerSchema);
       objectPath.set(updated, path, value);
-      this.internalSchema = updated;
+
+      this.updateContainerSchema(updated);
     },
 
     genFieldProps(label) {
@@ -70,7 +68,7 @@ export const VlsBuilderBlockSettings = {
     },
 
     genTextField(path, label, value) {
-      const initVal = objectPath.get(this.internalSchema, path, value);
+      const initVal = objectPath.get(this.containerSchema, path, value);
       const props = this.genFieldProps(label);
 
       return (
@@ -84,7 +82,7 @@ export const VlsBuilderBlockSettings = {
     },
 
     genCheckbox(path, label, value) {
-      const initVal = objectPath.get(this.internalSchema, path, value);
+      const initVal = objectPath.get(this.containerSchema, path, value);
       const props = this.genFieldProps(label);
 
       return (
@@ -113,14 +111,6 @@ export const VlsBuilderBlockSettings = {
 
       return this.genTextField([...path, key], key, val);
     },
-
-    // genPlaceholder() {
-    //   return (
-    //     <div class="text-caption text--secondary">
-    //       This block has no settings
-    //     </div>
-    //   );
-    // },
 
     mapPropsFields(obj, path) {
       return Object.keys(obj)
@@ -154,8 +144,6 @@ export const VlsBuilderBlockSettings = {
         )
       ];
 
-      // if (!mainProps.length && !proxyProps.length) return [this.genPlaceholder()];
-
       return [
         mainPropsFields,
         proxyPropsFields,
@@ -165,7 +153,7 @@ export const VlsBuilderBlockSettings = {
   },
 
   render(h) {
-    if (this.activeNode) {
+    if (this.containerActiveNode) {
       return h(VexStack, this.genFields());
     }
 
