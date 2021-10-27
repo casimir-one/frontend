@@ -30,17 +30,19 @@ class TeamHttp extends Singleton {
     return this.http.get(`/api/v2/teams?${query}`);
   }
 
-  getTeamsByUser(username) {
-    return this.http.get(`/api/v2/teams/member/${username}`);
+  getTeamsByUser(username, withTenantTeam) {
+    const query = qs.stringify({ withTenantTeam });
+    return this.http.get(`/api/v2/teams/member/${username}?${query}`);
   }
 
-  getTeamsListing(personal) {
-    const query = qs.stringify({ personal });
+  getTeamsListing(withTenantTeam) {
+    const query = qs.stringify({ withTenantTeam });
     return this.http.get(`/api/v2/teams/listing?${query}`);
   }
 
-  getTeamsByTenant(tenantId) {
-    return this.http.get(`/api/v2/teams/tenant/${tenantId}`);
+  getTeamsByTenant(tenantId, withTenantTeam) {
+    const query = qs.stringify({ withTenantTeam });
+    return this.http.get(`/api/v2/teams/tenant/${tenantId}?${query}`);
   }
 }
 
