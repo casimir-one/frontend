@@ -30,10 +30,9 @@
 
 ## Соглашения
 
-1. [styleguide по markdown](https://arcticicestudio.github.io/styleguide-markdown/)
-2. **именование методов и функций**
-  происходит по схеме `function [action][triger][event] () { ... }`, пример:
-
+- **[Styleguide по Markdown](https://arcticicestudio.github.io/styleguide-markdown/)**
+- **именование методов и функций**
+  происходит по схеме `function [action][triger][event] () { ... }`:
   ```vue
   <template>
     <button @click="handleAddItemBtnClick">Add Item</button>
@@ -48,28 +47,43 @@
     }
   </script>
   ```
-3. **один метод - одно действие (группировка действий)**
-
+- **один метод - одно действие (группировка действий)**
   ```vue
+  <template>
+    <button @click="handleAddItemBtnClick">Add Item</button>
+  </template>
+  <script>
+    export default {
+      methods: {
+        /** получение списка элементов по API */
+        getList() {},
 
-<template>
-  <button @click="handleAddItemBtnClick">Add Item</button>
-</template>
-<script>
-  export default {
-    methods: {
-      /** получение списка элементов по API */
-      fetchItems() {},
+        /** добавление элемента */
+        addItem() {},
 
-      /** добавление элемента */
-      addItem() {},
-
-      /** обработка клика по кнопке добавления элемента */
-      handleAddItemBtnClick() {
-        this.addItem();
-        this.fetchItems();
+        /** обработка клика по кнопке добавления элемента */
+        handleAddItemBtnClick() {
+          this.addItem();
+          this.getList();
+        }
       }
     }
-  }
-</script>
+  </script>
   ```
+- **методы работающие с API содержат префикс** -
+  `get/create/update/delete`
+  ```javascript
+  // Store Vuex
+  const ACTIONS = {
+    async getList({ commit }) {
+      const res = await itemsService.getList();
+      commit('setList', res);
+    },
+    async update({ commit }, item) {
+      const res = await itemsService.update(item);
+      commit('update', [ res ]);
+    }
+  }
+  ```
+- **async\await используем по умолчанию**
+  с конструкцией `try\catch\finally`, `.then().catch().finally()` - в особых случаях
