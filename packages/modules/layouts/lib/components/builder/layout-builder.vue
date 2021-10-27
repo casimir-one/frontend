@@ -1,7 +1,11 @@
 <template>
   <validation-observer v-slot="{ handleSubmit, invalid }">
     <v-form @submit.prevent="handleSubmit(onSubmit)">
-      <div class="builder">
+      <vls-builder-container
+        v-model="formData.schema"
+        :blocks="blocks"
+        class="builder"
+      >
         <v-navigation-drawer
           class="builder__nav"
           app
@@ -57,10 +61,7 @@
                 <v-divider />
               </template>
 
-              <vls-builder-blocks-list
-                :blocks="blocks"
-                class="spacer"
-              />
+              <vls-builder-blocks-list class="spacer" />
             </v-navigation-drawer>
 
             <v-navigation-drawer
@@ -77,8 +78,6 @@
 
               <vls-builder-canvas-tree
                 ref="navigator"
-                v-model="formData.schema"
-                :blocks="blocks"
                 class="pa-4"
               />
             </v-navigation-drawer>
@@ -98,11 +97,7 @@
             <v-divider />
           </template>
           <div class="pa-6">
-            <vls-builder-block-settings
-              ref="blockSettings"
-              v-model="formData.schema"
-              :blocks="blocks"
-            />
+            <vls-builder-block-settings ref="blockSettings" />
           </div>
         </v-navigation-drawer>
 
@@ -130,12 +125,7 @@
               />
             </v-col>
             <v-col cols="12">
-              <vls-builder-canvas
-                ref="canvas"
-                v-model="formData.schema"
-                :blocks="blocks"
-                watch-delete-key
-              />
+              <vls-builder-canvas ref="canvas" />
             </v-col>
           </v-row>
           <pre>{{ JSON.stringify(formData.schema, null, 2) }}</pre>
@@ -157,7 +147,7 @@
         >
           <v-icon>mdi-content-save-outline</v-icon>
         </v-btn>
-      </div>
+      </vls-builder-container>
     </v-form>
   </validation-observer>
 </template>
@@ -168,6 +158,7 @@
   import { formFactory } from '@deip/platform-components';
 
   import {
+    VlsBuilderContainer,
     VlsBuilderBlocksList,
     VlsBuilderCanvas,
     VlsBuilderCanvasTree,
@@ -189,6 +180,7 @@
     name: 'LayoutBuilder',
 
     components: {
+      VlsBuilderContainer,
       VlsBuilderBlocksList,
       VlsBuilderCanvas,
       VlsBuilderCanvasTree,
