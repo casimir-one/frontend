@@ -1,0 +1,60 @@
+@mixin area($area, $border: right) {
+  grid-area: $area;
+  position: relative;
+  display: flex;
+
+  @if $border != false {
+    border-#{$border}: 1px solid rgba(#000, .1)
+  }
+}
+
+.vls-builder {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 56px 260px 1fr 260px;
+  grid-template-areas: 'toggle controls content settings';
+  max-height: 100vh;
+  position: relative;
+
+  &__toggle {
+    @include area(toggle);
+  }
+
+  &__controls {
+    @include area(controls);
+  }
+
+  &__content {
+    @include area(content, false);
+
+    padding: 24px;
+  }
+
+  &__settings {
+    @include area(settings, left);
+  }
+
+  &__column {
+    flex: 1;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 56px 1fr;
+
+    &--no-head {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__column-head {
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(#000, .1);
+    align-items: center;
+    display: flex;
+  }
+
+  &__column-content {
+    flex: 1;
+    overflow: auto;
+    padding: 24px;
+  }
+}

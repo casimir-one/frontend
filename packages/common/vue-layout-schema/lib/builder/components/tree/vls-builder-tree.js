@@ -11,8 +11,8 @@ import {
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 
-export const VlsBuilderCanvasTree = {
-  name: 'VlsBuilderCanvasTree',
+export const VlsBuilderTree = {
+  name: 'VlsBuilderTree',
 
   mixins: [BuilderMixin],
 
@@ -37,8 +37,8 @@ export const VlsBuilderCanvasTree = {
         <VSheet
           class="d-flex justify-center"
           color="transparent"
-          width={18}
-          height={18}
+          width={20}
+          height={20}
         >
           {child}
         </VSheet>
@@ -47,8 +47,8 @@ export const VlsBuilderCanvasTree = {
       const nodeToggle = (
         <VBtn
           icon
-          width={18}
-          height={18}
+          width={20}
+          height={20}
           onClick={toggleNode}
         >
           <VIcon size={16}>
@@ -104,7 +104,7 @@ export const VlsBuilderCanvasTree = {
 
   render() {
     return (
-      <div class="schema-tree">
+      <div class="vls-builder-tree">
         {this.genDragger(this.containerSchema)}
       </div>
     );

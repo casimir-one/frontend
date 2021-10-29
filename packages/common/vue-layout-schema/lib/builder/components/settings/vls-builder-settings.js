@@ -10,7 +10,8 @@ import { cloneDeep } from '@deip/toolbox/lodash';
 /* eslint-disable */
 import {
   VTextField,
-  VCheckbox
+  VCheckbox,
+  VDivider
 } from 'vuetify/lib/components';
 import { VexStack } from '@deip/vuetify-extended';
 /* eslint-enable */
@@ -20,8 +21,8 @@ import { BuilderMixin } from '../../mixins';
 
 const PERM_DISABLED = ['proxyProps'];
 
-export const VlsBuilderBlockSettings = {
-  name: 'VlsBuilderBlockSettings',
+export const VlsBuilderSettings = {
+  name: 'VlsBuilderSettings',
 
   mixins: [BuilderMixin],
 
@@ -63,7 +64,8 @@ export const VlsBuilderBlockSettings = {
     genFieldProps(label) {
       return {
         hideDetails: true,
-        label: capitalCase(label)
+        label: capitalCase(label),
+        dense: true
       };
     },
 
@@ -152,14 +154,19 @@ export const VlsBuilderBlockSettings = {
     }
   },
 
-  render(h) {
-    if (this.containerActiveNode) {
-      return h(VexStack, this.genFields());
-    }
-
-    return (
+  render() {
+    const settings = (
+      <VexStack>{this.genFields()}</VexStack>
+    );
+    const placeholder = (
       <div class="text-caption text--secondary">
         Select an element on the canvas to activate this panel.
+      </div>
+    );
+
+    return (
+      <div class="vls-builder-tree">
+        {this.containerActiveNode ? settings : placeholder}
       </div>
     );
   }

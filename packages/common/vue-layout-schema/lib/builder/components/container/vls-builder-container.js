@@ -44,17 +44,6 @@ export const VlsBuilderContainer = {
     this.destroyContainer();
   },
 
-  watch: {
-    value: {
-      handler(newVal) {
-        if (newVal && !isEqual(newVal, this.schema)) {
-          mutations.updateContainerSchema(this.containerId, newVal);
-        }
-      },
-      deep: true
-    }
-  },
-
   methods: {
     initContainer() {
       mutations.createContainer(this.containerId);
@@ -68,6 +57,15 @@ export const VlsBuilderContainer = {
         handler(newVal, oldVal) {
           if (newVal && !isEqual(newVal, oldVal)) {
             this.$emit('change', newVal);
+          }
+        },
+        deep: true
+      });
+
+      this.$watch('value', {
+        handler(newVal) {
+          if (newVal && !isEqual(newVal, this.schema)) {
+            mutations.updateContainerSchema(this.containerId, newVal);
           }
         },
         deep: true
