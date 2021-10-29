@@ -1,154 +1,61 @@
 <template>
-  <validation-observer v-slot="{ handleSubmit, invalid }">
-    <v-form @submit.prevent="handleSubmit(onSubmit)">
-      <vls-builder-container
-        v-model="formData.schema"
-        :blocks="blocks"
-        class="builder"
-      >
-        <v-navigation-drawer
-          class="builder__nav"
-          app
-          permanent
-          width="320"
-        >
-          <div
-            class="d-flex fill-height"
+  <validation-observer
+    v-slot="{ invalid }"
+    tag="div"
+    class="d-flex"
+  >
+    <vls-builder
+      :value="formData.schema"
+      :blocks="blocks"
+      :disabled="invalid || loading"
+      :loading="loading"
+      class="flex-grow-1"
+      @submit="handleBuilderSubmit"
+    >
+      <template #toggle>
+        <v-list-item class="pl-4" @click="$router.back()">
+          <v-list-item-icon>
+            <v-icon>mdi-arrow-left</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content />
+        </v-list-item>
+      </template>
+
+      <v-row class="mb-4">
+        <v-col cols="9">
+          <validation-provider
+            v-slot="{ errors }"
+            name="Schema name"
+            rules="required"
           >
-            <v-navigation-drawer
-              mini-variant
-              mini-variant-width="56"
-              permanent
-            >
-              <v-list-item class="pl-4" @click="$router.back()">
-                <v-list-item-icon>
-                  <v-icon>mdi-arrow-left</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content />
-              </v-list-item>
-
-              <v-list-item-group
-                v-model="activeSide"
-                color="primary"
-              >
-                <v-list-item value="add" class="pl-4">
-                  <v-list-item-icon>
-                    <v-icon>mdi-plus-box</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content />
-                </v-list-item>
-
-                <v-list-item value="tree" class="pl-4">
-                  <v-list-item-icon>
-                    <v-icon>mdi-file-tree-outline</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content />
-                </v-list-item>
-              </v-list-item-group>
-            </v-navigation-drawer>
-
-            <v-divider vertical class="ma-0" />
-
-            <v-navigation-drawer
-              v-if="activeSide === 'add'"
-              permanent
-              class="spacer"
-            >
-              <template #prepend>
-                <div class="text-h6 py-4 px-6">
-                  Add
-                </div>
-                <v-divider />
-              </template>
-
-              <vls-builder-blocks-list class="spacer" />
-            </v-navigation-drawer>
-
-            <v-navigation-drawer
-              v-if="activeSide === 'tree'"
-              permanent
-              class="spacer"
-            >
-              <template #prepend>
-                <div class="text-h6 py-4 px-6">
-                  Navigate
-                </div>
-                <v-divider />
-              </template>
-
-              <vls-builder-canvas-tree
-                ref="navigator"
-                class="pa-4"
-              />
-            </v-navigation-drawer>
-          </div>
-        </v-navigation-drawer>
-
-        <v-navigation-drawer
-          right
-          class="builder__nav"
-          app
-          permanent
-        >
-          <template #prepend>
-            <div class="text-h6 py-4 px-6">
-              Settings
-            </div>
-            <v-divider />
-          </template>
-          <div class="pa-6">
-            <vls-builder-block-settings ref="blockSettings" />
-          </div>
-        </v-navigation-drawer>
-
-        <div class="pa-6">
-          <v-row>
-            <v-col cols="9">
-              <v-text-field v-model="formData.name" label="Schema name" hide-details="auto" />
-            </v-col>
-            <v-col cols="3">
-              <v-select
-                v-model="formData.scope"
-                label="Schema scope"
-                :items="scopesList"
-                hide-details="auto"
-                :disabled="isEditMode"
-              />
-            </v-col>
-            <v-col cols="12">
-              <v-switch
-                v-model="formData.isForm"
-                label="Schema is form"
-                class="ma-0 pa-0"
-                hide-details="auto"
-                :disabled="isEditMode"
-              />
-            </v-col>
-            <v-col cols="12">
-              <vls-builder-canvas ref="canvas" />
-            </v-col>
-          </v-row>
-          <pre>{{ JSON.stringify(formData.schema, null, 2) }}</pre>
-        </div>
-
-        <v-btn
-          color="primary"
-          fixed
-          bottom
-          right
-          fab
-          type="submit"
-          :style="{
-            right: `${$vuetify.application.right + 24}px`,
-            bottom: '24px'
-          }"
-          :disabled="disabled || untouched || invalid"
-          :loading="loading"
-        >
-          <v-icon>mdi-content-save-outline</v-icon>
-        </v-btn>
-      </vls-builder-container>
-    </v-form>
+            <v-text-field
+              v-model="formData.name"
+              label="Schema name"
+              hide-details="auto"
+              :error-messages="errors"
+            />
+          </validation-provider>
+        </v-col>
+        <v-col cols="3">
+          <v-select
+            v-model="formData.scope"
+            label="Schema scope"
+            :items="scopesList"
+            hide-details="auto"
+            :disabled="isEditMode"
+          />
+        </v-col>
+        <v-col cols="12">
+          <v-switch
+            v-model="formData.isForm"
+            label="Schema is form"
+            class="ma-0 pa-0"
+            hide-details="auto"
+            :disabled="isEditMode"
+          />
+        </v-col>
+      </v-row>
+    </vls-builder>
   </validation-observer>
 </template>
 
@@ -158,11 +65,7 @@
   import { formFactory } from '@deip/platform-components';
 
   import {
-    VlsBuilderContainer,
-    VlsBuilderBlocksList,
-    VlsBuilderCanvas,
-    VlsBuilderCanvasTree,
-    VlsBuilderBlockSettings
+    VlsBuilder
   } from '@deip/vue-layout-schema';
 
   import { ATTR_SCOPES, ATTR_SCOPES_LABELS, VIEW_MODE } from '@deip/constants';
@@ -180,11 +83,7 @@
     name: 'LayoutBuilder',
 
     components: {
-      VlsBuilderContainer,
-      VlsBuilderBlocksList,
-      VlsBuilderCanvas,
-      VlsBuilderCanvasTree,
-      VlsBuilderBlockSettings
+      VlsBuilder
     },
 
     mixins: [
@@ -234,43 +133,35 @@
         this.$emit('error', err);
       },
 
-      createLayout() {
+      async createLayout() {
         this.loading = true;
 
-        return this.$store.dispatch(
-          'layouts/create',
-          this.lazyFormData
-        )
-          .then(() => {
-            this.onSuccess();
-          })
-          .catch((err) => {
-            this.onError(err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        try {
+          await this.$store.dispatch('layouts/create', this.lazyFormData);
+          this.onSuccess();
+        } catch (err) {
+          this.onError(err);
+        }
+
+        this.loading = false;
       },
 
-      updateLayout() {
+      async updateLayout() {
         this.loading = true;
 
-        return this.$store.dispatch(
-          'layouts/update',
-          this.lazyFormData
-        )
-          .then(() => {
-            this.onSuccess();
-          })
-          .catch((err) => {
-            this.onError(err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        try {
+          await this.$store.dispatch('layouts/update', this.lazyFormData);
+          this.onSuccess();
+        } catch (err) {
+          this.onError(err);
+        }
+
+        this.loading = false;
       },
 
-      onSubmit() {
+      handleBuilderSubmit(schema) {
+        this.formData.schema = schema;
+
         if (this.mode === VIEW_MODE.CREATE) {
           this.createLayout();
         } else if (this.mode === VIEW_MODE.EDIT) {

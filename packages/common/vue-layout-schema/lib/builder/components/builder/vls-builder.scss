@@ -1,7 +1,7 @@
-@mixin area($area, $border: right) {
+@mixin area($area, $border: right, $display: flex) {
   grid-area: $area;
   position: relative;
-  display: flex;
+  display: $display;
 
   @if $border != false {
     border-#{$border}: 1px solid rgba(#000, .1)
@@ -17,7 +17,7 @@
   position: relative;
 
   &__toggle {
-    @include area(toggle);
+    @include area(toggle, right, block);
   }
 
   &__controls {
