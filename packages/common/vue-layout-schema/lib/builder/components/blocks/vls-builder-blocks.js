@@ -25,8 +25,8 @@ import { convertBlockForSchema } from '../../utils/helpers';
 
 import { BuilderMixin } from '../../mixins';
 
-export const VlsBuilderBlocksList = {
-  name: 'VlsBuilderBlocksList',
+export const VlsBuilderBlocks = {
+  name: 'VlsBuilderBlocks',
 
   mixins: [BuilderMixin],
 
@@ -74,7 +74,7 @@ export const VlsBuilderBlocksList = {
     genDragOut(blocks) {
       return (
         <draggable
-          class="schema-blocks__list"
+          class="vls-builder-blocks__list"
           list={blocks}
           clone={this.onClone}
           sort={false}
@@ -155,7 +155,7 @@ export const VlsBuilderBlocksList = {
     genBlock(block) {
       return (
         <VSheet
-          class="schema-blocks__block pa-4 text-center font-weight-medium pos-relative"
+          class="vls-builder-blocks__block pa-4 text-center font-weight-medium pos-relative"
           style="font-size:11px"
           vRipple
         >

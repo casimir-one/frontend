@@ -1,7 +1,8 @@
+export { VlsBuilder } from './components/builder';
 export { VlsBuilderContainer } from './components/container';
-export { VlsBuilderBlocksList } from './components/blocks-list';
+export { VlsBuilderBlocks } from './components/blocks';
 export { VlsBuilderCanvas } from './components/canvas';
-export { VlsBuilderCanvasTree } from './components/canvas-tree';
-export { VlsBuilderBlockSettings } from './components/block-settings';
+export { VlsBuilderTree } from './components/tree';
+export { VlsBuilderSettings } from './components/settings';
 
 export * from './utils/helpers';

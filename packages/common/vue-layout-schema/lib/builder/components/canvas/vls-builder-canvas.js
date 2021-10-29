@@ -137,8 +137,8 @@ export const VlsBuilderCanvas = {
 
       const data = {
         class: [
-          'schema-composer__node-host',
-          `schema-composer__node-host--${this.getBlockType(node.id)}`
+          'vls-builder-canvas__node-host',
+          `vls-builder-canvas__node-host--${this.getBlockType(node.id)}`
         ]
       };
 
@@ -206,9 +206,9 @@ export const VlsBuilderCanvas = {
         const content = wrapInArray(generator(node));
 
         const classList = {
-          'schema-composer__node': true,
-          'schema-composer__node--active': this.containerActiveNode === node.uid,
-          [`schema-composer__node--${blockType}`]: true
+          'vls-builder-canvas__node': true,
+          'vls-builder-canvas__node--active': this.containerActiveNode === node.uid,
+          [`vls-builder-canvas__node--${blockType}`]: true
         };
 
         return (
@@ -232,12 +232,12 @@ export const VlsBuilderCanvas = {
     genHoverBox() {
       return (
         <div
-          class="schema-composer__hover-box"
+          class="vls-builder-canvas__hover-box"
           style={this.hoverBox?.styles || {}}
           ref="hover-box"
         >
-          <div class="schema-composer__hover-box-header">
-            <div class="schema-composer__box-label">
+          <div class="vls-builder-canvas__hover-box-header">
+            <div class="vls-builder-canvas__box-label">
               {this.hoverBox?.info?.name}
             </div>
           </div>
@@ -247,12 +247,12 @@ export const VlsBuilderCanvas = {
     genFocusBox() {
       return (
         <div
-          class="schema-composer__focus-box"
+          class="vls-builder-canvas__focus-box"
           style={this.focusBox?.styles || {}}
           ref="focus-box"
         >
-          <div class="schema-composer__focus-box-header">
-            <div class="schema-composer__box-label">
+          <div class="vls-builder-canvas__focus-box-header">
+            <div class="vls-builder-canvas__box-label">
               {this.focusBox?.info?.name}
             </div>
             <VBtn
@@ -262,7 +262,7 @@ export const VlsBuilderCanvas = {
               class="mr-n1 mt-n1 mb-n1"
               color="white"
               onClick={() => {
-                this.removeNode(this.focusBox?.uid);
+                this.removeContainerNode(this.focusBox?.uid);
               }}
             >
               <VIcon size={12}>mdi-close</VIcon>
@@ -275,11 +275,16 @@ export const VlsBuilderCanvas = {
 
   render() {
     const composer = this.genHost({
-      class: ['schema-composer__host']
+      class: ['vls-builder-canvas__host']
     });
+
     return (
       <div
-        class="schema-composer"
+        class="vls-builder-canvas"
+        vClickOutside={{
+          handler: () => { this.setContainerActiveNode(null); },
+          include: () => [document.querySelector('.vls-builder-tree')].filter((el) => el)
+        }}
       >
         {this.genHoverBox()}
         {this.genFocusBox()}
