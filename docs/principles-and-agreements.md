@@ -1,15 +1,12 @@
 # Основные принципы и соглашения используемые в проекте
 
-## Single-responsibility Principle (SRP)
+## Single-responsibility Principle (SRP) и Декомпозиция
 
-**Принцип единственной ответственности** — принцип ООП который гласит: "объект должен отвечать только за одну вещь или делать одну вещь". Объект — это функция, переменная, класс, что угодно.
+**Принцип единственной ответственности** — принцип ООП который гласит: "объект должен отвечать только за одну вещь или делать одну вещь". Принцип применяется не только к объекту, это может быть: функция, класс или переменная.
 
 Принцип — это не закон и его стоит применять в зависимости от того, как изменяется приложение:
 * если при изменении кода отвечающего за одну ответственность, затрагивается код отвечающий за другую ответственность, то это первый сигнал о нарушении SRP.
 * если же изменения касаются только кода отвечающего за одну ответственность, то этот принцип можно не применять.
-
-
-## Декомпозиция
 
 **Декомпозиция** — разделение целого на части. В нашем случае, это умение делить код на логически составляющие.
 
@@ -22,26 +19,60 @@
 Любой этап может отсутствовать, но если брать стандартное монолитное микро-сервисное приложение, то это схема будет в какой-то мере прослеживаться.
 И самое частое нарушение SRP, это когда несколько пунктов находятся в одном месте, например: получение и обработка данных или вывод и обработка. Наличие одного из перечисленных случаев говорит об ошибке.
 
-Подробную информацию можете найти в сети по тегам:
-[Single-responsibility Principle](https://www.google.com/search?q=Single-responsibility+Principle),
-[SRP](https://www.google.com/search?q=SRP),
-[Принцип единственной ответственности](https://www.google.com/search?q=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D0%B5%D0%B4%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9+%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8&ei=lz95Ycv8G-WvrgSHg7ugAg&ved=0ahUKEwiLpNPUxerzAhXll4sKHYfBDiQQ4dUDCA4&uact=5&oq=%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF+%D0%B5%D0%B4%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9+%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEOgQIABANSgQIQRgAUOqFBVixkwVguJkFaAFwAngAgAGiAYgBigKSAQMwLjKYAQCgAQKgAQHAAQE&sclient=gws-wiz)
+Подробную информацию можете найти в сети:
+- [Принцип единственной ответственности на Wikipedia](https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF_%D0%B5%D0%B4%D0%B8%D0%BD%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9_%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8#:~:text=single%2Dresponsibility%20principle%2C%20SRP),%D0%B8%D1%81%D0%BA%D0%BB%D1%8E%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE%20%D0%BD%D0%B0%20%D0%BE%D0%B1%D0%B5%D1%81%D0%BF%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%20%D1%8D%D1%82%D0%BE%D0%B9%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D0%B8.),
+- По тегу [Single-responsibility Principle](https://www.google.com/search?q=Single-responsibility+Principle)
 
 
 ## Соглашения
 
-- **[Styleguide по Markdown](https://arcticicestudio.github.io/styleguide-markdown/)**
+- **[Styleguide по Markdown](https://arcticicestudio.github.io/styleguide-markdown/)** -
+рекомендации по ведению документации
 - **именование методов и функций**
-  происходит по схеме `function [action][triger][event] () { ... }`:
+  происходит по схеме `function [action][triger][event] () { ... }`, `event` - может не быть:
   ```vue
   <template>
-    <button @click="handleAddItemBtnClick">Add Item</button>
+    <div class="simple-list">
+      <SimpleListItem
+        v-for="(item, index) in model"
+        :data="item"
+        @delete="handleSimpleListItemDelete(index)"
+      />
+      <button @click="handleAddItemBtnClick">Add Item</button>
+    </div>
   </template>
+
   <script>
     export default {
+      data() {
+        return {
+          model: []
+        }
+      },
+      created() {
+        this.getList();
+      },
       methods: {
-        handleAddItemBtnClick() {
-          // do something
+        async getList() { // get - action, list - trigger
+          this.model = Promise.resolve(['one', 'two', 'three']) // some API method
+        },
+
+        addItem() { // add - action, item - trigger
+          this.model.push("new item")
+        },
+
+        deleteItem(index) { // delete - action, item - trigger
+          this.model.splice(index, 1)
+        },
+
+        handleAddItemBtnClick() { // handle - action, addItemBtn - trigger, click - event
+          this.addItem();
+          this.getList();
+        },
+
+        handleSimpleListItemDelete(index) { // handle - action, simpleListItem - trigger, delete - event
+          this.addItem(index);
+          this.getList();
         }
       }
     }
@@ -88,9 +119,9 @@
 - **async\await совместно с try\catch**
   вместо `.then().catch()`
 - **обработка ошибок**
-  - уровень поставщика данных - первый этап, ошибки полученные при запросе к серверу, проходят валидацию, затем пробрасывается дальше. Для обработки используется функция `type handleDataProviderError = (e: any) => Error`
+  - уровень поставщика данных - первый этап, ошибки полученные при запросе к серверу, проходят валидацию, затем пробрасывается дальше. Для обработки используется функция `handleDataProviderError(e)`, которая аргументом принимает ошибку и возвращает ошибку.
   - уровень сервиса и Vuex Store Actions - ошибки не обрабатываются, пробрасывается дальше
-  - уровень компонента UI (Vue) - конечный этап, ошибка отлавливается, по надобности пользователю показывается уведомление. Для обработки используется функция `type handleError = (e: any, options: object ) => void`, в опциях обязательно указывается `title` с названием действия `try { ... } catch (e) { handleError(e, { title: "Update user" }); }`
+  - уровень компонента UI (Vue) - конечный этап, ошибка отлавливается, по надобности пользователю показывается уведомление. Для обработки используется функция `handleError(e, options)`, в опциях обязательно указывается `title` с названием действия `try { ... } catch (e) { handleError(e, { title: "Update user" }); }`
 - **документирование кода**
   средствами JSDoc. Документированию подлежат:
   - переменные, если после инициализации тип значения будет отличаться от ткущего
@@ -100,3 +131,33 @@
   - для запуска команд в блоке `scripts` пакет `shx` для приведения к Unix-подобному синтаксису
   - для работы с переменными окружения используется пакет `cross-env`
   - для работы с архивами используется пакет `gzip-cli`
+- **идентификация компонента и коллизии имён** - для лучшего ориентирования не только в файловой структуре, но и при отладке кода в таких инструментах как: Browser DevTools и VueDevtools, рекомендуется:
+  - именовать vue файл в `kebab-case` пример `custom-component.vue`
+  - именовать css файл в `kebab-case` пример `custom-component.css`
+  - именовать js файл в `kebab-case` пример `custom-component.js`
+  - html-класс в `kebab-case` пример `<div class="custom-component" />`
+  - имя vue компонента в `CamelCase` пример `{ name: 'CustomComponent' }`
+  - во избежание коллизии имён использовать паттерн, где дочерний компонент в имени содержит префиксом имя родителя, пример:
+  ```
+  automation
+  │
+  ├───changes
+  │       automation-changes.vue
+  │       automation-changes-filter-panel.vue
+  │       automation-changes-table.vue
+  │
+  ├───rule
+  │   │   automation-rule-setup.vue
+  │   │   automation-rule-setup-item.vue
+  │   │
+  │   ├───action
+  │   │       automation-rule-action.vue
+  │   │       automation-rule-action-simple.vue
+  │   │
+  │   └───threshold
+  │           automation-rule-threshold.vue
+  │
+  └───rule-group
+          automation-rule-group-list.vue
+          automation-rule-group-list-item.vue
+  ```
