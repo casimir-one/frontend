@@ -30,12 +30,7 @@
 
 ## Соглашения
 
-- **[Styleguide по Markdown](https://arcticicestudio.github.io/styleguide-markdown/)** - рекомендации по ведению
-  документации
-- **именование методов, функций и обработка событий** - функцию условно можно разделить на глагол и существительное,
-  например `makeSomeClassInstance()` - `make` - действие,
-  `someClassInstance` - существительное, т.е. действие, а потом пояснение. Функцию обработчик событий именуем по
-  схеме `[action][triger][event]()`:
+- **именование методов, функций обработки событий** - по схеме `handle[triger][event]()`:
   ```vue
   <template>
     <div class="simple-list">
@@ -55,31 +50,9 @@
           model: []
         }
       },
-      created() {
-        this.getList();
-      },
       methods: {
-        async getList() {
-          this.model = Promise.resolve(['one', 'two', 'three'])
-        },
-
-        addItem() {
-          this.model.push("new item")
-        },
-
-        deleteItem(index) {
-          this.model.splice(index, 1)
-        },
-
-        handleAddItemBtnClick() {
-          this.addItem();
-          this.getList();
-        },
-
-        handleSimpleListItemDelete(index) {
-          this.deleteItem(index);
-          this.getList();
-        }
+        handleAddItemBtnClick() {},
+        handleSimpleListItemDelete(index) {}
       }
     }
   </script>
@@ -141,35 +114,39 @@
   - для запуска команд в блоке `scripts` пакет `shx` для приведения к Unix-подобному синтаксису
   - для работы с переменными окружения используется пакет `cross-env`
   - для работы с архивами используется пакет `gzip-cli`
-- **идентификация компонента и коллизии имён** - для лучшего ориентирования не только в файловой структуре, но и при
-  отладке кода в таких инструментах как: Browser DevTools и VueDevtools, рекомендуется:
-  - именовать vue файл в `kebab-case` пример `custom-component.vue`
-  - именовать css файл в `kebab-case` пример `custom-component.css`
-  - именовать js файл в `kebab-case` пример `custom-component.js`
-  - html-класс в `kebab-case` пример `<div class="custom-component" />`
-  - имя vue компонента в `CamelCase` пример `{ name: 'CustomComponent' }`
-  - во избежание коллизии имён, для удобного поиска, понимания связи компонентов, использовать паттерн, где дочерний
-    компонент в имени содержит префиксом имя родителя, пример:
+- **идентификация компонента и коллизии имён** - для лучшего ориентирования в файловой структуре проекта и во избежание коллизии имён и возможности лёгкого масштабирования проекта рекомендуется использовать паттерн, где дочерний компонент в имени содержит префиксом имя родителя, пример:
   ```
   automation
   │
   ├───changes
-  │       automation-changes.vue
-  │       automation-changes-filter-panel.vue
-  │       automation-changes-table.vue
+  │       AutomationChanges.vue
+  │       AutomationChangesFilterPanel.vue
+  │       AutomationChangesTable.vue
   │
   ├───rule
-  │   │   automation-rule-setup.vue
-  │   │   automation-rule-setup-item.vue
+  │   │   AutomationRuleSetup.vue
+  │   │   AutomationRuleSetup-item.vue
   │   │
   │   ├───action
-  │   │       automation-rule-action.vue
-  │   │       automation-rule-action-simple.vue
+  │   │       AutomationRuleAction.vue
+  │   │       AutomationRuleAction-simple.vue
   │   │
   │   └───threshold
-  │           automation-rule-threshold.vue
+  │           AutomationRuleThreshold.vue
   │
   └───rule-group
-          automation-rule-group-list.vue
-          automation-rule-group-list-item.vue
+          AutomationRuleGroupList.vue
+          AutomationRuleGroupListItem.vue
+  ```
+  Так же, для ускорения отладки в DevTools Elements, если компонент имеет html-шаблон, должно быть прописано имя селектора для обёртки и совпадать с названием компонента, даже если обёртка элемент библиотеки, пример:
+  ```vue
+    <templte>
+      <v-container class="automation-changes"> content </v-container>
+    </templte>
+    <script>
+      // AutomationChanges.vue
+      export default {
+        name: "AutomationChanges"
+      }
+    </script>
   ```
