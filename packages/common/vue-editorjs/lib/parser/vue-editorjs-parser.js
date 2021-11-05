@@ -44,6 +44,12 @@ export default Vue.extend({
 
   created() {
     this.stringParser = new TemplateStringParser(this.schemaData, { isTemplateShown: true });
+    this.$watch('parsedTemplate', {
+      handler(newVal) {
+        this.$emit('template-parsed', newVal);
+      },
+      immediate: true
+    });
   },
 
   render() {
