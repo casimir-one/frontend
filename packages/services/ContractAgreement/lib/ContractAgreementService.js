@@ -36,7 +36,8 @@ class ContractAgreementService extends Singleton {
       parties,
       startTime,
       endTime = proposalDefaultLifetime,
-      type
+      type,
+      pdfContent
     } = data;
 
     const formData = createFormData(data);
@@ -54,7 +55,8 @@ class ContractAgreementService extends Singleton {
               startTime,
               endTime,
               type,
-              terms
+              terms,
+              pdfContent
             });
 
             txBuilder.addCmd(createContractAgreementCmd);
@@ -116,7 +118,8 @@ class ContractAgreementService extends Singleton {
       parties,
       startTime,
       endTime = proposalDefaultLifetime,
-      type
+      type,
+      pdfContent
     } = data;
 
     const formData = createFormData(data);
@@ -134,7 +137,8 @@ class ContractAgreementService extends Singleton {
               startTime,
               endTime,
               type,
-              terms
+              terms,
+              pdfContent
             });
             const contractAgreementId = createContractAgreementCmd.getProtocolEntityId();
 
