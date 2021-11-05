@@ -21,7 +21,8 @@ const convertPayloadForCreation = (payload) => {
       parties,
       startTime,
       endTime,
-      type
+      type,
+      pdfContent
     }
   } = payload;
   return {
@@ -32,7 +33,8 @@ const convertPayloadForCreation = (payload) => {
     parties,
     startTime,
     endTime,
-    type
+    type,
+    pdfContent
   };
 };
 
