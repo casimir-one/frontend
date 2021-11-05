@@ -19,6 +19,11 @@
   import VexAutocomplete from '../VexAutocomplete/VexAutocomplete';
   import { getBindableProps } from '../../composables';
 
+  const placeTypesMap = {
+    city: '(cities)',
+    address: 'address'
+  };
+
   export default defineComponent({
     name: 'VexPlacesAutocomplete',
     components: { VexAutocomplete },
@@ -32,6 +37,14 @@
       value: {
         type: String,
         default: ''
+      },
+
+      placeType: {
+        type: String,
+        default: 'city',
+        validator(value) {
+          return ['city', 'address'].includes(value);
+        }
       },
 
       ...VexAutocomplete.options.props
@@ -105,7 +118,7 @@
             predictions = []
           } = await this.apiService.getPlacePredictions({
             input: val,
-            types: ['address']
+            types: [placeTypesMap[this.placeType]]
           });
           this.searchResults = predictions.map((p) => p.description);
         } catch (e) {
