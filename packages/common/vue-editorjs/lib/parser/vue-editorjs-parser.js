@@ -33,7 +33,7 @@ export default Vue.extend({
     },
 
     parsedTemplate() {
-      if (!this.schemaData) {
+      if (!this.schemaData || !this.stringParser) {
         return this.parsedHtml;
       }
 
@@ -42,14 +42,14 @@ export default Vue.extend({
     }
   },
 
+  watch: {
+    parsedTemplate(newVal) {
+      this.$emit('template-parsed', newVal);
+    }
+  },
+
   created() {
     this.stringParser = new TemplateStringParser(this.schemaData, { isTemplateShown: true });
-    this.$watch('parsedTemplate', {
-      handler(newVal) {
-        this.$emit('template-parsed', newVal);
-      },
-      immediate: true
-    });
   },
 
   render() {
