@@ -37,7 +37,6 @@ export default Vue.extend({
         return this.parsedHtml;
       }
 
-      this.stringParser.setCtx(this.schemaData);
       return this.stringParser.parse(this.parsedHtml);
     }
   },
@@ -45,6 +44,10 @@ export default Vue.extend({
   watch: {
     parsedTemplate(newVal) {
       this.emitTemplateParsed(newVal);
+    },
+
+    schemaData(newVal) {
+      this.stringParser.setCtx(newVal);
     }
   },
 
