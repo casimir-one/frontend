@@ -44,6 +44,7 @@ const CHAIN_TYPES = {
     "nonce": "Index",
     "consumers": "RefCount",
     "providers": "RefCount",
+    "sufficients": "RefCount",
     "data": "AccountData"
   },
   "ProposalBatchItemOf": {
@@ -186,20 +187,27 @@ const CHAIN_TYPES = {
     ]
   },
   "DeipAsset": {
-    "id": "AssetId",
-    "amount": "AssetsBalanceOf"
+    "id": "DeipAssetIdOf",
+    "amount": {
+      "0": "AssetsBalanceOf"
+    }
   },
   "DeipAssetOf": "DeipAsset",
   "SimpleCrowdfunding": {
     "external_id": "InvestmentId",
-    "project_id": "ProjectId",
     "start_time": "Moment",
     "end_time": "Moment",
     "status": "SimpleCrowdfundingStatus",
     "asset_id": "AssetId",
-    "total_amount": "AssetsBalanceOf",
-    "soft_cap": "AssetsBalanceOf",
-    "hard_cap": "AssetsBalanceOf",
+    "total_amount": {
+      "0": "AssetsBalanceOf"
+    },
+    "soft_cap": {
+      "0": "AssetsBalanceOf"
+    },
+    "hard_cap": {
+      "0": "AssetsBalanceOf"
+    },
     "shares": "Vec<DeipAsset>"
   },
   "Investment": {
@@ -219,12 +227,15 @@ const CHAIN_TYPES = {
     }
   },
   "FundingModelOf": "FundingModel",
-  "AssetsBalanceOf": "u64",
+  "AssetsBalanceOf": "u128",
   "DeipAssetBalanceOf": "AssetsBalanceOf",
+  "TAssetBalance": "u128",
   "AssetBalance": {
     "balance": "AssetsBalanceOf",
     "is_frozen": "bool",
-    "is_zombie": "bool"
+    "sufficient": "bool",
+    "extra": {
+    }
   },
   "AssetMetadata": {
     "deposit": "Balance",
@@ -239,21 +250,17 @@ const CHAIN_TYPES = {
     "freezer": "AccountId",
     "supply": "AssetsBalanceOf",
     "deposit": "Balance",
-    "max_zombies": "u32",
     "min_balance": "AssetsBalanceOf",
-    "zombies": "u32",
+    "is_sufficient": "bool",
     "accounts": "u32",
+    "sufficients": "u32",
+    "approvals": "u32",
     "is_frozen": "bool"
   },
   "DeipProjectIdOf": "H160",
-  "AssetId": {
-    "0": "H160"
-  },
+  "AssetId": "u32",
   "AssetsAssetIdOf": "AssetId",
-  "DeipAssetIdOf": "AssetId",
-  "Compact<AssetId>": {
-    "0": "AssetId"
-  },
+  "DeipAssetIdOf": "H160",
   "DeipReviewVoteId": "H160",
   "DeipReviewVote": {
     "dao": "AccountId",
@@ -297,8 +304,8 @@ const CHAIN_TYPES = {
     "licenser": "AccountId",
     "licensee": "AccountId",
     "hash": "Hash",
-    "start_time": "Option<Moment>",
-    "end_time": "Option<Moment>",
+    "activation_time": "Option<Moment>",
+    "expiration_time": "Option<Moment>",
     "project_id": "ProjectId",
     "price": "DeipAsset"
   },
@@ -336,8 +343,8 @@ const CHAIN_TYPES = {
     "creator": "AccountId",
     "parties": "Vec<AccountId>",
     "hash": "Hash",
-    "start_time": "Option<Moment>",
-    "end_time": "Option<Moment>"
+    "activation_time": "Option<Moment>",
+    "expiration_time": "Option<Moment>"
   },
   "GeneralContractStatus": {
     "_enum": {

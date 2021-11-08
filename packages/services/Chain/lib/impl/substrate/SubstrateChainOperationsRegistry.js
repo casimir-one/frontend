@@ -314,17 +314,21 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
           source: `0x${terms.projectId}`,
           price: { id: terms.fee.assetId, amount: terms.fee.amount }
         } 
-      } : null;
+      } : {
+          GeneralContractAgreement: {}
+      };
 
-      const createContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`, chainNodeClient.tx.deip.createContractAgreement(
-        /* contractAgreementId: */ `0x${entityId}`,
-        /* creator: */ { Dao: `0x${creator}` },
-        /* parties: */ parties.map((party) => `0x${party}`),
-        /* hash: */ `0x${hash}`,
-        /* start_time: */ startTime || null,
-        /* end_time: */ endTime || null,
-        /* terms: */ contractTerms
-      ));
+      const createContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`, 
+        chainNodeClient.tx.deip.createContractAgreement(
+          /* contractAgreementId: */ `0x${entityId}`,
+          /* creator: */ { Dao: `0x${creator}` },
+          /* parties: */ parties.map((party) => ({ Dao: `0x${party}`})),
+          /* hash: */ `0x${hash}`,
+          /* start_time: */ startTime || null,
+          /* end_time: */ endTime || null,
+          /* terms: */ contractTerms
+        )
+      );
 
       return [createContractAgreementOp];
     },
@@ -335,10 +339,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       party
     }) => {
 
-      const acceptContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, chainNodeClient.tx.deip.acceptContractAgreement(
-        /* contractAgreementId: */ `0x${entityId}`,
-        /* party: */ { Dao: `0x${party}` }
-      ));
+      const acceptContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, 
+        chainNodeClient.tx.deip.acceptContractAgreement(
+          /* contractAgreementId: */ `0x${entityId}`,
+          /* party: */ { Dao: `0x${party}` }
+        )
+      );
 
       return [acceptContractAgreementOp];
     },
@@ -349,10 +355,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       party
     }) => {
 
-      const rejectContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, chainNodeClient.tx.deip.rejectContractAgreement(
-        /* contractAgreementId: */ `0x${entityId}`,
-        /* party: */ { Dao: `0x${party}` }
-      ));
+      const rejectContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, 
+        chainNodeClient.tx.deip.rejectContractAgreement(
+          /* contractAgreementId: */ `0x${entityId}`,
+          /* party: */ { Dao: `0x${party}` }
+        )
+      );
 
       return [rejectContractAgreementOp];
     }
