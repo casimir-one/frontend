@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.349.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.349.0) (2021-11-09)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** wrong view for autofill in the sign-in form ([bca2da4](https://github.com/DEIPworld/deip-modules/commit/bca2da496cca4cec285e20877e1509978f7e4c4b))
+* **@deip/fundraising-module:** fix max amount in amount selector ([93dab8e](https://github.com/DEIPworld/deip-modules/commit/93dab8ec3437c848873139d010b653730f722c8e))
+* **@deip/lib-crypto,@deip/rpc-client:** not ability to run some commands in Windows OS ([ae969c1](https://github.com/DEIPworld/deip-modules/commit/ae969c18b80c89558062b85c43a362a5423bc70f))
+* **@deip/platform-fns, @deip/users-module, @deip/teams-module:** fix attributes files urls ([358ae3f](https://github.com/DEIPworld/deip-modules/commit/358ae3f3c6ca046a33ce2b887975d514f46c71f2))
+* **@deip/rpc-client:** cross-platform archive creating ([3c58b79](https://github.com/DEIPworld/deip-modules/commit/3c58b79e7c11c90b704ad9f94f02c39d6e4f1eb7))
+* **@deip/team-service:** fix join team in createTeam method ([ad06bfa](https://github.com/DEIPworld/deip-modules/commit/ad06bfaefd7d8f5ee5d583e77dc3f9b26e32825f))
+* **@deip/teams-module:** fix team creation ([a47cd72](https://github.com/DEIPworld/deip-modules/commit/a47cd727d9cb2b82e9fecacfbf60c357d794ff3f))
+* **@deip/teams-module:** no promise returned for getTeamsByIds ([fb56198](https://github.com/DEIPworld/deip-modules/commit/fb5619848034ab4ecad78d1c570c5fd838290c5c))
+* **@deip/vue-editorjs:** fix text save after paste ([4693fcf](https://github.com/DEIPworld/deip-modules/commit/4693fcf26d147ef9665cff8cc3a8e985483677d7))
+* **@deip/vuetify-extended:**  location field has infinite loading when empty ([43e1072](https://github.com/DEIPworld/deip-modules/commit/43e10720a87efdffcba5b19944fcbe6ab1bd5c1b))
+* **BalancesCards:** not set grid params ([a624546](https://github.com/DEIPworld/deip-modules/commit/a624546c1f53905c56d76765882fcef67ebc7989))
+
+
+### Features
+
+* **@deip/attributes-module:** added ability to remove key ([a6f801e](https://github.com/DEIPworld/deip-modules/commit/a6f801ec25f35d6c6fae36618ca3fa3f7f934667))
+* **@deip/chain-service:** substrate chainTypes; contractAgreementCmd ([aba26b8](https://github.com/DEIPworld/deip-modules/commit/aba26b82134ef4e3b10f567269ae07a77662819a))
+* **@deip/toolbox:** add uuidv4 ([20e6297](https://github.com/DEIPworld/deip-modules/commit/20e629718f219149ace0405b436e5f3a580000b9))
+* **@deip/vls-layout-schema:** add vls-schema-builder component ([3837477](https://github.com/DEIPworld/deip-modules/commit/3837477977db20fefdae79195ab9dcbbb87b9b3b))
+
+
+
+
+
 ## [1.348.1](https://github.com/DEIPworld/deip-modules/compare/v1.348.0...v1.348.1) (2021-10-18)
 
 
