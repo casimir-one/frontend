@@ -1,6 +1,5 @@
-import { Singleton } from '@deip/toolbox';
+import { Singleton, genSha256Hash } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import crypto from '@deip/lib-crypto';
 import { CreateAccountCmd } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
@@ -19,8 +18,7 @@ class AuthService extends Singleton {
     return this.$http.adminSignIn(model);
   }
 
-  signUp({
-    creator,
+  signUp({ privKey, isAuthorizedCreatorRequired }, {
     email,
     attributes,
     username,
@@ -28,50 +26,59 @@ class AuthService extends Singleton {
     roles
   }) {
     const env = this.proxydi.get('env');
-    const {
-      FAUCET_ACCOUNT_USERNAME,
-      IS_TESTNET
-    } = env;
+    const { IS_TESTNET, FAUCET_ACCOUNT_USERNAME } = env;
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainTxBuilder = chainService.getChainTxBuilder();
+        const chainNodeClient = chainService.getChainNodeClient();
         const userAttributes = attributes || [];
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
+              entityId: username,
               isTeamAccount: false,
               fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
-              creator: creator || FAUCET_ACCOUNT_USERNAME,
+              creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
               authority: {
                 owner: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
-                },
-                active: {
                   auths: [{ key: pubKey, weight: 1 }],
                   weight: 1
                 }
               },
               memoKey: pubKey,
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(userAttributes)).buffer)),
+              description: genSha256Hash(JSON.stringify(userAttributes)),
               attributes: userAttributes,
               email,
-              roles,
-              entityId: username
+              roles
             });
 
             txBuilder.addCmd(createAccountCmd);
-
             return txBuilder.end();
           })
-          .then((packedTx) => {
-            // const chainNodeClient = chainService.getChainNodeClient();
-            // return packedTx.signAsync(privKey, chainNodeClient);
-            const msg = new JsonDataMsg(packedTx.getPayload());
+          .then((finalizedTx) => (isAuthorizedCreatorRequired
+            ? Promise.resolve(finalizedTx)
+            : finalizedTx.signAsync(privKey, chainNodeClient)))
+          .then((finalizedTx) => {
+            const msg = new JsonDataMsg(finalizedTx.getPayload());
             return this.$http.signUp(msg);
           });
+      });
+  }
+
+  generateSeedAccount(username, passwordOrPrivKey) {
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        // TODO: There is no way to define programmatically what user provides exactly -
+        // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
+        const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
+        return chainService.generateChainSeedAccount({
+          username,
+          password: isValidPrivKey ? null : passwordOrPrivKey,
+          privateKey: isValidPrivKey ? passwordOrPrivKey : null
+        });
       });
   }
 }

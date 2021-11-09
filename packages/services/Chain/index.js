@@ -4,6 +4,7 @@ import GrapheneTxBuilder from './lib/impl/graphene/GrapheneTxBuilder';
 import SubstrateTx from './lib/impl/substrate/SubstrateTx';
 import SubstrateTxBuilder from './lib/impl/substrate/SubstrateTxBuilder';
 import * as SubstrateChainUtils from './lib/impl/substrate/utils';
+import * as GrapheneChainUtils from './lib/impl/graphene/utils';
 
 
 export {
@@ -14,5 +15,6 @@ export {
 
   SubstrateTx,
   SubstrateTxBuilder,
-  SubstrateChainUtils
+  SubstrateChainUtils,
+  GrapheneChainUtils
 }

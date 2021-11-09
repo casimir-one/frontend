@@ -2,7 +2,7 @@ import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a } from '@polkadot/util';
 import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
-import { daoIdToAddress } from './utils';
+import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey } from './utils';
 
 
 const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
@@ -16,10 +16,11 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       description
     }) => {
 
-      const signatories = authority.active.auths.map((auth) => {
-        return auth.name ? daoIdToAddress(`0x${auth.name}`, chainNodeClient.registry) : auth.key;
+      const signatories = authority.owner.auths.map((auth) => {
+        return auth.name ? daoIdToAddress(`0x${auth.name}`, chainNodeClient.registry) : pubKeyToAddress(`0x${auth.key}`)
       });
-      const threshold = authority.active.weight;
+      // Due to Substrate specifics, we have to set the weight to 0 for DAO with a single authority
+      const threshold = authority.owner.weight === 1 && signatories.length === 1 ? 0 : authority.owner.weight;
 
       if (!isTeamAccount) {
         assert(signatories.length === 1 && threshold === 0, `User DAO must have a threshold equal to 0 with a single signatory`);
@@ -264,13 +265,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         chainNodeClient.tx.deip.createInvestmentOpportunity(
           /* external_id: */ `0x${entityId}`,
           /* creator: */ { Dao: `0x${teamId}` },
-          /* shares: */ shares,
+          /* shares: */ shares.map((share) => ({ id: share.id, amount: { "0": share.amount } })),
           /* funding_model: */ {
             SimpleCrowdfunding: {
               start_time: startTime,
               end_time: endTime,
-              soft_cap: softCap,
-              hard_cap: hardCap
+              soft_cap: { id: softCap.id, amount: { "0": softCap.amount } },
+              hard_cap: { id: hardCap.id, amount: { "0": hardCap.amount } },
             }
           }
         )
@@ -283,15 +284,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
     [APP_CMD.INVEST]: ({
       investmentOpportunityId,
       investor,
-      asset: {
-        amount
-      }
+      asset
     }) => {
 
       const investOp = chainNodeClient.tx.deipDao.onBehalf(`0x${investor}`,
         chainNodeClient.tx.deip.invest(
           /* investment_opportunity_id: */ `0x${investmentOpportunityId}`,
-          /* amount: */ amount
+          /* amount: */ { id: asset.id, amount: { "0": asset.amount } }
         )
       );
 
@@ -313,7 +312,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       const contractTerms = type === CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE ? {
         TechnologyLicenseAgreementTerms: {
           source: `0x${terms.projectId}`,
-          price: { id: terms.fee.assetId, amount: terms.fee.amount }
+          price: { id: terms.fee.id, amount: { "0": terms.fee.amount } }
         } 
       } : {
           GeneralContractAgreement: {}
@@ -364,6 +363,25 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       );
 
       return [rejectContractAgreementOp];
+    },
+
+
+    [APP_CMD.ASSET_TRANSFER]: ({
+      from,
+      to,
+      asset,
+      memo
+    }) => {
+
+      // TODO: use deip_assets pallet functions
+      const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+        chainNodeClient.tx.balances.transfer(
+          /* to: */ isValidPubKey(`0x${to}`) ? pubKeyToAddress(`0x${to}`) : daoIdToAddress(`0x${to}`, chainNodeClient.registry),
+          /* amount: */ asset.amount
+        )
+      );
+
+      return [transferCoreAssetOp];
     }
 
   }

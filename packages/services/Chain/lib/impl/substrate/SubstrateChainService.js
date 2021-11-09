@@ -8,6 +8,8 @@ import SubstrateTxBuilder from './SubstrateTxBuilder';
 import SubstrateChainApi from './SubstrateChainApi';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
+import SubstrateChainSeedAccount from './SubstrateChainSeedAccount';
+import { verifySignature, isValidPrivKey } from './utils';
 
 
 class SubstrateChainService extends BaseChainService {
@@ -53,6 +55,18 @@ class SubstrateChainService extends BaseChainService {
       this.getChainNodeClient(), 
       this.getChainOperationsRegistry()
     );
+  }
+
+  generateChainSeedAccount({ username, password, privateKey }) {
+    return new SubstrateChainSeedAccount({ username, password, privateKey });
+  }
+
+  isValidPrivKey(privKey) {
+    return isValidPrivKey(`0x${privKey}`);
+  }
+
+  verifySignature(pubKey, msg, sig) {
+    return verifySignature(`0x${pubKey}`, msg, sig);
   }
 
 }

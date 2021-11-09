@@ -25,7 +25,7 @@ class CreateAccountCmd extends ProtocolEntityCmd {
     assert(!!creator, "'creator' is required");
     assert(!!description, "'description' is required");
     assert(!!authority, "'authority' auths must be set");
-    assert(!!authority.owner || !!authority.active, "'owner' or 'active' authority must be set");
+    assert(!!authority.owner, "'owner' authority must be set");
     assert(!!memoKey, "'memoKey' is required");
     assert(isBoolean(isTeamAccount), "Account must belong to a team or user");
 

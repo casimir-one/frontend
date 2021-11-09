@@ -31,7 +31,6 @@ class UserService extends Singleton {
       email,
       status,
       accountOwnerAuth,
-      accountActiveAuth,
       memoKey
     } = data;
 
@@ -49,7 +48,6 @@ class UserService extends Singleton {
               isTeamAccount: false,
               entityId: updater,
               ownerAuth: accountOwnerAuth,
-              activeAuth: accountActiveAuth,
               memoKey,
               description: genSha256Hash(attributes),
               attributes,

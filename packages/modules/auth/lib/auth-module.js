@@ -1,5 +1,3 @@
-import deipRpc from '@deip/rpc-client';
-
 import { proxydi } from '@deip/proxydi';
 import { isEmpty } from '@deip/toolbox/lodash';
 import { SYSTEM_ROLE } from '@deip/constants';
@@ -117,8 +115,8 @@ const install = (Vue, options = {}) => {
             ...data,
             isAdmin: data.roles.some((r) => r.role === 'admin'),
             memoKey: data.account.memo_key,
-            privKey: accessService.getOwnerWif(),
-            pubKey: deipRpc.auth.wifToPublic(accessService.getOwnerWif())
+            privKey: accessService.getOwnerPrivKey(),
+            pubKey: accessService.getOwnerPubKey()
           };
         }
 

@@ -29,6 +29,7 @@
     "@deip/toolbox": "1.349.0",
     "@polkadot/api": "^4.15.1",
     "@polkadot/rpc-provider": "^4.15.1",
+    "@polkadot/x-textencoder": "6.11.1",
     "cross-fetch": "^3.1.4"
   }
 }

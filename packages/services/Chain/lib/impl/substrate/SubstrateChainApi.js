@@ -17,6 +17,10 @@ class SubstrateChainApi extends BaseChainApi {
         return chainService.rpcToChainNode("deip_getProjectList", [null]);
       },
 
+      getAccountsAsync: async function (daoIds) {
+        return chainService.rpcToChainNode("deipDao_getMulti", [null, daoIds.map((daoId) => `0x${daoId}`)]);
+      },
+
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },
       getStateAsync: async function (path) { throw Error(`Not implemented exception`); },
       getConfigAsync: async function () { throw Error(`Not implemented exception`);},
@@ -25,7 +29,6 @@ class SubstrateChainApi extends BaseChainApi {
       getWitnessScheduleAsync: async function () { throw Error(`Not implemented exception`); },
       getHardforkVersionAsync: async function () { throw Error(`Not implemented exception`); },
       getNextScheduledHardforkAsync: async function () { throw Error(`Not implemented exception`); },
-      getAccountsAsync: async function (names) { throw Error(`Not implemented exception`); },
       getAccountReferencesAsync: async function (accountId) { throw Error(`Not implemented exception`); },
       lookupAccountNamesAsync: async function (accountNames) { throw Error(`Not implemented exception`); },
       lookupAccountsAsync: async function (lowerBoundName, limit) { throw Error(`Not implemented exception`); },
