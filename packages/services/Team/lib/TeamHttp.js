@@ -1,51 +1,65 @@
-import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { serializeParams, HttpServiceV2 } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox/lib/classSingleton';
 
-class TeamHttp extends Singleton {
-  http = HttpService.getInstance();
+export class TeamHttp {
+  http = HttpServiceV2.getInstance();
 
-  createTeam(req) {
-    return this.http.post('/api/v2/team', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  async create(req) {
+    return this.http.post(
+      '/api/v2/team',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
-  updateTeam(req) {
-    return this.http.put('/api/v2/team', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  async update(req) {
+    return this.http.put(
+      '/api/v2/team',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
-  joinTeam(req) {
-    return this.http.post('/api/v2/team/join', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  async joinTeam(req) {
+    return this.http.post(
+      '/api/v2/team/join',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
-  leaveTeam(req) {
-    return this.http.post('/api/v2/team/leave', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  async leaveTeam(req) {
+    return this.http.post(
+      '/api/v2/team/leave',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
-  getTeam(teamExternalId) {
+  async get(teamExternalId) {
     return this.http.get(`/api/v2/team/${teamExternalId}`);
   }
 
-  getTeams(teamsIds) {
-    const query = qs.stringify({ teamsIds });
+  async getList(teamsIds) {
+    const query = serializeParams({ teamsIds });
     return this.http.get(`/api/v2/teams?${query}`);
   }
 
-  getTeamsByUser(username, withTenantTeam) {
-    const query = qs.stringify({ withTenantTeam });
+  async getListByUser(username, withTenantTeam) {
+    const query = serializeParams({ withTenantTeam });
     return this.http.get(`/api/v2/teams/member/${username}?${query}`);
   }
 
-  getTeamsListing(withTenantTeam) {
-    const query = qs.stringify({ withTenantTeam });
+  async getListing(withTenantTeam) {
+    const query = serializeParams({ withTenantTeam });
     return this.http.get(`/api/v2/teams/listing?${query}`);
   }
 
-  getTeamsByTenant(tenantId, withTenantTeam) {
-    const query = qs.stringify({ withTenantTeam });
+  async getListByTenant(tenantId, withTenantTeam) {
+    const query = serializeParams({ withTenantTeam });
     return this.http.get(`/api/v2/teams/tenant/${tenantId}?${query}`);
   }
-}
 
-export {
-  TeamHttp
-};
+  /** @type {() => TeamHttp} */
+  static getInstance = createInstanceGetter(TeamHttp);
+}
