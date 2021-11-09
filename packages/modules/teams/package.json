@@ -1,6 +1,6 @@
 {
   "name": "@deip/teams-module",
-  "version": "1.348.1",
+  "version": "1.349.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,19 +20,19 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-module": "1.348.1",
-    "@deip/constants": "1.348.1",
-    "@deip/layouts-module": "1.348.1",
-    "@deip/platform-components": "1.348.1",
-    "@deip/platform-fns": "1.348.1",
-    "@deip/platform-store": "1.348.1",
-    "@deip/proxydi": "1.348.1",
-    "@deip/team-service": "1.348.1",
-    "@deip/toolbox": "1.348.1",
-    "@deip/users-module": "1.348.1",
-    "@deip/validation-plugin": "1.348.1",
-    "@deip/vue-layout-schema": "1.348.1",
-    "@deip/vuetify-extended": "1.348.1"
+    "@deip/attributes-module": "1.349.0",
+    "@deip/constants": "1.349.0",
+    "@deip/layouts-module": "1.349.0",
+    "@deip/platform-components": "1.349.0",
+    "@deip/platform-fns": "1.349.0",
+    "@deip/platform-store": "1.349.0",
+    "@deip/proxydi": "1.349.0",
+    "@deip/team-service": "1.349.0",
+    "@deip/toolbox": "1.349.0",
+    "@deip/users-module": "1.349.0",
+    "@deip/validation-plugin": "1.349.0",
+    "@deip/vue-layout-schema": "1.349.0",
+    "@deip/vuetify-extended": "1.349.0"
   },
   "peerDependencies": {
     "@deip/auth-module": "^1.341.0",

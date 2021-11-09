@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.349.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.349.0) (2021-11-09)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns, @deip/users-module, @deip/teams-module:** fix attributes files urls ([358ae3f](https://gitlab.com/DEIP/deip-client-modules/commit/358ae3f3c6ca046a33ce2b887975d514f46c71f2))
+
+
+
+
+
 ## [1.348.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.0...v1.348.1) (2021-10-18)
 
 **Note:** Version bump only for package @deip/platform-fns
