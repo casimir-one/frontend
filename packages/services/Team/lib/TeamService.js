@@ -63,8 +63,7 @@ class TeamService extends Singleton {
               isTeamAccount: true,
               fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
               authority: {
-                owner: authority,
-                active: authority
+                owner: authority
               },
               creator,
               memoKey,
@@ -142,9 +141,7 @@ class TeamService extends Singleton {
         isProposalApproved = true,
         proposalLifetime = proposalDefaultLifetime
       } = {},
-
-      ownerAuth, // need clarification
-      activeAuth // need clarification
+      ownerAuth // need clarification
     } = data;
 
     const formData = createFormData(data);
@@ -166,7 +163,6 @@ class TeamService extends Singleton {
 
               attributes, // need clarification
               ownerAuth, // need clarification
-              activeAuth, // need clarification
               description
             });
 

@@ -5,7 +5,7 @@ import { Metadata } from '@polkadot/metadata';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
 import { assert } from '@deip/toolbox';
-import { pubKeyToAddress, daoIdToAddress, getMultiAddress } from './utils';
+import { pubKeyToAddress, daoIdToAddress, getMultiAddress, getSeedAccount } from './utils';
 
 
 class SubstrateTx extends BaseTx {
@@ -217,10 +217,11 @@ class SubstrateTx extends BaseTx {
       });
   }
 
-  signAsync(keyring, api, options = { override: false }) {
+  signAsync(privKey, api, options = { override: false }) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(options.override || !this.getSignedInvariant(), `Transaction is already signed. Set 'override=true' option to override the current signer`);
-
+    
+    const keyring = getSeedAccount({}, `0x${privKey}`);
     const registry = api.registry;
 
     return Promise.all([

@@ -1,5 +1,5 @@
 import { assert } from '@deip/toolbox';
-import PackedTx from './PackedTx';
+import FinalizedTx from './FinalizedTx';
 
 
 class BaseTxBuilder {
@@ -58,7 +58,7 @@ class BaseTxBuilder {
   finalize(params) {
     return this._tx.finalize(params)
       .then((tx) => {
-        return new PackedTx(tx, this._protocolCmds);
+        return new FinalizedTx(tx, this._protocolCmds);
       })
   }
 

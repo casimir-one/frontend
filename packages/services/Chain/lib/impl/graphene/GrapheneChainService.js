@@ -4,6 +4,8 @@ import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';
 import GrapheneChainApi from './GrapheneChainApi';
+import GrapheneChainSeedAccount from './GrapheneChainSeedAccount';
+import { isValidPrivKey, verifySignature } from './utils';
 
 class GrapheneChainService extends BaseChainService {
 
@@ -40,7 +42,19 @@ class GrapheneChainService extends BaseChainService {
   getChainTxBuilder() {
     return new GrapheneTxBuilder(this.getChainNodeClient(), this.getChainOperationsRegistry());
   }
-  
+ 
+  generateChainSeedAccount({ username, password, privateKey }) {
+    return new GrapheneChainSeedAccount({ username, password, privateKey });
+  }
+
+  isValidPrivKey(privKey) {
+    return isValidPrivKey(privKey);
+  }
+
+  verifySignature(pubKey, msg, sig) {
+    return verifySignature(pubKey, msg, sig);
+  }
+
 }
 
 

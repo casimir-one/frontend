@@ -1,6 +1,6 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
-import { toAssetUnits, millisecToIso } from './../../helpers';
+import { APP_CMD } from '@deip/constants';
+import { toAssetUnits, millisecToIso } from './utils';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
@@ -23,12 +23,6 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         weight_threshold: authority.owner ? authority.owner.weight : 1
       };
 
-      const activeAuths = {
-        account_auths: [],
-        key_auths: [],
-        weight_threshold: authority.active ? authority.active.weight : 1
-      };
-
       for (let i = 0; i < authority.owner.auths.length; i++) {
         let auth = authority.owner.auths[i];
         if (auth.name) {
@@ -38,21 +32,12 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         }
       }
 
-      for (let i = 0; i < authority.active.auths.length; i++) {
-        let auth = authority.active.auths[i];
-        if (auth.name) {
-          activeAuths.account_auths.push([auth.name, auth.weight]);
-        } else {
-          activeAuths.key_auths.push([auth.key, auth.weight]);
-        }
-      }
-
       const createAccountOp = ['create_account', {
         fee: fee,
         creator: creator,
         new_account_name: entityId,
         owner: ownerAuths,
-        active: activeAuths,
+        active: ownerAuths,
         active_overrides: [],
         memo_key: memoKey,
         json_metadata: JSON.stringify({ description }),
@@ -72,13 +57,12 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       isTeamAccount,
       memoKey,
       ownerAuth,
-      activeAuth
     }) => {
 
       const updateAccountOp = ['update_account', {
         account: entityId,
         owner: ownerAuth || undefined,
-        active: activeAuth || undefined,
+        active: ownerAuth || undefined,
         active_overrides: [],
         memo_key: memoKey || undefined,
         json_metadata: JSON.stringify({ description }),
@@ -311,8 +295,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       investor,
       asset
     }) => {
-      const amountUnits = toAssetUnits(asset);
 
+      const amountUnits = toAssetUnits(asset);
       const investOp = ['contribute_to_token_sale', {
         token_sale_external_id: investmentOpportunityId,
         contributor: investor,
@@ -330,8 +314,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       asset,
       memo
     }) => {
+      
       const amountUnits = toAssetUnits(asset);
-
       const transferOp = ['transfer', {
         from: from,
         to: to,

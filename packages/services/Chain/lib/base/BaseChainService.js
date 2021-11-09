@@ -72,6 +72,19 @@ class BaseChainService extends Singleton {
         );
       })
   }
+
+  generateChainSeedAccount({ username, password, privateKey }) {
+    throw new Error("Not implemented exception!");
+  }
+
+  isValidPrivKey(privKey) {
+    throw new Error("Not implemented exception!");
+  }
+
+  verifySignature(pubKey, msg, sig) {
+    throw new Error("Not implemented exception!");
+  }
+
 }
 
 

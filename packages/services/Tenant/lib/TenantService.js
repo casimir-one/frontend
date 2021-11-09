@@ -74,10 +74,6 @@ class TenantService extends Singleton {
                 owner: {
                   auths: [{ key: pubKey, weight: 1 }],
                   weight: 1
-                },
-                active: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
                 }
               },
               memoKey: pubKey,
@@ -127,10 +123,6 @@ class TenantService extends Singleton {
                   creator: FAUCET_ACCOUNT_USERNAME,
                   authority: {
                     owner: {
-                      auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
-                      weight: 1
-                    },
-                    active: {
                       auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
                       weight: 1
                     }

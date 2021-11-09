@@ -33,25 +33,39 @@ const isAddress = (address, addressFormat) => {
   }
 }
 
+const isValidPrivKey = (privKey) => {
+  return isHex(privKey) && hexToU8a(privKey).length === 32;
+}
+
+const isValidPubKey = (pubKey) => {
+  return isHex(pubKey) && hexToU8a(pubKey).length === 32;
+}
 
 const getMultiAddress = (addresses, threshold) => {
   const multiAddress = createKeyMulti([...addresses].sort(), threshold);
   return u8aToHex(multiAddress);
 }
 
-
-const getAccountFromJson = (json, password, options = { type: 'sr25519' }) => {
+const getSeedAccountFromJson = (json, password, options = { type: 'sr25519' }) => {
   const keyring = new Keyring(options);
-  const account = keyring.createFromJson(json);
-  account.unlock(password);
-  return account;
+  const keyringPair = keyring.createFromJson(json);
+  keyringPair.unlock(password);
+  return keyringPair;
 }
 
 
-const getAccountFromSeed = (meta = {}, seed = randomAsHex(32), options = { type: 'sr25519' }) => {
+const getSeedAccount = (meta = {}, seed = randomAsHex(32), options = { type: 'sr25519' }) => {
   const keyring = new Keyring(options);
-  const account = keyring.addFromUri(seed, meta);
-  return account;
+  const keyringPair = keyring.addFromUri(seed, meta);
+  return keyringPair;
+}
+
+
+const verifySignature = (pubKey, msg, sig, options = { type: 'sr25519' }) => {
+  const address = pubKeyToAddress(pubKey);
+  const keyring = new Keyring(options);
+  const keyringPair = keyring.addFromAddress(address);
+  return keyringPair.verify(msg, sig, keyringPair.publicKey);
 }
 
 
@@ -60,6 +74,9 @@ export {
   daoIdToAddress,
   isAddress,
   getMultiAddress,
-  getAccountFromJson,
-  getAccountFromSeed
+  getSeedAccountFromJson,
+  getSeedAccount,
+  verifySignature,
+  isValidPrivKey,
+  isValidPubKey
 }

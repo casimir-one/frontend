@@ -1,6 +1,6 @@
 import decode from 'jwt-decode';
 import { Singleton } from '@deip/toolbox';
-import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY } from '@deip/constants';
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@deip/constants';
 
 class AccessService extends Singleton {
   getTokenExpirationDate(jwt) {
@@ -18,28 +18,32 @@ class AccessService extends Singleton {
     return expirationDate < new Date();
   }
 
-  /// ///////////
-
   getAccessToken() {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
-  getOwnerWif() {
+  getOwnerPrivKey() {
     return localStorage.getItem(OWNER_PRIVATE_KEY);
   }
 
-  setOwnerWif(wif) {
-    return localStorage.setItem(OWNER_PRIVATE_KEY, wif);
+  getOwnerPubKey() {
+    return localStorage.getItem(OWNER_PUBLIC_KEY);
+  }
+
+  setOwnerKeysPair(privKey, pubKey) {
+    localStorage.setItem(OWNER_PRIVATE_KEY, privKey);
+    localStorage.setItem(OWNER_PUBLIC_KEY, pubKey);
   }
 
   clearAccessToken() {
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(OWNER_PRIVATE_KEY);
+    localStorage.removeItem(OWNER_PUBLIC_KEY);
   }
 
-  setAccessToken(jwt, wif) {
+  setAccessToken(jwt, privKey, pubKey) {
     localStorage.setItem(ACCESS_TOKEN_KEY, jwt);
-    this.setOwnerWif(wif);
+    this.setOwnerKeysPair(privKey, pubKey);
   }
 
   isLoggedIn() {

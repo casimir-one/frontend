@@ -104,8 +104,7 @@ class ProjectService extends Singleton {
                 fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
                 creator: creator,
                 authority: {
-                  owner: authoritySetup,
-                  active: authoritySetup
+                  owner: authoritySetup
                 },
                 memoKey: memoKey,
                 description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({})).buffer)),

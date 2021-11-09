@@ -1,4 +1,4 @@
-class PackedTx {
+class FinalizedTx {
 
   _tx;
   _protocolCmds;
@@ -26,4 +26,4 @@ class PackedTx {
 }
 
 
-export default PackedTx;
+export default FinalizedTx;
