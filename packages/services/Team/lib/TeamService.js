@@ -25,9 +25,7 @@ const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 *
 
 class TeamService extends Singleton {
   proxydi = proxydi;
-
   teamHttp = TeamHttp.getInstance();
-
   userService = UserService.getInstance();
 
   createTeam(payload, isCreateDefaultProject = false) {
@@ -119,7 +117,7 @@ class TeamService extends Singleton {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
-            return this.teamHttp.createTeam(msg);
+            return this.teamHttp.create(msg);
           });
       });
   }
@@ -194,7 +192,7 @@ class TeamService extends Singleton {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
-            return this.teamHttp.updateTeam(msg);
+            return this.teamHttp.update(msg);
           });
       });
   }
@@ -299,7 +297,7 @@ class TeamService extends Singleton {
 
   getTeam(teamId) {
     return Promise.all([
-      this.teamHttp.getTeam(teamId),
+      this.teamHttp.get(teamId),
       this.userService.getUsersByTeam(teamId)
     ]).then(([team, members]) => ({
       ...team,
@@ -308,19 +306,19 @@ class TeamService extends Singleton {
   }
 
   getTeams(teamsIds) {
-    return this.teamHttp.getTeams(teamsIds);
+    return this.teamHttp.getList(teamsIds);
   }
 
   getTeamsListing(withTenantTeam = false) {
-    return this.teamHttp.getTeamsListing(withTenantTeam);
+    return this.teamHttp.getListing(withTenantTeam);
   }
 
   getTeamsByUser(user, withTenantTeam = false) {
-    return this.teamHttp.getTeamsByUser(user, withTenantTeam);
+    return this.teamHttp.getListByUser(user, withTenantTeam);
   }
 
   getTeamsByTenant(tenantId, withTenantTeam = false) {
-    return this.teamHttp.getTeamsByTenant(tenantId, withTenantTeam);
+    return this.teamHttp.getListByTenant(tenantId, withTenantTeam);
   }
 }
 

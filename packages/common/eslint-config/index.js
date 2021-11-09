@@ -55,6 +55,7 @@ module.exports = {
       'never'
     ],
     'no-plusplus': 'off',
-    'class-methods-use-this': 'off'
+    'class-methods-use-this': 'off',
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }]
   }
 };

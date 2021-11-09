@@ -4,6 +4,9 @@ import { proxydi } from '@deip/proxydi';
 
 import { Singleton, isFunction } from '@deip/toolbox';
 
+/**
+ * @deprecated Use HttpServiceV2
+ */
 class HttpService extends Singleton {
   accessService = AccessService.getInstance();
 
