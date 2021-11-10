@@ -31,6 +31,7 @@
         <vue-editorjs
           v-model="formData.body"
           :placeholder="$t('module.documentTemplates.form.bodyPlaceholder')"
+          :tools="editorTools"
         />
 
         <v-divider />
@@ -65,7 +66,7 @@
 
   import { VexMessage } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
-  import { VueEditorjs } from '@deip/vue-editorjs';
+  import { VueEditorjs, PlaceholderTool } from '@deip/vue-editorjs';
   import { formFactory } from '@deip/platform-components';
 
   export default defineComponent({
@@ -84,6 +85,20 @@
         type: Array,
         default: () => []
       }
+    },
+
+    data() {
+      return {
+        editorTools: {
+          placeholder: {
+            class: PlaceholderTool,
+            config: {
+              placeholders: this.placeholders.map((p) => this.formatPlaceholder(p)),
+              buttonContent: '{{}}'
+            }
+          }
+        }
+      };
     },
 
     computed: {
