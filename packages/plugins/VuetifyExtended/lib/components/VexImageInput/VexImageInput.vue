@@ -1,9 +1,9 @@
-<template lang="html">
-  <div v-if="ready">
+<template>
+  <div v-if="ready" class="vex-image-input">
     <div v-if="label" class="text-body-2 mb-1 text--secondary">
       {{ label }}
     </div>
-    <v-sheet rounded class="overflow-hidden">
+    <v-sheet rounded class="overflow-hidden mb-5">
       <v-responsive
         :aspect-ratio="_aspectRatio"
       >
@@ -286,7 +286,7 @@
 </script>
 
 <style lang="scss">
-  .vex-mage-input {
+  .vex-image-input {
     &__mask {
       position: absolute;
       width: 100%;
