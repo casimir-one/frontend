@@ -23,36 +23,54 @@ export default Vue.extend({
 
   data() {
     return {
-      stringParser: null
+      /** @type {TemplateStringParser | null} */
+      stringTemplateParser: null
     };
   },
 
   computed: {
+    /**
+     * @returns {string}
+     */
     parsedHtml() {
       return parser.parse(this.value);
     },
 
+    /**
+     * @returns {string}
+     */
     parsedTemplate() {
-      if (!this.schemaData || !this.stringParser) {
+      if (!this.schemaData || !this.stringTemplateParser) {
         return this.parsedHtml;
       }
 
-      return this.stringParser.parse(this.parsedHtml);
+      return this.stringTemplateParser.parse(this.parsedHtml);
     }
+
   },
 
   watch: {
-    parsedTemplate(newVal) {
-      this.emitTemplateParsed(newVal);
+    parsedTemplate: {
+      handler(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          this.emitTemplateParsed(newVal);
+        }
+      },
+      immediate: true
     },
 
-    schemaData(newVal) {
-      this.stringParser.setCtx(newVal);
+    schemaData: {
+      handler(newVal) {
+        this.stringTemplateParser.setCtx(newVal);
+      },
+      deep: true
     }
+
   },
 
   created() {
-    this.stringParser = new TemplateStringParser(this.schemaData, { isTemplateShown: true });
+    this.stringTemplateParser = new TemplateStringParser(this.schemaData,
+      { isTemplateShown: true });
   },
 
   methods: {
