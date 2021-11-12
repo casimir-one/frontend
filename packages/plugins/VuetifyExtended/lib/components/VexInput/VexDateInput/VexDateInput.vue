@@ -1,6 +1,6 @@
 <template>
   <v-menu
-    v-model.trim="open"
+    v-model.trim="isOpen"
     :close-on-content-click="false"
     offset-y
     min-width="290px"
@@ -15,8 +15,8 @@
         append-icon="mdi-calendar"
         autocomplete="off"
         v-bind="internalFieldProps"
-
-        @click:clear="$refs.field.blur()"
+        @click:append="handleIconClick()"
+        @click:clear="handleClearTextFieldClick()"
         v-on="on"
       />
     </template>
@@ -24,7 +24,7 @@
       v-model="internalValue"
       v-bind="pickerProps"
       :allowed-dates="allowedDates"
-      @change="onChange"
+      @change="handleDatePickerChange"
     />
   </v-menu>
 </template>
@@ -65,7 +65,7 @@
     },
     data() {
       return {
-        open: false
+        isOpen: false
       };
     },
     computed: {
@@ -111,9 +111,9 @@
       }
     },
     methods: {
-      onChange(e) {
+      handleDatePickerChange(e) {
         this.$emit('change', e);
-        this.open = false;
+        this.toggleCalendar();
       },
       allowedDates(val) {
         if (this.onlyFuture) {
@@ -122,7 +122,18 @@
         }
 
         return true;
+      },
+      toggleCalendar() {
+        this.isOpen = !this.isOpen;
+      },
+      handleClearTextFieldClick() {
+        this.$refs.field.blur();
+      },
+      handleIconClick() {
+        this.toggleCalendar();
       }
+
     }
+
   });
 </script>
