@@ -4,5 +4,5 @@ export const toAssetUnits = ({ symbol, precision, amount }) => {
 }
 
 export const millisecToIso = (millisecond) => {
-  return new Date(millisecond - (new Date().getTimezoneOffset() * 60000)).toISOString().split('.')[0];
+  return new Date(millisecond).toISOString().split('.')[0];
 }

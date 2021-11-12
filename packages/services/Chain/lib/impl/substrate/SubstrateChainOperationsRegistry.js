@@ -230,18 +230,17 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
 
     [APP_CMD.ISSUE_ASSET]: ({
-      assetId,
       issuer,
-      amount,
+      asset,
       recipient,
       memo
     }) => {
 
       const issueAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.issueAsset(
-          /* assetId: */ `0x${assetId}`,
+          /* assetId: */ `0x${asset.id}`,
           /* beneficiary */ { Dao: `0x${recipient}` },
-          /* amount */ amount
+          /* amount */ asset.amount
         )
       );
 
