@@ -391,14 +391,15 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
 
     [APP_CMD.ISSUE_ASSET]: ({
       issuer,
-      amount,
+      asset,
       recipient,
       memo
     }) => {
+      const amountUnits = toAssetUnits(asset);
 
       const issueAssetOp = ['issue_asset', {
         issuer: issuer,
-        amount: amount,
+        amount: amountUnits,
         recipient: recipient,
         memo: memo || undefined,
         extensions: []

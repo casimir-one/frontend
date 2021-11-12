@@ -116,11 +116,13 @@ class AssetsService extends Singleton {
 
             if (holders && holders.length) {
               for (let i = 0; i < holders.length; i++) {
-                const { account, amount } = holders[i];
+                const { account, asset } = holders[i];
                 const issueAssetCmd = new IssueAssetCmd({
-                  assetId: tokenId,
+                  asset: {
+                    ...asset,
+                    id: tokenId
+                  },
                   issuer,
-                  amount,
                   recipient: account
                 });
                 txBuilder.addCmd(issueAssetCmd);
@@ -138,9 +140,8 @@ class AssetsService extends Singleton {
   }
 
   issueAsset({ privKey }, {
-    assetId,
     issuer,
-    amount,
+    asset,
     recipient
   }) {
     const env = this.proxydi.get('env');
@@ -153,9 +154,8 @@ class AssetsService extends Singleton {
         return chainTxBuilder.begin()
           .then((txBuilder) => {
             const issueAssetCmd = new IssueAssetCmd({
-              assetId,
               issuer,
-              amount,
+              asset,
               recipient
             });
             txBuilder.addCmd(issueAssetCmd);
