@@ -8,7 +8,7 @@
           </span>
           <span
             :class="collectedAmountClass"
-          >{{ collected.amount }} {{ collected.assetId }}
+          >{{ collected.amount }} {{ collected.symbol }}
           </span>
         </div>
 
@@ -17,7 +17,7 @@
             {{ $t('module.fundraising.fundraisingProgress.goal') }}:
           </span>
           <span class="text--primary font-weight-medium">
-            {{ hardCap.amount }} {{ hardCap.assetId }}
+            {{ hardCap.amount }} {{ hardCap.symbol }}
           </span>
         </div>
       </div>
@@ -89,10 +89,10 @@
 
     computed: {
       hardCap() {
-        return this.$$fromAssetUnits(this.tokenSale?.hardCap);
+        return this.tokenSale?.hardCap;
       },
       collected() {
-        return this.$$fromAssetUnits(this.tokenSale?.totalAmount);
+        return this.tokenSale?.totalInvested;
       },
       currentPercent() {
         if (!this.hardCap) { return 0; }
@@ -133,10 +133,9 @@
 
     methods: {
       formatTimeToNow(time) {
-        let timeToFormat = time;
-        if (isString(time)) {
-          timeToFormat = this.$$parseISO(time, true);
-        }
+        const timeToFormat = isString(time)
+          ? this.$$parseISO(time, true)
+          : new Date(time);
 
         return this.$$formatDistanceToNow(timeToFormat);
       }

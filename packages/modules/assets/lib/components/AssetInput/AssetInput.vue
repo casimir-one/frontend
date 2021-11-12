@@ -25,7 +25,7 @@
     </v-col>
     <v-col cols="4">
       <v-select
-        v-model="internalValue.assetId"
+        v-model="internalValue.symbol"
         class="rounded-bl-0 rounded-tl-0"
         :items="assetsListKeys"
         :hide-details="true"
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+  import { isEqual } from '@deip/toolbox/lodash';
+
   import { assetsMixin } from '../../mixins';
 
   export default {
@@ -79,18 +81,18 @@
 
     data() {
       const model = {
+        id: undefined,
         amount: undefined,
-        assetId: this.$env.ASSET_UNIT,
+        symbol: this.$env.ASSET_UNIT,
         precision: undefined
       };
 
       return {
         defaultValue: { ...model },
-        internalValue: this.value
-          ? {
-            ...model,
-            ...this.value
-          } : model
+        internalValue: {
+          ...model,
+          ...this.value
+        }
       };
     },
 
@@ -99,7 +101,7 @@
         return this.$store.getters['assets/listKeys'](this.assetsFilter);
       },
 
-      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.assetId); }
+      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.symbol); }
     },
     watch: {
       'selectedAsset.precision': {
@@ -108,17 +110,27 @@
           this.internalValue.precision = val;
         }
       },
-      value: {
+      'selectedAsset._id': {
+        immediate: true,
         handler(val) {
-          this.internalValue = val || { ...this.defaultValue };
+          this.internalValue.id = val;
+        }
+      },
+      value: {
+        handler(newVal, oldVal) {
+          if (!isEqual(newVal, oldVal)) {
+            this.internalValue = newVal || { ...this.defaultValue };
+          }
         },
         deep: true
       },
       internalValue: {
         deep: true,
         immediate: true,
-        handler(val) {
-          this.$emit('change', val);
+        handler(newVal, oldVal) {
+          if (!isEqual(newVal, oldVal)) {
+            this.$emit('change', newVal);
+          }
         }
       }
     }

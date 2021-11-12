@@ -7,9 +7,10 @@ const DEFAULT_PRECISION = 3;
 
 export const assetsMixin = {
   methods: {
+    // TODO remove
     $$fromAssetUnits(val = '') {
       if (val.indexOf('.') === -1) {
-        const [stringAmount, assetId = this.$env.ASSET_UNIT] = val.split(' ');
+        const [stringAmount, symbol = this.$env.ASSET_UNIT] = val.split(' ');
         const amount = stringAmount ? parseInt(stringAmount, 10) : 0;
         const precision = 0;
 
@@ -17,7 +18,7 @@ export const assetsMixin = {
           stringAmount,
           amount,
           precision,
-          assetId
+          symbol
         };
       }
 
@@ -25,13 +26,13 @@ export const assetsMixin = {
       const stringAmount = matches[1];
       const amount = stringAmount ? parseFloat(stringAmount) : 0;
       const precision = stringAmount ? stringAmount.split('.')[1].length : DEFAULT_PRECISION;
-      const assetId = matches[2] || this.$env.ASSET_UNIT;
+      const symbol = matches[2] || this.$env.ASSET_UNIT;
 
       return {
         stringAmount,
         amount,
         precision,
-        assetId
+        symbol
       };
     },
 
@@ -61,11 +62,11 @@ export const assetsMixin = {
       }
 
       if (isObject(val)) {
-        const { amount = 0, assetId, precision = DEFAULT_PRECISION } = val;
+        const { amount = 0, symbol, precision = DEFAULT_PRECISION } = val;
 
         const formattedOpts = this.$$formatCurrencyOpts({
           precision,
-          symbol: assetId
+          symbol
         }, options, formatted);
 
         return currency(amount, formattedOpts).format();

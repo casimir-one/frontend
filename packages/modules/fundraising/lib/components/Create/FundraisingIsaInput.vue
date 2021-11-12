@@ -24,7 +24,7 @@
           v-slot="{ errors }"
         >
           <asset-input
-            v-model="amountPerItem"
+            v-model="assetPerItem"
             :label="$t('module.fundraising.createForm.isaAmountPerItem')"
             required
             :assets-filter="capAssetsFilter"
@@ -55,7 +55,7 @@
       isa: {
         type: Object,
         default: () => ({
-          amountPerItem: null,
+          assetPerItem: null,
           quantity: null
         })
       },
@@ -66,13 +66,13 @@
     },
 
     computed: {
-      amountPerItem: {
+      assetPerItem: {
         get() {
-          return this.isa.amountPerItem;
+          return this.isa.assetPerItem;
         },
 
         set(value) {
-          this.$emit('change', { amountPerItem: value, quantity: this.quantity });
+          this.$emit('change', { assetPerItem: value, quantity: this.quantity });
         }
       },
 
@@ -82,7 +82,7 @@
         },
 
         set(value) {
-          this.$emit('change', { quantity: value, amountPerItem: this.amountPerItem });
+          this.$emit('change', { quantity: value, assetPerItem: this.assetPerItem });
         }
       }
     }

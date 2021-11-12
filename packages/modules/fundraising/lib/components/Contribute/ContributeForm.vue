@@ -30,7 +30,7 @@
               v-model="internalAmount"
               :goal-amount="hardCap.amount"
               :remaining-amount="remainingAmount"
-              :asset="assetId"
+              :asset="hardCap.symbol"
               :disabled="loading"
             />
           </validation-provider>
@@ -117,44 +117,50 @@
         internalAmount: null,
         formData: {
           agreeFundraising: false,
-          amountToContribute: ''
+          assetToContribute: null
         }
       };
     },
 
     computed: {
       hardCap() {
-        return this.$$fromAssetUnits(this.tokenSale.hardCap);
+        return this.tokenSale?.hardCap
+          ? {
+            ...this.tokenSale.hardCap,
+            amount: parseInt(this.tokenSale.hardCap.amount, 10)
+          }
+          : {};
       },
 
       collected() {
-        return this.$$fromAssetUnits(this.tokenSale.totalAmount);
+        return this.tokenSale?.totalInvested ? {
+          ...this.tokenSale.totalInvested,
+          amount: parseInt(this.tokenSale.totalInvested.amount, 10)
+        }
+          : {};
       },
 
       remainingAmount() {
         return this.hardCap.amount - this.collected.amount;
       },
 
-      assetId() {
-        return this.hardCap.assetId;
-      },
-
       isUserBalanceEnough() {
-        const userBalance = this.$store.getters['wallet/one'](this.assetId);
+        const userBalance = this.$store.getters['wallet/one'](this.hardCap.symbol);
         if (!userBalance) return false;
 
-        const userBalanceAmount = this.$$fromAssetUnits(userBalance.amount).amount;
-        return (this.internalAmount || 0) <= userBalanceAmount;
+        const userBalanceAmount = parseInt(userBalance?.amount, 10);
+        return (this.internalAmount?.amount || 0) <= userBalanceAmount;
       }
     },
 
     watch: {
       internalAmount(val) {
-        this.formData.amountToContribute = this.$$toAssetUnits({
-          amount: val,
-          assetId: this.hardCap.assetId,
+        this.formData.assetToContribute = {
+          amount: val.toString(),
+          id: this.hardCap.id,
+          symbol: this.hardCap.symbol,
           precision: this.hardCap.precision
-        }, false);
+        };
       }
     },
 
@@ -185,9 +191,9 @@
         this.$store.dispatch('fundraising/contribute', {
           user: this.$currentUser,
           data: {
-            tokenSaleId: this.tokenSale.externalId,
-            contributor: this.$currentUser.username,
-            amount: this.formData.amountToContribute
+            investmentOpportunityId: this.tokenSale._id,
+            investor: this.$currentUser.username,
+            asset: this.formData.assetToContribute
           }
         })
           .then(() => {
