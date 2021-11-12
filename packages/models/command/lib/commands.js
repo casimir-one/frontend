@@ -31,6 +31,13 @@ import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
 import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd';
 import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
 import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
+import DeleteUserProfileCmd from './impl/DeleteUserProfileCmd';
+import UpdateAttributeSettingsCmd from './impl/UpdateAttributeSettingsCmd';
+import UpdateLayoutCmd from './impl/UpdateLayoutCmd';
+import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
+import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
+import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
+import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 
 
 export {
@@ -66,5 +73,12 @@ export {
   CreateProjectNdaCmd,
   CreateContractAgreementCmd,
   AcceptContractAgreementCmd,
-  RejectContractAgreementCmd
+  RejectContractAgreementCmd,
+  DeleteUserProfileCmd,
+  UpdateAttributeSettingsCmd,
+  UpdateLayoutCmd,
+  UpdateLayoutSettingsCmd,
+  UpdateNetworkSettingsCmd,
+  UpdatePortalProfileCmd,
+  UpdatePortalSettingsCmd
 }

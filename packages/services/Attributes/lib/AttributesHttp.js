@@ -44,10 +44,8 @@ class AttributesHttp extends Singleton {
     return this.http.get('/tenant/settings/attribute-settings');
   }
 
-  // temp solution, need change to msg
-
-  updateSettings(data) {
-    return this.http.put('/tenant/settings/attribute-settings', data);
+  updateSettings(req) {
+    return this.http.put('/tenant/settings/attribute-settings', req.getHttpBody());
   }
 }
 

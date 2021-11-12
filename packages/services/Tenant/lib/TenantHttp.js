@@ -16,36 +16,16 @@ class TenantHttp extends Singleton {
     return this.http.get('/api/network/tenants/listing');
   }
 
-  updateTenantProfile(updatedProfile) {
-    return this.http.put('/tenant/profile', updatedProfile);
+  updateTenantProfile(req) {
+    return this.http.put('/tenant/profile', req.getHttpBody());
   }
 
-  updateNetworkSettings(data) {
-    return this.http.put('/tenant/network-settings', data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  updateNetworkSettings(req) {
+    return this.http.put('/tenant/network-settings', req.getHttpBody());
   }
 
-  updateTenantSettings(form) {
-    return this.http.put('/tenant/settings', form, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-  }
-
-  createTenantResearchAttribute(researchAttribute) {
-    return this.http.post('/tenant/research-attributes', researchAttribute);
-  }
-
-  updateTenantResearchAttribute(researchAttribute) {
-    return this.http.put('/tenant/research-attributes', researchAttribute);
-  }
-
-  deleteTenantResearchAttribute(researchAttributeId) {
-    return this.http.delete_(`/tenant/research-attributes/${researchAttributeId}`);
+  updateTenantSettings(req) {
+    return this.http.put('/tenant/settings', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   postSignUp(req) {
@@ -60,8 +40,8 @@ class TenantHttp extends Singleton {
     return this.http.get('/tenant/registry/sign-ups');
   }
 
-  rejectSignUpRequest(username) {
-    return this.http.put('/tenant/registry/sign-ups/reject', { username });
+  rejectSignUpRequest(req) {
+    return this.http.put('/tenant/registry/sign-ups/reject', req.getHttpBody());
   }
 }
 
