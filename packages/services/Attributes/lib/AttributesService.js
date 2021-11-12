@@ -2,7 +2,8 @@ import { Singleton } from '@deip/toolbox';
 import {
   CreateAttributeCmd,
   UpdateAttributeCmd,
-  DeleteAttributeCmd
+  DeleteAttributeCmd,
+  UpdateAttributeSettingsCmd
 } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
 import { AttributesHttp } from './AttributesHttp';
@@ -56,10 +57,10 @@ class AttributesService extends Singleton {
     return this.attributesHttp.getSettings();
   }
 
-  // temp solution need change to cmd and send msg
-
   updateSettings(data) {
-    return this.attributesHttp.updateSettings(data);
+    const updateAttributeSettingsCmd = new UpdateAttributeSettingsCmd(data);
+    const msg = new JsonDataMsg({ appCmds: [updateAttributeSettingsCmd] });
+    return this.attributesHttp.updateSettings(msg);
   }
 }
 

@@ -12,14 +12,12 @@ class LayoutHttp extends Singleton {
     return this.http.get('/tenant/settings/layout-settings');
   }
 
-  // temp solution, need change to msg
-
-  updateLayouts(data) {
-    return this.http.put('/tenant/settings/layouts', data);
+  updateLayouts(req) {
+    return this.http.put('/tenant/settings/layouts', req.getHttpBody());
   }
 
-  updateSettings(data) {
-    return this.http.put('/tenant/settings/layout-settings', data);
+  updateSettings(req) {
+    return this.http.put('/tenant/settings/layout-settings', req.getHttpBody());
   }
 }
 

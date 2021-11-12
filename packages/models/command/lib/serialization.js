@@ -29,9 +29,16 @@ import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
 import CreateReviewCmd from './impl/CreateReviewCmd';
 import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
 import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
-import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd'
-import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd'
-import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd'
+import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd';
+import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
+import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
+import DeleteUserProfileCmd from './impl/DeleteUserProfileCmd';
+import UpdateAttributeSettingsCmd from './impl/UpdateAttributeSettingsCmd';
+import UpdateLayoutCmd from './impl/UpdateLayoutCmd';
+import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
+import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
+import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
+import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 
 
 const APP_CMD_INFO = {
@@ -67,7 +74,14 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_PROJECT_NDA]: { class: CreateProjectNdaCmd },
   [APP_CMD.CREATE_CONTRACT_AGREEMENT]: { class: CreateContractAgreementCmd },
   [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: { class: AcceptContractAgreementCmd },
-  [APP_CMD.REJECT_CONTRACT_AGREEMENT]: { class: RejectContractAgreementCmd }
+  [APP_CMD.REJECT_CONTRACT_AGREEMENT]: { class: RejectContractAgreementCmd },
+  [APP_CMD.UPDATE_PORTAL_PROFILE]: { class: UpdatePortalProfileCmd },
+  [APP_CMD.UPDATE_PORTAL_SETTINGS]: { class: UpdatePortalSettingsCmd },
+  [APP_CMD.UPDATE_LAYOUT]: { class: UpdateLayoutCmd },
+  [APP_CMD.UPDATE_LAYOUT_SETTINGS]: { class: UpdateLayoutSettingsCmd },
+  [APP_CMD.UPDATE_ATTRIBUTE_SETTINGS]: { class: UpdateAttributeSettingsCmd },
+  [APP_CMD.UPDATE_NETWORK_SETTINGS]: { class: UpdateNetworkSettingsCmd },
+  [APP_CMD.DELETE_USER_PROFILE]: { class: DeleteUserProfileCmd }
 }
 
 

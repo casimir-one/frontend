@@ -1,4 +1,9 @@
 import { collectionMerge, genObjectId, Singleton } from '@deip/toolbox';
+import { JsonDataMsg } from '@deip/message-models';
+import {
+  UpdateLayoutCmd,
+  UpdateLayoutSettingsCmd
+} from '@deip/command-models';
 import { LayoutHttp } from './LayoutHttp';
 
 class LayoutService extends Singleton {
@@ -13,10 +18,10 @@ class LayoutService extends Singleton {
       .then((res) => res.find((l) => l._id === _id));
   }
 
-  // temp solution need change to cmd and send msg
-
   updateLayouts(data) {
-    return this.layoutHttp.updateLayouts(data);
+    const updateLayoutCmd = new UpdateLayoutCmd(data);
+    const msg = new JsonDataMsg({ appCmds: [updateLayoutCmd] });
+    return this.layoutHttp.updateLayouts(msg);
   }
 
   create(data) {
@@ -60,7 +65,9 @@ class LayoutService extends Singleton {
   }
 
   updateSettings(data) {
-    return this.layoutHttp.updateSettings(data);
+    const updateLayoutSettingsCmd = new UpdateLayoutSettingsCmd(data);
+    const msg = new JsonDataMsg({ appCmds: [updateLayoutSettingsCmd] });
+    return this.layoutHttp.updateSettings(msg);
   }
 }
 

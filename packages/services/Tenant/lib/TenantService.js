@@ -1,9 +1,18 @@
-import { Singleton } from '@deip/toolbox';
+import {
+  Singleton,
+  createFormData
+} from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
-import { CreateAccountCmd } from '@deip/command-models';
+import {
+  CreateAccountCmd,
+  DeleteUserProfileCmd,
+  UpdateNetworkSettingsCmd,
+  UpdatePortalProfileCmd,
+  UpdatePortalSettingsCmd
+} from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg } from '@deip/message-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { TenantHttp } from './TenantHttp';
 
 class TenantService extends Singleton {
@@ -23,28 +32,34 @@ class TenantService extends Singleton {
     return this.tenantHttp.getNetworkTenants();
   }
 
-  updateTenantProfile(updatedProfile) {
-    return this.tenantHttp.updateTenantProfile(updatedProfile);
+  updateTenantProfile(data) {
+    const updatePortalProfileCmd = new UpdatePortalProfileCmd(data);
+    const msg = new JsonDataMsg({ appCmds: [updatePortalProfileCmd] });
+    return this.tenantHttp.updateTenantProfile(msg);
   }
 
   updateNetworkSettings(data) {
-    return this.tenantHttp.updateNetworkSettings(data);
+    const updateNetworkSettingsCmd = new UpdateNetworkSettingsCmd(data);
+    const msg = new JsonDataMsg({ appCmds: [updateNetworkSettingsCmd] });
+    return this.tenantHttp.updateNetworkSettings(msg);
   }
 
-  updateTenantSettings(form) {
-    return this.tenantHttp.updateTenantSettings(form);
-  }
+  updateTenantSettings(data) {
+    const {
+      title,
+      banner,
+      logo
+    } = data;
 
-  createTenantResearchAttribute(researchAttribute) {
-    return this.tenantHttp.createTenantResearchAttribute(researchAttribute);
-  }
+    const formData = createFormData(data);
 
-  updateTenantResearchAttribute(researchAttribute) {
-    return this.tenantHttp.updateTenantResearchAttribute(researchAttribute);
-  }
-
-  deleteTenantResearchAttribute(researchAttribute) {
-    return this.tenantHttp.deleteTenantResearchAttribute(researchAttribute);
+    const updatePortalSettingsCmd = new UpdatePortalSettingsCmd({
+      title,
+      banner,
+      logo
+    });
+    const msg = new MultFormDataMsg(formData, { appCmds: [updatePortalSettingsCmd] });
+    return this.tenantHttp.updateTenantSettings(msg);
   }
 
   postSignUp({
@@ -148,8 +163,9 @@ class TenantService extends Singleton {
   }
 
   rejectSignUpRequest(username) {
-    // TODO: replace with a specific command
-    return this.tenantHttp.rejectSignUpRequest(username);
+    const deleteUserProfileCmd = new DeleteUserProfileCmd({ username });
+    const msg = new JsonDataMsg({ appCmds: [deleteUserProfileCmd] });
+    return this.tenantHttp.rejectSignUpRequest(msg);
   }
 }
 
