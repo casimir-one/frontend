@@ -1,9 +1,9 @@
 import { InvestmentsService } from '@deip/investments-service';
 import {
   listGetter,
-  oneGetter,
-  setListMutation,
-  setOneMutation
+  oneGetterFactory,
+  setListMutationFactory,
+  setOneMutationFactory
 } from '@deip/platform-store';
 
 const investmentsService = InvestmentsService.getInstance();
@@ -13,7 +13,7 @@ const STATE = {
 };
 
 const GETTERS = {
-  one: oneGetter,
+  one: oneGetterFactory({ selectorKey: '_id' }),
   list: listGetter
 };
 
@@ -58,10 +58,10 @@ const ACTIONS = {
       });
   },
 
-  getTokenSaleContributions({ commit, getters }, tokenSaleId) {
-    return investmentsService.getInvestmentsHistoryByTokenSale(tokenSaleId)
+  getTokenSaleContributions({ commit, getters }, investmentOpportunityId) {
+    return investmentsService.getInvestmentsHistoryByTokenSale(investmentOpportunityId)
       .then((contributions) => {
-        const tokenSale = getters.one(tokenSaleId);
+        const tokenSale = getters.one(investmentOpportunityId);
         commit('setOne', {
           ...tokenSale,
           contributions
@@ -81,18 +81,18 @@ const ACTIONS = {
     const {
       user: { privKey },
       data: {
-        tokenSaleId,
-        contributor,
-        amount
+        investmentOpportunityId,
+        investor,
+        asset
       }
     } = payload;
 
     return investmentsService.investProjectTokenSale(
       { privKey },
       {
-        tokenSaleId,
-        investor: contributor,
-        amount
+        investmentOpportunityId,
+        investor,
+        asset
       }
     );
   },
@@ -108,8 +108,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setOne: setOneMutation,
-  setList: setListMutation
+  setOne: setOneMutationFactory({ mergeKey: '_id' }),
+  setList: setListMutationFactory({ mergeKey: '_id' })
 };
 
 export const fundraisingStore = {

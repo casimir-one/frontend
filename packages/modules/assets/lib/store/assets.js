@@ -17,9 +17,9 @@ const GETTERS = {
   list: listGetter,
 
   listKeys: (_, getters) => (query = {}) => getters.list(query)
-    .map((ass) => ass.stringSymbol),
+    .map((ass) => ass.symbol),
 
-  one: oneGetterFactory({ selectorKey: 'stringSymbol' })
+  one: oneGetterFactory({ selectorKey: 'symbol' })
 };
 
 const ACTIONS = {
@@ -37,14 +37,15 @@ const ACTIONS = {
       });
   },
 
-  createProjectSecurityToken(_, payload) {
-    return assetsService.createAsset(...payload);
+  create(_, payload) {
+    const { user, data } = payload;
+    return assetsService.createAsset(user, data);
   }
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'stringSymbol' }),
-  setOne: setOneMutationFactory({ mergeKey: 'stringSymbol' })
+  setList: setListMutationFactory({ mergeKey: '_id' }),
+  setOne: setOneMutationFactory({ mergeKey: '_id' })
 };
 
 export const assetsStore = {

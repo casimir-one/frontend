@@ -147,10 +147,11 @@
     },
 
     computed: {
+      // TODO rethink logic, maybe security token should be passed in props;
+      // select asset for fundraising from team assets that weren't sold
       issuedTokens() {
         if (hasValue(this.project.securityTokens)) {
-          const lastIndex = this.project.securityTokens.length - 1;
-          return this.$$fromAssetUnits(this.project.securityTokens[lastIndex]);
+          return this.project.securityTokens[0];
         }
 
         return null;
@@ -159,11 +160,11 @@
       availableTokens() {
         const teamBalance = this.$store.getters['balances/list']({
           owner: this.project.researchGroup.external_id,
-          assetSymbol: this.issuedTokens?.assetId
+          assetSymbol: this.issuedTokens?.symbol
         });
 
         if (teamBalance.length > 0) {
-          return this.$$fromAssetUnits(teamBalance[0].amount);
+          return teamBalance[0];
         }
 
         return null;
@@ -173,11 +174,11 @@
     watch: {
       'formData.isa': {
         handler(value) {
-          if (isNil(value.amountPerItem) || isNil(value.quantity)) return;
+          if (isNil(value.assetPerItem) || isNil(value.quantity)) return;
 
           const cap = {
-            ...value.amountPerItem,
-            amount: value.amountPerItem.amount * parseInt(value.quantity, 10)
+            ...value.assetPerItem,
+            amount: value.assetPerItem.amount * parseInt(value.quantity, 10)
           };
           this.formData.caps.soft = cap;
           this.formData.caps.hard = cap;
@@ -186,38 +187,34 @@
     },
 
     methods: {
-      formatDate(val) {
-        return new Date(val).toISOString()
-          .split('.')[0];
+      convertDateToTimestamp(val) {
+        return new Date(val).getTime();
       },
 
       createSecurityToken() {
         const DEFAULT_PRECISION = 0;
-        const DEFAULT_AMOUNT = 10000;
-        const assetId = this.generateAssetSymbol();
+        const DEFAULT_AMOUNT = '10000';
+        const symbol = this.generateAssetSymbol();
         const amount = this.isaFundraise
           ? parseInt(this.formData.isa.quantity, 10) * DEFAULT_AMOUNT
           : DEFAULT_AMOUNT;
 
         const holders = [{
           account: this.project.researchGroup.external_id,
-          amount: this.$$toAssetUnits({
-            amount,
-            assetId,
+          asset: {
+            amount: amount.toString(),
+            symbol,
             precision: DEFAULT_PRECISION
-          }, false)
+          }
         }];
 
-        const data = [
-          {
-            privKey: this.$currentUser.privKey,
-            username: this.$currentUser.username
-          },
-          {
+        const data = {
+          user: this.$currentUser,
+          data: {
             issuer: this.project.researchGroup.external_id,
-            symbol: assetId,
+            symbol,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseInt(amount + '0'.repeat(DEFAULT_PRECISION), 10),
+            maxSupply: parseFloat(amount + '0'.repeat(DEFAULT_PRECISION), 10),
             description: '',
             projectTokenOption: {
               projectId: this.project.externalId,
@@ -228,11 +225,11 @@
             },
             holders
           }
-        ];
+        };
 
-        return this.$store.dispatch('assets/createProjectSecurityToken', data)
-          .then(() => this.$store.dispatch('assets/getBySymbol', assetId))
-          .then(() => assetId);
+        return this.$store.dispatch('assets/create', data)
+          .then(() => this.$store.dispatch('assets/getBySymbol', symbol))
+          .then(() => symbol);
       },
 
       createFundraising(shares) {
@@ -242,11 +239,11 @@
             title: this.formData.title,
             teamId: this.project.researchGroup.external_id,
             projectId: this.project.externalId,
-            startTime: this.formatDate(this.formData.dates.start),
-            endTime: this.formatDate(this.formData.dates.end),
+            startTime: this.convertDateToTimestamp(this.formData.dates.start),
+            endTime: this.convertDateToTimestamp(this.formData.dates.end),
             shares,
-            softCap: this.$$toAssetUnits(this.formData.caps.soft, false),
-            hardCap: this.$$toAssetUnits(this.formData.caps.hard, false)
+            softCap: this.formData.caps.soft,
+            hardCap: this.formData.caps.hard
           },
           proposalInfo: {
             isProposal: this.isProposal
@@ -256,7 +253,7 @@
         if (this.isaFundraise) {
           payload.data.metadata = {
             isa: {
-              amountPerItem: this.$$toAssetUnits(this.formData.isa.amountPerItem, false),
+              assetPerItem: this.formData.isa.assetPerItem,
               quantity: parseInt(this.formData.isa.quantity, 10)
             }
           };
@@ -279,24 +276,21 @@
 
         if (this.autoCreateSecurityToken) {
           this.createSecurityToken()
-            .then((assetId) => {
-              const { currentSupply, precision } = this.$store.getters['assets/one'](assetId);
-              const shares = [
-                this.$$toAssetUnits({
-                  amount: currentSupply,
-                  assetId,
-                  precision
-                }, false)
-              ];
+            .then((symbol) => {
+              const { _id, currentSupply, precision } = this.$store.getters['assets/one'](symbol);
+              const shares = [{
+                id: _id,
+                amount: currentSupply,
+                symbol,
+                precision
+              }];
               this.createFundraising(shares);
             });
         } else {
-          const shares = [
-            this.$$toAssetUnits({
-              ...this.issuedTokens,
-              amount: this.formData.tokens
-            }, false)
-          ];
+          const shares = [{
+            ...this.issuedTokens,
+            amount: this.formData.tokens
+          }];
           this.createFundraising(shares);
         }
       },

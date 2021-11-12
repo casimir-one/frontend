@@ -104,20 +104,14 @@
     computed: {
       tokenSale() {
         const projectTokenSales = this.$store.getters['fundraising/list']({
-          researchExternalId: this.projectId
+          projectId: this.projectId
         });
 
         if (!projectTokenSales.length) {
           return null;
         }
 
-        const tokenSales = projectTokenSales.map((s) => ({
-          ...s,
-          startTime: this.$$parseISO(s.startTime, true),
-          endTime: this.$$parseISO(s.endTime, true)
-        }));
-
-        const sorted = orderBy(tokenSales, ['startTime'], ['desc']);
+        const sorted = orderBy(projectTokenSales, ['startTime'], ['desc']);
 
         return sorted[0];
       },
@@ -135,7 +129,7 @@
 
         if (!this.tokenSale.contributions) {
           return {
-            ...this.$$fromAssetUnits(this.tokenSale.hardCap),
+            ...this.tokenSale.hardCap,
             amount: 0
           };
         }
@@ -143,13 +137,13 @@
         const amount = this.tokenSale.contributions.reduce((acc, current) => {
           if (current.contributor === this.$currentUser.username) {
             // eslint-disable-next-line no-param-reassign
-            acc += this.$$fromAssetUnits(current.amount).amount;
+            acc += current.asset.amount;
           }
           return acc;
         }, 0);
 
         return {
-          ...this.$$fromAssetUnits(this.tokenSale.hardCap),
+          ...this.tokenSale.hardCap,
           amount
         };
       }
@@ -159,9 +153,9 @@
       this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
       this.loading = true;
-      this.getProjectTokenSaleData().finally(() => { 
-        this.loading = false; 
-        });
+      this.getProjectTokenSaleData().finally(() => {
+        this.loading = false;
+      });
     },
 
     destroyed() {
@@ -185,7 +179,7 @@
           this.cancelAutoUpdate();
           return this.getProjectTokenSaleData();
         }
-        
+
         return this.getProjectTokenSaleData();
       },
 
@@ -193,13 +187,12 @@
         return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
           .then(() => {
             if (this.tokenSale) {
-              this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale.externalId);
+              this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale._id);
             }
           })
           .catch((error) => {
             console.error(error);
-          })
-          
+          });
       },
 
       cancelAutoUpdate() {

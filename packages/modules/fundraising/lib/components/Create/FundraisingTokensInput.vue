@@ -21,7 +21,7 @@
             outlined
             persistent-hint
             :error-messages="errors"
-            :suffix="issuedTokens.assetId"
+            :suffix="issuedTokens.symbol"
             :hint="tokensHint"
             autocomplete="off"
           >
@@ -105,8 +105,7 @@
     methods: {
       toPercent(val, from) {
         if (!val) return '';
-        const target = from;
-        const pc = (val / target.amount) * 100;
+        const pc = (val / from.amount) * 100;
 
         return `${Math.round(pc * 100) / 100}%`;
       }

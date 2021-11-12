@@ -9,6 +9,7 @@
           :title="$t('module.assets.createTokenForm.title', {entity: sentenceCase(projectAlias) })"
           title-margin="16"
         >
+          <!-- TODO remove project title -->
           <div class="text-body-2">
             {{ sentenceCase(projectAlias) }}: {{ project.title }}
           </div>
@@ -68,10 +69,10 @@
               <v-row class="align-center">
                 <v-col cols="6">
                   <v-select
-                    :items="[teamData]"
+                    :items="[team]"
                     item-text="name"
-                    item-value="external_id"
-                    :value="teamData.external_id"
+                    item-value="entityId"
+                    :value="team.entityId"
                     disabled
                     outlined
                     :label="$t('module.assets.createTokenForm.shareholder')"
@@ -275,7 +276,7 @@
         type: Object,
         required: true
       },
-      teamData: {
+      team: {
         type: Object,
         required: true
       },
@@ -373,16 +374,13 @@
         this.loading = true;
         const DEFAULT_PRECISION = 0;
 
-        const data = [
-          {
-            privKey: this.$currentUser.privKey,
-            username: this.$currentUser.username
-          },
-          {
-            issuer: this.project.researchGroup.external_id,
+        const payload = {
+          user: this.$currentUser,
+          data: {
             symbol: this.formModel.symbol,
+            issuer: this.project.researchGroup.external_id,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseInt(this.formModel.maxSupply + '0'.repeat(DEFAULT_PRECISION), 10),
+            maxSupply: parseFloat(this.formModel.maxSupply + '0'.repeat(DEFAULT_PRECISION), 10),
             description: '',
             projectTokenOption: {
               projectId: this.project.externalId,
@@ -396,16 +394,16 @@
               ...this.formModel.holders
             ].map((holder) => ({
               account: holder.account,
-              amount: this.$$toAssetUnits({
+              asset: {
                 amount: holder.amount,
-                assetId: this.formModel.symbol,
+                symbol: this.formModel.symbol,
                 precision: DEFAULT_PRECISION
-              }, false)
+              }
             }))
           }
-        ];
+        };
 
-        this.$store.dispatch('assets/createProjectSecurityToken', data)
+        this.$store.dispatch('assets/create', payload)
           .then(() => {
             this.$emit('success');
           })
