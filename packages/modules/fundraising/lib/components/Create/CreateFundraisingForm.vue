@@ -174,11 +174,11 @@
     watch: {
       'formData.isa': {
         handler(value) {
-          if (isNil(value.assetPerItem) || isNil(value.quantity)) return;
+          if (isNil(value.assetPerItem)) return;
 
           const cap = {
             ...value.assetPerItem,
-            amount: value.assetPerItem.amount * parseInt(value.quantity, 10)
+            amount: (value.assetPerItem.amount || 0) * (parseInt(value.quantity, 10) || 0)
           };
           this.formData.caps.soft = cap;
           this.formData.caps.hard = cap;

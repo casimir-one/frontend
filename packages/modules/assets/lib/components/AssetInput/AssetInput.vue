@@ -12,7 +12,7 @@
         :rules="required ? 'required|number' : 'number'"
       >
         <v-text-field
-          v-model="internalValue.amount"
+          v-model="amount"
           class="rounded-br-0 rounded-tr-0"
           :label="label"
           outlined
@@ -25,7 +25,7 @@
     </v-col>
     <v-col cols="4">
       <v-select
-        v-model="internalValue.symbol"
+        v-model="symbol"
         class="rounded-bl-0 rounded-tl-0"
         :items="assetsListKeys"
         :hide-details="true"
@@ -39,12 +39,8 @@
 <script>
   import { isEqual } from '@deip/toolbox/lodash';
 
-  import { assetsMixin } from '../../mixins';
-
   export default {
     name: 'AssetInput',
-
-    mixins: [assetsMixin],
 
     model: {
       prop: 'value',
@@ -87,12 +83,17 @@
         precision: undefined
       };
 
+      const lazyValue = {
+        ...model,
+        ...this.value
+      };
+
       return {
         defaultValue: { ...model },
-        internalValue: {
-          ...model,
-          ...this.value
-        }
+        lazyValue,
+
+        amount: lazyValue.amount,
+        symbol: lazyValue.symbol
       };
     },
 
@@ -101,37 +102,60 @@
         return this.$store.getters['assets/listKeys'](this.assetsFilter);
       },
 
-      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.symbol); }
+      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.symbol); },
+
+      internalValue: {
+        get() {
+          return this.lazyValue;
+        },
+        set(val) {
+          if (isEqual(val, this.lazyValue)) return;
+          this.emitValueChange(val);
+        }
+      }
     },
     watch: {
-      'selectedAsset.precision': {
-        immediate: true,
-        handler(val) {
-          this.internalValue.precision = val;
-        }
-      },
-      'selectedAsset._id': {
-        immediate: true,
-        handler(val) {
-          this.internalValue.id = val;
-        }
-      },
-      value: {
+      selectedAsset: {
         handler(newVal, oldVal) {
-          if (!isEqual(newVal, oldVal)) {
-            this.internalValue = newVal || { ...this.defaultValue };
-          }
+          if (newVal?._id === oldVal?._id) return;
+
+          this.internalValue = {
+            ...this.internalValue,
+            id: newVal._id,
+            precision: newVal.precision
+          };
+        },
+        immediate: true,
+        deep: true
+      },
+
+      value: {
+        handler(newVal) {
+          if (isEqual(newVal, this.lazyValue)) return;
+
+          this.lazyValue = newVal || { ...this.defaultValue };
         },
         deep: true
       },
-      internalValue: {
-        deep: true,
-        immediate: true,
-        handler(newVal, oldVal) {
-          if (!isEqual(newVal, oldVal)) {
-            this.$emit('change', newVal);
-          }
-        }
+
+      amount(newVal) {
+        this.internalValue = {
+          ...this.internalValue,
+          amount: newVal
+        };
+      },
+
+      symbol(newVal) {
+        this.internalValue = {
+          ...this.internalValue,
+          symbol: newVal
+        };
+      }
+    },
+
+    methods: {
+      emitValueChange(val) {
+        this.$emit('change', val);
       }
     }
   };
