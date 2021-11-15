@@ -32,18 +32,13 @@
               />
             </validation-provider>
 
-            <validation-provider
-              v-slot="{ errors }"
-              :name="passwordLabel"
-              rules="required"
-            >
-              <vex-password-input
-                v-model="formModel.password"
-                :label="passwordLabel"
-                :error-messages="errors"
-                v-bind="fieldsProps"
-              />
-            </validation-provider>
+            <vex-password-repeat-input
+              v-model="formModel.password"
+              :password-label="passwordLabel"
+              :repeat-password-label="repeatPasswordLabel"
+              :password-min-lentgh="newPasswordMinLentgh"
+              :password-max-lentgh="newPasswordMaxLentgh"
+            />
 
             <slot name="apend-fields" v-bind="binds" />
           </vex-stack>
@@ -83,14 +78,14 @@
 </template>
 
 <script>
-  import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
+  import { VexStack, VexPasswordRepeatInput } from '@deip/vuetify-extended';
 
   export default {
     name: 'AuthSignUp',
 
     components: {
       VexStack,
-      VexPasswordInput
+      VexPasswordRepeatInput
     },
 
     props: {
@@ -100,12 +95,21 @@
           return this.$t('module.auth.password');
         }
       },
+
+      repeatPasswordLabel: {
+        type: String,
+        default() {
+          return this.$t('module.auth.repeatPassword');
+        }
+      },
+
       emailLabel: {
         type: String,
         default() {
           return this.$t('module.auth.email');
         }
       },
+
       submitLabel: {
         type: String,
         default() {
@@ -129,7 +133,18 @@
       roles: {
         type: Array,
         default: () => []
+      },
+
+      newPasswordMinLentgh: {
+        type: Number,
+        default: 10
+      },
+
+      newPasswordMaxLentgh: {
+        type: Number,
+        default: 64
       }
+
     },
 
     data() {
