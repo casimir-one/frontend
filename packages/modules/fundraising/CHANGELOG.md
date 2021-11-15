@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.350.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.350.0) (2021-11-15)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix max amount in amount selector ([93dab8e](https://gitlab.com/DEIP/deip-client-modules/commit/93dab8ec3437c848873139d010b653730f722c8e))
+
+
+
+
+
 # [1.349.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.349.0) (2021-11-09)
 
 

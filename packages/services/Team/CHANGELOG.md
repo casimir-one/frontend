@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.350.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.350.0) (2021-11-15)
+
+
+### Bug Fixes
+
+* **@deip/team-service:** fix join team in createTeam method ([ad06bfa](https://github.com/DEIPworld/deip-modules/commit/ad06bfaefd7d8f5ee5d583e77dc3f9b26e32825f))
+
+
+### Features
+
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+
+
+
+
+
 # [1.349.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.349.0) (2021-11-09)
 
 
