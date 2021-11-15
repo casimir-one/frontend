@@ -8,6 +8,7 @@ export default {
       haveAccountQuestion: 'Already have an account?',
       forgotPasswordQuestion: 'Forgot password?',
       password: 'Password',
+      repeatPassword: 'Repeat new password',
       email: 'Email',
       message: 'Message',
       restore: 'Restore',
