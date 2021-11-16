@@ -124,7 +124,7 @@
 
       assetsFilter() {
         return this.assetBalance
-          ? { stringSymbol: this.assetBalance.assetSymbol }
+          ? { symbol: this.assetBalance.symbol }
           : { type: ASSET_TYPE.SYSTEM };
       }
     },
@@ -132,7 +132,7 @@
     watch: {
       assetBalance: {
         handler(val) {
-          this.asset = val ? { assetId: val.assetSymbol } : null;
+          this.asset = val ? { symbol: val.symbol } : null;
         },
         deep: true
       }
@@ -169,8 +169,8 @@
           : this.$currentUser.username;
         const payload = {
           initiator: this.$currentUser,
-          amount: parseInt(this.asset.amount, 10) * 100, // cents
-          currency: this.asset.assetId,
+          amount: parseFloat(this.asset.amount, 10) * 100, // cents
+          currency: this.asset.symbol,
           account,
           timestamp: Date.now()
         };

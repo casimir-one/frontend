@@ -16,7 +16,7 @@
               readonly
               color="white"
             >
-              {{ balance.assetSymbol }}
+              {{ balance.symbol }}
             </v-chip>
             <span class="text-overline ml-3">{{ $t('module.wallet.balances.balance') }}</span>
           </div>
@@ -51,7 +51,7 @@
 
 <script>
   import { VexColorShadow, VexStack } from '@deip/vuetify-extended';
-  import { assetsMixin, currency } from '@deip/assets-module';
+  import { currency } from '@deip/assets-module';
 
   export default {
     name: 'BalanceCard',
@@ -60,8 +60,6 @@
       VexColorShadow,
       VexStack
     },
-
-    mixins: [assetsMixin],
 
     props: {
       balance: {
@@ -86,13 +84,9 @@
         };
       },
 
-      asset() {
-        return this.$$fromAssetUnits(this.balance.amount);
-      },
-
       formattedAmount() {
         return currency(
-          this.asset.stringAmount,
+          this.balance.amount,
           {
             symbol: '',
             separator: ',',
