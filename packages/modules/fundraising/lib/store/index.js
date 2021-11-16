@@ -100,8 +100,8 @@ const ACTIONS = {
   getContributionsHistory({ commit }, username) {
     return investmentsService.getAccountInvestmentsHistory(username)
       .then((res) => {
-        const tokenSales = res.map((item) => item.tokenSale);
-        commit('setList', tokenSales);
+        const investmentOpportunities = res.map((item) => item.investmentOpportunity);
+        commit('setList', investmentOpportunities);
         return res;
       });
   }
