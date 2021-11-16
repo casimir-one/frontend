@@ -6,6 +6,7 @@ import {
   VCol,
   VTextField,
   VBtn,
+  VIcon,
   VDivider,
   VSpacer,
   VForm
@@ -52,11 +53,11 @@ export default defineComponent({
   },
 
   methods: {
-    addMapKey() {
+    handleAddRowClick() {
       this.formData.mapping.push({ key: '', value: '' });
     },
 
-    removeMapKey(index) {
+    handleRemoveRowClick(index) {
       this.formData.mapping.splice(index, 1);
     },
 
@@ -90,6 +91,15 @@ export default defineComponent({
               clearable
             />
           </VCol>
+          <VCol class="d-flex justify-end align-center col col-1">
+            <VBtn
+              rounded="true"
+              small="true"
+              icon="true"
+              onClick={() => this.handleRemoveRowClick(index)}>
+                <VIcon>mdi-delete</VIcon>
+              </VBtn>
+            </VCol>
         </VRow>
       ));
     },
@@ -102,7 +112,7 @@ export default defineComponent({
               outlined
               color="primary"
               small
-              onClick={() => this.addMapKey()}
+              onClick={() => this.handleAddRowClick()}
             >Add key</VBtn>
           </VCol>
         </VRow>
