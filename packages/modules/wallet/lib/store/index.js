@@ -16,7 +16,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: 'assetSymbol' }),
+  one: oneGetterFactory({ selectorKey: 'symbol' }),
   history: (state) => state.history
 };
 
