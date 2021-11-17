@@ -23,9 +23,9 @@ export const VlsBuilderTree = {
   },
 
   methods: {
-    genNode(item, level = 0) {
-      const { icon, name } = this.getContainerNodeInfo(item.id);
-      const { uid, children } = item;
+    genNode(node, level = 0) {
+      const { icon, name } = this.getContainerNodeInfo(node.id);
+      const { uid, children } = node;
       const active = !!this.toggleMap[uid];
 
       const toggleNode = (e) => {
@@ -73,7 +73,7 @@ export const VlsBuilderTree = {
       return (
         <div>
           {head}
-          {children ? this.genDragger(children, level + 1, active) : null}
+          {node.children ? this.genDragger(node.children, level + 1, active) : null}
         </div>
       );
     },
@@ -82,7 +82,9 @@ export const VlsBuilderTree = {
       const data = {
         props: { list },
         class: {
-          'd-none': !visible
+          'd-none': list.length && !visible,
+          'fill-box': !list.length,
+          dragger: true
         },
         attrs: {
           group: { name: 'blocksTree' }
@@ -105,7 +107,7 @@ export const VlsBuilderTree = {
   render() {
     return (
       <div class="vls-builder-tree">
-        {this.genDragger(this.containerSchema)}
+        {this.genDragger(this.schemaAcc)}
       </div>
     );
   }

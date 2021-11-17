@@ -32,8 +32,9 @@ export const VlsBuilderContainer = {
   },
 
   computed: {
-    schema() { return getters.schema(this.containerId); },
-    activeNode() { return getters.activeNode(this.containerId); }
+    containerBlocks() { return getters.containerBlocks(this.containerId); },
+    containerSchema() { return getters.containerSchema(this.containerId); },
+    containerActiveNode() { return getters.containerActiveNode(this.containerId); }
   },
 
   created() {
@@ -48,12 +49,9 @@ export const VlsBuilderContainer = {
     initContainer() {
       mutations.createContainer(this.containerId);
       mutations.setContainerBlocks(this.containerId, normalizeBlocksObject(this.blocks));
+      mutations.setContainerSchema(this.containerId, this.value);
 
-      if (this.value && this.value.length) {
-        mutations.updateContainerSchema(this.containerId, this.value);
-      }
-
-      this.$watch('schema', {
+      this.$watch('containerSchema', {
         handler(newVal, oldVal) {
           if (newVal && !isEqual(newVal, oldVal)) {
             this.$emit('change', newVal);
@@ -64,14 +62,24 @@ export const VlsBuilderContainer = {
 
       this.$watch('value', {
         handler(newVal) {
-          if (newVal && !isEqual(newVal, this.schema)) {
-            mutations.updateContainerSchema(this.containerId, newVal);
+          if (newVal && !isEqual(newVal, this.containerSchema)) {
+            mutations.setContainerSchema(this.containerId, newVal);
+          }
+        },
+        deep: true
+      });
+
+      this.$watch('containerBlocks', {
+        handler(newVal) {
+          if (newVal && !isEqual(newVal, this.containerBlocks)) {
+            mutations.setContainerBlocks(this.containerId, newVal);
           }
         },
         deep: true
       });
 
       window.addEventListener('keydown', this.deleteKeyListener);
+      this.ready = true;
     },
 
     destroyContainer() {
@@ -83,10 +91,10 @@ export const VlsBuilderContainer = {
     deleteKeyListener(e) {
       if (
         ['Backspace', 'Delete'].includes(e.key)
-        && this.activeNode
+        && this.containerActiveNode
         && e.target.nodeName !== 'INPUT'
       ) {
-        mutations.removeContainerSchemaNode(this.containerId, this.activeNode);
+        mutations.removeContainerSchemaNode(this.containerId, this.containerActiveNode);
       }
     }
   },
@@ -94,7 +102,7 @@ export const VlsBuilderContainer = {
   render() {
     return (
       <div>
-        {this.$slots.default}
+        {this.ready ? this.$slots.default : null}
       </div>
     );
   },

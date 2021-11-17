@@ -1,4 +1,8 @@
 import { deepFindParentByValue } from '@deip/toolbox';
+import {
+  cloneDeep,
+  isEqual
+} from '@deip/toolbox/lodash';
 import { getters, mutations } from '../store';
 
 export const BuilderMixin = {
@@ -6,10 +10,25 @@ export const BuilderMixin = {
 
   inject: ['containerId'],
 
+  data() {
+    return {
+      schemaAcc: null
+    };
+  },
+
   computed: {
-    containerBlocks() { return getters.blocks(this.containerId); },
-    containerSchema() { return getters.schema(this.containerId); },
-    containerActiveNode() { return getters.activeNode(this.containerId); }
+    containerSchema() { return getters.containerSchema(this.containerId); },
+    containerBlocks() { return getters.containerBlocks(this.containerId); },
+    containerActiveNode() { return getters.containerActiveNode(this.containerId); },
+
+    internalSchema: {
+      get() {
+        return getters.containerSchema(this.containerId);
+      },
+      set(value) {
+        this.setContainerSchema(value);
+      }
+    }
   },
 
   watch: {
@@ -19,6 +38,24 @@ export const BuilderMixin = {
           this.selectNode(newVal);
         }
       }
+    },
+
+    containerSchema: {
+      handler(newVal) {
+        if (!isEqual(this.schemaAcc, newVal)) {
+          this.schemaAcc = cloneDeep(newVal);
+        }
+      },
+      deep: true,
+      immediate: true
+    },
+
+    schemaAcc: {
+      handler(newVal) {
+        this.setContainerSchema(newVal);
+      },
+      deep: true,
+      immediate: true
     }
   },
 
@@ -27,8 +64,8 @@ export const BuilderMixin = {
       mutations.setContainerActiveNode(this.containerId, nodeId);
     },
 
-    updateContainerSchema(schema) {
-      mutations.updateContainerSchema(this.containerId, schema);
+    setContainerSchema(schema) {
+      mutations.setContainerSchema(this.containerId, schema);
     },
 
     removeContainerNode(nodeId) {

@@ -1,4 +1,4 @@
-$gap: 4px;
+$gap: 8px;
 
 @mixin fly-box($opacity: 1, $type: 'solid') {
   position: absolute;
@@ -32,8 +32,10 @@ $gap: 4px;
 }
 
 .vls-builder-canvas {
-  border: 1px solid rgba(#000, .12);
-  position: relative;
+  &__pane {
+    border: 1px solid rgba(#000, .12);
+    position: relative;
+  }
 
   &__host {
     padding: 16px;
