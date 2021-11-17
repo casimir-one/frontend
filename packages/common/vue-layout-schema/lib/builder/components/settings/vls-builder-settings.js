@@ -28,12 +28,11 @@ export const VlsBuilderSettings = {
 
   computed: {
     nodePath() {
-      if (!this.containerActiveNode) return '';
-      return deepFindParentByValue(this.containerSchema, this.containerActiveNode, true).path;
+      return deepFindParentByValue(this.schemaAcc, this.containerActiveNode, true).path;
     },
 
     nodeInfo() {
-      const { id } = objectPath.get(this.containerSchema, this.nodePath);
+      const { id } = objectPath.get(this.schemaAcc, this.nodePath);
       return this.getContainerNodeInfo(id);
     }
   },
@@ -55,10 +54,10 @@ export const VlsBuilderSettings = {
     },
 
     setFieldVal(path, value) {
-      const updated = cloneDeep(this.containerSchema);
+      const updated = cloneDeep(this.schemaAcc);
       objectPath.set(updated, path, value);
 
-      this.updateContainerSchema(updated);
+      this.setContainerSchema(updated);
     },
 
     genFieldProps(label) {
@@ -70,7 +69,7 @@ export const VlsBuilderSettings = {
     },
 
     genTextField(path, label, value) {
-      const initVal = objectPath.get(this.containerSchema, path, value);
+      const initVal = objectPath.get(this.schemaAcc, path, value);
       const props = this.genFieldProps(label);
 
       return (
@@ -84,7 +83,7 @@ export const VlsBuilderSettings = {
     },
 
     genCheckbox(path, label, value) {
-      const initVal = objectPath.get(this.containerSchema, path, value);
+      const initVal = objectPath.get(this.schemaAcc, path, value);
       const props = this.genFieldProps(label);
 
       return (
@@ -155,18 +154,18 @@ export const VlsBuilderSettings = {
   },
 
   render() {
-    const settings = (
+    const settings = () => (
       <VexStack>{this.genFields()}</VexStack>
     );
-    const placeholder = (
+    const placeholder = () => (
       <div class="text-caption text--secondary">
         Select an element on the canvas to activate this panel.
       </div>
     );
 
     return (
-      <div class="vls-builder-tree">
-        {this.containerActiveNode ? settings : placeholder}
+      <div class="vls-builder-settings">
+        {this.containerActiveNode ? settings() : placeholder()}
       </div>
     );
   }

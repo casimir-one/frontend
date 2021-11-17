@@ -117,10 +117,12 @@ export const VlsBuilder = {
 
         <div class="vls-builder__content">
           <div class="vls-builder__column vls-builder__column--no-head">
-            <div className="vls-builder__column-content">
+            <div class="vls-builder__column-content">
               {this.$slots.default}
 
               <VlsBuilderCanvas/>
+
+              {this.$slots.append}
             </div>
           </div>
         </div>

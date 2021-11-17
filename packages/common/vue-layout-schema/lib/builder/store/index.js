@@ -6,9 +6,10 @@ export const state = Vue.observable({});
 
 export const getters = {
   container: (containerId) => state?.[containerId],
-  schema: (containerId) => state?.[containerId]?.schema,
-  blocks: (containerId) => state?.[containerId]?.blocks,
-  activeNode: (containerId) => state?.[containerId]?.activeNode
+
+  containerBlocks: (containerId) => state?.[containerId]?.blocks || [],
+  containerSchema: (containerId) => state?.[containerId]?.schema || [],
+  containerActiveNode: (containerId) => state?.[containerId]?.activeNode
 };
 
 export const mutations = {
@@ -32,16 +33,16 @@ export const mutations = {
     state[containerId].activeNode = nodeId;
   },
 
-  updateContainerSchema(containerId, schema) {
+  setContainerSchema(containerId, schema) {
     state[containerId].schema = schema;
   },
 
   removeContainerSchemaNode(containerId, nodeId) {
-    const schema = getters.schema(containerId);
+    const schema = getters.containerSchema(containerId);
     const { path } = deepFindParentByValue(schema, nodeId, true);
     objectPath.del(schema, path);
 
-    mutations.updateContainerSchema(containerId, schema);
+    mutations.setContainerSchema(containerId, schema);
     mutations.setContainerActiveNode(containerId, null);
   }
 
