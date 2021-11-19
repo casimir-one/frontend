@@ -1,7 +1,4 @@
-import {
-  Singleton,
-  createFormData
-} from '@deip/toolbox';
+import { createFormData, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
 import {
@@ -15,36 +12,36 @@ import { ChainService } from '@deip/chain-service';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { TenantHttp } from './TenantHttp';
 
-class TenantService extends Singleton {
+export class TenantService {
   tenantHttp = TenantHttp.getInstance();
 
   proxydi = proxydi;
 
-  getTenant() {
+  async getTenant() {
     return this.tenantHttp.getTenant();
   }
 
-  getNetworkTenant(tenantId) {
+  async getNetworkTenant(tenantId) {
     return this.tenantHttp.getNetworkTenant(tenantId);
   }
 
-  getNetworkTenants() {
+  async getNetworkTenants() {
     return this.tenantHttp.getNetworkTenants();
   }
 
-  updateTenantProfile(data) {
+  async updateTenantProfile(data) {
     const updatePortalProfileCmd = new UpdatePortalProfileCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updatePortalProfileCmd] });
     return this.tenantHttp.updateTenantProfile(msg);
   }
 
-  updateNetworkSettings(data) {
+  async updateNetworkSettings(data) {
     const updateNetworkSettingsCmd = new UpdateNetworkSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateNetworkSettingsCmd] });
     return this.tenantHttp.updateNetworkSettings(msg);
   }
 
-  updateTenantSettings(data) {
+  async updateTenantSettings(data) {
     const {
       title,
       banner,
@@ -62,7 +59,7 @@ class TenantService extends Singleton {
     return this.tenantHttp.updateTenantSettings(msg);
   }
 
-  postSignUp({
+  async postSignUp({
     creator,
     email,
     attributes,
@@ -111,11 +108,11 @@ class TenantService extends Singleton {
       });
   }
 
-  getSignUpRequests() {
+  async getSignUpRequests() {
     return this.tenantHttp.getSignUpRequests();
   }
 
-  approveSignUpRequest(username) {
+  async approveSignUpRequest(username) {
     // TODO: replace with a specific command
     return this.getSignUpRequests()
       .then((signupRequests) => {
@@ -162,13 +159,12 @@ class TenantService extends Singleton {
       });
   }
 
-  rejectSignUpRequest(username) {
+  async rejectSignUpRequest(username) {
     const deleteUserProfileCmd = new DeleteUserProfileCmd({ username });
     const msg = new JsonDataMsg({ appCmds: [deleteUserProfileCmd] });
     return this.tenantHttp.rejectSignUpRequest(msg);
   }
-}
 
-export {
-  TenantService
-};
+  /** @type {() => TenantService} */
+  static getInstance = createInstanceGetter(TenantService);
+}

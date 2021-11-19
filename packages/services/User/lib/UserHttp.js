@@ -1,51 +1,49 @@
-import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { HttpService, serializeParams } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class UserHttp extends Singleton {
+export class UserHttp {
   http = HttpService.getInstance();
 
   // Settings [deprecated]
 
-  updateUser(req) {
+  async updateUser(req) {
     return this.http.put('/api/v2/user/update', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   // Invites
 
-  getInvitesByUser(username) {
+  async getInvitesByUser(username) {
     return this.http.get(`/api/invites/${username}`);
   }
 
-  getUsers(usernames) {
-    const query = qs.stringify({ usernames });
+  async getUsers(usernames) {
+    const query = serializeParams({ usernames });
     return this.http.get(`/api/v2/users?${query}`);
   }
 
-  getUsersByTeam(teamId) {
+  async getUsersByTeam(teamId) {
     return this.http.get(`/api/v2/users/team/${teamId}`);
   }
 
-  getUsersByTenant(tenantId) {
+  async getUsersByTenant(tenantId) {
     return this.http.get(`/api/v2/users/tenant/${tenantId}`);
   }
 
-  getUsersListing(query) {
-    const q = qs.stringify(query);
-    return this.http.get(`/api/v2/users/listing?${q}`);
+  async getUsersListing(params) {
+    const query = serializeParams(params);
+    return this.http.get(`/api/v2/users/listing?${query}`);
   }
 
   // ONE
 
-  getUser(username) {
+  async getUser(username) {
     return this.http.get(`/api/v2/user/name/${username}`);
   }
 
-  getUserByEmail(email) {
+  async getUserByEmail(email) {
     return this.http.get(`/api/v2/user/email/${email}`);
   }
-}
 
-export {
-  UserHttp
-};
+  /** @type {() => UserHttp} */
+  static getInstance = createInstanceGetter(UserHttp);
+}

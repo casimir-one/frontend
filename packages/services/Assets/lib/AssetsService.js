@@ -1,4 +1,4 @@
-import { Singleton, genRipemd160Hash } from '@deip/toolbox';
+import { genRipemd160Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import {
@@ -16,7 +16,7 @@ import { AssetsHttp } from './AssetsHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class AssetsService extends Singleton {
+export class AssetsService {
   proxydi = proxydi;
 
   accessService = AccessService.getInstance();
@@ -298,8 +298,7 @@ class AssetsService extends Singleton {
       }
     );
   }
-}
 
-export {
-  AssetsService
-};
+  /** @type {() => AssetsService} */
+  static getInstance = createInstanceGetter(AssetsService);
+}

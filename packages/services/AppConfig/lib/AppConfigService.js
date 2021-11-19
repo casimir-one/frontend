@@ -1,7 +1,10 @@
-import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class AppConfigService extends Singleton {
+/**
+ * @deprecated
+ */
+export class AppConfigService {
   proxydi = proxydi;
 
   get(name) {
@@ -9,12 +12,13 @@ class AppConfigService extends Singleton {
   }
 
   set(name, value) {
-    this.proxydi.register(name, value)
+    this.proxydi.register(name, value);
   }
 
   init(config) {
-    this.proxydi.batchRegister(config)
+    this.proxydi.batchRegister(config);
   }
-}
 
-export { AppConfigService };
+  /** @type {() => AppConfigService} */
+  static getInstance = createInstanceGetter(AppConfigService)
+}

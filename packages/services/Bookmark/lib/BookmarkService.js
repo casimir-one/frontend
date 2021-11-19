@@ -1,22 +1,21 @@
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 import { BookmarkHttp } from './BookmarkHttp';
 
-class BookmarkService extends Singleton {
+export class BookmarkService {
   bookmarkHttp = BookmarkHttp.getInstance();
 
-  getProjectBookmarks(username) {
+  async getProjectBookmarks(username) {
     return this.bookmarkHttp.getProjectBookmarks(username);
   }
 
-  createProjectBookmark(username, researchId) {
+  async createProjectBookmark(username, researchId) {
     return this.bookmarkHttp.createProjectBookmark(username, researchId);
   }
 
-  removeProjectBookmark(username, bookmarkId) {
+  async removeProjectBookmark(username, bookmarkId) {
     return this.bookmarkHttp.removeProjectBookmark(username, bookmarkId);
   }
-}
 
-export {
-  BookmarkService
-};
+  /** @type {() => BookmarkService} */
+  static getInstance = createInstanceGetter(BookmarkService);
+}

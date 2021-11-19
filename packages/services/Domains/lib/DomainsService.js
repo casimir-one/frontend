@@ -1,21 +1,20 @@
 import { AccessService } from '@deip/access-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 import { DomainsHttp } from './DomainsHttp';
 
-class DomainsService extends Singleton {
+export class DomainsService {
   accessService = AccessService.getInstance();
 
   domainsHttp = DomainsHttp.getInstance();
 
-  getAllDomains() {
+  async getAllDomains() {
     return this.domainsHttp.getAllDomains();
   }
 
-  getDomainsByProject(projectId) {
+  async getDomainsByProject(projectId) {
     return this.domainsHttp.getDomainsByProject(projectId);
   }
-}
 
-export {
-  DomainsService
-};
+  /** @type {() => DomainsService} */
+  static getInstance = createInstanceGetter(DomainsService);
+}

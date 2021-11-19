@@ -1,14 +1,14 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class GrantsHttp extends Singleton {
+export class GrantsHttp {
   http = HttpService.getInstance();
 
-  getAwardWithdrawalRequestPackageRef(awardNumber, paymentNumber) {
+  async getAwardWithdrawalRequestPackageRef(awardNumber, paymentNumber) {
     return this.http.get(`/api/award-withdrawal-requests/${awardNumber}/${paymentNumber}`);
   }
 
-  createGrantAwardWithdrawalRequest(researchExternalId, formData) {
+  async createGrantAwardWithdrawalRequest(researchExternalId, formData) {
     return this.http.post(`/api/award-withdrawal-requests/upload-attachments`, formData, {
       headers: {
         'Research-External-Id': researchExternalId,
@@ -16,8 +16,7 @@ class GrantsHttp extends Singleton {
       }
     })
   }
-}
 
-export {
-  GrantsHttp
-};
+  /** @type {() => GrantsHttp} */
+  static getInstance = createInstanceGetter(GrantsHttp);
+}

@@ -1,8 +1,8 @@
 import {
-  Singleton,
   createFormData,
   genRipemd160Hash,
-  genSha256Hash
+  genSha256Hash,
+  createInstanceGetter
 } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
@@ -21,12 +21,12 @@ import { projectContentTypes } from './lists';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class ProjectContentService extends Singleton {
+export class ProjectContentService {
   proxydi = proxydi;
 
   projectContentHttp = ProjectContentHttp.getInstance();
 
-  createProjectContent(payload) {
+  async createProjectContent(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -101,31 +101,31 @@ class ProjectContentService extends Singleton {
       });
   }
 
-  getProjectContent(externalId) {
+  async getProjectContent(externalId) {
     return this.projectContentHttp.getProjectContent(externalId);
   }
 
-  getDraftsByProject(projectId) {
+  async getDraftsByProject(projectId) {
     return this.projectContentHttp.getDraftsByProject(projectId);
   }
 
-  getDraft(draftId) {
+  async getDraft(draftId) {
     return this.projectContentHttp.getDraft(draftId);
   }
 
-  getProjectContentsByTenant(tenantId) {
+  async getProjectContentsByTenant(tenantId) {
     return this.projectContentHttp.getProjectContentsByTenant(tenantId);
   }
 
-  getProjectContentsByProject(projectId) {
+  async getProjectContentsByProject(projectId) {
     return this.projectContentHttp.getProjectContentsByProject(projectId);
   }
 
-  getProjectContentRef(refId) {
+  async getProjectContentRef(refId) {
     return this.projectContentHttp.getProjectContentRef(refId);
   }
 
-  createProjectContentDraft(payload) {
+  async createProjectContentDraft(payload) {
     const draftId = genRipemd160Hash({
       ...payload, __timestamp: new Date().getTime()
     }).slice(0, 24);
@@ -141,31 +141,30 @@ class ProjectContentService extends Singleton {
     return this.projectContentHttp.createProjectContentDraft(msg);
   }
 
-  deleteProjectContentDraft(draftId) {
+  async deleteProjectContentDraft(draftId) {
     const deleteDraftCmd = new DeleteDraftCmd({ draftId });
     const msg = new JsonDataMsg({ appCmds: [deleteDraftCmd] }, { 'entity-id': draftId });
     return this.projectContentHttp.deleteProjectContentDraft(msg);
   }
 
-  unlockDraft(draft) {
+  async unlockDraft(draft) {
     const updateDraftCmd = new UpdateDraftCmd({ ...draft });
     const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': draft._id });
     return this.projectContentHttp.unlockProjectContentDraft(msg);
   }
 
-  getPublicProjectContentListing() {
+  async getPublicProjectContentListing() {
     return this.projectContentHttp.getPublicProjectContentListing();
   }
 
-  getProjectContentReferencesGraph(contentId) {
+  async getProjectContentReferencesGraph(contentId) {
     return this.projectContentHttp.getProjectContentReferencesGraph(contentId);
   }
 
-  getProjectContentType(type) {
+  async getProjectContentType(type) {
     return projectContentTypes.find((t) => t.type === type);
   }
-}
 
-export {
-  ProjectContentService
-};
+  /** @type {() => ProjectContentService} */
+  static getInstance = createInstanceGetter(ProjectContentService);
+}

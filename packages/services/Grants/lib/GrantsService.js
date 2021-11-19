@@ -1,11 +1,11 @@
-import { Singleton } from '@deip/toolbox';
 import { GrantsHttp } from './GrantsHttp';
 import { ChainService } from '@deip/chain-service';
 import { proxydi } from '@deip/proxydi';
+import { createInstanceGetter } from '@deip/toolbox';
 
 
 // WARNING: GrantsService is obsolete and will be refactored according to 'CallsModel'
-class GrantsService extends Singleton {
+export class GrantsService {
   grantsHttp = GrantsHttp.getInstance();
   proxydi = proxydi;
 
@@ -104,7 +104,7 @@ class GrantsService extends Singleton {
       });
   }
 
-  createAwardWithdrawalRequest({ privKey, username }, form) {
+  async createAwardWithdrawalRequest({ privKey, username }, form) {
 
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
@@ -382,7 +382,7 @@ class GrantsService extends Singleton {
       });
   }
 
-  getAwardWithdrawalRequest(awardNumber, paymentNumber) {
+  async getAwardWithdrawalRequest(awardNumber, paymentNumber) {
 
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
@@ -664,8 +664,6 @@ class GrantsService extends Singleton {
     return `${value} ${symbol}`;
   }
 
+  /** @type {() => GrantsService} */
+  static getInstance = createInstanceGetter(GrantsService);
 }
-
-export {
-  GrantsService
-};

@@ -1,4 +1,3 @@
-import { Singleton } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
@@ -9,16 +8,17 @@ import {
   InvestCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
+import { createInstanceGetter } from '@deip/toolbox';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class InvestmentsService extends Singleton {
+export class InvestmentsService {
   investmentsHttp = InvestmentsHttp.getInstance();
 
   proxydi = proxydi;
 
-  getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
+  async getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
     return this.investmentsHttp.getAccountRevenueHistoryByAsset(
       account,
       symbol,
@@ -28,22 +28,22 @@ class InvestmentsService extends Singleton {
     );
   }
 
-  getAccountRevenueHistory(account, cursor = 0) {
+  async getAccountRevenueHistory(account, cursor = 0) {
     return this.investmentsHttp.getAccountRevenueHistory(account, cursor);
   }
 
-  getAssetRevenueHistory(symbol, cursor = 0) {
+  async getAssetRevenueHistory(symbol, cursor = 0) {
     return this.investmentsHttp.getAssetRevenueHistory(symbol, cursor);
   }
 
-  getCurrentTokenSaleByProject(projectId) {
+  async getCurrentTokenSaleByProject(projectId) {
     return this.investmentsHttp.getProjectTokenSalesByProject(projectId)
       .then((tokenSales) => tokenSales.find(
         (ts) => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE
       ));
   }
 
-  createProjectTokenSale({ privKey, username }, {
+  async createProjectTokenSale({ privKey, username }, {
     teamId,
     projectId,
     startTime,
@@ -111,7 +111,7 @@ class InvestmentsService extends Singleton {
       });
   }
 
-  investProjectTokenSale({ privKey }, {
+  async investProjectTokenSale({ privKey }, {
     investmentOpportunityId,
     investor,
     asset
@@ -140,27 +140,26 @@ class InvestmentsService extends Singleton {
       });
   }
 
-  getProjectTokenSalesByProject(projectId) {
+  async getProjectTokenSalesByProject(projectId) {
     return this.investmentsHttp.getProjectTokenSalesByProject(projectId);
   }
 
-  getProjectTokenSaleInvestmentsByProject(projectId) {
+  async getProjectTokenSaleInvestmentsByProject(projectId) {
     return this.investmentsHttp.getProjectTokenSaleInvestmentsByProject(projectId);
   }
 
-  getAccountInvestmentsHistory(account) {
+  async getAccountInvestmentsHistory(account) {
     return this.investmentsHttp.getAccountInvestmentsHistory(account);
   }
 
-  getInvestmentsHistoryByTokenSale(tokenSaleId) {
+  async getInvestmentsHistoryByTokenSale(tokenSaleId) {
     return this.investmentsHttp.getInvestmentsHistoryByTokenSale(tokenSaleId);
   }
 
-  getProjectTokenSale(investmentOpportunityId) {
+  async getProjectTokenSale(investmentOpportunityId) {
     return this.investmentsHttp.getProjectTokenSale(investmentOpportunityId);
   }
-}
 
-export {
-  InvestmentsService
-};
+  /** @type {() => InvestmentsService} */
+  static getInstance = createInstanceGetter(InvestmentsService);
+}

@@ -1,58 +1,57 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ProjectContentHttp extends Singleton {
+export class ProjectContentHttp {
   http = HttpService.getInstance();
 
-  getDraft(draftId) {
+  async getDraft(draftId) {
     return this.http.get(`/api/v2/project-content/draft/${draftId}`);
   }
 
-  getProjectContentRef(refId) {
+  async getProjectContentRef(refId) {
     return this.http.get(`/api/v2/project-content/ref/${refId}`);
   }
 
-  getProjectContent(externalId) {
+  async getProjectContent(externalId) {
     return this.http.get(`/api/v2/project-content/${externalId}`);
   }
 
-  getProjectContentsByProject(projectId) {
+  async getProjectContentsByProject(projectId) {
     return this.http.get(`/api/v2/project-content/project/${projectId}`);
   }
 
-  publishProjectContent(req) {
+  async publishProjectContent(req) {
     return this.http.post('/api/v2/project-content/ref/publish', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  getDraftsByProject(projectId) {
+  async getDraftsByProject(projectId) {
     return this.http.get(`/api/v2/project-content/drafts/project/${projectId}`);
   }
 
-  createProjectContentDraft(req) {
+  async createProjectContentDraft(req) {
     return this.http.post('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  deleteProjectContentDraft(req) {
+  async deleteProjectContentDraft(req) {
     return this.http.put('/api/v2/project-content/draft/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  unlockDraft(req) {
+  async unlockDraft(req) {
     return this.http.put('/api/v2/project-content/draft/unlock', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  getProjectContentsByTenant(tenantId) {
+  async getProjectContentsByTenant(tenantId) {
     return this.http.get(`/api/v2/project-content/tenant/${tenantId}`);
   }
 
-  getPublicProjectContentListing() {
+  async getPublicProjectContentListing() {
     return this.http.get('/api/v2/project-content/listing');
   }
 
-  getProjectContentReferencesGraph(contentId) {
+  async getProjectContentReferencesGraph(contentId) {
     return this.http.get(`/api/v2/project-content/ref/graph/${contentId}`);
   }
-}
 
-export {
-  ProjectContentHttp
-};
+  /** @type {() => ProjectContentHttp} */
+  static getInstance = createInstanceGetter(ProjectContentHttp);
+}

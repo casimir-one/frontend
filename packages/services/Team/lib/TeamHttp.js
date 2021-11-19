@@ -1,8 +1,8 @@
-import { serializeParams, HttpServiceV2 } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox/lib/classSingleton';
+import { serializeParams, HttpService } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
 export class TeamHttp {
-  http = HttpServiceV2.getInstance();
+  http = HttpService.getInstance();
 
   async create(req) {
     return this.http.post(

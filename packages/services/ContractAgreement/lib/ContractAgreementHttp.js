@@ -1,32 +1,30 @@
-import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { HttpService, serializeParams } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ContractAgreementHttp extends Singleton {
+export class ContractAgreementHttp {
   http = HttpService.getInstance();
 
-  createContractAgreement(req) {
+  async createContractAgreement(req) {
     return this.http.post('/api/v2/contract-agreement', req.getHttpBody());
   }
 
-  acceptContractAgreement(req) {
+  async acceptContractAgreement(req) {
     return this.http.post('/api/v2/contract-agreement/accept', req.getHttpBody());
   }
 
-  proposeContractAgreement(req) {
+  async proposeContractAgreement(req) {
     return this.http.post('/api/v2/contract-agreement', req.getHttpBody());
   }
 
-  getContractAgreements(query) {
-    const q = qs.stringify({ ...query });
-    return this.http.get(`/api/v2/contract-agreements?${q}`);
+  async getContractAgreements(params) {
+    const query = serializeParams({ ...params });
+    return this.http.get(`/api/v2/contract-agreements?${query}`);
   }
 
-  getContractAgreement(contractAgreementId) {
+  async getContractAgreement(contractAgreementId) {
     return this.http.get(`/api/v2/contract-agreement/${contractAgreementId}`);
   }
-}
 
-export {
-  ContractAgreementHttp
-};
+  /** @type {() => ContractAgreementHttp} */
+  static getInstance = createInstanceGetter(ContractAgreementHttp);
+}

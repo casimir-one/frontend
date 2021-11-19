@@ -1,7 +1,4 @@
-import {
-  Singleton,
-  genSha256Hash
-} from '@deip/toolbox';
+import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import {
   CreateReviewRequestCmd,
   DeclineReviewRequestCmd,
@@ -13,32 +10,32 @@ import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
 import { ReviewHttp } from './ReviewHttp';
 
-class ReviewService extends Singleton {
+export class ReviewService {
   reviewHttp = ReviewHttp.getInstance();
 
   proxydi = proxydi;
 
-  createReviewRequest(reviewRequest) {
+  async createReviewRequest(reviewRequest) {
     const createReviewRequestCmd = new CreateReviewRequestCmd(reviewRequest);
     const msg = new JsonDataMsg({ appCmds: [createReviewRequestCmd] });
     return this.reviewHttp.createReviewRequest(msg);
   }
 
-  denyReviewRequest(reviewRequestId) {
+  async denyReviewRequest(reviewRequestId) {
     const declineReviewRequestCmd = new DeclineReviewRequestCmd({ reviewRequestId });
     const msg = new JsonDataMsg({ appCmds: [declineReviewRequestCmd] });
     return this.reviewHttp.denyReviewRequest(msg);
   }
 
-  getReviewRequestsByExpert(username, status) {
+  async getReviewRequestsByExpert(username, status) {
     return this.reviewHttp.getReviewRequestsByExpert(username, status);
   }
 
-  getReviewRequestsByRequestor(username, status) {
+  async getReviewRequestsByRequestor(username, status) {
     return this.reviewHttp.getReviewRequestsByRequestor(username, status);
   }
 
-  createReview(payload) {
+  async createReview(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -80,7 +77,7 @@ class ReviewService extends Singleton {
       });
   }
 
-  upvoteReview(payload) {
+  async upvoteReview(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -118,27 +115,26 @@ class ReviewService extends Singleton {
       });
   }
 
-  getReview(reviewId) {
+  async getReview(reviewId) {
     return this.reviewHttp.getReview(reviewId);
   }
 
-  getReviewsByProject(projectId) {
+  async getReviewsByProject(projectId) {
     return this.reviewHttp.getReviewsByProject(projectId);
   }
 
-  getReviewsByProjectContent(projectContentId) {
+  async getReviewsByProjectContent(projectContentId) {
     return this.reviewHttp.getReviewsByProjectContent(projectContentId);
   }
 
-  getReviewsByAuthor(author) {
+  async getReviewsByAuthor(author) {
     return this.reviewHttp.getReviewsByAuthor(author);
   }
 
-  getReviewUpvotes(reviewId) {
+  async getReviewUpvotes(reviewId) {
     return this.reviewHttp.getReviewUpvotes(reviewId);
   }
-}
 
-export {
-  ReviewService
-};
+  /** @type {() => ReviewService} */
+  static getInstance = createInstanceGetter(ReviewService);
+}

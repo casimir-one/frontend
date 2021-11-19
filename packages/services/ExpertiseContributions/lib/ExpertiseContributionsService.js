@@ -1,33 +1,33 @@
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 import { ExpertiseContributionsHttp } from './ExpertiseContributionsHttp';
 
-class ExpertiseContributionsService extends Singleton {
+export class ExpertiseContributionsService {
   expertiseContributionsHttp = ExpertiseContributionsHttp.getInstance();
 
-  getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
+  async getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
     return this.expertiseContributionsHttp
       .getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
-  getExpertiseContributionsByResearch(researchId) {
+  async getExpertiseContributionsByResearch(researchId) {
     return this.expertiseContributionsHttp.getExpertiseContributionsByResearch(researchId);
   }
 
-  getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
+  async getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
     return this.expertiseContributionsHttp
       .getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId);
   }
 
-  getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
+  async getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
     return this.expertiseContributionsHttp
       .getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId);
   }
 
-  getExpertiseContributionsByResearchContent(contentId) {
+  async getExpertiseContributionsByResearchContent(contentId) {
     return this.expertiseContributionsHttp.getExpertiseContributionsByResearchContent(contentId);
   }
 
-  getAccountExpertiseHistory(username, {
+  async getAccountExpertiseHistory(username, {
     discipline,
     from,
     to,
@@ -45,7 +45,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getAccountExpertiseHistory(username, filter);
   }
 
-  getAccountExpertiseStats(username, {
+  async getAccountExpertiseStats(username, {
     discipline,
     from,
     to,
@@ -63,7 +63,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getAccountExpertiseStats(username, filter);
   }
 
-  getAccountsExpertiseStats({
+  async getAccountsExpertiseStats({
     searchTerm,
     discipline,
     from,
@@ -83,7 +83,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
   }
 
-  getResearchExpertiseHistory(researchExternalId, {
+  async getResearchExpertiseHistory(researchExternalId, {
     discipline,
     from,
     to,
@@ -101,7 +101,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getResearchExpertiseHistory(researchExternalId, filter);
   }
 
-  getResearchExpertiseStats(researchExternalId, {
+  async getResearchExpertiseStats(researchExternalId, {
     discipline,
     from,
     to,
@@ -119,7 +119,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getResearchExpertiseStats(researchExternalId, filter);
   }
 
-  getResearchesExpertiseStats({
+  async getResearchesExpertiseStats({
     discipline,
     from,
     to,
@@ -137,7 +137,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getResearchesExpertiseStats(filter);
   }
 
-  getResearchContentExpertiseHistory(researchContentExternalId, {
+  async getResearchContentExpertiseHistory(researchContentExternalId, {
     discipline,
     from,
     to,
@@ -156,7 +156,7 @@ class ExpertiseContributionsService extends Singleton {
       .getResearchContentExpertiseHistory(researchContentExternalId, filter);
   }
 
-  getResearchContentExpertiseStats(researchContentExternalId, {
+  async getResearchContentExpertiseStats(researchContentExternalId, {
     discipline,
     from,
     to,
@@ -175,7 +175,7 @@ class ExpertiseContributionsService extends Singleton {
       .getResearchContentExpertiseStats(researchContentExternalId, filter);
   }
 
-  getResearchContentsExpertiseStats({
+  async getResearchContentsExpertiseStats({
     discipline,
     from,
     to,
@@ -193,7 +193,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getResearchContentsExpertiseStats(filter);
   }
 
-  getDisciplineExpertiseHistory({
+  async getDisciplineExpertiseHistory({
     discipline,
     from,
     to,
@@ -211,7 +211,7 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getDisciplineExpertiseHistory(filter);
   }
 
-  getDisciplinesExpertiseStatsHistory({
+  async getDisciplinesExpertiseStatsHistory({
     from,
     to,
     step
@@ -225,19 +225,18 @@ class ExpertiseContributionsService extends Singleton {
     return this.expertiseContributionsHttp.getDisciplinesExpertiseStatsHistory(filter);
   }
 
-  getDisciplinesExpertiseLastStats() {
+  async getDisciplinesExpertiseLastStats() {
     return this.expertiseContributionsHttp.getDisciplinesExpertiseLastStats();
   }
 
-  getAccountExpertiseTokens(username) {
+  async getAccountExpertiseTokens(username) {
     return this.expertiseContributionsHttp.getAccountExpertiseTokens(username);
   }
 
-  getDisciplineExpertiseTokens(disciplineExternalId) {
+  async getDisciplineExpertiseTokens(disciplineExternalId) {
     return this.expertiseContributionsHttp.getDisciplineExpertiseTokens(disciplineExternalId);
   }
-}
 
-export {
-  ExpertiseContributionsService
-};
+  /** @type {() => ExpertiseContributionsService} */
+  static getInstance = createInstanceGetter(ExpertiseContributionsService);
+}

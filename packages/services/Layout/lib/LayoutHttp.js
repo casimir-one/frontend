@@ -1,26 +1,25 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class LayoutHttp extends Singleton {
+export class LayoutHttp {
   http = HttpService.getInstance();
 
-  getLayouts() {
+  async getLayouts() {
     return this.http.get('/tenant/settings/layouts');
   }
 
-  getSettings() {
+  async getSettings() {
     return this.http.get('/tenant/settings/layout-settings');
   }
 
-  updateLayouts(req) {
+  async updateLayouts(req) {
     return this.http.put('/tenant/settings/layouts', req.getHttpBody());
   }
 
-  updateSettings(req) {
+  async updateSettings(req) {
     return this.http.put('/tenant/settings/layout-settings', req.getHttpBody());
   }
-}
 
-export {
-  LayoutHttp
-};
+  /** @type {() => LayoutHttp} */
+  static getInstance = createInstanceGetter(LayoutHttp);
+}

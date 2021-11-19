@@ -1,68 +1,66 @@
-import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { HttpService, serializeParams } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class AssetsHttp extends Singleton {
+export class AssetsHttp {
   http = HttpService.getInstance();
 
-  createAsset(req) {
+  async createAsset(req) {
     return this.http.post('/api/v2/asset/create', req.getHttpBody());
   }
 
-  issueAsset(req) {
+  async issueAsset(req) {
     return this.http.post('/api/v2/asset/issue', req.getHttpBody());
   }
 
-  transferAssets(req) {
+  async transferAssets(req) {
     return this.http.post('/api/v2/assets/transfer', req.getHttpBody());
   }
 
-  createAssetsExchangeProposal(req) {
+  async createAssetsExchangeProposal(req) {
     return this.http.post('/api/v2/assets/exchange', req.getHttpBody());
   }
 
-  getAccountDepositHistory(account, status) {
-    const query = qs.stringify({ status });
+  async getAccountDepositHistory(account, status) {
+    const query = serializeParams({ status });
     return this.http.get(`/api/v2/assets/deposit/history/account/${account}?${query}`);
   }
 
-  getAssetById(assetId) {
+  async getAssetById(assetId) {
     return this.http.get(`/api/v2/assets/id/${assetId}`);
   }
 
-  getAssetBySymbol(symbol) {
+  async getAssetBySymbol(symbol) {
     return this.http.get(`/api/v2/assets/symbol/${symbol}`);
   }
 
-  getAssetsByType(type) {
+  async getAssetsByType(type) {
     return this.http.get(`/api/v2/assets/type/${type}`);
   }
 
-  getAssetsByIssuer(issuer) {
+  async getAssetsByIssuer(issuer) {
     return this.http.get(`/api/v2/assets/issuer/${issuer}`);
   }
 
-  lookupAssets(lowerBoundSymbol = '', limit) {
+  async lookupAssets(lowerBoundSymbol = '', limit) {
     return this.http.get(`/api/v2/assets/limit/${limit}/${lowerBoundSymbol}`);
   }
 
-  getAccountAssetBalance(owner, symbol) {
+  async getAccountAssetBalance(owner, symbol) {
     return this.http.get(`/api/v2/assets/owner/${owner}/symbol/${symbol}`);
   }
 
-  getAccountAssetsBalancesByOwner(owner) {
+  async getAccountAssetsBalancesByOwner(owner) {
     return this.http.get(`/api/v2/assets/owner/${owner}`);
   }
 
-  getAccountsAssetBalancesByAsset(symbol) {
+  async getAccountsAssetBalancesByAsset(symbol) {
     return this.http.get(`/api/v2/assets/accounts/symbol/${symbol}`);
   }
 
-  depositAssets(payload) {
+  async depositAssets(payload) {
     return this.http.post('/webhook/assets/deposit', payload);
   }
-}
 
-export {
-  AssetsHttp
-};
+  /** @type {() => AssetsHttp} */
+  static getInstance = createInstanceGetter(AssetsHttp);
+}

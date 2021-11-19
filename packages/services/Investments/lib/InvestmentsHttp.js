@@ -1,50 +1,49 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class InvestmentsHttp extends Singleton {
+export class InvestmentsHttp {
   http = HttpService.getInstance();
 
-  getProjectTokenSale(investmentOpportunityId) {
+  async getProjectTokenSale(investmentOpportunityId) {
     return this.http.get(`/api/v2/investments/investment-opportunity/${investmentOpportunityId}`);
   }
 
-  getProjectTokenSalesByProject(projectId) {
+  async getProjectTokenSalesByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}`);
   }
 
-  getProjectTokenSaleInvestmentsByProject(projectId) {
+  async getProjectTokenSaleInvestmentsByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}/contributions`);
   }
 
-  createProjectTokenSale(req) {
+  async createProjectTokenSale(req) {
     return this.http.post('/api/v2/investments', req.getHttpBody());
   }
 
-  investProjectTokenSale(req) {
+  async investProjectTokenSale(req) {
     return this.http.post('/api/v2/investments/contributions', req.getHttpBody());
   }
 
-  getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {
+  async getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {
     return this.http.get(`/api/v2/investments/history/account/${account}/${symbol}/${step}/${cursor}/asset/${targetAsset}`);
   }
 
-  getAccountRevenueHistory(account, cursor) {
+  async getAccountRevenueHistory(account, cursor) {
     return this.http.get(`/api/v2/investments/history/account/${account}/${cursor}`);
   }
 
-  getAccountInvestmentsHistory(account) {
+  async getAccountInvestmentsHistory(account) {
     return this.http.get(`/api/v2/investments/history/contributions/account/${account}`);
   }
 
-  getInvestmentsHistoryByTokenSale(tokenSaleId) {
+  async getInvestmentsHistoryByTokenSale(tokenSaleId) {
     return this.http.get(`/api/v2/investments/history/contributions/investment-opportunity/${tokenSaleId}`);
   }
 
-  getAssetRevenueHistory(symbol, cursor) {
+  async getAssetRevenueHistory(symbol, cursor) {
     return this.http.get(`/api/v2/investments/history/symbol/${symbol}/${cursor}`);
   }
-}
 
-export {
-  InvestmentsHttp
-};
+  /** @type {() => InvestmentsHttp} */
+  static getInstance = createInstanceGetter(InvestmentsHttp);
+}

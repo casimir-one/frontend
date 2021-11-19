@@ -1,54 +1,53 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class AttributesHttp extends Singleton {
+export class AttributesHttp {
   http = HttpService.getInstance();
 
-  getAttributes() {
+  async getAttributes() {
     return this.http.get('/api/v2/attributes');
   }
 
-  getAttributesByScope(scope) {
+  async getAttributesByScope(scope) {
     return this.http.get(`/api/v2/attributes/scope/${scope}`);
   }
 
-  getNetworkAttributesByScope(scope) {
+  async getNetworkAttributesByScope(scope) {
     return this.http.get(`/api/v2/attributes/scope/network/${scope}`);
   }
 
-  getAttribute(id) {
+  async getAttribute(id) {
     return this.http.get(`/api/v2/attribute/${id}`);
   }
 
-  getNetworkAttributes() {
+  async getNetworkAttributes() {
     return this.http.get('/api/v2/attributes/network');
   }
 
-  getSystemAttributes() {
+  async getSystemAttributes() {
     return this.http.get('/api/v2/attributes/system');
   }
 
-  createAttribute(req) {
+  async createAttribute(req) {
     return this.http.post('/api/v2/attribute', req.getHttpBody());
   }
 
-  updateAttribute(req) {
+  async updateAttribute(req) {
     return this.http.put('/api/v2/attribute', req.getHttpBody());
   }
 
-  deleteAttribute(req) {
+  async deleteAttribute(req) {
     return this.http.put('/api/v2/attribute/delete', req.getHttpBody());
   }
 
-  getSettings() {
+  async getSettings() {
     return this.http.get('/tenant/settings/attribute-settings');
   }
 
-  updateSettings(req) {
+  async updateSettings(req) {
     return this.http.put('/tenant/settings/attribute-settings', req.getHttpBody());
   }
-}
 
-export {
-  AttributesHttp
-};
+  /** @type {() => AttributesHttp} */
+  static getInstance = createInstanceGetter(AttributesHttp);
+}

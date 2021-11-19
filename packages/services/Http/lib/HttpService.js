@@ -1,115 +1,110 @@
-import { AccessService } from '@deip/access-service';
 import axios from 'axios';
+import qs from 'qs';
+import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
+import { createInstanceGetter } from '@deip/toolbox';
+import { handleHttpError } from './HttpError';
 
-import { Singleton, isFunction } from '@deip/toolbox';
+export class HttpService {
+  /**
+   * @private
+   * @type {AccessService | null}
+   */
+  _accessService = null;
 
-/**
- * @deprecated Use HttpServiceV2
- */
-class HttpService extends Singleton {
-  accessService = AccessService.getInstance();
-
-  proxydi = proxydi;
-
-  _axiosInstance;
-
-  get axios() {
-    // eslint-disable-next-line no-return-assign
-    return this._axiosInstance
-      ? this._axiosInstance
-      : this._axiosInstance = axios.create({
-        baseURL: this.proxydi.get('env').DEIP_SERVER_URL,
-        headers: {
-          'Content-Type': 'application/json',
-          'deip-application': this.proxydi.get('env').APP_ID
-        }
-      });
+  constructor() {
+    this._accessService = AccessService.getInstance();
+    const axiosInstance = this.makeAxiosInstance();
+    this.setRequestInterceptors(axiosInstance);
+    this.setResponseInterceptors(axiosInstance);
+    this.addMethods(axiosInstance);
   }
 
-  _handleErrors(error) {
-    // console.error(error);
+  /**
+   * @param {import("axios").AxiosRequestConfig?} config
+   * @return {import("axios").AxiosInstance}
+   */
+  makeAxiosInstance(config = {}) {
+    return axios.create(config);
+  }
+
+  /**
+   * @param {import("axios").AxiosInstance} axiosInstance
+   */
+  setRequestInterceptors(axiosInstance) {
+    axiosInstance.interceptors.request.use(
+      async (originalConfig) => {
+        const config = originalConfig;
+        config.baseURL = proxydi.get('env')?.DEIP_SERVER_URL;
+        const token = this._accessService.getAccessToken();
+        config.headers.Authorization = `Bearer ${token}`;
+        config.headers['deip-application'] = proxydi.get('env')?.APP_ID;
+        return config;
+      },
+      (error) => {
+        throw error;
+      }
+    );
+  }
+
+  logoutUser() {
+    this._accessService.clearAccessToken();
 
     const router = proxydi.get('routerInstance');
     const store = proxydi.get('storeInstance');
-
-    if (error.response) {
-      const { status } = error.response;
-
-      if (status === 401) {
-        this.accessService.clearAccessToken();
-
-        if (router && store) {
-          router.push({ name: store.getters['auth/settings'].signInRedirectRouteName });
-        } else {
-          window.location.replace('/sign-in');
-        }
-
-        return false;
-        // throw new Error(data);
-      }
+    if (router && store) {
+      const routeName = store.getters['auth/settings'].signInRedirectRouteName;
+      router.push({ name: routeName });
+    } else {
+      window.location.replace('/sign-in');
     }
-
-    throw error;
   }
 
-  _verb(method, url, model, options = {}) {
-    this.axios.defaults.headers.common.Authorization = `Bearer ${this.accessService.getAccessToken()}`;
-
-    return new Promise((resolve, reject) => {
-      let httpPromise;
-
-      switch (method) {
-        case 'get':
-          httpPromise = this.axios[method](url, options);
-          break;
-        case 'post':
-          httpPromise = this.axios[method](url, model, options);
-          break;
-        case 'put':
-          httpPromise = this.axios[method](url, model, options);
-          break;
-        case 'delete':
-          httpPromise = this.axios[method](url, model, options);
-          break;
-        default:
-          resolve();
-          break;
-      }
-
-      const handleErrors = isFunction(options.handleErrors)
-        ? options.handleErrors
-        : this._handleErrors;
-
-      httpPromise.then(
-        (response) => {
-          resolve(response.data);
+  /**
+   * @param {import("axios").AxiosInstance} axiosInstance
+   */
+  setResponseInterceptors(axiosInstance) {
+    axiosInstance.interceptors.response.use(
+      (response) => {
+        if (!response) {
+          throw new Error('Response is not provided');
         }
-      )
-        .catch(handleErrors)
-        .catch((error) => {
-          reject(error);
-        });
-    });
+
+        return response.data.data || response.data;
+      },
+      async (responseError) => {
+        if (axios.isCancel(responseError) || !responseError.config) {
+          throw responseError;
+        }
+
+        const originalResponse = responseError.response;
+        const status = originalResponse ? originalResponse.status : NaN;
+
+        if (status === 401) {
+          this.logoutUser();
+        }
+
+        throw handleHttpError(responseError);
+      }
+    );
   }
 
-  get(url, options) {
-    return this._verb('get', url, null, options);
+  /**
+   * @param {import("axios").AxiosInstance} axiosInstance
+   */
+  addMethods(axiosInstance) {
+    this.post = axiosInstance.post;
+    this.delete = axiosInstance.delete;
+    this.put = axiosInstance.put;
+    this.get = axiosInstance.get;
   }
 
-  post(url, model, options) {
-    return this._verb('post', url, model, options);
-  }
-
-  put(url, model, options) {
-    return this._verb('put', url, model, options);
-  }
-
-  delete_(url, model, options) {
-    return this._verb('delete', url, model, options);
-  }
+  /** @type {() => HttpService} */
+  static getInstance = createInstanceGetter(HttpService);
 }
 
-export {
-  HttpService
-};
+/**
+ * @param {object} params
+ * @return {string}
+ */
+export const serializeParams = (params) => qs.stringify(params);

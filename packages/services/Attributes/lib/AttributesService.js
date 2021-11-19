@@ -1,4 +1,3 @@
-import { Singleton } from '@deip/toolbox';
 import {
   CreateAttributeCmd,
   UpdateAttributeCmd,
@@ -6,64 +5,64 @@ import {
   UpdateAttributeSettingsCmd
 } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
+import { createInstanceGetter } from '@deip/toolbox';
 import { AttributesHttp } from './AttributesHttp';
 
-class AttributesService extends Singleton {
+export class AttributesService {
   attributesHttp = AttributesHttp.getInstance();
 
-  getAttributes() {
+  async getAttributes() {
     return this.attributesHttp.getAttributes();
   }
 
-  getAttributesByScope(scope) {
+  async getAttributesByScope(scope) {
     return this.attributesHttp.getAttributesByScope(scope);
   }
 
-  getNetworkAttributesByScope(scope) {
+  async getNetworkAttributesByScope(scope) {
     return this.attributesHttp.getNetworkAttributesByScope(scope);
   }
 
-  getAttribute(id) {
+  async getAttribute(id) {
     return this.attributesHttp.getAttribute(id);
   }
 
-  getNetworkAttributes() {
+  async getNetworkAttributes() {
     return this.attributesHttp.getNetworkAttributes();
   }
 
-  getSystemAttributes() {
+  async getSystemAttributes() {
     return this.attributesHttp.getSystemAttributes();
   }
 
-  createAttribute(attribute) {
+  async createAttribute(attribute) {
     const createAttributeCmd = new CreateAttributeCmd(attribute);
     const msg = new JsonDataMsg({ appCmds: [createAttributeCmd] });
     return this.attributesHttp.createAttribute(msg);
   }
 
-  updateAttribute(attribute) {
+  async updateAttribute(attribute) {
     const updateAttributeCmd = new UpdateAttributeCmd(attribute);
     const msg = new JsonDataMsg({ appCmds: [updateAttributeCmd] });
     return this.attributesHttp.updateAttribute(msg);
   }
 
-  deleteAttribute(attributeId) {
+  async deleteAttribute(attributeId) {
     const deleteAttributeCmd = new DeleteAttributeCmd({ attributeId });
     const msg = new JsonDataMsg({ appCmds: [deleteAttributeCmd] });
     return this.attributesHttp.deleteAttribute(msg);
   }
 
-  getSettings() {
+  async getSettings() {
     return this.attributesHttp.getSettings();
   }
 
-  updateSettings(data) {
+  async updateSettings(data) {
     const updateAttributeSettingsCmd = new UpdateAttributeSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateAttributeSettingsCmd] });
     return this.attributesHttp.updateSettings(msg);
   }
-}
 
-export {
-  AttributesService
-};
+  /** @type {() => AttributesService} */
+  static getInstance = createInstanceGetter(AttributesService);
+}
