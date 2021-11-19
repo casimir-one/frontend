@@ -1,6 +1,6 @@
-import { Singleton } from '@deip/toolbox';
+import { classSingleton } from '@deip/toolbox';
 
-class Proxydi extends Singleton {
+export class Proxydi {
   _registry = {};
 
   get(name) {
@@ -32,6 +32,5 @@ class Proxydi extends Singleton {
   }
 }
 
-const proxydi = Proxydi.getInstance();
-
-export { Proxydi, proxydi };
+/** @type {Proxydi} */
+export const proxydi = classSingleton(Proxydi);

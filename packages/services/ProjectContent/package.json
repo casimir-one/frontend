@@ -29,8 +29,7 @@
     "@deip/lib-crypto": "1.352.0",
     "@deip/message-models": "1.352.0",
     "@deip/proxydi": "1.352.0",
-    "@deip/toolbox": "1.352.0",
-    "qs": "^6.10.1"
+    "@deip/toolbox": "1.352.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.341.0"

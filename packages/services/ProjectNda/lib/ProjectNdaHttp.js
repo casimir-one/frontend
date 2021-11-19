@@ -1,26 +1,25 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ProjectNdaHttp extends Singleton {
+export class ProjectNdaHttp {
   http = HttpService.getInstance();
 
-  createProjectNda(req) {
+  async createProjectNda(req) {
     return this.http.post('/api/v2/nda', req.getHttpBody());
   }
 
-  getProjectNda(ndaExternalId) {
+  async getProjectNda(ndaExternalId) {
     return this.http.get(`/api/v2/nda/${ndaExternalId}`);
   }
 
-  getProjectNdaListByCreator(creator) {
+  async getProjectNdaListByCreator(creator) {
     return this.http.get(`/api/v2/nda/creator/${creator}`);
   }
 
-  getProjectNdaListByProject(projectId) {
+  async getProjectNdaListByProject(projectId) {
     return this.http.get(`/api/v2/nda/project/${projectId}`);
   }
-}
 
-export {
-  ProjectNdaHttp
-};
+  /** @type {() => ProjectNdaHttp} */
+  static getInstance = createInstanceGetter(ProjectNdaHttp);
+}

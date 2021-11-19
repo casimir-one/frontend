@@ -1,44 +1,43 @@
-import { Singleton } from '@deip/toolbox';
 import { ProjectService } from '@deip/project-service';
 import { proxydi } from '@deip/proxydi';
+import { createInstanceGetter } from '@deip/toolbox';
 import { ExpressLicensingHttp } from './ExpressLicensingHttp';
 
-class ExpressLicensingService extends Singleton {
+export class ExpressLicensingService {
   expressLicensingHttp = ExpressLicensingHttp.getInstance();
 
   projectService = ProjectService.getInstance();
 
   proxydi = proxydi;
 
-  createExpressLicensingRequest() {
+  async createExpressLicensingRequest() {
     // Will be recovered by Egor Anekey's PR
   }
 
-  getResearchLicense(externalId) {
+  async getResearchLicense(externalId) {
     return this.expressLicensingHttp.getResearchLicense(externalId);
   }
 
-  getResearchLicensesByLicensee(licensee) {
+  async getResearchLicensesByLicensee(licensee) {
     return this.expressLicensingHttp.getResearchLicensesByLicensee(licensee);
   }
 
-  getResearchLicensesByLicenser(licenser) {
+  async getResearchLicensesByLicenser(licenser) {
     return this.expressLicensingHttp.getResearchLicensesByLicenser(licenser);
   }
 
-  getResearchLicensesByResearch(researchId) {
+  async getResearchLicensesByResearch(researchId) {
     return this.expressLicensingHttp.getResearchLicensesByResearch(researchId);
   }
 
-  getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
+  async getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
     return this.expressLicensingHttp.getResearchLicensesByLicenseeAndResearch(licensee, researchId);
   }
 
-  getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
+  async getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
     return this.expressLicensingHttp.getResearchLicensesByLicenseeAndLicenser(licensee, licenser);
   }
-}
 
-export {
-  ExpressLicensingService
-};
+  /** @type {() => ExpressLicensingService} */
+  static getInstance = createInstanceGetter(ExpressLicensingService);
+}

@@ -1,6 +1,6 @@
 import {
-  Singleton,
-  createFormData
+  createFormData,
+  createInstanceGetter
 } from '@deip/toolbox';
 import {
   CreateContractAgreementCmd,
@@ -16,12 +16,12 @@ import { ContractAgreementHttp } from './ContractAgreementHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class ContractAgreementService extends Singleton {
+export class ContractAgreementService {
   contractAgreementHttp = ContractAgreementHttp.getInstance();
 
   proxydi = proxydi;
 
-  createContractAgreement(payload) {
+  async createContractAgreement(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -70,7 +70,7 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-  acceptContractAgreement(payload) {
+  async acceptContractAgreement(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -103,7 +103,7 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-  proposeContractAgreement(payload) {
+  async proposeContractAgreement(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -174,7 +174,7 @@ class ContractAgreementService extends Singleton {
       });
   }
 
-  getContractAgreements({
+  async getContractAgreements({
     parties,
     type,
     status,
@@ -189,11 +189,10 @@ class ContractAgreementService extends Singleton {
     return this.contractAgreementHttp.getContractAgreements(query);
   }
 
-  getContractAgreement(contractAgreementId) {
+  async getContractAgreement(contractAgreementId) {
     return this.contractAgreementHttp.getContractAgreement(contractAgreementId);
   }
-}
 
-export {
-  ContractAgreementService
-};
+  /** @type {() => ContractAgreementService} */
+  static getInstance = createInstanceGetter(ContractAgreementService);
+}

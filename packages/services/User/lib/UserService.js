@@ -5,19 +5,19 @@ import {
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import {
-  Singleton,
   replaceFileWithName,
   createFormData,
-  genSha256Hash
+  genSha256Hash,
+  createInstanceGetter
 } from '@deip/toolbox';
 import { UserHttp } from './UserHttp';
 
-class UserService extends Singleton {
+export class UserService {
   userHttp = UserHttp.getInstance();
 
   proxydi = proxydi;
 
-  updateUser(payload) {
+  async updateUser(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -66,36 +66,36 @@ class UserService extends Singleton {
       });
   }
 
-  getUserInvites(username) {
+  async getUserInvites(username) {
     return this.userHttp.getInvitesByUser(username);
   }
 
-  getUsers(usernames) {
+  async getUsers(usernames) {
     return this.userHttp.getUsers(usernames);
   }
 
-  getUsersByTeam(teamId) {
+  async getUsersByTeam(teamId) {
     return this.userHttp.getUsersByTeam(teamId);
   }
 
-  getUsersByTenant(tenantId) {
+  async getUsersByTenant(tenantId) {
     return this.userHttp.getUsersByTenant(tenantId);
   }
 
-  getUsersListing(query = {}) {
+  async getUsersListing(query = {}) {
     return this.userHttp.getUsersListing(query);
   }
 
   // ONE
 
-  getUser(username) {
+  async getUser(username) {
     if (username.includes('@')) {
       return this.userHttp.getUserByEmail(username);
     }
     return this.userHttp.getUser(username);
   }
 
-  checkIfUserExists(username) {
+  async checkIfUserExists(username) {
     return new Promise((resolve) => this.getUser(username)
       .then(() => resolve(true))
       .catch((error) => {
@@ -106,8 +106,7 @@ class UserService extends Singleton {
         }
       }));
   }
-}
 
-export {
-  UserService
-};
+  /** @type {() => UserService} */
+  static getInstance = createInstanceGetter(UserService);
+}

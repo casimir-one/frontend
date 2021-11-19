@@ -1,42 +1,41 @@
-import { Singleton } from '@deip/toolbox';
 import {
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd
 } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
+import { createInstanceGetter } from '@deip/toolbox';
 import { DocumentTemplateHttp } from './DocumentTemplateHttp';
 
-class DocumentTemplateService extends Singleton {
+export class DocumentTemplateService {
   documentTemplateHttp = DocumentTemplateHttp.getInstance();
 
-  getDocumentTemplate(id) {
+  async getDocumentTemplate(id) {
     return this.documentTemplateHttp.getDocumentTemplate(id);
   }
 
-  getDocumentTemplatesByAccount(account) {
+  async getDocumentTemplatesByAccount(account) {
     return this.documentTemplateHttp.getDocumentTemplatesByAccount(account);
   }
 
-  createDocumentTemplate(documentTemplate) {
+  async createDocumentTemplate(documentTemplate) {
     const createDocumentTemplateCmd = new CreateDocumentTemplateCmd(documentTemplate);
     const msg = new JsonDataMsg({ appCmds: [createDocumentTemplateCmd] });
     return this.documentTemplateHttp.createDocumentTemplate(msg);
   }
 
-  updateDocumentTemplate(documentTemplate) {
+  async updateDocumentTemplate(documentTemplate) {
     const updateDocumentTemplateCmd = new UpdateDocumentTemplateCmd(documentTemplate);
     const msg = new JsonDataMsg({ appCmds: [updateDocumentTemplateCmd] });
     return this.documentTemplateHttp.updateDocumentTemplate(msg);
   }
 
-  deleteDocumentTemplate(documentTemplateId) {
+  async deleteDocumentTemplate(documentTemplateId) {
     const deleteDocumentTemplateCmd = new DeleteDocumentTemplateCmd({ documentTemplateId });
     const msg = new JsonDataMsg({ appCmds: [deleteDocumentTemplateCmd] });
     return this.documentTemplateHttp.deleteDocumentTemplate(msg);
   }
-}
 
-export {
-  DocumentTemplateService
-};
+  /** @type {() => DocumentTemplateService} */
+  static getInstance = createInstanceGetter(DocumentTemplateService);
+}

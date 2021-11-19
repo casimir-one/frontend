@@ -1,4 +1,4 @@
-import { collectionMerge, genObjectId, Singleton } from '@deip/toolbox';
+import { collectionMerge, genObjectId, createInstanceGetter } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/message-models';
 import {
   UpdateLayoutCmd,
@@ -6,25 +6,25 @@ import {
 } from '@deip/command-models';
 import { LayoutHttp } from './LayoutHttp';
 
-class LayoutService extends Singleton {
+export class LayoutService {
   layoutHttp = LayoutHttp.getInstance();
 
-  getLayouts() {
+  async getLayouts() {
     return this.layoutHttp.getLayouts();
   }
 
-  getOne(_id) {
+  async getOne(_id) {
     return this.getLayouts()
       .then((res) => res.find((l) => l._id === _id));
   }
 
-  updateLayouts(data) {
+  async updateLayouts(data) {
     const updateLayoutCmd = new UpdateLayoutCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateLayoutCmd] });
     return this.layoutHttp.updateLayouts(msg);
   }
 
-  create(data) {
+  async create(data) {
     return this.getLayouts()
       .then((res) => {
         const _id = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
@@ -37,7 +37,7 @@ class LayoutService extends Singleton {
       });
   }
 
-  update(_id, data) {
+  async update(_id, data) {
     return this.getLayouts()
       .then((res) => {
         const exist = res.find((l) => l._id === _id);
@@ -51,7 +51,7 @@ class LayoutService extends Singleton {
       });
   }
 
-  remove(_id) {
+  async remove(_id) {
     return this.getLayouts()
       .then((res) => {
         const updated = res.filter((l) => l._id !== _id);
@@ -60,17 +60,16 @@ class LayoutService extends Singleton {
       });
   }
 
-  getSettings() {
+  async getSettings() {
     return this.layoutHttp.getSettings();
   }
 
-  updateSettings(data) {
+  async updateSettings(data) {
     const updateLayoutSettingsCmd = new UpdateLayoutSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateLayoutSettingsCmd] });
     return this.layoutHttp.updateSettings(msg);
   }
-}
 
-export {
-  LayoutService
-};
+  /** @type {() => LayoutService} */
+  static getInstance = createInstanceGetter(LayoutService);
+}

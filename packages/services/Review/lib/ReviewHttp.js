@@ -1,56 +1,55 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ReviewHttp extends Singleton {
+export class ReviewHttp {
   http = HttpService.getInstance();
 
-  getReviewRequestsByExpert(username, status) {
+  async getReviewRequestsByExpert(username, status) {
     const query = status ? `?status=${status}` : '';
     return this.http.get(`/api/v2/review-requests/expert/${username}${query}`);
   }
 
-  getReviewRequestsByRequestor(username, status) {
+  async getReviewRequestsByRequestor(username, status) {
     const query = status ? `?status=${status}` : '';
     return this.http.get(`/api/v2/review-requests/requestor/${username}${query}`);
   }
 
-  createReviewRequest(req) {
+  async createReviewRequest(req) {
     return this.http.post('/api/v2/review-request', req.getHttpBody());
   }
 
-  denyReviewRequest(req) {
+  async denyReviewRequest(req) {
     return this.http.put('/api/v2/review-request/deny', req.getHttpBody());
   }
 
-  createReview(req) {
+  async createReview(req) {
     return this.http.post('/api/v2/review', req.getHttpBody());
   }
 
-  upvoteReview(req) {
+  async upvoteReview(req) {
     return this.http.post('/api/v2/review/upvote', req.getHttpBody());
   }
 
-  getReview(reviewId) {
+  async getReview(reviewId) {
     return this.http.get(`/api/v2/review/${reviewId}`);
   }
 
-  getReviewsByProject(projectId) {
+  async getReviewsByProject(projectId) {
     return this.http.get(`/api/v2/reviews/project/${projectId}`);
   }
 
-  getReviewsByProjectContent(projectContentId) {
+  async getReviewsByProjectContent(projectContentId) {
     return this.http.get(`/api/v2/reviews/project-content/${projectContentId}`);
   }
 
-  getReviewsByAuthor(author) {
+  async getReviewsByAuthor(author) {
     return this.http.get(`/api/v2/reviews/author/${author}`);
   }
 
-  getReviewUpvotes(reviewId) {
+  async getReviewUpvotes(reviewId) {
     return this.http.get(`/api/v2/review/votes/${reviewId}`);
   }
-}
 
-export {
-  ReviewHttp
-};
+  /** @type {() => ReviewHttp} */
+  static getInstance = createInstanceGetter(ReviewHttp);
+}

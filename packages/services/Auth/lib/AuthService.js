@@ -1,24 +1,24 @@
-import { Singleton, genSha256Hash } from '@deip/toolbox';
+import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { CreateAccountCmd } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
 import { AuthHttp } from './AuthHttp';
 
-class AuthService extends Singleton {
+export class AuthService {
   proxydi = proxydi;
 
-  $http = AuthHttp.getInstance();
+  http = AuthHttp.getInstance();
 
-  signIn(model) {
-    return this.$http.signIn(model);
+  async signIn(model) {
+    return this.http.signIn(model);
   }
 
-  adminSignIn(model) {
-    return this.$http.adminSignIn(model);
+  async adminSignIn(model) {
+    return this.http.adminSignIn(model);
   }
 
-  signUp({ privKey, isAuthorizedCreatorRequired }, {
+  async signUp({ privKey, isAuthorizedCreatorRequired }, {
     email,
     attributes,
     username,
@@ -62,12 +62,12 @@ class AuthService extends Singleton {
             : finalizedTx.signAsync(privKey, chainNodeClient)))
           .then((finalizedTx) => {
             const msg = new JsonDataMsg(finalizedTx.getPayload());
-            return this.$http.signUp(msg);
+            return this.http.signUp(msg);
           });
       });
   }
 
-  generateSeedAccount(username, passwordOrPrivKey) {
+  async generateSeedAccount(username, passwordOrPrivKey) {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -81,8 +81,7 @@ class AuthService extends Singleton {
         });
       });
   }
-}
 
-export {
-  AuthService
-};
+  /** @type {() => AuthService} */
+  static getInstance = createInstanceGetter(AuthService)
+}

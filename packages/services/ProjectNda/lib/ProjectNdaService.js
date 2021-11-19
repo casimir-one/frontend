@@ -1,4 +1,3 @@
-import { Singleton } from '@deip/toolbox';
 import {
   CreateProjectNdaCmd,
   CreateProposalCmd,
@@ -8,17 +7,18 @@ import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
+import { createInstanceGetter } from '@deip/toolbox';
 import { ProjectNdaHttp } from './ProjectNdaHttp';
 
 const ndaDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 50).getTime();
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class ProjectNdaService extends Singleton {
+export class ProjectNdaService {
   projectNdaHttp = ProjectNdaHttp.getInstance();
 
   proxydi = proxydi;
 
-  createProjectNda(payload) {
+  async createProjectNda(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -76,19 +76,18 @@ class ProjectNdaService extends Singleton {
       });
   }
 
-  getProjectNda(externalId) {
+  async getProjectNda(externalId) {
     return this.projectNdaHttp.getProjectNda(externalId);
   }
 
-  getProjectNdaListByCreator(creator) {
+  async getProjectNdaListByCreator(creator) {
     return this.projectNdaHttp.getProjectNdaListByCreator(creator);
   }
 
-  getProjectNdaListByProject(projectId) {
+  async getProjectNdaListByProject(projectId) {
     return this.projectNdaHttp.getProjectNdaListByProject(projectId);
   }
-}
 
-export {
-  ProjectNdaService
-};
+  /** @type {() => ProjectNdaService} */
+  static getInstance = createInstanceGetter(ProjectNdaService);
+}

@@ -1,50 +1,49 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class TenantHttp extends Singleton {
+export class TenantHttp {
   http = HttpService.getInstance();
 
-  getTenant() {
+  async getTenant() {
     return this.http.get('/tenant');
   }
 
-  getNetworkTenant(tenantId) {
+  async getNetworkTenant(tenantId) {
     return this.http.get(`/api/network/tenants/${tenantId}`);
   }
 
-  getNetworkTenants() {
+  async getNetworkTenants() {
     return this.http.get('/api/network/tenants/listing');
   }
 
-  updateTenantProfile(req) {
+  async updateTenantProfile(req) {
     return this.http.put('/tenant/profile', req.getHttpBody());
   }
 
-  updateNetworkSettings(req) {
+  async updateNetworkSettings(req) {
     return this.http.put('/tenant/network-settings', req.getHttpBody());
   }
 
-  updateTenantSettings(req) {
+  async updateTenantSettings(req) {
     return this.http.put('/tenant/settings', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  postSignUp(req) {
+  async postSignUp(req) {
     return this.http.post('/tenant/v2/registry/sign-up', req.getHttpBody());
   }
 
-  approveSignUpRequest(req) {
+  async approveSignUpRequest(req) {
     return this.http.post('/tenant/v2/registry/sign-ups/approve', req.getHttpBody());
   }
 
-  getSignUpRequests() {
+  async getSignUpRequests() {
     return this.http.get('/tenant/registry/sign-ups');
   }
 
-  rejectSignUpRequest(req) {
+  async rejectSignUpRequest(req) {
     return this.http.put('/tenant/registry/sign-ups/reject', req.getHttpBody());
   }
-}
 
-export {
-  TenantHttp
-};
+  /** @type {() => TenantHttp} */
+  static getInstance = createInstanceGetter(TenantHttp);
+}

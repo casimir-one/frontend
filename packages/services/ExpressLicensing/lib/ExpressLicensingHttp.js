@@ -1,39 +1,37 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ExpressLicensingHttp extends Singleton {
+export class ExpressLicensingHttp {
   http = HttpService.getInstance();
 
-  createExpressLicensingRequest({ tx, offchainMeta }) {
-    return this.http.post(`/api/express-licensing`, { tx, offchainMeta });
+  async createExpressLicensingRequest({ tx, offchainMeta }) {
+    return this.http.post('/api/express-licensing', { tx, offchainMeta });
   }
 
-  getResearchLicense(externalId) {
+  async getResearchLicense(externalId) {
     return this.http.get(`/api/express-licensing/externalId/${externalId}`);
   }
 
-  getResearchLicensesByLicensee(licensee) {
+  async getResearchLicensesByLicensee(licensee) {
     return this.http.get(`/api/express-licensing/licensee/${licensee}`);
   }
 
-  getResearchLicensesByLicenser(licenser) {
+  async getResearchLicensesByLicenser(licenser) {
     return this.http.get(`/api/express-licensing/licenser/${licenser}`);
   }
 
-  getResearchLicensesByResearch(researchId) {
+  async getResearchLicensesByResearch(researchId) {
     return this.http.get(`/api/express-licensing/researchId/${researchId}`);
   }
 
-  getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
+  async getResearchLicensesByLicenseeAndResearch(licensee, researchId) {
     return this.http.get(`/api/express-licensing/licensee/${licensee}/researchId/${researchId}`);
   }
 
-  getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
+  async getResearchLicensesByLicenseeAndLicenser(licensee, licenser) {
     return this.http.get(`/api/express-licensing/licensee/${licensee}/licenser/${licenser}`);
   }
-}
 
-export {
-  ExpressLicensingHttp
-};
+  /** @type {() => ExpressLicensingHttp} */
+  static getInstance = createInstanceGetter(ExpressLicensingHttp);
+}

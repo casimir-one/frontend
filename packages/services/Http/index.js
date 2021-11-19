@@ -1,3 +1,2 @@
-export { HttpService } from './lib/HttpService';
-export { HttpServiceV2, serializeParams } from './lib/HttpServiceV2';
+export { HttpService, serializeParams } from './lib/HttpService';
 export { HttpError, handleHttpError } from './lib/HttpError';

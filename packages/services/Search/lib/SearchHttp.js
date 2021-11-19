@@ -1,10 +1,9 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class SearchHttp extends Singleton {
+export class SearchHttp {
   http = HttpService.getInstance();
-}
 
-export {
-  SearchHttp
-};
+  /** @type {() => SearchHttp} */
+  static getInstance = createInstanceGetter(SearchHttp);
+}

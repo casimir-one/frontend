@@ -1,8 +1,8 @@
 import decode from 'jwt-decode';
-import { Singleton } from '@deip/toolbox';
 import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@deip/constants';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class AccessService extends Singleton {
+export class AccessService {
   getTokenExpirationDate(jwt) {
     const token = decode(jwt);
     if (!token.exp) { return null; }
@@ -58,8 +58,7 @@ class AccessService extends Singleton {
   }
 
   decodedToken = (jwt) => decode(jwt)
-}
 
-export {
-  AccessService
-};
+  /** @type {() => AccessService} */
+  static getInstance = createInstanceGetter(AccessService)
+}

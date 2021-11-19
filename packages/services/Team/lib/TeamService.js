@@ -1,8 +1,8 @@
 import {
-  Singleton,
   createFormData,
   replaceFileWithName,
-  genSha256Hash
+  genSha256Hash,
+  createInstanceGetter
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
@@ -23,12 +23,12 @@ import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class TeamService extends Singleton {
+export class TeamService {
   proxydi = proxydi;
   teamHttp = TeamHttp.getInstance();
   userService = UserService.getInstance();
 
-  createTeam(payload, isCreateDefaultProject = false) {
+  async createTeam(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET } = env;
     const {
@@ -122,7 +122,7 @@ class TeamService extends Singleton {
       });
   }
 
-  updateTeam(payload) {
+  async updateTeam(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -197,7 +197,7 @@ class TeamService extends Singleton {
       });
   }
 
-  joinTeam(payload) {
+  async joinTeam(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -246,7 +246,7 @@ class TeamService extends Singleton {
       });
   }
 
-  leaveTeam(payload) {
+  async leaveTeam(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -295,7 +295,7 @@ class TeamService extends Singleton {
       });
   }
 
-  getTeam(teamId) {
+  async getTeam(teamId) {
     return Promise.all([
       this.teamHttp.get(teamId),
       this.userService.getUsersByTeam(teamId)
@@ -305,23 +305,22 @@ class TeamService extends Singleton {
     }));
   }
 
-  getTeams(teamsIds) {
+  async getTeams(teamsIds) {
     return this.teamHttp.getList(teamsIds);
   }
 
-  getTeamsListing(withTenantTeam = false) {
+  async getTeamsListing(withTenantTeam = false) {
     return this.teamHttp.getListing(withTenantTeam);
   }
 
-  getTeamsByUser(user, withTenantTeam = false) {
+  async getTeamsByUser(user, withTenantTeam = false) {
     return this.teamHttp.getListByUser(user, withTenantTeam);
   }
 
-  getTeamsByTenant(tenantId, withTenantTeam = false) {
+  async getTeamsByTenant(tenantId, withTenantTeam = false) {
     return this.teamHttp.getListByTenant(tenantId, withTenantTeam);
   }
-}
 
-export {
-  TeamService
-};
+  /** @type {() => TeamService} */
+  static getInstance = createInstanceGetter(TeamService);
+}

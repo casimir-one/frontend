@@ -1,21 +1,18 @@
-import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
-import { Singleton } from '@deip/toolbox';
 import { UpdateProposalCmd, DeclineProposalCmd } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
 import { ChainService } from '@deip/chain-service';
+import { createInstanceGetter } from '@deip/toolbox';
 import { ProposalsHttp } from './ProposalsHttp';
 
-class ProposalsService extends Singleton {
+export class ProposalsService {
   proposalsHttp = ProposalsHttp.getInstance();
-
-  accessService = AccessService.getInstance();
 
   proxydi = proxydi;
 
   // TODO: add createProposal endpoint and support proposal of APP_PROPOSAL.CUSTOM type
 
-  updateProposal({ privKey }, {
+  async updateProposal({ privKey }, {
     proposalId,
     activeApprovalsToAdd = [],
     activeApprovalsToRemove = [],
@@ -52,7 +49,7 @@ class ProposalsService extends Singleton {
       });
   }
 
-  declineProposal({ privKey }, {
+  async declineProposal({ privKey }, {
     proposalId,
     account,
     authorityType
@@ -81,7 +78,7 @@ class ProposalsService extends Singleton {
       });
   }
 
-  getProposalsByCreator(account) {
+  async getProposalsByCreator(account) {
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -100,15 +97,14 @@ class ProposalsService extends Singleton {
       });
   }
 
-  getAccountProposals(account, status = 0) {
+  async getAccountProposals(account, status = 0) {
     return this.proposalsHttp.getAccountProposals(account, status);
   }
 
-  getProposal(externalId) {
+  async getProposal(externalId) {
     return this.proposalsHttp.getProposal(externalId);
   }
-}
 
-export {
-  ProposalsService
-};
+  /** @type {() => ProposalsService} */
+  static getInstance = createInstanceGetter(ProposalsService);
+}

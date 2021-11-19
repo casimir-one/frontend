@@ -1,30 +1,29 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class DocumentTemplateHttp extends Singleton {
+export class DocumentTemplateHttp {
   http = HttpService.getInstance();
 
-  getDocumentTemplate(id) {
+  async getDocumentTemplate(id) {
     return this.http.get(`/api/v2/document-template/${id}`);
   }
 
-  getDocumentTemplatesByAccount(account) {
+  async getDocumentTemplatesByAccount(account) {
     return this.http.get(`/api/v2/document-templates/account/${account}`);
   }
 
-  createDocumentTemplate(req) {
+  async createDocumentTemplate(req) {
     return this.http.post('/api/v2/document-template', req.getHttpBody());
   }
 
-  updateDocumentTemplate(req) {
+  async updateDocumentTemplate(req) {
     return this.http.put('/api/v2/document-template', req.getHttpBody());
   }
 
-  deleteDocumentTemplate(req) {
+  async deleteDocumentTemplate(req) {
     return this.http.put('/api/v2/document-template/delete', req.getHttpBody());
   }
-}
 
-export {
-  DocumentTemplateHttp
-};
+  /** @type {() => DocumentTemplateHttp} */
+  static getInstance = createInstanceGetter(DocumentTemplateHttp)
+}

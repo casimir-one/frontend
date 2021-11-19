@@ -18,6 +18,7 @@ export * from './lib/files';
 export * from './lib/interface';
 export * from './lib/hash';
 export * from './lib/template-string-parser';
+export * from './lib/classSingleton';
 
 export * from 'change-case';
 

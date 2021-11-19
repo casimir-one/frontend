@@ -1,4 +1,3 @@
-import { Singleton } from '@deip/toolbox';
 import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
 import crypto from '@deip/lib-crypto';
@@ -16,30 +15,30 @@ import {
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamService } from '@deip/team-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
 
 // TODO: move to constants
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-class ProjectService extends Singleton {
+export class ProjectService {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
   teamService = TeamService.getInstance();
 
-
-  getProject(projectId) {
+  async getProject(projectId) {
     return this.projectHttp.getProject(projectId);
   }
 
-  getProjects(projectsIds) {
+  async getProjects(projectsIds) {
     return this.projectHttp.getProjects(projectsIds);
   }
 
-  getTeamDefaultProject(teamId) {
+  async getTeamDefaultProject(teamId) {
     return this.projectHttp.getTeamDefaultProject(teamId);
   }
 
-  createProject({ privKey }, {
+  async createProject({ privKey }, {
     isAdmin,
     teamId,
     creator,
@@ -165,7 +164,7 @@ class ProjectService extends Singleton {
   }
 
 
-  updateProject({ privKey }, {
+  async updateProject({ privKey }, {
     projectId,
     teamId,
     isPrivate,
@@ -279,7 +278,7 @@ class ProjectService extends Singleton {
   }
 
 
-  deleteProject(projectId) {
+  async deleteProject(projectId) {
     const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
     const msg = new JsonDataMsg({ appCmds: [deleteProjectCmd] }, { 'entity-id': projectId });
     return this.projectHttp.deleteProject(msg);
@@ -287,7 +286,7 @@ class ProjectService extends Singleton {
 
   // Change all methods to cmd
 
-  getPublicProjectListing({
+  async getPublicProjectListing({
     searchTerm,
     disciplines,
     organizations,
@@ -306,21 +305,21 @@ class ProjectService extends Singleton {
     return this.projectHttp.getPublicProjectListing(filter);
   }
 
-  getUserProjectListing(username) {
+  async getUserProjectListing(username) {
     return this.projectHttp.getUserProjectListing(username);
   }
 
-  getUserPublicProjects(username) {
+  async getUserPublicProjects(username) {
     return this.projectHttp.getUserProjectListing(username)
       .then((projects) => projects.filter((p) => !p.is_private));
   }
 
-  getUserPrivateProjects(username) {
+  async getUserPrivateProjects(username) {
     return this.projectHttp.getUserProjectListing(username)
       .then((projects) => projects.filter((p) => p.is_private));
   }
 
-  getUserTeamsProjects(username) {
+  async getUserTeamsProjects(username) {
     return this.projectHttp.getUserProjectListing(username)
       .then((projects) => projects.filter((p) => !p.research_group.is_personal));
   }
@@ -330,17 +329,14 @@ class ProjectService extends Singleton {
       .then((projects) => projects.filter((p) => p.research_group.is_personal));
   }
 
-  getTeamProjectListing(teamId) {
+  async getTeamProjectListing(teamId) {
     return this.projectHttp.getTeamProjectListing(teamId);
   }
 
-  getTenantProjectListing() {
+  async getTenantProjectListing() {
     return this.projectHttp.getTenantProjectListing();
   }
 
+  /** @type {() => ProjectService} */
+  static getInstance = createInstanceGetter(ProjectService);
 }
-
-
-export {
-  ProjectService
-};

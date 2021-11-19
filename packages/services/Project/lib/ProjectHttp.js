@@ -1,58 +1,55 @@
-import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
-import qs from 'qs';
+import { HttpService, serializeParams } from '@deip/http-service';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class ProjectHttp extends Singleton {
+export class ProjectHttp {
   http = HttpService.getInstance();
 
-
-  getProject(projectId) {
+  async getProject(projectId) {
     return this.http.get(`/api/v2/project/${projectId}`);
   }
 
-  getProjects(projectsIds) {
-    const query = qs.stringify({ projectsIds });
+  async getProjects(projectsIds) {
+    const query = serializeParams({ projectsIds });
     return this.http.get(`/api/v2/projects?${query}`);
   }
 
-  getTeamDefaultProject(teamId) {
+  async getTeamDefaultProject(teamId) {
     return this.http.get(`/api/v2/project/default/${teamId}`);
   }
 
-  createProject(req) {
+  async createProject(req) {
     return this.http.post('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  getProjectPendingInvites(projectId) {
+  async getProjectPendingInvites(projectId) {
     return this.http.get(`/api/invites/research/${projectId}`);
   }
 
-  updateProject(req) {
+  async updateProject(req) {
     return this.http.put('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  deleteProject(req) {
+  async deleteProject(req) {
     return this.http.put(`/api/v2/project/delete`, req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  getPublicProjectListing(filter) {
-    let query = qs.stringify({ filter });
+  async getPublicProjectListing(filter) {
+    let query = serializeParams({ filter });
     return this.http.get(`/api/v2/projects/listing?${query}`);
   }
 
-  getUserProjectListing(username) {
+  async getUserProjectListing(username) {
     return this.http.get(`/api/v2/projects/user/listing/${username}`);
   }
 
-  getTeamProjectListing(teamId) {
+  async getTeamProjectListing(teamId) {
     return this.http.get(`/api/v2/projects/team/listing/${teamId}`);
   }
 
-  getTenantProjectListing() {
+  async getTenantProjectListing() {
     return this.http.get(`/api/v2/projects/tenant/listing`);
   }
-}
 
-export {
-  ProjectHttp
-};
+  /** @type {() => ProjectHttp} */
+  static getInstance = createInstanceGetter(ProjectHttp);
+}

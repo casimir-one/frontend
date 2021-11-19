@@ -1,22 +1,21 @@
 import { HttpService } from '@deip/http-service';
-import { Singleton } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 
-class NotificationHttp extends Singleton {
+export class NotificationHttp {
   http = HttpService.getInstance();
 
-  getNotificationsByUser(username) {
+  async getNotificationsByUser(username) {
     return this.http.get(`/api/notifications/user/${username}`);
   }
 
-  markUserNotificationAsRead(username, notificationId) {
+  async markUserNotificationAsRead(username, notificationId) {
     return this.http.put(`/api/notifications/${username}/mark-read/${notificationId}`, {});
   }
 
-  markAllUserNotificationAsRead(username) {
+  async markAllUserNotificationAsRead(username) {
     return this.http.put(`/api/notifications/${username}/mark-all-read`, {});
   }
-}
 
-export {
-  NotificationHttp
-};
+  /** @type {() => NotificationHttp} */
+  static getInstance = createInstanceGetter(NotificationHttp);
+}
