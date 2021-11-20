@@ -1,25 +1,148 @@
-import BaseChainApi from './../../base/BaseChainApi';
+import BaseChainRpc from './../../base/BaseChainRpc';
+import { isAddress, daoIdToAddress } from './utils'
 
-
-class SubstrateChainApi extends BaseChainApi {
+class SubstrateChainRpc extends BaseChainRpc {
 
   constructor(chainService) {
-    const api = {
+
+    const LIST_LIMIT = 1000;
+    const toHexFormat = (id) => {
+      if (!id) return null;
+      const hexId = id.indexOf(`0x`) === 0 ? id : `0x${id}`;
+      return hexId;
+    }
+
+    const rpc = {
+
       sendTxAsync: (rawTx) => {
         return chainService.rpcToChainNode('author_submitExtrinsic', [rawTx]);
       },
       
+
+      /* DAO */
+
+      getAccountAsync: (daoId) => {
+        return chainService.rpcToChainNode("deipDao_get", [null, toHexFormat(daoId)]);
+      },
+
+      getAccountsAsync: (daoIds) => {
+        return chainService.rpcToChainNode("deipDao_getMulti", [null, daoIds.map((daoId) => toHexFormat(daoId))]);
+      },
+
+      getAccountsListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deipDao_getList", [null, limit, toHexFormat(startIdx)]);
+      },
+
+
+
+      /* PROJECT */
+
       getProjectAsync: (projectId) => {
-        return chainService.rpcToChainNode("deip_getProject", [null, `0x${projectId}`]);
+        return chainService.rpcToChainNode("deip_getProject", [null, toHexFormat(projectId)]);
       },
 
-      getProjectsListAsync: () => {
-        return chainService.rpcToChainNode("deip_getProjectList", [null]);
+      getProjectsListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deip_getProjectList", [null, limit, toHexFormat(startIdx)]);
       },
 
-      getAccountsAsync: async function (daoIds) {
-        return chainService.rpcToChainNode("deipDao_getMulti", [null, daoIds.map((daoId) => `0x${daoId}`)]);
+      getProjectsByTeamAsync: (daoId, startIdx = null, limit = LIST_LIMIT) => { 
+        const chainNodeClient = chainService.getChainNodeClient();
+        const teamId = isAddress(daoId) ? daoId : daoIdToAddress(toHexFormat(daoId), chainNodeClient.registry);
+        return chainService.rpcToChainNode("deip_getProjectListByTeam", [null, teamId, limit, toHexFormat(startIdx)]);
       },
+
+
+
+      /*  PROJECT CONTENT */
+
+      getProjectContentAsync: (projectContentId) => { 
+        return chainService.rpcToChainNode("deip_getProjectContent", [null, toHexFormat(projectContentId)]);
+      },
+
+      getProjectContentsListAsync: (startIdx = null, limit = LIST_LIMIT) => { 
+        return chainService.rpcToChainNode("deip_getProjectContentList", [null, limit, toHexFormat(startIdx)]);
+      },
+
+      getProjectContentsByProjectAsync: (projectId, startIdx = null, limit = LIST_LIMIT) => { 
+        return chainService.rpcToChainNode("deip_getProjectContentListByProject", [null, toHexFormat(projectId), limit, toHexFormat(startIdx)]);
+      },
+
+
+      /* INVESTMENT OPPORTUNITY */
+
+      getInvestmentOpportunityAsync: (invstOppId) => {
+        return chainService.rpcToChainNode("deip_getInvestmentOpportunity", [null, toHexFormat(invstOppId)]);
+      },
+
+      getInvestmentOpportunitiesListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deip_getInvestmentOpportunityList", [null, limit, toHexFormat(startIdx)]);
+      },
+
+
+      /* CONTRACT AGREEMENT */
+
+      getContractAgreementAsync: (contractAgreementId) => {
+        return chainService.rpcToChainNode("deip_getContractAgreement", [null, toHexFormat(contractAgreementId)]);
+      },
+
+      getContractAgreementsListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deip_getContractAgreementList", [null, limit, toHexFormat(startIdx)]);
+      },
+
+      getContractAgreementsByTypeAsync: (type, startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deip_getContractAgreementListByType", [null, type, limit, toHexFormat(startIdx)]);
+      },
+
+
+      /* PROPOSAL */
+
+      getProposalAsync: (proposalId) => {
+        return chainService.rpcToChainNode("deipProposal_get", [null, toHexFormat(proposalId)]);
+      },
+
+      getProposalsListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("deipProposal_getList", [null, limit, toHexFormat(startIdx)]);
+      },
+
+      getProposalsByCreatorAsync: (daoId, startIdx = null, limit = LIST_LIMIT) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const creator = isAddress(daoId) ? daoId : daoIdToAddress(toHexFormat(daoId), chainNodeClient.registry);
+        return chainService.rpcToChainNode("deipProposal_getListByCreator", [null, creator, limit, toHexFormat(startIdx)]);
+      },
+
+
+      /* ASSET */
+
+      getAssetAsync: (id) => {
+        return chainService.rpcToChainNode("assets_getAsset", [null, toHexFormat(id)]);
+      },
+
+      getAssetsListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        const idx = startIdx ? [toHexFormat(startIdx)[0], toHexFormat(startIdx)[1]] : null;
+        return chainService.rpcToChainNode("assets_getAssetList", [null, limit, idx]);
+      },
+    
+
+      /* ASSET BALANCE */
+
+      getAssetBalanceByOwnerAsync: (daoId, assetId) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const accountId = isAddress(daoId) ? daoId : daoIdToAddress(toHexFormat(daoId), chainNodeClient.registry);
+        return chainService.rpcToChainNode("assets_getAssetBalanceByOwner", [null, accountId, toHexFormat(assetId)]);
+      },
+
+      getAssetBalancesByAssetAsync: (assetId, startIdx = null, limit = LIST_LIMIT) => {
+        return chainService.rpcToChainNode("assets_getAssetBalanceListByAsset", [null, toHexFormat(assetId), limit, toHexFormat(startIdx)]);
+      },
+
+      getAssetBalancesListAsync: (startIdx = null, limit = LIST_LIMIT) => {
+        const idx = startIdx ? [toHexFormat(startIdx)[0], toHexFormat(startIdx)[1]] : null;
+        return chainService.rpcToChainNode("assets_getAssetBalanceList", [null, limit, idx]);
+      },
+
+
+
+      // TODO:
 
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },
       getStateAsync: async function (path) { throw Error(`Not implemented exception`); },
@@ -30,8 +153,6 @@ class SubstrateChainApi extends BaseChainApi {
       getHardforkVersionAsync: async function () { throw Error(`Not implemented exception`); },
       getNextScheduledHardforkAsync: async function () { throw Error(`Not implemented exception`); },
       getAccountReferencesAsync: async function (accountId) { throw Error(`Not implemented exception`); },
-      lookupAccountNamesAsync: async function (accountNames) { throw Error(`Not implemented exception`); },
-      lookupAccountsAsync: async function (lowerBoundName, limit) { throw Error(`Not implemented exception`); },
       getAccountCountAsync: async function () { throw Error(`Not implemented exception`); },
       getAccountHistoryAsync: async function (account, from, limit) { throw Error(`Not implemented exception`); },
       getOwnerHistoryAsync: async function (account) { throw Error(`Not implemented exception`); },
@@ -74,7 +195,6 @@ class SubstrateChainApi extends BaseChainApi {
       getReviewVotesByReviewIdAsync: async function (reviewId) { throw Error(`Not implemented exception`); },
       getReviewVotesByReviewAsync: async function (reviewExternalId) { throw Error(`Not implemented exception`); },
       getReviewVotesByVoterAsync: async function (account) { throw Error(`Not implemented exception`); },
-      getProjectsByTeamAsync: async function (externalId) { throw Error(`Not implemented exception`); },
       getSchemaAsync: async function () { throw Error(`Not implemented exception`); },
       getExpiringVestingDelegationsAsync: async function (account, from, limit) { throw Error(`Not implemented exception`); },
       lookupDisciplinesAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
@@ -84,8 +204,6 @@ class SubstrateChainApi extends BaseChainApi {
       getProjectByPermlinkAsync: async function (teamId, permlink) { throw Error(`Not implemented exception`); },
       getProjectByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink) { throw Error(`Not implemented exception`); },
       getProjectsAsync: async function (ids) { throw Error(`Not implemented exception`); },
-      getProjectContentsByProjectAsync: async function (externalId) { throw Error(`Not implemented exception`); },
-      lookupProjectContentsAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
       getProjectLicenseAsync: async function (externalId) { throw Error(`Not implemented exception`); },
       getProjectLicensesAsync: async function (externalIds) { throw Error(`Not implemented exception`); },
       getProjectLicensesByLicenseeAsync: async function (licensee) { throw Error(`Not implemented exception`); },
@@ -93,20 +211,14 @@ class SubstrateChainApi extends BaseChainApi {
       getProjectLicensesByProjectAsync: async function (projectExternalId) { throw Error(`Not implemented exception`); },
       getProjectLicensesByLicenseeAndProjectAsync: async function (licensee, projectExternalId) { throw Error(`Not implemented exception`); },
       getProjectLicensesByLicenseeAndLicenserAsync: async function (licensee, licenser) { throw Error(`Not implemented exception`); },
-      getProjectContentAsync: async function (externalId) { throw Error(`Not implemented exception`); },
-      getProjectContentsAsync: async function (ids) { throw Error(`Not implemented exception`); },
       getProjectContentByTypeAsync: async function (projectId, type) { throw Error(`Not implemented exception`); },
       getProjectContentByPermlinkAsync: async function (projectId, permlink) { throw Error(`Not implemented exception`); },
       getProjectContentByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink, researchContentPermlink) { throw Error(`Not implemented exception`); },
       getExpertTokenAsync: async function (id) { throw Error(`Not implemented exception`); },
       getExpertTokensByAccountNameAsync: async function (accountName) { throw Error(`Not implemented exception`); },
       getExpertTokensByDisciplineAsync: async function (disciplineExternalId) { throw Error(`Not implemented exception`); },
-      getProposalAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getProposalsByCreatorAsync: async function (creator) { throw Error(`Not implemented exception`); },
       getTeamTokenByAccountAndProjectGroupIdAsync: async function (account, teamId) { throw Error(`Not implemented exception`); },
-      getProjectTokenSaleAsync: async function (tokenSaleExternalId) { throw Error(`Not implemented exception`); },
       getProjectTokenSalesByProjectAsync: async function (projectExternalId) { throw Error(`Not implemented exception`); },
-      getProjectTokenSalesAsync: async function (from, limit) { throw Error(`Not implemented exception`); },
       getProjectTokenSaleContributionsByProjectTokenSaleAsync: async function (tokenSaleExternalId) { throw Error(`Not implemented exception`); },
       getProjectTokenSaleContributionsByContributorAsync: async function (owner) { throw Error(`Not implemented exception`); },
       getDisciplinesByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
@@ -164,18 +276,14 @@ class SubstrateChainApi extends BaseChainApi {
       getWithdrawalRequestsHistoryByAwardNumberAsync: async function (awardNumber) { throw Error(`Not implemented exception`); },
       getWithdrawalRequestHistoryByAwardAndPaymentNumberAsync: async function (awardNumber, paymentNumber) { throw Error(`Not implemented exception`); },
       getWithdrawalRequestsHistoryByAwardAndSubawardNumberAsync: async function (awardNumber, subawardNumber) { throw Error(`Not implemented exception`); },
-      getAssetAsync: async function (id) { throw Error(`Not implemented exception`); },
       getAssetBySymbolAsync: async function (symbol) { throw Error(`Not implemented exception`); },
       getAssetsByIssuerAsync: async function (issuer) { throw Error(`Not implemented exception`); },
       getAssetsByTypeAsync: async function (type) { throw Error(`Not implemented exception`); },
-      lookupAssetsAsync: async function (lowerBoundSymbol, limit) { throw Error(`Not implemented exception`); },
       getFundingTransactionAsync: async function (id) { throw Error(`Not implemented exception`); },
       getFundingTransactionsBySenderOrganisationAsync: async function (senderOrganisationId) { throw Error(`Not implemented exception`); },
       getFundingTransactionsByReceiverOrganisationAsync: async function (receiverOrganisationId) { throw Error(`Not implemented exception`); },
       getAssetStatisticsAsync: async function (symbol) { throw Error(`Not implemented exception`); },
-      getAccountAssetBalanceAsync: async function (owner, symbol) { throw Error(`Not implemented exception`); },
       getAccountAssetsBalancesAsync: async function (owner) { throw Error(`Not implemented exception`); },
-      getAccountsAssetBalancesByAssetAsync: async function (symbol) { throw Error(`Not implemented exception`); },
       getProjectNdaAsync: async function (externalId) { throw Error(`Not implemented exception`); },
       getProjectNdaByCreatorAsync: async function (creator) { throw Error(`Not implemented exception`); },
       getProjectNdaByHashAsync: async function (hash) { throw Error(`Not implemented exception`); },
@@ -221,12 +329,12 @@ class SubstrateChainApi extends BaseChainApi {
       getProposalStateAsync: async function (externalId) { throw Error(`Not implemented exception`); },
       getProposalsStatesAsync: async function (externalIds) { throw Error(`Not implemented exception`); },
       lookupProposalsStatesAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
-      getContractAgreementAsync: (id) => { throw Error(`Not implemented exception`); },
-      getContractAgreementsByCreatorAsync: (creator) => { throw Error(`Not implemented exception`); }
+      getContractAgreementsByCreatorAsync: (creator) => { throw Error(`Not implemented exception`); },
+      getProjectContentsAsync: (ids) => { throw Error(`Not implemented exception`); },
     }
-    return super(api);
+    return super(rpc);
   }
 }
 
 
-export default SubstrateChainApi;
+export default SubstrateChainRpc;

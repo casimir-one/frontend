@@ -1,7 +1,7 @@
 import ProtocolCmd from './../base/ProtocolCmd';
 import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
 import { APP_CMD, APP_PROPOSAL } from '@deip/constants';
-import { assert, isString } from '@deip/toolbox';
+import { assert } from '@deip/toolbox';
 
 
 class CreateProposalCmd extends ProtocolEntityCmd {
@@ -17,10 +17,9 @@ class CreateProposalCmd extends ProtocolEntityCmd {
       reviewPeriodSeconds
     } = cmdPayload;
 
-    assert(!!expirationTime, "'expirationTime' is required");
-    assert(isString(expirationTime), "'expirationTime' must be in stringified 'yyyy-MM-ddTHH:mm:ss' format");
-    assert(!!type, "'type' is required");
-    assert(APP_PROPOSAL[type] !== undefined, "'type' is unknown");
+    assert(!!expirationTime && !isNaN(expirationTime), "'expirationTime' required and should be in milliseconds");
+    assert(!!type, "'type' is required"); // temp limitation
+    assert(APP_PROPOSAL[type] !== undefined, "'type' is unknown"); // temp limitation
     assert(!!creator, "'creator' is required");
 
     assert(!!proposedCmds && proposedCmds.length, "Protocol proposal must contain at least 1 ProtocolCmd");

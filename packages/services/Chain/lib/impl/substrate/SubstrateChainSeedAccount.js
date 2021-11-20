@@ -11,7 +11,7 @@ class SubstrateChainSeedAccount extends BaseChainSeedAccount {
       "Either 'password' or 'privateKey' should be specified for seed account generation");
 
     const secretSeedHex = password ? keccakAsHex(`${username}/${password}`, 256) : `0x${privateKey}`;
-    const keyringPair = getSeedAccount({ username }, secretSeedHex);
+    const keyringPair = getSeedAccount(secretSeedHex, { username });
     const pubKey = u8aToHex(keyringPair.publicKey).substring(2);
     const privKey = secretSeedHex.substring(2);
     const address = keyringPair.address;
@@ -23,7 +23,7 @@ class SubstrateChainSeedAccount extends BaseChainSeedAccount {
   }
 
   signString(msg) {
-    const keyringPair = getSeedAccount({ username: this.getUsername() }, `0x${this.getPrivKey()}`);
+    const keyringPair = getSeedAccount(`0x${this.getPrivKey()}`, { username: this.getUsername() });
     return keyringPair.sign(msg);
   }
 }

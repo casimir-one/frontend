@@ -3,21 +3,18 @@ import GrapheneClient from '@deip/rpc-client';
 import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';
-import GrapheneChainApi from './GrapheneChainApi';
+import GrapheneChainRpc from './GrapheneChainRpc';
 import GrapheneChainSeedAccount from './GrapheneChainSeedAccount';
 import { isValidPrivKey, verifySignature } from './utils';
 
 class GrapheneChainService extends BaseChainService {
 
-  _rpcConnectionString;
   _chainId;
   _reconnectTimeout = 3000;
   
-  constructor({ connectionString, chainId }) {
-    super();
-    assert(!!connectionString, `Graphene FULL NODE connection string is not specified`);
+  constructor({ connectionString, chainId, coreAsset }) {
+    super({ connectionString, coreAsset });
     assert(!!chainId, `Graphene CHAIN ID is not specified`);
-    this._rpcConnectionString = connectionString;
     this._chainId = chainId;
   }
 
@@ -30,8 +27,8 @@ class GrapheneChainService extends BaseChainService {
       });
 
       this._chainNodeClient = GrapheneClient;
-      this._chainOpsRegistry = new GrapheneChainOperationsRegistry(this._chainNodeClient);
-      this._chainApi = new GrapheneChainApi(this);
+      this._chainOpsRegistry = new GrapheneChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
+      this._chainRpc = new GrapheneChainRpc(this);
 
       console.log(`Connected to Graphene chain ${this._chainId}`);
       this._isInited = true;

@@ -58,7 +58,7 @@ class TenantService extends Singleton {
     const env = this.proxydi.get('env');
     const {
       FAUCET_ACCOUNT_USERNAME,
-      IS_TESTNET
+      CORE_ASSET
     } = env;
 
     return ChainService.getInstanceAsync(env)
@@ -68,7 +68,7 @@ class TenantService extends Singleton {
           .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
               isTeamAccount: false,
-              fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+              fee: { ...CORE_ASSET, amount: 0 },
               creator: creator || FAUCET_ACCOUNT_USERNAME,
               authority: {
                 owner: {
@@ -109,7 +109,7 @@ class TenantService extends Singleton {
         const env = this.proxydi.get('env');
         const {
           FAUCET_ACCOUNT_USERNAME,
-          IS_TESTNET
+          CORE_ASSET
         } = env;
 
         return ChainService.getInstanceAsync(env)
@@ -119,7 +119,7 @@ class TenantService extends Singleton {
               .then((txBuilder) => {
                 const createAccountCmd = new CreateAccountCmd({
                   isTeamAccount: false,
-                  fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+                  fee: { ...CORE_ASSET, amount: 0 },
                   creator: FAUCET_ACCOUNT_USERNAME,
                   authority: {
                     owner: {

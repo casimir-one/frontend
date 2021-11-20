@@ -26,7 +26,7 @@ class AuthService extends Singleton {
     roles
   }) {
     const env = this.proxydi.get('env');
-    const { IS_TESTNET, FAUCET_ACCOUNT_USERNAME } = env;
+    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME } = env;
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -39,7 +39,7 @@ class AuthService extends Singleton {
             const createAccountCmd = new CreateAccountCmd({
               entityId: username,
               isTeamAccount: false,
-              fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+              fee: { ...CORE_ASSET, amount: 0 },
               creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
               authority: {
                 owner: {

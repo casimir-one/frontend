@@ -21,7 +21,7 @@ import {
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
 
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class TeamService extends Singleton {
   proxydi = proxydi;
@@ -30,7 +30,7 @@ class TeamService extends Singleton {
 
   createTeam(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
-    const { TENANT, IS_TESTNET } = env;
+    const { TENANT, CORE_ASSET } = env;
     const {
       initiator: {
         memoKey,
@@ -59,7 +59,7 @@ class TeamService extends Singleton {
           .then((txBuilder) => {
             const createAccountCmd = new CreateAccountCmd({
               isTeamAccount: true,
-              fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+              fee: { ...CORE_ASSET, amount: 0 },
               authority: {
                 owner: authority
               },

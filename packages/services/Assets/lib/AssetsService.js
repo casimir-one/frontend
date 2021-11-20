@@ -14,7 +14,7 @@ import { ChainService } from '@deip/chain-service';
 import crypto from '@deip/lib-crypto';
 import { AssetsHttp } from './AssetsHttp';
 
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class AssetsService extends Singleton {
   proxydi = proxydi;

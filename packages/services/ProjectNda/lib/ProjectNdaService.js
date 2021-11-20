@@ -10,8 +10,8 @@ import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
 import { ProjectNdaHttp } from './ProjectNdaHttp';
 
-const ndaDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 50).toISOString().split('.')[0]; // 50 years
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const ndaDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 50).getTime();
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class ProjectNdaService extends Singleton {
   projectNdaHttp = ProjectNdaHttp.getInstance();

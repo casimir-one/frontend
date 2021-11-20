@@ -15,8 +15,8 @@ class FinalizedTx {
       })
   }
 
-  sendAsync(chainApi) {
-    return this._tx.sendAsync(chainApi);
+  sendAsync(chainRpc) {
+    return this._tx.sendAsync(chainRpc);
   }
 
   getPayload() {

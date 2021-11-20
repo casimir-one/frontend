@@ -19,7 +19,7 @@ import { TeamService } from '@deip/team-service';
 
 
 // TODO: move to constants
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class ProjectService extends Singleton {
   projectHttp = ProjectHttp.getInstance();
@@ -60,7 +60,7 @@ class ProjectService extends Singleton {
       }, proposalInfo);
 
     const env = this.proxydi.get('env');
-    const { TENANT, IS_TESTNET } = env;
+    const { TENANT, CORE_ASSET } = env;
     const isNewProjectTeam = teamId === null;
 
     return Promise.all([
@@ -101,7 +101,7 @@ class ProjectService extends Singleton {
 
               const createAccountCmd = new CreateAccountCmd({
                 isTeamAccount: true,
-                fee: `0.000 ${IS_TESTNET ? 'TESTS' : 'DEIP'}`,
+                fee: { ...CORE_ASSET, amount: 0 },
                 creator: creator,
                 authority: {
                   owner: authoritySetup

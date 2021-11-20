@@ -3,7 +3,9 @@ import { APP_CMD } from '@deip/constants';
 import { toAssetUnits, millisecToIso } from './utils';
 
 
-const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
+const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
+  coreAsset
+}) => {
 
   return {
 
@@ -33,7 +35,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       }
 
       const createAccountOp = ['create_account', {
-        fee: fee,
+        fee: fee ? toAssetUnits(fee) : toAssetUnits({ ...coreAsset, amount: 0 }),
         creator: creator,
         new_account_name: entityId,
         owner: ownerAuths,
@@ -207,7 +209,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
           }
           return arr;
         }, []),
-        expiration_time: expirationTime,
+        expiration_time: millisecToIso(expirationTime),
         review_period_seconds: reviewPeriodSeconds || undefined
       }];
 
@@ -477,8 +479,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         parties,
         description,
         researches: [projectId],
-        start_time: startTime,
-        end_time: endTime,
+        start_time: millisecToIso(startTime),
+        end_time: millisecToIso(endTime),
         extensions: []
       }];
     
@@ -491,8 +493,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
       creator,
       parties,
       hash,
-      startTime,
-      endTime,
+      activationTime,
+      expirationTime,
       type,
       terms
     }) => {
@@ -502,8 +504,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
         creator: creator,
         parties: parties,
         hash: hash,
-        start_time: startTime || undefined,
-        end_time: endTime || undefined,
+        start_time: activationTime ? millisecToIso(activationTime) : undefined,
+        end_time: expirationTime ? millisecToIso(expirationTime) : undefined,
         terms: [], // will be populated with terms meta
         extensions: []
       }];
@@ -546,8 +548,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient) => {
 }
 
 class GrapheneChainOperationsRegistry extends BaseOperationsRegistry {
-  constructor(chainNodeClient) {
-    super(GRAPHENE_OP_CMD_MAP(chainNodeClient));
+  constructor(chainNodeClient, settings) {
+    super(GRAPHENE_OP_CMD_MAP(chainNodeClient, settings));
   }
 }
 

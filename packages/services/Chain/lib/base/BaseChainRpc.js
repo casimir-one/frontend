@@ -2,10 +2,13 @@ import { Interface } from '@deip/toolbox';
 
 /* Keep args in functions to validate interface */
 
-const ChainApi = Interface('ChainApi', {
+const defaultLimit = 1000;
+const defaultIdx = 0;
+
+const ChainRpc = Interface('ChainRpc', {
   sendTxAsync: async function (tx) { },
   getProjectAsync: async function (projectId) { },
-  getProjectsListAsync: async function () { },
+  getProjectsListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
   setBlockAppliedCallbackAsync: async function (cb) { },
   getStateAsync: async function (path) { },
   getConfigAsync: async function () { },
@@ -14,10 +17,9 @@ const ChainApi = Interface('ChainApi', {
   getWitnessScheduleAsync: async function () { },
   getHardforkVersionAsync: async function () { },
   getNextScheduledHardforkAsync: async function () { },
-  getAccountsAsync: async function (names) { },
+  getAccountsAsync: async function (daoIds) { },
   getAccountReferencesAsync: async function (accountId) { },
-  lookupAccountNamesAsync: async function (accountNames) { },
-  lookupAccountsAsync: async function (lowerBoundName, limit) { },
+  getAccountsListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
   getAccountCountAsync: async function () { },
   getAccountHistoryAsync: async function (account, from, limit) { },
   getOwnerHistoryAsync: async function (account) { },
@@ -60,7 +62,7 @@ const ChainApi = Interface('ChainApi', {
   getReviewVotesByReviewIdAsync: async function (reviewId) { },
   getReviewVotesByReviewAsync: async function (reviewExternalId) { },
   getReviewVotesByVoterAsync: async function (account) { },
-  getProjectsByTeamAsync: async function (externalId) { },
+  getProjectsByTeamAsync: async function (teamId, startIdx = defaultIdx, limit = defaultLimit) { },
   getSchemaAsync: async function () { },
   getExpiringVestingDelegationsAsync: async function (account, from, limit) { },
   lookupDisciplinesAsync: async function (lowerBound, limit) { },
@@ -70,8 +72,7 @@ const ChainApi = Interface('ChainApi', {
   getProjectByPermlinkAsync: async function (teamId, permlink) { },
   getProjectByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink) { },
   getProjectsAsync: async function (ids) { },
-  getProjectContentsByProjectAsync: async function (externalId) { },
-  lookupProjectContentsAsync: async function (lowerBound, limit) { },
+  getProjectContentsByProjectAsync: async function (projectId, startIdx = defaultIdx, limit = defaultLimit) { },
   getProjectLicenseAsync: async function (externalId) { },
   getProjectLicensesAsync: async function (externalIds) { },
   getProjectLicensesByLicenseeAsync: async function (licensee) { },
@@ -79,7 +80,8 @@ const ChainApi = Interface('ChainApi', {
   getProjectLicensesByProjectAsync: async function (projectExternalId) { },
   getProjectLicensesByLicenseeAndProjectAsync: async function (licensee, projectExternalId) { },
   getProjectLicensesByLicenseeAndLicenserAsync: async function (licensee, licenser) { },
-  getProjectContentAsync: async function (externalId) { },
+  getProjectContentsListAsync: (startIdx = defaultIdx, limit = defaultLimit) => { },
+  getProjectContentAsync: async function (projectContentId) { },
   getProjectContentsAsync: async function (ids) { },
   getProjectContentByTypeAsync: async function (projectId, type) { },
   getProjectContentByPermlinkAsync: async function (projectId, permlink) { },
@@ -88,11 +90,11 @@ const ChainApi = Interface('ChainApi', {
   getExpertTokensByAccountNameAsync: async function (accountName) { },
   getExpertTokensByDisciplineAsync: async function (disciplineExternalId) { },
   getProposalAsync: async function (id) { },
-  getProposalsByCreatorAsync: async function (creator) { },
+  getProposalsListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
+  getProposalsByCreatorAsync: async function (creator, startIdx = defaultIdx, limit = defaultLimit) { },
   getTeamTokenByAccountAndProjectGroupIdAsync: async function (account, teamId) { },
-  getProjectTokenSaleAsync: async function (tokenSaleExternalId) { },
+  getInvestmentOpportunityAsync: async function (invstOppId) { },
   getProjectTokenSalesByProjectAsync: async function (projectExternalId) { },
-  getProjectTokenSalesAsync: async function (from, limit) { },
   getProjectTokenSaleContributionsByProjectTokenSaleAsync: async function (tokenSaleExternalId) { },
   getProjectTokenSaleContributionsByContributorAsync: async function (owner) { },
   getDisciplinesByProjectAsync: async function (projectId) { },
@@ -154,14 +156,15 @@ const ChainApi = Interface('ChainApi', {
   getAssetBySymbolAsync: async function (symbol) { },
   getAssetsByIssuerAsync: async function (issuer) { },
   getAssetsByTypeAsync: async function (type) { },
-  lookupAssetsAsync: async function (lowerBoundSymbol, limit) { },
+  getAssetsListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
   getFundingTransactionAsync: async function (id) { },
   getFundingTransactionsBySenderOrganisationAsync: async function (senderOrganisationId) { },
   getFundingTransactionsByReceiverOrganisationAsync: async function (receiverOrganisationId) { },
   getAssetStatisticsAsync: async function (symbol) { },
-  getAccountAssetBalanceAsync: async function (owner, symbol) { },
+  getAssetBalancesListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
+  getAssetBalanceByOwnerAsync: async function (owner, symbol) { },
   getAccountAssetsBalancesAsync: async function (owner) { },
-  getAccountsAssetBalancesByAssetAsync: async function (symbol) { },
+  getAssetBalancesByAssetAsync: async function (symbol, startIdx = defaultIdx, limit = defaultLimit) { },
   getProjectNdaAsync: async function (externalId) { },
   getProjectNdaByCreatorAsync: async function (creator) { },
   getProjectNdaByHashAsync: async function (hash) { },
@@ -208,16 +211,20 @@ const ChainApi = Interface('ChainApi', {
   getProposalsStatesAsync: async function (externalIds) { },
   lookupProposalsStatesAsync: async function (lowerBound, limit) { },
   getContractAgreementAsync: (id) => { },
-  getContractAgreementsByCreatorAsync: (creator) => { }
+  getContractAgreementsByCreatorAsync: (creator) => { },
+  getAccountAsync: (daoId) => { },
+  getContractAgreementsListAsync: (startIdx = defaultIdx, limit = defaultLimit) => { },
+  getContractAgreementsByTypeAsync: (type, startIdx = defaultIdx, limit = defaultLimit) => {}
+
 });
 
 
-class BaseChainApi {
+class BaseChainRpc {  
   constructor(impl) {
-    Interface.implement(impl, ChainApi);
+    Interface.implement(impl, ChainRpc);
     return impl;
   }
 }
 
 
-export default BaseChainApi;
+export default BaseChainRpc;

@@ -20,10 +20,9 @@ class CreateAssetCmd extends ProtocolEntityCmd {
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
     assert(isNumber(precision), "'precision' must be a number");
-    assert(!!maxSupply, "'maxSupply' is required");
 
     if (projectTokenOption) {
-      const { projectId, teamId, licenseRevenue } = projectTokenOption;
+      const { projectId, teamId, licenseRevenue } = projectTokenOption; // TODO: remove 'teamId'
       assert(!!projectId, "'projectId' is required for project token");
       assert(!!teamId, "'teamId' is required for project token");
 

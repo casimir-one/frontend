@@ -14,7 +14,7 @@ import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
 import { ContractAgreementHttp } from './ContractAgreementHttp';
 
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class ContractAgreementService extends Singleton {
   contractAgreementHttp = ContractAgreementHttp.getInstance();
@@ -34,8 +34,8 @@ class ContractAgreementService extends Singleton {
       terms,
       hash,
       parties,
-      startTime,
-      endTime = proposalDefaultLifetime,
+      activationTime,
+      expirationTime = proposalDefaultLifetime,
       type,
       pdfContent
     } = data;
@@ -52,8 +52,8 @@ class ContractAgreementService extends Singleton {
               creator,
               parties,
               hash,
-              startTime,
-              endTime,
+              activationTime,
+              expirationTime,
               type,
               terms,
               pdfContent
@@ -116,8 +116,8 @@ class ContractAgreementService extends Singleton {
       terms,
       hash,
       parties,
-      startTime,
-      endTime = proposalDefaultLifetime,
+      activationTime,
+      expirationTime = proposalDefaultLifetime,
       type,
       pdfContent
     } = data;
@@ -134,8 +134,8 @@ class ContractAgreementService extends Singleton {
               creator,
               parties,
               hash,
-              startTime,
-              endTime,
+              activationTime,
+              expirationTime,
               type,
               terms,
               pdfContent
@@ -150,7 +150,7 @@ class ContractAgreementService extends Singleton {
             const createProposalCmd = new CreateProposalCmd({
               creator,
               type: APP_PROPOSAL.CONTRACT_AGREEMENT_PROPOSAL,
-              expirationTime: endTime,
+              expirationTime,
               proposedCmds: [createContractAgreementCmd, ...acceptContractsCmds]
             });
 

@@ -5,13 +5,14 @@ import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
 import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey } from './utils';
 
 
-const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
+const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
+  coreAsset
+}) => {
 
   return {
 
     [APP_CMD.CREATE_ACCOUNT]: ({
       entityId,
-      isTeamAccount,
       authority,
       description
     }) => {
@@ -22,10 +23,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       // Due to Substrate specifics, we have to set the weight to 0 for DAO with a single authority
       const threshold = authority.owner.weight === 1 && signatories.length === 1 ? 0 : authority.owner.weight;
 
-      if (!isTeamAccount) {
-        assert(signatories.length === 1 && threshold === 0, `User DAO must have a threshold equal to 0 with a single signatory`);
-      } else {
-        assert(signatories.length > 1 && threshold !== 0, `Multisig DAO threshold must be more than 1`);
+      if (signatories.length > 1) {
+        assert(threshold != 0 && threshold <= signatories.length, `Multisig DAO threshold must be more than 0 and can not be more than signatories count`);
       }
 
       const createAccountOp = chainNodeClient.tx.deipDao.create(
@@ -45,7 +44,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       entityId,
       description
     }) => {
-      
+
       const updateAccountOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
         chainNodeClient.tx.deipDao.updateDao(
           /* "new_metadata": */ description ? `0x${description}` : null
@@ -193,6 +192,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       entityId,
       issuer,
       symbol,
+      name,
       precision,
       maxSupply,
       minBalance,
@@ -211,7 +211,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       const setAssetMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.deipAssets.setMetadata(
           /* assetId: */ `0x${entityId}`,
-          /* name */ symbol,
+          /* name */ name,
           /* symbol */ symbol,
           /* decimals */ precision
         )
@@ -265,13 +265,13 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
         chainNodeClient.tx.deip.createInvestmentOpportunity(
           /* external_id: */ `0x${entityId}`,
           /* creator: */ { Dao: `0x${teamId}` },
-          /* shares: */ shares.map((share) => ({ id: share.id, amount: { "0": share.amount } })),
+          /* shares: */ shares.map((share) => ({ id: `0x${share.id}`, amount: { "0": share.amount } })),
           /* funding_model: */ {
             SimpleCrowdfunding: {
               start_time: startTime,
               end_time: endTime,
-              soft_cap: { id: softCap.id, amount: { "0": softCap.amount } },
-              hard_cap: { id: hardCap.id, amount: { "0": hardCap.amount } },
+              soft_cap: { id: `0x${softCap.id}`, amount: { "0": softCap.amount } },
+              hard_cap: { id: `0x${hardCap.id}`, amount: { "0": hardCap.amount } },
             }
           }
         )
@@ -290,7 +290,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       const investOp = chainNodeClient.tx.deipDao.onBehalf(`0x${investor}`,
         chainNodeClient.tx.deip.invest(
           /* investment_opportunity_id: */ `0x${investmentOpportunityId}`,
-          /* amount: */ { id: asset.id, amount: { "0": asset.amount } }
+          /* amount: */ { id: `0x${asset.id}`, amount: { "0": asset.amount } },
         )
       );
 
@@ -303,29 +303,29 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       creator,
       parties,
       hash,
-      startTime,
-      endTime,
+      activationTime,
+      expirationTime,
       type,
       terms
     }) => {
 
       const contractTerms = type === CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE ? {
-        TechnologyLicenseAgreementTerms: {
+        LicenseAgreement: {
           source: `0x${terms.projectId}`,
-          price: { id: terms.fee.id, amount: { "0": terms.fee.amount } }
-        } 
+          price: { id: `0x${terms.price.id}`, amount: { "0": terms.price.amount } }
+        }
       } : {
-          GeneralContractAgreement: {}
+        GeneralContractAgreement: {}
       };
 
-      const createContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`, 
+      const createContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${creator}`,
         chainNodeClient.tx.deip.createContractAgreement(
           /* contractAgreementId: */ `0x${entityId}`,
           /* creator: */ { Dao: `0x${creator}` },
-          /* parties: */ parties.map((party) => ({ Dao: `0x${party}`})),
+          /* parties: */ parties.map((party) => ({ Dao: `0x${party}` })),
           /* hash: */ `0x${hash}`,
-          /* start_time: */ startTime || null,
-          /* end_time: */ endTime || null,
+          /* start_time: */ activationTime || null,
+          /* end_time: */ expirationTime || null,
           /* terms: */ contractTerms
         )
       );
@@ -339,7 +339,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       party
     }) => {
 
-      const acceptContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, 
+      const acceptContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`,
         chainNodeClient.tx.deip.acceptContractAgreement(
           /* contractAgreementId: */ `0x${entityId}`,
           /* party: */ { Dao: `0x${party}` }
@@ -355,7 +355,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       party
     }) => {
 
-      const rejectContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`, 
+      const rejectContractAgreementOp = chainNodeClient.tx.deipDao.onBehalf(`0x${party}`,
         chainNodeClient.tx.deip.rejectContractAgreement(
           /* contractAgreementId: */ `0x${entityId}`,
           /* party: */ { Dao: `0x${party}` }
@@ -373,15 +373,27 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
       memo
     }) => {
 
-      // TODO: use deip_assets pallet functions
-      const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-        chainNodeClient.tx.balances.transfer(
-          /* to: */ isValidPubKey(`0x${to}`) ? pubKeyToAddress(`0x${to}`) : daoIdToAddress(`0x${to}`, chainNodeClient.registry),
-          /* amount: */ asset.amount
-        )
-      );
+      const toAddress = isValidPubKey(`0x${to}`) ? pubKeyToAddress(`0x${to}`) : daoIdToAddress(`0x${to}`, chainNodeClient.registry);
+      
+      if (asset.id == coreAsset.id) {
+        const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+          chainNodeClient.tx.balances.transfer(
+            /* to: */ toAddress,
+            /* amount: */ asset.amount
+          )
+        );
+        return [transferCoreAssetOp];
+      } else {
+        const transferAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`, 
+          chainNodeClient.tx.deipAssets.transfer(
+            /* assetId: */ `0x${asset.id}`,
+            /* to: */ { Native: toAddress },
+            /* amount: */ asset.amount
+          )
+        );
+        return [transferAssetOp];
+      }
 
-      return [transferCoreAssetOp];
     }
 
   }
@@ -389,8 +401,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient) => {
 
 
 class SubstrateChainOperationsRegistry extends BaseOperationsRegistry {
-  constructor(chainNodeClient) {
-    super(SUBSTRATE_OP_CMD_MAP(chainNodeClient));
+  constructor(chainNodeClient, settings) {
+    super(SUBSTRATE_OP_CMD_MAP(chainNodeClient, settings));
   }
 }
 

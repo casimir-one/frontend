@@ -3,10 +3,12 @@ import { encodeAddress, decodeAddress, blake2AsU8a, createKeyMulti, randomAsHex 
 import { Keyring } from '@polkadot/api';
 
 
+
 const pubKeyToAddress = (pubKey, addressFormat = 42) => {
   const address = encodeAddress(isU8a(pubKey) ? u8aToHex(pubKey) : pubKey, addressFormat);
   return address;
 }
+
 
 const daoIdToAddress = (daoId, registry) => {
   const H160 = registry.createType('H160', daoId);
@@ -19,7 +21,7 @@ const daoIdToAddress = (daoId, registry) => {
 }
 
 
-const isAddress = (address, addressFormat) => {
+const isAddress = (address, addressFormat = 42) => {
   try {
     encodeAddress(
       isHex(address)
@@ -33,18 +35,22 @@ const isAddress = (address, addressFormat) => {
   }
 }
 
+
 const isValidPrivKey = (privKey) => {
   return isHex(privKey) && hexToU8a(privKey).length === 32;
 }
+
 
 const isValidPubKey = (pubKey) => {
   return isHex(pubKey) && hexToU8a(pubKey).length === 32;
 }
 
+
 const getMultiAddress = (addresses, threshold) => {
   const multiAddress = createKeyMulti([...addresses].sort(), threshold);
   return u8aToHex(multiAddress);
 }
+
 
 const getSeedAccountFromJson = (json, password, options = { type: 'sr25519' }) => {
   const keyring = new Keyring(options);
@@ -54,9 +60,9 @@ const getSeedAccountFromJson = (json, password, options = { type: 'sr25519' }) =
 }
 
 
-const getSeedAccount = (meta = {}, seed = randomAsHex(32), options = { type: 'sr25519' }) => {
+const getSeedAccount = (suri, meta = {}, options = { type: 'sr25519' }) => {
   const keyring = new Keyring(options);
-  const keyringPair = keyring.addFromUri(seed, meta);
+  const keyringPair = keyring.addFromUri(suri, meta);
   return keyringPair;
 }
 
