@@ -221,8 +221,8 @@ class SubstrateTx extends BaseTx {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(options.override || !this.getSignedInvariant(), `Transaction is already signed. Set 'override=true' option to override the current signer`);
     
-    const keyring = getSeedAccount({}, `0x${privKey}`);
-    const registry = api.registry;
+    const isSuriPath = privKey.indexOf('/') !== -1;
+    const keyring = isSuriPath ? getSeedAccount(privKey) : getSeedAccount(`0x${privKey}`);
 
     return Promise.all([
       this.getTxSignersTree(api),
@@ -236,11 +236,11 @@ class SubstrateTx extends BaseTx {
           nonce: signingInfo.nonce,
           blockHash: signingInfo.header.hash,
           genesisHash: api.genesisHash,
-          era: registry.createType('ExtrinsicEra', {
+          era: api.registry.createType('ExtrinsicEra', {
             current: signingInfo.header.number,
             period: signingInfo.mortalLength
           }),
-          signedExtensions: registry.signedExtensions,
+          signedExtensions: api.registry.signedExtensions,
           runtimeVersion: api.runtimeVersion,
           version: api.extrinsicVersion
         };
@@ -261,12 +261,12 @@ class SubstrateTx extends BaseTx {
           return result;
         }
 
-        const batchAll = registry.createType('Extrinsic', this.getTx().toU8a());
+        const batchAll = api.registry.createType('Extrinsic', this.getTx().toU8a());
         const signingOpsPromises = [];
 
         for (let i = 0; i < batchAll.method.args[0].length; i++) {
-          const call = registry.createType('Call', batchAll.method.args[0][i].toU8a(), batchAll.method.args[0][i].meta);
-          const extrinsic = registry.createType('Extrinsic', call);
+          const call = api.registry.createType('Call', batchAll.method.args[0][i].toU8a(), batchAll.method.args[0][i].meta);
+          const extrinsic = api.registry.createType('Extrinsic', call);
 
           const isOnBehalf = extrinsic.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
           if (!isOnBehalf) {
@@ -275,7 +275,7 @@ class SubstrateTx extends BaseTx {
 
           const daoId = isOnBehalf ? extrinsic.method.args[0].toHex() : extrinsic.method.args[0].toHex();
           const op = isOnBehalf ? extrinsic.method.args[1].toHex() : extrinsic;
-          const daoAddress = daoIdToAddress(daoId, registry);
+          const daoAddress = daoIdToAddress(daoId, api.registry);
 
           const signersChain = buildSignersChain(signerRoot, daoAddress);
           const signersVector = signersChain.reverse();
@@ -327,12 +327,12 @@ class SubstrateTx extends BaseTx {
 
         return Promise.all(signingOpsPromises)
           .then((signingOps) => {
-            const batchCall = registry.createType('Call', {
+            const batchCall = api.registry.createType('Call', {
               args: { "calls": signingOps },
               callIndex: api.tx.utility.batchAll.callIndex,
             }, api.tx.utility.batchAll.meta);
 
-            const signingTx = registry.createType('Extrinsic', batchCall);
+            const signingTx = api.registry.createType('Extrinsic', batchCall);
             const signedTx = signingTx.sign(keyring, signingMeta);
             this.signedInvariant = signedTx.toHex();
             return this;
@@ -355,10 +355,10 @@ class SubstrateTx extends BaseTx {
     return this.getTx().toHex();
   }
 
-  sendAsync(chainApi) {
+  sendAsync(chainRpc) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(!!this.isSigned(), `Transaction is not signed for sending`);
-    return chainApi.sendTxAsync(this.getSignedInvariant());
+    return chainRpc.sendTxAsync(this.getSignedInvariant());
   }
 
   finalize({ chainNodeClient: api }) {

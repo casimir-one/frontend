@@ -5,7 +5,7 @@ import { assert } from '@deip/toolbox';
 import BaseChainService from './../../base/BaseChainService';
 import SubstrateChainOperationsRegistry from './SubstrateChainOperationsRegistry';
 import SubstrateTxBuilder from './SubstrateTxBuilder';
-import SubstrateChainApi from './SubstrateChainApi';
+import SubstrateChainRpc from './SubstrateChainRpc';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
 import SubstrateChainSeedAccount from './SubstrateChainSeedAccount';
@@ -14,10 +14,8 @@ import { verifySignature, isValidPrivKey } from './utils';
 
 class SubstrateChainService extends BaseChainService {
 
-  constructor({ connectionString }) {
-    super();
-    assert(!!connectionString, `Substrate FULL NODE connection string is not specified`);
-    this._rpcConnectionString = connectionString;
+  constructor({ connectionString, coreAsset }) {
+    super({ connectionString, coreAsset });
   }
 
   init() {
@@ -30,8 +28,8 @@ class SubstrateChainService extends BaseChainService {
       return ApiPromise.create({ provider, registry: typesRegistry })
         .then((chainNodeClient) => {
           this._chainNodeClient = chainNodeClient;
-          this._chainOpsRegistry = new SubstrateChainOperationsRegistry(this._chainNodeClient);
-          this._chainApi = new SubstrateChainApi(this);
+          this._chainOpsRegistry = new SubstrateChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
+          this._chainRpc = new SubstrateChainRpc(this);
 
           return Promise.all([
             this._chainNodeClient.rpc.system.chain(),

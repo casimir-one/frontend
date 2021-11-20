@@ -6,18 +6,20 @@ import GrapheneChainService from './impl/graphene/GrapheneChainService';
 
 class ChainService extends Singleton {
 
-  constructor({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID }) {
+  constructor({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET }) {
     let impl;
     switch (CHAIN_PROTOCOL) {
       case PROTOCOL_CHAIN.SUBSTRATE: {
         impl = SubstrateChainService.getInstance({
-          connectionString: DEIP_FULL_NODE_URL
+          connectionString: DEIP_FULL_NODE_URL,
+          coreAsset: CORE_ASSET
         });
         break;
       }
       case PROTOCOL_CHAIN.GRAPHENE: {
         impl = GrapheneChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
+          coreAsset: CORE_ASSET,
           chainId: CHAIN_ID
         });
         break;
@@ -34,8 +36,8 @@ class ChainService extends Singleton {
     return this.impl.init();
   }
 
-  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID }) {
-    const chainService = ChainService.getInstance({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID });
+  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET }) {
+    const chainService = ChainService.getInstance({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET });
     return chainService.init();
   }
 

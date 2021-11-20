@@ -10,10 +10,9 @@ class CreateAccountCmd extends ProtocolEntityCmd {
     const {
       // onchain
       entityId,
-      fee,
       creator,
       authority,
-      memoKey,
+      memoKey, // DEPRECATED
       description,
 
       // offchain
@@ -21,7 +20,6 @@ class CreateAccountCmd extends ProtocolEntityCmd {
       attributes
     } = cmdPayload;
 
-    assert(!!fee, "'fee' is required");
     assert(!!creator, "'creator' is required");
     assert(!!description, "'description' is required");
     assert(!!authority, "'authority' auths must be set");

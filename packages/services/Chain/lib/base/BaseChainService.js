@@ -9,7 +9,17 @@ class BaseChainService extends Singleton {
 
   _chainNodeClient;
   _chainOpsRegistry;
-  _chainApi;
+  _chainRpc;
+  _coreAsset;
+
+  constructor({ connectionString, coreAsset }) {
+    assert(!!connectionString, `Node rpc connection string is not specified`);
+    assert(!!coreAsset && coreAsset.id && coreAsset.symbol && (coreAsset.precision || coreAsset.precision === 0), 
+      `Chain Core Asset should be specified in format { id, symbol, precision }`);
+    super();
+    this._rpcConnectionString = connectionString;
+    this._coreAsset = coreAsset;
+  }
 
   init() { 
     throw new Error("Not implemented exception!");
@@ -34,9 +44,9 @@ class BaseChainService extends Singleton {
     return this._chainOpsRegistry;
   }
 
-  getChainApi() {
-    assert(this.isInited() && !!this._chainApi, `Chain api is not available until initialization`);
-    return this._chainApi;
+  getChainRpc() {
+    assert(this.isInited() && !!this._chainRpc, `Chain RPC is not available until initialization`);
+    return this._chainRpc;
   }
 
   getChainTxBuilder() {

@@ -12,7 +12,8 @@ const init = () => axios.get('/env')
     return ChainService.getInstanceAsync({
       DEIP_FULL_NODE_URL: env.DEIP_FULL_NODE_URL,
       CHAIN_ID: env.CHAIN_ID,
-      PROTOCOL: env.PROTOCOL
+      PROTOCOL: env.PROTOCOL,
+      CORE_ASSET: env.CORE_ASSET
     });
   })
   .then(() => proxydi.get('env'));

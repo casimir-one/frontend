@@ -11,7 +11,7 @@ import {
 import { ChainService } from '@deip/chain-service';
 import { InvestmentsHttp } from './InvestmentsHttp';
 
-const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).toISOString().split('.')[0]; // 3 years
+const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
 class InvestmentsService extends Singleton {
   investmentsHttp = InvestmentsHttp.getInstance();
