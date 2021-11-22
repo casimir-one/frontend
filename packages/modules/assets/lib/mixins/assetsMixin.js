@@ -3,73 +3,56 @@ import currency from 'currency.js';
 import { isNil } from '@deip/toolbox/lodash';
 import { isNumber, isObject, isString } from '@deip/toolbox';
 
-const DEFAULT_PRECISION = 3;
-
 export const assetsMixin = {
   methods: {
-    // TODO remove
-    $$fromAssetUnits(val = '') {
-      if (val.indexOf('.') === -1) {
-        const [stringAmount, symbol = this.$env.ASSET_UNIT] = val.split(' ');
-        const amount = stringAmount ? parseInt(stringAmount, 10) : 0;
-        const precision = 0;
+    /**
+     * Create options object for currency.js
+     * @param {Object} value
+     * @param {Object} options
+     * @param {Boolean} isFormatted
+     * @returns {Object} options for currency.js
+     */
+    $$makeCurrencyOptions(value = {}, options = {}, isFormatted = true) {
+      const defaultCurrencyOptions = {
+        precision: this.$env.CORE_ASSET.precision,
+        symbol: this.$env.CORE_ASSET.symbol,
 
-        return {
-          stringAmount,
-          amount,
-          precision,
-          symbol
-        };
-      }
-
-      const matches = val.match(/^(\d+\.\d+)\s([a-zA-Z]+)/);
-      const stringAmount = matches[1];
-      const amount = stringAmount ? parseFloat(stringAmount) : 0;
-      const precision = stringAmount ? stringAmount.split('.')[1].length : DEFAULT_PRECISION;
-      const symbol = matches[2] || this.$env.ASSET_UNIT;
-
-      return {
-        stringAmount,
-        amount,
-        precision,
-        symbol
-      };
-    },
-
-    $$formatCurrencyOpts(obj = {}, options = {}, formatted = true) {
-      const formatOptions = {
-        precision: DEFAULT_PRECISION,
-        symbol: this.$env.ASSET_UNIT,
-
-        separator: formatted ? ',' : '',
+        separator: isFormatted ? ',' : '',
         pattern: '# !', // # - amount, ! - symbol
         negativePattern: '-# !'
       };
 
       return {
-        ...formatOptions,
-        ...obj,
+        ...defaultCurrencyOptions,
+        ...value,
         ...options
       };
     },
 
-    $$toAssetUnits(val, formatted = true, options = {}) {
-      if (isNil(val)) return null;
+    /**
+     * Format asset
+     * @param {Object | String | Number} value
+     * @param {Boolean} isFormatted
+     * @param {Object | undefined} options
+     * @returns {String}
+     */
+    $$formatAsset(value, isFormatted = true, options = {}) {
+      if (isNil(value)) return null;
 
-      if (isString(val) || isNumber(val)) {
-        const formattedOpts = this.$$formatCurrencyOpts({}, options, formatted);
-        return currency(val, formattedOpts).format();
+      if (isString(value) || isNumber(value)) {
+        const currencyOptions = this.$$makeCurrencyOptions({}, options, isFormatted);
+        return currency(value, currencyOptions).format();
       }
 
-      if (isObject(val)) {
-        const { amount = 0, symbol, precision = DEFAULT_PRECISION } = val;
+      if (isObject(value)) {
+        const { amount = 0, symbol, precision } = value;
 
-        const formattedOpts = this.$$formatCurrencyOpts({
+        const currencyOptions = this.$$makeCurrencyOptions({
           precision,
           symbol
-        }, options, formatted);
+        }, options, isFormatted);
 
-        return currency(amount, formattedOpts).format();
+        return currency(amount, currencyOptions).format();
       }
 
       throw new Error('Unknown asset format');

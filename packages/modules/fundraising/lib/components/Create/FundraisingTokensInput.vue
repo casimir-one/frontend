@@ -90,11 +90,11 @@
         if (!this.internalTokens) return '';
 
         const messages = [
-          `${this.toPercent(this.internalTokens, this.issuedTokens)} of ${this.$$toAssetUnits(this.issuedTokens)} issued tokens`
+          `${this.toPercent(this.internalTokens, this.issuedTokens)} of ${this.$$formatAsset(this.issuedTokens)} issued tokens`
         ];
         if (this.issuedTokens?.amount > this.availableTokens?.amount) {
           messages.push(
-            `${this.toPercent(this.internalTokens, this.availableTokens)} of ${this.$$toAssetUnits(this.availableTokens)} team's tokens`
+            `${this.toPercent(this.internalTokens, this.availableTokens)} of ${this.$$formatAsset(this.availableTokens)} team's tokens`
           );
         }
 

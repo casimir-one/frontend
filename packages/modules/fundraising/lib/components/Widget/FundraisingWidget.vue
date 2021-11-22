@@ -16,7 +16,7 @@
             <span
               v-if="userInvestment"
               class="primary--text font-weight-medium"
-            >{{ $$toAssetUnits(userInvestment) }}</span>
+            >{{ $$formatAsset(userInvestment) }}</span>
           </v-card>
 
           <v-btn

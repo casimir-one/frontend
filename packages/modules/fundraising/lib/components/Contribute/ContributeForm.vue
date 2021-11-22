@@ -84,7 +84,6 @@
 </template>
 
 <script>
-  import { assetsMixin } from '@deip/assets-module';
   import { VexStack } from '@deip/vuetify-extended';
   import FundraisingProgress from '../Progress/FundraisingProgress';
   import AmountSelector from './AmountSelector';
@@ -97,8 +96,6 @@
       FundraisingProgress,
       AmountSelector
     },
-
-    mixins: [assetsMixin],
 
     props: {
       tokenSale: {

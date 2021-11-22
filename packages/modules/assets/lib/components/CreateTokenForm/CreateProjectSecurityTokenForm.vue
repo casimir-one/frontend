@@ -252,8 +252,6 @@
   import { UsersSelector } from '@deip/users-module';
   import { TeamAvatar } from '@deip/teams-module';
 
-  import { assetsMixin } from '../../mixins';
-
   const shareholderModel = () => ({
     account: undefined,
     amount: 0
@@ -270,7 +268,6 @@
       VexTimelineItem,
       VexTimelineAdd
     },
-    mixins: [assetsMixin],
     props: {
       project: {
         type: Object,

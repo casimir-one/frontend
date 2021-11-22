@@ -77,10 +77,10 @@
 
     data() {
       const model = {
-        id: undefined,
-        amount: undefined,
-        symbol: this.$env.ASSET_UNIT,
-        precision: undefined
+        id: this.$env.CORE_ASSET.id,
+        symbol: this.$env.CORE_ASSET.symbol,
+        precision: this.$env.CORE_ASSET.precision,
+        amount: undefined
       };
 
       const lazyValue = {
