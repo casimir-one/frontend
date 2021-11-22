@@ -1,8 +1,9 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
-import { hexToU8a } from '@polkadot/util';
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
-import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey } from './utils';
+import { hexToU8a, stringToHex } from '@polkadot/util';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE, RESEARCH_CONTENT_TYPES } from '@deip/constants';
+import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey, getMultiAddress } from './utils';
+import { pascalCase } from 'change-case';
 
 
 const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
@@ -11,7 +12,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
 
   return {
 
-    [APP_CMD.CREATE_ACCOUNT]: ({
+    [APP_CMD.CREATE_DAO]: ({
       entityId,
       authority,
       description
@@ -40,7 +41,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.UPDATE_ACCOUNT]: ({
+    [APP_CMD.UPDATE_DAO]: ({
       entityId,
       description
     }) => {
@@ -54,19 +55,75 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       return [updateAccountOp];
     },
 
-    [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: ({
+    [APP_CMD.ALTER_DAO_AUTHORITY]: ({
       entityId,
+      authority
     }) => {
 
-      // Add Operation !!!
+      const signatories = authority.owner.auths.map((auth) => {
+        return auth.name ? daoIdToAddress(`0x${auth.name}`, chainNodeClient.registry) : pubKeyToAddress(`0x${auth.key}`)
+      });
+      // Due to Substrate specifics, we have to set the weight to 0 for DAO with a single authority
+      const threshold = authority.owner.weight === 1 && signatories.length === 1 ? 0 : authority.owner.weight;
 
-      // const updateAccountOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
-      //   chainNodeClient.tx.deipDao.updateDao(
-      //     /* "new_metadata": */ description ? `0x${description}` : null
-      //   )
-      // );
+      if (signatories.length > 1) {
+        assert(threshold != 0 && threshold <= signatories.length, `Multisig DAO threshold must be more than 0 and can not be more than signatories count`);
+      }
 
-      return [];
+      const authorityKey = signatories.length > 1 ? getMultiAddress(signatories, threshold) : signatories[0];
+
+      const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
+        chainNodeClient.tx.deipDao.alterAuthority(
+          /* "alteration_type": */ { 
+          "ReplaceAuthority" : {
+            "authority_key": authorityKey,
+            "authority": {
+              "signatories": signatories,
+              "threshold": threshold
+            }
+          } 
+        })
+      );
+
+      return [alterAuthOp];
+    },
+
+
+    [APP_CMD.ADD_DAO_MEMBER]: ({
+      member,
+      teamId
+    }) => {
+
+      const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
+      const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
+        chainNodeClient.tx.deipDao.alterAuthority(
+          /* "alteration_type": */ { 
+          "AddMember" : {
+            "member": account
+          } 
+        })
+      );
+
+      return [alterAuthOp];
+    },
+
+
+    [APP_CMD.REMOVE_DAO_MEMBER]: ({
+      member,
+      teamId
+    }) => {
+
+      const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
+      const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
+        chainNodeClient.tx.deipDao.alterAuthority(
+          /* "alteration_type": */ { 
+          "RemoveMember" : {
+            "member": account
+          } 
+        })
+      );
+
+      return [alterAuthOp];
     },
 
 
@@ -111,6 +168,85 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
+    [APP_CMD.CREATE_PROJECT_CONTENT]: ({
+      entityId,
+      projectId,
+      teamId,
+      type,
+      description,
+      content,
+      authors,
+      references
+    }) => {
+
+      const contentType = RESEARCH_CONTENT_TYPES[type];
+      const projectContentType = contentType ? pascalCase(contentType) : "Announcement";
+
+      const createProjectContentOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
+        chainNodeClient.tx.deip.createProjectContent(
+          /* "project_content_id": */ `0x${entityId}`,
+          /* "project_id": */ `0x${projectId}`,
+          /* "team_id": */ { Dao: `0x${teamId}` },
+          /* "content_type": */ projectContentType,
+          /* "description": */ `0x${description}`,
+          /* "content": */ `0x${content}`,
+          /* "authors": */ authors.map((author) => ({ Dao: `0x${author}` })),
+          /* "references": */ references.map((contentId) => `0x${contentId}`),
+        )
+      );
+      return [createProjectContentOp];
+    },
+
+
+    [APP_CMD.CREATE_REVIEW]: ({
+      entityId,
+      author,
+      projectContentId,
+      content,
+      assessment,
+      domains
+    }) => {
+
+      const { scores, type, isPositive } = assessment;
+      const model = type == 1 ? {
+        scores
+      } : {
+        isPositive
+      };
+    
+      const createReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${author}`,
+        chainNodeClient.tx.deip.createReview(
+          /* "review_id": */ `0x${entityId}`,
+          /* "author": */ { Dao: `0x${author}` },
+          /* "content": */ `0x${content}`,
+          /* "domains": */ domains.map((domainId) => `0x${domainId}`),
+          /* "assessmentModel": */ type,
+          /* "weight": */ stringToHex(JSON.stringify(model)),
+          /* "project_content_id": */ `0x${projectContentId}`,
+        )
+      );
+
+      return [createReviewOp];
+    },
+
+
+    [APP_CMD.UPVOTE_REVIEW]: ({
+      voter,
+      reviewId,
+      domainId
+    }) => {
+    
+      const upvoteReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${voter}`,
+        chainNodeClient.tx.deip.upvoteReview(
+          /* "review_id": */ `0x${reviewId}`,
+          /* "domain_id": */ `0x${domainId}`
+        )
+      );
+
+      return [upvoteReviewOp];
+    },
+
+
     [APP_CMD.CREATE_PROPOSAL]: ({
       entityId,
       creator,
@@ -151,56 +287,38 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.UPDATE_PROPOSAL]: ({
+
+    [APP_CMD.ACCEPT_PROPOSAL]: ({
       entityId,
-      activeApprovalsToAdd,
-      activeApprovalsToRemove,
-      ownerApprovalsToAdd,
-      ownerApprovalsToRemove,
-      keyApprovalsToAdd,
-      keyApprovalsToRemove
+      account
     }) => {
 
-      const approvers = [...(activeApprovalsToAdd || []), ...(ownerApprovalsToAdd || []), ...(keyApprovalsToAdd || [])].reduce((arr, approver) => {
-        if (!arr.includes(approver))
-          arr.push(approver);
-        return arr;
-      }, []);
-
-      const rejectors = [...(activeApprovalsToRemove || []), ...(ownerApprovalsToRemove || []), ...(keyApprovalsToRemove || [])].reduce((arr, rejector) => {
-        if (!arr.includes(rejector))
-          arr.push(rejector);
-        return arr;
-      }, []);
-
-
-      assert(approvers.length || rejectors.length, "Proposal can be either approved or rejected");
-
-      const ops = [];
-      for (let i = 0; i < approvers.length; i++) {
-        const approver = approvers[i];
-        const approveProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${approver}`,
-          chainNodeClient.tx.deipProposal.decide(
+      const acceptProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${account}`,
+        chainNodeClient.tx.deipProposal.decide(
            /* external_id: */ `0x${entityId}`,
            /* decision: */ 'Approve'
-          )
-        );
-        ops.push(approveProposalOp);
-      }
+        )
+      );
 
-      for (let i = 0; i < rejectors.length; i++) {
-        const rejector = rejectors[i];
-        const rejectProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${rejector}`,
-          chainNodeClient.tx.deipProposal.decide(
-            /* external_id: */ `0x${entityId}`,
-            /* decision: */ 'Reject'
-          )
-        );
-        ops.push(rejectProposalOp);
-      }
-
-      return ops;
+      return [acceptProposalOp];
     },
+
+
+    [APP_CMD.DECLINE_PROPOSAL]: ({
+      entityId,
+      account
+    }) => {
+
+      const declineProposalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${account}`,
+        chainNodeClient.tx.deipProposal.decide(
+          /* external_id: */ `0x${entityId}`,
+          /* decision: */ 'Reject'
+        )
+      );
+      
+      return [declineProposalOp];
+    },
+
 
 
     [APP_CMD.CREATE_ASSET]: ({
@@ -218,7 +336,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         chainNodeClient.tx.deipAssets.createAsset(
           /* assetId: */ `0x${entityId}`,
           /* admin: */ { Dao: `0x${issuer}` },
-          /* min_balance: */ minBalance,
+          /* min_balance: */ minBalance || 1,
           /* project_id: */ projectTokenOption ? `0x${projectTokenOption.projectId}` : null
         )
       );
@@ -381,7 +499,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.ASSET_TRANSFER]: ({
+    [APP_CMD.TRANSFER_ASSET]: ({
       from,
       to,
       asset,

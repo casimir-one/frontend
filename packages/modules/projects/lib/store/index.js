@@ -145,7 +145,6 @@ const ACTIONS = {
         reviewShare,
         compensationShare,
         attributes,
-        memoKey,
         formData
       },
       proposal: {
@@ -167,7 +166,6 @@ const ACTIONS = {
         reviewShare,
         compensationShare,
         attributes,
-        memoKey,
         formData
       },
       { isProposal, isProposalApproved, proposalLifetime }

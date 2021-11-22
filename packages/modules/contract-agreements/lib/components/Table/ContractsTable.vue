@@ -159,7 +159,10 @@
 
     methods: {
       formatDate(date) {
-        return this.$$formatDate(this.$$parseISO(date), 'PP');
+        if (typeof date === 'string') {
+          return this.$$formatDate(this.$$parseISO(date), 'PP');
+        }
+        return this.$$formatDate(new Date(date), 'PP'); // millis
       },
 
       getPartyNameById(id) {

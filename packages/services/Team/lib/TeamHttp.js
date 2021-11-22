@@ -20,7 +20,7 @@ export class TeamHttp {
     );
   }
 
-  async joinTeam(req) {
+  async addTeamMember(req) {
     return this.http.post(
       '/api/v2/team/join',
       req.getHttpBody(),
@@ -28,7 +28,7 @@ export class TeamHttp {
     );
   }
 
-  async leaveTeam(req) {
+  async removeTeamMember(req) {
     return this.http.post(
       '/api/v2/team/leave',
       req.getHttpBody(),

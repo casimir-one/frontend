@@ -1,6 +1,5 @@
 import { ProjectHttp } from './ProjectHttp';
 import { proxydi } from '@deip/proxydi';
-import crypto from '@deip/lib-crypto';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants'
 import {
@@ -8,14 +7,14 @@ import {
   UpdateProjectCmd,
   DeleteProjectCmd,
   CreateProposalCmd,
-  CreateAccountCmd,
-  JoinTeamCmd,
-  UpdateProposalCmd,
-  LeaveTeamCmd
+  CreateDaoCmd,
+  AddDaoMemberCmd,
+  AcceptProposalCmd,
+  RemoveDaoMemberCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamService } from '@deip/team-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { createInstanceGetter, genSha256Hash } from '@deip/toolbox';
 
 
 // TODO: move to constants
@@ -46,7 +45,6 @@ export class ProjectService {
     isPrivate,
     members,
     attributes,
-    memoKey,
     formData
   },
     proposalInfo) {
@@ -98,25 +96,24 @@ export class ProjectService {
 
               authoritySetup.auths.push(...projectTeamMembers);
 
-              const createAccountCmd = new CreateAccountCmd({
+              const createDaoCmd = new CreateDaoCmd({
                 isTeamAccount: true,
                 fee: { ...CORE_ASSET, amount: 0 },
                 creator: creator,
                 authority: {
                   owner: authoritySetup
                 },
-                memoKey: memoKey,
-                description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify({})).buffer)),
+                description: genSha256Hash(JSON.stringify({})),
                 attributes: []
               });
 
-              txBuilder.addCmd(createAccountCmd);
-              teamId = createAccountCmd.getProtocolEntityId();
+              txBuilder.addCmd(createDaoCmd);
+              teamId = createDaoCmd.getProtocolEntityId();
             }
 
             const createProjectCmd = new CreateProjectCmd({
               teamId: teamId,
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              description: genSha256Hash(JSON.stringify(attributes)),
               domains: domains,
               isPrivate: isPrivate,
               isDefault: false,
@@ -139,9 +136,9 @@ export class ProjectService {
 
               if (isProposalApproved) {
                 const projectProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: projectProposalId,
-                  activeApprovalsToAdd: [creator]
+                  account: creator
                 });
 
                 txBuilder.addCmd(updateProposalCmd);
@@ -204,30 +201,30 @@ export class ProjectService {
             const leftMembers = members ? teamMembers.filter(member => !members.includes(member) && member != TENANT) : [];
 
             const invites = joinedMembers.map((invitee) => {
-              const joinTeamCmd = new JoinTeamCmd({
+              const addTeamMemberCmd = new AddDaoMemberCmd({
                 member: invitee,
                 teamId: teamId,
                 projectId: projectId
               });
 
-              return joinTeamCmd;
+              return addTeamMemberCmd;
             });
 
             const leavings = leftMembers.map((leaving) => {
-              const leaveTeamCmd = new LeaveTeamCmd({
+              const removeDaoMemberCmd = new RemoveDaoMemberCmd({
                 member: leaving,
                 teamId: teamId,
                 projectId: projectId
               });
 
-              return leaveTeamCmd;
+              return removeDaoMemberCmd;
             });
 
 
             const updateProjectCmd = new UpdateProjectCmd({
               entityId: projectId,
               teamId: teamId,
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              description: genSha256Hash(JSON.stringify(attributes)),
               isPrivate: isPrivate,
               members: undefined,
               attributes: attributes
@@ -247,9 +244,9 @@ export class ProjectService {
 
               if (isProposalApproved) {
                 const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: projectUpdateProposalId,
-                  activeApprovalsToAdd: [updater]
+                  account: updater
                 });
 
                 txBuilder.addCmd(updateProposalCmd);

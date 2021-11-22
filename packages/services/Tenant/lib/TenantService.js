@@ -1,8 +1,7 @@
-import { createFormData, createInstanceGetter } from '@deip/toolbox';
+import { createFormData, createInstanceGetter, genSha256Hash } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import crypto from '@deip/lib-crypto';
 import {
-  CreateAccountCmd,
+  CreateDaoCmd,
   DeleteUserProfileCmd,
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,
@@ -78,7 +77,7 @@ export class TenantService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const createAccountCmd = new CreateAccountCmd({
+            const createDaoCmd = new CreateDaoCmd({
               isTeamAccount: false,
               fee: { ...CORE_ASSET, amount: 0 },
               creator: creator || FAUCET_ACCOUNT_USERNAME,
@@ -88,14 +87,13 @@ export class TenantService {
                   weight: 1
                 }
               },
-              memoKey: pubKey,
-              description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(attributes)).buffer)),
+              description: genSha256Hash(JSON.stringify(attributes)),
               attributes,
               email,
               roles,
               entityId: username
             });
-            txBuilder.addCmd(createAccountCmd);
+            txBuilder.addCmd(createDaoCmd);
 
             return txBuilder.end();
           })
@@ -129,7 +127,7 @@ export class TenantService {
             const chainTxBuilder = chainService.getChainTxBuilder();
             return chainTxBuilder.begin()
               .then((txBuilder) => {
-                const createAccountCmd = new CreateAccountCmd({
+                const createDaoCmd = new CreateDaoCmd({
                   isTeamAccount: false,
                   fee: { ...CORE_ASSET, amount: 0 },
                   creator: FAUCET_ACCOUNT_USERNAME,
@@ -139,14 +137,13 @@ export class TenantService {
                       weight: 1
                     }
                   },
-                  memoKey: signupRequest.signUpPubKey,
-                  description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify(signupRequest.attributes)).buffer)),
+                  description: genSha256Hash(JSON.stringify(signupRequest.attributes)),
                   attributes: signupRequest.attributes,
                   email: signupRequest.email,
                   roles: signupRequest.roles,
                   entityId: username
                 });
-                txBuilder.addCmd(createAccountCmd);
+                txBuilder.addCmd(createDaoCmd);
                 return txBuilder.end();
               })
               .then((packedTx) => {

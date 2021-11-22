@@ -114,7 +114,6 @@ const install = (Vue, options = {}) => {
           $currentUser = {
             ...data,
             isAdmin: data.roles.some((r) => r.role === 'admin'),
-            memoKey: data.account.memo_key,
             privKey: accessService.getOwnerPrivKey(),
             pubKey: accessService.getOwnerPubKey()
           };

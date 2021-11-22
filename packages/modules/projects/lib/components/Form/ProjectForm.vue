@@ -121,7 +121,7 @@
         const payload = {
           creator: this.$currentUser,
           data: {
-            creator: this.$currentUser.username,
+            creator: this.$currentUser.username
             // TODO
             // teamId,
             // domains,
@@ -132,7 +132,6 @@
             // compensationShare,
             // attributes,
             // formData
-            memoKey: this.$currentUser.memoKey
           },
           proposal: {
             // isProposal

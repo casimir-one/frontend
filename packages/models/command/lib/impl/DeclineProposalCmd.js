@@ -10,13 +10,11 @@ class DeclineProposalCmd extends ProtocolCmd {
     const {
       // onchain
       entityId,
-      account,
-      authorityType
+      account
     } = cmdPayload;
 
     assert(!!entityId, "'entityId' is required");
     assert(!!account, "'account' is required");
-    assert(!!authorityType, "'authorityType' is required");
 
     super(APP_CMD.DECLINE_PROPOSAL, cmdPayload);
   }

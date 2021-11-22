@@ -1,6 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { APP_CMD } from '@deip/constants';
 import { toAssetUnits, millisecToIso } from './utils';
+import crypto from '@deip/lib-crypto';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
@@ -9,20 +10,19 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
 
   return {
 
-    [APP_CMD.CREATE_ACCOUNT]: ({
+    [APP_CMD.CREATE_DAO]: ({
       entityId,
       isTeamAccount,
       fee,
       creator,
       description,
-      authority,
-      memoKey,
+      authority
     }) => {
 
       const ownerAuths = {
         account_auths: [],
         key_auths: [],
-        weight_threshold: authority.owner ? authority.owner.weight : 1
+        weight_threshold: authority.owner.weight
       };
 
       for (let i = 0; i < authority.owner.auths.length; i++) {
@@ -41,10 +41,10 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         owner: ownerAuths,
         active: ownerAuths,
         active_overrides: [],
-        memo_key: memoKey,
+        memo_key: crypto.generateKeys().public, // @deprecated
         json_metadata: JSON.stringify({ description }),
         traits: isTeamAccount
-          ? [["research_group", { description: "", extensions: [] }]] // deprecated
+          ? [["research_group", { description: "", extensions: [] }]] // @deprecated
           : [],
         extensions: []
       }];
@@ -53,7 +53,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.UPDATE_ACCOUNT]: ({
+    [APP_CMD.UPDATE_DAO]: ({
       entityId,
       description,
       isTeamAccount
@@ -63,11 +63,11 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         account: entityId,
         owner: undefined,
         active: undefined,
-        active_overrides: [],
+        active_overrides: undefined,
         memo_key: undefined,
         json_metadata: JSON.stringify({ description }),
         traits: isTeamAccount
-          ? [["research_group", { description: "", extensions: [] }]] // deprecated
+          ? [["research_group", { description: "", extensions: [] }]] // @deprecated
           : [],
         update_extensions: []
       }];
@@ -75,23 +75,35 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       return [updateAccountOp];
     },
 
-    [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: ({
+    [APP_CMD.ALTER_DAO_AUTHORITY]: ({
       entityId,
-      isTeamAccount,
-      memoKey,
-      ownerAuth
+      authority
     }) => {
+
+      const ownerAuth = {
+        account_auths: [],
+        key_auths: [],
+        weight_threshold: authority.owner.weight
+      };
+
+      for (let i = 0; i < authority.owner.auths.length; i++) {
+        let auth = authority.owner.auths[i];
+        if (auth.name) {
+          ownerAuth.account_auths.push([auth.name, auth.weight]);
+        } else {
+          ownerAuth.key_auths.push([auth.key, auth.weight]);
+        }
+      }
+
 
       const updateAccountOp = ['update_account', {
         account: entityId,
         owner: ownerAuth,
         active: ownerAuth,
-        active_overrides: [],
-        memo_key: memoKey || undefined,
+        active_overrides: undefined,
+        memo_key: undefined,
         json_metadata: undefined,
-        traits: isTeamAccount
-        ? [["research_group", { description: "", extensions: [] }]] // deprecated
-        : [],
+        traits: undefined,
         update_extensions: []
       }];
 
@@ -113,9 +125,9 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         description: description,
         disciplines: domains,
         is_private: isPrivate || false,
-        members: undefined, // deprecated
-        review_share: undefined, // deprecated
-        compensation_share: undefined, // deprecated
+        members: undefined, // @deprecated
+        review_share: undefined, // @deprecated
+        compensation_share: undefined, // @deprecated
         extensions: []
       }];
 
@@ -135,9 +147,9 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         account: teamId,
         description: description,
         is_private: isPrivate || false,
-        review_share: undefined, // deprecated
-        compensation_share: undefined, // deprecated
-        members: undefined, // deprecated
+        review_share: undefined, // @deprecated
+        compensation_share: undefined, // @deprecated
+        members: undefined, // @deprecated
         update_extensions: []
       }];
 
@@ -145,7 +157,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.JOIN_TEAM]: ({
+    [APP_CMD.ADD_DAO_MEMBER]: ({
       member,
       teamId
     }) => {
@@ -178,7 +190,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.LEAVE_TEAM]: ({
+    [APP_CMD.REMOVE_DAO_MEMBER]: ({
       member,
       teamId
     }) => {
@@ -238,24 +250,19 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.UPDATE_PROPOSAL]: ({
+    [APP_CMD.ACCEPT_PROPOSAL]: ({
       entityId,
-      activeApprovalsToAdd,
-      activeApprovalsToRemove,
-      ownerApprovalsToAdd,
-      ownerApprovalsToRemove,
-      keyApprovalsToAdd,
-      keyApprovalsToRemove
+      account
     }) => {
 
       const updateProposalOp = ['update_proposal', {
         external_id: entityId,
-        active_approvals_to_add: activeApprovalsToAdd || [],
-        active_approvals_to_remove: activeApprovalsToRemove || [],
-        owner_approvals_to_add: ownerApprovalsToAdd || [],
-        owner_approvals_to_remove: ownerApprovalsToRemove || [],
-        key_approvals_to_add: keyApprovalsToAdd || [],
-        key_approvals_to_remove: keyApprovalsToRemove || [],
+        active_approvals_to_add: [],
+        active_approvals_to_remove: [],
+        owner_approvals_to_add: [account],
+        owner_approvals_to_remove: [],
+        key_approvals_to_add: [],
+        key_approvals_to_remove: [],
         extensions: []
       }];
 
@@ -265,14 +272,13 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
 
     [APP_CMD.DECLINE_PROPOSAL]: ({
       entityId,
-      account,
-      authorityType,
+      account
     }) => {
 
       const declineProposalOp = ['delete_proposal', {
         external_id: entityId,
         account: account,
-        authority: authorityType,
+        authority: 2,
         extensions: []
       }];
 
@@ -331,11 +337,10 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.ASSET_TRANSFER]: ({
+    [APP_CMD.TRANSFER_ASSET]: ({
       from,
       to,
-      asset,
-      memo
+      asset
     }) => {
       
       const amountUnits = toAssetUnits(asset);
@@ -343,7 +348,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         from: from,
         to: to,
         amount: amountUnits,
-        memo: memo || "",
+        memo: "",
         extensions: []
       }];
     
@@ -415,6 +420,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       return [issueAssetOp];
     },
 
+
     [APP_CMD.CREATE_PROJECT_CONTENT]: ({
       entityId,
       projectId,
@@ -441,24 +447,43 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       return [createResearchContentOp];
     },
 
+
     [APP_CMD.CREATE_REVIEW]: ({
       entityId,
       author,
       projectContentId,
       content,
-      weight,
       assessment,
-      disciplines
+      domains
     }) => {
+
+      const { scores, isPositive, type, weight } = assessment;
+
+      const model = type == 1 ? [
+        'multicriteria_scoring_assessment_model',
+        {
+          scores: Object.keys(scores).reduce((sc, key) => {
+            const val = scores[key];
+            return [...sc, [parseInt(key), parseInt(val)]];
+          }, []),
+          extensions: []
+        }
+      ] : [
+        'binary_scoring_assessment_model',
+        {
+          is_positive: isPositive,
+          extensions: []
+        }
+      ];
     
       const createReviewOp = ['create_review', {
         external_id: entityId,
-        author,
+        author: author,
         research_content_external_id: projectContentId,
-        content: JSON.stringify({ content }),
-        weight,
-        assessment_model: assessment,
-        disciplines,
+        content: typeof content === 'object' ? JSON.stringify(content) : JSON.stringify({ content }),
+        weight: weight || `100.00 %`,
+        assessment_model: model,
+        disciplines: domains,
         extensions: []
       }];
     
@@ -469,7 +494,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       entityId,
       voter,
       reviewId,
-      disciplineId,
+      domainId,
       weight
     }) => {
     
@@ -477,8 +502,8 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         external_id: entityId,
         voter,
         review_external_id: reviewId,
-        discipline_external_id: disciplineId,
-        weight,
+        discipline_external_id: domainId,
+        weight: weight || `100.00 %`,
         extensions: []
       }];
     

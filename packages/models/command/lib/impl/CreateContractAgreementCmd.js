@@ -33,6 +33,8 @@ class CreateContractAgreementCmd extends ProtocolEntityCmd {
     if (type == CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE) {
       assert(!!terms.projectId, "'projectId' is required");
       assert(!!terms.price, "'price' is required");
+    } else if (type == CONTRACT_AGREEMENT_TYPE.PROJECT_ACCESS) {
+      assert(!!terms.projectId, "'projectId' is required");
     }
 
     super(APP_CMD.CREATE_CONTRACT_AGREEMENT, cmdPayload);

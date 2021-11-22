@@ -27,7 +27,6 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
     assert(!!content, "'content' is required");
     assert(!!type, "'type' is required");
     assert(!!authors && authors.length, "'authors' is required");
-    assert(!!title, "'title' is required");
 
     super(APP_CMD.CREATE_PROJECT_CONTENT, cmdPayload);
   }

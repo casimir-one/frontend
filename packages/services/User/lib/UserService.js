@@ -1,8 +1,8 @@
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import {
-  UpdateAccountCmd,
-  AlterAccountAuthorityCmd
+  UpdateDaoCmd,
+  AlterDaoAuthorityCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import {
@@ -43,7 +43,7 @@ export class UserService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const updateAccountCmd = new UpdateAccountCmd({
+            const updateDaoCmd = new UpdateDaoCmd({
               isTeamAccount: false,
               entityId: updater,
               description: genSha256Hash(attributes),
@@ -52,7 +52,7 @@ export class UserService {
               status
             });
 
-            txBuilder.addCmd(updateAccountCmd);
+            txBuilder.addCmd(updateDaoCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -70,8 +70,7 @@ export class UserService {
         privKey,
         username
       },
-      ownerAuth,
-      memoKey
+      authority
     } = payload;
 
     return ChainService.getInstanceAsync(env)
@@ -81,14 +80,13 @@ export class UserService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const alterAccountAuthorityCmd = new AlterAccountAuthorityCmd({
+            const alterDaoAuthorityCmd = new AlterDaoAuthorityCmd({
               entityId: username,
               isTeamAccount: false,
-              ownerAuth,
-              memoKey
+              authority
             });
 
-            txBuilder.addCmd(alterAccountAuthorityCmd);
+            txBuilder.addCmd(alterDaoAuthorityCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -132,7 +130,7 @@ export class UserService {
     return new Promise((resolve) => this.getUser(username)
       .then(() => resolve(true))
       .catch((error) => {
-        if (error.response.status === 404) {
+        if (error.statusCode === 404 || (error.response && error.response.status === 404)) {
           resolve(false);
         } else {
           throw error;

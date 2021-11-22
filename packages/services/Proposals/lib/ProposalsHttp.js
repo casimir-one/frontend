@@ -4,7 +4,7 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class ProposalsHttp {
   http = HttpService.getInstance();
 
-  async updateProposal(req) {
+  async acceptProposal(req) {
     return this.http.put('/api/v2/proposals/update', req.getHttpBody());
   }
 

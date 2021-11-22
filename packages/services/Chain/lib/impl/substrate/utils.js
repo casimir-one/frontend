@@ -36,6 +36,23 @@ const isAddress = (address, addressFormat = 42) => {
 }
 
 
+const addressToPubKey = (address, addressFormat = 42, ignoreChecksum = false) => {
+  return u8aToHex(decodeAddress(address, ignoreChecksum, addressFormat));
+}
+
+
+const fromHexFormat = (str) => {
+  if (!str) return null;
+  return str.indexOf(`0x`) === 0 ? str.substring(2, str.length) : str;
+}
+
+
+const toHexFormat = (str) => {
+  if (!str) return null;
+  return str.indexOf(`0x`) === 0 ? str : `0x${str}`;
+}
+
+
 const isValidPrivKey = (privKey) => {
   return isHex(privKey) && hexToU8a(privKey).length === 32;
 }
@@ -75,14 +92,23 @@ const verifySignature = (pubKey, msg, sig, options = { type: 'sr25519' }) => {
 }
 
 
+const encodeAddressFormat = (address, addressFormat = 42) => {
+  return encodeAddress(address, addressFormat);
+}
+
+
 export {
   pubKeyToAddress,
   daoIdToAddress,
+  addressToPubKey,
+  fromHexFormat,
+  toHexFormat,
   isAddress,
   getMultiAddress,
   getSeedAccountFromJson,
   getSeedAccount,
   verifySignature,
   isValidPrivKey,
-  isValidPubKey
+  isValidPubKey,
+  encodeAddressFormat
 }

@@ -1,7 +1,7 @@
 import {
   CreateProjectNdaCmd,
   CreateProposalCmd,
-  UpdateProposalCmd
+  AcceptProposalCmd
 } from '@deip/command-models';
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
@@ -59,12 +59,14 @@ export class ProjectNdaService {
             txBuilder.addCmd(createProposalCmd);
 
             const createProjectNdaProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
-              entityId: createProjectNdaProposalId,
-              activeApprovalsToAdd: [...approvers]
-            });
-
-            txBuilder.addCmd(updateProposalCmd);
+            for (let i = 0; i < approvers.length; i++) {
+              const approver = approvers[i];
+              const updateProposalCmd = new AcceptProposalCmd({
+                entityId: createProjectNdaProposalId,
+                account: approver
+              });
+              txBuilder.addCmd(updateProposalCmd);
+            }
 
             return txBuilder.end();
           })

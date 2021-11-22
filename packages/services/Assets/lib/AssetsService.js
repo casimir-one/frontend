@@ -2,9 +2,9 @@ import { genRipemd160Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import {
-  UpdateProposalCmd,
+  AcceptProposalCmd,
   CreateProposalCmd,
-  AssetTransferCmd,
+  TransferAssetCmd,
   CreateAssetCmd,
   IssueAssetCmd
 } from '@deip/command-models';
@@ -26,8 +26,7 @@ export class AssetsService {
   transferAssets({ privKey, username }, {
     from,
     to,
-    asset,
-    memo
+    asset
   }, proposalInfo) {
     const { isProposal, isProposalApproved, proposalLifetime } = {
       isProposal: false,
@@ -44,11 +43,10 @@ export class AssetsService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const assetTransferCmd = new AssetTransferCmd({
+            const transferAssetCmd = new TransferAssetCmd({
               from,
               to,
-              asset,
-              memo: memo || ''
+              asset
             });
 
             if (isProposal) {
@@ -56,22 +54,22 @@ export class AssetsService {
                 type: APP_PROPOSAL.ASSET_TRANSFER_PROPOSAL,
                 creator: username,
                 expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [assetTransferCmd]
+                proposedCmds: [transferAssetCmd]
               });
 
               txBuilder.addCmd(createProposalCmd);
 
               if (isProposalApproved) {
                 const updateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: updateProposalId,
-                  activeApprovalsToAdd: [username]
+                  account: username
                 });
 
                 txBuilder.addCmd(updateProposalCmd);
               }
             } else {
-              txBuilder.addCmd(assetTransferCmd);
+              txBuilder.addCmd(transferAssetCmd);
             }
             return txBuilder.end();
           })
@@ -208,8 +206,7 @@ export class AssetsService {
     party1,
     party2,
     asset1,
-    asset2,
-    memo
+    asset2
   }, proposalInfo) {
     const { isProposalApproved, proposalLifetime } = {
       isProposalApproved: true,
@@ -225,25 +222,23 @@ export class AssetsService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const assetTransferCmd1 = new AssetTransferCmd({
+            const transferAssetCmd1 = new TransferAssetCmd({
               from: party1,
               to: party2,
-              asset: asset1,
-              memo: memo || ''
+              asset: asset1
             });
 
-            const assetTransferCmd2 = new AssetTransferCmd({
+            const transferAssetCmd2 = new TransferAssetCmd({
               from: party2,
               to: party1,
-              asset: asset2,
-              memo: memo || ''
+              asset: asset2
             });
 
             const createProposalCmd = new CreateProposalCmd({
               type: APP_PROPOSAL.ASSET_EXCHANGE_PROPOSAL,
               creator: username,
               expirationTime: proposalLifetime || proposalDefaultLifetime,
-              proposedCmds: [assetTransferCmd1, assetTransferCmd2]
+              proposedCmds: [transferAssetCmd1, transferAssetCmd2]
             });
 
             txBuilder.addCmd(createProposalCmd);
@@ -251,9 +246,9 @@ export class AssetsService {
             const updateProposalId = createProposalCmd.getProtocolEntityId();
 
             if (isProposalApproved) {
-              const updateProposalCmd = new UpdateProposalCmd({
+              const updateProposalCmd = new AcceptProposalCmd({
                 entityId: updateProposalId,
-                activeApprovalsToAdd: [username]
+                account: username
               });
 
               txBuilder.addCmd(updateProposalCmd);
