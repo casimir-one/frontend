@@ -60,14 +60,13 @@
 <script>
   import { dateMixin } from '@deip/platform-components';
   import { TS_TYPES } from '@deip/constants';
-  import { assetsMixin } from '@deip/assets-module';
   import { isString } from '@deip/toolbox';
   import { uniqBy } from '@deip/toolbox/lodash';
 
   export default {
     name: 'FundraisingProgress',
 
-    mixins: [dateMixin, assetsMixin],
+    mixins: [dateMixin],
 
     props: {
       tokenSale: {
