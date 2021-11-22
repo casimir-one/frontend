@@ -7,6 +7,7 @@ import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
 import UpdateAccountCmd from './impl/UpdateAccountCmd';
+import AlterAccountAuthorityCmd from './impl/AlterAccountAuthorityCmd';
 import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
@@ -39,7 +40,6 @@ import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 
-
 export {
   CreateAccountCmd,
   CreateProjectCmd,
@@ -50,6 +50,7 @@ export {
   UpdateProposalCmd,
   DeclineProposalCmd,
   UpdateAccountCmd,
+  AlterAccountAuthorityCmd,
   CreateAttributeCmd,
   UpdateAttributeCmd,
   DeleteAttributeCmd,

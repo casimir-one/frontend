@@ -10,6 +10,10 @@ export class UserHttp {
     return this.http.put('/api/v2/user/update', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
+  changePassword(req) {
+    return this.http.put('/api/v2/user/update/password', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  }
+
   // Invites
 
   async getInvitesByUser(username) {

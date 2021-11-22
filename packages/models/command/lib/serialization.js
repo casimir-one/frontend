@@ -8,6 +8,7 @@ import CreateProposalCmd from './impl/CreateProposalCmd';
 import UpdateProposalCmd from './impl/UpdateProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
 import UpdateAccountCmd from './impl/UpdateAccountCmd';
+import AlterAccountAuthorityCmd from './impl/AlterAccountAuthorityCmd';
 import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
@@ -44,6 +45,7 @@ import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_ACCOUNT]: { class: CreateAccountCmd },
   [APP_CMD.UPDATE_ACCOUNT]: { class: UpdateAccountCmd },
+  [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: { class: AlterAccountAuthorityCmd },
   [APP_CMD.CREATE_PROJECT]: { class: CreateProjectCmd },
   [APP_CMD.UPDATE_PROJECT]: { class: UpdateProjectCmd },
   [APP_CMD.DELETE_PROJECT]: { class: DeleteProjectCmd },
