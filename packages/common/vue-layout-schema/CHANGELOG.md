@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.352.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.352.0) (2021-11-22)
+
+
+### Bug Fixes
+
+* **@deip/vue-layout-schema:** schema builder model ([984ea23](https://github.com/DEIPworld/deip-modules/commit/984ea2388d8ce4e466f73b76c8e203b0cf118a87))
+
+
+### Features
+
+* **@deip/vls-layout-schema:** add vls-schema-builder component ([3837477](https://github.com/DEIPworld/deip-modules/commit/3837477977db20fefdae79195ab9dcbbb87b9b3b))
+
+
+
+
+
 # [1.351.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.351.0) (2021-11-22)
 
 
