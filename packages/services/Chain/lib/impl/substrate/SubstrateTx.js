@@ -72,6 +72,7 @@ class SubstrateTx extends BaseTx {
   getTxSignersTree(api) {
     const ops = this.getOps();
     const daoSigners = this.getTxSigners(api);
+    const newDaoMap = {};
     return Promise.all(daoSigners.map((daoSigner) => {
 
       if (daoSigner.isNewDao) {
@@ -83,8 +84,7 @@ class SubstrateTx extends BaseTx {
         const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
         const isUserDao = threshold === 0;
         const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
-
-        return Promise.resolve({
+        const newDao = {
           address: address,
           daoId: daoId,
           isNewDao: true,
@@ -97,38 +97,48 @@ class SubstrateTx extends BaseTx {
           isThreshold1: threshold === 1,
           isRoot: false,
           children: {}
-        });
-
-      } else {
-
-        return api.query.deipDao.daoRepository(daoSigner.daoId)
-          .then((daoOpt) => {
-            assert(daoOpt.isSome, `DAO actor is not found`);
-            const daoId = u8aToHex(daoOpt.value.id);
-            const address = daoIdToAddress(daoId, api.registry);
-            const authority = daoOpt.value.authority;
-            const threshold = authority.threshold.toBn().toNumber();
-            const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
-            const isUserDao = threshold === 0;
-            const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
-
-            return {
-              address: address,
-              daoId: daoId,
-              isNewDao: false,
-              authority: {
-                threshold: threshold,
-                signatories: signatories
-              },
-              multiAddress: multiAddress,
-              isUserDao: isUserDao,
-              isThreshold1: threshold === 1,
-              isRoot: false,
-              children: {}
-            }
-          });
+        };
+        newDaoMap[daoId] = newDao;
+        return Promise.resolve(newDao);
       }
-    }))
+      else {
+        const isOnBehalfNewDao = !!newDaoMap[daoSigner.daoId];
+        return isOnBehalfNewDao
+          ? Promise.resolve(newDaoMap[daoSigner.daoId])
+          : api.query.deipDao.daoRepository(daoSigner.daoId)
+            .then((daoOpt) => {
+
+              assert(daoOpt.isSome, `DAO actor is not found`);
+              const daoId = u8aToHex(daoOpt.value.id);
+              const address = daoIdToAddress(daoId, api.registry);
+              const authority = daoOpt.value.authority;
+              const threshold = authority.threshold.toBn().toNumber();
+              const signatories = authority.signatories.map(signatory => pubKeyToAddress(signatory)).sort();
+              const isUserDao = threshold === 0;
+              const multiAddress = signatories.length > 1 ? getMultiAddress(signatories, threshold) : null;
+              const dao = {
+                address: address,
+                daoId: daoId,
+                isNewDao: false,
+                authority: {
+                  threshold: threshold,
+                  signatories: signatories
+                },
+                multiAddress: multiAddress,
+                isUserDao: isUserDao,
+                isThreshold1: threshold === 1,
+                isRoot: false,
+                children: {}
+              };
+              return dao;
+            });
+      }
+    })
+      .reduce((distinct, dao) => {
+        if (distinct.some((d) => d.daoId === dao.daoId))
+          return distinct;
+        return [dao, ...distinct];
+      }, []))
       .then((signers) => {
 
         const buildFlatTree = (address, arr) => {
@@ -201,7 +211,7 @@ class SubstrateTx extends BaseTx {
                 }
               }
             }
-            
+
             return flatTrees.reduce((tree, flatTree) => {
               for (let i = flatTree.length - 1; i >= 0; i--) {
                 const leaf = flatTree[i];
@@ -220,14 +230,14 @@ class SubstrateTx extends BaseTx {
   signAsync(privKey, api, options = { override: false }) {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(options.override || !this.getSignedInvariant(), `Transaction is already signed. Set 'override=true' option to override the current signer`);
-    
+
     const isSuriPath = privKey.indexOf('/') !== -1;
     const keyring = isSuriPath ? getSeedAccount(privKey) : getSeedAccount(`0x${privKey}`);
 
     return Promise.all([
       this.getTxSignersTree(api),
       api.derive.tx.signingInfo(keyring.address)
-    ]) 
+    ])
       .then(([signersTree, signingInfo]) => {
         const signerRoot = signersTree[keyring.address];
         assert(!!signerRoot, `${keyring.address} address is not authorized to sign the transaction`);
@@ -263,6 +273,7 @@ class SubstrateTx extends BaseTx {
 
         const batchAll = api.registry.createType('Extrinsic', this.getTx().toU8a());
         const signingOpsPromises = [];
+        const createDaoIds = []
 
         for (let i = 0; i < batchAll.method.args[0].length; i++) {
           const call = api.registry.createType('Call', batchAll.method.args[0][i].toU8a(), batchAll.method.args[0][i].meta);
@@ -271,14 +282,15 @@ class SubstrateTx extends BaseTx {
           const isOnBehalf = extrinsic.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
           if (!isOnBehalf) {
             assert(extrinsic.method.meta.toHex() === api.tx.deipDao.create.meta.toHex(), "All operations except account initialization must be send via 'onBehalf' call");
+            createDaoIds.push(extrinsic.method.args[0].toHex());
           }
 
           const daoId = isOnBehalf ? extrinsic.method.args[0].toHex() : extrinsic.method.args[0].toHex();
           const op = isOnBehalf ? extrinsic.method.args[1].toHex() : extrinsic;
           const daoAddress = daoIdToAddress(daoId, api.registry);
-
           const signersChain = buildSignersChain(signerRoot, daoAddress);
           const signersVector = signersChain.reverse();
+          const isOnBehalfNewDao = isOnBehalf && createDaoIds.includes(daoId);
 
           const opChainPromise = signersVector.reduce((chainPromise, dao, i) => {
             if (dao.isRoot) {
@@ -288,7 +300,9 @@ class SubstrateTx extends BaseTx {
             }
             else if (dao.isUserDao) {
               return chainPromise.then((opChain) => {
-                return dao.isNewDao ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain);
+                const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
+                const onBehalfDaoId = isOnBehalf ? opChain.method.args[0].toHex() : null;
+                return (dao.isNewDao || isOnBehalf) && !isOnBehalfNewDao ? opChain : api.tx.deipDao.onBehalf(onBehalfDaoId || dao.daoId, opChain);
               });
             }
             else if (dao.isThreshold1) {
@@ -296,12 +310,16 @@ class SubstrateTx extends BaseTx {
                 const topDao = signersVector[(i + 1)];
                 const others = dao.authority.signatories.filter((signatory) => signatory != topDao.address).sort();
                 const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
-                return api.tx.multisig.asMultiThreshold1(others, dao.isNewDao || isOnBehalf ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain));
+                const onBehalfDaoId = isOnBehalf ? opChain.method.args[0].toHex() : null;
+                return api.tx.multisig.asMultiThreshold1(others, (dao.isNewDao || isOnBehalf) && !isOnBehalfNewDao ? opChain : api.tx.deipDao.onBehalf(onBehalfDaoId || dao.daoId, opChain));
               });
             }
             else {
               return chainPromise.then((opChain) => {
-                const operation = dao.isNewDao ? opChain : api.tx.deipDao.onBehalf(dao.daoId, opChain);
+                const isOnBehalf = !isHex(opChain) && opChain.method.meta.toHex() === api.tx.deipDao.onBehalf.meta.toHex();
+                const onBehalfDaoId = isOnBehalf ? opChain.method.args[0].toHex() : null;
+                const operation = (dao.isNewDao || isOnBehalf) && !isOnBehalfNewDao ? opChain : api.tx.deipDao.onBehalf(onBehalfDaoId || dao.daoId, opChain);
+
                 return Promise.all([
                   api.query.multisig.multisigs(dao.multiAddress, operation.method.hash),
                   operation.paymentInfo ? operation.paymentInfo(dao.multiAddress) : { weight: 1000000 } // todo: add fallback

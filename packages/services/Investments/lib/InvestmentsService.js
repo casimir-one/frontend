@@ -2,7 +2,7 @@ import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
 import {
-  UpdateProposalCmd,
+  AcceptProposalCmd,
   CreateProposalCmd,
   CreateInvestmentOpportunityCmd,
   InvestCmd
@@ -83,7 +83,7 @@ export class InvestmentsService {
 
             if (isProposal) {
               const createProposalCmd = new CreateProposalCmd({
-                type: APP_PROPOSAL.PROJECT_TOKEN_SALE_PROPOSAL,
+                type: APP_PROPOSAL.INVESTMENT_OPPORTUNITY_PROPOSAL,
                 creator: username,
                 expirationTime: proposalLifetime || proposalDefaultLifetime,
                 proposedCmds: [createInvestmentOpportunityCmd]
@@ -92,9 +92,9 @@ export class InvestmentsService {
 
               if (isProposalApproved) {
                 const updateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: updateProposalId,
-                  activeApprovalsToAdd: [username]
+                  account: username
                 });
                 txBuilder.addCmd(updateProposalCmd);
               }

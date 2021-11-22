@@ -7,7 +7,7 @@ import {
   AcceptContractAgreementCmd,
   RejectContractAgreementCmd,
   CreateProposalCmd,
-  UpdateProposalCmd
+  AcceptProposalCmd
 } from '@deip/command-models';
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
@@ -191,9 +191,9 @@ export class ContractAgreementService {
             txBuilder.addCmd(createProposalCmd);
 
             const createContractAgreementProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
+            const updateProposalCmd = new AcceptProposalCmd({
               entityId: createContractAgreementProposalId,
-              activeApprovalsToAdd: [creator]
+              account: creator
             });
 
             txBuilder.addCmd(updateProposalCmd);

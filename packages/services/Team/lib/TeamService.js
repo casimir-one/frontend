@@ -11,12 +11,13 @@ import { APP_PROPOSAL } from '@deip/constants';
 import crypto from '@deip/lib-crypto';
 import {
   CreateProposalCmd,
-  CreateAccountCmd,
-  UpdateProposalCmd,
-  UpdateAccountCmd,
+  CreateDaoCmd,
+  AcceptProposalCmd,
+  UpdateDaoCmd,
   CreateProjectCmd,
-  JoinTeamCmd,
-  LeaveTeamCmd
+  AddDaoMemberCmd,
+  RemoveDaoMemberCmd,
+  TransferAssetCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
@@ -30,10 +31,9 @@ export class TeamService {
 
   async createTeam(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
-    const { TENANT, CORE_ASSET } = env;
+    const { TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT } = env;
     const {
       initiator: {
-        memoKey,
         privKey,
         username: creator
       },
@@ -57,20 +57,28 @@ export class TeamService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const createAccountCmd = new CreateAccountCmd({
+            const createDaoCmd = new CreateDaoCmd({
               isTeamAccount: true,
               fee: { ...CORE_ASSET, amount: 0 },
               authority: {
                 owner: authority
               },
               creator,
-              memoKey,
               description,
               attributes
             });
 
-            txBuilder.addCmd(createAccountCmd);
-            entityId = createAccountCmd.getProtocolEntityId();
+            txBuilder.addCmd(createDaoCmd);
+            entityId = createDaoCmd.getProtocolEntityId();
+
+            if (ACCOUNT_DEFAULT_FUNDING_AMOUNT) {
+              const transferAssetCmd = new TransferAssetCmd({
+                from: creator,
+                to: entityId,
+                asset: { ...CORE_ASSET, amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT }
+              });
+              txBuilder.addCmd(transferAssetCmd);
+            }
 
             if (isCreateDefaultProject) {
               const createProjectCmd = new CreateProjectCmd({
@@ -86,17 +94,17 @@ export class TeamService {
             const members = data.members.filter((m) => m !== creator);
             if (members.length > 0) {
               const invites = members.map((invitee) => {
-                const joinTeamCmd = new JoinTeamCmd({
+                const addTeamMemberCmd = new AddDaoMemberCmd({
                   member: invitee,
                   teamId: entityId
                 });
 
-                return joinTeamCmd;
+                return addTeamMemberCmd;
               });
 
               const createProposalCmd = new CreateProposalCmd({
                 creator,
-                type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
+                type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
                 expirationTime: proposalDefaultLifetime,
                 proposedCmds: [...invites]
               });
@@ -104,9 +112,9 @@ export class TeamService {
               txBuilder.addCmd(createProposalCmd);
 
               const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-              const updateProposalCmd = new UpdateProposalCmd({
+              const updateProposalCmd = new AcceptProposalCmd({
                 entityId: joinTeamProposalId,
-                activeApprovalsToAdd: [creator]
+                account: creator
               });
 
               txBuilder.addCmd(updateProposalCmd);
@@ -152,7 +160,7 @@ export class TeamService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const updateAccountCmd = new UpdateAccountCmd({
+            const updateDaoCmd = new UpdateDaoCmd({
               entityId,
               isTeamAccount: true,
               attributes, // need clarification
@@ -164,22 +172,22 @@ export class TeamService {
                 creator,
                 type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
                 expirationTime: proposalLifetime,
-                proposedCmds: [updateAccountCmd]
+                proposedCmds: [updateDaoCmd]
               });
 
               txBuilder.addCmd(createProposalCmd);
 
               if (isProposalApproved) {
                 const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: teamUpdateProposalId,
-                  activeApprovalsToAdd: [creator]
+                  account: creator
                 });
 
                 txBuilder.addCmd(updateProposalCmd);
               }
             } else {
-              txBuilder.addCmd(updateAccountCmd);
+              txBuilder.addCmd(updateDaoCmd);
             }
 
             return txBuilder.end();
@@ -192,7 +200,7 @@ export class TeamService {
       });
   }
 
-  async joinTeam(payload) {
+  async addTeamMember(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -209,24 +217,24 @@ export class TeamService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const joinTeamCmd = new JoinTeamCmd({
+            const addTeamMemberCmd = new AddDaoMemberCmd({
               member,
               teamId
             });
 
             const createProposalCmd = new CreateProposalCmd({
               creator,
-              type: APP_PROPOSAL.JOIN_TEAM_PROPOSAL,
+              type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
               expirationTime: proposalDefaultLifetime,
-              proposedCmds: [joinTeamCmd]
+              proposedCmds: [addTeamMemberCmd]
             });
 
             txBuilder.addCmd(createProposalCmd);
 
             const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
+            const updateProposalCmd = new AcceptProposalCmd({
               entityId: joinTeamProposalId,
-              activeApprovalsToAdd: [creator]
+              account: creator
             });
 
             txBuilder.addCmd(updateProposalCmd);
@@ -236,12 +244,12 @@ export class TeamService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
-            return this.teamHttp.joinTeam(msg);
+            return this.teamHttp.addTeamMember(msg);
           });
       });
   }
 
-  async leaveTeam(payload) {
+  async removeTeamMember(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -258,24 +266,24 @@ export class TeamService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const leaveTeamCmd = new LeaveTeamCmd({
+            const removeDaoMemberCmd = new RemoveDaoMemberCmd({
               member,
               teamId
             });
 
             const createProposalCmd = new CreateProposalCmd({
               creator,
-              type: APP_PROPOSAL.LEAVE_TEAM_PROPOSAL,
+              type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
               expirationTime: proposalDefaultLifetime,
-              proposedCmds: [leaveTeamCmd]
+              proposedCmds: [removeDaoMemberCmd]
             });
 
             txBuilder.addCmd(createProposalCmd);
 
             const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new UpdateProposalCmd({
+            const updateProposalCmd = new AcceptProposalCmd({
               entityId: leaveTeamProposalId,
-              activeApprovalsToAdd: [creator]
+              account: creator
             });
 
             txBuilder.addCmd(updateProposalCmd);
@@ -285,7 +293,7 @@ export class TeamService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
-            return this.teamHttp.leaveTeam(msg);
+            return this.teamHttp.removeTeamMember(msg);
           });
       });
   }

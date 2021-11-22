@@ -2,7 +2,8 @@ import { createEnum } from '@deip/toolbox';
 
 const CONTRACT_AGREEMENT_TYPE = createEnum({
   PROJECT_LICENSE: 1,
-  INCOME_SHARE_AGREEMENT: 2
+  INCOME_SHARE_AGREEMENT: 2,
+  PROJECT_ACCESS: 3
 });
 
 const CONTRACT_AGREEMENT_STATUS = createEnum({

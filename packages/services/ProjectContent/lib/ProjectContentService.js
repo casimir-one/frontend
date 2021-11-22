@@ -9,7 +9,7 @@ import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants';
 import {
   CreateProposalCmd,
-  UpdateProposalCmd,
+  AcceptProposalCmd,
   CreateProjectContentCmd,
   CreateDraftCmd,
   DeleteDraftCmd,
@@ -81,9 +81,9 @@ export class ProjectContentService {
 
               if (isProposalApproved) {
                 const createProjectContentProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new UpdateProposalCmd({
+                const updateProposalCmd = new AcceptProposalCmd({
                   entityId: createProjectContentProposalId,
-                  activeApprovalsToAdd: [creator]
+                  account: creator
                 });
 
                 txBuilder.addCmd(updateProposalCmd);

@@ -45,9 +45,8 @@ export class ReviewService {
       },
       projectContentId,
       content,
-      weight,
       assessment,
-      disciplines
+      domains
     } = payload;
 
     return ChainService.getInstanceAsync(env)
@@ -61,9 +60,8 @@ export class ReviewService {
               author: creator,
               projectContentId,
               content: genSha256Hash(content),
-              weight,
               assessment,
-              disciplines
+              domains
             });
 
             txBuilder.addCmd(createReviewCmd);
@@ -86,7 +84,7 @@ export class ReviewService {
         username: creator
       },
       reviewId,
-      disciplineId,
+      domainId,
       weight
     } = payload;
 
@@ -100,7 +98,7 @@ export class ReviewService {
             const upvoteReviewCmd = new UpvoteReviewCmd({
               voter: creator,
               reviewId,
-              disciplineId,
+              domainId,
               weight
             });
 

@@ -3,15 +3,14 @@ import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 
-class AssetTransferCmd extends ProtocolCmd {
+class TransferAssetCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 
     const {
       from,
       to,
-      asset,
-      memo
+      asset
     } = cmdPayload;
 
     assert(!!from, "'from' is required");
@@ -25,10 +24,10 @@ class AssetTransferCmd extends ProtocolCmd {
       "'asset' is required and should contains 'id', 'symbol', 'precision', 'amount' fields"
     )
 
-    super(APP_CMD.ASSET_TRANSFER, cmdPayload);
+    super(APP_CMD.TRANSFER_ASSET, cmdPayload);
   }
 
 }
 
 
-export default AssetTransferCmd;
+export default TransferAssetCmd;

@@ -1,6 +1,6 @@
 import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { CreateAccountCmd } from '@deip/command-models';
+import { CreateDaoCmd } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/message-models';
 import { AuthHttp } from './AuthHttp';
@@ -36,7 +36,7 @@ export class AuthService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const createAccountCmd = new CreateAccountCmd({
+            const createDaoCmd = new CreateDaoCmd({
               entityId: username,
               isTeamAccount: false,
               fee: { ...CORE_ASSET, amount: 0 },
@@ -47,14 +47,13 @@ export class AuthService {
                   weight: 1
                 }
               },
-              memoKey: pubKey,
               description: genSha256Hash(JSON.stringify(userAttributes)),
               attributes: userAttributes,
               email,
               roles
             });
 
-            txBuilder.addCmd(createAccountCmd);
+            txBuilder.addCmd(createDaoCmd);
             return txBuilder.end();
           })
           .then((finalizedTx) => (isAuthorizedCreatorRequired

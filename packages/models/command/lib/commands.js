@@ -1,20 +1,20 @@
-import CreateAccountCmd from './impl/CreateAccountCmd';
+import CreateDaoCmd from './impl/CreateDaoCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';
 import DeleteProjectCmd from './impl/DeleteProjectCmd';
-import JoinTeamCmd from './impl/JoinTeamCmd';
+import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
-import UpdateProposalCmd from './impl/UpdateProposalCmd';
+import AcceptProposalCmd from './impl/AcceptProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
-import UpdateAccountCmd from './impl/UpdateAccountCmd';
-import AlterAccountAuthorityCmd from './impl/AlterAccountAuthorityCmd';
+import UpdateDaoCmd from './impl/UpdateDaoCmd';
+import AlterDaoAuthorityCmd from './impl/AlterDaoAuthorityCmd';
 import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
-import LeaveTeamCmd from './impl/LeaveTeamCmd';
+import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import AssetTransferCmd from './impl/AssetTransferCmd';
+import TransferAssetCmd from './impl/TransferAssetCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
@@ -44,23 +44,23 @@ import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 
 export {
-  CreateAccountCmd,
+  CreateDaoCmd,
   CreateProjectCmd,
   UpdateProjectCmd,
   DeleteProjectCmd,
-  JoinTeamCmd,
+  AddDaoMemberCmd,
   CreateProposalCmd,
-  UpdateProposalCmd,
+  AcceptProposalCmd,
   DeclineProposalCmd,
-  UpdateAccountCmd,
-  AlterAccountAuthorityCmd,
+  UpdateDaoCmd,
+  AlterDaoAuthorityCmd,
   CreateAttributeCmd,
   UpdateAttributeCmd,
   DeleteAttributeCmd,
-  LeaveTeamCmd,
+  RemoveDaoMemberCmd,
   CreateInvestmentOpportunityCmd,
   InvestCmd,
-  AssetTransferCmd,
+  TransferAssetCmd,
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,

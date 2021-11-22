@@ -5,7 +5,7 @@ import { assert } from '@deip/toolbox';
 import BaseChainService from './../../base/BaseChainService';
 import SubstrateChainOperationsRegistry from './SubstrateChainOperationsRegistry';
 import SubstrateTxBuilder from './SubstrateTxBuilder';
-import SubstrateChainRpc from './SubstrateChainRpc';
+import SubstrateChainRpc from './rpc/SubstrateChainRpc';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
 import SubstrateChainSeedAccount from './SubstrateChainSeedAccount';
@@ -29,7 +29,7 @@ class SubstrateChainService extends BaseChainService {
         .then((chainNodeClient) => {
           this._chainNodeClient = chainNodeClient;
           this._chainOpsRegistry = new SubstrateChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
-          this._chainRpc = new SubstrateChainRpc(this);
+          this._chainRpc = new SubstrateChainRpc(this, { coreAsset: this._coreAsset });
 
           return Promise.all([
             this._chainNodeClient.rpc.system.chain(),

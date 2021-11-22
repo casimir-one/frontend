@@ -238,7 +238,6 @@ const CHAIN_TYPES = {
     }
   },
   "AssetMetadata": {
-    "deposit": "Balance",
     "name": "Vec<u8>",
     "symbol": "Vec<u8>",
     "decimals": "u8"

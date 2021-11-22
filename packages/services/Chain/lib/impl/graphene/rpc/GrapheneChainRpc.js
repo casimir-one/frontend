@@ -1,24 +1,269 @@
-import BaseChainRpc from './../../base/BaseChainRpc';
+import BaseChainRpc from './../../../base/rpc/BaseChainRpc';
+import GrapheneDaoDto from './response/dto/GrapheneDaoDto';
+import GrapheneAssetDto from './response/dto/GrapheneAssetDto';
+import GrapheneAssetBalanceDto from './response/dto/GrapheneAssetBalanceDto';
+import GrapheneProjectDto from './response/dto/GrapheneProjectDto';
+import GrapheneProjectContentDto from './response/dto/GrapheneProjectContentDto';
+import GrapheneInvestmentOpportunityDto from './response/dto/GrapheneInvestmentOpportunityDto';
+import GrapheneContractAgreementDto from './response/dto/GrapheneContractAgreementDto';
+import GrapheneProposalDto from './response/dto/GrapheneProposalDto';
+import GrapheneReviewDto from './response/dto/GrapheneReviewDto';
+import GrapheneReviewUpvoteDto from './response/dto/GrapheneReviewUpvoteDto';
+import GrapheneDomainDto from './response/dto/GrapheneDomainDto';
+
 
 
 class GrapheneChainRpc extends BaseChainRpc {
 
-  constructor(chainService) {
+  constructor(chainService, {
+    coreAsset
+  }) {
 
     const LIST_LIMIT = 1000;
 
     const api = {
+
       sendTxAsync: (rawTx) => {
         return chainService.rpcToChainNode("call", ["network_broadcast_api", "broadcast_transaction_synchronous", [rawTx]]);
       },
-      
-      getProjectAsync: (projectId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research", [projectId]]);
+
+
+
+      /* DAO */
+
+      getAccountAsync: async (daoId) => {
+        const [dao] = await chainService.rpcToChainNode("call", ["database_api", "get_accounts", [[daoId]]]);
+        if (!dao) return null;
+        return new GrapheneDaoDto(dao);
       },
 
-      getProjectsListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "lookup_researches", [startIdx, limit]]);
+      getAccountsAsync: async (daoIds) => {
+        const list = await chainService.rpcToChainNode("call", ["database_api", "get_accounts", [daoIds]]);
+        return list.filter((dao) => !!dao).map((dao) => new GrapheneDaoDto(dao));
       },
+
+      getAccountsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        const list = await chainService.rpcToChainNode("call", ["database_api", "lookup_accounts", [startIdx, limit]]);
+        return list.map((dao) => new GrapheneDaoDto(dao));
+      },
+
+
+
+      /* PROJECT */
+
+      getProjectAsync: async (projectId) => {
+        const project = await chainService.rpcToChainNode("call", ["database_api", "get_research", [projectId]]);
+        if (!project) return null;
+        return new GrapheneProjectDto(project);
+      },
+
+      getProjectsAsync: async (projectIds) => {
+        const projects = await chainService.rpcToChainNode("call", ["database_api", "get_researches", [projectIds]]);
+        return projects.map((project) => new GrapheneProjectDto(project));
+      },
+
+      getProjectsByTeamAsync: async (teamId, startIdx = 0, limit = LIST_LIMIT) => {
+        const projects = await chainService.rpcToChainNode("call", ["database_api", "get_researches_by_research_group", [teamId]]);
+        return projects.map((project) => new GrapheneProjectDto(project));
+      },
+
+      getProjectsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        const projects = await chainService.rpcToChainNode("call", ["database_api", "lookup_researches", [startIdx, limit]]);
+        return projects.map((project) => new GrapheneProjectDto(project));
+      },
+
+      
+
+      /* PROJECT CONTENT */
+
+      getProjectContentAsync: async (projectContentId) => {
+        const projectContent = await chainService.rpcToChainNode("call", ["database_api", "get_research_content", [projectContentId]]);
+        if (!projectContent) return null;
+        return new GrapheneProjectContentDto(projectContent);
+      },
+
+      getProjectContentsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        const projectsContents = await chainService.rpcToChainNode("call", ["database_api", "lookup_research_contents", [startIdx, limit]]);
+        return projectsContents.map((projectContent) => new GrapheneProjectContentDto(projectContent));
+      },
+
+      getProjectContentsByProjectAsync: async (projectId, startIdx = 0, limit = LIST_LIMIT) => {
+        const projectsContents = await chainService.rpcToChainNode("call", ["database_api", "get_research_contents_by_research", [projectId]]);
+        return projectsContents.map((projectContent) => new GrapheneProjectContentDto(projectContent));
+      },
+
+
+
+      /* ASSET */
+
+      getAssetAsync: async (assetId) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getAssetBySymbolAsync: async (symbol) => {
+        const asset = await chainService.rpcToChainNode("call", ["database_api", "get_asset_by_symbol", [symbol]]);
+        if (!asset) return null;
+        return new GrapheneAssetDto(asset);
+      },
+
+      getAssetsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        const assets = await chainService.rpcToChainNode("call", ["database_api", "lookup_assets", [startIdx, limit]]);
+        return assets.map((asset) => (new GrapheneAssetDto(asset)));
+      },
+
+      getProjectAssetsAsync: async (projectId) => {
+        const assets = await chainService.rpcToChainNode("call", ["database_api", "get_assets_by_type", [2]]);
+        const assetsDtos = await Promise.all(assets
+          .filter((asset) => asset.tokenized_research == projectId)
+          .map((asset) => this.getAssetBySymbolAsync(asset.string_symbol))
+        );
+        return assetsDtos;
+      },
+
+
+
+      /* ASSET BALANCE */
+
+      getAssetBalanceByOwnerAsync: async (daoId, assetId) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getAssetBalanceByOwnerAndAssetSymbolAsync: async (daoId, symbol) => {
+        const balance = await chainService.rpcToChainNode("call", ["database_api", "get_account_asset_balance", [daoId, symbol]]);
+        if (!balance) return null;
+        return new GrapheneAssetBalanceDto(balance);
+      },
+
+      getAssetsBalancesByOwnerAsync: async (daoId) => {
+        const balances = await chainService.rpcToChainNode("call", ["database_api", "get_account_assets_balances", [daoId]]);
+        return balances.map((balance) => (new GrapheneAssetBalanceDto(balance)));
+      },
+
+      getAssetBalancesByAssetAsync: async (assetId, startIdx = 0, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getAssetBalancesByAssetSymbolAsync: async (symbol, startIdx = 0, limit = LIST_LIMIT) => {
+        const balances = await chainService.rpcToChainNode("call", ["database_api", "get_accounts_asset_balances_by_asset", [symbol]]);
+        return balances.map((balance) => (new GrapheneAssetBalanceDto(balance)));
+      },
+      
+      getAssetBalancesListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+
+
+      /* INVESTMENT OPPORTUNITY */
+
+      getInvestmentOpportunityAsync: async (invstOppId) => {
+        const invstOpp = await chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale", [invstOppId]]);
+        if (!invstOpp) return null;
+        return new GrapheneInvestmentOpportunityDto(invstOpp);
+      },
+
+      getInvestmentOpportunitiesListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        const invstOpps = await chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales", [startIdx, limit]]);
+        return invstOpps.map((invstOpp => (new GrapheneInvestmentOpportunityDto(invstOpp))));
+      },
+
+
+
+      /* CONTRACT AGREEMENT */
+
+      getContractAgreementAsync: async (agreementId) => {
+        const agreement = await chainService.rpcToChainNode("call", ["database_api", "get_contract_agreement", [agreementId]]);
+        if (!agreement) return null;
+        return new GrapheneContractAgreementDto(agreement);
+      },
+
+      getContractAgreementsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getContractAgreementsByTypeAsync: async (type, startIdx = 0, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+
+
+      /* PROPOSAL */
+
+      getProposalAsync: async (proposalId) => {
+        const proposal = await chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposal_state", [proposalId]]);
+        if (!proposal) return null;
+        return new GrapheneProposalDto(proposal);
+      },
+
+      getProposalsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getProposalsByCreatorAsync: async (creator, startIdx = 0, limit = LIST_LIMIT) => {
+        const proposals = await chainService.rpcToChainNode("call", ["database_api", "get_proposals_by_creator", [creator]]);
+        const list = await Promise.all(proposals.map((proposal) => this.getProposalAsync(proposal.external_id)));
+        return list;
+      },
+
+
+
+      /* REVIEW */
+
+      getReviewAsync: async (reviewId) => {
+        const review = await chainService.rpcToChainNode("call", ["database_api", "get_review", [reviewId]]);
+        if (!review) return null;
+        return new GrapheneReviewDto(review);
+      },
+
+      getReviewsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+      getReviewsByProjectAsync: async (reviewId, startIdx = 0, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research", [reviewId]]);
+        return reviews.map((review) => new GrapheneReviewDto(review));
+      },
+
+      getReviewsByProjectContentAsync: async (contentId, startIdx = 0, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research_content", [contentId]]);
+        return reviews.map((review) => new GrapheneReviewDto(review));
+      },
+
+      getReviewsByAuthorAsync: async (author, startIdx = null, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_author", [author]]);
+        return reviews.map((review) => new GrapheneReviewDto(review));
+      },
+
+
+
+      /* REVIEW UPVOTE */
+
+      getReviewUpvotesByReviewAsync: async (reviewId, startIdx = null, limit = LIST_LIMIT) => {
+        const reviewUpvotes = await chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review", [reviewId]]);
+        return reviewUpvotes.map((upvote) => new GrapheneReviewUpvoteDto(upvote));
+      },
+
+      getReviewUpvotesByUpvoterAsync: async (account, startIdx = null, limit = LIST_LIMIT) => {
+        const reviewsUpvotes = await chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_voter", [account]]);
+        return reviewsUpvotes.map((upvote) => new GrapheneReviewUpvoteDto(upvote));
+      },
+
+
+
+      /* DOMAIN */
+
+      getDomainAsync: async (domainId) => {
+        const domain = await chainService.rpcToChainNode("call", ["database_api", "get_discipline", [domainId]]);
+        if (!domain) return null;
+        return new GrapheneDomainDto(domain);
+      },
+
+      getDomainsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
+        throw new Error("Not implemented exception");
+      },
+
+
+
 
       setBlockAppliedCallbackAsync: (cb) => {
         return chainService.rpcToChainNode("call", ["database_api", "set_block_applied_callback", [cb]]);
@@ -50,14 +295,9 @@ class GrapheneChainRpc extends BaseChainRpc {
       getNextScheduledHardforkAsync: () => {
         return chainService.rpcToChainNode("call", ["database_api", "get_next_scheduled_hardfork"]);
       },
-      getAccountsAsync: (daoIds) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_accounts", [daoIds]]);
-      },
+
       getAccountReferencesAsync: (accountId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_account_references", [accountId]])
-      },
-      getAccountsListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "lookup_accounts", [startIdx, limit]])
       },
       getAccountCountAsync: () => {
         return chainService.rpcToChainNode("call", ["database_api", "get_account_count", []])
@@ -176,17 +416,8 @@ class GrapheneChainRpc extends BaseChainRpc {
       getTeamByPermlinkAsync: (permlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_group_by_permlink", [permlink]])
       },
-      getReviewVotesByReviewIdAsync: (reviewId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review_id", [reviewId]])
-      },
       getReviewVotesByReviewAsync: (reviewExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review", [reviewExternalId]])
-      },
-      getReviewVotesByVoterAsync: (account) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_voter", [account]])
-      },
-      getProjectsByTeamAsync: (teamId, startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_researches_by_research_group", [teamId]])
       },
       getSchemaAsync: () => {
         return chainService.rpcToChainNode("call", ["database_api", "get_schema", []])
@@ -196,9 +427,6 @@ class GrapheneChainRpc extends BaseChainRpc {
       },
       lookupDisciplinesAsync: (lowerBound, limit) => {
         return chainService.rpcToChainNode("call", ["database_api", "lookup_disciplines", [lowerBound, limit]])
-      },
-      getDisciplineAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_discipline", [externalId]])
       },
       getDisciplineByNameAsync: (name) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_discipline_by_name", [name]])
@@ -211,12 +439,6 @@ class GrapheneChainRpc extends BaseChainRpc {
       },
       getProjectByAbsolutePermlinkAsync: (teamPermlink, projectPermlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_by_absolute_permlink", [teamPermlink, projectPermlink]])
-      },
-      getProjectsAsync: (ids) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_researches", [ids]])
-      },
-      getProjectContentsByProjectAsync: (projectId, startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_contents_by_research", [projectId]])
       },
       getProjectLicenseAsync: (externalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_license", [externalId]])
@@ -239,9 +461,6 @@ class GrapheneChainRpc extends BaseChainRpc {
       getProjectLicensesByLicenseeAndLicenserAsync: (licensee, licenser) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licensee_and_licenser", [licensee, licenser]])
       },
-      getProjectContentAsync: (projectContentId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_content", [projectContentId]])
-      },
       getProjectContentsAsync: (ids) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_contents", [ids]])
       },
@@ -263,26 +482,11 @@ class GrapheneChainRpc extends BaseChainRpc {
       getExpertTokensByDisciplineAsync: (disciplineExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expert_tokens_by_discipline", [disciplineExternalId]])
       },
-      getProposalAsync: (id) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_proposal", [id]])
-      },
-      getProposalsListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        throw new Error("Not implemented exception");
-      },
-      getProposalsByCreatorAsync: (creator, startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_proposals_by_creator", [creator]])
-      },
       getTeamTokenByAccountAndProjectGroupIdAsync: (account, teamId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_group_token_by_account_and_research_group_id", [account, teamId]])
       },
-      getInvestmentOpportunityAsync: (invstOppId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale", [invstOppId]])
-      },
       getProjectTokenSalesByProjectAsync: (projectExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales_by_research", [projectExternalId]])
-      },
-      getInvestmentOpportunitiesListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales", [startIdx, limit]])
       },
       getProjectTokenSaleContributionsByProjectTokenSaleAsync: (tokenSaleExternalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_research_token_sale", [tokenSaleExternalId]])
@@ -320,17 +524,8 @@ class GrapheneChainRpc extends BaseChainRpc {
       getWitnessByAccountAsync: (accountName) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_witness_by_account", [accountName]])
       },
-      getReviewAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_review", [externalId]])
-      },
       getReviewsAsync: (ids) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_reviews", [ids]])
-      },
-      getReviewsByProjectContentAsync: (projectContentExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research_content", [projectContentExternalId]])
-      },
-      getReviewsByProjectAsync: (projectExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_research", [projectExternalId]])
       },
       getProjectTokensByAccountNameAsync: (accountName) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_tokens_by_account_name", [accountName]])
@@ -373,9 +568,6 @@ class GrapheneChainRpc extends BaseChainRpc {
       },
       getAccountsByExpertDisciplineAsync: (disciplineId, from, limit) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_accounts_by_expert_discipline", [disciplineId, from, limit]])
-      },
-      getReviewsByAuthorAsync: (author) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_reviews_by_author", [author]])
       },
       getFundingOpportunityAnnouncementAsync: (id) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_funding_opportunity_announcement", [id]])
@@ -455,20 +647,12 @@ class GrapheneChainRpc extends BaseChainRpc {
       getWithdrawalRequestsHistoryByAwardAndSubawardNumberAsync: (awardNumber, subawardNumber) => {
         return chainService.rpcToChainNode("call", ["fo_history_api", "get_withdrawal_requests_history_by_award_and_subaward_number", [awardNumber, subawardNumber]])
       },
-      getAssetAsync: (id) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_asset", [id]])
-      },
-      getAssetBySymbolAsync: (symbol) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_asset_by_symbol", [symbol]])
-      },
+
       getAssetsByIssuerAsync: (issuer) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_assets_by_issuer", [issuer]])
       },
       getAssetsByTypeAsync: (type) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_assets_by_type", [type]])
-      },
-      getAssetsListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "lookup_assets", [startIdx, limit]])
       },
       getFundingTransactionAsync: (id) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_funding_transaction", [id]])
@@ -479,20 +663,8 @@ class GrapheneChainRpc extends BaseChainRpc {
       getFundingTransactionsByReceiverOrganisationAsync: (receiverOrganisationId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_funding_transactions_by_receiver_organisation", [receiverOrganisationId]])
       },
-      getAssetStatisticsAsync: (symbol) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_asset_statistics", [symbol]])
-      },
-      getAssetBalanceByOwnerAsync: (owner, symbol) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_account_asset_balance", [owner, symbol]])
-      },
-      getAssetBalancesListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        throw new Error("Not implemented exception");
-      },
-      getAccountAssetsBalancesAsync: (owner) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_account_assets_balances", [owner]])
-      },
-      getAssetBalancesByAssetAsync: (symbol, startIdx = 0, limit = LIST_LIMIT) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_accounts_asset_balances_by_asset", [symbol]])
+      getAssetStatisticsAsync: (assetSymbol) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_asset_statistics", [assetSymbol]])
       },
       getProjectNdaAsync: (externalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_nda", [externalId]])
@@ -535,15 +707,6 @@ class GrapheneChainRpc extends BaseChainRpc {
       },
       getSubscriptionsByOwnerAsync: (owner) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_subscriptions_by_owner", [owner]])
-      },
-      getContractAgreementAsync: (id) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_contract_agreement", [id]])
-      },
-      getContractAgreementsListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
-        throw new Error("Not implemented exception");
-      },
-      getContractAgreementsByTypeAsync: (type, startIdx = 0, limit = LIST_LIMIT) => {
-        throw new Error("Not implemented exception");
       },
       getContractAgreementsByCreatorAsync: (creator) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_contract_agreement_by_creator", [creator]])
@@ -640,17 +803,7 @@ class GrapheneChainRpc extends BaseChainRpc {
       },
       lookupProposalsStatesAsync: (lowerBound, limit) => {
         return chainService.rpcToChainNode("call", ["proposal_history_api", "lookup_proposals_states", [lowerBound, limit]])
-      },
-
-      getProjectContentsListAsync: (startIdx = 0, limit = LIST_LIMIT) => { 
-        return chainService.rpcToChainNode("call", ["database_api", "lookup_research_contents", [startIdx, limit]])
-      },
-
-      getAccountAsync: async (daoId) => {
-         const accounts = await chainService.rpcToChainNode("call", ["database_api", "get_accounts", [[daoId]]]);
-         return accounts[0] || null;
-      },
-
+      }
 
     };
 

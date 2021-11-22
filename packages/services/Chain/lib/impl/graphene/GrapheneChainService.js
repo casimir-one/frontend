@@ -3,7 +3,7 @@ import GrapheneClient from '@deip/rpc-client';
 import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';
-import GrapheneChainRpc from './GrapheneChainRpc';
+import GrapheneChainRpc from './rpc/GrapheneChainRpc';
 import GrapheneChainSeedAccount from './GrapheneChainSeedAccount';
 import { isValidPrivKey, verifySignature } from './utils';
 
@@ -28,7 +28,7 @@ class GrapheneChainService extends BaseChainService {
 
       this._chainNodeClient = GrapheneClient;
       this._chainOpsRegistry = new GrapheneChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
-      this._chainRpc = new GrapheneChainRpc(this);
+      this._chainRpc = new GrapheneChainRpc(this, { coreAsset: this._coreAsset });
 
       console.log(`Connected to Graphene chain ${this._chainId}`);
       this._isInited = true;

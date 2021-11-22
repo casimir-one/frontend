@@ -24,7 +24,7 @@ class SubstrateChainSeedAccount extends BaseChainSeedAccount {
 
   signString(msg) {
     const keyringPair = getSeedAccount(`0x${this.getPrivKey()}`, { username: this.getUsername() });
-    return keyringPair.sign(msg);
+    return u8aToHex(keyringPair.sign(msg));
   }
 }
 

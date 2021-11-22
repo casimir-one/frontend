@@ -3,7 +3,7 @@ import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
 
-class LeaveTeamCmd extends ProtocolCmd {
+class AddDaoMemberCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 
@@ -19,9 +19,9 @@ class LeaveTeamCmd extends ProtocolCmd {
     assert(!!member, "'member' is required");
     assert(!!teamId, "'teamId' is required");
 
-    super(APP_CMD.LEAVE_TEAM, cmdPayload);
+    super(APP_CMD.ADD_DAO_MEMBER, cmdPayload);
   }
 }
 
 
-export default LeaveTeamCmd;
+export default AddDaoMemberCmd;

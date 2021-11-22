@@ -1,21 +1,21 @@
 import { APP_CMD } from '@deip/constants';
-import CreateAccountCmd from './impl/CreateAccountCmd';
+import CreateDaoCmd from './impl/CreateDaoCmd';
 import CreateProjectCmd from './impl/CreateProjectCmd';
 import UpdateProjectCmd from './impl/UpdateProjectCmd';
 import DeleteProjectCmd from './impl/DeleteProjectCmd';
-import JoinTeamCmd from './impl/JoinTeamCmd';
+import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
-import UpdateProposalCmd from './impl/UpdateProposalCmd';
+import AcceptProposalCmd from './impl/AcceptProposalCmd';
 import DeclineProposalCmd from './impl/DeclineProposalCmd';
-import UpdateAccountCmd from './impl/UpdateAccountCmd';
-import AlterAccountAuthorityCmd from './impl/AlterAccountAuthorityCmd';
+import UpdateDaoCmd from './impl/UpdateDaoCmd';
+import AlterDaoAuthorityCmd from './impl/AlterDaoAuthorityCmd';
 import CreateAttributeCmd from './impl/CreateAttributeCmd';
 import UpdateAttributeCmd from './impl/UpdateAttributeCmd';
 import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
-import LeaveTeamCmd from './impl/LeaveTeamCmd';
+import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import AssetTransferCmd from './impl/AssetTransferCmd';
+import TransferAssetCmd from './impl/TransferAssetCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
@@ -46,23 +46,23 @@ import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 
 
 const APP_CMD_INFO = {
-  [APP_CMD.CREATE_ACCOUNT]: { class: CreateAccountCmd },
-  [APP_CMD.UPDATE_ACCOUNT]: { class: UpdateAccountCmd },
-  [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: { class: AlterAccountAuthorityCmd },
+  [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
+  [APP_CMD.UPDATE_DAO]: { class: UpdateDaoCmd },
+  [APP_CMD.ALTER_DAO_AUTHORITY]: { class: AlterDaoAuthorityCmd },
   [APP_CMD.CREATE_PROJECT]: { class: CreateProjectCmd },
   [APP_CMD.UPDATE_PROJECT]: { class: UpdateProjectCmd },
   [APP_CMD.DELETE_PROJECT]: { class: DeleteProjectCmd },
-  [APP_CMD.JOIN_TEAM]: { class: JoinTeamCmd },
+  [APP_CMD.ADD_DAO_MEMBER]: { class: AddDaoMemberCmd },
   [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd },
-  [APP_CMD.UPDATE_PROPOSAL]: { class: UpdateProposalCmd },
+  [APP_CMD.ACCEPT_PROPOSAL]: { class: AcceptProposalCmd },
   [APP_CMD.DECLINE_PROPOSAL]: { class: DeclineProposalCmd },
   [APP_CMD.CREATE_ATTRIBUTE]: { class: CreateAttributeCmd },
   [APP_CMD.UPDATE_ATTRIBUTE]: { class: UpdateAttributeCmd },
   [APP_CMD.DELETE_ATTRIBUTE]: { class: DeleteAttributeCmd },
-  [APP_CMD.LEAVE_TEAM]: { class: LeaveTeamCmd },
+  [APP_CMD.REMOVE_DAO_MEMBER]: { class: RemoveDaoMemberCmd },
   [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: { class: CreateInvestmentOpportunityCmd },
   [APP_CMD.INVEST]: { class: InvestCmd },
-  [APP_CMD.ASSET_TRANSFER]: { class: AssetTransferCmd },
+  [APP_CMD.TRANSFER_ASSET]: { class: TransferAssetCmd },
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },

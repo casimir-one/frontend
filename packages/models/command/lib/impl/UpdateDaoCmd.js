@@ -3,7 +3,7 @@ import { APP_CMD } from '@deip/constants';
 import { assert, isBoolean } from '@deip/toolbox';
 
 
-class UpdateAccountCmd extends ProtocolCmd {
+class UpdateDaoCmd extends ProtocolCmd {
 
   constructor(cmdPayload) {
 
@@ -21,9 +21,9 @@ class UpdateAccountCmd extends ProtocolCmd {
     assert(!!entityId, "'entityId' is required");
     assert(isBoolean(isTeamAccount), "Account must belong to a team or user");
 
-    super(APP_CMD.UPDATE_ACCOUNT, cmdPayload);
+    super(APP_CMD.UPDATE_DAO, cmdPayload);
   }
 }
 
 
-export default UpdateAccountCmd;
+export default UpdateDaoCmd;

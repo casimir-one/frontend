@@ -1,25 +1,20 @@
 import { proxydi } from '@deip/proxydi';
-import { UpdateProposalCmd, DeclineProposalCmd } from '@deip/command-models';
+import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/command-models';
 import { JsonDataMsg } from '@deip/message-models';
 import { ChainService } from '@deip/chain-service';
 import { createInstanceGetter } from '@deip/toolbox';
+import { PROTOCOL_CHAIN } from '@deip/constants';
 import { ProposalsHttp } from './ProposalsHttp';
 
 export class ProposalsService {
   proposalsHttp = ProposalsHttp.getInstance();
-
   proxydi = proxydi;
 
   // TODO: add createProposal endpoint and support proposal of APP_PROPOSAL.CUSTOM type
 
-  async updateProposal({ privKey }, {
+  async acceptProposal({ privKey }, {
     proposalId,
-    activeApprovalsToAdd = [],
-    activeApprovalsToRemove = [],
-    ownerApprovalsToAdd = [],
-    ownerApprovalsToRemove = [],
-    keyApprovalsToAdd = [],
-    keyApprovalsToRemove = []
+    account
   }) {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
@@ -28,31 +23,24 @@ export class ProposalsService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const updateProposalCmd = new UpdateProposalCmd({
+            const updateProposalCmd = new AcceptProposalCmd({
               entityId: proposalId,
-              activeApprovalsToAdd,
-              activeApprovalsToRemove,
-              ownerApprovalsToAdd,
-              ownerApprovalsToRemove,
-              keyApprovalsToAdd,
-              keyApprovalsToRemove
+              account
             });
-
             txBuilder.addCmd(updateProposalCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.proposalsHttp.updateProposal(msg);
+            return this.proposalsHttp.acceptProposal(msg);
           });
       });
   }
 
   async declineProposal({ privKey }, {
     proposalId,
-    account,
-    authorityType
+    account
   }) {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
@@ -63,8 +51,7 @@ export class ProposalsService {
           .then((txBuilder) => {
             const declineProposalCmd = new DeclineProposalCmd({
               entityId: proposalId,
-              account,
-              authorityType
+              account
             });
 
             txBuilder.addCmd(declineProposalCmd);
@@ -83,16 +70,21 @@ export class ProposalsService {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-        const deipRpc = chainService.getChainNodeClient();
+        const chainRpc = chainService.getChainRpc();
 
-        return deipRpc.api.getProposalsByCreatorAsync(account)
+        return chainRpc.getProposalsByCreatorAsync(account)
           .then((result) => {
-            const proposals = result.map((proposal) => {
-              const { proposed_transaction: { operations: [[opName, opPayload]] } } = proposal;
-              const opTag = deipRpc.operations.getOperationTag(opName);
-              return { ...proposal, action: opTag, payload: opPayload };
-            });
-            return proposals;
+            // TODO: move all mappings outside service
+            if (env.PROTOCOL === PROTOCOL_CHAIN.GRAPHENE) {
+              const deipRpc = chainService.getChainNodeClient();
+              const proposals = result.map((proposal) => {
+                const { operations: [[opName, opPayload]] } = proposal.serializedProposedTx;
+                const opTag = deipRpc.operations.getOperationTag(opName);
+                return { ...proposal, action: opTag, payload: opPayload };
+              });
+              return proposals;
+            }
+            return result;
           });
       });
   }
