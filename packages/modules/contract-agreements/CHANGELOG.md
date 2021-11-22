@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.351.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.351.0) (2021-11-22)
+
+**Note:** Version bump only for package @deip/contract-agreements-module
+
+
+
+
+
 # [1.350.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.350.0) (2021-11-15)
 
 **Note:** Version bump only for package @deip/contract-agreements-module

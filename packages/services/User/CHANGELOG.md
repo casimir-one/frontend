@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.351.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.351.0) (2021-11-22)
+
+
+### Features
+
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+
+
+
+
+
 # [1.350.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.350.0) (2021-11-15)
 
 
