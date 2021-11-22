@@ -1,6 +1,6 @@
 {
   "name": "@deip/notification-service",
-  "version": "1.350.0",
+  "version": "1.351.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,9 +22,9 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.350.0",
-    "@deip/http-service": "1.350.0",
-    "@deip/toolbox": "1.350.0"
+    "@deip/constants": "1.351.0",
+    "@deip/http-service": "1.351.0",
+    "@deip/toolbox": "1.351.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.341.0"
