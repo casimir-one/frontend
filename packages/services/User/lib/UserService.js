@@ -1,7 +1,8 @@
 import { proxydi } from '@deip/proxydi';
-import { MultFormDataMsg } from '@deip/message-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import {
-  UpdateAccountCmd
+  UpdateAccountCmd,
+  AlterAccountAuthorityCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import {
@@ -29,9 +30,7 @@ export class UserService {
 
     const {
       email,
-      status,
-      accountOwnerAuth,
-      memoKey
+      status
     } = data;
 
     const formData = createFormData(data);
@@ -47,8 +46,6 @@ export class UserService {
             const updateAccountCmd = new UpdateAccountCmd({
               isTeamAccount: false,
               entityId: updater,
-              ownerAuth: accountOwnerAuth,
-              memoKey,
               description: genSha256Hash(attributes),
               attributes,
               email,
@@ -62,6 +59,42 @@ export class UserService {
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': updater });
             return this.userHttp.updateUser(msg);
+          });
+      });
+  }
+
+  async changePassword(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: {
+        privKey,
+        username
+      },
+      ownerAuth,
+      memoKey
+    } = payload;
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        const chainNodeClient = chainService.getChainNodeClient();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const alterAccountAuthorityCmd = new AlterAccountAuthorityCmd({
+              entityId: username,
+              isTeamAccount: false,
+              ownerAuth,
+              memoKey
+            });
+
+            txBuilder.addCmd(alterAccountAuthorityCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': username });
+            return this.userHttp.changePassword(msg);
           });
       });
   }

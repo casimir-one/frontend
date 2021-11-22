@@ -56,21 +56,42 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     [APP_CMD.UPDATE_ACCOUNT]: ({
       entityId,
       description,
-      isTeamAccount,
-      memoKey,
-      ownerAuth,
+      isTeamAccount
     }) => {
 
       const updateAccountOp = ['update_account', {
         account: entityId,
-        owner: ownerAuth || undefined,
-        active: ownerAuth || undefined,
+        owner: undefined,
+        active: undefined,
         active_overrides: [],
-        memo_key: memoKey || undefined,
+        memo_key: undefined,
         json_metadata: JSON.stringify({ description }),
         traits: isTeamAccount
           ? [["research_group", { description: "", extensions: [] }]] // deprecated
           : [],
+        update_extensions: []
+      }];
+
+      return [updateAccountOp];
+    },
+
+    [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: ({
+      entityId,
+      isTeamAccount,
+      memoKey,
+      ownerAuth
+    }) => {
+
+      const updateAccountOp = ['update_account', {
+        account: entityId,
+        owner: ownerAuth,
+        active: ownerAuth,
+        active_overrides: [],
+        memo_key: memoKey || undefined,
+        json_metadata: undefined,
+        traits: isTeamAccount
+        ? [["research_group", { description: "", extensions: [] }]] // deprecated
+        : [],
         update_extensions: []
       }];
 

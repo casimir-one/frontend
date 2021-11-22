@@ -54,6 +54,21 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       return [updateAccountOp];
     },
 
+    [APP_CMD.ALTER_ACCOUNT_AUTHORITY]: ({
+      entityId,
+    }) => {
+
+      // Add Operation !!!
+
+      // const updateAccountOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
+      //   chainNodeClient.tx.deipDao.updateDao(
+      //     /* "new_metadata": */ description ? `0x${description}` : null
+      //   )
+      // );
+
+      return [];
+    },
+
 
     [APP_CMD.CREATE_PROJECT]: ({
       entityId,

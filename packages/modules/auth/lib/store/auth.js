@@ -140,10 +140,10 @@ const ACTIONS = {
 
         const data = {
           ...initiator,
-          accountOwnerAuth: ownerAuth
+          ownerAuth
         };
 
-        return userService.updateUser({ initiator, ...data })
+        return userService.changePassword({ initiator, ...data })
           .then(() => dispatch('currentUser/get', null, { root: true })
             .then(() => accessService.setOwnerKeysPair(newPrivateKey, newPublicKey))
             .then(() => Promise.resolve({ privKey: newPrivateKey, pubKey: newPublicKey })));

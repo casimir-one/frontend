@@ -138,8 +138,7 @@ export class TeamService {
         isProposal = false,
         isProposalApproved = true,
         proposalLifetime = proposalDefaultLifetime
-      } = {},
-      ownerAuth // need clarification
+      } = {}
     } = data;
 
     const formData = createFormData(data);
@@ -155,12 +154,8 @@ export class TeamService {
           .then((txBuilder) => {
             const updateAccountCmd = new UpdateAccountCmd({
               entityId,
-
               isTeamAccount: true,
-              memoKey: undefined,
-
               attributes, // need clarification
-              ownerAuth, // need clarification
               description
             });
 
