@@ -1,5 +1,17 @@
 import { createEnum } from '@deip/toolbox';
 
+const PROJECT_CONTENT_STATUS = createEnum({
+  IN_PROGRESS: 1,
+  PROPOSED: 2,
+  PUBLISHED: 3
+});
+
+const PROJECT_CONTENT_DATA_TYPES = createEnum({
+  DAR: 1,
+  PACKAGE: 2,
+  FILE: 3
+});
+
 const RESEARCH_CONTENT_TYPES = createEnum({
   UNKNOWN: 0,
   ANNOUNCEMENT: 1,
@@ -25,5 +37,7 @@ const RESEARCH_CONTENT_TYPES = createEnum({
 });
 
 export {
-  RESEARCH_CONTENT_TYPES
+  RESEARCH_CONTENT_TYPES,
+  PROJECT_CONTENT_STATUS,
+  PROJECT_CONTENT_DATA_TYPES
 };
