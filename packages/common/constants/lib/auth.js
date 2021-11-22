@@ -6,6 +6,12 @@ const SYSTEM_ROLE = createEnum({
   ANY: '*'
 });
 
+const SIGN_UP_POLICY = createEnum({
+  FREE: 1,
+  ADMIN_APPROVAL: 2
+});
+
 export {
-  SYSTEM_ROLE
+  SYSTEM_ROLE,
+  SIGN_UP_POLICY
 };
