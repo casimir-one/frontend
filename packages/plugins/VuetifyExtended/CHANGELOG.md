@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.352.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.352.0) (2021-11-22)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:**  location field has infinite loading when empty ([43e1072](https://gitlab.com/DEIP/deip-client-modules/commit/43e10720a87efdffcba5b19944fcbe6ab1bd5c1b))
+* **@deip/vuetify-extended:** calendar icon doesn't work ([e04bf62](https://gitlab.com/DEIP/deip-client-modules/commit/e04bf62f983f64230b796ca328812e096a4e9344))
+
+
+
+
+
 # [1.351.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.351.0) (2021-11-22)
 
 
