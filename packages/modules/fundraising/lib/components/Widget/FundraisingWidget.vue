@@ -135,9 +135,9 @@
         }
 
         const amount = this.tokenSale.contributions.reduce((acc, current) => {
-          if (current.contributor === this.$currentUser.username) {
+          if (current.investor === this.$currentUser.username) {
             // eslint-disable-next-line no-param-reassign
-            acc += current.asset.amount;
+            acc += parseFloat(current.asset.amount);
           }
           return acc;
         }, 0);
