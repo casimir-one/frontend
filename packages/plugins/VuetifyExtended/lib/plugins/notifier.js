@@ -53,6 +53,11 @@ const install = (Vue, options = {}) => {
       return showNotifier(message || defMessage, { ...opts, ...{ color: 'error' } });
     },
 
+    showWarning: (message, opts = {}) => {
+      const defMessage = 'Something wrong. Please try later.';
+      return showNotifier(message || defMessage, { ...opts, ...{ color: 'warning' } });
+    },
+
     showSuccess: (message, opts = {}) => {
       const defMessage = 'Successful!';
       return showNotifier(message || defMessage, { ...opts, ...{ color: 'success' } });
