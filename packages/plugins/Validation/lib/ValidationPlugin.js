@@ -7,13 +7,14 @@ import {
 import {
   required,
   integer,
-  regex,
-  email
+  regex
+
 } from 'vee-validate/dist/rules';
 
 import { setLocalesMessages } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import {
+  email,
   number,
   minMax,
   minMaxValue,
