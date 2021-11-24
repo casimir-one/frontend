@@ -17,7 +17,8 @@ export default {
         between: '{_field_} should be between {prev} and {next}'
       },
       number: '{_field_} must be valid number',
-      equal: '{_field_} must be equal to field {label}'
+      equal: '{_field_} must be equal to field {label}',
+      email: '{_field_} is not valid'
 
     }
   }
