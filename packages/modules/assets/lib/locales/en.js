@@ -19,7 +19,8 @@ export default {
         tokens: 'Tokens',
         legal: 'Legal',
         confirmation: 'Confirmation',
-        agree: 'I agree to the Terms and Conditions listed below',
+        agree: 'I agree to the {0} listed below',
+        tos: 'Terms and Conditions',
         understand: `I understand that issued tokens will be distributed among shareholders,
         effectively transferring ownership
         over the property related to the {entity}.
