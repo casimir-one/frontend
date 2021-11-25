@@ -1,5 +1,9 @@
 <template>
-  <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
+  <validation-observer
+    v-slot="{ invalid, handleSubmit }"
+    ref="observer"
+    class="create-security-token-form"
+  >
     <v-form
       :disabled="loading"
       @submit.prevent="handleSubmit(createAsset)"
@@ -9,11 +13,6 @@
           :title="$t('module.assets.createTokenForm.title', {entity: sentenceCase(projectAlias) })"
           title-margin="16"
         >
-          <!-- TODO remove project title -->
-          <div class="text-body-2">
-            {{ sentenceCase(projectAlias) }}: {{ project.title }}
-          </div>
-
           <v-row>
             <v-col cols="8">
               <validation-provider
@@ -30,6 +29,7 @@
                 />
               </validation-provider>
             </v-col>
+
             <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
@@ -56,7 +56,7 @@
           </v-row>
 
           <div class="text-body-2">
-            {{ $t('module.assets.createTokenForm.tokensAmountNote',{entity: projectAlias}) }}
+            {{ $t('module.assets.createTokenForm.tokensAmountNote', {entity: projectAlias}) }}
           </div>
         </vex-block>
 
@@ -64,6 +64,7 @@
           <div class="text-body-2">
             {{ $t('module.assets.createTokenForm.shareholdersNote') }}
           </div>
+
           <vex-timeline>
             <vex-timeline-item :dot-top="16">
               <v-row class="align-center">
@@ -85,7 +86,7 @@
                       >
                         <team-avatar :team="item" :size="24" class="mr-2" />
                         <div class="text-truncate">
-                          {{ teamTitle(item) }}
+                          {{ $$teamTitle(item) }}
                         </div>
                       </div>
                     </template>
@@ -101,7 +102,7 @@
                   />
                 </v-col>
                 <v-col class="text-body-2">
-                  {{ toPercent(teamTokens.amount) }}
+                  {{ convertAmountToPercent(teamTokens.amount) }}
                 </v-col>
                 <v-col cols="auto">
                   <v-btn icon disabled>
@@ -150,10 +151,14 @@
                   </validation-provider>
                 </v-col>
                 <v-col class="text-body-2 d-flex align-center" style="height: 72px;">
-                  {{ toPercent(item.amount) }}
+                  {{ convertAmountToPercent(item.amount) }}
                 </v-col>
-                <v-col cols="auto" class="mt-2 d-flex align-center" style="height: 72px;">
-                  <v-btn icon @click="removeShareholder(item)">
+                <v-col cols="auto" class="d-flex align-center" style="height: 72px;">
+                  <v-btn
+                    icon
+                    :disabled="loading"
+                    @click="handleRemoveShareholderClick(item)"
+                  >
                     <v-icon>mdi-close</v-icon>
                   </v-btn>
                 </v-col>
@@ -162,72 +167,80 @@
 
             <vex-timeline-add
               :label="$t('module.assets.createTokenForm.addShareholder')"
-              @click="addShareholder()"
+              :disabled="loading"
+              @click="handleAddShareholderClick"
             />
           </vex-timeline>
         </vex-block>
 
         <vex-block :title="$t('module.assets.createTokenForm.legal')">
-          <v-row no-gutters>
-            <v-col cols="auto">
-              <validation-provider
-                ref="s"
-                :name="$t('module.assets.createTokenForm.confirmation')"
-                :rules="{ required: { allowFalse: false } }"
-              >
-                <v-checkbox
-                  v-model="formModel.terms"
-                  :hide-details="true"
-                  class="ma-0 pa-0"
-                />
-              </validation-provider>
-            </v-col>
-            <v-col style="padding-top:2px">
-              <div class="text-body-2">
-                {{ $t('module.assets.createTokenForm.agree') }}
-              </div>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col cols="auto">
-              <validation-provider
-                ref="s"
-                :name="$t('module.assets.createTokenForm.confirmation')"
-                :rules="{required: {allowFalse: false}}"
-              >
-                <v-checkbox
-                  v-model="formModel.confirm"
-                  :hide-details="true"
-                  class="ma-0 pa-0"
-                />
-              </validation-provider>
-            </v-col>
-            <v-col style="padding-top:2px">
-              <div class="text-body-2">
-                {{ $t('module.assets.createTokenForm.understand', {entity: projectAlias}) }}
-              </div>
-            </v-col>
-          </v-row>
+          <div>
+            <v-row>
+              <v-col>
+                <validation-provider
+                  :name="$t('module.assets.createTokenForm.confirmation')"
+                  :rules="{ required: { allowFalse: false } }"
+                >
+                  <v-checkbox
+                    v-model="formModel.terms"
+                    :hide-details="true"
+                    class="ma-0 pa-0"
+                  >
+                    <template #label>
+                      <i18n path="module.assets.createTokenForm.agree" class="text-body-2">
+                        <a :href="tosUrl" target="_blank" @click.stop>
+                          {{ $t('module.assets.createTokenForm.tos') }}
+                        </a>
+                      </i18n>
+                    </template>
+                  </v-checkbox>
+                </validation-provider>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col>
+                <validation-provider
+                  :name="$t('module.assets.createTokenForm.confirmation')"
+                  :rules="{required: {allowFalse: false}}"
+                >
+                  <v-checkbox
+                    v-model="formModel.confirm"
+                    :hide-details="true"
+                    class="ma-0 pa-0"
+                  >
+                    <template #label>
+                      <div class="text-body-2">
+                        {{ $t('module.assets.createTokenForm.understand', {entity: projectAlias}) }}
+                      </div>
+                    </template>
+                  </v-checkbox>
+                </validation-provider>
+              </v-col>
+            </v-row>
+          </div>
         </vex-block>
 
         <v-divider />
 
         <div class="d-flex">
           <v-spacer />
+
           <vex-stack horizontal gap="16">
             <v-btn
               color="primary"
               outlined
               :disabled="loading"
-              @click="cancel()"
+              @click="handleCancelClick"
             >
               {{ $t('module.assets.createTokenForm.cancel') }}
             </v-btn>
+
             <v-btn
+              type="submit"
               color="primary"
               :disabled="invalid"
               :loading="loading"
-              @click="createAsset()"
             >
               {{ $t('module.assets.createTokenForm.submit') }}
             </v-btn>
@@ -242,6 +255,7 @@
   import currency from 'currency.js';
   import { sentenceCase } from 'change-case';
 
+  import { defineComponent } from '@deip/platform-util';
   import {
     VexBlock,
     VexStack,
@@ -250,15 +264,16 @@
     VexTimelineAdd
   } from '@deip/vuetify-extended';
   import { UsersSelector } from '@deip/users-module';
-  import { TeamAvatar } from '@deip/teams-module';
+  import { TeamAvatar, teamHelpersMixin } from '@deip/teams-module';
 
   const shareholderModel = () => ({
     account: undefined,
     amount: 0
   });
 
-  export default {
+  export default defineComponent({
     name: 'CreateProjectSecurityTokenForm',
+
     components: {
       UsersSelector,
       TeamAvatar,
@@ -268,6 +283,9 @@
       VexTimelineItem,
       VexTimelineAdd
     },
+
+    mixins: [teamHelpersMixin],
+
     props: {
       project: {
         type: Object,
@@ -280,8 +298,13 @@
       projectAlias: {
         type: String,
         required: true
+      },
+      tosUrl: {
+        type: String,
+        required: true
       }
     },
+
     data() {
       return {
         assetMask: {
@@ -303,6 +326,7 @@
         loading: false
       };
     },
+
     computed: {
       assetsKeys() { return this.$store.getters['assets/listKeys'](); },
 
@@ -313,7 +337,7 @@
           .reduce((a, b) => a + b, 0);
 
         return {
-          account: this.project.researchGroup.external_id,
+          account: this.team.entityId,
           amount: this.formModel.maxSupply - tokensSpend
         };
       }
@@ -321,15 +345,6 @@
 
     methods: {
       sentenceCase,
-
-      teamTitle(team) {
-        const title = this.$attributes.getMappedData(
-          'teamTitle',
-          team.researchGroupRef.attributes
-        );
-
-        return title?.value;
-      },
 
       addShareholder() {
         this.formModel.holders = [
@@ -352,7 +367,7 @@
         };
       },
 
-      toPercent(amount) {
+      convertAmountToPercent(amount) {
         return currency(
           (amount / this.formModel.maxSupply) * 100,
           {
@@ -363,11 +378,27 @@
         ).format();
       },
 
-      cancel() {
+      emitSuccess() {
+        this.$emit('success');
+      },
+
+      emitError(error) {
+        this.$emit('error', error);
+      },
+
+      handleAddShareholderClick() {
+        this.addShareholder();
+      },
+
+      handleRemoveShareholderClick(item) {
+        this.removeShareholder(item);
+      },
+
+      handleCancelClick() {
         this.$emit('cancel');
       },
 
-      createAsset() {
+      async createAsset() {
         this.loading = true;
         const DEFAULT_PRECISION = 0;
 
@@ -375,13 +406,13 @@
           user: this.$currentUser,
           data: {
             symbol: this.formModel.symbol,
-            issuer: this.project.researchGroup.external_id,
+            issuer: this.team.entityId,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseFloat(this.formModel.maxSupply + '0'.repeat(DEFAULT_PRECISION), 10),
+            maxSupply: parseInt(this.formModel.maxSupply, 10),
             description: '',
             projectTokenOption: {
               projectId: this.project.externalId,
-              teamId: this.project.researchGroup.external_id,
+              teamId: this.team.entityId,
               licenseRevenue: {
                 holdersShare: '100.00 %'
               }
@@ -400,17 +431,15 @@
           }
         };
 
-        this.$store.dispatch('assets/create', payload)
-          .then(() => {
-            this.$emit('success');
-          })
-          .catch((err) => {
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        try {
+          await this.$store.dispatch('assets/create', payload);
+          this.emitSuccess();
+        } catch (error) {
+          this.emitError(error);
+        }
+
+        this.loading = false;
       }
     }
-  };
+  });
 </script>
