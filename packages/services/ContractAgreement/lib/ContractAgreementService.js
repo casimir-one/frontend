@@ -5,6 +5,7 @@ import {
 import {
   CreateContractAgreementCmd,
   AcceptContractAgreementCmd,
+  RejectContractAgreementCmd,
   CreateProposalCmd,
   UpdateProposalCmd
 } from '@deip/command-models';
@@ -99,6 +100,39 @@ export class ContractAgreementService {
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.contractAgreementHttp.acceptContractAgreement(msg);
+          });
+      });
+  }
+
+  async rejectContractAgreement(payload) {
+    const env = this.proxydi.get('env');
+
+    const {
+      initiator: {
+        privKey,
+        username: party
+      },
+      contractAgreementId
+    } = payload;
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const rejectContractAgreementCmd = new RejectContractAgreementCmd({
+              entityId: contractAgreementId,
+              party
+            });
+            txBuilder.addCmd(rejectContractAgreementCmd);
+
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.contractAgreementHttp.rejectContractAgreement(msg);
           });
       });
   }
