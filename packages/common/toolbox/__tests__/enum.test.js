@@ -31,7 +31,7 @@ describe('createEnum', () => {
     });
 
     it('should return correct values', () => {
-      expect(STATUS.values()).toEqual(['1', '2', '3']);
+      expect(STATUS.values()).toEqual([1, 2, 3]);
     });
   });
 
@@ -61,7 +61,7 @@ describe('createEnum', () => {
     });
 
     it('should return correct values', () => {
-      expect(STATUS.values()).toEqual(['0', '1', '2']);
+      expect(STATUS.values()).toEqual([0, 1, 2]);
     });
   });
 });
