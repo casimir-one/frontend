@@ -12,6 +12,10 @@ export class ContractAgreementHttp {
     return this.http.post('/api/v2/contract-agreement/accept', req.getHttpBody());
   }
 
+  async rejectContractAgreement(req) {
+    return this.http.post('/api/v2/contract-agreement/reject', req.getHttpBody());
+  }
+
   async proposeContractAgreement(req) {
     return this.http.post('/api/v2/contract-agreement', req.getHttpBody());
   }
