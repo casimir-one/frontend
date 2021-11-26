@@ -5,7 +5,7 @@ module.exports = {
     'vue'
   ],
   moduleNameMapper: {
-    '\\.(css|sass)$': '<rootDir>/__mocks__/styleMock.js'
+    '\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js'
   },
   transformIgnorePatterns: [
     '/node_modules/(?!crc)/',
@@ -16,9 +16,10 @@ module.exports = {
     '^.*\\.(vue)$': 'vue-jest'
   },
   testPathIgnorePatterns: [
-    'packages/utilities/lib-crypto',
+    'packages/common/lib-crypto',
     'packages/services/RpcClient',
     'packages/models'
   ],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  testEnvironment: 'jsdom'
 };
