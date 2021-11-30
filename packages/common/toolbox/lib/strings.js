@@ -1,3 +1,6 @@
+import { isNil } from 'lodash';
+
+/** @deprecated */
 export const stripHtml = (html) => {
   const tmp = document.createElement('div');
   tmp.innerHTML = html;
@@ -5,11 +8,11 @@ export const stripHtml = (html) => {
 };
 
 export function convertToUnit(str, unit = 'px') {
-  if (str == null || str === '') {
+  if (isNil(str) || str === '' || str === ' ') {
     return undefined;
   }
 
-  if (Number.isNaN(str)) {
+  if (Number.isNaN(str) || Number.isNaN(parseFloat(str)) || Number.isNaN(Number(str))) {
     return String(str);
   }
 
