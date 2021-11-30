@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.353.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.353.0) (2021-11-30)
+
+
+### Bug Fixes
+
+* **@deip/assets-module, @deip/fundraising-module:** fix fundraising creation ([2e1e970](https://gitlab.com/DEIP/deip-client-modules/commit/2e1e9703ddc598828e667c56f3a2afae60b223cf))
+* **@deip/fundraising-module:** fix getContributionsHistory action ([3cfe16a](https://gitlab.com/DEIP/deip-client-modules/commit/3cfe16ac98f8d8763bb5d5911d522228455aafce))
+* **@deip/fundraising-module:** fix max amount in amount selector ([93dab8e](https://gitlab.com/DEIP/deip-client-modules/commit/93dab8ec3437c848873139d010b653730f722c8e))
+* **@deip/fundraising-module:** fix Your investment amount in FundraisingWidget ([92ef232](https://gitlab.com/DEIP/deip-client-modules/commit/92ef232a2f81352e3ff2d12aa042da4b957c004e))
+
+
+
+
+
 # [1.352.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.352.0) (2021-11-22)
 
 
