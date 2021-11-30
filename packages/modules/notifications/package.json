@@ -1,6 +1,6 @@
 {
   "name": "@deip/notifications-module",
-  "version": "1.352.0",
+  "version": "1.353.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,11 +20,11 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.352.0",
-    "@deip/notification-service": "1.352.0",
-    "@deip/platform-fns": "1.352.0",
-    "@deip/platform-store": "1.352.0",
-    "@deip/proxydi": "1.352.0"
+    "@deip/constants": "1.353.0",
+    "@deip/notification-service": "1.353.0",
+    "@deip/platform-fns": "1.353.0",
+    "@deip/platform-store": "1.353.0",
+    "@deip/proxydi": "1.353.0"
   },
   "peerDependencies": {
     "@deip/auth-module": "^1.341.0",
