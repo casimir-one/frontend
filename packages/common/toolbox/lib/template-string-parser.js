@@ -4,7 +4,7 @@ import { isNil } from 'lodash';
 const mainPattern = /{{\s*([\w\d.:,()'"\s]*?)\s*}}/g;
 const fnSubPattern = /^\(([\w\d.,_\s'"]*)\)(::[\w\d]+)+/g;
 
-const isSingleMatch = (str, matches) => {
+export const isSingleMatch = (str, matches) => {
   if (matches.length === 1) {
     return str
       .replace(matches[0][0], '')
@@ -13,9 +13,9 @@ const isSingleMatch = (str, matches) => {
   return false;
 };
 
-const isFunctionMatch = (str) => !![...str.matchAll(fnSubPattern)].length;
+export const isFunctionMatch = (str) => !![...str.matchAll(fnSubPattern)].length;
 
-class TemplateStringParser {
+export class TemplateStringParser {
   constructor(ctx, options = { isTemplateShown: false }) {
     this.ctx = ctx;
     const { isTemplateShown } = options;
@@ -38,7 +38,10 @@ class TemplateStringParser {
       }
 
       return str
-        .replace(mainPattern, (matched, match) => this.parseMatch(match));
+        .replace(mainPattern, (matched, match) => {
+          const parsedMatch = this.parseMatch(match);
+          return !isNil(parsedMatch) ? parsedMatch : '';
+        });
     }
 
     return str;
@@ -60,7 +63,7 @@ class TemplateStringParser {
     const fn = chain.pop();
 
     const isFnExist = this.isCtxHas(fn);
-    let result = null;
+    let result;
     if (isFnExist) {
       result = this.getValueFromContext(fn)(...params);
     } else if (this.isTemplateShown) {
@@ -99,5 +102,3 @@ class TemplateStringParser {
     return !isNil(value) || !this.isTemplateShown ? value : `{{${match}}}`;
   }
 }
-
-export { TemplateStringParser };

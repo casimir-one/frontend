@@ -60,11 +60,11 @@ export const genObjectId = (obj, turns = 3) => {
       .toString(16), '');
 };
 
-export const filterObjectKeys = (obj, keys, reverse = false) => {
+export const filterObjectKeys = (obj, keys, isExclude = false) => {
   if (!keys) return obj;
 
   const filterKeys = Object.keys(obj)
-    .filter((key) => keys.includes(key) === !reverse);
+    .filter((key) => keys.includes(key) === !isExclude);
 
   return filterKeys.reduce((acc, key) => ({
     ...acc,
