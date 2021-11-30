@@ -32,13 +32,24 @@
         return getBindableProps.call(this, VexAvatar.options.props);
       },
 
+      /** @returns {null | string} */
       avatarSrc() {
-        const opts = {
-          width: this.$props.size,
-          height: this.$props.size
-        };
-        return this.$$userAvatarSrc(this.user, opts);
+        /**
+         * @summary If you need trim image on server add options param
+         * @example
+         * const opts = {
+         *          width: this.$props.size,
+         *          height: this.$props.size,
+         *          image:true,
+         *       };
+         * this.$$userAvatarSrc(this.user, opts);
+         */
+        const url = this.$$userAvatarSrc(this.user);
+
+        return !url ? null : `${url}?cache=${this.user.updated_at}`;
       }
+
     }
+
   };
 </script>

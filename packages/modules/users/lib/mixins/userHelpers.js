@@ -3,6 +3,11 @@ import { ATTR_SCOPES } from '@deip/constants';
 
 export const userHelpersMixin = {
   methods: {
+    /**
+     *
+     * @param {object} user
+     * @returns {null | string}
+     */
     $$userFullName(user) {
       if (!user || isEmpty(user)) return null;
 
@@ -15,6 +20,11 @@ export const userHelpersMixin = {
       return user.username;
     },
 
+    /**
+     *
+     * @param {object} user
+     * @returns {string}
+     */
     $$userInitials(user) {
       const fullName = this.$$userFullName(user);
 
@@ -27,6 +37,14 @@ export const userHelpersMixin = {
         .toUpperCase();
     },
 
+    /**
+    * @param {object} user
+    * @param {object} opts - add this parameter if you need to crop the image on the server
+    * @param {number} opts.width
+    * @param {number} opts.height
+    * @param {boolean} opts.image
+    * @returns {null | string}
+    */
     $$userAvatarSrc(user, opts = {}) {
       if (!user || isEmpty(user)) return null;
 
