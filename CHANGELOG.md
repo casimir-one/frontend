@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.355.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.355.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **@deip/command-models:** missed dependency fixed ([43502e8](https://github.com/DEIPworld/deip-modules/commit/43502e8ed0b2a53d0e636998b634cf67f19ed423))
+* eslint config uses @deip/eslint-config in extends ([1281fa8](https://github.com/DEIPworld/deip-modules/commit/1281fa87662c507bc41b6ec8fe3478cb8fbd0cb1))
+* **@deip/assets-module, @deip/fundraising-module:** fix fundraising creation ([2e1e970](https://github.com/DEIPworld/deip-modules/commit/2e1e9703ddc598828e667c56f3a2afae60b223cf))
+* **@deip/assets-service:** issue asset fix ([93a917a](https://github.com/DEIPworld/deip-modules/commit/93a917aebb1e2cefb0c70a0dc283e84026692e5d))
+* **@deip/auth-module:** wrong view for autofill in the sign-in form ([bca2da4](https://github.com/DEIPworld/deip-modules/commit/bca2da496cca4cec285e20877e1509978f7e4c4b))
+* **@deip/fundraising-module:** fix getContributionsHistory action ([3cfe16a](https://github.com/DEIPworld/deip-modules/commit/3cfe16ac98f8d8763bb5d5911d522228455aafce))
+* **@deip/fundraising-module:** fix max amount in amount selector ([93dab8e](https://github.com/DEIPworld/deip-modules/commit/93dab8ec3437c848873139d010b653730f722c8e))
+* **@deip/fundraising-module:** fix Your investment amount in FundraisingWidget ([92ef232](https://github.com/DEIPworld/deip-modules/commit/92ef232a2f81352e3ff2d12aa042da4b957c004e))
+* **@deip/lib-crypto,@deip/rpc-client:** not ability to run some commands in Windows OS ([ae969c1](https://github.com/DEIPworld/deip-modules/commit/ae969c18b80c89558062b85c43a362a5423bc70f))
+* **@deip/platform-fns, @deip/users-module, @deip/teams-module:** fix attributes files urls ([358ae3f](https://github.com/DEIPworld/deip-modules/commit/358ae3f3c6ca046a33ce2b887975d514f46c71f2))
+* **@deip/rpc-client:** cross-platform archive creating ([3c58b79](https://github.com/DEIPworld/deip-modules/commit/3c58b79e7c11c90b704ad9f94f02c39d6e4f1eb7))
+* **@deip/team-service:** fix join team in createTeam method ([ad06bfa](https://github.com/DEIPworld/deip-modules/commit/ad06bfaefd7d8f5ee5d583e77dc3f9b26e32825f))
+* **@deip/teams-module:** fix team creation ([a47cd72](https://github.com/DEIPworld/deip-modules/commit/a47cd727d9cb2b82e9fecacfbf60c357d794ff3f))
+* **@deip/teams-module:** no promise returned for getTeamsByIds ([fb56198](https://github.com/DEIPworld/deip-modules/commit/fb5619848034ab4ecad78d1c570c5fd838290c5c))
+* **@deip/vue-editorjs:** fix text save after paste ([4693fcf](https://github.com/DEIPworld/deip-modules/commit/4693fcf26d147ef9665cff8cc3a8e985483677d7))
+* **@deip/vue-layout-schema:** schema builder model ([984ea23](https://github.com/DEIPworld/deip-modules/commit/984ea2388d8ce4e466f73b76c8e203b0cf118a87))
+* **@deip/vuetify-extended:**  location field has infinite loading when empty ([43e1072](https://github.com/DEIPworld/deip-modules/commit/43e10720a87efdffcba5b19944fcbe6ab1bd5c1b))
+* **@deip/vuetify-extended:** calendar icon doesn't work ([e04bf62](https://github.com/DEIPworld/deip-modules/commit/e04bf62f983f64230b796ca328812e096a4e9344))
+* **BalancesCards:** not set grid params ([a624546](https://github.com/DEIPworld/deip-modules/commit/a624546c1f53905c56d76765882fcef67ebc7989))
+
+
+### Features
+
+* **@deip/attributes-module:** added ability to remove key ([a6f801e](https://github.com/DEIPworld/deip-modules/commit/a6f801ec25f35d6c6fae36618ca3fa3f7f934667))
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://github.com/DEIPworld/deip-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+* **@deip/chain-service:** substrate chainTypes; contractAgreementCmd ([aba26b8](https://github.com/DEIPworld/deip-modules/commit/aba26b82134ef4e3b10f567269ae07a77662819a))
+* **@deip/constants:** new constants ([c347c37](https://github.com/DEIPworld/deip-modules/commit/c347c37f58fcefec218965d749142cbeaae4ceac))
+* **@deip/contract-agreement-service:** rejectContractAgreement ([6c52482](https://github.com/DEIPworld/deip-modules/commit/6c524828f0c6fbe9d5dd710eef729a37975f876a))
+* **@deip/document-templates-module:** add Placeholder tool to document template edit form ([f31fe6b](https://github.com/DEIPworld/deip-modules/commit/f31fe6b37f742dbcfee4f6cc198f3d859f4017b6))
+* **@deip/tenant-service:** add cmds ([cc3bd22](https://github.com/DEIPworld/deip-modules/commit/cc3bd22d1b86efa6c27fdd509f81a45c0f7b0281))
+* **@deip/toolbox:** add uuidv4 ([20e6297](https://github.com/DEIPworld/deip-modules/commit/20e629718f219149ace0405b436e5f3a580000b9))
+* **@deip/user-service:** change password ([4c46b04](https://github.com/DEIPworld/deip-modules/commit/4c46b0437bd212c8840cac0c6c1fe5bada6c5aa0))
+* **@deip/vls-layout-schema:** add vls-schema-builder component ([3837477](https://github.com/DEIPworld/deip-modules/commit/3837477977db20fefdae79195ab9dcbbb87b9b3b))
+* **@deip/vue-editorjs:** add PlaceholderTool ([2507b11](https://github.com/DEIPworld/deip-modules/commit/2507b116f5bdce4e936cc1467d88713556b23198))
+* **@deip/vuetify-extended:** add showWarning to notifier ([8ea66f6](https://github.com/DEIPworld/deip-modules/commit/8ea66f6a4b8e2b310583a8a8eb92b1ba8754c95e))
+
+
+
+
+
 # [1.354.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.354.0) (2021-12-02)
 
 
