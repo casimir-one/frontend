@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.355.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.355.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **@deip/assets-module, @deip/fundraising-module:** fix fundraising creation ([2e1e970](https://gitlab.com/DEIP/deip-client-modules/commit/2e1e9703ddc598828e667c56f3a2afae60b223cf))
+
+
+
+
+
 # [1.354.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.354.0) (2021-12-02)
 
 
