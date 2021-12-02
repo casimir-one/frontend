@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-service",
-  "version": "1.353.0",
+  "version": "1.354.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,11 +22,11 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/command-models": "1.353.0",
-    "@deip/constants": "1.353.0",
-    "@deip/http-service": "1.353.0",
-    "@deip/message-models": "1.353.0",
-    "@deip/toolbox": "1.353.0"
+    "@deip/command-models": "1.354.0",
+    "@deip/constants": "1.354.0",
+    "@deip/http-service": "1.354.0",
+    "@deip/message-models": "1.354.0",
+    "@deip/toolbox": "1.354.0"
   },
   "peerDependencies": {
     "@deip/app-config-service": "^1.341.0"
