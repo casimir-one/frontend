@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.354.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.354.0) (2021-12-02)
+
+
+### Bug Fixes
+
+* **@deip/platform-fns, @deip/users-module, @deip/teams-module:** fix attributes files urls ([358ae3f](https://gitlab.com/DEIP/deip-client-modules/commit/358ae3f3c6ca046a33ce2b887975d514f46c71f2))
+* **@deip/teams-module:** fix team creation ([a47cd72](https://gitlab.com/DEIP/deip-client-modules/commit/a47cd727d9cb2b82e9fecacfbf60c357d794ff3f))
+* **@deip/teams-module:** no promise returned for getTeamsByIds ([fb56198](https://gitlab.com/DEIP/deip-client-modules/commit/fb5619848034ab4ecad78d1c570c5fd838290c5c))
+
+
+
+
+
 # [1.353.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.353.0) (2021-11-30)
 
 

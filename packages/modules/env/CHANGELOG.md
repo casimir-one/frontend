@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.354.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.354.0) (2021-12-02)
+
+
+### Features
+
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://gitlab.com/DEIP/deip-client-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+
+
+
+
+
 # [1.353.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.353.0) (2021-11-30)
 
 

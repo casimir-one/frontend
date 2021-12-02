@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.354.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.354.0) (2021-12-02)
+
+
+### Features
+
+* **@deip/toolbox:** add uuidv4 ([20e6297](https://gitlab.com/DEIP/deip-client-modules/commit/20e629718f219149ace0405b436e5f3a580000b9))
+
+
+
+
+
 # [1.353.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.353.0) (2021-11-30)
 
 
