@@ -3,7 +3,7 @@ import crc32 from 'crc/crc32';
 import { cloneDeep, sortBy } from 'lodash';
 import { find as deepFind } from 'find-keypath';
 import objectPath from 'object-path';
-import { isArray, isObject } from './validation';
+import { isArray, isObject, isSimpleVal } from './validation';
 
 export const sortObjectKeys = (obj, comparator) => {
   const clone = cloneDeep(obj);
@@ -72,9 +72,25 @@ export const filterObjectKeys = (obj, keys, isExclude = false) => {
   }), {});
 };
 
+const possibleDeepFindError = (condition, message) => {
+  if (condition) {
+    throw new Error(`[deepFindParentByValue]: ${message}`);
+  }
+};
+
 export const deepFindParentByValue = (obj, value, returnObject = false) => {
+  possibleDeepFindError(!obj, 'You must specify object');
+  possibleDeepFindError(!value, 'You must specify search value');
+  possibleDeepFindError(!isSimpleVal(value), 'Value must be a primitive');
+
   const path = deepFind(obj, value).slice(0, -1);
+
+  if (!path.length) {
+    return undefined;
+  }
+
   const data = objectPath.get(obj, path);
+
   return returnObject
     ? { path, data }
     : data;

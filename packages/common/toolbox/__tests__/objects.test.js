@@ -72,37 +72,45 @@ describe('filterObjectKeys', () => {
 });
 
 describe('deepFindParentByValue', () => {
-  it('should return empty object for empty object', () => {
-    expect(deepFindParentByValue({}, 1)).toMatchObject({});
-  });
-
-  it('should return null for null', () => {
-    expect(deepFindParentByValue(null, 1)).toBe(null);
-  });
-
-  const obj1 = {
+  const testObject1 = {
     id: 1,
     attributes: {
       children: ['a', 'b', 'c']
     }
   };
-  const obj = {
+  const testObject2 = {
     data: [
-      obj1
+      testObject1
     ]
   };
 
   it.each([
-    [1, obj1],
-    ['b', ['a', 'b', 'c']]
-  ])('should return expected value for %s', (initial, expected) => {
-    expect(deepFindParentByValue(obj, initial)).toMatchObject(expected);
+    null,
+    undefined
+  ])('should return error for %s as object', (object) => {
+    expect(() => { deepFindParentByValue(object, 1); }).toThrow();
   });
 
   it.each([
-    [1, { path: ['data', '0'], data: obj1 }],
+    null,
+    undefined,
+    '',
+    {}
+  ])('should return error for %s as value', (value) => {
+    expect(() => { deepFindParentByValue(testObject1, value); }).toThrow();
+  });
+
+  it.each([
+    [1, testObject1],
+    ['b', ['a', 'b', 'c']]
+  ])('should return expected value for %s', (initial, expected) => {
+    expect(deepFindParentByValue(testObject2, initial)).toMatchObject(expected);
+  });
+
+  it.each([
+    [1, { path: ['data', '0'], data: testObject1 }],
     ['b', { path: ['data', '0', 'attributes', 'children'], data: ['a', 'b', 'c'] }]
   ])('should return expected value for %s as object', (initial, expected) => {
-    expect(deepFindParentByValue(obj, initial, true)).toMatchObject(expected);
+    expect(deepFindParentByValue(testObject2, initial, true)).toMatchObject(expected);
   });
 });
