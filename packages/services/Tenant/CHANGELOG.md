@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.356.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.356.0) (2021-12-03)
+
+
+### Features
+
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://github.com/DEIPworld/deip-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+* **@deip/tenant-service:** add cmds ([cc3bd22](https://github.com/DEIPworld/deip-modules/commit/cc3bd22d1b86efa6c27fdd509f81a45c0f7b0281))
+
+
+
+
+
 # [1.355.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.355.0) (2021-12-02)
 
 

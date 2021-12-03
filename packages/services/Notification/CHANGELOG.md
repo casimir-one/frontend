@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.356.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.356.0) (2021-12-03)
+
+
+### Features
+
+* **@deip/notification-service, @deip/bookmark-service:** create commands ([e649562](https://github.com/DEIPworld/deip-modules/commit/e649562730336f20751b94024f19c69beead347c))
+
+
+
+
+
 # [1.355.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.355.0) (2021-12-02)
 
 **Note:** Version bump only for package @deip/notification-service
