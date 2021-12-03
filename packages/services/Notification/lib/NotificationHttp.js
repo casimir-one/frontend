@@ -5,15 +5,11 @@ export class NotificationHttp {
   http = HttpService.getInstance();
 
   async getNotificationsByUser(username) {
-    return this.http.get(`/api/notifications/user/${username}`);
+    return this.http.get(`/api/v2/notifications/user/${username}`);
   }
 
-  async markUserNotificationAsRead(username, notificationId) {
-    return this.http.put(`/api/notifications/${username}/mark-read/${notificationId}`, {});
-  }
-
-  async markAllUserNotificationAsRead(username) {
-    return this.http.put(`/api/notifications/${username}/mark-all-read`, {});
+  async markUserNotificationsAsRead(req) {
+    return this.http.put('/api/v2/notifications/mark-read', req.getHttpBody());
   }
 
   /** @type {() => NotificationHttp} */

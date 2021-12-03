@@ -39,6 +39,9 @@ import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
+import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
+import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
+import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 
 export {
   CreateAccountCmd,
@@ -81,5 +84,8 @@ export {
   UpdateLayoutSettingsCmd,
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,
-  UpdatePortalSettingsCmd
+  UpdatePortalSettingsCmd,
+  CreateBookmarkCmd,
+  DeleteBookmarkCmd,
+  MarkNotificationsAsReadCmd
 }

@@ -1,4 +1,8 @@
 import { createInstanceGetter } from '@deip/toolbox';
+import { JsonDataMsg } from '@deip/message-models';
+import {
+  MarkNotificationsAsReadCmd
+} from '@deip/command-models';
 import { NotificationHttp } from './NotificationHttp';
 
 export class NotificationService {
@@ -9,11 +13,23 @@ export class NotificationService {
   }
 
   async markUserNotificationAsRead(username, notificationId) {
-    return this.notificationHttp.markUserNotificationAsRead(username, notificationId);
+    const markNotificationsAsReadCmd = new MarkNotificationsAsReadCmd({
+      username,
+      markAll: false,
+      notifications: [notificationId]
+    });
+    const msg = new JsonDataMsg({ appCmds: [markNotificationsAsReadCmd] });
+    return this.notificationHttp.markUserNotificationsAsRead(msg);
   }
 
   async markAllUserNotificationAsRead(username) {
-    return this.notificationHttp.markAllUserNotificationAsRead(username);
+    const markNotificationsAsReadCmd = new MarkNotificationsAsReadCmd({
+      username,
+      markAll: true,
+      notifications: []
+    });
+    const msg = new JsonDataMsg({ appCmds: [markNotificationsAsReadCmd] });
+    return this.notificationHttp.markUserNotificationsAsRead(msg);
   }
 
   /** @type {() => NotificationService} */

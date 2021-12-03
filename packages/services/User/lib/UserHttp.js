@@ -17,7 +17,7 @@ export class UserHttp {
   // Invites
 
   async getInvitesByUser(username) {
-    return this.http.get(`/api/invites/${username}`);
+    return this.http.get(`/api/v2/invites/${username}`);
   }
 
   async getUsers(usernames) {
