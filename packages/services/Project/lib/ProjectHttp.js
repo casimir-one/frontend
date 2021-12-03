@@ -21,10 +21,6 @@ export class ProjectHttp {
     return this.http.post('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async getProjectPendingInvites(projectId) {
-    return this.http.get(`/api/invites/research/${projectId}`);
-  }
-
   async updateProject(req) {
     return this.http.put('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }

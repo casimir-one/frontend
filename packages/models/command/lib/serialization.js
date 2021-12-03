@@ -40,6 +40,9 @@ import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
+import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
+import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
+import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 
 
 const APP_CMD_INFO = {
@@ -83,7 +86,10 @@ const APP_CMD_INFO = {
   [APP_CMD.UPDATE_LAYOUT_SETTINGS]: { class: UpdateLayoutSettingsCmd },
   [APP_CMD.UPDATE_ATTRIBUTE_SETTINGS]: { class: UpdateAttributeSettingsCmd },
   [APP_CMD.UPDATE_NETWORK_SETTINGS]: { class: UpdateNetworkSettingsCmd },
-  [APP_CMD.DELETE_USER_PROFILE]: { class: DeleteUserProfileCmd }
+  [APP_CMD.DELETE_USER_PROFILE]: { class: DeleteUserProfileCmd },
+  [APP_CMD.CREATE_BOOKMARK]: { class: CreateBookmarkCmd },
+  [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
+  [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd }
 }
 
 

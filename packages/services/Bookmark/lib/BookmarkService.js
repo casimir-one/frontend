@@ -1,4 +1,10 @@
 import { createInstanceGetter } from '@deip/toolbox';
+import { JsonDataMsg } from '@deip/message-models';
+import {
+  CreateBookmarkCmd,
+  DeleteBookmarkCmd
+} from '@deip/command-models';
+import { USER_BOOKMARK_TYPE } from '@deip/constants';
 import { BookmarkHttp } from './BookmarkHttp';
 
 export class BookmarkService {
@@ -8,12 +14,23 @@ export class BookmarkService {
     return this.bookmarkHttp.getProjectBookmarks(username);
   }
 
-  async createProjectBookmark(username, researchId) {
-    return this.bookmarkHttp.createProjectBookmark(username, researchId);
+  async createProjectBookmark(username, projectId, type = USER_BOOKMARK_TYPE.PROJECT) {
+    const createBookmarkCmd = new CreateBookmarkCmd({
+      username,
+      ref: projectId,
+      type
+    });
+    const msg = new JsonDataMsg({ appCmds: [createBookmarkCmd] });
+    return this.bookmarkHttp.createProjectBookmark(msg);
   }
 
-  async removeProjectBookmark(username, bookmarkId) {
-    return this.bookmarkHttp.removeProjectBookmark(username, bookmarkId);
+  async deleteProjectBookmark(username, bookmarkId) {
+    const deleteBookmarkCmd = new DeleteBookmarkCmd({
+      username,
+      bookmarkId
+    });
+    const msg = new JsonDataMsg({ appCmds: [deleteBookmarkCmd] });
+    return this.bookmarkHttp.deleteProjectBookmark(msg);
   }
 
   /** @type {() => BookmarkService} */
