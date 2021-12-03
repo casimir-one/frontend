@@ -1,6 +1,6 @@
 {
   "name": "@deip/contract-agreements-module",
-  "version": "1.355.0",
+  "version": "1.356.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -17,16 +17,16 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.355.0",
-    "@deip/contract-agreement-service": "1.355.0",
-    "@deip/platform-components": "1.355.0",
-    "@deip/platform-store": "1.355.0",
-    "@deip/proposals-service": "1.355.0",
-    "@deip/proxydi": "1.355.0",
-    "@deip/teams-module": "1.355.0",
-    "@deip/toolbox": "1.355.0",
-    "@deip/users-module": "1.355.0",
-    "@deip/vuetify-extended": "1.355.0",
+    "@deip/constants": "1.356.0",
+    "@deip/contract-agreement-service": "1.356.0",
+    "@deip/platform-components": "1.356.0",
+    "@deip/platform-store": "1.356.0",
+    "@deip/proposals-service": "1.356.0",
+    "@deip/proxydi": "1.356.0",
+    "@deip/teams-module": "1.356.0",
+    "@deip/toolbox": "1.356.0",
+    "@deip/users-module": "1.356.0",
+    "@deip/vuetify-extended": "1.356.0",
     "vue-pdf": "^4.3.0"
   },
   "devDependencies": {

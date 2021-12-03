@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.356.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.356.0) (2021-12-03)
+
+
+### Features
+
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://github.com/DEIPworld/deip-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+
+
+
+
+
 # [1.355.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.355.0) (2021-12-02)
 
 
