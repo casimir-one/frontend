@@ -1,0 +1,36 @@
+.ve-raw-display {
+  margin-top: 12px;
+
+  &__btn {
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(#000, .1);
+    padding: 6px 12px;
+    border-radius: 4px;
+
+    .ve-raw-display--is-open & {
+      border-bottom: 0;
+      border-radius: 4px 4px 0 0;
+    }
+  }
+
+  &__block {
+    border: 1px solid rgba(#000, .1);
+    border-radius: 4px;
+    padding: 12px;
+    overflow: auto;
+    display: none;
+
+    .ve-raw-display--is-open & {
+      display: block;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+
+  pre {
+    text-align: start;
+    font-size: 12px;
+  }
+}
