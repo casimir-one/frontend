@@ -2,22 +2,18 @@ import './vls-builder-canvas.scss';
 
 /* eslint-disable */
 import {
-  VIcon, VSheet, VDivider, VSpacer, VBtn
+  VIcon, VSheet,
+  VDivider, VSpacer,
+  VBtn
 } from 'vuetify/lib/components';
-
-import {
-  ClickOutside
-} from 'vuetify/lib/directives';
+import { ClickOutside } from 'vuetify/lib/directives';
 
 /* eslint-enable */
 
-import {
-  pascalCase,
-  deepFindParentByValue
-} from '@deip/toolbox';
+import { VeRawDisplay } from '@deip/vue-elements';
 
+import { deepFindParentByValue } from '@deip/toolbox';
 import draggable from 'vuedraggable';
-
 import { BuilderMixin } from '../../mixins';
 
 export const VlsBuilderCanvas = {
@@ -39,14 +35,29 @@ export const VlsBuilderCanvas = {
   },
 
   methods: {
-
+    /**
+     * Return canvas block type based on  info from blocks list
+     * @param {string} id
+     * @returns {string}
+     */
     getBlockType(id) {
-      const { blockType = 'common' } = this.getContainerNodeInfo(id);
+      const blockInfo = this.getContainerNodeInfo(id);
+
+      if (!blockInfo) {
+        return 'undefined';
+      }
+
+      const { blockType = 'common' } = blockInfo;
       return blockType;
     },
 
+    /**
+     * Get node info for hovered/selected marker position
+     * @param {string} uid
+     * @returns {null|Object}
+     */
     getNodeBoxData(uid) {
-      if (!uid) return false;
+      if (!uid) return null;
 
       const { id } = deepFindParentByValue(this.schemaAcc, uid);
 
@@ -70,6 +81,10 @@ export const VlsBuilderCanvas = {
       };
     },
 
+    /**
+     * Set hover node data
+     * @param {string} uid
+     */
     hoverNode(uid) {
       if (!uid || this.isMoved) {
         this.hoverBox = {};
@@ -78,6 +93,9 @@ export const VlsBuilderCanvas = {
       }
     },
 
+    /**
+     * Set selected node data
+     */
     selectNode() {
       this.hoverNode(null);
 
@@ -88,6 +106,14 @@ export const VlsBuilderCanvas = {
       }
     },
 
+    // //////////////////////////
+
+    /**
+     * Generate draggable host on canvas
+     * @param {Object} additionData
+     * @param {Object[]} list
+     * @returns {JSX.Element}
+     */
     genHost(
       additionData = {},
       list
@@ -98,12 +124,8 @@ export const VlsBuilderCanvas = {
       };
 
       const data = {
-        props: {
-          list
-        },
-        attrs: {
-          group: { name: 'blocks' }
-        },
+        props: { list },
+        attrs: { group: { name: 'blocks' } },
         on: {
           clone: reset,
           start: reset,
@@ -121,6 +143,11 @@ export const VlsBuilderCanvas = {
       );
     },
 
+    /**
+     * Wrapper for {@link genHost}. Set additional data and point list to node children
+     * @param {Object} node
+     * @returns {JSX.Element|*[]}
+     */
     genChildrenHost(node) {
       if (!node?.children) return [];
 
@@ -136,57 +163,124 @@ export const VlsBuilderCanvas = {
 
     // //////////////////////////
 
-    genNodeContentCommon(node) {
-      return this.genChildrenHost(node);
+    /**
+     * Generate node markup for simple node.
+     * Display only icon and title.
+     * Can't accept children.
+     * @param {string} icon
+     * @param {string} title
+     * @returns {JSX.Element}
+     */
+    genSimpleNodeMarkup(icon, title) {
+      return (
+        <VSheet class="d-flex align-center">
+          <VSheet width="32px" height="32" class="d-flex align-center justify-center">
+            <VIcon size={18}>{icon}</VIcon>
+          </VSheet>
+          <VDivider vertical class="mr-3"/>
+          <div class="text-caption font-weight-medium">{title}</div>
+        </VSheet>
+      );
     },
 
-    genNodeContentTypography(node) {
-      const nodeInfo = this.getContainerNodeInfo(node.id);
-
+    /**
+     * Generate node markup for container node.
+     * Has icon on left side.
+     * Has drag-n-drop host.
+     * @param {string} icon
+     * @param {(JSX.Element | JSX.Element[])} content
+     * @returns {JSX.Element}
+     */
+    genExtendedNodeMarkup(icon, content) {
       return (
         <VSheet class="d-flex align-center">
           <VSheet width="40px" height="40" class="d-flex align-center justify-center">
-            <VIcon>{nodeInfo.icon}</VIcon>
+            <VIcon>{icon}</VIcon>
           </VSheet>
           <VDivider vertical class="mr-1"/>
           <VSpacer>
-            {this.genChildrenHost(node)}
+            {content}
           </VSpacer>
         </VSheet>
       );
     },
 
-    genNodeContentSimple(node) {
-      const nodeInfo = this.getContainerNodeInfo(node.id);
+    // //////////////////////////
 
-      return (
-        <VSheet class="d-flex align-center">
-          <VSheet width="32px" height="32" class="d-flex align-center justify-center">
-            <VIcon size={18}>{nodeInfo.icon}</VIcon>
-          </VSheet>
-          <VDivider vertical class="mr-3"/>
-          <div class="text-caption font-weight-medium">{nodeInfo.name}</div>
-        </VSheet>
+    /**
+     * Generate undefined node if canvas cant get node info from blocks
+     * @returns {JSX.Element}
+     */
+    genUndefinedNode() {
+      return this.genSimpleNodeMarkup(
+        'mdi-alert-circle-outline',
+        'Undefined block'
       );
     },
 
-    genNodeContentAttribute(node) {
-      return this.genNodeContentSimple(node);
+    /**
+     * Generate simple node (without children)
+     * @param {Object} node
+     * @returns {JSX.Element}
+     */
+    genSimpleNode(node) {
+      const { icon, name } = this.getContainerNodeInfo(node.id);
+      return this.genSimpleNodeMarkup(icon, name);
     },
 
-    genNodeContentRow(node) {
+    /**
+     * Generate container node with children host and icon at left side
+     * @param {Object} node
+     * @returns {JSX.Element}
+     */
+    genExtendedNode(node) {
+      const { icon } = this.getContainerNodeInfo(node.id);
+      return this.genExtendedNodeMarkup(icon, this.genChildrenHost(node));
+    },
+
+    /**
+     * Generate container node with children host
+     * @param {Object} node
+     * @returns {JSX.Element}
+     */
+    genDefaultNode(node) {
       return this.genChildrenHost(node);
     },
 
     // //////////////////////////
 
+    /**
+     * Select node generator based on block type
+     * @param blockType
+     * @returns {function(): void}
+     */
+    getNodeGenerator(blockType) {
+      if (blockType === 'undefined') {
+        return this.genUndefinedNode;
+      }
+
+      if (['attribute', 'component', 'simple'].includes(blockType)) {
+        return this.genSimpleNode;
+      }
+
+      if (['typography'].includes(blockType)) {
+        return this.genExtendedNode;
+      }
+
+      return this.genDefaultNode;
+    },
+
+    // //////////////////////////
+
+    /**
+     * Generate list of nodes on canvas
+     * @param {Object[]} nodes
+     * @returns {JSX.Element[]}
+     */
     genNodes(nodes) {
       return nodes.map((node) => {
         const blockType = this.getBlockType(node.id);
-
-        const generator = this[`genNodeContent${pascalCase(blockType)}`]
-          ? this[`genNodeContent${pascalCase(blockType)}`]
-          : this.genNodeContentCommon;
+        const generator = this.getNodeGenerator(blockType);
 
         const classList = {
           'vls-builder-canvas__node': true,
@@ -212,6 +306,9 @@ export const VlsBuilderCanvas = {
       });
     },
 
+    /**
+     * @returns {JSX.Element}
+     */
     genHoverBox() {
       return (
         <div
@@ -227,6 +324,10 @@ export const VlsBuilderCanvas = {
         </div>
       );
     },
+
+    /**
+     * @returns {JSX.Element}
+     */
     genFocusBox() {
       return (
         <div
@@ -269,14 +370,23 @@ export const VlsBuilderCanvas = {
             handler: () => {
               this.setContainerActiveNode(null);
             },
-            include: () => [document.querySelector('.vls-builder-tree')].filter((el) => el)
+            include: () => [
+              document.querySelector('.vls-builder-tree'),
+              document.querySelector('.vls-builder-settings')
+            ].filter((el) => el)
           }}
         >
           {this.genHoverBox()}
           {this.genFocusBox()}
           {composer}
         </div>
-        <pre>{JSON.stringify(this.schemaAcc, null, 2)}</pre>
+
+        {
+          process.env.NODE_ENV === 'development'
+            ? <VeRawDisplay value={this.schemaAcc} />
+            : null
+        }
+
       </div>
     );
   }
