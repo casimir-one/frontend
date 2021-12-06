@@ -20,15 +20,17 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "peerDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/eslint-parser": "^7.14.4",
+    "@babel/core": "^7.16.0",
+    "@babel/eslint-parser": "^7.16.3",
     "eslint": "^7.28.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "vue": "^2.6.12",
+    "vuetify": "^2.4.9"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx": "^0.1.0",
-    "eslint-plugin-vue": "^7.11.0",
-    "vue": "^2.6.12",
-    "vuetify": "^2.4.9"
+    "eslint-plugin-vue": "^7.11.0"
   }
 }

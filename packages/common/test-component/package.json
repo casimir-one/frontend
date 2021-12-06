@@ -1,0 +1,40 @@
+{
+  "name": "@deip/test-component",
+  "version": "1.356.0",
+  "description": "> TODO: description",
+  "author": "alexey.sholohov <alexey.sholohov@binatomic.com>",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "directories": {
+    "lib": "lib",
+    "src": "src"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEIPworld/deip-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "clean": "shx rm -rf lib",
+    "build": "npm run clean && rollup -c",
+    "prepublish": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.14",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.1.2",
+    "qs": "^6.10.2"
+  },
+  "devDependencies": {
+    "shx": "^0.3.3"
+  },
+  "dependencies": {}
+}
