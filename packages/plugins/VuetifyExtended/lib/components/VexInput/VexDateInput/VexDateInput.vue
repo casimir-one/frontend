@@ -1,23 +1,23 @@
 <template>
   <v-menu
-    v-model.trim="isOpen"
+    v-model="isOpen"
     :close-on-content-click="false"
+    :close-on-click="!isFocus"
     offset-y
     min-width="290px"
   >
-    <template #activator="{ on }">
+    <template #activator="{ }">
       <v-text-field
         ref="field"
         v-model="dateText"
         :label="label"
-        outlined
         hide-details="auto"
         append-icon="mdi-calendar"
         autocomplete="off"
         v-bind="internalFieldProps"
-        @click:append="handleIconClick()"
-        @click:clear="handleClearTextFieldClick()"
-        v-on="on"
+        outlined
+        @focus="handleTextFieldFocus"
+        @blur="handleTextFieldBlur"
       />
     </template>
     <v-date-picker
@@ -65,10 +65,12 @@
     },
     data() {
       return {
-        isOpen: false
+        isOpen: false,
+        isFocus: false
       };
     },
     computed: {
+
       validatableProps() {
         return Object.keys(Validatable.options.props)
           .reduce((props, key) => ({ ...props, ...(this[key] ? { [key]: this[key] } : {}) }), {});
@@ -126,11 +128,15 @@
       toggleCalendar() {
         this.isOpen = !this.isOpen;
       },
-      handleClearTextFieldClick() {
-        this.$refs.field.blur();
+      toggleFocus() {
+        this.isFocus = !this.isFocus;
       },
-      handleIconClick() {
-        this.toggleCalendar();
+      handleTextFieldFocus() {
+        this.toggleFocus();
+        this.isOpen = true;
+      },
+      handleTextFieldBlur() {
+        this.toggleFocus();
       }
 
     }
