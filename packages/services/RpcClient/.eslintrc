@@ -8,7 +8,7 @@
     "es6": true,
     "node": true,
     "browser": true,
-    "mocha": true,
+    "mocha": true
   },
   "rules": {
     "no-undef": ["error"],
@@ -22,6 +22,6 @@
     "no-unreachable": ["warn"],
     "no-shadow": ["warn"],
     "no-constant-condition": ["warn"],
-    "no-shadow-restricted-names": ["off"], # warn misfired on 'import' statements
-  },
+    "no-shadow-restricted-names": ["off"]
+  }
 }
