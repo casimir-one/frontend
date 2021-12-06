@@ -8,6 +8,8 @@ export const getters = {
   container: (containerId) => state?.[containerId],
 
   containerBlocks: (containerId) => state?.[containerId]?.blocks || [],
+  containerBlocksList: (containerId) => state?.[containerId]?.blocks
+    .reduce((acc, b) => [...acc, ...b.blocks], []) || [],
   containerSchema: (containerId) => state?.[containerId]?.schema || [],
   containerActiveNode: (containerId) => state?.[containerId]?.activeNode
 };

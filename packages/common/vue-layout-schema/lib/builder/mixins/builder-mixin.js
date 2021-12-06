@@ -1,4 +1,3 @@
-import { deepFindParentByValue } from '@deip/toolbox';
 import {
   cloneDeep,
   isEqual
@@ -19,6 +18,7 @@ export const BuilderMixin = {
   computed: {
     containerSchema() { return getters.containerSchema(this.containerId); },
     containerBlocks() { return getters.containerBlocks(this.containerId); },
+    containerBlocksList() { return getters.containerBlocksList(this.containerId); },
     containerActiveNode() { return getters.containerActiveNode(this.containerId); },
 
     internalSchema: {
@@ -73,7 +73,7 @@ export const BuilderMixin = {
     },
 
     getContainerNodeInfo(id) {
-      return deepFindParentByValue(this.containerBlocks, id);
+      return this.containerBlocksList.find((b) => b.id === id);
     },
 
     selectNode() { return true; }

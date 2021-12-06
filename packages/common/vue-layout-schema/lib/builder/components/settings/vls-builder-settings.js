@@ -38,6 +38,11 @@ export const VlsBuilderSettings = {
   },
 
   methods: {
+    /**
+     * Check block property type
+     * @param {string} key
+     * @returns {string}
+     */
     checkPropType(key) {
       const type = this.nodeInfo?.data?.props?.[key]?.type;
 
@@ -53,6 +58,11 @@ export const VlsBuilderSettings = {
       return kindOf(type());
     },
 
+    /**
+     * Update block property value in layout schema
+     * @param {string[]} path
+     * @param {*} value
+     */
     setFieldVal(path, value) {
       const updated = cloneDeep(this.schemaAcc);
       objectPath.set(updated, path, value);
@@ -60,6 +70,11 @@ export const VlsBuilderSettings = {
       this.setContainerSchema(updated);
     },
 
+    /**
+     * Generate VInput component props
+     * @param {string} label
+     * @returns {{hideDetails: boolean, label: string, dense: boolean}}
+     */
     genFieldProps(label) {
       return {
         hideDetails: true,
@@ -68,6 +83,13 @@ export const VlsBuilderSettings = {
       };
     },
 
+    /**
+     * Generate text input
+     * @param {string[]} path
+     * @param {string} label
+     * @param {*} value
+     * @returns {JSX.Element}
+     */
     genTextField(path, label, value) {
       const initVal = objectPath.get(this.schemaAcc, path, value);
       const props = this.genFieldProps(label);
@@ -82,6 +104,13 @@ export const VlsBuilderSettings = {
       );
     },
 
+    /**
+     * Generate checkbox input
+     * @param {string[]} path
+     * @param {string} label
+     * @param {*} value
+     * @returns {JSX.Element}
+     */
     genCheckbox(path, label, value) {
       const initVal = objectPath.get(this.schemaAcc, path, value);
       const props = this.genFieldProps(label);
@@ -96,6 +125,13 @@ export const VlsBuilderSettings = {
       );
     },
 
+    /**
+     * Generate property input based on property type
+     * @param {string[]} path
+     * @param {string} key
+     * @param {*} val
+     * @returns {JSX.Element|null}
+     */
     genField(path, key, val) {
       const propType = this.checkPropType(key, path);
 
@@ -113,6 +149,12 @@ export const VlsBuilderSettings = {
       return this.genTextField([...path, key], key, val);
     },
 
+    /**
+     * Map properties from block to schema object
+     * @param {Object} obj
+     * @param {string[]} path
+     * @returns {(JSX.Element|null)[]}
+     */
     mapPropsFields(obj, path) {
       return Object.keys(obj)
         .filter((prop) => prop !== 'tag')
@@ -120,6 +162,10 @@ export const VlsBuilderSettings = {
         .filter((f) => f);
     },
 
+    /**
+     * Generate inputs list for block properties
+     * @returns {JSX.Element[]}
+     */
     genFields() {
       const info = convertBlockPropsForCanvas(this.nodeInfo);
       const mainProps = objectPath.get(info, ['data', 'props'], {});
@@ -142,13 +188,17 @@ export const VlsBuilderSettings = {
         this.genTextField(
           [...this.nodePath, 'data', 'staticClass'],
           'Additional class'
+        ),
+        this.genTextField(
+          [...this.nodePath, 'condition'],
+          'Display conditions'
         )
       ];
 
       return [
-        mainPropsFields,
-        proxyPropsFields,
-        additionalFields
+        ...mainPropsFields,
+        ...proxyPropsFields,
+        ...additionalFields
       ];
     }
   },

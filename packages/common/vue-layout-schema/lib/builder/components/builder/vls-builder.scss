@@ -14,6 +14,7 @@
   grid-template-columns: 56px 260px 1fr 260px;
   grid-template-areas: 'toggle controls content settings';
   max-height: 100vh;
+  width: 100vw;
   position: relative;
 
   &__toggle {
