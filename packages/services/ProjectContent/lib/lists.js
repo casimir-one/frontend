@@ -26,7 +26,7 @@ let contentTypesMap = {
 contentTypesMap = Object.keys(contentTypesMap).reduce((obj, key) => {
   const o = obj;
   o[key] = {
-    id: key,
+    id: parseInt(key, 10),
     type: RESEARCH_CONTENT_TYPES[key].toLowerCase(),
     ...contentTypesMap[key]
   };

@@ -8,12 +8,12 @@ class CreateDraftCmd extends AppCmd {
 
     const {
       projectId,
-      draftType,
+      formatType,
       draftId
     } = cmdPayload;
 
     assert(!!projectId, "'projectId' is required");
-    assert(!!draftType, "'draftType' is required");
+    assert(!!formatType, "'formatType' is required");
     assert(!!draftId, "'draftId' is required");
 
     super(APP_CMD.CREATE_DRAFT, cmdPayload);
