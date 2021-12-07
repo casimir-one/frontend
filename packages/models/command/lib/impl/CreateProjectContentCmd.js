@@ -11,7 +11,7 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
       // onchain
       projectId,
       teamId,
-      type,
+      contentType,
       description,
       content,
       authors,
@@ -25,7 +25,7 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
     assert(!!teamId, "'teamId' is required");
     assert(!!description, "'description' is required");
     assert(!!content, "'content' is required");
-    assert(!!type, "'type' is required");
+    assert(!!contentType, "'contentType' is required");
     assert(!!authors && authors.length, "'authors' is required");
 
     super(APP_CMD.CREATE_PROJECT_CONTENT, cmdPayload);

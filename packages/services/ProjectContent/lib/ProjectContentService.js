@@ -44,7 +44,7 @@ export class ProjectContentService {
       } = {},
       projectId,
       teamId,
-      type,
+      contentType,
       title,
       content,
       authors,
@@ -61,7 +61,7 @@ export class ProjectContentService {
             const createProjectContentCmd = new CreateProjectContentCmd({
               projectId,
               teamId,
-              type,
+              contentType,
               description: genSha256Hash({ researchContent: { title } }),
               content,
               authors,
@@ -161,8 +161,8 @@ export class ProjectContentService {
     return this.projectContentHttp.getProjectContentReferencesGraph(contentId);
   }
 
-  async getProjectContentType(type) {
-    return projectContentTypes.find((t) => t.type === type);
+  getProjectContentType(type) {
+    return projectContentTypes.find((t) => t.type === type || t.id === type);
   }
 
   /** @type {() => ProjectContentService} */
