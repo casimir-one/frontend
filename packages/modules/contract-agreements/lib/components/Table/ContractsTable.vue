@@ -5,7 +5,7 @@
     :headers="tableHeaders"
     @click:row="handleContractRowClick"
   >
-    <template #item.partyNames="{ item }">
+    <template #[`item.partyNames`]="{ item }">
       <div class="text-body-2 font-weight-medium">
         <template v-if="hasSlot('partyNames')">
           <slot name="partyNames" :contract="item" :parties="parties" />
@@ -21,11 +21,11 @@
       </div>
     </template>
 
-    <template #item.createdAt="{ item }">
+    <template #[`item.createdAt`]="{ item }">
       {{ formatDate(item.createdAt) }}
     </template>
 
-    <template #item.signedAt="{ item }">
+    <template #[`item.signedAt`]="{ item }">
       <vex-tooltip
         v-for="(signer, index) of item.signers"
         :key="index"
@@ -40,7 +40,7 @@
       </vex-tooltip>
     </template>
 
-    <template #item.status="{ item }">
+    <template #[`item.status`]="{ item }">
       <v-chip
         outlined
         :color="getStatusColor(item.status)"
@@ -49,7 +49,7 @@
       </v-chip>
     </template>
 
-    <template #item.actions="{item}">
+    <template #[`item.actions`]="{item}">
       <template v-if="hasSlot('actions')">
         <slot name="actions" :contract="item" />
       </template>
@@ -159,7 +159,8 @@
 
     methods: {
       formatDate(date) {
-        return this.$$formatDate(this.$$parseISO(date), 'PP');
+        const validDate = Date.parse(new Date(date));
+        return validDate ? this.$$formatDate(validDate, 'PP') : '';
       },
 
       getPartyNameById(id) {
