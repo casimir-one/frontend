@@ -1,6 +1,6 @@
 {
     "name": "@deip/lib-crypto",
-    "version": "1.356.0",
+    "version": "1.357.0",
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {

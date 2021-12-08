@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.357.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.357.0) (2021-12-08)
+
+
+### Bug Fixes
+
+* **@deip/lib-crypto,@deip/rpc-client:** not ability to run some commands in Windows OS ([ae969c1](https://github.com/DEIPworld/deip-modules/commit/ae969c18b80c89558062b85c43a362a5423bc70f))
+
+
+
+
+
 # [1.356.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.356.0) (2021-12-03)
 
 
