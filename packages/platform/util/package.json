@@ -1,6 +1,6 @@
 {
   "name": "@deip/platform-util",
-  "version": "1.356.0",
+  "version": "1.357.0",
   "description": "Utils for deip platform applications",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,7 +20,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/toolbox": "1.356.0"
+    "@deip/toolbox": "1.357.0"
   },
   "peerDependencies": {
     "vue": "^2.6.14"

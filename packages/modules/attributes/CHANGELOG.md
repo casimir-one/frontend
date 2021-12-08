@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.357.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.357.0) (2021-12-08)
+
+
+### Features
+
+* **@deip/attributes-module:** added ability to remove key ([a6f801e](https://gitlab.com/DEIP/deip-client-modules/commit/a6f801ec25f35d6c6fae36618ca3fa3f7f934667))
+
+
+
+
+
 # [1.356.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.356.0) (2021-12-03)
 
 
