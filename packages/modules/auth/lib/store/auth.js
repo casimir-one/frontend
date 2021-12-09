@@ -39,7 +39,7 @@ const ACTIONS = {
     return userService.checkIfUserExists(usernameOrEmail)
       .then((exists) => {
         if (!exists) {
-          throw new Error('No such user exists');
+          throw new Error('Wrong email or password. Please try again.');
         }
         return userService.getUser(usernameOrEmail);
       })
