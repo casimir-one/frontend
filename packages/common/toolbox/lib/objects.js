@@ -3,8 +3,18 @@ import crc32 from 'crc/crc32';
 import { cloneDeep, sortBy } from 'lodash';
 import { find as deepFind } from 'find-keypath';
 import objectPath from 'object-path';
-import { isArray, isObject, isSimpleVal } from './validation';
+import {
+  isArray,
+  isObject,
+  isSimpleVal,
+  assert
+} from './validation';
 
+/**
+ * @param {Object} obj
+ * @param {function} comparator
+ * @return {Object}
+ */
 export const sortObjectKeys = (obj, comparator) => {
   const clone = cloneDeep(obj);
 
@@ -27,6 +37,10 @@ export const sortObjectKeys = (obj, comparator) => {
   return clone;
 };
 
+/**
+ * @param {Object} obj
+ * @return {Object}
+ */
 export const deepFreeze = (obj) => {
   const propsNames = Object.getOwnPropertyNames(obj);
   propsNames.forEach((name) => {
@@ -39,6 +53,11 @@ export const deepFreeze = (obj) => {
   return Object.freeze(obj);
 };
 
+/**
+ * @param {Object} obj
+ * @param {string[]} [exception=['_id', '__v']]
+ * @return {Object}
+ */
 export const camelizeObjectKeys = (obj, exception = ['_id', '__v']) => {
   if (!obj) return {};
   return Object.keys(obj)
@@ -50,6 +69,11 @@ export const camelizeObjectKeys = (obj, exception = ['_id', '__v']) => {
     }), {});
 };
 
+/**
+ * @param {Object} obj
+ * @param {number} [turns = 3]
+ * @return {string}
+ */
 export const genObjectId = (obj, turns = 3) => {
   const sorted = sortObjectKeys(obj);
 
@@ -60,6 +84,12 @@ export const genObjectId = (obj, turns = 3) => {
       .toString(16), '');
 };
 
+/**
+ * @param {Object} obj
+ * @param {string[]} keys
+ * @param {boolean} isExclude
+ * @return {Object}
+ */
 export const filterObjectKeys = (obj, keys, isExclude = false) => {
   if (!keys) return obj;
 
@@ -72,16 +102,32 @@ export const filterObjectKeys = (obj, keys, isExclude = false) => {
   }), {});
 };
 
-const possibleDeepFindError = (condition, message) => {
-  if (condition) {
-    throw new Error(`[deepFindParentByValue]: ${message}`);
-  }
+/**
+ * @param {boolean} condition
+ * @param {string} failureMessage
+ * @return {assert}
+ */
+const deepFindAssert = (
+  condition,
+  failureMessage
+) => {
+  assert(
+    condition,
+    `[deepFindParentByValue]: ${failureMessage}`
+  );
 };
 
+/**
+ * Find string value in object
+ * @param {Object} obj
+ * @param {string} value
+ * @param {boolean} returnObject
+ * @return {{path: string[], data: Object} | Object}
+ */
 export const deepFindParentByValue = (obj, value, returnObject = false) => {
-  possibleDeepFindError(!obj, 'You must specify object');
-  possibleDeepFindError(!value, 'You must specify search value');
-  possibleDeepFindError(!isSimpleVal(value), 'Value must be a primitive');
+  deepFindAssert(!!obj, 'You must specify object');
+  deepFindAssert(!!value, 'You must specify search value');
+  deepFindAssert(isSimpleVal(value), 'Value must be a primitive');
 
   const path = deepFind(obj, value).slice(0, -1);
 
@@ -91,7 +137,5 @@ export const deepFindParentByValue = (obj, value, returnObject = false) => {
 
   const data = objectPath.get(obj, path);
 
-  return returnObject
-    ? { path, data }
-    : data;
+  return returnObject ? { path, data } : data;
 };
