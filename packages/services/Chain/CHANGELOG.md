@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.359.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.359.0) (2021-12-12)
+
+
+### Bug Fixes
+
+* **@deip/assets-service:** issue asset fix ([93a917a](https://github.com/DEIPworld/deip-modules/commit/93a917aebb1e2cefb0c70a0dc283e84026692e5d))
+
+
+### Features
+
+* **@deip/assets-service:** chain-agnostic deposit feature ([36e20f2](https://github.com/DEIPworld/deip-modules/commit/36e20f2f262b1e7bd18fa50da0b8280e32a9cb9f))
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://github.com/DEIPworld/deip-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+* **@deip/chain-service:** substrate chainTypes; contractAgreementCmd ([aba26b8](https://github.com/DEIPworld/deip-modules/commit/aba26b82134ef4e3b10f567269ae07a77662819a))
+* **@deip/user-service:** change password ([4c46b04](https://github.com/DEIPworld/deip-modules/commit/4c46b0437bd212c8840cac0c6c1fe5bada6c5aa0))
+
+
+
+
+
 # [1.358.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.358.0) (2021-12-10)
 
 

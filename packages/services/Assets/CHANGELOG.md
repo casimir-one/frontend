@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.359.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.359.0) (2021-12-12)
+
+
+### Bug Fixes
+
+* **@deip/assets-service:** issue asset fix ([93a917a](https://github.com/DEIPworld/deip-modules/commit/93a917aebb1e2cefb0c70a0dc283e84026692e5d))
+
+
+### Features
+
+* **@deip/assets-service:** chain-agnostic deposit feature ([36e20f2](https://github.com/DEIPworld/deip-modules/commit/36e20f2f262b1e7bd18fa50da0b8280e32a9cb9f))
+* **@deip/chain-service:** substarte rpc endpoints and commands ([a3199d1](https://github.com/DEIPworld/deip-modules/commit/a3199d10fd753335960e62b4917ed12efb469f6f))
+
+
+
+
+
 # [1.358.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.358.0) (2021-12-10)
 
 
