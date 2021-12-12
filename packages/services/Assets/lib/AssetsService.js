@@ -11,7 +11,6 @@ import {
 import { APP_PROPOSAL } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
 import { ChainService } from '@deip/chain-service';
-import crypto from '@deip/lib-crypto';
 import { AssetsHttp } from './AssetsHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
@@ -265,7 +264,7 @@ export class AssetsService {
 
   depositAssets(payload) {
     const {
-      initiator: { privKey },
+      initiator: { privKey, username },
       redirectUrl,
       amount,
       currency,
@@ -280,18 +279,24 @@ export class AssetsService {
       timestamp
     };
 
-    const depositDataStr = JSON.stringify(depositData, Object.keys(depositData).sort());
-    const privateKey = crypto.PrivateKey.from(privKey);
-    const sigBuff = privateKey.sign(new TextEncoder('utf-8').encode(depositDataStr).buffer);
-    const sigHex = crypto.hexify(sigBuff);
-
-    return this.assetsHttp.depositAssets(
-      {
-        ...depositData,
-        sigHex,
-        redirectUrl
-      }
-    );
+    const env = this.proxydi.get('env');
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const seedAccount = chainService.generateChainSeedAccount({
+          username,
+          privateKey: privKey
+        });
+        const sigSource = JSON.stringify(depositData, Object.keys(depositData).sort());
+        const sigHex = seedAccount.signString(sigSource);
+        return this.assetsHttp.depositAssets(
+          {
+            ...depositData,
+            sigSource,
+            sigHex,
+            redirectUrl
+          }
+        );
+      });
   }
 
   /** @type {() => AssetsService} */

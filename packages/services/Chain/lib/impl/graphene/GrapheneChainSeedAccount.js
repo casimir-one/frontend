@@ -1,6 +1,6 @@
 import BaseChainSeedAccount from './../../base/BaseChainSeedAccount';
 import GrapheneClient from '@deip/rpc-client';
-import { assert } from '@deip/toolbox';
+import { assert, genMd5Hash } from '@deip/toolbox';
 import { TextEncoder } from '@polkadot/x-textencoder';
 import crypto from '@deip/lib-crypto';
 
@@ -29,7 +29,7 @@ class GrapheneChainSeedAccount extends BaseChainSeedAccount {
 
   signString(msg) {
     const PrivKey = crypto.PrivateKey.from(this.getPrivKey());
-    const sig = PrivKey.sign(new TextEncoder('utf-8').encode(msg).buffer);
+    const sig = PrivKey.sign(new TextEncoder('utf-8').encode(genMd5Hash(msg)).buffer);
     return crypto.hexify(sig);
   }
 }
