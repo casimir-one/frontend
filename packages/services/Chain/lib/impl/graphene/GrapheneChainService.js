@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert, genMd5Hash } from '@deip/toolbox';
 import GrapheneClient from '@deip/rpc-client';
 import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
@@ -49,7 +49,7 @@ class GrapheneChainService extends BaseChainService {
   }
 
   verifySignature(pubKey, msg, sig) {
-    return verifySignature(pubKey, msg, sig);
+    return verifySignature(pubKey, genMd5Hash(msg), sig);
   }
 
 }
