@@ -202,7 +202,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       entityId,
       author,
       projectContentId,
-      content,
+      contentHash,
       assessment,
       domains
     }) => {
@@ -218,7 +218,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         chainNodeClient.tx.deip.createReview(
           /* "review_id": */ `0x${entityId}`,
           /* "author": */ { Dao: `0x${author}` },
-          /* "content": */ `0x${content}`,
+          /* "content": */ `0x${contentHash}`,
           /* "domains": */ domains.map((domainId) => `0x${domainId}`),
           /* "assessmentModel": */ type,
           /* "weight": */ stringToHex(JSON.stringify(model)),

@@ -11,6 +11,7 @@ class CreateReviewCmd extends ProtocolEntityCmd {
       author,
       projectContentId,
       content,
+      contentHash,
       assessment,
       domains
     } = cmdPayload;
@@ -18,6 +19,7 @@ class CreateReviewCmd extends ProtocolEntityCmd {
     assert(!!author, "'author' is required");
     assert(!!projectContentId, "'projectContentId' is required");
     assert(!!content, "'content' is required");
+    assert(!!contentHash, "'contentHash' is required");
     assert(!!domains, "'domains' is required");
     assert(!!assessment, "'assessment' is required");
 
