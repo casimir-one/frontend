@@ -1,12 +1,8 @@
 {
   "packages": [
     "packages/common/*",
-    "packages/modules/*",
-    "packages/platform/*",
-    "packages/plugins/*",
-    "packages/services/*",
-    "packages/utilities/*",
-    "packages/models/*"
+
+    "packages/casimir/*/*"
   ],
   "version": "1.359.0",
   "npmClient": "npm",

@@ -1,9 +1,9 @@
 **/node_modules/**
 **/dist/**
-packages/models/**
-packages/services/Project/**
+packages/casimir/models/**
+packages/casimir/services/Project/**
 packages/common/lib-crypto/**
-packages/services/RpcClient/**
-packages/services/Chain/**
-packages/services/Grants/**
+packages/casimir/services/RpcClient/**
+packages/casimir/services/Chain/**
+packages/casimir/services/Grants/**
 packages/common/platform-fns/lib/helpers/_temp.js
