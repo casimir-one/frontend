@@ -452,7 +452,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       entityId,
       author,
       projectContentId,
-      content,
+      contentHash,
       assessment,
       domains
     }) => {
@@ -480,7 +480,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         external_id: entityId,
         author: author,
         research_content_external_id: projectContentId,
-        content: typeof content === 'object' ? JSON.stringify(content) : JSON.stringify({ content }),
+        content: contentHash,
         weight: weight || `100.00 %`,
         assessment_model: model,
         disciplines: domains,

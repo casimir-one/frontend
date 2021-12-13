@@ -59,7 +59,8 @@ export class ReviewService {
             const createReviewCmd = new CreateReviewCmd({
               author: creator,
               projectContentId,
-              content: genSha256Hash(content),
+              content,
+              contentHash: genSha256Hash(content),
               assessment,
               domains
             });

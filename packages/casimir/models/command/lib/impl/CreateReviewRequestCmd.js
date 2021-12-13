@@ -2,7 +2,7 @@ import AppCmd from './../base/AppCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 
-class UpdateDocumentTemplateCmd extends AppCmd {
+class CreateReviewRequestCmd extends AppCmd {
 
   constructor(cmdPayload) {
 
@@ -19,4 +19,4 @@ class UpdateDocumentTemplateCmd extends AppCmd {
 
 }
 
-export default UpdateDocumentTemplateCmd;
+export default CreateReviewRequestCmd;
