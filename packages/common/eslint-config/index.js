@@ -56,6 +56,7 @@ module.exports = {
     ],
     'no-plusplus': 'off',
     'class-methods-use-this': 'off',
-    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }]
+    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    radix: ['error', 'as-needed']
   }
 };
