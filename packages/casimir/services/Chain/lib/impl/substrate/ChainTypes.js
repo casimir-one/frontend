@@ -1,4 +1,5 @@
 const CHAIN_TYPES = {
+  "PortalId": "DaoId",
   "InputProposalBatch": "Vec<InputProposalBatchItem>",
   "InputProposalBatchItem": {
     "account": "DeipAccountId",
@@ -13,10 +14,12 @@ const CHAIN_TYPES = {
   "AlterAuthority": {
     "_enum": {
       "AddMember": {
-        "member": "AccountId"
+        "member": "AccountId",
+        "preserve_threshold": "bool"
       },
       "RemoveMember": {
-        "member": "AccountId"
+        "member": "AccountId",
+        "preserve_threshold": "bool"
       },
       "ReplaceAuthority": {
         "authority_key": "AccountId",
@@ -227,9 +230,10 @@ const CHAIN_TYPES = {
     }
   },
   "FundingModelOf": "FundingModel",
-  "AssetsBalanceOf": "u128",
+  "Balance": "u128",
+  "AssetBalanceOf": "Balance",
+  "AssetsBalanceOf": "AssetBalanceOf",
   "DeipAssetBalanceOf": "AssetsBalanceOf",
-  "TAssetBalance": "u128",
   "AssetBalance": {
     "balance": "AssetsBalanceOf",
     "is_frozen": "bool",
@@ -237,6 +241,7 @@ const CHAIN_TYPES = {
     "extra": {
     }
   },
+  "TAssetBalance": "u128",
   "AssetMetadata": {
     "name": "Vec<u8>",
     "symbol": "Vec<u8>",
@@ -258,6 +263,7 @@ const CHAIN_TYPES = {
   },
   "DeipProjectIdOf": "H160",
   "AssetId": "u32",
+  "AssetIdOf": "AssetId",
   "AssetsAssetIdOf": "AssetId",
   "DeipAssetIdOf": "H160",
   "DeipReviewVoteId": "H160",

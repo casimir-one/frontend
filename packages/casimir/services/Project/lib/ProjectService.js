@@ -204,7 +204,8 @@ export class ProjectService {
               const addTeamMemberCmd = new AddDaoMemberCmd({
                 member: invitee,
                 teamId: teamId,
-                projectId: projectId
+                projectId: projectId,
+                isThresholdPreserved: true
               });
 
               return addTeamMemberCmd;
@@ -214,7 +215,8 @@ export class ProjectService {
               const removeDaoMemberCmd = new RemoveDaoMemberCmd({
                 member: leaving,
                 teamId: teamId,
-                projectId: projectId
+                projectId: projectId,
+                isThresholdPreserved: true
               });
 
               return removeDaoMemberCmd;

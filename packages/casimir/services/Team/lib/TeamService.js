@@ -2,7 +2,8 @@ import {
   createFormData,
   replaceFileWithName,
   genSha256Hash,
-  createInstanceGetter
+  createInstanceGetter,
+  isBoolean
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
@@ -96,7 +97,8 @@ export class TeamService {
               const invites = members.map((invitee) => {
                 const addTeamMemberCmd = new AddDaoMemberCmd({
                   member: invitee,
-                  teamId: entityId
+                  teamId: entityId,
+                  isThresholdPreserved: true
                 });
 
                 return addTeamMemberCmd;
@@ -208,7 +210,8 @@ export class TeamService {
         username: creator
       },
       teamId,
-      member
+      member,
+      isThresholdPreserved
     } = payload;
 
     return ChainService.getInstanceAsync(env)
@@ -219,7 +222,8 @@ export class TeamService {
           .then((txBuilder) => {
             const addTeamMemberCmd = new AddDaoMemberCmd({
               member,
-              teamId
+              teamId,
+              isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
             });
 
             const createProposalCmd = new CreateProposalCmd({
@@ -257,7 +261,8 @@ export class TeamService {
         username: creator
       },
       teamId,
-      member
+      member,
+      isThresholdPreserved
     } = payload;
 
     return ChainService.getInstanceAsync(env)
@@ -268,7 +273,8 @@ export class TeamService {
           .then((txBuilder) => {
             const removeDaoMemberCmd = new RemoveDaoMemberCmd({
               member,
-              teamId
+              teamId,
+              isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
             });
 
             const createProposalCmd = new CreateProposalCmd({
