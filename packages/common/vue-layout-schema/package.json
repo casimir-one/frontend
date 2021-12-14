@@ -1,6 +1,6 @@
 {
   "name": "@deip/vue-layout-schema",
-  "version": "1.359.0",
+  "version": "1.360.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,9 +27,9 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.359.0",
-    "@deip/toolbox": "1.359.0",
-    "@deip/vue-elements": "1.359.0",
+    "@deip/constants": "1.360.0",
+    "@deip/toolbox": "1.360.0",
+    "@deip/vue-elements": "1.360.0",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
