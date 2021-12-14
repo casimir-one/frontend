@@ -91,7 +91,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
 
     [APP_CMD.ADD_DAO_MEMBER]: ({
       member,
-      teamId
+      teamId,
+      isThresholdPreserved
     }) => {
 
       const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
@@ -99,7 +100,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         chainNodeClient.tx.deipDao.alterAuthority(
           /* "alteration_type": */ { 
           "AddMember" : {
-            "member": account
+            "member": account,
+            "preserve_threshold": isThresholdPreserved
           } 
         })
       );
@@ -110,7 +112,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
 
     [APP_CMD.REMOVE_DAO_MEMBER]: ({
       member,
-      teamId
+      teamId,
+      isThresholdPreserved
     }) => {
 
       const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
@@ -118,7 +121,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         chainNodeClient.tx.deipDao.alterAuthority(
           /* "alteration_type": */ { 
           "RemoveMember" : {
-            "member": account
+            "member": account,
+            "preserve_threshold": isThresholdPreserved
           } 
         })
       );
