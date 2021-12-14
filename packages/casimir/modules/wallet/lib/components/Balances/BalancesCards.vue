@@ -1,9 +1,6 @@
 <template>
   <ve-auto-grid
-    cols="1"
-    cols-md="2"
-    cols-lg="3"
-    cols-xl="4"
+    item-width="300px"
   >
     <balance-card
       v-for="(balance, index) of balances"
