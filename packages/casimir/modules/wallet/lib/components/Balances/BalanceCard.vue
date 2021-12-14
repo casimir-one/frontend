@@ -21,7 +21,10 @@
             <span class="text-overline ml-3">{{ $t('module.wallet.balances.balance') }}</span>
           </div>
 
-          <div class="text-h2">
+          <div
+            class="text-h2 text-truncate"
+            :title="formattedAmount"
+          >
             {{ formattedAmount }}
           </div>
 
