@@ -32,11 +32,15 @@ export class ProjectContentHttp {
     return this.http.post('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
+  async updateProjectContentDraft(req) {
+    return this.http.put('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
+  }
+
   async deleteProjectContentDraft(req) {
     return this.http.put('/api/v2/project-content/draft/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async unlockDraft(req) {
+  async unlockProjectContentDraft(req) {
     return this.http.put('/api/v2/project-content/draft/unlock', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
