@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.360.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.360.0) (2021-12-14)
+
+
+### Bug Fixes
+
+* **@deip/vue-editorjs:** fix text save after paste ([4693fcf](https://github.com/DEIPworld/deip-modules/commit/4693fcf26d147ef9665cff8cc3a8e985483677d7))
+
+
+### Features
+
+* **@deip/vue-editorjs:** add PlaceholderTool ([2507b11](https://github.com/DEIPworld/deip-modules/commit/2507b116f5bdce4e936cc1467d88713556b23198))
+
+
+
+
+
 # [1.359.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.359.0) (2021-12-12)
 
 
