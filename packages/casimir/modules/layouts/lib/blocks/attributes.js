@@ -15,6 +15,7 @@ export const attributesBlocksFactory = (attributes, component) => {
         ...(proxyProps ? { proxyProps } : {})
       },
       blockName: attr.shortTitle || attr.title,
+      id: attr._id,
       icon,
       blockType: 'attribute',
       dataType: attr.type,
