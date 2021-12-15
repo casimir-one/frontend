@@ -39,7 +39,8 @@ export const WalletModule = {
     'EnvModule',
     'AuthModule',
     'VuetifyExtended',
-    'ValidationPlugin'
+    'ValidationPlugin',
+    'AssetsModule'
   ],
   install
 };
