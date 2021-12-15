@@ -4,21 +4,24 @@ import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
-import { assert } from '@deip/toolbox';
+import { assert, genSha256Hash } from '@deip/toolbox';
 import { pubKeyToAddress, daoIdToAddress, getMultiAddress, getSeedAccount } from './utils';
 
 
 class SubstrateTx extends BaseTx {
 
-  chainMetadata;
   signedInvariant;
+  chainMetadata;
 
-  constructor(trx) {
+  constructor(trx, chainMetadata) {
+
+    assert(!!chainMetadata, "Chain metadata must be specified for the Substrate Transaction");
+
     if (!trx) {
       super();
       this.signedInvariant = null;
     } else {
-      const { tx, chainMetadata, signedInvariant } = trx;
+      const { tx, signedInvariant } = trx;
       const ops = [];
       const registry = new TypeRegistry();
       registry.register(ChainTypes);
@@ -30,18 +33,15 @@ class SubstrateTx extends BaseTx {
         ops.push(op);
       }
       super(tx, ops);
-      this.chainMetadata = chainMetadata;
       this.signedInvariant = signedInvariant;
     }
+    
+    this.chainMetadata = chainMetadata;
   }
 
   getProtocolChain() {
     return PROTOCOL_CHAIN.SUBSTRATE;
   };
-
-  getChainMetadata() {
-    return this.chainMetadata;
-  }
 
   getSignedInvariant() {
     return this.signedInvariant;
@@ -381,43 +381,36 @@ class SubstrateTx extends BaseTx {
 
   finalize({ chainNodeClient: api }) {
     if (!super.isFinalized()) {
-      return api.rpc.state.getMetadata()
-        .then((chainMetadata) => {
-          const batchCall = api.registry.createType('Call', {
-            args: { "calls": super.getOps() },
-            callIndex: api.tx.utility.batchAll.callIndex,
-          }, api.tx.utility.batchAll.meta);
-
-          const tx = api.registry.createType('Extrinsic', batchCall);
-          this.chainMetadata = chainMetadata.toHex();
-          super.finalize(tx);
-          return this;
-        });
-    } else {
-      return Promise.resolve(this);
+      const batchCall = api.registry.createType('Call', {
+        args: { "calls": super.getOps() },
+        callIndex: api.tx.utility.batchAll.callIndex,
+      }, api.tx.utility.batchAll.meta);
+      const tx = api.registry.createType('Extrinsic', batchCall);
+      super.finalize(tx);
     }
+    return Promise.resolve(this);
   }
 
   serialize() {
     assert(super.isFinalized(), 'Transaction is not finalized');
-    return SubstrateTx.Serialize(this);
+    return SubstrateTx.Serialize(this, this.chainMetadata);
   }
 
-  deserialize(serialized) {
-    return SubstrateTx.Deserialize(serialized);
+  deserialize(serializedTx, chainMetadata) {
+    return SubstrateTx.Deserialize(serializedTx, chainMetadata);
   }
 
-  static Serialize(tx) {
+  static Serialize(tx, chainMetadata) {
     assert(!!tx, "Transaction is not specified");
     const rawTx = tx.getRawTx();
-    const chainMetadata = tx.getChainMetadata();
     const signedInvariant = tx.getSignedInvariant();
-    return JSON.stringify({ tx: rawTx, chainMetadata, signedInvariant });
+    const chainMetadataHash = genSha256Hash(chainMetadata);
+    return JSON.stringify({ tx: rawTx, signedInvariant, chainMetadataHash });
   }
 
-  static Deserialize(serialized) {
-    const finalized = JSON.parse(serialized);
-    return new SubstrateTx(finalized);
+  static Deserialize(serializedTx, chainMetadata) {
+    const finalizedTx = JSON.parse(serializedTx);
+    return new SubstrateTx(finalizedTx, chainMetadata);
   }
 
 }

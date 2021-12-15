@@ -11,9 +11,9 @@ class BaseHttpMsg {
   getHttpHeaders() { return this._headers; }
   getHttpBody() { throw new Error("Not implemented exception!"); }
 
-  static UnwrapEnvelope(data, TxClass) {
+  static UnwrapEnvelope(data, TxClass, chainMetadata) {
     const serialized = typeof data === 'string' ? JSON.parse(data) : data;
-    const envelope = AppMsgEnvelope.Deserialize(serialized, TxClass);
+    const envelope = AppMsgEnvelope.Deserialize(serialized, TxClass, chainMetadata);
     return envelope.unwrap();
   }
 

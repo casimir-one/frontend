@@ -79,8 +79,8 @@ class GrapheneTx extends BaseTx {
     return GrapheneTx.Serialize(this);
   }
 
-  deserialize(serialized) {
-    return GrapheneTx.Deserialize(serialized);
+  deserialize(serializedTx) {
+    return GrapheneTx.Deserialize(serializedTx);
   }
 
   static Serialize(tx) {
@@ -88,9 +88,9 @@ class GrapheneTx extends BaseTx {
     return JSON.stringify(tx.getRawTx());
   }
 
-  static Deserialize(serialized) {
-    const finalized = JSON.parse(serialized);
-    return new GrapheneTx(finalized);
+  static Deserialize(serializedTx) {
+    const finalizedTx = JSON.parse(serializedTx);
+    return new GrapheneTx(finalizedTx);
   }
 
 }

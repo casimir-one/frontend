@@ -12,9 +12,14 @@ class AppMsgEnvelope {
   unwrap() { 
     return this._appMsg;
   };
+  
+  serialize() {
+    return AppMsgEnvelope.Serialize(this); 
+  }
 
-  serialize() { return AppMsgEnvelope.Serialize(this); }
-  deserialize(serialized) { return AppMsgEnvelope.Deserialize(serialized); }
+  deserialize(serialized, TxClass, chainMetadata) { 
+    return AppMsgEnvelope.Deserialize(serialized, TxClass, chainMetadata); 
+  }
 
   static Serialize(envelope) {
     const { tx, appCmds } = envelope.unwrap();
@@ -27,13 +32,13 @@ class AppMsgEnvelope {
     };
   }
 
-  static Deserialize(serialized, TxClass) {
-    const { PROTOCOL_CHAIN, MESSAGE } = serialized;
+  static Deserialize(serializedTx, TxClass, chainMetadata) {
+    const { PROTOCOL_CHAIN, MESSAGE } = serializedTx;
     const msg = JSON.parse(MESSAGE);
     let tx;
     if (PROTOCOL_CHAIN) {
       assert(!!TxClass, "Chain Protocol Transaction class is not specified");
-      tx = TxClass.Deserialize(msg.tx);
+      tx = TxClass.Deserialize(msg.tx, chainMetadata);
     }
     const appCmds = msg.commands.map((cmd) => {
       const { CMD_NUM } = cmd;

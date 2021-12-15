@@ -9,7 +9,6 @@ import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
 import { APP_PROPOSAL } from '@deip/constants';
-import crypto from '@deip/lib-crypto';
 import {
   CreateProposalCmd,
   CreateDaoCmd,
@@ -84,7 +83,7 @@ export class TeamService {
             if (isCreateDefaultProject) {
               const createProjectCmd = new CreateProjectCmd({
                 teamId: entityId,
-                description: crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(JSON.stringify([])).buffer)),
+                description: genSha256Hash([]),
                 domains: [],
                 isDefault: true,
                 attributes: []

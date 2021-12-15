@@ -53,6 +53,10 @@ class BaseChainService extends Singleton {
     throw new Error("Not implemented exception!");
   }
 
+  getChainInfo() { 
+    throw new Error("Not implemented exception!");
+  }
+
   rpcToChainNode(method, params = []) {
     return fetch(this.getRpcConnectionString(), {
       body: JSON.stringify({

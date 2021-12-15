@@ -11,8 +11,11 @@ class SubstrateTxBuilder extends BaseTxBuilder {
   }
 
   begin() {
-    this._tx = new SubstrateTx();
-    return super.begin();
+    return this._chainNodeClient.rpc.state.getMetadata()
+      .then((chainMetadata) => {
+        this._tx = new SubstrateTx(null, chainMetadata.toHex());
+        return super.begin();
+      });
   }
 
   end() {

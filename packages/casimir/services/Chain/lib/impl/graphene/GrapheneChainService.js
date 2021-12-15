@@ -5,6 +5,7 @@ import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';
 import GrapheneChainRpc from './rpc/GrapheneChainRpc';
 import GrapheneChainSeedAccount from './GrapheneChainSeedAccount';
+import GrapheneTx from './GrapheneTx';
 import { isValidPrivKey, verifySignature } from './utils';
 
 class GrapheneChainService extends BaseChainService {
@@ -34,6 +35,15 @@ class GrapheneChainService extends BaseChainService {
       this._isInited = true;
     }
     return Promise.resolve(this);
+  }
+
+  getChainInfo() {
+    return { 
+      TxClass: GrapheneTx,
+      metadata: {
+        chainId: this._chainId
+      }
+    };
   }
 
   getChainTxBuilder() {

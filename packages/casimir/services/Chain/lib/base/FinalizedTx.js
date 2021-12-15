@@ -20,7 +20,10 @@ class FinalizedTx {
   }
 
   getPayload() {
-    return { tx: this._tx, appCmds: this._protocolCmds };
+    return { 
+      tx: this._tx, 
+      appCmds: this._protocolCmds
+    };
   }
 
 }
