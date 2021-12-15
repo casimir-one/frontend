@@ -77,9 +77,9 @@
 
     data() {
       const model = {
-        id: this.$env.CORE_ASSET.id,
-        symbol: this.$env.CORE_ASSET.symbol,
-        precision: this.$env.CORE_ASSET.precision,
+        id: undefined,
+        symbol: undefined,
+        precision: undefined,
         amount: undefined
       };
 
@@ -102,7 +102,11 @@
         return this.$store.getters['assets/listKeys'](this.assetsFilter);
       },
 
-      selectedAsset() { return this.$store.getters['assets/one'](this.internalValue.symbol); },
+      selectedAsset() {
+        if (this.internalValue.symbol) return this.$store.getters['assets/one'](this.internalValue.symbol);
+        if (this.assetsListKeys.length) return this.$store.getters['assets/one'](this.assetsListKeys[0]);
+        return null;
+      },
 
       internalValue: {
         get() {
@@ -114,16 +118,20 @@
         }
       }
     },
+
     watch: {
       selectedAsset: {
         handler(newVal, oldVal) {
-          if (newVal?._id === oldVal?._id) return;
+          if (newVal && newVal?._id === oldVal?._id) return;
 
           this.internalValue = {
             ...this.internalValue,
             id: newVal._id,
-            precision: newVal.precision
+            precision: newVal.precision,
+            symbol: newVal.symbol
           };
+
+          this.symbol = newVal.symbol;
         },
         immediate: true,
         deep: true
@@ -145,9 +153,14 @@
         };
       },
 
-      symbol(newVal) {
+      symbol(newVal, oldVal) {
+        if (newVal === oldVal) return;
+
+        const newAsset = this.$store.getters['assets/one'](newVal);
         this.internalValue = {
           ...this.internalValue,
+          id: newAsset._id,
+          precision: newAsset.precision,
           symbol: newVal
         };
       }

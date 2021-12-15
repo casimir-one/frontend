@@ -111,7 +111,8 @@
         },
         set(value) {
           const hardCapAmount = this.noHardCap ? value.amount : this.hardCap.amount;
-          this.$emit('change', {
+
+          this.emitValueChange({
             soft: value,
             hard: { ...value, amount: hardCapAmount }
           });
@@ -122,8 +123,17 @@
           return this.caps.hard;
         },
         set(value) {
-          this.$emit('change', { soft: this.softCap, hard: value });
+          this.emitValueChange({
+            soft: { ...value, amount: this.softCap.amount },
+            hard: value
+          });
         }
+      }
+    },
+
+    methods: {
+      emitValueChange(value) {
+        this.$emit('change', value);
       }
     }
   });

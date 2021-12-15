@@ -175,7 +175,7 @@
 
           const cap = {
             ...value.assetPerItem,
-            amount: (value.assetPerItem.amount || 0) * (parseInt(value.quantity, 10) || 0)
+            amount: (value.assetPerItem.amount || 0) * (parseInt(value.quantity) || 0)
           };
           this.formData.caps.soft = cap;
           this.formData.caps.hard = cap;
@@ -193,7 +193,7 @@
         const DEFAULT_AMOUNT = '10000';
         const symbol = this.generateAssetSymbol();
         const amount = this.isaFundraise
-          ? parseInt(this.formData.isa.quantity, 10) * DEFAULT_AMOUNT
+          ? parseInt(this.formData.isa.quantity) * DEFAULT_AMOUNT
           : DEFAULT_AMOUNT;
 
         const holders = [{
@@ -211,7 +211,7 @@
             issuer: this.project.researchGroup.external_id,
             symbol,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseFloat(amount + '0'.repeat(DEFAULT_PRECISION), 10),
+            maxSupply: parseInt(amount),
             description: '',
             projectTokenOption: {
               projectId: this.project.externalId,
@@ -251,7 +251,7 @@
           payload.data.metadata = {
             isa: {
               assetPerItem: this.formData.isa.assetPerItem,
-              quantity: parseInt(this.formData.isa.quantity, 10)
+              quantity: parseInt(this.formData.isa.quantity)
             }
           };
         }
