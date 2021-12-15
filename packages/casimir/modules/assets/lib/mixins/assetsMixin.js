@@ -14,8 +14,8 @@ export const assetsMixin = {
      */
     $$makeCurrencyOptions(value = {}, options = {}, isFormatted = true) {
       const defaultCurrencyOptions = {
-        precision: this.$env.CORE_ASSET.precision,
-        symbol: this.$env.CORE_ASSET.symbol,
+        precision: 0,
+        symbol: '',
 
         separator: isFormatted ? ',' : '',
         pattern: '# !', // # - amount, ! - symbol
