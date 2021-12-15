@@ -1,8 +1,9 @@
 import { createEnum } from '@deip/toolbox';
 
 const ASSET_TYPE = createEnum({
-  SYSTEM: 1,
-  TOKEN: 2
+  COIN: 1,
+  NFT: 2,
+  CORE: 3
 });
 
 const DEPOSIT_REQUEST_STATUS = createEnum({

@@ -23,7 +23,7 @@ const ACTIONS = {
 
     const loadBalances = (assets) => {
       const balancesPromises = assets
-        .filter((asset) => asset.type === ASSET_TYPE.TOKEN)
+        .filter((asset) => asset.type === ASSET_TYPE.NFT)
         .map((asset) => assetsService
           .getAccountsAssetBalancesByAsset(asset.stringSymbol));
 
