@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.361.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
+
+
+### Bug Fixes
+
+* **@deip/wallet-module:** truncate long amount in balance card ([0441adc](https://gitlab.com/DEIP/deip-client-modules/commit/0441adce0f71c13a83392a9fae8a836e5ee5d553))
+
+
+
+
+
 # [1.360.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.360.0) (2021-12-14)
 
 **Note:** Version bump only for package @deip/wallet-module

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.361.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** add stable attribute block id ([97f7c13](https://github.com/DEIPworld/deip-modules/commit/97f7c138c28b102bccd0ca9b3639ff3988b80401))
+
+
+
+
+
 # [1.360.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.360.0) (2021-12-14)
 
 **Note:** Version bump only for package @deip/layouts-module
