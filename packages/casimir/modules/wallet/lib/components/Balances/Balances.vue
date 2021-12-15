@@ -29,6 +29,7 @@
 </template>
 
 <script>
+  import { ASSET_TYPE } from '@deip/constants';
   import { VexStack, VexDialog } from '@deip/vuetify-extended';
   import { componentViewType } from '@deip/platform-util';
   import { AssetInput } from '@deip/assets-module';
@@ -67,7 +68,24 @@
 
     computed: {
       balances() {
-        return this.$store.getters['wallet/list']();
+        const assets = this.$store.getters['assets/list'](
+          { type: [ASSET_TYPE.COIN, ASSET_TYPE.CORE] }
+        );
+
+        if (!assets.length) return this.$store.getters['wallet/list']();
+
+        return assets.map((asset) => {
+          const walletBalance = this.$store.getters['wallet/one'](asset.symbol);
+          return {
+            amount: '0',
+            assetId: asset._id,
+            precision: asset.precision,
+            symbol: asset.symbol,
+            tokenizedProject: asset.tokenizedProject,
+            type: asset.type,
+            ...walletBalance
+          };
+        });
       },
 
       listComponent() {

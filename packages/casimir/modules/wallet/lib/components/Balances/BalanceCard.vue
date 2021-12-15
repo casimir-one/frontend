@@ -30,7 +30,7 @@
 
           <div>
             <v-btn
-              v-if="withDeposit"
+              v-if="withDeposit && balance.type !== ASSET_TYPE.CORE"
               x-small
               text
               depressed
@@ -53,6 +53,7 @@
 </template>
 
 <script>
+  import { ASSET_TYPE } from '@deip/constants';
   import { VexColorShadow, VexStack } from '@deip/vuetify-extended';
   import { currency } from '@deip/assets-module';
 
@@ -79,6 +80,12 @@
       }
     },
 
+    data() {
+      return {
+        ASSET_TYPE
+      };
+    },
+
     computed: {
       styles() {
         return {
@@ -91,6 +98,7 @@
         return currency(
           this.balance.amount,
           {
+            precision: this.balance.precision,
             symbol: '',
             separator: ',',
             pattern: '#!',
