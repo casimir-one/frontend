@@ -9,6 +9,7 @@ import SubstrateChainRpc from './rpc/SubstrateChainRpc';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/metadata';
 import SubstrateChainSeedAccount from './SubstrateChainSeedAccount';
+import SubstrateTx from './SubstrateTx';
 import { verifySignature, isValidPrivKey } from './utils';
 
 
@@ -17,6 +18,8 @@ class SubstrateChainService extends BaseChainService {
   constructor({ connectionString, coreAsset }) {
     super({ connectionString, coreAsset });
   }
+
+  _chainMetadata;
 
   init() {
     if (!this.isInited()) {
@@ -38,14 +41,22 @@ class SubstrateChainService extends BaseChainService {
             this._chainNodeClient.rpc.state.getMetadata()
           ]);
         })
-        .then(([chain, nodeName, nodeVersion, rpcMetadata]) => {
-          this._chainNodeClient.registry.setMetadata(new Metadata(typesRegistry, rpcMetadata));
+        .then(([chain, nodeName, nodeVersion, chainMetadata]) => {
+          this._chainMetadata = chainMetadata.toHex();
+          this._chainNodeClient.registry.setMetadata(new Metadata(typesRegistry, chainMetadata));
           console.log(`Connected to Substrate chain ${chain.toString()} using ${nodeName.toString()} v${nodeVersion.toString()}`);
           this._isInited = true;
           return this;
         });
     }
     return Promise.resolve(this);
+  }
+
+  getChainInfo() {
+    return {
+      TxClass: SubstrateTx,
+      metadata: this._chainMetadata
+    };
   }
 
   getChainTxBuilder() {

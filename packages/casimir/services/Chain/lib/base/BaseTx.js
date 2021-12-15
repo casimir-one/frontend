@@ -41,9 +41,9 @@ class BaseTx {
   signByTenantAsync() { throw new Error("Not implemented exception!"); };
   getProtocolChain() { throw new Error("Not implemented exception!"); };
   serialize() { throw new Error("Not implemented exception!"); };
-  deserialize() { throw new Error("Not implemented exception!"); };
+  deserialize(serializedTx) { throw new Error("Not implemented exception!"); };
   static Serialize(tx) { throw new Error("Not implemented exception!"); };
-  static Deserialize(serialized) { throw new Error("Not implemented exception!"); };
+  static Deserialize(serializedTx) { throw new Error("Not implemented exception!"); };
 }
 
 
