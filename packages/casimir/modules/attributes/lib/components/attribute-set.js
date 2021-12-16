@@ -1,6 +1,6 @@
 import { VlsParser } from '@deip/vue-layout-schema';
-import { isEqual, merge } from '@deip/toolbox/lodash';
-import { wrapInArray } from '@deip/toolbox';
+import { isEqual, merge, cloneDeep } from '@deip/toolbox/lodash';
+import { wrapInArray, objectPath, isArray } from '@deip/toolbox';
 import { ValidationProvider } from '@deip/validation-plugin';
 
 import {
@@ -13,7 +13,12 @@ import {
   VTextarea,
   VSelect,
   VSwitch,
-  VCheckbox
+  VCheckbox,
+  VBtn,
+  VIcon,
+
+  VCol,
+  VRow
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
@@ -45,6 +50,9 @@ const AttributeSet = defineComponent({
         VSwitch,
         VCheckbox,
 
+        VCol,
+        VRow,
+
         VexImageInput,
         VexDateInput,
         VexTimeInput,
@@ -53,7 +61,8 @@ const AttributeSet = defineComponent({
         VexFileInputExtended,
         VexPlacesAutocomplete,
         VexRichedit
-      }
+      },
+      'set'
     )
   ],
 
@@ -112,43 +121,88 @@ const AttributeSet = defineComponent({
   },
 
   methods: {
-    genAttribute(errors = []) {
+    genStandardAttribute(errors, subPath, defaultValue) {
       const schemaData = merge(
         this.internalSchemaData,
-        {
-          attribute: {
-            errors
-          }
-        }
+        { attribute: { errors } }
       );
+
+      const attributeValue = this.value || this.attributeInfo.defaultValue || defaultValue;
+      const providedValue = subPath ? objectPath.get(attributeValue, subPath) : attributeValue;
 
       return (
         <VlsParser
           schema={this.normalisedSchema}
           schemaData={schemaData}
           components={this.internalComponents}
-          value={this.value || this.attributeInfo.defaultValue}
+          value={providedValue}
           onInput={(val) => {
-            this.internalValue = val;
+            if (subPath) {
+              const clone = cloneDeep(this.internalValue);
+              objectPath.set(clone, subPath, val);
+              this.internalValue = clone;
+            } else {
+              this.internalValue = val;
+            }
           }}
         />
       );
     },
 
-    // genAttribute(errors = []) {
-    //   return this.$createElement(VlsParser, {
-    //     props: {
-    //       value: this.value || this.attributeInfo.defaultValue,
-    //       disabled: this.attributeInfo.isEditable
-    //     },
-    //     attrs: this.$attrs,
-    //     on: {
-    //       input: (val) => {
-    //         this.internalValue = val;
-    //       }
-    //     }
-    //   });
-    // },
+    genAttribute(errors = []) {
+      if (this.attributeInfo.isMultiple) {
+        return this.genMultipleAttribute(errors);
+      }
+
+      return this.genStandardAttribute(errors);
+    },
+
+    genMultipleAttribute(errors = []) {
+      const addRowBtn = (
+        <VBtn
+          text
+          small
+          color="primary"
+          onClick={() => this.internalValue.push(undefined)}
+        >
+          Add item
+        </VBtn>
+      );
+
+      if (!isArray(this.internalValue)) {
+        this.internalValue = [];
+      }
+
+      const attributeRows = this.internalValue.map((_, index) => {
+        const delHandler = () => {
+          this.internalValue.splice(index, 1);
+        };
+
+        const delButton = () => (
+          <VBtn icon small onClick={delHandler}>
+            <VIcon>mdi-close</VIcon>
+          </VBtn>
+        );
+
+        return (
+          <VRow noGutters align="start">
+            <VCol class="py-4">
+              {this.genStandardAttribute(errors, [index], [])}
+            </VCol>
+            <VCol cols="auto" class="px-3 py-5">
+              {delButton()}
+            </VCol>
+          </VRow>
+        );
+      });
+
+      return (
+        <div>
+          {attributeRows}
+          {addRowBtn}
+        </div>
+      );
+    },
 
     genRequiredAttribute() {
       return this.$createElement(ValidationProvider, {

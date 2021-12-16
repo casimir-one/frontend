@@ -1,5 +1,6 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
+    <ve-raw-display :value="formData.attributes" />
     <v-form
       :disabled="loading"
       @submit.prevent="handleSubmit(onSubmit)"
@@ -49,13 +50,15 @@
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory } from '@deip/layouts-module';
   import { VIEW_MODE, ATTR_SCOPES } from '@deip/constants';
+  import { VeRawDisplay } from '@deip/vue-elements';
 
   export default {
     name: 'TeamForm',
 
     components: {
       VexStack,
-      VlsParser
+      VlsParser,
+      VeRawDisplay
     },
 
     mixins: [attributedFormFactory('team')],
