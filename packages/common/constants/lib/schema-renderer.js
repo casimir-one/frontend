@@ -6,7 +6,8 @@ export const RENDERER_SCHEMA_BLOCK_KEYS = [
   'data',
   'children',
   'proxyProps',
-  'model'
+  'model',
+  'text'
 ];
 
 export const RENDERER_BLOCK_KEYS = [

@@ -8,7 +8,7 @@ import {
   capitalCase,
   paramCase,
 
-  RecursiveIterator, objectPath, isFunction
+  RecursiveIterator, objectPath, isFunction, assert
 } from '@deip/toolbox';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
@@ -101,6 +101,27 @@ export const normalizeBlocksObject = (obj) => {
   return obj;
 };
 
+const normalizeBlockProp = (prop) => {
+  if (isFunction(prop)) {
+    return {
+      type: prop,
+      default: undefined
+    };
+  }
+
+  if (
+    isFunction(prop.default)
+    && (isArray(prop.default()) || isObject(prop.default()))
+  ) {
+    return {
+      type: prop.type,
+      default: prop.default()
+    };
+  }
+
+  return prop;
+};
+
 const normalizeBlockProps = (props) => {
   if (!props || !Object.keys(props).length) return {};
 
@@ -118,25 +139,26 @@ const normalizeBlockProps = (props) => {
   }
 
   return Object.keys(props)
-    .reduce((acc, prop) => {
-      let propVal;
+    .reduce((acc, prop) => ({
+      ...acc,
+      ...{ [prop]: normalizeBlockProp(props[prop]) }
+    }), {});
+};
 
-      if (isFunction(props[prop])) {
-        propVal = {
-          type: props[prop],
-          default: undefined
-        };
-      } else {
-        propVal = props[prop];
-      }
+const filterProps = (
+  componentProps,
+  filter,
+  exclude
+) => {
+  if (filter === '*' && exclude) {
+    return {};
+  }
 
-      return {
-        ...acc,
-        ...{
-          [prop]: propVal
-        }
-      };
-    }, {});
+  if (filter === '*' && !exclude) {
+    return componentProps;
+  }
+
+  return filterObjectKeys(componentProps, filter, exclude);
 };
 
 export const blocksGenerator = (blocks) => wrapInArray(blocks)
@@ -153,10 +175,15 @@ export const blocksGenerator = (blocks) => wrapInArray(blocks)
     const blockProps = normalizeBlockProps(block?.data?.props);
     const proxyProps = normalizeBlockProps(block?.data?.proxyProps);
 
-    const resultProps = filterObjectKeys(
+    assert(
+      !(block.excludeProps && block.includeProps),
+      '[blocksGenerator]: You can`t use "excludeProps" and "includeProps" at same time'
+    );
+
+    const resultProps = filterProps(
       { ...componentProps, ...blockProps },
-      block.excludeProps,
-      true
+      block.excludeProps || block.includeProps,
+      !!block.excludeProps
     );
 
     const data = {
