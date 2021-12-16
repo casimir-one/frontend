@@ -4,7 +4,8 @@ import { isFile, wrapInArray } from '@deip/toolbox';
 
 export const abstractAttributeFactory = (
   schemas = [],
-  components = {}
+  components = {},
+  area = 'set'
 ) => defineComponent({
   name: 'AttributeAbstract',
 
@@ -41,20 +42,14 @@ export const abstractAttributeFactory = (
     },
 
     internalSchema() {
-      return this.attributeInfo?.schemas?.set
+      return this.attributeInfo?.schemas?.[area]
         || schemas[this.attributeInfo.type]
         || schemas.fallback
-        || { is: 'div', text: `${this.attributeInfo.title} need [SET] schema` };
+        || { is: 'div', text: `${this.attributeInfo.title} need [${area}] schema` };
     },
 
     internalSchemaData() {
       const value = this.schemaData?.data?.attributes?.[this.attributeId];
-
-      // if (Object.prototype.hasOwnProperty.call(this, 'value')) {
-      //   value = isFile(this.value) ? this.value.name : this.value;
-      // } else {
-      //   value = this.schemaData.data.attributes[this.attributeId].value;
-      // }
 
       return {
         ...this.schemaData,
@@ -79,7 +74,16 @@ export const abstractAttributeFactory = (
   },
 
   methods: {
+
     genAttribute() {
+      const { isMultiple } = this.attributeInfo;
+
+      if (isMultiple) {
+        return (
+          <div>Multiple attrimute placeholder</div>
+        );
+      }
+
       return (
         <VlsParser
           schema={this.normalisedSchema}

@@ -32,6 +32,7 @@
     "@deip/proxydi": "1.361.0",
     "@deip/toolbox": "1.361.0",
     "@deip/validation-plugin": "1.361.0",
+    "@deip/vue-elements": "^1.359.0",
     "@deip/vue-layout-schema": "1.361.0",
     "@deip/vuetify-extended": "1.361.0",
     "dot-prop": "^6.0.1",
