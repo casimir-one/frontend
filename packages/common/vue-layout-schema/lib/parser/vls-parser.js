@@ -203,7 +203,7 @@ export const VlsParser = {
             if (!modelProps.path) {
               vm.internalValue = value;
             } else {
-              const updatedValue = cloneDeep(vm.internalValue);
+              const updatedValue = cloneDeep(vm.internalValue) || {};
               objectPath.set(updatedValue, modelProps.path, value);
 
               vm.internalValue = updatedValue;

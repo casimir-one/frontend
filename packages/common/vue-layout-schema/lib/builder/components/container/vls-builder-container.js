@@ -52,10 +52,8 @@ export const VlsBuilderContainer = {
       mutations.setContainerSchema(this.containerId, this.value);
 
       this.$watch('containerSchema', {
-        handler(newVal, oldVal) {
-          if (newVal && !isEqual(newVal, oldVal)) {
-            this.$emit('change', newVal);
-          }
+        handler(newVal) {
+          this.$emit('change', newVal);
         },
         deep: true
       });

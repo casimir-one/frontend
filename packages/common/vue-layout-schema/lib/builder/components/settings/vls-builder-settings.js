@@ -10,6 +10,7 @@ import { cloneDeep } from '@deip/toolbox/lodash';
 /* eslint-disable */
 import {
   VTextField,
+  VTextarea,
   VCheckbox,
   VDivider
 } from 'vuetify/lib/components';
@@ -71,6 +72,19 @@ export const VlsBuilderSettings = {
     },
 
     /**
+     * Update block property value in layout schema
+     * @param {string[]} path
+     * @param {*} value
+     */
+    setFieldArrayVal(path, value) {
+      const arr = value.split('\n').filter((i) => !!i);
+      const updated = cloneDeep(this.schemaAcc);
+      objectPath.set(updated, path, arr);
+
+      this.setContainerSchema(updated);
+    },
+
+    /**
      * Generate VInput component props
      * @param {string} label
      * @returns {{hideDetails: boolean, label: string, dense: boolean}}
@@ -105,6 +119,27 @@ export const VlsBuilderSettings = {
     },
 
     /**
+     * Generate text input
+     * @param {string[]} path
+     * @param {string} label
+     * @param {*} value
+     * @returns {JSX.Element}
+     */
+    genTextarea(path, label, value) {
+      const initVal = objectPath.get(this.schemaAcc, path, value);
+      const props = this.genFieldProps(label);
+
+      return (
+        <VTextarea
+          {...{ props }}
+          class="ma-0"
+          value={initVal === false ? '' : initVal.join('\n')}
+          onInput={(v) => this.setFieldArrayVal(path, v)}
+        />
+      );
+    },
+
+    /**
      * Generate checkbox input
      * @param {string[]} path
      * @param {string} label
@@ -129,11 +164,15 @@ export const VlsBuilderSettings = {
      * Generate property input based on property type
      * @param {string[]} path
      * @param {string} key
-     * @param {*} val
+     * @param {*} defaultValue
      * @returns {JSX.Element|null}
      */
-    genField(path, key, val) {
+    genField(path, key, defaultValue) {
       const propType = this.checkPropType(key, path);
+      // const defaultValue = isFunction(val) ? val() : val;
+      const propPath = [...path, key];
+
+      const params = [propPath, key, defaultValue];
 
       const disabled = ([
         ...PERM_DISABLED,
@@ -143,10 +182,14 @@ export const VlsBuilderSettings = {
       if (disabled) return null;
 
       if (propType === 'boolean') {
-        return this.genCheckbox([...path, key], key, val);
+        return this.genCheckbox(...params);
       }
 
-      return this.genTextField([...path, key], key, val);
+      if (propType === 'array') {
+        return this.genTextarea(...params);
+      }
+
+      return this.genTextField(...params);
     },
 
     /**
