@@ -66,6 +66,7 @@
                   color="error"
                   depressed
                   :loading="discardLoading"
+                  :disabled="signLoading"
                   @click="handleDiscardContract"
                 >
                   {{ $t('module.contractAgreements.discard') }}
@@ -76,7 +77,7 @@
                   type="submit"
                   color="primary"
                   depressed
-                  :disabled="invalid"
+                  :disabled="invalid || discardLoading"
                   :loading="signLoading"
                 >
                   {{ $t('module.contractAgreements.details.sign') }}
@@ -95,6 +96,8 @@
 
   import { proxydi } from '@deip/proxydi';
   import { VexStack } from '@deip/vuetify-extended';
+
+  const sleep = (time) => new Promise((resolve) => { setTimeout(() => { resolve(); }, time); });
 
   export default {
     name: 'ContractPdfDetails',
@@ -186,62 +189,62 @@
         console.error(error);
       },
 
-      handleDiscardContract() {
-        this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),
-                      { title: this.$t('module.contractAgreements.discardAction.confirm.title') })
-          .then((confirm) => {
-            if (confirm) {
-              this.discardLoading = true;
-              const payload = {
-                initiator: this.$currentUser,
-                data: {
-                  account: this.currentPartyId,
-                  proposalId: this.contract.proposalId
-                }
-              };
-              this.$store.dispatch('contractAgreements/discard', payload)
-                .then(() => this.getContract())
-                .then(() => {
-                  this.$notifier.showSuccess(this.$t('module.contractAgreements.discardAction.success'));
-                })
-                .finally(() => {
-                  this.discardLoading = false;
-                })
-                .catch((error) => {
-                  console.error(error);
-                  this.$notifier.showError(error.message);
-                });
-            }
-          });
+      async discardContract() {
+        const payload = {
+          initiator: this.$currentUser,
+          data: {
+            account: this.currentPartyId,
+            proposalId: this.contract.proposalId
+          }
+        };
+        try {
+          await this.$store.dispatch('contractAgreements/discard', payload);
+          await this.getContract();
+          this.$notifier.showSuccess(this.$t('module.contractAgreements.discardAction.success'));
+        } catch (error) {
+          console.error(error);
+          this.$notifier.showError(error.message);
+        }
       },
 
-      handleSignContract() {
-        this.$confirm(this.$t('module.contractAgreements.signAction.confirm.message'),
-                      { title: this.$t('module.contractAgreements.signAction.confirm.title') })
-          .then((confirm) => {
-            if (confirm) {
-              this.signLoading = true;
-              const payload = {
-                initiator: this.$currentUser,
-                data: {
-                  contractParty: this.currentPartyId,
-                  proposalId: this.contract.proposalId
-                }
-              };
-              this.$store.dispatch('contractAgreements/acceptProposed', payload)
-                .then(() => this.getContract())
-                .then(() => {
-                  this.$notifier.showSuccess(this.$t('module.contractAgreements.signAction.success'));
-                })
-                .finally(() => {
-                  this.signLoading = false;
-                })
-                .catch((error) => {
-                  console.error(error);
-                  this.$notifier.showError(error.message);
-                });
-            }
-          });
+      async signContract() {
+        const payload = {
+          initiator: this.$currentUser,
+          data: {
+            contractParty: this.currentPartyId,
+            proposalId: this.contract.proposalId
+          }
+        };
+
+        try {
+          await this.$store.dispatch('contractAgreements/acceptProposed', payload);
+          await sleep(4000);
+          await this.getContract();
+          this.$notifier.showSuccess(this.$t('module.contractAgreements.signAction.success'));
+        } catch (error) {
+          console.error(error);
+          this.$notifier.showError(error.message);
+        }
+      },
+
+      async handleDiscardContract() {
+        const isConfirmed = await this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),
+                                                { title: this.$t('module.contractAgreements.discardAction.confirm.title') });
+        if (isConfirmed) {
+          this.discardLoading = true;
+          await this.discardContract();
+          this.discardLoading = false;
+        }
+      },
+
+      async handleSignContract() {
+        const isConfirmed = await this.$confirm(this.$t('module.contractAgreements.signAction.confirm.message'),
+                                                { title: this.$t('module.contractAgreements.signAction.confirm.title') });
+        if (isConfirmed) {
+          this.signLoading = true;
+          await this.signContract();
+          this.signLoading = false;
+        }
       }
     }
   };
