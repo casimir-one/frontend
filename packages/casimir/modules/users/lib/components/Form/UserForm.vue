@@ -2,7 +2,7 @@
   <validation-observer v-slot="{ handleSubmit, invalid }">
     <v-form @submit.prevent="handleSubmit(updateUser)">
       <vex-stack gutter="32">
-        <vls-parser
+        <layout-renderer
           v-if="schema.length"
           :key="forceUpdateKey"
           v-model="formData"
@@ -39,10 +39,9 @@
 </template>
 
 <script>
-  import { VlsParser } from '@deip/vue-layout-schema';
   import { AttributeSet } from '@deip/attributes-module';
   import { attributeMethodsFactory } from '@deip/platform-fns';
-  import { attributedFormFactory } from '@deip/layouts-module';
+  import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VexStack } from '@deip/vuetify-extended';
   import { ATTR_SCOPES } from '@deip/constants';
 
@@ -50,7 +49,7 @@
     name: 'UserForm',
 
     components: {
-      VlsParser,
+      LayoutRenderer,
       VexStack
     },
 
