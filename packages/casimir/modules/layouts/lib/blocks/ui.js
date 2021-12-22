@@ -2,7 +2,6 @@ import { blocksGenerator } from '@deip/vue-layout-schema';
 import { defaultLayoutComponents } from '../default-layouts-components';
 
 const {
-  VIcon,
   VDivider,
   VexMiniMetaItem,
   VexTooltip,
@@ -14,13 +13,9 @@ export const uiBlocks = {
   title: 'Ui elements',
   blocks: blocksGenerator([
     {
-      component: VIcon,
-      icon: 'mdi-star-box-outline',
-      children: []
-    },
-    {
       component: VDivider,
       icon: 'mdi-minus',
+      blockType: 'component',
       children: []
     },
     {
