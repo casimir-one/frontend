@@ -14,17 +14,19 @@ import {
 } from 'vuetify/lib/components';
 
 import {
-  VexAutocomplete,
-  VexBlock,
-  VexStack
+  VexAutocomplete
   // eslint-disable-next-line import/extensions,import/no-unresolved
 } from '@deip/vuetify-extended';
+
+import { VeStack } from '@deip/vue-elements';
 
 const defaultMapKeys = () => [
   'userDetails',
   'userEdit',
+
   'teamDetails',
   'teamEdit',
+
   'projectDetails',
   'projectEdit'
 ];
@@ -61,17 +63,6 @@ export default defineComponent({
       this.formData.mapping.splice(index, 1);
     },
 
-    genMapBlock() {
-      return (
-        <VexBlock title='Glodal layout map'>
-          <div>
-            {this.genMapFields()}
-            {this.genMapAdd()}
-          </div>
-        </VexBlock>
-      );
-    },
-
     genMapFields() {
       return this.formData.mapping.map((item, index) => (
         <VRow>
@@ -93,9 +84,9 @@ export default defineComponent({
           </VCol>
           <VCol class="d-flex justify-end align-center col col-1">
             <VBtn
-              rounded="true"
-              small="true"
-              icon="true"
+              rounded
+              small
+              icon
               onClick={() => this.handleRemoveRowClick(index)}>
                 <VIcon>mdi-delete</VIcon>
               </VBtn>
@@ -169,11 +160,12 @@ export default defineComponent({
   render() {
     return (
       <VForm onSubmit={() => this.onSubmit()}>
-        <VexStack gutter={32}>
-          {this.genMapBlock()}
+        <VeStack gap={32}>
+          {this.genMapFields()}
+          {this.genMapAdd()}
           <VDivider />
           {this.genFormControls()}
-        </VexStack>
+        </VeStack>
 
       </VForm>
 
