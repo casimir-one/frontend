@@ -1,12 +1,18 @@
 <template>
-  <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
-    <ve-raw-display :value="formData.attributes" />
+  <validation-observer
+    v-slot="{ invalid, handleSubmit }"
+    ref="observer"
+    tag="div"
+    style="min-width: 0px"
+  >
+    <ve-raw-display :value="formData.attributes" class="mb-6" />
+
     <v-form
       :disabled="loading"
       @submit.prevent="handleSubmit(onSubmit)"
     >
       <vex-stack gutter="32">
-        <vls-parser
+        <layout-renderer
           v-if="schema.length"
           v-model="formData"
           :schema="schema"
@@ -45,10 +51,9 @@
 
 <script>
   import { VexStack } from '@deip/vuetify-extended';
-  import { VlsParser } from '@deip/vue-layout-schema';
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
-  import { attributedFormFactory } from '@deip/layouts-module';
+  import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VIEW_MODE, ATTR_SCOPES } from '@deip/constants';
   import { VeRawDisplay } from '@deip/vue-elements';
 
@@ -57,8 +62,9 @@
 
     components: {
       VexStack,
-      VlsParser,
-      VeRawDisplay
+      VeRawDisplay,
+
+      LayoutRenderer
     },
 
     mixins: [attributedFormFactory('team')],
