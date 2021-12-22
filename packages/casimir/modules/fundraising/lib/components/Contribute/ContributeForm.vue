@@ -124,7 +124,7 @@
         return this.tokenSale?.hardCap
           ? {
             ...this.tokenSale.hardCap,
-            amount: parseInt(this.tokenSale.hardCap.amount, 10)
+            amount: parseInt(this.tokenSale.hardCap.amount)
           }
           : {};
       },
@@ -132,7 +132,7 @@
       collected() {
         return this.tokenSale?.totalInvested ? {
           ...this.tokenSale.totalInvested,
-          amount: parseInt(this.tokenSale.totalInvested.amount, 10)
+          amount: parseInt(this.tokenSale.totalInvested.amount)
         }
           : {};
       },
@@ -145,15 +145,15 @@
         const userBalance = this.$store.getters['wallet/one'](this.hardCap.symbol);
         if (!userBalance) return false;
 
-        const userBalanceAmount = parseInt(userBalance?.amount, 10);
-        return (this.internalAmount?.amount || 0) <= userBalanceAmount;
+        const userBalanceAmount = parseInt(userBalance?.amount);
+        return (this.internalAmount || 0) <= userBalanceAmount;
       }
     },
 
     watch: {
       internalAmount(val) {
         this.formData.assetToContribute = {
-          amount: val.toString(),
+          amount: val ? val.toString() : null,
           id: this.hardCap.id,
           symbol: this.hardCap.symbol,
           precision: this.hardCap.precision
@@ -166,42 +166,47 @@
         this.$emit('cancel');
       },
 
-      confirmSubmit() {
+      emitSuccess() {
+        this.$emit('success');
+      },
+      emitError(error) {
+        this.$emit('error', error);
+      },
+
+      async confirmSubmit() {
         if (!this.isUserBalanceEnough) {
           this.$notifier.showError(this.$t('module.fundraising.contributeForm.userBalanceIsNotEnough'));
           return;
         }
-
         const message = this.$t('module.fundraising.contributeForm.doYouConfirm');
         const options = { title: this.$t('module.fundraising.contributeForm.confirmTitle') };
-        this.$confirm(message, options)
-          .then((isConfirmed) => {
-            if (isConfirmed) {
-              this.contribute();
-            }
-          });
+
+        const isConfirmed = await this.$confirm(message, options);
+        if (isConfirmed) {
+          this.loading = true;
+
+          this.contribute();
+
+          this.loading = false;
+        }
       },
 
-      contribute() {
-        this.loading = true;
-
-        this.$store.dispatch('fundraising/contribute', {
+      async contribute() {
+        const payload = {
           user: this.$currentUser,
           data: {
             investmentOpportunityId: this.tokenSale._id,
             investor: this.$currentUser.username,
             asset: this.formData.assetToContribute
           }
-        })
-          .then(() => {
-            this.$emit('success');
-          })
-          .catch((err) => {
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+        };
+
+        try {
+          await this.$store.dispatch('fundraising/contribute', payload);
+          this.emitSuccess();
+        } catch (error) {
+          this.emitError(error);
+        }
       }
     }
   };
