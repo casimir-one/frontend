@@ -80,16 +80,18 @@
     methods: {
       parseVal(dateTime) {
         const [date, time] = dateTime.split('T');
+        const [hours = '00', min = '00'] = time.split(':');
 
-        return { date, time };
+        return { date, time: `${hours}:${min}` };
       },
 
       stringifyVal(dateTime) {
         const { date, time } = dateTime;
+        const [hours = '00', min = '00', sec = '00'] = time.split(':');
 
         if (!date) return '';
 
-        return `${date}T${time || '00:00'}:00`;
+        return `${date}T${hours}:${min}:${sec}`;
       }
     }
   });
