@@ -1,5 +1,4 @@
 module.exports = {
-  root: true,
   env: {
     es6: true,
     node: true,
@@ -24,8 +23,7 @@ module.exports = {
       'error',
       'always',
       {
-        js: 'never',
-        vue: 'never'
+        js: 'never'
       }
     ],
     'no-restricted-syntax': 'off',
@@ -58,5 +56,14 @@ module.exports = {
     'class-methods-use-this': 'off',
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
     radix: ['error', 'as-needed']
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: [
+          '.js'
+        ]
+      }
+    }
   }
 };

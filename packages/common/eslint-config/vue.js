@@ -70,5 +70,15 @@ module.exports = {
         indent: 'off'
       }
     }
-  ]
+  ],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: [
+          '.js',
+          '.vue'
+        ]
+      }
+    }
+  }
 };
