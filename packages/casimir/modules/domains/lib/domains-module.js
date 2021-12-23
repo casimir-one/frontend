@@ -10,6 +10,7 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('domains', domainsStore);
+    store.dispatch('domains/getList');
   } else {
     throw Error('[DomainsModule]: storeInstance is not provided');
   }

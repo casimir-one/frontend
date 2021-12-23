@@ -8,7 +8,7 @@ import {
 describe('deepFreeze', () => {
   it('should freeze object at all levels', () => {
     const object = {
-      externalId: 1,
+      _id: 1,
       publicProfile: {
         personalNo: 111
       }
@@ -26,13 +26,13 @@ describe('camelizeObjectKeys', () => {
 
   it('should camelize object keys only on the first level', () => {
     const object = {
-      external_id: 1,
+      _id: 1,
       public_profile: {
         personal_no: 111
       }
     };
     const expectedResult = {
-      externalId: 1,
+      _id: 1,
       publicProfile: {
         personal_no: 111
       }

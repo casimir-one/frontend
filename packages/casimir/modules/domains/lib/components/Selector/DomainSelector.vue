@@ -34,7 +34,7 @@
           v-if="domainsTree && domainsTree.length"
           :items="domainsTree"
           :value="internalValue"
-          item-key="externalId"
+          item-key="_id"
           item-text="name"
 
           :search="search"
@@ -58,7 +58,7 @@
     >
       <v-chip
         v-for="domain in selectedDomains"
-        :key="domain.externalId"
+        :key="domain._id"
         outlined
         class="ma-1"
         :disabled="disabled"
@@ -70,7 +70,7 @@
           icon
           x-small
           class="mr-n2 ml-2"
-          @click="removeItem(domain.externalId)"
+          @click="removeItem(domain._id)"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -118,7 +118,7 @@
         return this.$store.getters['domains/tree']();
       },
       selectedDomains() {
-        return this.$store.getters['domains/list']({ externalId: this.internalValue });
+        return this.$store.getters['domains/list']({ _id: this.internalValue });
       }
     },
 

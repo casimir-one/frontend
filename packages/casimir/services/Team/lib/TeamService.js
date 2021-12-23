@@ -317,16 +317,16 @@ export class TeamService {
     return this.teamHttp.getList(teamsIds);
   }
 
-  async getTeamsListing(withTenantTeam = false) {
-    return this.teamHttp.getListing(withTenantTeam);
+  async getTeamsListing(withPortalTeam = false) {
+    return this.teamHttp.getListing(withPortalTeam);
   }
 
-  async getTeamsByUser(user, withTenantTeam = false) {
-    return this.teamHttp.getListByUser(user, withTenantTeam);
+  async getTeamsByUser(user, withPortalTeam = false) {
+    return this.teamHttp.getListByUser(user, withPortalTeam);
   }
 
-  async getTeamsByTenant(tenantId, withTenantTeam = false) {
-    return this.teamHttp.getListByTenant(tenantId, withTenantTeam);
+  async getTeamsByPortal(portalId, withPortalTeam = false) {
+    return this.teamHttp.getListByPortal(portalId, withPortalTeam);
   }
 
   /** @type {() => TeamService} */

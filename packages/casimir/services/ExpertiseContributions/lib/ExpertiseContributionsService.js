@@ -4,38 +4,38 @@ import { ExpertiseContributionsHttp } from './ExpertiseContributionsHttp';
 export class ExpertiseContributionsService {
   expertiseContributionsHttp = ExpertiseContributionsHttp.getInstance();
 
-  async getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId) {
+  async getEciHistoryByProjectContentAndDomain(contentId, domainId) {
     return this.expertiseContributionsHttp
-      .getEciHistoryByResearchContentAndDiscipline(contentId, disciplineId);
+      .getEciHistoryByProjectContentAndDomain(contentId, domainId);
   }
 
-  async getExpertiseContributionsByResearch(researchId) {
-    return this.expertiseContributionsHttp.getExpertiseContributionsByResearch(researchId);
+  async getExpertiseContributionsByProject(projectId) {
+    return this.expertiseContributionsHttp.getExpertiseContributionsByProject(projectId);
   }
 
-  async getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId) {
+  async getExpertiseContributionsByProjectAndDomain(projectId, domainId) {
     return this.expertiseContributionsHttp
-      .getExpertiseContributionsByResearchAndDiscipline(researchId, disciplineId);
+      .getExpertiseContributionsByProjectAndDomain(projectId, domainId);
   }
 
-  async getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId) {
+  async getExpertiseContributionByProjectContentAndDomain(contentId, domainId) {
     return this.expertiseContributionsHttp
-      .getExpertiseContributionByResearchContentAndDiscipline(contentId, disciplineId);
+      .getExpertiseContributionByProjectContentAndDomain(contentId, domainId);
   }
 
-  async getExpertiseContributionsByResearchContent(contentId) {
-    return this.expertiseContributionsHttp.getExpertiseContributionsByResearchContent(contentId);
+  async getExpertiseContributionsByProjectContent(contentId) {
+    return this.expertiseContributionsHttp.getExpertiseContributionsByProjectContent(contentId);
   }
 
   async getAccountExpertiseHistory(username, {
-    discipline,
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
@@ -46,14 +46,14 @@ export class ExpertiseContributionsService {
   }
 
   async getAccountExpertiseStats(username, {
-    discipline,
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
@@ -65,7 +65,7 @@ export class ExpertiseContributionsService {
 
   async getAccountsExpertiseStats({
     searchTerm,
-    discipline,
+    domain,
     from,
     to,
     contribution,
@@ -73,7 +73,7 @@ export class ExpertiseContributionsService {
   }) {
     const filter = {
       searchTerm: searchTerm || '',
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
@@ -83,88 +83,69 @@ export class ExpertiseContributionsService {
     return this.expertiseContributionsHttp.getAccountsExpertiseStats(filter);
   }
 
-  async getResearchExpertiseHistory(researchExternalId, {
-    discipline,
+  async getProjectExpertiseHistory(projectId, {
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
       criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchExpertiseHistory(researchExternalId, filter);
+    return this.expertiseContributionsHttp.getProjectExpertiseHistory(projectId, filter);
   }
 
-  async getResearchExpertiseStats(researchExternalId, {
-    discipline,
+  async getProjectExpertiseStats(projectId, {
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
       criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchExpertiseStats(researchExternalId, filter);
+    return this.expertiseContributionsHttp.getProjectExpertiseStats(projectId, filter);
   }
 
-  async getResearchesExpertiseStats({
-    discipline,
+  async getProjectsExpertiseStats({
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
       criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchesExpertiseStats(filter);
+    return this.expertiseContributionsHttp.getProjectsExpertiseStats(filter);
   }
 
-  async getResearchContentExpertiseHistory(researchContentExternalId, {
-    discipline,
+  async getProjectContentExpertiseHistory(projectContentId, {
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
-      from: from || '',
-      to: to || '',
-      contribution: contribution || '',
-      criteria: criteria || ''
-    };
-
-    return this.expertiseContributionsHttp
-      .getResearchContentExpertiseHistory(researchContentExternalId, filter);
-  }
-
-  async getResearchContentExpertiseStats(researchContentExternalId, {
-    discipline,
-    from,
-    to,
-    contribution,
-    criteria
-  }) {
-    const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
@@ -172,46 +153,65 @@ export class ExpertiseContributionsService {
     };
 
     return this.expertiseContributionsHttp
-      .getResearchContentExpertiseStats(researchContentExternalId, filter);
+      .getProjectContentExpertiseHistory(projectContentId, filter);
   }
 
-  async getResearchContentsExpertiseStats({
-    discipline,
+  async getProjectContentExpertiseStats(projectContentId, {
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
       criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getResearchContentsExpertiseStats(filter);
+    return this.expertiseContributionsHttp
+      .getProjectContentExpertiseStats(projectContentId, filter);
   }
 
-  async getDisciplineExpertiseHistory({
-    discipline,
+  async getProjectContentsExpertiseStats({
+    domain,
     from,
     to,
     contribution,
     criteria
   }) {
     const filter = {
-      discipline: discipline || '',
+      domain: domain || '',
       from: from || '',
       to: to || '',
       contribution: contribution || '',
       criteria: criteria || ''
     };
 
-    return this.expertiseContributionsHttp.getDisciplineExpertiseHistory(filter);
+    return this.expertiseContributionsHttp.getProjectContentsExpertiseStats(filter);
   }
 
-  async getDisciplinesExpertiseStatsHistory({
+  async getDomainExpertiseHistory({
+    domain,
+    from,
+    to,
+    contribution,
+    criteria
+  }) {
+    const filter = {
+      domain: domain || '',
+      from: from || '',
+      to: to || '',
+      contribution: contribution || '',
+      criteria: criteria || ''
+    };
+
+    return this.expertiseContributionsHttp.getDomainExpertiseHistory(filter);
+  }
+
+  async getDomainsExpertiseStatsHistory({
     from,
     to,
     step
@@ -222,19 +222,19 @@ export class ExpertiseContributionsService {
       step: step || ''
     };
 
-    return this.expertiseContributionsHttp.getDisciplinesExpertiseStatsHistory(filter);
+    return this.expertiseContributionsHttp.getDomainsExpertiseStatsHistory(filter);
   }
 
-  async getDisciplinesExpertiseLastStats() {
-    return this.expertiseContributionsHttp.getDisciplinesExpertiseLastStats();
+  async getDomainsExpertiseLastStats() {
+    return this.expertiseContributionsHttp.getDomainsExpertiseLastStats();
   }
 
   async getAccountExpertiseTokens(username) {
     return this.expertiseContributionsHttp.getAccountExpertiseTokens(username);
   }
 
-  async getDisciplineExpertiseTokens(disciplineExternalId) {
-    return this.expertiseContributionsHttp.getDisciplineExpertiseTokens(disciplineExternalId);
+  async getDomainExpertiseTokens(domainId) {
+    return this.expertiseContributionsHttp.getDomainExpertiseTokens(domainId);
   }
 
   /** @type {() => ExpertiseContributionsService} */

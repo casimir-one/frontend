@@ -9,38 +9,38 @@ import {
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
-import { TenantHttp } from './TenantHttp';
+import { PortalHttp } from './PortalHttp';
 
-export class TenantService {
-  tenantHttp = TenantHttp.getInstance();
+export class PortalService {
+  portalHttp = PortalHttp.getInstance();
 
   proxydi = proxydi;
 
-  async getTenant() {
-    return this.tenantHttp.getTenant();
+  async getPortal() {
+    return this.portalHttp.getPortal();
   }
 
-  async getNetworkTenant(tenantId) {
-    return this.tenantHttp.getNetworkTenant(tenantId);
+  async getNetworkPortal(portalId) {
+    return this.portalHttp.getNetworkPortal(portalId);
   }
 
-  async getNetworkTenants() {
-    return this.tenantHttp.getNetworkTenants();
+  async getNetworkPortals() {
+    return this.portalHttp.getNetworkPortals();
   }
 
-  async updateTenantProfile(data) {
+  async updatePortalProfile(data) {
     const updatePortalProfileCmd = new UpdatePortalProfileCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updatePortalProfileCmd] });
-    return this.tenantHttp.updateTenantProfile(msg);
+    return this.portalHttp.updatePortalProfile(msg);
   }
 
   async updateNetworkSettings(data) {
     const updateNetworkSettingsCmd = new UpdateNetworkSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateNetworkSettingsCmd] });
-    return this.tenantHttp.updateNetworkSettings(msg);
+    return this.portalHttp.updateNetworkSettings(msg);
   }
 
-  async updateTenantSettings(data) {
+  async updatePortalSettings(data) {
     const {
       title,
       banner,
@@ -55,7 +55,7 @@ export class TenantService {
       logo
     });
     const msg = new MultFormDataMsg(formData, { appCmds: [updatePortalSettingsCmd] });
-    return this.tenantHttp.updateTenantSettings(msg);
+    return this.portalHttp.updatePortalSettings(msg);
   }
 
   async postSignUp({
@@ -101,13 +101,13 @@ export class TenantService {
             // const chainNodeClient = chainService.getChainNodeClient();
             // return txEnvelop.signAsync(privKey, chainNodeClient);
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.tenantHttp.postSignUp(msg);
+            return this.portalHttp.postSignUp(msg);
           });
       });
   }
 
   async getSignUpRequests() {
-    return this.tenantHttp.getSignUpRequests();
+    return this.portalHttp.getSignUpRequests();
   }
 
   async approveSignUpRequest(username) {
@@ -150,7 +150,7 @@ export class TenantService {
                 // const chainNodeClient = chainService.getChainNodeClient();
                 // return txEnvelop.signAsync(privKey, chainNodeClient);
                 const msg = new JsonDataMsg(packedTx.getPayload());
-                return this.tenantHttp.approveSignUpRequest(msg);
+                return this.portalHttp.approveSignUpRequest(msg);
               });
           });
       });
@@ -159,9 +159,9 @@ export class TenantService {
   async rejectSignUpRequest(username) {
     const deleteUserProfileCmd = new DeleteUserProfileCmd({ username });
     const msg = new JsonDataMsg({ appCmds: [deleteUserProfileCmd] });
-    return this.tenantHttp.rejectSignUpRequest(msg);
+    return this.portalHttp.rejectSignUpRequest(msg);
   }
 
-  /** @type {() => TenantService} */
-  static getInstance = createInstanceGetter(TenantService);
+  /** @type {() => PortalService} */
+  static getInstance = createInstanceGetter(PortalService);
 }

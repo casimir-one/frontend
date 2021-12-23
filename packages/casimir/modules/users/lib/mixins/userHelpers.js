@@ -17,7 +17,7 @@ export const userHelpersMixin = {
       if (firstName || lastName) {
         return `${firstName} ${lastName}`;
       }
-      return user.username;
+      return user._id;
     },
 
     /**
@@ -57,7 +57,7 @@ export const userHelpersMixin = {
 
       return this.$attributes.getFileSrc({
         scope: ATTR_SCOPES.USER,
-        scopeId: user.username,
+        scopeId: user._id,
         attributeId: avatar.attributeId,
         filename: avatar.value,
         ...opts

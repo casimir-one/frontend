@@ -8,8 +8,8 @@ export class ProjectNdaHttp {
     return this.http.post('/api/v2/nda', req.getHttpBody());
   }
 
-  async getProjectNda(ndaExternalId) {
-    return this.http.get(`/api/v2/nda/${ndaExternalId}`);
+  async getProjectNda(ndaId) {
+    return this.http.get(`/api/v2/nda/${ndaId}`);
   }
 
   async getProjectNdaListByCreator(creator) {

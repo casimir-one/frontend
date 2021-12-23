@@ -232,7 +232,7 @@
       async submit() {
         this.loading = true;
         const payload = {
-          projectId: this.project.entityId,
+          projectId: this.project._id,
           title: this.formData.title,
           contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,

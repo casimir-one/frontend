@@ -36,8 +36,8 @@ export class TeamHttp {
     );
   }
 
-  async get(teamExternalId) {
-    return this.http.get(`/api/v2/team/${teamExternalId}`);
+  async get(teamId) {
+    return this.http.get(`/api/v2/team/${teamId}`);
   }
 
   async getList(teamsIds) {
@@ -45,19 +45,19 @@ export class TeamHttp {
     return this.http.get(`/api/v2/teams?${query}`);
   }
 
-  async getListByUser(username, withTenantTeam) {
-    const query = serializeParams({ withTenantTeam });
+  async getListByUser(username, withPortalTeam) {
+    const query = serializeParams({ withPortalTeam });
     return this.http.get(`/api/v2/teams/member/${username}?${query}`);
   }
 
-  async getListing(withTenantTeam) {
-    const query = serializeParams({ withTenantTeam });
+  async getListing(withPortalTeam) {
+    const query = serializeParams({ withPortalTeam });
     return this.http.get(`/api/v2/teams/listing?${query}`);
   }
 
-  async getListByTenant(tenantId, withTenantTeam) {
-    const query = serializeParams({ withTenantTeam });
-    return this.http.get(`/api/v2/teams/tenant/${tenantId}?${query}`);
+  async getListByPortal(portalId, withPortalTeam) {
+    const query = serializeParams({ withPortalTeam });
+    return this.http.get(`/api/v2/teams/portal/${portalId}?${query}`);
   }
 
   /** @type {() => TeamHttp} */

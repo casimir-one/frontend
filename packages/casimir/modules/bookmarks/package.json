@@ -25,7 +25,7 @@
     "@deip/platform-store": "1.361.0",
     "@deip/proxydi": "1.361.0",
     "@deip/toolbox": "1.361.0",
-    "@deip/user-service": "1.361.0"
+    "@deip/bookmark-service": "1.361.0"
   },
   "peerDependencies": {
     "@deip/auth-module": "^1.341.0",

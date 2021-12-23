@@ -72,8 +72,8 @@
                   <v-select
                     :items="[team]"
                     item-text="name"
-                    item-value="entityId"
-                    :value="team.entityId"
+                    item-value="_id"
+                    :value="team._id"
                     disabled
                     outlined
                     :label="$t('module.assets.createTokenForm.shareholder')"
@@ -337,7 +337,7 @@
           .reduce((a, b) => a + b, 0);
 
         return {
-          account: this.team.entityId,
+          account: this.team._id,
           amount: this.formModel.maxSupply - tokensSpend
         };
       }
@@ -406,13 +406,13 @@
           user: this.$currentUser,
           data: {
             symbol: this.formModel.symbol,
-            issuer: this.team.entityId,
+            issuer: this.team._id,
             precision: DEFAULT_PRECISION,
-            maxSupply: parseInt(this.formModel.maxSupply, 10),
+            maxSupply: parseInt(this.formModel.maxSupply),
             description: '',
             projectTokenOption: {
-              projectId: this.project.externalId,
-              teamId: this.team.entityId,
+              projectId: this.project._id,
+              teamId: this.team._id,
               licenseRevenue: {
                 holdersShare: '100.00 %'
               }

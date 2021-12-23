@@ -39,7 +39,7 @@
         const filter = { ...this.filterItems };
 
         if (this.teams && wrapInArray(this.teams).length > 0) {
-          filter['+externalId'] = this.teams;
+          filter['+_id'] = this.teams;
         }
 
         return filter;

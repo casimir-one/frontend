@@ -78,10 +78,9 @@
           const walletBalance = this.$store.getters['wallet/one'](asset.symbol);
           return {
             amount: '0',
-            assetId: asset._id,
+            assetId: asset.assetId,
             precision: asset.precision,
             symbol: asset.symbol,
-            tokenizedProject: asset.tokenizedProject,
             type: asset.type,
             ...walletBalance
           };

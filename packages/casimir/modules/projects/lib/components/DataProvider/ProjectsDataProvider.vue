@@ -30,7 +30,7 @@
         type: String,
         default: null
       },
-      tenantId: {
+      portalId: {
         type: String,
         default: null
       },
@@ -63,26 +63,20 @@
 
           switch (this.type) {
             case 'following':
-              filter['+externalId'] = this.projects;
+              filter['+_id'] = this.projects;
               break;
             case 'public':
               filter.isPrivate = false;
-              break;
-            case 'teams':
-              filter.researchGroup = { isPersonal: false };
-              break;
-            case ' personal':
-              filter.researchGroup = { isPersonal: true };
               break;
             default:
               break;
           }
         } else if (this.teamId) {
-          filter.researchGroup = {
-            external_id: this.teamId
+          filter.team = {
+            _id: this.teamId
           };
-        } else if (this.tenantId) {
-          filter.tenantId = this.tenantId;
+        } else if (this.portalId) {
+          filter.portalId = this.portalId;
         } else {
           filter.isPrivate = false;
         }
@@ -113,7 +107,7 @@
         this.loading = true;
 
         const {
-          scope, type, username, teamId, tenantId, filterItems
+          scope, type, username, teamId, portalId, filterItems
         } = this;
 
         const payload = {
@@ -121,7 +115,7 @@
           type,
           username,
           teamId,
-          tenantId
+          portalId
         };
 
         if (filterItems) {

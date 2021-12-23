@@ -42,8 +42,8 @@ export class ProjectHttp {
     return this.http.get(`/api/v2/projects/team/listing/${teamId}`);
   }
 
-  async getTenantProjectListing() {
-    return this.http.get(`/api/v2/projects/tenant/listing`);
+  async getPortalProjectListing() {
+    return this.http.get(`/api/v2/projects/portal/listing`);
   }
 
   /** @type {() => ProjectHttp} */

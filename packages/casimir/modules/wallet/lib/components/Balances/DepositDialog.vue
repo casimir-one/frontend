@@ -167,7 +167,7 @@
 
         const account = this.assetBalance
           ? this.assetBalance.owner
-          : this.$currentUser.username;
+          : this.$currentUser._id;
         const payload = {
           initiator: this.$currentUser,
           amount: parseFloat(this.asset.amount) * 100, // cents

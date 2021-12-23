@@ -19,8 +19,8 @@ const ATTR_TYPES = createEnum({
   RICHTEXT: 16,
 
   STEPPER: 501, // not implemented
-  DISCIPLINE: 502, // not implemented
-  RESEARCH_GROUP: 503, // not implemented
+  DOMAIN: 502, // not implemented
+  TEAM: 503, // not implemented
   EXPRESS_LICENSING: 504, // not implemented
   NETWORK_CONTENT_ACCESS: 505, // not implemented
   ROADMAP: 506, // not implemented
@@ -58,8 +58,8 @@ const ATTR_TYPES_LABELS = {
   // temp section
 
   [ATTR_TYPES.STEPPER]: 'STEPPER  (not implemented)',
-  [ATTR_TYPES.DISCIPLINE]: 'DISCIPLINE (not implemented)',
-  [ATTR_TYPES.RESEARCH_GROUP]: 'RESEARCH_GROUP (not implemented)',
+  [ATTR_TYPES.DOMAIN]: 'DOMAIN (not implemented)',
+  [ATTR_TYPES.TEAM]: 'TEAM (not implemented)',
   [ATTR_TYPES.EXPRESS_LICENSING]: 'EXPRESS_LICENSING (not implemented)',
   [ATTR_TYPES.NETWORK_CONTENT_ACCESS]: 'NETWORK_CONTENT_ACCESS (not implemented)',
   [ATTR_TYPES.ROADMAP]: 'ROADMAP (not implemented)',
@@ -99,8 +99,8 @@ const ATTR_TYPES_ICONS = {
   // temp section
 
   [ATTR_TYPES.STEPPER]: 'mdi-format-list-numbered',
-  [ATTR_TYPES.DISCIPLINE]: 'mdi-flask-empty-outline',
-  [ATTR_TYPES.RESEARCH_GROUP]: 'mdi-account-box-outline',
+  [ATTR_TYPES.DOMAIN]: 'mdi-flask-empty-outline',
+  [ATTR_TYPES.TEAM]: 'mdi-account-box-outline',
   [ATTR_TYPES.EXPRESS_LICENSING]: 'mdi-file-certificate-outline',
   [ATTR_TYPES.NETWORK_CONTENT_ACCESS]: 'mdi-account-key-outline',
   [ATTR_TYPES.ROADMAP]: 'mdi-timeline-clock-outline',

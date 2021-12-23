@@ -62,7 +62,7 @@ export class ProjectContentService {
               projectId,
               teamId,
               contentType,
-              description: genSha256Hash({ researchContent: { title } }),
+              description: genSha256Hash({ projectContent: { title } }),
               content,
               authors,
               references,
@@ -101,8 +101,8 @@ export class ProjectContentService {
       });
   }
 
-  async getProjectContent(externalId) {
-    return this.projectContentHttp.getProjectContent(externalId);
+  async getProjectContent(projectContentId) {
+    return this.projectContentHttp.getProjectContent(projectContentId);
   }
 
   async getDraftsByProject(projectId) {
@@ -113,8 +113,8 @@ export class ProjectContentService {
     return this.projectContentHttp.getDraft(draftId);
   }
 
-  async getProjectContentsByTenant(tenantId) {
-    return this.projectContentHttp.getProjectContentsByTenant(tenantId);
+  async getProjectContentsByPortal(portalId) {
+    return this.projectContentHttp.getProjectContentsByPortal(portalId);
   }
 
   async getProjectContentsByProject(projectId) {

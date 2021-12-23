@@ -3,15 +3,14 @@ import { ATTR_SCOPES } from '@deip/constants';
 
 import {
   listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory,
-  removeFromListMutationFactory
+  oneGetter,
+  setListMutation,
+  setOneMutation,
+  removeFromListMutation
 } from '@deip/platform-store';
 import { collectionOne } from '@deip/toolbox';
 
 const attributesService = AttributesService.getInstance();
-const idKey = '_id';
 
 const STATE = {
   data: [],
@@ -20,7 +19,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: idKey }),
+  one: oneGetter,
   listByScopes: (state) => {
     const initialListByScopes = {
       [ATTR_SCOPES.PROJECT]: [],
@@ -97,9 +96,9 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: idKey }),
-  setOne: setOneMutationFactory({ mergeKey: idKey }),
-  remove: removeFromListMutationFactory({ mergeKey: idKey }),
+  setList: setListMutation,
+  setOne: setOneMutation,
+  remove: removeFromListMutation,
 
   setSettings(state, payload) {
     state.settings = state.settings === null

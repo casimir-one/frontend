@@ -23,7 +23,7 @@
         type: String,
         default: null
       },
-      tenantId: {
+      portalId: {
         type: String,
         default: null
       },
@@ -46,14 +46,14 @@
       getterFilter() {
         const filter = { ...this.filterItems };
 
-        if (this.tenantId) {
-          filter.tenantId = this.tenantId;
+        if (this.portalId) {
+          filter.portalId = this.portalId;
         }
         if (this.teamId) {
           filter['+teams'] = this.teamId;
         }
         if (this.users && wrapInArray(this.users).length > 0) {
-          filter['+username'] = this.users;
+          filter['+_id'] = this.users;
         }
 
         return filter;
@@ -85,7 +85,7 @@
         this.$store.dispatch('users/getList', {
           users: wrapInArray(this.users),
           teamId: this.teamId,
-          tenantId: this.tenantId
+          portalId: this.portalId
         })
           .then(() => {
             this.loading = false;

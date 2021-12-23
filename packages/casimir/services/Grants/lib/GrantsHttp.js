@@ -8,10 +8,10 @@ export class GrantsHttp {
     return this.http.get(`/api/award-withdrawal-requests/${awardNumber}/${paymentNumber}`);
   }
 
-  async createGrantAwardWithdrawalRequest(researchExternalId, formData) {
+  async createGrantAwardWithdrawalRequest(projectId, formData) {
     return this.http.post(`/api/award-withdrawal-requests/upload-attachments`, formData, {
       headers: {
-        'Research-External-Id': researchExternalId,
+        'Project-Id': projectId,
         'Content-Type': 'multipart/form-data'
       }
     })

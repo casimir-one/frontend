@@ -1,7 +1,7 @@
 import { TeamService } from '@deip/team-service';
 
 import {
-  crudGettersFactory,
+  crudGetters,
   setListMutation,
   setOneMutation
 } from '@deip/platform-store';
@@ -13,9 +13,7 @@ const STATE = {
 };
 
 const GETTERS = {
-  ...crudGettersFactory({ dataKey: 'entityId' })
-  // list: listGetter,
-  // one: oneGetter
+  ...crudGetters
 };
 
 const ACTIONS = {
@@ -48,8 +46,8 @@ const ACTIONS = {
       });
   },
 
-  getTeamsByUser({ commit }, username) {
-    return teamService.getTeamsByUser(username)
+  getTeamsByUser({ commit }, userId) {
+    return teamService.getTeamsByUser(userId)
       .then((res) => {
         commit('setList', res);
       })
@@ -79,9 +77,7 @@ const ACTIONS = {
     return teamService
       .createTeam({ ...data, members }, isCreateDefaultProject)
       .then((res) => {
-        const { entityId } = res;
-
-        dispatch('getOne', entityId);
+        dispatch('getOne', res._id);
         dispatch('currentUser/get', null, { root: true }); // update current user roles
 
         return res;
@@ -92,9 +88,7 @@ const ACTIONS = {
     return teamService
       .updateTeam(payload)
       .then((res) => {
-        const { entityId } = res;
-
-        dispatch('getOne', entityId);
+        dispatch('getOne', res._id);
 
         return res;
       });

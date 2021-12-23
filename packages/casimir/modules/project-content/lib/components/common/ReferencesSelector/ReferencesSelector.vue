@@ -3,7 +3,7 @@
     v-model="internalValue"
     :items="references"
     item-text="title"
-    item-value="externalId"
+    item-value="_id"
     v-bind="fieldProps"
 
     :loading="loading"

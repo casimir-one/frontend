@@ -1,5 +1,5 @@
 {
-  "name": "@deip/tenants-module",
+  "name": "@deip/portals-module",
   "version": "1.361.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
@@ -24,7 +24,7 @@
     "@deip/platform-fns": "1.361.0",
     "@deip/platform-store": "1.361.0",
     "@deip/proxydi": "1.361.0",
-    "@deip/tenant-service": "1.361.0"
+    "@deip/portal-service": "1.361.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

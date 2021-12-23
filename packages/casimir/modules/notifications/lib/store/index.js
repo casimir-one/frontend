@@ -2,8 +2,8 @@ import { NotificationService } from '@deip/notification-service';
 
 import {
   listGetter,
-  setListMutationFactory,
-  removeFromListMutationFactory
+  setListMutation,
+  removeFromListMutation
 } from '@deip/platform-store';
 
 const notificationService = NotificationService.getInstance();
@@ -49,8 +49,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' }),
-  remove: removeFromListMutationFactory({ mergeKey: 'id' }),
+  setList: setListMutation,
+  remove: removeFromListMutation,
   clear: (state) => {
     state.data = [];
   }

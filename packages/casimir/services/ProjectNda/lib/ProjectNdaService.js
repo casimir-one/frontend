@@ -78,8 +78,8 @@ export class ProjectNdaService {
       });
   }
 
-  async getProjectNda(externalId) {
-    return this.projectNdaHttp.getProjectNda(externalId);
+  async getProjectNda(ndaId) {
+    return this.projectNdaHttp.getProjectNda(ndaId);
   }
 
   async getProjectNdaListByCreator(creator) {

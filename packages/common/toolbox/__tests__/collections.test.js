@@ -73,10 +73,10 @@ describe('collectionMerge', () => {
   });
 
   it('should merge collections when key is defined in options', () => {
-    const col1 = [{ externalId: 1 }, { externalId: 2 }];
-    const col2 = [{ externalId: 2, name: 'Hello' }];
-    const expectedResult = [{ externalId: 1 }, { externalId: 2, name: 'Hello' }];
-    expect(collectionMerge(col1, col2, { key: 'externalId' })).toEqual(expectedResult);
+    const col1 = [{ _id: 1 }, { _id: 2 }];
+    const col2 = [{ _id: 2, name: 'Hello' }];
+    const expectedResult = [{ _id: 1 }, { _id: 2, name: 'Hello' }];
+    expect(collectionMerge(col1, col2, { key: '_id' })).toEqual(expectedResult);
   });
 });
 

@@ -9,14 +9,14 @@ const state = {
   data: [
     {
       id: 1,
-      externalId: 'a'
+      _id: 'a'
     }, {
       id: 2,
-      externalId: 'b'
+      _id: 'b'
     }
   ]
 };
-const expectedObject = { id: 1, externalId: 'a' };
+const expectedObject = { id: 1, _id: 'a' };
 
 describe('listGetter', () => {
   it('should return all objects', () => {

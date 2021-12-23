@@ -18,14 +18,14 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  topLevelList: (state) => (query = {}) => collectionList(state.data, { ...query, parentExternalId: '' }),
+  topLevelList: (state) => (query = {}) => collectionList(state.data, { ...query, parentId: '' }),
   one: oneGetter,
   tree: (state) => (query = {}) => {
     const array = collectionList(state.data, query);
 
     return arrayToTree(array, {
-      id: 'externalId',
-      parentId: 'parentExternalId',
+      id: '_id',
+      parentId: 'parentId',
       dataField: null
     });
   }

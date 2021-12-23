@@ -287,18 +287,18 @@ export class ProjectService {
 
   async getPublicProjectListing({
     searchTerm,
-    disciplines,
+    domains,
     organizations,
-    researchAttributes,
-    tenantIds
+    projectAttributes,
+    portalIds
   }) {
 
     const filter = {
       searchTerm: searchTerm || "",
-      disciplines: disciplines || [],
+      domains: domains || [],
       organizations: organizations || [],
-      researchAttributes: researchAttributes || [],
-      tenantIds: tenantIds || []
+      projectAttributes: projectAttributes || [],
+      portalIds: portalIds || []
     };
 
     return this.projectHttp.getPublicProjectListing(filter);
@@ -319,21 +319,20 @@ export class ProjectService {
   }
 
   async getUserTeamsProjects(username) {
-    return this.projectHttp.getUserProjectListing(username)
-      .then((projects) => projects.filter((p) => !p.research_group.is_personal));
+    return this.projectHttp.getUserProjectListing(username);
   }
 
   getUserPersonalProjects(username) {
     return this.projectHttp.getUserProjectListing(username)
-      .then((projects) => projects.filter((p) => p.research_group.is_personal));
+      .then((projects) => projects.filter((p) => p.is_personal));
   }
 
   async getTeamProjectListing(teamId) {
     return this.projectHttp.getTeamProjectListing(teamId);
   }
 
-  async getTenantProjectListing() {
-    return this.projectHttp.getTenantProjectListing();
+  async getPortalProjectListing() {
+    return this.projectHttp.getPortalProjectListing();
   }
 
   /** @type {() => ProjectService} */

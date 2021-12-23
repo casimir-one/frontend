@@ -1,7 +1,7 @@
 <template>
   <vex-block v-if="!loading && content" :title="content.title">
     <span v-if="content.contentType">
-      {{ $t(`module.projectContent.types.${RESEARCH_CONTENT_TYPES[content.contentType]}`) }}
+      {{ $t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[content.contentType]}`) }}
     </span>
 
     <div>
@@ -27,7 +27,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock } from '@deip/vuetify-extended';
-  import { PROJECT_CONTENT_FORMAT, RESEARCH_CONTENT_TYPES } from '@deip/constants';
+  import { PROJECT_CONTENT_FORMAT, PROJECT_CONTENT_TYPES } from '@deip/constants';
   import { UsersList } from '@deip/users-module';
 
   import PackageContentDetails from '../../common/PackageContentDetails';
@@ -54,7 +54,7 @@
       return {
         loading: false,
         PROJECT_CONTENT_FORMAT,
-        RESEARCH_CONTENT_TYPES
+        PROJECT_CONTENT_TYPES
       };
     },
 

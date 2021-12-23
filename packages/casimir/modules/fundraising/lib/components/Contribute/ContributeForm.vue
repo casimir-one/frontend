@@ -196,7 +196,7 @@
           user: this.$currentUser,
           data: {
             investmentOpportunityId: this.tokenSale._id,
-            investor: this.$currentUser.username,
+            investor: this.$currentUser._id,
             asset: this.formData.assetToContribute
           }
         };

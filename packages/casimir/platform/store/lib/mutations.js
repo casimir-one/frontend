@@ -1,11 +1,8 @@
-import {
-  camelizeObjectKeys,
-  collectionMerge
-} from '@deip/toolbox';
+import { collectionMerge } from '@deip/toolbox';
 
 export const setListMutationFactory = (opts = {}) => {
   const {
-    mergeKey = 'externalId',
+    mergeKey = '_id',
     storeKey = 'data'
   } = opts;
 
@@ -14,7 +11,7 @@ export const setListMutationFactory = (opts = {}) => {
 
     state[storeKey] = [...collectionMerge(
       state[storeKey],
-      payload.map((asset) => camelizeObjectKeys(asset)),
+      payload,
       { key: mergeKey }
     )];
   };
@@ -23,7 +20,7 @@ export const setListMutation = setListMutationFactory();
 
 export const setOneMutationFactory = (opts = {}) => {
   const {
-    mergeKey = 'externalId',
+    mergeKey = '_id',
     storeKey = 'data'
   } = opts;
 
@@ -32,7 +29,7 @@ export const setOneMutationFactory = (opts = {}) => {
 
     state[storeKey] = collectionMerge(
       state[storeKey],
-      camelizeObjectKeys(payload),
+      payload,
       { key: mergeKey }
     );
   };
@@ -41,7 +38,7 @@ export const setOneMutation = setOneMutationFactory();
 
 export const removeFromListMutationFactory = (opts = {}) => {
   const {
-    mergeKey = 'externalId',
+    mergeKey = '_id',
     storeKey = 'data'
   } = opts;
 
@@ -71,7 +68,7 @@ export const clearMutation = clearMutationFactory();
 
 export const crudMutationsFactory = (opts = {}) => {
   const {
-    dataKey: mergeKey = 'externalId',
+    dataKey: mergeKey = '_id',
     storeKey = 'data',
     emptyData = []
   } = opts;

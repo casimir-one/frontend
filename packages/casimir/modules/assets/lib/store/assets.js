@@ -3,8 +3,8 @@ import { AssetsService } from '@deip/assets-service';
 import {
   listGetter,
   oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory
+  setListMutation,
+  setOneMutation
 } from '@deip/platform-store';
 
 const assetsService = AssetsService.getInstance();
@@ -30,8 +30,8 @@ const ACTIONS = {
       });
   },
 
-  getBySymbol({ commit }, assetSymbol) {
-    return assetsService.getAssetBySymbol(assetSymbol)
+  getBySymbol({ commit }, symbol) {
+    return assetsService.getAssetBySymbol(symbol)
       .then((asset) => {
         commit('setOne', asset);
       });
@@ -44,8 +44,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: '_id' }),
-  setOne: setOneMutationFactory({ mergeKey: '_id' })
+  setList: setListMutation,
+  setOne: setOneMutation
 };
 
 export const assetsStore = {

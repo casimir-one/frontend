@@ -39,7 +39,7 @@
     </template>
 
     <span v-if="draft.contentType" class="font-weight-medium">
-      {{ $t(`module.projectContent.types.${RESEARCH_CONTENT_TYPES[draft.contentType]}`) }}
+      {{ $t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[draft.contentType]}`) }}
     </span>
 
     <div>
@@ -65,7 +65,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock, contextMixin } from '@deip/vuetify-extended';
-  import { PROJECT_CONTENT_FORMAT, RESEARCH_CONTENT_TYPES } from '@deip/constants';
+  import { PROJECT_CONTENT_FORMAT, PROJECT_CONTENT_TYPES } from '@deip/constants';
   import { UsersList } from '@deip/users-module';
 
   import PackageContentDetails from '../../common/PackageContentDetails';
@@ -103,7 +103,7 @@
         loading: false,
         actionLoading: false,
         PROJECT_CONTENT_FORMAT,
-        RESEARCH_CONTENT_TYPES
+        PROJECT_CONTENT_TYPES
       };
     },
 

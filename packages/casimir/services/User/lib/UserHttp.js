@@ -29,8 +29,8 @@ export class UserHttp {
     return this.http.get(`/api/v2/users/team/${teamId}`);
   }
 
-  async getUsersByTenant(tenantId) {
-    return this.http.get(`/api/v2/users/tenant/${tenantId}`);
+  async getUsersByPortal(portalId) {
+    return this.http.get(`/api/v2/users/portal/${portalId}`);
   }
 
   async getUsersListing(params) {

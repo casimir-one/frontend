@@ -416,8 +416,8 @@ class GrapheneChainRpc extends BaseChainRpc {
       getTeamByPermlinkAsync: (permlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_group_by_permlink", [permlink]])
       },
-      getReviewVotesByReviewAsync: (reviewExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review", [reviewExternalId]])
+      getReviewVotesByReviewAsync: (reviewId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_review_votes_by_review", [reviewId]])
       },
       getSchemaAsync: () => {
         return chainService.rpcToChainNode("call", ["database_api", "get_schema", []])
@@ -425,14 +425,14 @@ class GrapheneChainRpc extends BaseChainRpc {
       getExpiringVestingDelegationsAsync: (account, from, limit) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expiring_vesting_delegations", [account, from, limit]])
       },
-      lookupDisciplinesAsync: (lowerBound, limit) => {
+      lookupDomainsAsync: (lowerBound, limit) => {
         return chainService.rpcToChainNode("call", ["database_api", "lookup_disciplines", [lowerBound, limit]])
       },
-      getDisciplineByNameAsync: (name) => {
+      getDomainByNameAsync: (name) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_discipline_by_name", [name]])
       },
-      getDisciplinesByParentAsync: (parentExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_disciplines_by_parent", [parentExternalId]])
+      getDomainsByParentAsync: (parentId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_disciplines_by_parent", [parentId]])
       },
       getProjectByPermlinkAsync: (teamId, permlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_by_permlink", [teamId, permlink]])
@@ -440,11 +440,11 @@ class GrapheneChainRpc extends BaseChainRpc {
       getProjectByAbsolutePermlinkAsync: (teamPermlink, projectPermlink) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_by_absolute_permlink", [teamPermlink, projectPermlink]])
       },
-      getProjectLicenseAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_license", [externalId]])
+      getProjectLicenseAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_license", [id]])
       },
-      getProjectLicensesAsync: (externalIds) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses", [externalIds]])
+      getProjectLicensesAsync: (ids) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses", [ids]])
       },
       getProjectLicensesByLicenseeAsync: (licensee) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licensee", [licensee]])
@@ -452,11 +452,11 @@ class GrapheneChainRpc extends BaseChainRpc {
       getProjectLicensesByLicenserAsync: (licenser) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licenser", [licenser]])
       },
-      getProjectLicensesByProjectAsync: (projectExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_research", [projectExternalId]])
+      getProjectLicensesByProjectAsync: (projectId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_research", [projectId]])
       },
-      getProjectLicensesByLicenseeAndProjectAsync: (licensee, projectExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licensee_and_research", [licensee, projectExternalId]])
+      getProjectLicensesByLicenseeAndProjectAsync: (licensee, projectId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licensee_and_research", [licensee, projectId]])
       },
       getProjectLicensesByLicenseeAndLicenserAsync: (licensee, licenser) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_licenses_by_licensee_and_licenser", [licensee, licenser]])
@@ -479,40 +479,40 @@ class GrapheneChainRpc extends BaseChainRpc {
       getExpertTokensByAccountNameAsync: (accountName) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expert_tokens_by_account_name", [accountName]])
       },
-      getExpertTokensByDisciplineAsync: (disciplineExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_expert_tokens_by_discipline", [disciplineExternalId]])
+      getExpertTokensByDomainAsync: (domainId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_expert_tokens_by_discipline", [domainId]])
       },
       getTeamTokenByAccountAndProjectGroupIdAsync: (account, teamId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_group_token_by_account_and_research_group_id", [account, teamId]])
       },
-      getProjectTokenSalesByProjectAsync: (projectExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales_by_research", [projectExternalId]])
+      getProjectTokenSalesByProjectAsync: (projectId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sales_by_research", [projectId]])
       },
-      getProjectTokenSaleContributionsByProjectTokenSaleAsync: (tokenSaleExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_research_token_sale", [tokenSaleExternalId]])
+      getProjectTokenSaleContributionsByProjectTokenSaleAsync: (tokenSaleId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_research_token_sale", [tokenSaleId]])
       },
       getProjectTokenSaleContributionsByContributorAsync: (owner) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_token_sale_contributions_by_contributor", [owner]])
       },
-      getDisciplinesByProjectAsync: (projectId) => {
+      getDomainsByProjectAsync: (projectId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_disciplines_by_research", [projectId]])
       },
       checkTeamExistenceByPermlinkAsync: (name) => {
         return chainService.rpcToChainNode("call", ["database_api", "check_research_group_existence_by_permlink", [name]])
       },
-      checkProjectExistenceByPermlinkAsync: (teamExternalId, title) => {
-        return chainService.rpcToChainNode("call", ["database_api", "check_research_existence_by_permlink", [teamExternalId, title]])
+      checkProjectExistenceByPermlinkAsync: (teamId, title) => {
+        return chainService.rpcToChainNode("call", ["database_api", "check_research_existence_by_permlink", [teamId, title]])
       },
-      checkProjectContentExistenceByPermlinkAsync: (projectExternalId, title) => {
-        return chainService.rpcToChainNode("call", ["database_api", "check_research_content_existence_by_permlink", [projectExternalId, title]])
+      checkProjectContentExistenceByPermlinkAsync: (projectId, title) => {
+        return chainService.rpcToChainNode("call", ["database_api", "check_research_content_existence_by_permlink", [projectId, title]])
       },
-      getExpertiseContributionByProjectContentAndDisciplineAsync: (projectContentId, disciplineId) => {
+      getExpertiseContributionByProjectContentAndDomainAsync: (projectContentId, disciplineId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_contribution_by_research_content_and_discipline", [projectContentId, disciplineId]])
       },
       getExpertiseContributionsByProjectAsync: (projectId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_contributions_by_research", [projectId]])
       },
-      getExpertiseContributionsByProjectAndDisciplineAsync: (projectId, disciplineId) => {
+      getExpertiseContributionsByProjectAndDomainAsync: (projectId, disciplineId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_contributions_by_research_and_discipline", [projectId, disciplineId]])
       },
       getExpertiseContributionsByProjectContentAsync: (projectContentId) => {
@@ -542,14 +542,14 @@ class GrapheneChainRpc extends BaseChainRpc {
       getExpertiseAllocationProposalsByInitiatorAsync: (initiator) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposals_by_initiator", [initiator]])
       },
-      getExpertiseAllocationProposalsByClaimerAndDisciplineAsync: (claimer, disciplineId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposals_by_claimer_and_discipline", [claimer, disciplineId]])
+      getExpertiseAllocationProposalsByClaimerAndDomainAsync: (claimer, domainId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposals_by_claimer_and_discipline", [claimer, domainId]])
       },
-      getExpertiseAllocationProposalByDisciplineInitiatorAndClaimerAsync: (disciplineId, initiator, claimer) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_by_discipline_initiator_and_claimer", [disciplineId, initiator, claimer]])
+      getExpertiseAllocationProposalByDomainInitiatorAndClaimerAsync: (domainId, initiator, claimer) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_by_discipline_initiator_and_claimer", [domainId, initiator, claimer]])
       },
-      getExpertiseAllocationProposalsByDisciplineAsync: (disciplineId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposals_by_discipline", [disciplineId]])
+      getExpertiseAllocationProposalsByDomainAsync: (domainId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposals_by_discipline", [domainId]])
       },
       getExpertiseAllocationProposalVoteByIdAsync: (id) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_vote_by_id", [id]])
@@ -560,14 +560,14 @@ class GrapheneChainRpc extends BaseChainRpc {
       getExpertiseAllocationProposalVoteByVoterAndExpertiseAllocationProposalIdAsync: (voter, expertiseAllocationProposalId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_vote_by_voter_and_expertise_allocation_proposal_id", [voter, expertiseAllocationProposalId]])
       },
-      getExpertiseAllocationProposalVotesByVoterAndDisciplineIdAsync: (voter, disciplineId) => {
+      getExpertiseAllocationProposalVotesByVoterAndDomainIdAsync: (voter, disciplineId) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_votes_by_voter_and_discipline_id", [voter, disciplineId]])
       },
       getExpertiseAllocationProposalVotesByVoterAsync: (voter) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_expertise_allocation_proposal_votes_by_voter", [voter]])
       },
-      getAccountsByExpertDisciplineAsync: (disciplineId, from, limit) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_accounts_by_expert_discipline", [disciplineId, from, limit]])
+      getAccountsByExpertDomainAsync: (domainId, from, limit) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_accounts_by_expert_discipline", [domainId, from, limit]])
       },
       getFundingOpportunityAnnouncementAsync: (id) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_funding_opportunity_announcement", [id]])
@@ -666,8 +666,8 @@ class GrapheneChainRpc extends BaseChainRpc {
       getAssetStatisticsAsync: (assetSymbol) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_asset_statistics", [assetSymbol]])
       },
-      getProjectNdaAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_nda", [externalId]])
+      getProjectNdaAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_nda", [id]])
       },
       getProjectNdaByCreatorAsync: (creator) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_nda_by_creator", [creator]])
@@ -675,14 +675,14 @@ class GrapheneChainRpc extends BaseChainRpc {
       getProjectNdaByHashAsync: (hash) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_research_nda_by_hash", [hash]])
       },
-      getProjectNdaByProjectAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_research_nda_by_research", [externalId]])
+      getProjectNdaByProjectAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_research_nda_by_research", [id]])
       },
-      getNdaContractContentAccessRequestAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_nda_contract_content_access_request", [externalId]])
+      getNdaContractContentAccessRequestAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_nda_contract_content_access_request", [id]])
       },
-      getNdaContractContentAccessRequestsByNdaAsync: (ndaExternalId) => {
-        return chainService.rpcToChainNode("call", ["database_api", "get_nda_contract_content_access_requests_by_nda", [ndaExternalId]])
+      getNdaContractContentAccessRequestsByNdaAsync: (ndaId) => {
+        return chainService.rpcToChainNode("call", ["database_api", "get_nda_contract_content_access_requests_by_nda", [ndaId]])
       },
       getNdaContractContentAccessRequestsByRequesterAsync: (requester) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_nda_contract_content_access_requests_by_requester", [requester]])
@@ -735,59 +735,59 @@ class GrapheneChainRpc extends BaseChainRpc {
       getContentReferencesAsync: (projectContentId) => {
         return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_content_references", [projectContentId]])
       },
-      getContentReferences2Async: (projectContentExternalId) => {
-        return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_content_references2", [projectContentExternalId]])
+      getContentReferences2Async: (projectContentId) => {
+        return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_content_references2", [projectContentId]])
       },
       getContentsReferToContentAsync: (projectContentId) => {
         return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_contents_refer_to_content", [projectContentId]])
       },
-      getContentsReferToContent2Async: (projectContentExternalId) => {
-        return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_contents_refer_to_content2", [projectContentExternalId]])
+      getContentsReferToContent2Async: (projectContentId) => {
+        return chainService.rpcToChainNode("call", ["research_content_reference_history_api", "get_contents_refer_to_content2", [projectContentId]])
       },
-      getProjectContentEciHistoryAsync: (projectContentExternalId, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_content_eci_history", [projectContentExternalId, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectContentEciHistoryAsync: (projectContentId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_content_eci_history", [projectContentId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getProjectContentEciStatsAsync: (projectContentExternalId, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_content_eci_stats", [projectContentExternalId, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectContentEciStatsAsync: (projectContentId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_content_eci_stats", [projectContentId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getProjectContentsEciStatsAsync: (disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_contents_eci_stats", [disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectContentsEciStatsAsync: (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_contents_eci_stats", [domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getProjectEciHistoryAsync: (projectExternalId, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_eci_history", [projectExternalId, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectEciHistoryAsync: (projectId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_eci_history", [projectId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getProjectEciStatsAsync: (projectExternalId, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_eci_stats", [projectExternalId, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectEciStatsAsync: (projectId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_research_eci_stats", [projectId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getProjectsEciStatsAsync: (disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_researches_eci_stats", [disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getProjectsEciStatsAsync: (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_researches_eci_stats", [domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getAccountEciHistoryAsync: (account, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_account_eci_history", [account, cursor, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getAccountEciHistoryAsync: (account, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_account_eci_history", [account, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getAccountEciStatsAsync: (account, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_account_eci_stats", [account, disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getAccountEciStatsAsync: (account, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_account_eci_stats", [account, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getAccountsEciStatsAsync: (disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_accounts_eci_stats", [disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getAccountsEciStatsAsync: (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_accounts_eci_stats", [domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getDisciplinesEciStatsHistoryAsync: (fromFilter, toFilter, stepFilter) => {
+      getDomainsEciStatsHistoryAsync: (fromFilter, toFilter, stepFilter) => {
         return chainService.rpcToChainNode("call", ["eci_history_api", "get_disciplines_eci_stats_history", [fromFilter, toFilter, stepFilter]])
       },
-      getDisciplineEciHistoryAsync: (disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
-        return chainService.rpcToChainNode("call", ["eci_history_api", "get_discipline_eci_history", [disciplineFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
+      getDomainEciHistoryAsync: (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) => {
+        return chainService.rpcToChainNode("call", ["eci_history_api", "get_discipline_eci_history", [domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter]])
       },
-      getDisciplinesEciLastStatsAsync: () => {
+      getDomainsEciLastStatsAsync: () => {
         return chainService.rpcToChainNode("call", ["eci_history_api", "get_disciplines_eci_last_stats", []])
       },
-      getAccountRevenueHistoryBySecurityTokenAsync: (account, securityTokenExternalId, cursor, step, targetAssetSymbol) => {
-        return chainService.rpcToChainNode("call", ["investments_history_api", "get_account_revenue_history_by_security_token", [account, securityTokenExternalId, cursor, step, targetAssetSymbol]])
+      getAccountRevenueHistoryBySecurityTokenAsync: (account, securityTokenId, cursor, step, targetAssetSymbol) => {
+        return chainService.rpcToChainNode("call", ["investments_history_api", "get_account_revenue_history_by_security_token", [account, securityTokenId, cursor, step, targetAssetSymbol]])
       },
       getAccountRevenueHistoryAsync: (account, cursor) => {
         return chainService.rpcToChainNode("call", ["investments_history_api", "get_account_revenue_history", [account, cursor]])
       },
-      getSecurityTokenRevenueHistoryAsync: (securityTokenExternalId, cursor) => {
-        return chainService.rpcToChainNode("call", ["investments_history_api", "get_security_token_revenue_history", [securityTokenExternalId, cursor]])
+      getSecurityTokenRevenueHistoryAsync: (securityTokenId, cursor) => {
+        return chainService.rpcToChainNode("call", ["investments_history_api", "get_security_token_revenue_history", [securityTokenId, cursor]])
       },
       getProposalsBySignerAsync: (account) => {
         return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposals_by_signer", [account]])
@@ -795,11 +795,11 @@ class GrapheneChainRpc extends BaseChainRpc {
       getProposalsBySignersAsync: (accounts) => {
         return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposals_by_signers", [accounts]])
       },
-      getProposalStateAsync: (externalId) => {
-        return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposal_state", [externalId]])
+      getProposalStateAsync: (id) => {
+        return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposal_state", [id]])
       },
-      getProposalsStatesAsync: (externalIds) => {
-        return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposals_states", [externalIds]])
+      getProposalsStatesAsync: (ids) => {
+        return chainService.rpcToChainNode("call", ["proposal_history_api", "get_proposals_states", [ids]])
       },
       lookupProposalsStatesAsync: (lowerBound, limit) => {
         return chainService.rpcToChainNode("call", ["proposal_history_api", "lookup_proposals_states", [lowerBound, limit]])

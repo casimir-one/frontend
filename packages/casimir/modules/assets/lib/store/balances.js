@@ -25,7 +25,7 @@ const ACTIONS = {
       const balancesPromises = assets
         .filter((asset) => asset.type === ASSET_TYPE.NFT)
         .map((asset) => assetsService
-          .getAccountsAssetBalancesByAsset(asset.stringSymbol));
+          .getAccountsAssetBalancesByAsset(asset.symbol));
 
       return Promise.all(balancesPromises)
         .then((balances) => {
@@ -42,7 +42,7 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' })
+  setList: setListMutationFactory({ mergeKey: 'assetId' })
 };
 
 export const balancesStore = {

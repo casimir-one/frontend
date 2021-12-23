@@ -35,7 +35,7 @@ export const teamHelpersMixin = {
 
       return this.$attributes.getFileSrc({
         scope: ATTR_SCOPES.TEAM,
-        scopeId: team.externalId,
+        scopeId: team._id,
         attributeId: avatar.attributeId,
         filename: avatar.value,
         ...opts

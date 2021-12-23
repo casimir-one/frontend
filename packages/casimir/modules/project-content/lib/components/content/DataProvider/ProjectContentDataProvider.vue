@@ -39,7 +39,7 @@
         const filter = { ...this.filterItems };
 
         if (this.projectId) {
-          filter.researchExternalId = this.projectId;
+          filter.projectId = this.projectId;
         }
 
         return filter;

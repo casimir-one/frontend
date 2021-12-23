@@ -19,7 +19,7 @@ export default {
         MILESTONE_PREPRINT: 'Preprint',
         MILESTONE_PRESENTATION: 'Presentation',
         MILESTONE_RAW_DATA: 'Raw data',
-        MILESTONE_RESEARCH_PROPOSAL: 'Research proposal',
+        MILESTONE_PROJECT_PROPOSAL: 'Project proposal',
         MILESTONE_TECHNICAL_REPORT: 'Technical report',
         MILESTONE_THESIS: 'Thesis'
       },

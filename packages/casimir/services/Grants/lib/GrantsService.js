@@ -14,7 +14,7 @@ export class GrantsService {
     foaNumber,
     grantor,
     amount,
-    targetDisciplines,
+    targetDomains,
     distributionModel,
     extensions
   }) {
@@ -23,7 +23,7 @@ export class GrantsService {
       "external_id": foaNumber, // replace with entitiy id
       "grantor": grantor,
       "amount": amount,
-      "target_disciplines": targetDisciplines,
+      "target_disciplines": targetDomains,
       "distribution_model": distributionModel,
       "extensions": extensions
     }];
@@ -40,8 +40,8 @@ export class GrantsService {
     fundingOpportunityNumber,
     award,
     awardee,
-    researchExternalId,
-    universityExternalId,
+    projectId,
+    universityId,
     universityOverhead,
     subawardees,
     creator,
@@ -53,8 +53,8 @@ export class GrantsService {
       funding_opportunity_number: fundingOpportunityNumber,
       award: award,
       awardee: awardee,
-      research_external_id: researchExternalId,
-      university_external_id: universityExternalId,
+      research_external_id: projectId,
+      university_external_id: universityId,
       university_overhead: universityOverhead,
       subawardees: subawardees,
       creator: creator,
@@ -111,7 +111,7 @@ export class GrantsService {
       .then((chainService) => {
         const deipRpc = chainService.getChainNodeClient();
 
-        return this.grantsHttp.createGrantAwardWithdrawalRequest(form.get('researchExternalId'), form)
+        return this.grantsHttp.createGrantAwardWithdrawalRequest(form.get('projectId'), form)
           .then((res) => {
             const { hash } = res;
             return deipRpc.broadcast.createAwardWithdrawalRequestAsync(
@@ -294,14 +294,14 @@ export class GrantsService {
       });
   }
 
-  getFundingOpportunityAnnouncementsByOrganization(researchGroupId) {
+  getFundingOpportunityAnnouncementsByOrganization(teamId) {
 
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const deipRpc = chainService.getChainNodeClient();
 
-        return deipRpc.api.getFundingOpportunityAnnouncementsByOrganizationAsync(researchGroupId);
+        return deipRpc.api.getFundingOpportunityAnnouncementsByOrganizationAsync(teamId);
       });
   }
 

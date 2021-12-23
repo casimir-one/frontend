@@ -1,1 +1,1 @@
-export * from './lib/tenants-module';
+export * from './lib/portals-module';

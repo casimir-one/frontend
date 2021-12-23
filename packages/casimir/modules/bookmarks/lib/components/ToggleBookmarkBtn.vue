@@ -19,8 +19,8 @@
 
     props: {
       type: {
-        type: String,
-        default: 'research'
+        type: Number,
+        default: 1
       },
       refId: {
         type: String,
@@ -40,7 +40,7 @@
           (b) => b.ref === this.refId && b.type === this.type
         );
 
-        return bookmark ? bookmark.id : false;
+        return bookmark ? bookmark._id : false;
       }
     },
 

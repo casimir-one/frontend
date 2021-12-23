@@ -1,14 +1,12 @@
-import { UserService } from '@deip/user-service';
+import { BookmarkService } from '@deip/bookmark-service';
 
 import {
   listGetter,
-  setListMutationFactory,
-  removeFromListMutationFactory
+  setListMutation,
+  removeFromListMutation
 } from '@deip/platform-store';
 
-import { camelizeObjectKeys } from '@deip/toolbox';
-
-const userService = UserService.getInstance();
+const bookmarkService = BookmarkService.getInstance();
 
 const STATE = {
   data: []
@@ -24,7 +22,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return userService.getResearchBookmarks(rootGetters['auth/username'])
+    return bookmarkService.getProjectBookmarks(rootGetters['auth/username'])
       .then((bookmarks) => {
         commit('setList', bookmarks);
       });
@@ -35,7 +33,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return userService.createResearchBookmark(rootGetters['auth/username'], projectId)
+    return bookmarkService.createProjectBookmark(rootGetters['auth/username'], projectId)
       .then((bookmark) => {
         commit('add', bookmark);
       });
@@ -46,7 +44,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return userService.removeResearchBookmark(rootGetters['auth/username'], bookmarkId)
+    return bookmarkService.deleteProjectBookmark(rootGetters['auth/username'], bookmarkId)
       .then(() => {
         commit('remove', bookmarkId);
       });
@@ -58,11 +56,11 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' }),
+  setList: setListMutation,
   add: (state, bookmark) => {
-    state.data.push(camelizeObjectKeys(bookmark));
+    state.data.push(bookmark);
   },
-  remove: removeFromListMutationFactory({ mergeKey: 'id' }),
+  remove: removeFromListMutation,
   clear: (state) => {
     state.data = [];
   }
