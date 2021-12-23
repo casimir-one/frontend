@@ -1,9 +1,9 @@
 import {
   listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory,
-  removeFromListMutationFactory
+  oneGetter,
+  setListMutation,
+  setOneMutation,
+  removeFromListMutation
 } from '@deip/platform-store';
 
 import { DocumentTemplateService } from '@deip/document-template-service';
@@ -16,7 +16,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: '_id' })
+  one: oneGetter
 };
 
 const ACTIONS = {
@@ -57,9 +57,9 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: '_id' }),
-  setOne: setOneMutationFactory({ mergeKey: '_id' }),
-  remove: removeFromListMutationFactory({ mergeKey: '_id' })
+  setList: setListMutation,
+  setOne: setOneMutation,
+  remove: removeFromListMutation
 };
 
 export const documentTemplatesStore = {

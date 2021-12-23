@@ -9,7 +9,7 @@ export class AuthHttp {
   }
 
   async adminSignIn(model) {
-    return this.http.post('/tenant/sign-in/', model);
+    return this.http.post('/portal/sign-in/', model);
   }
 
   async signUp(req) {

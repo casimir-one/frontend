@@ -93,8 +93,8 @@ export class ProposalsService {
     return this.proposalsHttp.getAccountProposals(account, status);
   }
 
-  async getProposal(externalId) {
-    return this.proposalsHttp.getProposal(externalId);
+  async getProposal(proposalId) {
+    return this.proposalsHttp.getProposal(proposalId);
   }
 
   /** @type {() => ProposalsService} */

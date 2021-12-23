@@ -20,7 +20,7 @@ export const listGetter = listGetterFactory();
 
 export const oneGetterFactory = (opts = {}) => {
   const {
-    selectorKey = 'externalId',
+    selectorKey = '_id',
     storeKey = 'data'
   } = opts;
 
@@ -42,7 +42,7 @@ export const oneGetter = oneGetterFactory();
 
 export const crudGettersFactory = (opts = {}) => {
   const {
-    dataKey: selectorKey = 'externalId',
+    dataKey: selectorKey = '_id',
     storeKey = 'data'
   } = opts;
 

@@ -41,11 +41,11 @@ export class AttributesHttp {
   }
 
   async getSettings() {
-    return this.http.get('/tenant/settings/attribute-settings');
+    return this.http.get('/portal/settings/attribute-settings');
   }
 
   async updateSettings(req) {
-    return this.http.put('/tenant/settings/attribute-settings', req.getHttpBody());
+    return this.http.put('/portal/settings/attribute-settings', req.getHttpBody());
   }
 
   /** @type {() => AttributesHttp} */

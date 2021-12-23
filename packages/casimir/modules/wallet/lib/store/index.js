@@ -6,6 +6,7 @@ import {
   oneGetterFactory,
   setListMutationFactory
 } from '@deip/platform-store';
+import { ASSET_TYPE } from '@deip/constants';
 
 const assetsService = AssetsService.getInstance();
 
@@ -29,7 +30,7 @@ const ACTIONS = {
     return assetsService.getAccountAssetsBalancesByOwner(rootGetters['auth/username'])
       .then((balances) => {
         commit('setList',
-          balances.filter((balance) => !balance.tokenized_research));
+          balances.filter((balance) => balance.type !== ASSET_TYPE.NFT));
       });
   },
 
@@ -54,7 +55,7 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'id' }),
+  setList: setListMutationFactory({ mergeKey: 'assetId' }),
   clear: clearMutation,
   setHistory: (state, payload) => {
     state.history = payload;

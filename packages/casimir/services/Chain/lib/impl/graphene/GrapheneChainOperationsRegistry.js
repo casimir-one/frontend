@@ -119,7 +119,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       isPrivate
     }) => {
 
-      const createResearchOp = ['create_research', {
+      const createProjectOp = ['create_research', {
         external_id: entityId,
         account: teamId,
         description: description,
@@ -131,7 +131,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         extensions: []
       }];
 
-      return [createResearchOp];
+      return [createProjectOp];
     },
 
 
@@ -432,7 +432,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       references
     }) => {
     
-      const createResearchContentOp = ['create_research_content', {
+      const createProjectContentOp = ['create_research_content', {
         external_id: entityId,
         research_external_id: projectId,
         research_group: teamId,
@@ -444,7 +444,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         extensions: []
       }];
     
-      return [createResearchContentOp];
+      return [createProjectContentOp];
     },
 
 

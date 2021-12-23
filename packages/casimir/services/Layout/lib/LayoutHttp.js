@@ -5,19 +5,19 @@ export class LayoutHttp {
   http = HttpService.getInstance();
 
   async getLayouts() {
-    return this.http.get('/tenant/settings/layouts');
+    return this.http.get('/portal/settings/layouts');
   }
 
   async getSettings() {
-    return this.http.get('/tenant/settings/layout-settings');
+    return this.http.get('/portal/settings/layout-settings');
   }
 
   async updateLayouts(req) {
-    return this.http.put('/tenant/settings/layouts', req.getHttpBody());
+    return this.http.put('/portal/settings/layouts', req.getHttpBody());
   }
 
   async updateSettings(req) {
-    return this.http.put('/tenant/settings/layout-settings', req.getHttpBody());
+    return this.http.put('/portal/settings/layout-settings', req.getHttpBody());
   }
 
   /** @type {() => LayoutHttp} */

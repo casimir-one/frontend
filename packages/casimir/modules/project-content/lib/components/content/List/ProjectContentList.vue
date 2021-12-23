@@ -21,7 +21,7 @@
 
 <script>
   import { defineComponent } from '@deip/platform-util';
-  import { RESEARCH_CONTENT_TYPES } from '@deip/constants';
+  import { PROJECT_CONTENT_TYPES } from '@deip/constants';
 
   export default defineComponent({
     name: 'ProjectContentList',
@@ -59,7 +59,7 @@
 
     methods: {
       getContentType(type) {
-        return this.$t(`module.projectContent.types.${RESEARCH_CONTENT_TYPES[type]}`);
+        return this.$t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[type]}`);
       },
 
       handleRowClick(content) {

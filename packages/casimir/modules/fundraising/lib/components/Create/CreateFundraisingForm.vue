@@ -147,8 +147,8 @@
       // TODO rethink logic, maybe security token should be passed in props;
       // select asset for fundraising from team assets that weren't sold
       issuedTokens() {
-        if (hasValue(this.project.securityTokens)) {
-          return this.project.securityTokens[0];
+        if (hasValue(this.project.nfts)) {
+          return this.project.nfts[0];
         }
 
         return null;
@@ -156,8 +156,8 @@
 
       availableTokens() {
         const teamBalance = this.$store.getters['balances/list']({
-          owner: this.project.researchGroup.external_id,
-          assetSymbol: this.issuedTokens?.symbol
+          owner: this.project.teamId,
+          symbol: this.issuedTokens?.symbol
         });
 
         if (teamBalance.length > 0) {
@@ -197,7 +197,7 @@
           : DEFAULT_AMOUNT;
 
         const holders = [{
-          account: this.project.researchGroup.external_id,
+          account: this.project.teamId,
           asset: {
             amount: amount.toString(),
             symbol,
@@ -208,14 +208,14 @@
         const data = {
           user: this.$currentUser,
           data: {
-            issuer: this.project.researchGroup.external_id,
+            issuer: this.project.teamId,
             symbol,
             precision: DEFAULT_PRECISION,
             maxSupply: parseInt(amount),
             description: '',
             projectTokenOption: {
-              projectId: this.project.externalId,
-              teamId: this.project.researchGroup.external_id,
+              projectId: this.project._id,
+              teamId: this.project.teamId,
               licenseRevenue: {
                 holdersShare: '100.00 %'
               }
@@ -234,8 +234,8 @@
           user: this.$currentUser,
           data: {
             title: this.formData.title,
-            teamId: this.project.researchGroup.external_id,
-            projectId: this.project.externalId,
+            teamId: this.project.teamId,
+            projectId: this.project._id,
             startTime: this.convertDateToTimestamp(this.formData.dates.start),
             endTime: this.convertDateToTimestamp(this.formData.dates.end),
             shares,
@@ -285,7 +285,9 @@
             });
         } else {
           const shares = [{
-            ...this.issuedTokens,
+            id: this.issuedTokens.assetId,
+            symbol: this.issuedTokens.symbol,
+            precision: this.issuedTokens.precision,
             amount: this.formData.tokens
           }];
           this.createFundraising(shares);

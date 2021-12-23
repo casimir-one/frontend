@@ -109,8 +109,8 @@ export class UserService {
     return this.userHttp.getUsersByTeam(teamId);
   }
 
-  async getUsersByTenant(tenantId) {
-    return this.userHttp.getUsersByTenant(tenantId);
+  async getUsersByPortal(portalId) {
+    return this.userHttp.getUsersByPortal(portalId);
   }
 
   async getUsersListing(query = {}) {

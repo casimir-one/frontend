@@ -1,8 +1,8 @@
 import {
   listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory
+  oneGetter,
+  setListMutation,
+  setOneMutation
 } from '@deip/platform-store';
 
 import { ContractAgreementService } from '@deip/contract-agreement-service';
@@ -44,7 +44,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: '_id' })
+  one: oneGetter
 };
 
 const ACTIONS = {
@@ -113,8 +113,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: '_id' }),
-  setOne: setOneMutationFactory({ mergeKey: '_id' })
+  setList: setListMutation,
+  setOne: setOneMutation
 };
 
 export const contractAgreementsStore = {

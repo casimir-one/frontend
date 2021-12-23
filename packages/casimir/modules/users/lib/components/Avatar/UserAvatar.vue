@@ -46,7 +46,7 @@
          */
         const url = this.$$userAvatarSrc(this.user);
 
-        return !url ? null : `${url}?cache=${this.user.updated_at}`;
+        return !url ? null : `${url}?cache=${this.user.updatedAt}`;
       }
 
     }

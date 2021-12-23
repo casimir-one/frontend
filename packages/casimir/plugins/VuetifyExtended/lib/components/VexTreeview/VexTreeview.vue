@@ -106,11 +106,11 @@
 
       removeChildren(id) {
         const target = this.getItemObject(id);
-        this.removeItem(target.id);
+        this.removeItem(target[this.itemKey]);
 
         if (target.children && target.children.length) {
           for (const child of target.children) {
-            this.removeChildren(child.id);
+            this.removeChildren(child[this.itemKey]);
           }
         }
       },
@@ -121,8 +121,8 @@
 
         for (const value of path) {
           target = target[value];
-          if (!isNil(target.id)) {
-            this.addItem(target.id);
+          if (!isNil(target[this.itemKey])) {
+            this.addItem(target[this.itemKey]);
           }
         }
       },

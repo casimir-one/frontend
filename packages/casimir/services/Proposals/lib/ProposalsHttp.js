@@ -16,8 +16,8 @@ export class ProposalsHttp {
     return this.http.get(`/api/v2/proposals/${account}/${status}`);
   }
 
-  async getProposal(externalId) {
-    return this.http.get(`/api/v2/proposals/${externalId}`);
+  async getProposal(proposalId) {
+    return this.http.get(`/api/v2/proposals/${proposalId}`);
   }
 
   /** @type {() => ProposalsHttp} */

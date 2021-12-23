@@ -1,5 +1,5 @@
 {
-  "name": "@deip/tenant-service",
+  "name": "@deip/portal-service",
   "version": "1.361.0",
   "description": "",
   "main": "index.js",

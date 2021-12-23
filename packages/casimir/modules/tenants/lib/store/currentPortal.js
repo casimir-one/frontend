@@ -1,7 +1,7 @@
-import { TenantService } from '@deip/tenant-service';
+import { PortalService } from '@deip/portal-service';
 import { proxydi } from '@deip/proxydi';
 
-const tenantService = TenantService.getInstance();
+const portalService = PortalService.getInstance();
 
 const STATE = {
   data: null
@@ -13,28 +13,28 @@ const GETTERS = {
 
 const ACTIONS = {
   get({ commit }) {
-    return tenantService.getTenant(proxydi.get('env').TENANT)
+    return portalService.getPortal(proxydi.get('env').TENANT)
       .then((result) => {
         commit('setData', result);
       });
   },
 
   updateProfile({ commit }, payload) {
-    return tenantService.updateTenantProfile(payload)
+    return portalService.updatePortalProfile(payload)
       .then((result) => {
         commit('setData', result);
       });
   },
 
   updateNetworkSettings({ commit }, payload) {
-    return tenantService.updateNetworkSettings(payload)
+    return portalService.updateNetworkSettings(payload)
       .then((result) => {
         commit('setData', result);
       });
   },
 
   updateSettings({ commit }, payload) {
-    return tenantService.updateTenantSettings(payload)
+    return portalService.updatePortalSettings(payload)
       .then((result) => {
         commit('setData', result);
       });
@@ -47,7 +47,7 @@ const MUTATIONS = {
   }
 };
 
-export const currentTenantStore = {
+export const currentPortalStore = {
   namespaced: true,
   state: STATE,
   getters: GETTERS,

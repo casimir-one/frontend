@@ -2,9 +2,9 @@ import { UserService } from '@deip/user-service';
 
 import {
   listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory
+  oneGetter,
+  setListMutation,
+  setOneMutation
 } from '@deip/platform-store';
 
 import { hasValue } from '@deip/toolbox';
@@ -17,7 +17,7 @@ const STATE = {
 
 const GETTERS = {
   list: listGetter,
-  one: oneGetterFactory({ selectorKey: 'username' })
+  one: oneGetter
 };
 
 const ACTIONS = {
@@ -25,7 +25,7 @@ const ACTIONS = {
     const methods = {
       users: 'getListByNames',
       teamId: 'getListByTeam',
-      tenantId: 'getListByTenant',
+      portalId: 'getListByPortal',
       status: 'getListByStatus'
     };
 
@@ -58,8 +58,8 @@ const ACTIONS = {
       });
   },
 
-  getListByTenant({ commit }, { tenantId }) {
-    return userService.getUsersByTenant(tenantId)
+  getListByPortal({ commit }, { portalId }) {
+    return userService.getUsersByPortal(portalId)
       .then((data) => {
         commit('setList', data);
       })
@@ -80,8 +80,8 @@ const ACTIONS = {
 
   // one
 
-  getOne({ commit }, username) {
-    return userService.getUser(username)
+  getOne({ commit }, id) {
+    return userService.getUser(id)
       .then((user) => {
         commit('setOne', user);
       })
@@ -91,12 +91,12 @@ const ACTIONS = {
   },
 
   update({ dispatch, rootGetters }, payload) {
-    const { username } = payload;
+    const { _id } = payload;
     return userService.updateUser(payload)
       .then(() => {
-        dispatch('getOne', username);
-        if (rootGetters['auth/username'] === username) {
-          dispatch('currentUser/get', username, { root: true });
+        dispatch('getOne', _id);
+        if (rootGetters['auth/username'] === _id) {
+          dispatch('currentUser/get', _id, { root: true });
         }
       })
       .catch((err) => {
@@ -106,8 +106,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'username' }),
-  setOne: setOneMutationFactory({ mergeKey: 'username' })
+  setList: setListMutation,
+  setOne: setOneMutation
 };
 
 export const usersStore = {

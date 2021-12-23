@@ -12,8 +12,8 @@ export class ProjectContentHttp {
     return this.http.get(`/api/v2/project-content/ref/${refId}`);
   }
 
-  async getProjectContent(externalId) {
-    return this.http.get(`/api/v2/project-content/${externalId}`);
+  async getProjectContent(projectContentid) {
+    return this.http.get(`/api/v2/project-content/${projectContentid}`);
   }
 
   async getProjectContentsByProject(projectId) {
@@ -44,8 +44,8 @@ export class ProjectContentHttp {
     return this.http.put('/api/v2/project-content/draft/unlock', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async getProjectContentsByTenant(tenantId) {
-    return this.http.get(`/api/v2/project-content/tenant/${tenantId}`);
+  async getProjectContentsByPortal(portalId) {
+    return this.http.get(`/api/v2/project-content/portal/${portalId}`);
   }
 
   async getPublicProjectContentListing() {

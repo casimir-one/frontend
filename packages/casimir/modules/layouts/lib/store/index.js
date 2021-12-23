@@ -1,8 +1,8 @@
 import { LayoutService } from '@deip/layout-service';
 
 import {
-  crudGettersFactory,
-  crudMutationsFactory
+  crudGetters,
+  crudMutations
 } from '@deip/platform-store';
 import { collectionOne } from '@deip/toolbox';
 
@@ -14,7 +14,7 @@ const STATE = {
 };
 
 const GETTERS = {
-  ...crudGettersFactory({ dataKey: '_id' }),
+  ...crudGetters,
 
   settings: (state) => state.settings,
   mappedId: (state) => (key) => collectionOne(state.settings.mapping || [], { key })?.value
@@ -79,7 +79,7 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  ...crudMutationsFactory({ dataKey: '_id' }),
+  ...crudMutations,
 
   setSettings(state, payload) {
     state.settings = state.settings === null

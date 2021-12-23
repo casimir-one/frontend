@@ -27,13 +27,13 @@
         return {
           canEdit: this.$currentUser.hasRole(
             SYSTEM_ROLE.TEAM_ADMIN,
-            { name: 'teamId', id: this.team.entityId }
+            { name: 'teamId', id: this.team._id }
           ),
           ...attributeMethodsFactory(
             expandAttributes(this.team),
             {
               scopeName: ATTR_SCOPES.TEAM,
-              scopeId: this.team.entityId
+              scopeId: this.team._id
             }
           ),
           ...this.schemaData

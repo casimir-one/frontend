@@ -1,7 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a, stringToHex } from '@polkadot/util';
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE, RESEARCH_CONTENT_TYPES } from '@deip/constants';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE, PROJECT_CONTENT_TYPES } from '@deip/constants';
 import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey, getMultiAddress } from './utils';
 import { pascalCase } from 'change-case';
 
@@ -183,7 +183,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       references
     }) => {
 
-      const contentType = RESEARCH_CONTENT_TYPES[type];
+      const contentType = PROJECT_CONTENT_TYPES[type];
       const projectContentType = contentType ? pascalCase(contentType) : "Announcement";
 
       const createProjectContentOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,

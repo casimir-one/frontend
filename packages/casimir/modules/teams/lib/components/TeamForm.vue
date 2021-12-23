@@ -106,7 +106,7 @@
             this.formData,
             {
               scopeName: ATTR_SCOPES.TEAM,
-              scopeId: this.formData.externalId
+              scopeId: this.formData._id
             }
           )
         };
@@ -144,7 +144,7 @@
           }
         )
           .then((res) => {
-            this.$emit('success', res.entityId);
+            this.$emit('success', res._id);
           })
           .catch((err) => {
             this.$emit('error', err);
@@ -165,7 +165,7 @@
           }
         )
           .then((res) => {
-            this.$emit('success', res.entityId);
+            this.$emit('success', res._id);
           })
           .catch((err) => {
             this.$emit('error', err);

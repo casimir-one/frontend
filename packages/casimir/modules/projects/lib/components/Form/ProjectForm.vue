@@ -22,7 +22,7 @@
             :disabled="isDisabled || invalid"
             :loading="isLoading"
           >
-            {{ formModel.externalId
+            {{ formModel._id
               ? $t('module.projects.form.update')
               : $t('module.projects.form.create') }}
           </v-btn>
@@ -73,7 +73,7 @@
       return {
         isLoading: false,
         lazyFormModel: {
-          researchRef: { attributes: {} }
+          attributes: {}
         }
       };
     },
@@ -121,7 +121,7 @@
         const payload = {
           creator: this.$currentUser,
           data: {
-            creator: this.$currentUser.username
+            creator: this.$currentUser._id
             // TODO
             // teamId,
             // domains,
@@ -155,7 +155,7 @@
         const payload = {
           creator: this.$currentUser,
           data: {
-            updater: this.$currentUser.username
+            updater: this.$currentUser._id
             // TODO
             // projectId,
             // teamId,

@@ -1,9 +1,9 @@
 import { InvestmentsService } from '@deip/investments-service';
 import {
   listGetter,
-  oneGetterFactory,
-  setListMutationFactory,
-  setOneMutationFactory
+  oneGetter,
+  setListMutation,
+  setOneMutation
 } from '@deip/platform-store';
 
 const investmentsService = InvestmentsService.getInstance();
@@ -13,7 +13,7 @@ const STATE = {
 };
 
 const GETTERS = {
-  one: oneGetterFactory({ selectorKey: '_id' }),
+  one: oneGetter,
   list: listGetter
 };
 
@@ -97,8 +97,8 @@ const ACTIONS = {
     );
   },
 
-  getContributionsHistory({ commit }, username) {
-    return investmentsService.getAccountInvestmentsHistory(username)
+  getContributionsHistory({ commit }, userId) {
+    return investmentsService.getAccountInvestmentsHistory(userId)
       .then((res) => {
         const investmentOpportunities = res.map((item) => item.investmentOpportunity);
         commit('setList', investmentOpportunities);
@@ -108,8 +108,8 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setOne: setOneMutationFactory({ mergeKey: '_id' }),
-  setList: setListMutationFactory({ mergeKey: '_id' })
+  setOne: setOneMutation,
+  setList: setListMutation
 };
 
 export const fundraisingStore = {

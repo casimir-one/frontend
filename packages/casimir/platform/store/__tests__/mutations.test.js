@@ -12,20 +12,20 @@ describe('setListMutation', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }, {
         id: 2,
-        externalId: 'b'
+        _id: 'b'
       }]
     };
 
-    setListMutation(state, [{ id: 2, externalId: 'b' }]);
+    setListMutation(state, [{ id: 2, _id: 'b' }]);
     expect(state).toEqual(expectedState);
   });
 
@@ -33,17 +33,17 @@ describe('setListMutation', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       data: [{
         id: 9,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
 
-    setListMutation(state, [{ id: 9, externalId: 'a' }]);
+    setListMutation(state, [{ id: 9, _id: 'a' }]);
     expect(state).toEqual(expectedState);
   });
 
@@ -64,20 +64,20 @@ describe('setListMutationFactory', () => {
     const state = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }, {
         id: 2,
-        externalId: 'b'
+        _id: 'b'
       }]
     };
 
-    setListMutationFactory(options)(state, [{ id: 2, externalId: 'b' }]);
+    setListMutationFactory(options)(state, [{ id: 2, _id: 'b' }]);
     expect(state).toEqual(expectedState);
   });
 
@@ -85,17 +85,17 @@ describe('setListMutationFactory', () => {
     const state = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       objects: [{
         id: 1,
-        externalId: 'z'
+        _id: 'z'
       }]
     };
 
-    setListMutationFactory(options)(state, [{ id: 1, externalId: 'z' }]);
+    setListMutationFactory(options)(state, [{ id: 1, _id: 'z' }]);
     expect(state).toEqual(expectedState);
   });
 });
@@ -105,20 +105,20 @@ describe('setOneMutation', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }, {
         id: 2,
-        externalId: 'b'
+        _id: 'b'
       }]
     };
 
-    setOneMutation(state, { id: 2, externalId: 'b' });
+    setOneMutation(state, { id: 2, _id: 'b' });
     expect(state).toEqual(expectedState);
   });
 
@@ -126,17 +126,17 @@ describe('setOneMutation', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       data: [{
         id: 9,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
 
-    setOneMutation(state, { id: 9, externalId: 'a' });
+    setOneMutation(state, { id: 9, _id: 'a' });
     expect(state).toEqual(expectedState);
   });
 
@@ -157,20 +157,20 @@ describe('setOneMutationFactory', () => {
     const state = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }, {
         id: 2,
-        externalId: 'b'
+        _id: 'b'
       }]
     };
 
-    setOneMutationFactory(options)(state, { id: 2, externalId: 'b' });
+    setOneMutationFactory(options)(state, { id: 2, _id: 'b' });
     expect(state).toEqual(expectedState);
   });
 
@@ -178,17 +178,17 @@ describe('setOneMutationFactory', () => {
     const state = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       objects: [{
         id: 1,
-        externalId: 'z'
+        _id: 'z'
       }]
     };
 
-    setOneMutationFactory(options)(state, { id: 1, externalId: 'z' });
+    setOneMutationFactory(options)(state, { id: 1, _id: 'z' });
     expect(state).toEqual(expectedState);
   });
 });
@@ -198,17 +198,17 @@ describe('removeFromListMutation', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       },
       {
         id: 2,
-        externalId: 'b'
+        _id: 'b'
       }]
     };
     const expectedState = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
 
@@ -233,13 +233,13 @@ describe('removeFromListMutationFactory', () => {
     const state = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
     const expectedState = {
       objects: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
 
@@ -260,7 +260,7 @@ describe('removeFromListMutationFactory', () => {
     const state = {
       data: [{
         id: 1,
-        externalId: 'a'
+        _id: 'a'
       }]
     };
 

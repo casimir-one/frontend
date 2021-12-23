@@ -25,8 +25,8 @@ const actionsMap = {
     team: {
       all: 'getTeamProjects'
     },
-    tenant: {
-      all: 'getTenantProjects'
+    portal: {
+      all: 'getPortalProjects'
     }
   }
 };
@@ -47,7 +47,7 @@ const ACTIONS = {
 
     if (payload.username) target.push('user');
     else if (payload.teamId) target.push('team');
-    else if (payload.tenantId) target.push('tenant');
+    else if (payload.portalId) target.push('portal');
     else target.push('public');
 
     target.push(payload.type || 'all');
@@ -110,10 +110,10 @@ const ACTIONS = {
       });
   },
 
-  // tenant
+  // portal
 
-  getTenantProjects({ commit }, { tenantId }) {
-    return projectService.getTenantProjectListing(tenantId)
+  getPortalProjects({ commit }, { portalId }) {
+    return projectService.getPortalProjectListing(portalId)
       .then((result) => {
         commit('setList', result);
       });

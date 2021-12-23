@@ -1,2 +1,2 @@
-export { tenantsStore } from './tenants';
-export { currentTenantStore } from './currentTenant';
+export { portalsStore } from './portals';
+export { currentPortalStore } from './currentPortal';

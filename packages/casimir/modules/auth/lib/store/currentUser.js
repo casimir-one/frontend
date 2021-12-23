@@ -16,9 +16,9 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    const username = rootGetters['auth/username'];
+    const userId = rootGetters['auth/username'];
 
-    return userService.getUser(username)
+    return userService.getUser(userId)
       .then((res) => {
         if (res) {
           commit('setData', res);

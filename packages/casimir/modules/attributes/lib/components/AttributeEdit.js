@@ -69,7 +69,7 @@ const defaultAttributeModel = () => ({
   // TODO: check what the prop
   marker: null,
 
-  tenantId: null,
+  portalId: null,
   blockchainFieldMeta: null
 });
 

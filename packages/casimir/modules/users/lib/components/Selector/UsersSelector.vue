@@ -11,7 +11,7 @@
         :items="users"
 
         :item-text="$$userFullName"
-        :item-value="userExternalId"
+        item-value="_id"
 
         :name="label"
         :loading="loading"
@@ -88,7 +88,6 @@
   import { VAutocomplete } from 'vuetify/lib/components';
   /* eslint-enable import/extensions, import/no-unresolved */
 
-  import { hasValue } from '@deip/toolbox';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import { VexAutocomplete } from '@deip/vuetify-extended';
   import UsersDataProvider from '../DataProvider/UsersDataProvider';
@@ -135,13 +134,6 @@
           }
 
         };
-      }
-    },
-
-    methods: {
-      userExternalId(data) {
-        if (!hasValue(data)) return false;
-        return data.username;
       }
     }
   };

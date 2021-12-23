@@ -166,7 +166,7 @@
       },
 
       getPartyNameById(id) {
-        const party = this.parties.find((p) => p.entityId === id);
+        const party = this.parties.find((p) => p._id === id);
         if (!party) {
           return null;
         }
