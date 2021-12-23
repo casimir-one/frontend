@@ -13,20 +13,20 @@ const ATTR_TYPES = createEnum({
   URL: 10,
   NUMBER: 11,
   VIDEO_URL: 12,
-  USER: 13,
+  USER: 13, // not implemented, must be FEATURE
   AVATAR: 14,
   LOCATION: 15,
   RICHTEXT: 16,
 
-  STEPPER: 501,
-  DISCIPLINE: 502,
-  RESEARCH_GROUP: 503,
-  EXPRESS_LICENSING: 504,
-  NETWORK_CONTENT_ACCESS: 505,
-  ROADMAP: 506,
-  PARTNERS: 507,
-  EDUCATION: 508,
-  EMPLOYMENT: 509,
+  STEPPER: 501, // not implemented
+  DISCIPLINE: 502, // not implemented
+  RESEARCH_GROUP: 503, // not implemented
+  EXPRESS_LICENSING: 504, // not implemented
+  NETWORK_CONTENT_ACCESS: 505, // not implemented
+  ROADMAP: 506, // not implemented
+  PARTNERS: 507, // not implemented
+  EDUCATION: 508, // not implemented
+  EMPLOYMENT: 509, // not implemented
 
   CUSTOM: 1001,
   FEATURE: 1002
@@ -51,26 +51,26 @@ const ATTR_TYPES_LABELS = {
   [ATTR_TYPES.NUMBER]: 'Number',
 
   [ATTR_TYPES.VIDEO_URL]: 'Video url',
-  [ATTR_TYPES.USER]: 'User selector',
+  [ATTR_TYPES.USER]: 'User selector (not implemented)',
   [ATTR_TYPES.AVATAR]: 'Avatar/Photo image',
   [ATTR_TYPES.LOCATION]: 'Location',
 
   // temp section
 
-  [ATTR_TYPES.STEPPER]: 'STEPPER',
-  [ATTR_TYPES.DISCIPLINE]: 'DISCIPLINE',
-  [ATTR_TYPES.RESEARCH_GROUP]: 'RESEARCH_GROUP',
-  [ATTR_TYPES.EXPRESS_LICENSING]: 'EXPRESS_LICENSING',
-  [ATTR_TYPES.NETWORK_CONTENT_ACCESS]: 'NETWORK_CONTENT_ACCESS',
-  [ATTR_TYPES.ROADMAP]: 'ROADMAP',
-  [ATTR_TYPES.PARTNERS]: 'PARTNERS',
-  [ATTR_TYPES.EDUCATION]: 'EDUCATION',
-  [ATTR_TYPES.EMPLOYMENT]: 'EMPLOYMENT',
+  [ATTR_TYPES.STEPPER]: 'STEPPER  (not implemented)',
+  [ATTR_TYPES.DISCIPLINE]: 'DISCIPLINE (not implemented)',
+  [ATTR_TYPES.RESEARCH_GROUP]: 'RESEARCH_GROUP (not implemented)',
+  [ATTR_TYPES.EXPRESS_LICENSING]: 'EXPRESS_LICENSING (not implemented)',
+  [ATTR_TYPES.NETWORK_CONTENT_ACCESS]: 'NETWORK_CONTENT_ACCESS (not implemented)',
+  [ATTR_TYPES.ROADMAP]: 'ROADMAP (not implemented)',
+  [ATTR_TYPES.PARTNERS]: 'PARTNERS (not implemented)',
+  [ATTR_TYPES.EDUCATION]: 'EDUCATION (not implemented)',
+  [ATTR_TYPES.EMPLOYMENT]: 'EMPLOYMENT (not implemented)',
 
   // - temp section
 
   [ATTR_TYPES.CUSTOM]: 'Custom attribute',
-  [ATTR_TYPES.FEATURE]: 'Feature attribute'
+  [ATTR_TYPES.FEATURE]: 'Feature attribute (not implemented)'
 };
 
 const ATTR_TYPES_ICONS = {
@@ -129,6 +129,14 @@ const ATTR_TYPES_PROPS = {
       size: {
         type: Number,
         default: 48
+      }
+    }
+  },
+  [ATTR_TYPES.IMAGE]: {
+    VexImageInput: {
+      aspectRatio: {
+        type: Number,
+        default: 16 / 9
       }
     }
   }
