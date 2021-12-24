@@ -17,7 +17,7 @@ export const layoutBlocks = {
   blocks: blocksGenerator([
     {
       component: VexHeader,
-      icon: 'mdi-image-area',
+      icon: 'mdi-page-layout-header',
       children: [],
       excludeProps: ['returnDominant'],
       allowedFor: {
@@ -27,7 +27,7 @@ export const layoutBlocks = {
     },
     {
       component: VexSection,
-      icon: 'mdi-view-agenda-outline',
+      icon: 'mdi-page-layout-body',
       children: []
     },
     {

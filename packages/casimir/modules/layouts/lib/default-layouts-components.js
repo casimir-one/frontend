@@ -23,7 +23,8 @@ import {
   VSheet,
   VSimpleTable,
   VIcon,
-  VDivider
+  VDivider,
+  VImg
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
@@ -33,6 +34,14 @@ export const defaultLayoutComponents = {
   // attributes
   AttributeSet,
   AttributeRead,
+
+  // content
+  VImg,
+  VexVideoEmbed,
+  VIcon,
+
+  VueEditorjs,
+  VexRichedit,
 
   // layout
   VexHeader,
@@ -48,18 +57,14 @@ export const defaultLayoutComponents = {
   VSimpleTable,
 
   // ui
-  VIcon,
   VDivider,
   VexMiniMetaItem,
   VexTooltip,
-  VexVideoEmbed,
 
   // other
   VexAvatar,
 
   // text
   VexTextExpand,
-  VeLineClamp,
-  VueEditorjs,
-  VexRichedit
+  VeLineClamp
 };
