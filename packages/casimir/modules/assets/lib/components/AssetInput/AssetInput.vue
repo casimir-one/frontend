@@ -12,7 +12,7 @@
         :rules="required ? 'required|number' : 'number'"
       >
         <v-text-field
-          v-model="amount"
+          :value="internalValue.amount"
           class="rounded-br-0 rounded-tr-0"
           :label="label"
           outlined
@@ -20,17 +20,19 @@
           :error-messages="[...errors, ...errorMessages]"
           :name="$t('module.assets.input.amount')"
           autocomplete="off"
+          @input="handleAmountInput"
         />
       </validation-provider>
     </v-col>
     <v-col cols="4">
       <v-select
-        v-model="symbol"
+        :value="internalValue.symbol"
         class="rounded-bl-0 rounded-tl-0"
         :items="assetsListKeys"
         :hide-details="true"
         :disabled="disableAssets"
         outlined
+        @change="handleSymbolChange"
       />
     </v-col>
   </v-row>
@@ -38,6 +40,13 @@
 
 <script>
   import { isEqual } from '@deip/toolbox/lodash';
+
+  const defaultValue = {
+    id: null,
+    symbol: null,
+    precision: null,
+    amount: null
+  };
 
   export default {
     name: 'AssetInput',
@@ -76,24 +85,13 @@
     },
 
     data() {
-      const model = {
-        id: undefined,
-        symbol: undefined,
-        precision: undefined,
-        amount: undefined
-      };
-
       const lazyValue = {
-        ...model,
+        ...defaultValue,
         ...this.value
       };
 
       return {
-        defaultValue: { ...model },
-        lazyValue,
-
-        amount: lazyValue.amount,
-        symbol: lazyValue.symbol
+        lazyValue
       };
     },
 
@@ -121,8 +119,16 @@
 
     watch: {
       selectedAsset: {
-        handler(newVal, oldVal) {
-          if (newVal && newVal?._id === oldVal?._id) return;
+        handler(newVal) {
+          if (newVal?._id === this.internalValue.id) return;
+
+          if (!newVal) {
+            this.internalValue = {
+              ...defaultValue,
+              amount: this.internalValue.amount
+            };
+            return;
+          }
 
           this.internalValue = {
             ...this.internalValue,
@@ -130,8 +136,6 @@
             precision: newVal.precision,
             symbol: newVal.symbol
           };
-
-          this.symbol = newVal.symbol;
         },
         immediate: true,
         deep: true
@@ -141,34 +145,29 @@
         handler(newVal) {
           if (isEqual(newVal, this.lazyValue)) return;
 
-          this.lazyValue = newVal || { ...this.defaultValue };
+          this.lazyValue = newVal || { ...defaultValue };
         },
         deep: true
-      },
-
-      amount(newVal) {
-        this.internalValue = {
-          ...this.internalValue,
-          amount: newVal
-        };
-      },
-
-      symbol(newVal, oldVal) {
-        if (newVal === oldVal) return;
-
-        const newAsset = this.$store.getters['assets/one'](newVal);
-        this.internalValue = {
-          ...this.internalValue,
-          id: newAsset._id,
-          precision: newAsset.precision,
-          symbol: newVal
-        };
       }
     },
 
     methods: {
       emitValueChange(val) {
         this.$emit('change', val);
+      },
+
+      handleAmountInput(value) {
+        this.internalValue = {
+          ...this.internalValue,
+          amount: value
+        };
+      },
+
+      handleSymbolChange(value) {
+        this.internalValue = {
+          ...this.internalValue,
+          symbol: value
+        };
       }
     }
   };
