@@ -110,15 +110,16 @@
         set(val) {
           this.$emit('input', val);
 
-          if (this.$refs.observer) {
-            this.$refs.observer.reset();
-          }
           if (this.asset) {
             this.asset.amount = null;
           }
 
           this.redirectToPaymentUrl = null;
           this.step = STEPS.FORM;
+
+          if (this.$refs.observer) {
+            this.$refs.observer.reset();
+          }
         }
       },
 
@@ -161,7 +162,7 @@
         }
       },
 
-      deposit() {
+      async deposit() {
         this.isLoading = true;
 
         const account = this.assetBalance
@@ -169,25 +170,23 @@
           : this.$currentUser.username;
         const payload = {
           initiator: this.$currentUser,
-          amount: parseFloat(this.asset.amount, 10) * 100, // cents
+          amount: parseFloat(this.asset.amount) * 100, // cents
           currency: this.asset.symbol,
           account,
           timestamp: Date.now()
         };
 
-        this.$store.dispatch('wallet/deposit', payload)
-          .then((data) => {
-            this.redirectToPaymentUrl = data.redirectUrl;
-            this.step = STEPS.PAYMENT;
-            this.isIframeSrcLoading = true;
-          })
-          .catch((error) => {
-            console.error(error);
-            this.$notifier.showError(error.response.data);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
+        try {
+          const data = await this.$store.dispatch('wallet/deposit', payload);
+          this.redirectToPaymentUrl = data.redirectUrl;
+          this.step = STEPS.PAYMENT;
+          this.isIframeSrcLoading = true;
+        } catch (error) {
+          console.error(error);
+          this.$notifier.showError(error.response.data);
+        }
+
+        this.isLoading = false;
       },
 
       submitForm() {
