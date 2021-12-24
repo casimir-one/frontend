@@ -10,24 +10,13 @@ export const tableBlocks = {
   blocks: [
     ...blocksGenerator([
       {
+        blockName: 'Table',
         component: VSimpleTable,
         icon: 'mdi-table',
         children: []
       }
     ]),
     ...normalizeBlocksObject([
-      {
-        is: 'thead',
-        name: 'Table header',
-        icon: 'mdi-page-layout-header',
-        children: []
-      },
-      {
-        is: 'tbody',
-        name: 'Table body',
-        icon: 'mdi-page-layout-body',
-        children: []
-      },
       {
         is: 'tr',
         name: 'Table row',

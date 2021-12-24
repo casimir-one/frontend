@@ -5,7 +5,6 @@ const {
   VDivider,
   VexMiniMetaItem,
   VexTooltip,
-  VexVideoEmbed,
   VexTextExpand
 } = defaultLayoutComponents;
 
@@ -20,8 +19,10 @@ export const uiBlocks = {
     },
     {
       component: VexMiniMetaItem,
+      blockName: 'Meta item',
       icon: 'mdi-tag-text-outline',
-      children: []
+      excludeProps: ['meta', 'title'],
+      blockType: 'component'
     },
     {
       component: VexTooltip,
@@ -29,14 +30,9 @@ export const uiBlocks = {
       children: []
     },
     {
-      component: VexVideoEmbed,
-      icon: 'mdi-video-outline',
-      excludeProps: ['params'],
-      children: []
-    },
-    {
       component: VexTextExpand,
-      icon: 'mdi-text-short',
+      blockName: 'Expand',
+      icon: 'mdi-text-box-plus-outline',
       children: []
     }
   ])

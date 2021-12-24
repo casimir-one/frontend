@@ -6,7 +6,7 @@ import {
   layoutBlocks,
   typographyBlocks,
   tableBlocks,
-  uiBlocks
+  uiBlocks, contentBlocks
 } from './blocks';
 
 const layoutsRegistry = LayoutsRegistry.getInstance();
@@ -24,6 +24,7 @@ const install = (Vue, options = {}) => {
 
   layoutsRegistry
     .registerBlocksObjects([
+      contentBlocks,
       layoutBlocks,
       typographyBlocks,
       tableBlocks,
