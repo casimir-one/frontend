@@ -147,9 +147,11 @@ export class ProjectContentService {
     return this.projectContentHttp.deleteProjectContentDraft(msg);
   }
 
-  async updateProjectContentDraft(draft) {
-    const updateDraftCmd = new UpdateDraftCmd({ ...draft });
-    const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': draft._id });
+  async updateProjectContentDraft(payload) {
+    const formData = createFormData(payload);
+
+    const updateDraftCmd = new UpdateDraftCmd(payload);
+    const msg = new MultFormDataMsg(formData, { appCmds: [updateDraftCmd] }, { 'project-id': payload.projectId, 'entity-id': payload._id });
     return this.projectContentHttp.updateProjectContentDraft(msg);
   }
 
