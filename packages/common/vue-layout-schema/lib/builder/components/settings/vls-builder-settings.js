@@ -2,19 +2,25 @@ import {
   isArray,
   kindOf,
   objectPath,
-  capitalCase, deepFindParentByValue
+  capitalCase, deepFindParentByValue, hasOwnProperty, sentenceCase
 } from '@deip/toolbox';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
+
+import { VeStack } from '@deip/vue-elements';
 
 /* eslint-disable */
 import {
   VTextField,
   VTextarea,
   VCheckbox,
-  VDivider
+  VSelect,
+  VAutocomplete,
+  VIcon,
+  VSpacer
 } from 'vuetify/lib/components';
-import { VexStack } from '@deip/vuetify-extended';
+
+import { global as globalMdiVars } from '!!sass-extract-loader?{"plugins": ["compact"]}!@mdi/font/scss/_variables.scss';
 /* eslint-enable */
 
 import { convertBlockPropsForCanvas } from '../../utils/helpers';
@@ -101,18 +107,18 @@ export const VlsBuilderSettings = {
      * Generate text input
      * @param {string[]} path
      * @param {string} label
-     * @param {*} value
+     * @param {string} value
      * @returns {JSX.Element}
      */
     genTextField(path, label, value) {
-      const initVal = objectPath.get(this.schemaAcc, path, value);
+      const initVal = objectPath.get(this.schemaAcc, path, value) || '';
       const props = this.genFieldProps(label);
 
       return (
         <VTextField
           {...{ props }}
           class="ma-0"
-          value={initVal === false ? '' : initVal}
+          value={!initVal ? '' : initVal}
           onInput={(v) => this.setFieldVal(path, v)}
         />
       );
@@ -122,19 +128,28 @@ export const VlsBuilderSettings = {
      * Generate text input
      * @param {string[]} path
      * @param {string} label
-     * @param {*} value
+     * @param {string} value
+     * @param {boolean} asArray
      * @returns {JSX.Element}
      */
-    genTextarea(path, label, value) {
-      const initVal = objectPath.get(this.schemaAcc, path, value);
+    genTextarea(path, label, value, asArray = false) {
+      const initVal = objectPath.get(this.schemaAcc, path, value) || '';
       const props = this.genFieldProps(label);
+
+      const onInputHandler = (val) => {
+        if (asArray) {
+          this.setFieldArrayVal(path, val);
+        } else {
+          this.setFieldVal(path, val);
+        }
+      };
 
       return (
         <VTextarea
           {...{ props }}
           class="ma-0"
-          value={initVal === false ? '' : initVal.join('\n')}
-          onInput={(v) => this.setFieldArrayVal(path, v)}
+          value={asArray ? initVal.join('\n') : initVal}
+          onInput={onInputHandler}
         />
       );
     },
@@ -143,7 +158,7 @@ export const VlsBuilderSettings = {
      * Generate checkbox input
      * @param {string[]} path
      * @param {string} label
-     * @param {*} value
+     * @param {boolean} value
      * @returns {JSX.Element}
      */
     genCheckbox(path, label, value) {
@@ -154,6 +169,62 @@ export const VlsBuilderSettings = {
         <VCheckbox
           {...{ props }}
           class="ma-0 pa-0"
+          value={initVal}
+          onChange={(v) => this.setFieldVal(path, v)}
+        />
+      );
+    },
+
+    /**
+     * Generate select input
+     * @param {string[]} path
+     * @param {string} label
+     * @param {string} value
+     * @param {Array} items
+     * @returns {JSX.Element}
+     */
+    genSelect(path, label, value, items) {
+      const initVal = objectPath.get(this.schemaAcc, path, value);
+      const props = this.genFieldProps(label);
+
+      return (
+        <VSelect
+          {...{ props }}
+          class="ma-0 pa-0"
+          items={items}
+          value={initVal}
+          onChange={(v) => this.setFieldVal(path, v)}
+        />
+      );
+    },
+
+    /**
+     * Generate icons selector
+     * @param {string[]} path
+     * @param {string} label
+     * @param {string} value
+     * @returns {JSX.Element}
+     */
+    genIconSelector(path, label, value) {
+      const initVal = objectPath.get(this.schemaAcc, path, value);
+      const props = this.genFieldProps(label);
+      const scopedSlots = {
+        item: ({ item }) => (
+          <div class="d-flex">
+            <VIcon class="mr-4">{item.value}</VIcon>
+            <VSpacer>{item.text}</VSpacer>
+          </div>
+        )
+      };
+
+      const icons = Object.keys(globalMdiVars['$mdi-icons'])
+        .map((icon) => ({ text: sentenceCase(icon), value: `mdi-${icon}` }));
+
+      return (
+        <VAutocomplete
+          {...{ props, scopedSlots }}
+          class="ma-0 pa-0"
+          items={icons}
           value={initVal}
           onChange={(v) => this.setFieldVal(path, v)}
         />
@@ -189,6 +260,10 @@ export const VlsBuilderSettings = {
         return this.genTextarea(...params);
       }
 
+      if (key === 'icon') {
+        return this.genIconSelector(...params);
+      }
+
       return this.genTextField(...params);
     },
 
@@ -214,20 +289,20 @@ export const VlsBuilderSettings = {
       const mainProps = objectPath.get(info, ['data', 'props'], {});
       const proxyProps = objectPath.get(info, ['data', 'proxyProps'], {});
 
-      const mainPropsFields = this
+      const mainPropsFields = () => this
         .mapPropsFields(
           mainProps,
           [...this.nodePath, 'data', 'props']
         );
 
-      const proxyPropsFields = Object.keys(proxyProps)
+      const proxyPropsFields = () => Object.keys(proxyProps)
         .map((component) => this
           .mapPropsFields(
             proxyProps[component],
             [...this.nodePath, 'data', 'proxyProps', component]
           ));
 
-      const additionalFields = [
+      const additionalFields = () => [
         this.genTextField(
           [...this.nodePath, 'data', 'staticClass'],
           'Additional class'
@@ -238,18 +313,24 @@ export const VlsBuilderSettings = {
         )
       ];
 
-      return [
-        ...mainPropsFields,
-        ...proxyPropsFields,
-        ...additionalFields
-      ];
+      const allowText = hasOwnProperty('text', this.nodeInfo);
+      const textInput = () => this.genTextarea(
+        [...this.nodePath, 'text'],
+        'Text'
+      );
+
+      return (
+        <VeStack>
+          {allowText ? [textInput()] : null}
+          {mainPropsFields()}
+          {proxyPropsFields()}
+          {additionalFields()}
+        </VeStack>
+      );
     }
   },
 
   render() {
-    const settings = () => (
-      <VexStack>{this.genFields()}</VexStack>
-    );
     const placeholder = () => (
       <div class="text-caption text--secondary">
         Select an element on the canvas to activate this panel.
@@ -258,7 +339,7 @@ export const VlsBuilderSettings = {
 
     return (
       <div class="vls-builder-settings">
-        {this.containerActiveNode ? settings() : placeholder()}
+        {this.containerActiveNode ? this.genFields() : placeholder()}
       </div>
     );
   }

@@ -13,6 +13,7 @@ import { ClickOutside } from 'vuetify/lib/directives';
 import { VeRawDisplay } from '@deip/vue-elements';
 
 import { deepFindParentByValue } from '@deip/toolbox';
+import { isEqual } from '@deip/toolbox/lodash';
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 
@@ -106,6 +107,15 @@ export const VlsBuilderCanvas = {
       }
     },
 
+    /**
+     * @param {Object} node
+     * @return {boolean}
+     */
+    isFocused(node) {
+      return !!this.containerActiveNode
+      && this.containerActiveNode === node.uid;
+    },
+
     // //////////////////////////
 
     /**
@@ -137,7 +147,7 @@ export const VlsBuilderCanvas = {
       };
 
       return (
-        <draggable {...data }>
+        <draggable {...data}>
           {this.genNodes(list)}
         </draggable>
       );
@@ -194,7 +204,7 @@ export const VlsBuilderCanvas = {
     genExtendedNodeMarkup(icon, content) {
       return (
         <VSheet class="d-flex align-center">
-          <VSheet width="40px" height="40" class="d-flex align-center justify-center">
+          <VSheet width="40px" height="40" class="d-flex align-center justify-center flex-shrink-0">
             <VIcon>{icon}</VIcon>
           </VSheet>
           <VDivider vertical class="mr-1"/>
@@ -239,6 +249,27 @@ export const VlsBuilderCanvas = {
     },
 
     /**
+     * Generate container node with children host and icon at left side
+     * @param {Object} node
+     * @returns {JSX.Element}
+     */
+    genContentNode(node) {
+      const { icon } = this.getContainerNodeInfo(node.id);
+
+      const content = () => (
+        <div {...{ style: { paddingLeft: '8px' } }}>{node.text}</div>
+      );
+
+      if (this.isFocused(node)) {
+        if (!isEqual(this.focusBox, this.getNodeBoxData(node.uid))) {
+          this.focusBox = this.getNodeBoxData(this.containerActiveNode);
+        }
+      }
+
+      return this.genExtendedNodeMarkup(icon, content());
+    },
+
+    /**
      * Generate container node with children host
      * @param {Object} node
      * @returns {JSX.Element}
@@ -265,6 +296,10 @@ export const VlsBuilderCanvas = {
 
       if (['typography'].includes(blockType)) {
         return this.genExtendedNode;
+      }
+
+      if (['content'].includes(blockType)) {
+        return this.genContentNode;
       }
 
       return this.genDefaultNode;
@@ -372,7 +407,8 @@ export const VlsBuilderCanvas = {
             },
             include: () => [
               document.querySelector('.vls-builder-tree'),
-              document.querySelector('.vls-builder-settings')
+              document.querySelector('.vls-builder-settings'),
+              document.querySelector('.v-menu__content')
             ].filter((el) => el)
           }}
         >
@@ -383,7 +419,7 @@ export const VlsBuilderCanvas = {
 
         {
           process.env.NODE_ENV === 'development'
-            ? <VeRawDisplay value={this.schemaAcc} />
+            ? <VeRawDisplay value={this.schemaAcc}/>
             : null
         }
 
