@@ -111,12 +111,22 @@ const install = (Vue, options = {}) => {
         let $currentUser = {};
 
         if (data) {
-          $currentUser = {
-            ...data,
-            isAdmin: data.roles.some((r) => r.role === 'admin'),
-            privKey: accessService.getOwnerPrivKey(),
-            pubKey: accessService.getOwnerPubKey()
-          };
+          $currentUser = { ...data };
+
+          Object.defineProperty($currentUser, 'isAdmin', {
+            enumerable: false,
+            value: data.roles.some((r) => r.role === 'admin')
+          });
+
+          Object.defineProperty($currentUser, 'privKey', {
+            enumerable: false,
+            value: accessService.getOwnerPrivKey()
+          });
+
+          Object.defineProperty($currentUser, 'pubKey', {
+            enumerable: false,
+            value: accessService.getOwnerPubKey()
+          });
         }
 
         Object.defineProperty($currentUser, 'exists', {
