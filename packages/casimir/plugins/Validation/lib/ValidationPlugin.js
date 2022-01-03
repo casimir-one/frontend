@@ -22,7 +22,6 @@ import {
   maxValue,
   unique,
   equal,
-  username,
   dateBefore,
   dateAfter,
   dateAfterNow
@@ -65,7 +64,6 @@ const install = (Vue, options = {}) => {
   extend('unique', unique);
   extend('equal', equal);
   extend('number', number);
-  extend('username', username);
   extend('dateBefore', dateBefore);
   extend('dateAfter', dateAfter);
   extend('dateAfterNow', dateAfterNow);
