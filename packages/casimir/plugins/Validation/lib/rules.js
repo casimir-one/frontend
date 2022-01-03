@@ -1,6 +1,6 @@
 import { integer, double } from 'vee-validate/dist/rules';
 import { proxydi } from '@deip/proxydi';
-import { validateAccountName, wrapInArray } from '@deip/toolbox';
+import { wrapInArray } from '@deip/toolbox';
 
 export const email = {
   validate(value) {
@@ -27,14 +27,6 @@ export const number = {
     const i18n = proxydi.get('i18nInstance');
     return i18n.t('plugin.validation.number', values);
   }
-};
-
-export const username = {
-  validate(value) {
-    const { valid, error } = validateAccountName(value, '{_field_}');
-    return valid || error;
-  },
-  computesRequired: true
 };
 
 export const minMax = {

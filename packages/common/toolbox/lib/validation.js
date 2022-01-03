@@ -1,21 +1,83 @@
 import kindOf from 'kind-of';
 
+/**
+ * Checks if value is Array
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isArray = (val) => kindOf(val) === 'array';
+
+/**
+ * Checks if value is Object
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isObject = (val) => kindOf(val) === 'object';
+
+/**
+ * Checks if value is File
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isFile = (val) => kindOf(val) === 'file';
 
+/**
+ * Checks if value is Function
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isFunction = (val) => kindOf(val) === 'function';
 
+/**
+ * Checks if value is Boolean
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isBoolean = (val) => kindOf(val) === 'boolean';
+
+/**
+ * Checks if value is String
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isString = (val) => kindOf(val) === 'string';
+
+/**
+ * Checks if value is Number
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isNumber = (val) => kindOf(val) === 'number';
+
+/**
+ * Checks if value is numeric string
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isNumeric = (val) => {
   if (isNumber(val)) return false;
   return !Number.isNaN(val) && !Number.isNaN(Number.parseFloat(val));
 };
 
+/**
+ * Checks if value is null or undefined
+ * @param {*} val
+ * @returns {boolean}
+ */
+export const isNil = (val) => val == null;
+
+/**
+ * Checks if value is boolean, string or number
+ * @param {*} val
+ * @returns {boolean}
+ */
 export const isSimpleVal = (val) => ['boolean', 'string', 'number'].includes(kindOf(val));
 
+/**
+ * Checks if value is JSON string
+ * @param {*} str
+ * @returns {boolean}
+ */
 export const isJsonString = (str) => {
   if (!isString(str)) {
     return false;
@@ -28,10 +90,19 @@ export const isJsonString = (str) => {
   }
 };
 
+/**
+ * Checks if value is not nil or empty
+ * @param {*} value
+ * @returns {boolean}
+ */
 export const hasValue = (value) => {
-  if (!value) return false;
+  if (isNil(value)) return false;
 
   const res = [];
+
+  if (isBoolean(value)) {
+    res.push(true);
+  }
 
   if (isSimpleVal(value)) {
     res.push(!!value);
@@ -56,6 +127,12 @@ export const hasValue = (value) => {
   return res.includes(true);
 };
 
+/**
+ * Check if object has property
+ * @param {string} prop
+ * @param {Object} obj
+ * @returns {boolean}
+ */
 export const hasOwnProperty = (prop, obj) => {
   if (kindOf(obj) !== 'object') return false;
 
@@ -92,56 +169,4 @@ export const assert = (
 ) => {
   if (condition) return;
   throw new Error(failureMessage);
-};
-
-export const validateAccountName = (
-  value,
-  suffix = 'Account name'
-) => {
-  if (!value) {
-    return {
-      valid: false,
-      error: `${suffix} should not be empty.`
-    };
-  }
-  if (!/^[a-z]/.test(value)) {
-    return {
-      valid: false,
-      error: `${suffix} should start with a small letter.`
-    };
-  }
-  if (!/^[a-z0-9-]*$/.test(value)) {
-    return {
-      valid: false,
-      error: `${suffix} should have only small letters, digits, or dashes.`
-    };
-  }
-  if (/--/.test(value)) {
-    return {
-      valid: false,
-      error: `${suffix} should have only one dash in a row.`
-    };
-  }
-  if (!/[a-z0-9]$/.test(value)) {
-    return {
-      valid: false,
-      error: `${suffix} should end with a small letter or digit.`
-    };
-  }
-  if (value.length < 3) {
-    return {
-      valid: false,
-      error: `${suffix} should be longer`
-    };
-  }
-  if (value.length > 40) {
-    return {
-      valid: false,
-      error: `${suffix} should be shorter`
-    };
-  }
-
-  return {
-    valid: true
-  };
 };
