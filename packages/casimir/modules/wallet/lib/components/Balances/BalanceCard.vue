@@ -1,6 +1,6 @@
 <template>
   <v-hover v-slot="{ hover }">
-    <vex-color-shadow :opacity="hover ? 0 : 1">
+    <ve-shadow-box :opacity="hover ? 1 : 0">
       <v-card
         :elevation="hover ? 8 : 0"
         :style="styles"
@@ -48,20 +48,21 @@
           </div>
         </vex-stack>
       </v-card>
-    </vex-color-shadow>
+    </ve-shadow-box>
   </v-hover>
 </template>
 
 <script>
   import { ASSET_TYPE } from '@deip/constants';
-  import { VexColorShadow, VexStack } from '@deip/vuetify-extended';
+  import { VexStack } from '@deip/vuetify-extended';
+  import { VeShadowBox } from '@deip/vue-elements';
   import { currency } from '@deip/assets-module';
 
   export default {
     name: 'BalanceCard',
 
     components: {
-      VexColorShadow,
+      VeShadowBox,
       VexStack
     },
 
