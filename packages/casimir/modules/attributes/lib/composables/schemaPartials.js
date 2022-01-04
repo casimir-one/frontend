@@ -1,5 +1,5 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
-import { VeStack } from '@deip/vue-elements/lib/components/ve-stack';
+import { VeStack } from '@deip/vue-elements';
 import {
   VTextField,
   VTextarea,
