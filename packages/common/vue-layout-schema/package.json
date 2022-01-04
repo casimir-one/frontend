@@ -1,6 +1,6 @@
 {
   "name": "@deip/vue-layout-schema",
-  "version": "1.361.0",
+  "version": "1.362.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,9 +27,9 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.361.0",
-    "@deip/toolbox": "1.361.0",
-    "@deip/vue-elements": "1.361.0",
+    "@deip/constants": "1.362.0",
+    "@deip/toolbox": "1.362.0",
+    "@deip/vue-elements": "1.362.0",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
@@ -45,7 +45,6 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
     "@babel/plugin-proposal-optional-chaining": "^7.14.2",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
-
     "sass-extract": "^2.1.0",
     "sass-extract-loader": "^1.1.0"
   }

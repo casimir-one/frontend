@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.362.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.362.0) (2022-01-04)
+
+
+### Bug Fixes
+
+* **@deip/assets-module, @deip/fundraising-module:** select first value in asset input by default ([1aa7cb3](https://gitlab.com/DEIP/deip-client-modules/commit/1aa7cb381ac3d03a3e069e09963f9869043d3a81))
+* **@deip/assets-module, @deip/wallet-module:** fix asset input edit ([d0351a2](https://gitlab.com/DEIP/deip-client-modules/commit/d0351a2c1582ebcaaada4558719756900b47948c))
+
+
+
+
+
 # [1.361.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
 
 **Note:** Version bump only for package @deip/assets-module
