@@ -1,7 +1,7 @@
 <template>
   <vex-stack>
     <v-item-group v-model="internalValue">
-      <vex-grid>
+      <ve-auto-grid :cols="2">
         <v-item
           v-for="amount in amounts"
           v-slot="{ active }"
@@ -16,7 +16,7 @@
             {{ amount }} {{ asset }}
           </div>
         </v-item>
-      </vex-grid>
+      </ve-auto-grid>
     </v-item-group>
 
     <validation-observer ref="amountObserver">
@@ -47,14 +47,15 @@
 </template>
 
 <script>
-  import { VexGrid, VexStack } from '@deip/vuetify-extended';
+  import { VexStack } from '@deip/vuetify-extended';
+  import { VeAutoGrid } from '@deip/vue-elements';
 
   const NUMBER_OF_STEPS = 6;
 
   export default {
     name: 'AmountSelector',
     components: {
-      VexGrid,
+      VeAutoGrid,
       VexStack
     },
 
