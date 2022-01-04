@@ -5,7 +5,6 @@ export * from './VexColorShadow';
 export * from './VexCroppa';
 export * from './VexDialog';
 export * from './VexDotList';
-export * from './VexGrid'; // rename to autogrid
 export * from './VexHeader';
 export * from './VexImageInput';
 export * from './VexInput';

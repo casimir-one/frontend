@@ -1,7 +1,5 @@
 <template>
-  <ve-auto-grid
-    item-width="300px"
-  >
+  <ve-auto-grid item-width="272px">
     <balance-card
       v-for="(balance, index) of balances"
       :key="balance.assetId"
