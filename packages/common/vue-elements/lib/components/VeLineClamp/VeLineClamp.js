@@ -1,4 +1,4 @@
-import './ve-line-clamp.scss';
+import './VeLineClamp.scss';
 
 import { defineComponent } from '@deip/platform-util';
 

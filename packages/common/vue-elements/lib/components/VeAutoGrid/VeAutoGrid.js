@@ -1,4 +1,4 @@
-import './ve-auto-grid.scss';
+import './VeAutoGrid.scss';
 
 import { defineComponent } from '@deip/platform-util';
 import { convertToUnit } from '@deip/toolbox';
