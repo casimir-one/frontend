@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.363.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.363.0) (2022-01-04)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** add stable attribute block id ([97f7c13](https://github.com/DEIPworld/deip-modules/commit/97f7c138c28b102bccd0ca9b3639ff3988b80401))
+* **@deip/layouts-module:** fix settings form ([ca30fe0](https://github.com/DEIPworld/deip-modules/commit/ca30fe03341bb624aae86c87083abd5367abcc3e))
+
+
+### Features
+
+* **@deip/layouts-module:** add text-content block ([b4a258a](https://github.com/DEIPworld/deip-modules/commit/b4a258abc61043c69c7caaeb25b040fc36a1008c))
+
+
+
+
+
 # [1.362.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.362.0) (2022-01-04)
 
 

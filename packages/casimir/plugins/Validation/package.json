@@ -1,6 +1,6 @@
 {
   "name": "@deip/validation-plugin",
-  "version": "1.362.0",
+  "version": "1.363.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,9 +20,9 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.362.0",
-    "@deip/proxydi": "1.362.0",
-    "@deip/toolbox": "1.362.0",
+    "@deip/constants": "1.363.0",
+    "@deip/proxydi": "1.363.0",
+    "@deip/toolbox": "1.363.0",
     "vee-validate": "^3.4.9"
   },
   "peerDependencies": {
