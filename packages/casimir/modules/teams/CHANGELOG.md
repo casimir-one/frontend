@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.362.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.362.0) (2022-01-04)
+
+
+### Bug Fixes
+
+* **@deip/teams-module:** change parser ([2b2d206](https://gitlab.com/DEIP/deip-client-modules/commit/2b2d206fe7b215c64f25d6ebbd0db19737a65945))
+
+
+### Features
+
+* **@deip/attributes-module:** add custom attribute type ([5b5b436](https://gitlab.com/DEIP/deip-client-modules/commit/5b5b436bae96c94064ba0ec904a687cff8a37ecd))
+
+
+
+
+
 # [1.361.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
 
 **Note:** Version bump only for package @deip/teams-module

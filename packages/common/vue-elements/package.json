@@ -1,6 +1,6 @@
 {
   "name": "@deip/vue-elements",
-  "version": "1.361.0",
+  "version": "1.362.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,8 +27,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/platform-util": "1.361.0",
-    "@deip/toolbox": "1.361.0"
+    "@deip/platform-util": "1.362.0",
+    "@deip/toolbox": "1.362.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

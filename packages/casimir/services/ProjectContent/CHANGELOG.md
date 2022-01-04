@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.362.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.362.0) (2022-01-04)
+
+
+### Features
+
+* JSON type in pojectContent ([e71032d](https://github.com/DEIPworld/deip-modules/commit/e71032debe5218b4ed380f41bffc0e56234f103e))
+
+
+
+
+
 # [1.361.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
 
 

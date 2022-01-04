@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.362.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.362.0) (2022-01-04)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** make currentUser fields enumerable ([86029ee](https://gitlab.com/DEIP/deip-client-modules/commit/86029ee91f789cc8bff403223719d97ff9336376))
+
+
+
+
+
 # [1.361.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.361.0) (2021-12-15)
 
 **Note:** Version bump only for package @deip/auth-module
