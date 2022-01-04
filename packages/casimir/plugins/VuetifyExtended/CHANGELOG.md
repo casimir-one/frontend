@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.364.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fixed parseVal and stringifyVal ([e1345db](https://gitlab.com/DEIP/deip-client-modules/commit/e1345dbd6b8e59aab0eb86bc79335e3400f0de48))
+
+
+
+
+
 # [1.363.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.363.0) (2022-01-04)
 
 
