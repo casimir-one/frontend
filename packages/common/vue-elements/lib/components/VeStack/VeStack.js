@@ -1,4 +1,4 @@
-import './ve-stack.scss';
+import './VeStack.scss';
 
 import { defineComponent } from '@deip/platform-util';
 import { convertToUnit } from '@deip/toolbox';

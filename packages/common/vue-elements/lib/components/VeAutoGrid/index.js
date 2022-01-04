@@ -1,4 +1,4 @@
-import VeAutoGrid from './ve-auto-grid';
+import VeAutoGrid from './VeAutoGrid';
 
 export { VeAutoGrid };
 export default VeAutoGrid;

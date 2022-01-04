@@ -1,4 +1,4 @@
-import VeStack from './ve-stack';
+import VeStack from './VeStack';
 
 export { VeStack };
 export default VeStack;

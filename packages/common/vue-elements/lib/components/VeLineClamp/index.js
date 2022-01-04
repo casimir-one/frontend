@@ -1,4 +1,4 @@
-import VeLineClamp from './ve-line-clamp';
+import VeLineClamp from './VeLineClamp';
 
 export { VeLineClamp };
 export default VeLineClamp;
