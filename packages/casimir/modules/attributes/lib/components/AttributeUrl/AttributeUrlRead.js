@@ -1,4 +1,4 @@
-import { VeStack } from '@deip/vue-elements/lib/components/ve-stack';
+import { VeStack } from '@deip/vue-elements';
 import {
   VIcon
 // eslint-disable-next-line import/extensions,import/no-unresolved

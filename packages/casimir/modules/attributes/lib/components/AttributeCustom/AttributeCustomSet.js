@@ -8,7 +8,7 @@ import {
 
 import { defineComponent } from '@deip/platform-util';
 import { VlsParser } from '@deip/vue-layout-schema';
-import { VeStack } from '@deip/vue-elements/lib/components/ve-stack';
+import { VeStack } from '@deip/vue-elements';
 import { AttributeSetMixin, AttributeMultipleModelMixin, AttributeSchemaMixin } from '../../mixins';
 import {
   schemaLayoutComponents,
