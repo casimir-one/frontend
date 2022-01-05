@@ -168,9 +168,11 @@ Make sure everything is done correctly.
     } catch (err) {
       errorHandler(err, false);
 
-      spinner.start('Reverting...');
-      await revertPublish();
-      spinner.succeed('Reverted');
+      if (err.toString().includes('publishing')) {
+        spinner.start('Reverting...');
+        await revertPublish();
+        spinner.succeed('Reverted');
+      }
     }
 
     process.exit();

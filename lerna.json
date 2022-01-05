@@ -16,7 +16,8 @@
       ],
       "includeMergedTags": true,
       "allowBranch": [
-        "publish/*"
+        "develop",
+        "master"
       ]
     },
     "publish": {},
