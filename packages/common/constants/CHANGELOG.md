@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Features
+
+* JSON type in pojectContent ([e71032d](https://github.com/DEIPworld/deip-modules/commit/e71032debe5218b4ed380f41bffc0e56234f103e))
+* **@deip/chain-service:** abstraction for Substrate and Graphene account SignUp; ([ae1803b](https://github.com/DEIPworld/deip-modules/commit/ae1803b3f5950174a7df1a4d10d0549a71e80ab6))
+* **@deip/constants:** new constants ([c347c37](https://github.com/DEIPworld/deip-modules/commit/c347c37f58fcefec218965d749142cbeaae4ceac))
+* **@deip/notification-service, @deip/bookmark-service:** create commands ([e649562](https://github.com/DEIPworld/deip-modules/commit/e649562730336f20751b94024f19c69beead347c))
+* **@deip/tenant-service:** add cmds ([cc3bd22](https://github.com/DEIPworld/deip-modules/commit/cc3bd22d1b86efa6c27fdd509f81a45c0f7b0281))
+* **@deip/user-service:** change password ([4c46b04](https://github.com/DEIPworld/deip-modules/commit/4c46b0437bd212c8840cac0c6c1fe5bada6c5aa0))
+
+
+
+
+
 # [1.364.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

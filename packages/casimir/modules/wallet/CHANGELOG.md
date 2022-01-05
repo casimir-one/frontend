@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* **@deip/assets-module, @deip/wallet-module:** fix asset input edit ([d0351a2](https://gitlab.com/DEIP/deip-client-modules/commit/d0351a2c1582ebcaaada4558719756900b47948c))
+* **@deip/wallet-module:** show balances for assets with amount 0 ([5c428d2](https://gitlab.com/DEIP/deip-client-modules/commit/5c428d203fbe49cf6299f04783dbc94ddd6fd050))
+* **@deip/wallet-module:** truncate long amount in balance card ([0441adc](https://gitlab.com/DEIP/deip-client-modules/commit/0441adce0f71c13a83392a9fae8a836e5ee5d553))
+
+
+
+
+
 # [1.364.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

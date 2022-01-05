@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** change renderer ([b98571a](https://gitlab.com/DEIP/deip-client-modules/commit/b98571a4ffe9a490c25b01edb39456d0856837fd))
+
+
+
+
+
 # [1.364.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

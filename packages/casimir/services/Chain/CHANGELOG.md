@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** substrate tx chain metadata is moved outside ([bb201dc](https://github.com/DEIPworld/deip-modules/commit/bb201dcfa22d96d6dd249cccc41f29d106a4ac82))
+
+
+### Features
+
+* **@deip/chain-service:** preserve DAO threshold field is added ([cdde6c3](https://github.com/DEIPworld/deip-modules/commit/cdde6c3d553607eac21749a7d37d3abcd500041b))
+
+
+
+
+
 # [1.364.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

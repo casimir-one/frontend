@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Features
+
+* **@deip/chain-service:** preserve DAO threshold field is added ([cdde6c3](https://gitlab.com/DEIP/deip-client-modules/commit/cdde6c3d553607eac21749a7d37d3abcd500041b))
+* JSON type in pojectContent ([e71032d](https://gitlab.com/DEIP/deip-client-modules/commit/e71032debe5218b4ed380f41bffc0e56234f103e))
+
+
+
+
+
 # [1.364.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* **@deip/toolbox:** deepFindParentByValue now return undefined if no result ([d80efa2](https://gitlab.com/DEIP/deip-client-modules/commit/d80efa290c0895c9700444c9ce18dda85775b4c4))
+* **@deip/toolbox:** fix methods ([e247827](https://gitlab.com/DEIP/deip-client-modules/commit/e2478275f0f642f571195e5a9fc0e6cb1109b051))
+
+
+### Features
+
+* **@deip/assets-service:** chain-agnostic deposit feature ([36e20f2](https://gitlab.com/DEIP/deip-client-modules/commit/36e20f2f262b1e7bd18fa50da0b8280e32a9cb9f))
+* **@deip/toolbox:** add uuidv4 ([20e6297](https://gitlab.com/DEIP/deip-client-modules/commit/20e629718f219149ace0405b436e5f3a580000b9))
+
+
+
+
+
 # [1.364.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.365.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* **@deip/vue-layout-schema:** fix sass-extract dependencies ([5152d54](https://github.com/DEIPworld/deip-modules/commit/5152d54a360a09ead8722719a6d806271599d6a4))
+* **@deip/vue-layout-schema:** icon selector ([c4a544f](https://github.com/DEIPworld/deip-modules/commit/c4a544fab1a248f42cb88a6636cb3c931a89eb7c))
+* **@deip/vue-layout-schema:** refact and fixes ([1076d58](https://github.com/DEIPworld/deip-modules/commit/1076d581dcd0da2c4c3c6c99bef7929d529fa6c7))
+* **@deip/vue-layout-schema:** schema builder model ([984ea23](https://github.com/DEIPworld/deip-modules/commit/984ea2388d8ce4e466f73b76c8e203b0cf118a87))
+
+
+### Features
+
+* **@deip/vls-layout-schema:** add vls-schema-builder component ([3837477](https://github.com/DEIPworld/deip-modules/commit/3837477977db20fefdae79195ab9dcbbb87b9b3b))
+* **@deip/vue-schema-builder:** add icon selector ([3ddd3ab](https://github.com/DEIPworld/deip-modules/commit/3ddd3ab6496ac9a2f816ade79afb318c3654893a))
+
+
+
+
+
 # [1.364.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.364.0) (2022-01-04)
 
 
