@@ -160,7 +160,6 @@ Make sure everything is done correctly.
     await prepareForPublish();
     spinner.succeed('Complete');
 
-    spinner.start('Publishing...');
     try {
       await makePublish(publishBranch);
 
