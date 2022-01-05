@@ -20,7 +20,7 @@ import {
   VSpacer
 } from 'vuetify/lib/components';
 
-import { global as globalMdiVars } from '!!sass-extract-loader?{"plugins": ["compact"]}!@mdi/font/scss/_variables.scss';
+import iconsData from '@mdi/svg/meta.json';
 /* eslint-enable */
 
 import { convertBlockPropsForCanvas } from '../../utils/helpers';
@@ -206,25 +206,32 @@ export const VlsBuilderSettings = {
      * @returns {JSX.Element}
      */
     genIconSelector(path, label, value) {
+      if (this.$vuetify.icons.iconfont !== 'mdi') {
+        return this.genTextField(path, label, value);
+      }
+
       const initVal = objectPath.get(this.schemaAcc, path, value);
       const props = this.genFieldProps(label);
+
       const scopedSlots = {
         item: ({ item }) => (
           <div class="d-flex">
-            <VIcon class="mr-4">{item.value}</VIcon>
-            <VSpacer>{item.text}</VSpacer>
+            <VIcon class="mr-4">mdi-{item.name}</VIcon>
+            <VSpacer>{sentenceCase(item.name)}</VSpacer>
           </div>
         )
       };
 
-      const icons = Object.keys(globalMdiVars['$mdi-icons'])
-        .map((icon) => ({ text: sentenceCase(icon), value: `mdi-${icon}` }));
+      const getIconName = (icon) => sentenceCase(icon.name);
+      const getIconValue = (icon) => `mdi-${icon.name}`;
 
       return (
         <VAutocomplete
           {...{ props, scopedSlots }}
           class="ma-0 pa-0"
-          items={icons}
+          items={iconsData}
+          item-text={getIconName}
+          item-value={getIconValue}
           value={initVal}
           onChange={(v) => this.setFieldVal(path, v)}
         />

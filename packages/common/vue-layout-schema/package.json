@@ -30,13 +30,12 @@
     "@deip/constants": "1.364.0",
     "@deip/toolbox": "1.364.0",
     "@deip/vue-elements": "1.364.0",
-    "sass-extract": "^2.1.0",
-    "sass-extract-loader": "^1.1.0",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
     "@deip/vuetify-extended": "^1.341.0",
     "@mdi/font": "^6.5.95",
+    "@mdi/svg": "^6.5.95",
     "vue": "^2.6.14",
     "vuetify": "^2.5.3"
   },
