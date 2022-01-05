@@ -156,9 +156,9 @@ Make sure everything is done correctly.
     }
     spinner.stop();
 
-    spinner.start('Preparing for publication');
+    spinner.info('Preparing for publication...');
     await prepareForPublish();
-    spinner.succeed();
+    spinner.succeed('Complete');
 
     spinner.start('Publishing...');
     try {
