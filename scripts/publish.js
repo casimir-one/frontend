@@ -2,59 +2,127 @@
 const inquirer = require('inquirer');
 const ora = require('ora');
 const execa = require('execa');
-const { crc32 } = require('crc');
 const chalk = require('chalk');
-
+const fs = require('fs');
+const path = require('path');
 const argv = require('yargs/yargs')(process.argv.slice(2)).argv
 /* eslint-enable */
 
 const {
-  boostrap = true,
+  bootstrap = true,
   clean = true
 } = argv;
 
-const prompt = inquirer.createPromptModule();
+const rootDir = path.resolve(__dirname, '..');
 
+const spinner = ora();
+const prompt = inquirer.createPromptModule();
+const allowBranch = ['master', 'develop'];
+
+/**
+ * @return {string} Current branch name
+ */
 const getCurrentBranch = async () => (await execa.command('git rev-parse --abbrev-ref HEAD')).stdout;
 
-const checkBranchCleanness = async (currentBranch) => {
+/**
+ * @param error
+ * @param withExit
+ */
+const errorHandler = (error, withExit = true) => {
+  spinner.fail(chalk.red(error.toString()));
+
+  if (withExit) {
+    process.exit();
+  }
+};
+
+/**
+ * Check current branch state
+ * @param currentBranch
+ * @return {Promise<boolean>}
+ */
+const checkBranchUpToDate = async (currentBranch) => {
   await execa.command('git remote update');
 
   const { stdout } = await execa.command('git status -uno');
 
-  // const isUpToDate = stdout.includes('Your branch is up to date');
   const isAhead = stdout.includes('Your branch is ahead');
   const isBehind = stdout.includes('Your branch is behind');
   const isDirty = stdout.includes('Changes not staged');
 
-  const errors = [];
-
-  if (isAhead) errors.push(`Your branch is ahead of 'origin/${currentBranch}'. Use "git push" to publish your local commits`);
-  if (isBehind) errors.push(`Your branch is behind of 'origin/${currentBranch}'. Use "git pull" to update your local branch`);
-  if (isDirty) errors.push('Changes not staged for commit. Use "git add [file]..." to update what will be committed');
-
-  if (errors.length) {
-    return {
-      clean: false,
-      errors
-    };
+  if (isAhead) {
+    throw new Error(`Your branch is ahead of 'origin/${currentBranch}'. Use "git push" to publish your local commits`);
+  }
+  if (isBehind) {
+    throw new Error(`Your branch is behind of 'origin/${currentBranch}'. Use "git pull" to update your local branch`);
+  }
+  if (isDirty) {
+    throw new Error('Changes not staged for commit. Use "git add [file]..." to update what will be committed');
   }
 
-  return {
-    clean: true,
-    errors
-  };
+  return true;
+};
+
+/**
+ * Make re:bootstrap of all packages
+ * @return {Promise<void>}
+ */
+const prepareForPublish = async () => {
+  if (clean) {
+    await execa.command('npx lerna clean --yes', { stdio: 'inherit', shell: true });
+  }
+  if (bootstrap) {
+    await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
+  }
+};
+
+/**
+ * Increase repo version, commit and push to git, publish packages to registry
+ * @param publishBranch
+ * @return {Promise<void>}
+ */
+const makePublish = async (publishBranch) => {
+  await execa.command(
+    'npx lerna version --no-push --exact',
+    { stdio: 'inherit', shell: true }
+  );
+
+  try {
+    await execa.command(`git push --tags origin ${publishBranch}`);
+  } catch ({ message }) {
+    const accessError = message.includes('protected branch hook declined');
+
+    if (accessError) {
+      throw new Error('You do not have the required rights for publishing.');
+    }
+
+    throw new Error(message);
+  }
+
+  await execa.command(
+    'npx lerna publish from-package',
+    { stdio: 'inherit', shell: true }
+  );
+};
+
+/**
+ * Revert publish changes
+ * @return {Promise<void>}
+ */
+const revertPublish = async () => {
+  const { version } = JSON.parse(fs.readFileSync(path.join(rootDir, 'lerna.json')));
+  await execa.command('git reset --hard HEAD~1');
+  await execa.command(`git tag -d v${version}`);
 };
 
 prompt([{
   type: 'list',
   name: 'startPublish',
+  prefix: '',
   message: `
-
 ${chalk.cyan.bold('ATTENTION!')}
-You are going to publish modules to the NPM repository.
+You are going to publish packages to the NPM registry.
 Make sure everything is done correctly.
-Otherwise, it will take a lot of work to roll back.
 
   `,
   default: [1],
@@ -74,54 +142,36 @@ Otherwise, it will take a lot of work to roll back.
       process.exit();
     }
 
-    const spinner = ora();
-    const allowBranch = ['master', 'develop'];
-    const currentBranch = await getCurrentBranch();
+    const publishBranch = await getCurrentBranch();
 
-    if (!allowBranch.includes(currentBranch)) {
-      console.info(`Wrong Brunch ${currentBranch}. Publish can be started only from ${allowBranch.join(' ,')}.`);
-      process.exit();
+    if (!allowBranch.includes(publishBranch)) {
+      errorHandler(`Wrong Branch ${publishBranch}. Publish can be started only from ${allowBranch.join(' ,')}.`);
     }
 
-    const today = new Date();
-    const crc = crc32(today.toString()).toString(16);
-    const publishBranch = `publish/${today.getDate()}-${today.getMonth() + 1}-${today.getFullYear()}-${crc}`;
-
-    spinner.start('Checking brunch cleanness');
-    const checkResult = await checkBranchCleanness();
+    spinner.start('Checking branch state');
+    try {
+      await checkBranchUpToDate(publishBranch);
+    } catch (err) {
+      errorHandler(err);
+    }
     spinner.stop();
-
-    if (!checkResult.clean) {
-      for (const error of checkResult.errors) {
-        console.info(`${chalk.red.bold('✘')} ${error}`);
-      }
-      process.exit();
-    }
-
-    console.info(`${chalk.green.bold('✔')} Your branch is up to date. Continue...`);
 
     spinner.start('Preparing for publication');
-    await execa.command(`git checkout -b ${publishBranch}`);
-    if (clean) {
-      await execa.command('npx lerna clean --yes');
+    await prepareForPublish();
+    spinner.succeed();
+
+    spinner.start('Publishing...');
+    try {
+      await makePublish(publishBranch);
+
+      spinner.succeed(chalk.green('Published'));
+    } catch (err) {
+      errorHandler(err, false);
+
+      spinner.start('Reverting...');
+      await revertPublish();
+      spinner.succeed('Reverted');
     }
-    spinner.stop();
-
-    if (boostrap) {
-      await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
-    }
-    await execa.command('npx lerna version --no-push --exact', { stdio: 'inherit', shell: true });
-    await execa.command('npx lerna publish from-git', { stdio: 'inherit', shell: true });
-    await execa.command(`git push --tags origin ${publishBranch}`);
-
-    console.info('Clear publish brunch...');
-    await execa.command('git checkout develop');
-    await execa.command(`git branch -D ${publishBranch}`);
-
-    console.info();
-    console.info(`${chalk.cyan.bold('NOTE')}: Do not forget to create a merge request '${publishBranch} -> develop'`);
-    console.info();
-    console.info(`${chalk.green.bold('Finished')}`);
 
     process.exit();
   });
