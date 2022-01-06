@@ -13,7 +13,9 @@
     "clean": "lerna clean --yes",
     "bootstrap": "npm run clean && lerna bootstrap",
     "prepare": "husky install",
-    "updateDeipDeps": "node ./scripts/updateDeipDeps.js"
+    "updateDeipDeps": "node ./scripts/updateDeipDeps.js",
+
+    "create:package": "npx yo ./packages/generators/generator-package"
   },
   "keywords": [],
   "author": "",
@@ -68,7 +70,8 @@
     "vue-loader": "^15.9.7",
     "vue-template-compiler": "^2.6.14",
     "vuetify": "^2.5.0",
-    "yargs": "^17.0.1"
+    "yargs": "^17.0.1",
+    "yo": "^4.3.0"
   },
   "dependencies": {
     "qs": "^6.10.1"
