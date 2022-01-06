@@ -7,3 +7,4 @@ packages/casimir/services/RpcClient/**
 packages/casimir/services/Chain/**
 packages/casimir/services/Grants/**
 packages/common/platform-fns/lib/helpers/_temp.js
+packages/generators/**/generators/*/templates/**

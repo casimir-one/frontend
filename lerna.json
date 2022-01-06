@@ -1,7 +1,8 @@
 {
   "packages": [
     "packages/common/*",
-    "packages/casimir/*/*"
+    "packages/casimir/*/*",
+    "packages/generators/*"
   ],
   "version": "1.365.0",
   "npmClient": "npm",
