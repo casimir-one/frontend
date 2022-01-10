@@ -35,7 +35,7 @@
     "mime": "^2.5.2",
     "parse-path": "^4.0.3",
     "raw-loader": "^4.0.2",
-    "vue-croppa": "^1.3.8"
+    "vue-advanced-cropper": "^1.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

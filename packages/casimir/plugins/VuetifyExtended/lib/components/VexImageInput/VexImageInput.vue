@@ -3,88 +3,93 @@
     <div v-if="label" class="text-body-2 mb-1 text--secondary">
       {{ label }}
     </div>
-    <v-sheet rounded class="overflow-hidden">
-      <v-responsive
-        :aspect-ratio="_aspectRatio"
-      >
-        <template v-if="mask && isInited && croppa.hasImage()">
-          <!-- eslint-disable vue/no-v-html -->
-          <div class="vex-mage-input__mask" v-html="mask" />
-          <!-- eslint-enable -->
-        </template>
 
-        <vex-croppa
-          ref="croppa"
-          v-model="croppa"
-          :accept="'image/*'"
-          :prevent-white-space="true"
-          :show-remove-button="false"
-          :disable-scroll-to-zoom="true"
-          :quality="croppaQuality"
-
-          placeholder="Choose or drag-n-drop an image"
-          :placeholder-font-size="14"
-          placeholder-color="rgba(0,0,0,.5)"
-          canvas-color="#F5F5F5"
-
-          initial-size="cover"
-          initial-position="center"
-          auto-sizing
-          :style="{width: '100%', height: '100%', display: 'block'}"
-          :initial-image="checkedInitialImage"
-
-          @init="onInit"
-
-          @new-image-drawn="onNewImage"
-          @draw="onDrawDebounce"
-          @file-choose="onFileChoose"
-          @initial-image-loaded="onInitialImageLoadedDebounce"
-        />
+    <v-sheet rounded class="overflow-hidden ">
+      <v-responsive :aspect-ratio="_aspectRatio">
+        <div class="cropper-container" :style="cropperContainerStyle">
+          <cropper
+            ref="cropper"
+            class="cropper grey lighten-4"
+            :debounce="500"
+            :src="image"
+            :default-size="fillArea"
+            :stencil-size="fullArea"
+            :stencil-component="stencilType"
+            :stencil-props="{
+              handlers: {},
+              movable: false,
+              scalable: false,
+              aspectRatio: aspectRatio,
+            }"
+            image-restriction="stencil"
+            default-boundaries="fill"
+            @change="handleChange"
+            @ready="handleReady"
+            @error="handleError"
+          />
+          <div
+            v-if="!image"
+            class="cropper-background grey lighten-4 d-flex justify-center align-center"
+            @click="handleImageUploadClick"
+          >
+            <span class="text-caption text--secondary">Click to choose image</span>
+          </div>
+        </div>
       </v-responsive>
 
-      <template v-if="isInited">
-        <v-divider />
+      <v-divider />
 
-        <v-sheet color="grey lighten-4 px-2 py-1 d-flex align-center">
-          <template v-if="!noRotate">
-            <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.rotate(1)">
-              <v-icon>mdi-rotate-right</v-icon>
-            </v-btn>
-            <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.rotate(-1)">
-              <v-icon>mdi-rotate-left</v-icon>
-            </v-btn>
-          </template>
+      <v-sheet
+        color="grey lighten-4 px-2 py-1 d-flex align-center"
+        :disabled="disabled"
+      >
+        <v-btn icon :disabled="isActionsDisabled" @click="handleZoomOutClick">
+          <v-icon>mdi-magnify-minus-outline</v-icon>
+        </v-btn>
+        <v-btn icon :disabled="isActionsDisabled" @click="handleZoomInClick">
+          <v-icon>mdi-magnify-plus-outline</v-icon>
+        </v-btn>
 
-          <template v-if="!noFlip">
-            <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.flipX()">
-              <v-icon>mdi-flip-horizontal</v-icon>
-            </v-btn>
-            <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.flipY()">
-              <v-icon>mdi-flip-vertical</v-icon>
-            </v-btn>
-          </template>
-
-          <div class="spacer mx-4">
-            <v-slider
-              v-model="sliderVal"
-              :min="sliderMin"
-              :max="sliderMax"
-              :step="0.001"
-              :hide-details="true"
-              :disabled="!croppa.hasImage()"
-              @input="onSliderInput"
-            />
-          </div>
-
-          <v-btn icon :disabled="!croppa.hasImage()" @click="croppa.chooseFile()">
-            <v-icon>mdi-sync</v-icon>
+        <template v-if="!noRotate">
+          <v-btn icon :disabled="isActionsDisabled" @click="handleRotateRightClick">
+            <v-icon>mdi-rotate-right</v-icon>
           </v-btn>
-
-          <v-btn icon :disabled="!croppa.hasImage()" @click="removeImage">
-            <v-icon>mdi-close</v-icon>
+          <v-btn icon :disabled="isActionsDisabled" @click="handleRotateLeftClick">
+            <v-icon>mdi-rotate-left</v-icon>
           </v-btn>
-        </v-sheet>
-      </template>
+        </template>
+
+        <template v-if="!noFlip">
+          <v-btn icon :disabled="isActionsDisabled" @click="hanldleFlipHorizontalClick">
+            <v-icon>mdi-flip-horizontal</v-icon>
+          </v-btn>
+          <v-btn icon :disabled="isActionsDisabled" @click="handleFlipVertialClick">
+            <v-icon>mdi-flip-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-spacer />
+
+        <input
+          ref="file"
+          type="file"
+          accept="image/*"
+          class="hidden"
+          @change="handleImageLoad"
+        >
+
+        <v-btn
+          icon
+          :disabled="disabled"
+          @click="handleImageUploadClick"
+        >
+          <v-icon>mdi-sync</v-icon>
+        </v-btn>
+
+        <v-btn icon :disabled="!image || imageLoading" @click="handleRemoveImageClick">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-sheet>
     </v-sheet>
   </div>
 </template>
@@ -92,17 +97,17 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import parsePath from 'parse-path';
-  import mime from 'mime';
 
   // eslint-disable-next-line import/extensions,import/no-unresolved
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   // eslint-disable-next-line import/extensions,import/no-unresolved
-  import { debounce } from 'vuetify/lib/util/helpers';
 
-  import { isNil } from '@deip/toolbox/lodash';
-
-  // import VexTooltip from '../VexTooltip/VexTooltip';
-  import VexCroppa from '../VexCroppa/VexCroppa';
+  import {
+    Cropper,
+    CircleStencil,
+    RectangleStencil
+  } from 'vue-advanced-cropper';
+  import 'vue-advanced-cropper/dist/style.css';
 
   const imageNameFromUrl = (url) => {
     const { pathname } = parsePath(url);
@@ -113,8 +118,11 @@
     name: 'VexImageInput',
 
     components: {
-      // VexTooltip,
-      VexCroppa
+      Cropper,
+      /* eslint-disable vue/no-unused-components */
+      CircleStencil,
+      RectangleStencil
+      /* eslint-enable import/extensions,import/no-unresolved */
     },
 
     mixins: [Proxyable],
@@ -149,61 +157,64 @@
         default: false
       },
 
-      mask: {
-        type: String,
-        default: null
+      round: {
+        type: Boolean,
+        default: false
       },
 
-      imageWidth: {
-        type: Number,
-        default: 0
+      disabled: {
+        type: Boolean,
+        default: false
       }
     },
 
     data() {
       return {
-        croppa: {},
-
-        isInited: false,
+        image: null,
+        imageLoading: false,
         ready: false,
 
-        sliderVal: 0,
-        sliderMin: 0,
-        sliderMax: 1,
-
-        onDrawDebounce: null,
-        onInitialImageLoadedDebounce: null,
-
-        chosenFile: null,
-        checkedInitialImage: ''
+        chosenFileName: null
       };
     },
 
     computed: {
-      croppaQuality() {
-        if (this.isInited && this.imageWidth) {
-          return this.imageWidth / this.$refs.croppa.$el.clientWidth;
-        }
-        return 2;
-      },
-
       _aspectRatio() {
         return parseFloat(this.aspectRatio);
+      },
+
+      cropperContainerStyle() {
+        return this._aspectRatio
+          ? { paddingBottom: `${(1 / this.aspectRatio) * 100}%` }
+          : undefined;
+      },
+
+      stencilType() {
+        return this.round
+          ? this.$options.components.CircleStencil
+          : this.$options.components.RectangleStencil;
+      },
+
+      isActionsDisabled() {
+        return this.disabled || !this.image || this.imageLoading;
       }
     },
 
-    created() {
+    async created() {
       if (this.initialImage) {
-        this.checkInitialImage()
-          .then((ok) => {
-            if (ok) this.checkedInitialImage = this.initialImage;
-            this.ready = true;
-          });
+        const ok = await this.checkInitialImage();
+        if (ok) this.image = this.initialImage;
+        this.ready = true;
       } else {
         this.ready = true;
       }
-      this.onDrawDebounce = debounce(this.onDraw, 1500);
-      this.onInitialImageLoadedDebounce = debounce(this.onInitialImageLoaded, 1500);
+    },
+
+    destroyed() {
+      // Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
+      if (this.image) {
+        URL.revokeObjectURL(this.image);
+      }
     },
 
     methods: {
@@ -212,94 +223,128 @@
           .then((res) => res.ok);
       },
 
-      onInit() {
-        this.isInited = true;
-      },
-
-      onNewImage() {
-        const scaleRatio = isNil(this.croppa.scaleRatio) ? 0 : this.croppa.scaleRatio;
-        this.sliderVal = scaleRatio;
-        this.sliderMin = scaleRatio;
-        this.sliderMax = scaleRatio > 0 ? scaleRatio * 4 : 4;
-      },
-
-      onFileChoose(file) {
-        this.chosenFile = file;
-      },
-
-      removeImage() {
-        this.croppa.remove();
-        this.chosenFile = null;
-        this.internalValue = null;
-      },
-
-      onInitialImageLoaded() {
-        if (!this.chosenFile) {
-          this.chosenFile = {
-            name: this.initialImageName || imageNameFromUrl(this.initialImage)
-          };
+      setInitialChosenFileName() {
+        if (!this.chosenFileName) {
+          this.chosenFileName = this.initialImageName || imageNameFromUrl(this.initialImage);
         }
       },
 
-      onDraw() {
-        this.getBlob()
-          .then((blob) => {
+      setChosenFileName(value) {
+        this.chosenFileName = value;
+      },
+
+      resetCropper() {
+        this.$refs.cropper.reset();
+      },
+
+      fillArea({ imageSize }) {
+        return {
+          width: Math.min(imageSize.width, imageSize.height),
+          height: Math.min(imageSize.width, imageSize.height)
+        };
+      },
+
+      fullArea({ boundaries }) {
+        return {
+          width: boundaries.width,
+          height: boundaries.height
+        };
+      },
+
+      handleImageUploadClick() {
+        this.$refs.file.click();
+      },
+
+      handleRemoveImageClick() {
+        this.resetCropper();
+        this.setChosenFileName(null);
+        this.internalValue = null;
+        this.image = null;
+      },
+
+      handleChange({ canvas }) {
+        if (canvas) {
+          canvas.toBlob((blob) => {
             if (!blob) {
               return;
             }
 
-            this.internalValue = new File([blob], this.chosenFile.name);
+            this.internalValue = new File([blob], this.chosenFileName);
           });
-      },
-
-      onSliderInput(e) {
-        this.croppa.scaleRatio = +e;
-      },
-
-      getMime(mimeType) {
-        if (mimeType) {
-          return mimeType;
         }
+      },
+      hanldleFlipHorizontalClick() {
+        this.$refs.cropper.flip(true, false);
+      },
 
-        if (!mimeType && this.chosenFile?.name) {
-          return mime.getType(this.chosenFile.name);
+      handleFlipVertialClick() {
+        this.$refs.cropper.flip(false, true);
+      },
+
+      handleRotateRightClick() {
+        this.$refs.cropper.rotate(90);
+      },
+
+      handleRotateLeftClick() {
+        this.$refs.cropper.rotate(-90);
+      },
+
+      handleZoomInClick() {
+        this.$refs.cropper.zoom(2);
+      },
+
+      handleZoomOutClick() {
+        this.$refs.cropper.zoom(0.5);
+      },
+
+      handleReady() {
+        this.imageLoading = false;
+        this.setInitialChosenFileName();
+      },
+
+      handleError(error) {
+        console.error(error);
+        this.imageLoading = false;
+      },
+
+      handleImageLoad(event) {
+        this.imageLoading = true;
+        const { files } = event.target;
+        this.loadImage(files);
+      },
+
+      loadImage(files) {
+        if (files && files[0]) {
+          if (this.image) {
+            URL.revokeObjectURL(this.image);
+          }
+          const blob = URL.createObjectURL(files[0]);
+          this.image = blob;
+          this.setChosenFileName(files[0].name);
+          this.resetCropper();
         }
-
-        return 'image/png';
-      },
-
-      getDataUrl(mimeType, compressionRate = 0.9) {
-        return this.croppa.generateDataUrl(
-          this.getMime(mimeType),
-          compressionRate
-        );
-      },
-
-      getBlob(mimeType, compressionRate = 0.9) {
-        return this.croppa.promisedBlob(
-          this.getMime(mimeType),
-          compressionRate
-        );
       }
     }
   });
 </script>
 
 <style lang="scss">
-  .vex-mage-input {
-    &__mask {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      pointer-events: none;
-      z-index: 1;
+  .cropper-container {
+    position: relative;
+    overflow: hidden;
 
-      svg {
-        width: 100%;
-        height: 100%;
-      }
+    .cropper, .cropper-background {
+      height: 100%;
+      width: 100%;
+      position: absolute;
     }
+
+    .cropper-background {
+      cursor: pointer;
+    }
+  }
+
+  .hidden {
+    display: none;
   }
 </style>
