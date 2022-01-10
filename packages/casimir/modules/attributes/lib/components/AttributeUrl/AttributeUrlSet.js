@@ -49,7 +49,7 @@ export const AttributeUrlSet = defineComponent({
 
     genLabelField(
       target = this.internalValue,
-      label = 'Label',
+      label = 'Link',
     ) {
       return (
         <VTextField
