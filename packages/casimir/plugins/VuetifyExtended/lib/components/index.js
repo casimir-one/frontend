@@ -1,7 +1,6 @@
 export * from './VexAutocomplete';
 export * from './VexAvatar';
 export * from './VexBlock';
-export * from './VexCroppa';
 export * from './VexDialog';
 export * from './VexDotList';
 export * from './VexHeader';
