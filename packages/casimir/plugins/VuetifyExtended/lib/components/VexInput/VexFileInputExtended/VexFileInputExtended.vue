@@ -8,7 +8,7 @@
     />
 
     <slot name="existList" :files="existsFiles">
-      <vex-stack v-if="existsFiles && existsFiles.length" class="mt-2" :gutter="8">
+      <ve-stack v-if="existsFiles && existsFiles.length" class="mt-2" :gap="8">
         <div
           v-for="(file, index) of existsFiles"
           :key="`link-${index}`"
@@ -24,7 +24,7 @@
             {{ file }}
           </a>
         </div>
-      </vex-stack>
+      </ve-stack>
     </slot>
   </div>
 </template>
@@ -37,8 +37,8 @@
   import { wrapInArray } from 'vuetify/lib/util/helpers';
   /* eslint-enable */
 
+  import { VeStack } from '@deip/vue-elements';
   import { VexFileInput } from '../VexFileInput';
-  import { VexStack } from '../../VexStack';
 
   const iconsMap = [
     { icon: 'mdi-file-image-outline', ext: ['jpg', 'jpeg', 'png', 'svg', 'bmp', 'gif'] },
@@ -51,7 +51,7 @@
 
   export default defineComponent({
     name: 'VexFileInputExtended',
-    components: { VexStack, VexFileInput },
+    components: { VeStack, VexFileInput },
     mixins: [Proxyable, BindsAttrs],
     props: {
       urlBuilder: {

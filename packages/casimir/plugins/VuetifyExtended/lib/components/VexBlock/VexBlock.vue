@@ -1,5 +1,5 @@
 <template>
-  <vex-stack :gap="titleMarginComputed">
+  <ve-stack :gap="titleMarginComputed">
     <div v-if="hasHeader" :class="headerClassList">
       <slot name="title-prepend" />
 
@@ -26,17 +26,17 @@
     </div>
 
     <slot />
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
-  import { VexStack } from '../VexStack';
+  import { VeStack } from '@deip/vue-elements';
   import { contextMixin } from '../../composables';
 
   export default defineComponent({
     name: 'VexBlock',
-    components: { VexStack },
+    components: { VeStack },
     mixins: [contextMixin],
     props: {
       compact: {

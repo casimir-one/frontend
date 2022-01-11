@@ -1,5 +1,5 @@
 <template>
-  <vex-stack>
+  <ve-stack>
     <v-item-group v-model="internalValue">
       <ve-auto-grid :cols="2">
         <v-item
@@ -43,12 +43,11 @@
         />
       </validation-provider>
     </validation-observer>
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
-  import { VexStack } from '@deip/vuetify-extended';
-  import { VeAutoGrid } from '@deip/vue-elements';
+  import { VeAutoGrid, VeStack } from '@deip/vue-elements';
 
   const NUMBER_OF_STEPS = 6;
 
@@ -56,7 +55,7 @@
     name: 'AmountSelector',
     components: {
       VeAutoGrid,
-      VexStack
+      VeStack
     },
 
     model: {

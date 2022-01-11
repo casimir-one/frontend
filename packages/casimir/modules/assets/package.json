@@ -27,6 +27,7 @@
 		"@deip/toolbox": "1.365.0",
 		"@deip/users-module": "1.365.0",
 		"@deip/validation-plugin": "1.365.0",
+		"@deip/vue-elements": "^1.365.0",
 		"@deip/vuetify-extended": "1.365.0",
 		"change-case": "^4.1.2",
 		"currency.js": "^2.0.4",

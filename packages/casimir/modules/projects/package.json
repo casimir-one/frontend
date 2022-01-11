@@ -29,6 +29,7 @@
     "@deip/project-service": "1.365.0",
     "@deip/proxydi": "1.365.0",
     "@deip/toolbox": "1.365.0",
+    "@deip/vue-elements": "^1.365.0",
     "@deip/vuetify-extended": "1.365.0"
   },
   "peerDependencies": {

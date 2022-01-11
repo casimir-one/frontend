@@ -8,7 +8,7 @@
         height="184px"
         class="pa-6"
       >
-        <vex-stack class="white--text">
+        <ve-stack class="white--text">
           <div>
             <v-chip
               small
@@ -46,7 +46,7 @@
               {{ $t('module.wallet.balances.deposit') }}
             </v-btn>
           </div>
-        </vex-stack>
+        </ve-stack>
       </v-card>
     </ve-shadow-box>
   </v-hover>
@@ -54,8 +54,7 @@
 
 <script>
   import { ASSET_TYPE } from '@deip/constants';
-  import { VexStack } from '@deip/vuetify-extended';
-  import { VeShadowBox } from '@deip/vue-elements';
+  import { VeShadowBox, VeStack } from '@deip/vue-elements';
   import { currency } from '@deip/assets-module';
 
   export default {
@@ -63,7 +62,7 @@
 
     components: {
       VeShadowBox,
-      VexStack
+      VeStack
     },
 
     props: {

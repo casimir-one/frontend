@@ -1,34 +1,34 @@
 <template>
-  <vex-stack class="d-flex">
+  <ve-stack class="d-flex">
     <vex-mini-meta-item
       v-for="(item, index) of items"
       :key="index"
       :meta="item"
     />
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
+  import { VeStack } from '@deip/vue-elements';
   import VexMiniMetaItem from './VexMiniMetaItem';
-  import VexStack from '../VexStack/VexStack';
 
   import { getBindableProps } from '../../composables';
 
   export default defineComponent({
     name: 'VexMiniMeta',
-    components: { VexStack, VexMiniMetaItem },
+    components: { VeStack, VexMiniMetaItem },
     props: {
       items: {
         type: Array,
         default: () => ([])
       },
 
-      ...VexStack.options.props
+      ...VeStack.options.props
     },
     computed: {
       stackProps() {
-        return getBindableProps.call(this, VexStack.options.props);
+        return getBindableProps.call(this, VeStack.options.props);
       }
     }
   });

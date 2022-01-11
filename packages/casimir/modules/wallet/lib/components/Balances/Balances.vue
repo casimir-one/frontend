@@ -1,5 +1,5 @@
 <template>
-  <vex-stack gutter="32">
+  <ve-stack :gap="32">
     <div class="d-flex justify-space-between align-center">
       <span class="text-h3">
         {{ $t('module.wallet.balances.wallet') }}
@@ -25,12 +25,13 @@
       :asset-balance="selectedAssetBalance"
       @payment-processed="handlePaymentProcessed"
     />
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
   import { ASSET_TYPE } from '@deip/constants';
-  import { VexStack, VexDialog } from '@deip/vuetify-extended';
+  import { VexDialog } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import { componentViewType } from '@deip/platform-util';
   import { AssetInput } from '@deip/assets-module';
 
@@ -41,7 +42,7 @@
     name: 'Balances',
 
     components: {
-      VexStack,
+      VeStack,
       VexDialog,
       AssetInput,
       BalancesCards,

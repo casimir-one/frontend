@@ -15,7 +15,7 @@
         <slot name="prepend" v-bind="binds" />
 
         <slot name="fields" v-bind="binds">
-          <vex-stack :gutter="8" class="mb-7">
+          <ve-stack :gap="8" class="mb-7">
             <slot name="prepend-fields" v-bind="binds" />
 
             <validation-provider
@@ -41,11 +41,11 @@
             />
 
             <slot name="apend-fields" v-bind="binds" />
-          </vex-stack>
+          </ve-stack>
         </slot>
 
         <slot name="submit" v-bind="binds">
-          <vex-stack :gutter="24">
+          <ve-stack :gap="24">
             <v-btn
               type="submit"
               color="primary"
@@ -68,7 +68,7 @@
                 {{ $t('module.auth.signIn') }}
               </router-link>
             </div>
-          </vex-stack>
+          </ve-stack>
         </slot>
 
         <slot name="append" v-bind="binds" />
@@ -78,13 +78,14 @@
 </template>
 
 <script>
-  import { VexStack, VexPasswordRepeatInput } from '@deip/vuetify-extended';
+  import { VexPasswordRepeatInput } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   export default {
     name: 'AuthSignUp',
 
     components: {
-      VexStack,
+      VeStack,
       VexPasswordRepeatInput
     },
 

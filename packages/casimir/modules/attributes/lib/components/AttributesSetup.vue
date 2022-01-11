@@ -1,7 +1,7 @@
 <template>
   <validation-observer v-slot="{ handleSubmit, invalid }">
     <v-form @submit.prevent="handleSubmit(updateSettings)">
-      <vex-stack gutter="32">
+      <ve-stack :gap="32">
         <v-row>
           <v-col>
             <v-card outlined>
@@ -126,14 +126,14 @@
             Save
           </v-btn>
         </div>
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
 
 <script>
   import { formMixin } from '@deip/platform-components';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import draggable from 'vuedraggable';
   import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/constants';
 
@@ -157,7 +157,7 @@
     name: 'AttributesSetup',
 
     components: {
-      VexStack,
+      VeStack,
       draggable
     },
 

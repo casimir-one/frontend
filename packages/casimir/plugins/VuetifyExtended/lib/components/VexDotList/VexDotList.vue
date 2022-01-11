@@ -1,5 +1,5 @@
 <template>
-  <vex-stack :gap="8">
+  <ve-stack :gap="8">
     <slot>
       <vex-dot-list-item
         v-for="(item, index) of items"
@@ -21,19 +21,19 @@
         </template>
       </vex-dot-list-item>
     </slot>
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
+  import { VeStack } from '@deip/vue-elements';
   import VexDotListItem from './VexDotListItem';
-  import { VexStack } from '../VexStack';
   import { contextMixin } from '../../composables';
 
   export default defineComponent({
     name: 'VexDotList',
     components: {
-      VexStack,
+      VeStack,
       VexDotListItem
     },
     mixins: [contextMixin],

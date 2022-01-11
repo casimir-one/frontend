@@ -4,10 +4,10 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(restore)"
     >
-      <vex-stack :gutter="formGutter">
+      <ve-stack :gap="formGap">
         <slot name="prepend" />
 
-        <vex-stack :gutter="fieldsGutter">
+        <ve-stack :gap="fieldsGap">
           <validation-provider
             v-slot="{ errors }"
             :name="emailLabel"
@@ -35,9 +35,9 @@
               rows="4"
             />
           </validation-provider>
-        </vex-stack>
+        </ve-stack>
 
-        <vex-stack :gutter="submitGutter">
+        <ve-stack :gap="submitGap">
           <v-btn
             type="submit"
             color="primary"
@@ -48,21 +48,21 @@
           >
             {{ submitLabel }}
           </v-btn>
-        </vex-stack>
+        </ve-stack>
 
         <slot name="append" />
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
 
 <script>
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   export default {
     name: 'AuthPasswordRestore',
 
-    components: { VexStack },
+    components: { VeStack },
 
     props: {
       emailLabel: {
@@ -78,17 +78,17 @@
         default() { return this.$t('module.auth.restore'); }
       },
 
-      formGutter: {
+      formGap: {
         type: [String, Number],
         default: 48
       },
 
-      fieldsGutter: {
+      fieldsGap: {
         type: [String, Number],
         default: 8
       },
 
-      submitGutter: {
+      submitGap: {
         type: [String, Number],
         default: 16
       },

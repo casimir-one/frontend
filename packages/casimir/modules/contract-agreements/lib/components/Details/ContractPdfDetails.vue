@@ -1,5 +1,5 @@
 <template>
-  <vex-stack v-if="!loading">
+  <ve-stack v-if="!loading">
     <div class="pdf-container d-flex flex-column justify-center">
       <v-progress-circular
         v-if="fileLoading"
@@ -26,7 +26,7 @@
           :disabled="signLoading"
           @submit.prevent="handleSubmit(handleSignContract)"
         >
-          <vex-stack :gutter="32">
+          <ve-stack :gap="32">
             <validation-provider
               v-if="canSign"
               name="Agreement"
@@ -55,10 +55,7 @@
             <div class="d-flex">
               <v-spacer />
 
-              <vex-stack
-                :gutter="16"
-                horizontal
-              >
+              <ve-stack flow="column" :gap="16">
                 <v-btn
                   v-if="canDiscard"
                   type="button"
@@ -82,20 +79,20 @@
                 >
                   {{ $t('module.contractAgreements.details.sign') }}
                 </v-btn>
-              </vex-stack>
+              </ve-stack>
             </div>
-          </vex-stack>
+          </ve-stack>
         </v-form>
       </validation-observer>
     </template>
-  </vex-stack>
+  </ve-stack>
 </template>
 
 <script>
   import pdf from 'vue-pdf';
 
   import { proxydi } from '@deip/proxydi';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   const sleep = (time) => new Promise((resolve) => { setTimeout(() => { resolve(); }, time); });
 
@@ -104,7 +101,7 @@
 
     components: {
       pdf,
-      VexStack
+      VeStack
     },
 
     props: {

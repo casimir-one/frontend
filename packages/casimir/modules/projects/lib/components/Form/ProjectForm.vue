@@ -6,7 +6,7 @@
       <v-divider class="mt-8 mb-6" />
 
       <div class="d-flex justify-end align-center">
-        <vex-stack horizontal :gap="8">
+        <ve-stack flow="column" :gap="8">
           <v-btn
             text
             color="primary"
@@ -26,7 +26,7 @@
               ? $t('module.projects.form.update')
               : $t('module.projects.form.create') }}
           </v-btn>
-        </vex-stack>
+        </ve-stack>
       </div>
     </v-form>
   </validation-observer>
@@ -34,7 +34,7 @@
 
 <script>
   import { cloneDeep } from '@deip/toolbox/lodash';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   // import { changeable, dataReadyMixin } from '@deip/platform-fns';
 
@@ -46,7 +46,7 @@
     name: 'ProjectForm',
 
     components: {
-      VexStack
+      VeStack
     },
 
     // mixins: [changeable, dataReadyMixin],

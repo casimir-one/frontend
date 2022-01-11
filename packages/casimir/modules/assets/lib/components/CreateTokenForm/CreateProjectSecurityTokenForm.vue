@@ -8,7 +8,7 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(createAsset)"
     >
-      <vex-stack gap="32">
+      <ve-stack :gap="32">
         <vex-block
           :title="$t('module.assets.createTokenForm.title', {entity: sentenceCase(projectAlias) })"
           title-margin="16"
@@ -226,7 +226,7 @@
         <div class="d-flex">
           <v-spacer />
 
-          <vex-stack horizontal gap="16">
+          <ve-stack flow="column" :gap="16">
             <v-btn
               color="primary"
               outlined
@@ -244,9 +244,9 @@
             >
               {{ $t('module.assets.createTokenForm.submit') }}
             </v-btn>
-          </vex-stack>
+          </ve-stack>
         </div>
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
@@ -258,11 +258,11 @@
   import { defineComponent } from '@deip/platform-util';
   import {
     VexBlock,
-    VexStack,
     VexTimeline,
     VexTimelineItem,
     VexTimelineAdd
   } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import { UsersSelector } from '@deip/users-module';
   import { TeamAvatar, teamHelpersMixin } from '@deip/teams-module';
 
@@ -278,7 +278,7 @@
       UsersSelector,
       TeamAvatar,
       VexBlock,
-      VexStack,
+      VeStack,
       VexTimeline,
       VexTimelineItem,
       VexTimelineAdd
