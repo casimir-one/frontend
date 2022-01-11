@@ -5,7 +5,6 @@ const {
   VexHeader,
   VexSection,
   VexSectionSplit,
-  VexStack,
   VeStack,
   VRow,
   VCol,
@@ -55,13 +54,14 @@ export const layoutBlocks = {
       children: []
     },
     {
-      component: VexStack,
+      component: VeStack,
+      blockName: 'Stack extended',
       icon: 'mdi-view-sequential-outline',
       children: []
     },
     {
       component: VeStack,
-      blockName: 'Stack extended',
+      blockName: 'Stack',
       icon: 'mdi-view-sequential-outline',
       children: []
     }

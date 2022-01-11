@@ -1,5 +1,5 @@
 <template>
-  <vex-stack :gutter="8" class="mb-7">
+  <ve-stack :gap="8" class="mb-7">
     <!-- new password -->
 
     <validation-provider
@@ -35,16 +35,16 @@
         v-bind="fieldsProps"
       />
     </validation-provider>
-  </vex-stack>
+  </ve-stack>
 </template>
 <script>
-  import { VexStack } from '../../VexStack';
+  import { VeStack } from '@deip/vue-elements';
   import { VexPasswordInput } from '../VexPasswordInput';
 
   export default {
     name: 'VexPasswordRepeatInput',
     components: {
-      VexStack,
+      VeStack,
       VexPasswordInput
     },
     model: {

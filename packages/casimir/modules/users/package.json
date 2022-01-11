@@ -32,6 +32,7 @@
     "@deip/toolbox": "1.365.0",
     "@deip/user-service": "1.365.0",
     "@deip/validation-plugin": "1.365.0",
+    "@deip/vue-elements": "^1.365.0",
     "@deip/vue-layout-schema": "1.365.0",
     "@deip/vuetify-extended": "1.365.0"
   },

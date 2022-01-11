@@ -512,7 +512,7 @@ const AttributeEdit = {
   render() {
     return (
       <VForm disabled={this.disabled}>
-        <VeStack gutter={32}>
+        <VeStack gap={32}>
           {this.genAttributeSetup()}
           <VDivider/>
           {this.genAttributeMetaInfoFields()}

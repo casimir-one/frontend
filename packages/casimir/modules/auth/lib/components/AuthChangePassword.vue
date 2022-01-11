@@ -9,7 +9,7 @@
         <slot name="prepend" v-bind="binds" />
 
         <slot name="fields" v-bind="binds">
-          <vex-stack :gutter="8" class="mb-7">
+          <ve-stack :gap="8" class="mb-7">
             <!-- original password -->
 
             <validation-provider
@@ -34,13 +34,13 @@
               :password-min-lentgh="newPasswordMinLentgh"
               :password-max-lentgh="newPasswordMaxLentgh"
             />
-          </vex-stack>
+          </ve-stack>
         </slot>
 
         <div class="d-flex align-center">
           <v-spacer />
           <slot name="submit" v-bind="binds">
-            <vex-stack horizontal :gutter="8">
+            <ve-stack flow="column" :gap="8">
               <v-btn
                 text
                 color="primary"
@@ -59,7 +59,7 @@
               >
                 {{ submitLabel }}
               </v-btn>
-            </vex-stack>
+            </ve-stack>
           </slot>
         </div>
         <slot name="append" v-bind="binds" />
@@ -68,12 +68,13 @@
   </validation-observer>
 </template>
 <script>
-  import { VexStack, VexPasswordInput, VexPasswordRepeatInput } from '@deip/vuetify-extended';
+  import { VexPasswordInput, VexPasswordRepeatInput } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   export default {
     name: 'AuthChangePassword',
     components: {
-      VexStack,
+      VeStack,
       VexPasswordInput,
       VexPasswordRepeatInput
     },

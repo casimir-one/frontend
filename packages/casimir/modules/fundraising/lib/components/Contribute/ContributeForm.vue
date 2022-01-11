@@ -1,7 +1,7 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form :disabled="loading" @submit.prevent="handleSubmit(confirmSubmit)">
-      <vex-stack gutter="32">
+      <ve-stack :gap="32">
         <slot name="header" />
         <v-divider />
 
@@ -9,7 +9,7 @@
           :token-sale="tokenSale"
         />
 
-        <vex-stack gutter="24">
+        <ve-stack :gap="24">
           <v-divider />
           <h4 class="text-h4">
             {{ $t('module.fundraising.contributeForm.title') }}
@@ -53,7 +53,7 @@
               </template>
             </v-checkbox>
           </validation-provider>
-        </vex-stack>
+        </ve-stack>
 
         <v-divider />
 
@@ -78,13 +78,13 @@
             {{ $t('module.fundraising.contributeForm.invest') }}
           </v-btn>
         </div>
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
 
 <script>
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import FundraisingProgress from '../Progress/FundraisingProgress';
   import AmountSelector from './AmountSelector';
 
@@ -92,7 +92,7 @@
     name: 'ContributeForm',
 
     components: {
-      VexStack,
+      VeStack,
       FundraisingProgress,
       AmountSelector
     },

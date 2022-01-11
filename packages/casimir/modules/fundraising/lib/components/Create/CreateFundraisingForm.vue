@@ -1,7 +1,7 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form :disabled="loading" @submit.prevent="handleSubmit(submit)">
-      <vex-stack gap="32">
+      <ve-stack :gap="32">
         <fundraising-title-input v-model="formData.title" />
 
         <fundraising-tokens-input
@@ -30,7 +30,7 @@
 
         <div class="d-flex align-center">
           <v-spacer />
-          <vex-stack horizontal gap="8">
+          <ve-stack flow="column" :gap="8">
             <v-btn
               type="button"
               text
@@ -50,9 +50,9 @@
             >
               {{ $t('module.fundraising.createForm.start') }}
             </v-btn>
-          </vex-stack>
+          </ve-stack>
         </div>
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
@@ -67,7 +67,7 @@
   import randomstring from 'randomstring';
 
   import { defineComponent } from '@deip/platform-util';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import { hasValue } from '@deip/toolbox';
   import { isNil } from '@deip/toolbox/lodash';
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
@@ -81,7 +81,7 @@
   export default defineComponent({
     name: 'CreateFundraisingForm',
     components: {
-      VexStack,
+      VeStack,
       FundraisingTitleInput,
       FundraisingTokensInput,
       FundraisingDatesInput,

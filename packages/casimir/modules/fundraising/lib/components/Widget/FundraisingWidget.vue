@@ -1,7 +1,7 @@
 <template>
   <v-card v-if="!loading" elevation="0" light>
     <v-card-text>
-      <vex-stack gutter="24">
+      <ve-stack :gap="24">
         <template v-if="tokenSale">
           <fundraising-progress
             :token-sale="tokenSale"
@@ -41,7 +41,7 @@
         >
           {{ $t('module.fundraising.fundraisingWidget.startFundraising') }}
         </v-btn>
-      </vex-stack>
+      </ve-stack>
     </v-card-text>
   </v-card>
 </template>
@@ -52,7 +52,7 @@
   import { orderBy } from '@deip/toolbox/lodash';
   import { TS_TYPES } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   import FundraisingProgress from '../Progress/FundraisingProgress';
 
@@ -60,7 +60,7 @@
     name: 'FundraisingWidget',
 
     components: {
-      VexStack,
+      VeStack,
       FundraisingProgress
     },
 

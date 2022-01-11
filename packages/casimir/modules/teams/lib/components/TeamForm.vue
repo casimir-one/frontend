@@ -11,7 +11,7 @@
       :disabled="loading"
       @submit.prevent="handleSubmit(onSubmit)"
     >
-      <vex-stack gutter="32">
+      <ve-stack :gap="32">
         <layout-renderer
           v-if="schema.length"
           v-model="formData"
@@ -42,7 +42,7 @@
             {{ submitLabelText }}
           </v-btn>
         </div>
-      </vex-stack>
+      </ve-stack>
 
       <slot name="append" />
     </v-form>
@@ -50,18 +50,17 @@
 </template>
 
 <script>
-  import { VexStack } from '@deip/vuetify-extended';
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VIEW_MODE, ATTR_SCOPES } from '@deip/constants';
-  import { VeRawDisplay } from '@deip/vue-elements';
+  import { VeRawDisplay, VeStack } from '@deip/vue-elements';
 
   export default {
     name: 'TeamForm',
 
     components: {
-      VexStack,
+      VeStack,
       VeRawDisplay,
 
       LayoutRenderer

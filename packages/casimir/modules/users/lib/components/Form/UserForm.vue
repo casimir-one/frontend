@@ -1,7 +1,7 @@
 <template>
   <validation-observer v-slot="{ handleSubmit, invalid }">
     <v-form @submit.prevent="handleSubmit(updateUser)">
-      <vex-stack gutter="32">
+      <ve-stack :gap="32">
         <layout-renderer
           v-if="schema.length"
           :key="forceUpdateKey"
@@ -33,7 +33,7 @@
             Save
           </v-btn>
         </div>
-      </vex-stack>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
@@ -42,7 +42,7 @@
   import { AttributeSet } from '@deip/attributes-module';
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { VexStack } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
   import { ATTR_SCOPES } from '@deip/constants';
 
   export default {
@@ -50,7 +50,7 @@
 
     components: {
       LayoutRenderer,
-      VexStack
+      VeStack
     },
 
     mixins: [attributedFormFactory('user')],

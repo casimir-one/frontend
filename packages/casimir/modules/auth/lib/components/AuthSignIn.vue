@@ -9,7 +9,7 @@
         <slot name="prepend" v-bind="binds" />
 
         <slot name="fields" v-bind="binds">
-          <vex-stack :gutter="8" class="mb-7">
+          <ve-stack :gap="8" class="mb-7">
             <validation-provider
               v-slot="{ errors }"
               :name="usernameLabel"
@@ -46,11 +46,11 @@
                 </template>
               </vex-password-input>
             </validation-provider>
-          </vex-stack>
+          </ve-stack>
         </slot>
 
         <slot name="submit" v-bind="binds">
-          <vex-stack :gutter="24">
+          <ve-stack :gap="24">
             <v-btn
               type="submit"
               color="primary"
@@ -68,7 +68,7 @@
                 {{ $t('module.auth.signUp') }}
               </router-link>
             </div>
-          </vex-stack>
+          </ve-stack>
         </slot>
 
         <slot name="append" v-bind="binds" />
@@ -78,13 +78,14 @@
 </template>
 
 <script>
-  import { VexStack, VexPasswordInput } from '@deip/vuetify-extended';
+  import { VexPasswordInput } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
 
   export default {
     name: 'AuthSignIn',
 
     components: {
-      VexStack,
+      VeStack,
       VexPasswordInput
     },
 
