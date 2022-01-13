@@ -11,10 +11,9 @@
     "test:update": "jest -u",
     "publish": "node ./scripts/publish.js",
     "clean": "lerna clean --yes",
-    "bootstrap": "npm run clean && lerna bootstrap",
+    "bootstrap": "npm run clean && lerna bootstrap -- --legacy-peer-deps",
     "prepare": "husky install",
     "updateDeipDeps": "node ./scripts/updateDeipDeps.js",
-
     "create:package": "npx yo ./packages/generators/generator-package"
   },
   "keywords": [],
@@ -83,5 +82,9 @@
   },
   "lint-staged": {
     "*.{js,vue}": "eslint --fix"
+  },
+  "engines": {
+    "node": "^12 || ^14 || ^16",
+    "npm": ">= 6.0.0"
   }
 }
