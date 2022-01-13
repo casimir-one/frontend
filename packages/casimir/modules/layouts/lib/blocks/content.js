@@ -13,7 +13,7 @@ export const contentBlocks = {
       {
         is: 'span',
         name: 'Text',
-        icon: 'mdi-text-box-outline',
+        icon: 'mdi-text',
         blockType: 'content',
         text: ''
       }

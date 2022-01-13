@@ -85,71 +85,86 @@ export const VlsBuilderBlocks = {
       );
     },
 
-    genBlockMenu(block) {
-      if (block.blockType === 'attribute') {
-        const scopedSlots = {
-          activator: ({ on }) => (
-            <VBtn
-              slot='activator'
-              width={20}
-              height={20}
-              absolute
-              style="right: 4px; top: 4px"
-              icon
-              vOn:click={on.click}
-              vOn:keydown={on.keydown}
-            >
-              <VIcon size={12}>mdi-dots-vertical</VIcon>
-            </VBtn>
-          )
-        };
+    genBlockMenu(menu) {
+      const scopedSlots = {
+        activator: ({ on }) => (
+          <VBtn
+            slot='activator'
+            width={20}
+            height={20}
+            absolute
+            style="right: 4px; top: 4px"
+            icon
+            vOn:click={on.click}
+            vOn:keydown={on.keydown}
+          >
+            <VIcon size={12}>mdi-dots-vertical</VIcon>
+          </VBtn>
+        )
+      };
 
-        const { dataType } = block;
-        const { attributeId } = block.data.props;
+      const menuItems = menu.map((item) => (
+        <VListItem vOn:click={item.action}>
+          <VListItemIcon><VIcon>{item.icon}</VIcon></VListItemIcon>
+          <VListItemContent>{item.label}</VListItemContent>
+        </VListItem>
+      ));
 
-        const menu = [
-          {
-            icon: 'mdi-pound-box-outline',
-            label: 'Copy attribute ID',
-            action: () => { this.$clipboard(attributeId); }
-          },
+      return (
+        <VMenu scopedSlots={scopedSlots}>
+          <VList>
+            {menuItems}
+          </VList>
+        </VMenu>
+      );
+    },
 
-          {
-            icon: 'mdi-text-box-multiple-outline',
-            label: 'Copy attribute value',
-            action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeValue}}`); }
-          },
+    genAttributeMenu(block) {
+      const { dataType } = block;
+      const { attributeId } = block.data.props;
 
-          {
-            icon: 'mdi-checkbox-multiple-marked-outline',
-            label: 'Copy attribute condition',
-            action: () => { this.$clipboard(`{{('${attributeId}')::attributeHasValue}}`); }
-          },
+      const menu = [
+        {
+          icon: 'mdi-pound-box-outline',
+          label: 'Copy attribute ID',
+          action: () => { this.$clipboard(attributeId); }
+        },
 
-          ...(dataType === ATTR_TYPES.IMAGE
-            ? [{
-              icon: 'mdi-image-multiple-outline',
-              label: 'Copy image url',
-              action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeFileSrc}}`); }
-            }] : [])
+        {
+          icon: 'mdi-text-box-multiple-outline',
+          label: 'Copy attribute value',
+          action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeValue}}`); }
+        },
 
-        ].map((item) => (
-          <VListItem vOn:click={item.action}>
-            <VListItemIcon><VIcon>{item.icon}</VIcon></VListItemIcon>
-            <VListItemContent>{item.label}</VListItemContent>
-          </VListItem>
-        ));
+        {
+          icon: 'mdi-checkbox-multiple-marked-outline',
+          label: 'Copy attribute condition',
+          action: () => { this.$clipboard(`{{('${attributeId}')::attributeHasValue}}`); }
+        },
 
-        return (
-          <VMenu scopedSlots={scopedSlots}>
-            <VList>
-              {menu}
-            </VList>
-          </VMenu>
-        );
-      }
+        ...(dataType === ATTR_TYPES.IMAGE
+          ? [{
+            icon: 'mdi-image-multiple-outline',
+            label: 'Copy image url',
+            action: () => { this.$clipboard(`{{('${attributeId}')::getAttributeFileSrc}}`); }
+          }] : [])
 
-      return null;
+      ];
+
+      return this.genBlockMenu(menu);
+    },
+
+    genValueMenu(block) {
+      const menu = [
+        {
+          icon: 'mdi-pound-box-outline',
+          label: 'Copy value',
+          action: () => { this.$clipboard(block.text); }
+        }
+
+      ];
+
+      return this.genBlockMenu(menu);
     },
 
     genBlock(block) {
@@ -161,7 +176,8 @@ export const VlsBuilderBlocks = {
         >
           <VIcon class="mb-1">{block.icon || 'mdi-card-outline'}</VIcon>
           <div>{block.name}</div>
-          {this.genBlockMenu(block)}
+          {block.blockType === 'attribute' ? this.genAttributeMenu(block) : null}
+          {block.blockType === 'value' ? this.genValueMenu(block) : null}
         </VSheet>
       );
     }

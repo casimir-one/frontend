@@ -87,6 +87,15 @@ $gap: 8px;
       grid-gap: $gap;
       grid-template-columns: repeat(auto-fit, minmax(50px, 1fr))
     }
+
+    &--stack {
+      display: grid;
+      grid-gap: $gap;
+
+      &[data-flow='column'] {
+        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr))
+      }
+    }
   }
 
   &__box-label {
