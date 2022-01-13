@@ -5,7 +5,11 @@
     tag="div"
     style="min-width: 0px"
   >
-    <ve-raw-display :value="formData.attributes" class="mb-6" />
+    <ve-raw-display
+      v-if="$env.NODE_ENV === 'development'"
+      :value="formData.attributes"
+      class="mb-6"
+    />
 
     <v-form
       :disabled="loading"
