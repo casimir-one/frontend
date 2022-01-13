@@ -10,6 +10,9 @@ import {
   VRow
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
+
+import { VexDateInput } from '@deip/vuetify-extended';
+
 import { cloneDeep } from '@deip/toolbox/lodash';
 import { pascalCase, isObject, RecursiveIterator } from '@deip/toolbox';
 
@@ -73,6 +76,13 @@ const formBlocksData = [
     blockType: 'component',
     includeProps: ['hint', 'label', 'placeholder', 'prefix', 'suffix', 'items'],
     model: 'VSelect'
+  },
+  {
+    component: VexDateInput,
+    icon: 'mdi-calendar',
+    blockType: 'component',
+    includeProps: ['label'],
+    model: 'VexDateInput'
   }
 ];
 

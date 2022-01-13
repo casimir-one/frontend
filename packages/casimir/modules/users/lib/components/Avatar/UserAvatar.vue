@@ -1,7 +1,6 @@
 <template>
   <vex-avatar
     :src="avatarSrc"
-    :text="$$userInitials(user)"
     v-bind="avatarProps"
   />
 </template>

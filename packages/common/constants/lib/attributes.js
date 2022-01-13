@@ -129,6 +129,10 @@ const ATTR_TYPES_PROPS = {
       size: {
         type: Number,
         default: 48
+      },
+      fallbackIcon: {
+        type: String,
+        default: 'mdi-account-circle-outline'
       }
     }
   },
