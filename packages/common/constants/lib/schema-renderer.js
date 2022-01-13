@@ -23,6 +23,7 @@ export const RENDERER_BLOCK_KEYS = [
   'disabledProps',
   'excludeProps',
   'proxyProps',
+  'propsValues',
 
   'blockType',
   'dataType',

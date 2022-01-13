@@ -1,14 +1,17 @@
 <template>
   <component
     :is="component"
-    color="neutral lighten-5"
+    :style="avatarStyle"
     v-bind="avatarProps"
   >
     <img v-if="src" :src="src" alt="avatar">
-    <span
+    <v-icon
       v-else
-      :class="[textClass, 'text--disabled']"
-    >{{ text }}</span>
+      :style="iconStyles"
+      :size="iconSize"
+    >
+      {{ fallbackIcon }}
+    </v-icon>
   </component>
 </template>
 
@@ -17,7 +20,7 @@
   import { VAvatar, VListItemAvatar } from 'vuetify/lib/components';
   import { isString } from '@deip/toolbox';
   import { defineComponent } from '@deip/platform-util';
-  import { getBindableProps } from '../../composables/props';
+  import { getBindableProps } from '../../composables';
 
   export default defineComponent({
     name: 'VexAvatar',
@@ -30,9 +33,9 @@
         default: null
       },
 
-      text: {
+      fallbackIcon: {
         type: String,
-        default: null
+        default: 'mdi-account-circle-outline'
       },
 
       viewType: {
@@ -56,19 +59,25 @@
 
       sizeNumber() {
         if (isString(this.$props.size)) {
-          return parseInt(this.$props.size.replace(/\D/g, ''), 10);
+          return parseInt(this.$props.size.replace(/\D/g, ''));
         }
         return this.$props.size;
       },
 
-      textClass() {
-        if (!this.sizeNumber || this.sizeNumber <= 40) {
-          return 'text-caption';
-        }
-        if (this.sizeNumber <= 48) {
-          return 'text-body-2';
-        }
-        return 'text-body-1';
+      iconSize() {
+        return this.sizeNumber * 0.6;
+      },
+
+      iconStyles() {
+        return {
+          color: 'var(--v-core-color-divider)'
+        };
+      },
+
+      avatarStyle() {
+        return {
+          backgroundColor: 'var(--v-core-color-hover)'
+        };
       }
     }
   });

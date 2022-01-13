@@ -15,5 +15,9 @@ export const AttributeAvatarRead = {
         />
       );
     }
+  },
+
+  render() {
+    return this.genAttribute();
   }
 };

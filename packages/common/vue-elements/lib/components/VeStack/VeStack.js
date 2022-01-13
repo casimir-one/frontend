@@ -12,7 +12,7 @@ const VeStack = defineComponent({
     ...genBreakpointProps(
       'flow',
       [Number, String],
-      (val) => ['column', 'row'].includes(val)
+      (val) => ['column', 'row', ''].includes(val),
     ),
     ...genBreakpointProps('templateColumns', [String])
   },

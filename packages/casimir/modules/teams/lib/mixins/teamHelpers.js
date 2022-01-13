@@ -15,14 +15,6 @@ export const teamHelpersMixin = {
       return title.value;
     },
 
-    $$teamInitials(team) {
-      const title = this.$$teamTitle(team);
-
-      if (!title) return '×';
-
-      return title[0].toUpperCase();
-    },
-
     $$teamAvatarSrc(team, opts = {}) {
       if (!team) return null;
 

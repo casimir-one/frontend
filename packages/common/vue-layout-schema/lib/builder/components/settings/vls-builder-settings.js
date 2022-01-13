@@ -72,7 +72,11 @@ export const VlsBuilderSettings = {
      */
     setFieldVal(path, value) {
       const updated = cloneDeep(this.schemaAcc);
-      objectPath.set(updated, path, value);
+      if (value) {
+        objectPath.set(updated, path, value);
+      } else {
+        objectPath.set(updated, path, value);
+      }
 
       this.setContainerSchema(updated);
     },
@@ -247,7 +251,6 @@ export const VlsBuilderSettings = {
      */
     genField(path, key, defaultValue) {
       const propType = this.checkPropType(key, path);
-      // const defaultValue = isFunction(val) ? val() : val;
       const propPath = [...path, key];
 
       const params = [propPath, key, defaultValue];
@@ -259,6 +262,12 @@ export const VlsBuilderSettings = {
 
       if (disabled) return null;
 
+      const allowedValues = this.nodeInfo?.propsValues?.[key];
+
+      if (allowedValues && isArray(allowedValues)) {
+        return this.genSelect(...params, allowedValues);
+      }
+
       if (propType === 'boolean') {
         return this.genCheckbox(...params);
       }
@@ -267,7 +276,7 @@ export const VlsBuilderSettings = {
         return this.genTextarea(...params);
       }
 
-      if (key === 'icon') {
+      if (key.toLowerCase().includes('icon')) {
         return this.genIconSelector(...params);
       }
 

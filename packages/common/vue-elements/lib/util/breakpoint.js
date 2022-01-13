@@ -1,16 +1,17 @@
 import { camelCase, paramCase } from '@deip/toolbox';
 
-const defaultBreakpoints = ['sm', 'md', 'lg', 'xl'];
+export const defaultBreakpoints = ['sm', 'md', 'lg', 'xl'];
 
 export const genBreakpointProps = (
   prop,
   propType = String,
   validator = () => true,
+  defaultValue = undefined,
   breakpoints = defaultBreakpoints
 ) => {
   const propVal = () => ({
     type: propType,
-    default: undefined,
+    default: defaultValue,
     validator
   });
 

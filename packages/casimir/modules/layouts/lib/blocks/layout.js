@@ -1,4 +1,6 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
+import { defaultBreakpoints } from '@deip/vue-elements/lib/util/breakpoint';
+import { camelCase } from '@deip/toolbox';
 import { defaultLayoutComponents } from '../default-layouts-components';
 
 const {
@@ -55,12 +57,14 @@ export const layoutBlocks = {
     },
     {
       component: VeStack,
-      blockName: 'Stack extended',
-      icon: 'mdi-view-sequential-outline',
-      children: []
-    },
-    {
-      component: VeStack,
+      propsValues: {
+        ...defaultBreakpoints.reduce((acc, bp) => ({
+          ...acc,
+          ...{
+            [camelCase(`flow-${bp}`)]: ['row', 'column']
+          }
+        }), { flow: ['row', 'column'] })
+      },
       blockName: 'Stack',
       icon: 'mdi-view-sequential-outline',
       children: []

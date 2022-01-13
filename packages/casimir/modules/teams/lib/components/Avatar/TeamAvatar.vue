@@ -1,7 +1,7 @@
 <template>
   <vex-avatar
     :src="$$teamAvatarSrc(team, avatarOptions)"
-    :text="$$teamInitials(team)"
+    fallback-icon="mdi-account-group-outline"
     v-bind="avatarProps"
   />
 </template>

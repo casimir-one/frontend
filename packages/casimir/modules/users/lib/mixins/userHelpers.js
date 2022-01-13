@@ -21,23 +21,6 @@ export const userHelpersMixin = {
     },
 
     /**
-     *
-     * @param {object} user
-     * @returns {string}
-     */
-    $$userInitials(user) {
-      const fullName = this.$$userFullName(user);
-
-      if (!fullName) return '×';
-
-      return fullName
-        .split(' ')
-        .map((word) => word[0])
-        .join('')
-        .toUpperCase();
-    },
-
-    /**
     * @param {object} user
     * @param {object} opts - add this parameter if you need to crop the image on the server
     * @param {number} opts.width
