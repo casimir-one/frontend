@@ -10,9 +10,9 @@
           <cropper
             ref="cropper"
             class="cropper grey lighten-4"
-            :debounce="500"
+            :debounce="100"
             :src="image"
-            :default-size="fillArea"
+            :default-size="defaultSize"
             :stencil-size="fullArea"
             :stencil-component="stencilType"
             :stencil-props="{
@@ -43,13 +43,6 @@
         color="grey lighten-4 px-2 py-1 d-flex align-center"
         :disabled="disabled"
       >
-        <v-btn icon :disabled="isActionsDisabled" @click="handleZoomOutClick">
-          <v-icon>mdi-magnify-minus-outline</v-icon>
-        </v-btn>
-        <v-btn icon :disabled="isActionsDisabled" @click="handleZoomInClick">
-          <v-icon>mdi-magnify-plus-outline</v-icon>
-        </v-btn>
-
         <template v-if="!noRotate">
           <v-btn icon :disabled="isActionsDisabled" @click="handleRotateRightClick">
             <v-icon>mdi-rotate-right</v-icon>
@@ -237,10 +230,10 @@
         this.$refs.cropper.reset();
       },
 
-      fillArea({ imageSize }) {
+      defaultSize({ imageSize, visibleArea }) {
         return {
-          width: Math.min(imageSize.width, imageSize.height),
-          height: Math.min(imageSize.width, imageSize.height)
+          width: (visibleArea || imageSize).width,
+          height: (visibleArea || imageSize).height
         };
       },
 
@@ -273,6 +266,7 @@
           });
         }
       },
+
       hanldleFlipHorizontalClick() {
         this.$refs.cropper.flip(true, false);
       },
@@ -287,14 +281,6 @@
 
       handleRotateLeftClick() {
         this.$refs.cropper.rotate(-90);
-      },
-
-      handleZoomInClick() {
-        this.$refs.cropper.zoom(2);
-      },
-
-      handleZoomOutClick() {
-        this.$refs.cropper.zoom(0.5);
       },
 
       handleReady() {
