@@ -69,6 +69,5 @@ export const layoutBlocks = {
       icon: 'mdi-view-sequential-outline',
       children: []
     }
-
   ])
 };

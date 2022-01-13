@@ -12,8 +12,8 @@ import { ClickOutside } from 'vuetify/lib/directives';
 
 import { VeRawDisplay } from '@deip/vue-elements';
 
-import { deepFindParentByValue } from '@deip/toolbox';
-import { isEqual } from '@deip/toolbox/lodash';
+import { deepFindParentByValue, paramCase } from '@deip/toolbox';
+import { merge } from '@deip/toolbox/lodash';
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 
@@ -35,6 +35,19 @@ export const VlsBuilderCanvas = {
     };
   },
 
+  watch: {
+    schemaAcc: {
+      handler() {
+        this.$nextTick(() => {
+          if (this.containerActiveNode) {
+            this.focusBox = this.getNodeBoxData(this.containerActiveNode);
+          }
+        });
+      },
+      deep: true
+    }
+  },
+
   methods: {
     /**
      * Return canvas block type based on  info from blocks list
@@ -48,8 +61,21 @@ export const VlsBuilderCanvas = {
         return 'undefined';
       }
 
-      const { blockType = 'common' } = blockInfo;
-      return blockType;
+      return blockInfo.blockType || paramCase(blockInfo.name);
+    },
+
+    /**
+     * @param {Object} node
+     * @return {Object}
+     */
+    getNodeAttrs(node) {
+      const props = node?.data?.props || {};
+      return Object.keys(props).reduce((acc, prop) => ({
+        ...acc,
+        ...{
+          [`data-${paramCase(prop)}`]: props[prop]
+        }
+      }), {});
     },
 
     /**
@@ -133,7 +159,7 @@ export const VlsBuilderCanvas = {
         this.setContainerActiveNode(null);
       };
 
-      const data = {
+      const baseData = {
         props: { list },
         attrs: { group: { name: 'blocks' } },
         on: {
@@ -142,12 +168,11 @@ export const VlsBuilderCanvas = {
           end: () => {
             this.isMoved = false;
           }
-        },
-        ...additionData
+        }
       };
 
       return (
-        <draggable {...data}>
+        <draggable {...merge(baseData, additionData)}>
           {this.genNodes(list)}
         </draggable>
       );
@@ -165,7 +190,8 @@ export const VlsBuilderCanvas = {
         class: [
           'vls-builder-canvas__node-host',
           `vls-builder-canvas__node-host--${this.getBlockType(node.id)}`
-        ]
+        ],
+        attrs: this.getNodeAttrs(node)
       };
 
       return this.genHost(data, node.children);
@@ -260,12 +286,6 @@ export const VlsBuilderCanvas = {
         <div {...{ style: { paddingLeft: '8px' } }}>{node.text}</div>
       );
 
-      if (this.isFocused(node)) {
-        if (!isEqual(this.focusBox, this.getNodeBoxData(node.uid))) {
-          this.focusBox = this.getNodeBoxData(this.containerActiveNode);
-        }
-      }
-
       return this.genExtendedNodeMarkup(icon, content());
     },
 
@@ -290,7 +310,7 @@ export const VlsBuilderCanvas = {
         return this.genUndefinedNode;
       }
 
-      if (['attribute', 'component', 'simple'].includes(blockType)) {
+      if (['attribute', 'component', 'simple', 'value'].includes(blockType)) {
         return this.genSimpleNode;
       }
 
@@ -336,6 +356,7 @@ export const VlsBuilderCanvas = {
             vOn:mouseleave_stop={() => {
               this.hoverNode(null);
             }}
+            { ...{ attrs: this.getNodeAttrs(node) }}
           >{generator(node)}</div>
         );
       });

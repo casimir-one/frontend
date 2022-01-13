@@ -38,8 +38,8 @@ export const typographyBlocks = {
     },
     {
       is: 'div',
-      name: 'Base text 1',
-      icon: 'mdi-text-subject',
+      name: 'Body 1',
+      icon: 'mdi-text-box-outline',
       data: {
         class: 'text-body-1'
       },
@@ -48,8 +48,8 @@ export const typographyBlocks = {
     },
     {
       is: 'div',
-      name: 'Base text 2',
-      icon: 'mdi-text-subject',
+      name: 'Body 2',
+      icon: 'mdi-text-box-plus-outline',
       data: {
         class: 'text-body-2'
       },

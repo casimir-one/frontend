@@ -1,4 +1,4 @@
-import { blocksGenerator } from '@deip/vue-layout-schema';
+import { blocksGenerator, normalizeBlocksObject } from '@deip/vue-layout-schema';
 import { VeStack } from '@deip/vue-elements';
 import {
   VTextField,
@@ -14,7 +14,20 @@ import {
 import { VexDateInput } from '@deip/vuetify-extended';
 
 import { cloneDeep } from '@deip/toolbox/lodash';
-import { pascalCase, isObject, RecursiveIterator } from '@deip/toolbox';
+import {
+  pascalCase, isObject, RecursiveIterator, camelCase
+} from '@deip/toolbox';
+import { defaultBreakpoints } from '@deip/vue-elements/lib/util/breakpoint';
+
+const contentBlocksData = [
+  {
+    is: 'span',
+    name: 'Text',
+    icon: 'mdi-text',
+    blockType: 'content',
+    text: ''
+  }
+];
 
 /**
  * @type {Object[]}
@@ -34,7 +47,15 @@ const layoutBlocksData = [
   {
     component: VeStack,
     icon: 'mdi-view-sequential-outline',
-    children: []
+    children: [],
+    propsValues: {
+      ...defaultBreakpoints.reduce((acc, bp) => ({
+        ...acc,
+        ...{
+          [camelCase(`flow-${bp}`)]: ['row', 'column']
+        }
+      }), { flow: ['row', 'column'] })
+    }
   }
 ];
 
@@ -107,6 +128,14 @@ export const schemaFormComponents = formBlocksData.reduce((acc, i) => {
 /**
  * @type {Object}
  */
+export const contentBlocks = {
+  title: 'Content',
+  blocks: normalizeBlocksObject(contentBlocksData)
+};
+
+/**
+ * @type {Object}
+ */
 export const layoutBlocks = {
   title: 'Layout',
   blocks: blocksGenerator(layoutBlocksData)
@@ -142,7 +171,7 @@ export const genReflectedFormBlocks = (schema) => {
         text: `{{attribute.value.${model}}}`,
         icon,
         name: label,
-        blockType: 'component'
+        blockType: 'value'
       });
     }
   }

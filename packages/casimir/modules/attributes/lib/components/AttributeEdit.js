@@ -32,6 +32,7 @@ import {
 } from '@deip/constants';
 
 import {
+  contentBlocks,
   layoutBlocks,
   formBlocks,
   genReflectedFormBlocks
@@ -387,8 +388,16 @@ const AttributeEdit = {
         read: composerReadSchema = []
       } = this.attributeData.schemas;
 
-      const composerSetBlocks = [layoutBlocks, formBlocks];
-      const composerReadBlocks = [layoutBlocks, genReflectedFormBlocks(composerSetSchema)];
+      const composerSetBlocks = [
+        contentBlocks,
+        layoutBlocks,
+        formBlocks
+      ];
+      const composerReadBlocks = [
+        contentBlocks,
+        layoutBlocks,
+        genReflectedFormBlocks(composerSetSchema)
+      ];
 
       return (
         <div>
@@ -402,6 +411,8 @@ const AttributeEdit = {
             scrollable
             value={this.dialogs.composerSet}
             onInput={(val) => { this.dialogs.composerSet = val; }}
+            retainFocus={false}
+            eager
           >
             <VSheet height="80vh" class="d-flex" color="white">
               <VlsBuilder
@@ -418,6 +429,8 @@ const AttributeEdit = {
             scrollable
             value={this.dialogs.composerRead}
             onInput={(val) => { this.dialogs.composerRead = val; }}
+            retainFocus={false}
+            eager
           >
             <VSheet height="80vh" class="d-flex" color="white">
               <VlsBuilder
