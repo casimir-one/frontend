@@ -4,7 +4,7 @@
     compact
   >
     <v-row>
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <validation-provider
           v-slot="{ errors }"
           name=" "
@@ -19,7 +19,7 @@
         </validation-provider>
       </v-col>
 
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <validation-provider
           v-slot="{ errors }"
         >
