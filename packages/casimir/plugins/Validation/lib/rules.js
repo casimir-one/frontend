@@ -122,7 +122,7 @@ export const dateBefore = {
 
     const { currentDate, nextDates } = normalizeDates(value, null, target);
 
-    return nextDates.some((d) => currentDate <= d);
+    return nextDates.some((d) => currentDate < d);
   },
 
   message(_, values) {
@@ -138,7 +138,7 @@ export const dateAfter = {
 
     const { currentDate, prevDates } = normalizeDates(value, target, null);
 
-    return prevDates.some((d) => currentDate >= d);
+    return prevDates.some((d) => currentDate > d);
   },
 
   message(_, values) {
