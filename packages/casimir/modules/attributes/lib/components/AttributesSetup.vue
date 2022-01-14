@@ -198,7 +198,8 @@
       },
 
       getAttrTitle(id) {
-        return this.$store.getters['attributes/one'](id).title;
+        const attribute = this.$store.getters['attributes/one'](id);
+        return attribute ? attribute.title : 'ATTRIBUTE NOT FOUND';
       },
 
       isDefaultKey(key) {
