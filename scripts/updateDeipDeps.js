@@ -1,9 +1,6 @@
 /* eslint-disable */
 const inquirer = require('inquirer');
-const ora = require('ora');
 const execa = require('execa');
-const { crc32 } = require('crc');
-const chalk = require('chalk');
 /* eslint-enable */
 
 const prompt = inquirer.createPromptModule();

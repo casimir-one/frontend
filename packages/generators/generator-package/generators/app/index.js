@@ -101,7 +101,8 @@ module.exports = class extends GeneratorBase {
 
   writing() {
     this._copyFiles(
-      ['**', '*.*']
+      ['**', '*.*'],
+      ['**', '.*']
     );
   }
 
