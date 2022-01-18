@@ -19,6 +19,7 @@ module.exports = {
     'packages/common/lib-crypto',
     'packages/casimir/services/RpcClient',
     'packages/casimir/models',
+    'packages/generators',
     '__tests__/helpers'
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],

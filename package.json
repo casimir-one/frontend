@@ -12,6 +12,7 @@
     "publish": "node ./scripts/publish.js",
     "clean": "lerna clean --yes",
     "bootstrap": "npm run clean && lerna bootstrap -- --legacy-peer-deps",
+    "bootstrap:ci": "npm run clean && lerna bootstrap --no-ci -- --legacy-peer-deps",
     "prepare": "husky install",
     "updateDeipDeps": "node ./scripts/updateDeipDeps.js",
     "create:package": "npx yo ./packages/generators/generator-package",
