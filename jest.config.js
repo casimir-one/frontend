@@ -18,7 +18,8 @@ module.exports = {
   testPathIgnorePatterns: [
     'packages/common/lib-crypto',
     'packages/casimir/services/RpcClient',
-    'packages/casimir/models'
+    'packages/casimir/models',
+    '__tests__/helpers'
   ],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom'
