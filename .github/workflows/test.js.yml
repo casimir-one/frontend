@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -20,6 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm config set '//npm-registry.deip.world/:_authToken' "${CASIMIR_NPM_TOKEN}"
     - run: npm i && npm run bootstrap:ci
       env:
         CASIMIR_NPM_TOKEN: ${{ secrets.CASIMIR_NPM_TOKEN }}
