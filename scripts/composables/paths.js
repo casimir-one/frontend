@@ -1,6 +1,4 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = {
-  rootPath: path.resolve(),
-  babelConfPath: path.join(path.resolve(), 'babel.config.js')
-};
+export const rootPath = path.resolve();
+export const babelConfPath = path.join(path.resolve(), 'babel.config.js');

@@ -1,16 +1,16 @@
 /* eslint-disable */
-const vueCompiler = require('vue-template-compiler');
-const fs = require('fs-extra');
-const babel = require('@babel/core');
-const shell = require('shelljs');
-const path = require('path');
-const glob = require('glob');
-const ora = require('ora');
-const chalk = require('chalk');
+import vueCompiler from 'vue-template-compiler';
+import fs from 'fs-extra';
+import babel from '@babel/core';
+import shell from 'shelljs';
+import path from 'path';
+import glob from 'glob';
+import ora from 'ora';
+import chalk from 'chalk';
 /* eslint-enable */
 
-const { getAttrsString, changePathToLib } = require('./utils');
-const { babelConfPath } = require('./paths');
+import { getAttrsString, changePathToLib } from './utils';
+import { babelConfPath } from './paths';
 
 const spinner = ora();
 const scriptExtensions = ['js', 'ts', 'tsx'];
@@ -31,7 +31,8 @@ const processVue = (pkgPath) => {
       script.content.trim(),
       {
         babelrc: true,
-        filename: babelConfPath
+        filename: babelConfPath,
+        envName: 'lib'
       }
     );
     const processedScript = `<script>\n${compiledScript.code.trim()}\n</script>`;
@@ -65,7 +66,7 @@ const processVue = (pkgPath) => {
 const processScripts = (pkgPath) => {
   const babelExt = scriptExtensions.map((ext) => `.${ext}`).join(',');
   shell.exec(
-    `npx babel --config-file ${babelConfPath} ${pkgPath}/src --out-dir ${pkgPath}/lib --extensions "${babelExt}"`,
+    `cross-env NODE_ENV=lib babel --config-file ${babelConfPath} ${pkgPath}/src --out-dir ${pkgPath}/lib --extensions "${babelExt}"`,
     { silent: true }
   );
 };
@@ -89,14 +90,10 @@ const processOtherFiles = (pkgPath) => {
 /**
  * @param {string} pkgPath
  */
-const buildPackageLib = (pkgPath) => {
+export const buildPackageLib = (pkgPath) => {
   spinner.start(`Building: ${pkgPath}`);
   processVue(pkgPath);
   processOtherFiles(pkgPath);
   processScripts(pkgPath);
   spinner.succeed(`Complete: ${pkgPath}`);
-};
-
-module.exports = {
-  buildPackageLib
 };

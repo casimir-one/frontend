@@ -1,7 +1,7 @@
 /* eslint-disable */
-const glob = require('glob');
-const path = require('path');
-const fs = require('fs-extra');
+import glob from 'glob';
+import path from 'path';
+import fs from 'fs-extra';
 /* eslint-enable */
 
 const { rootPath } = require('./paths');
@@ -20,6 +20,6 @@ const getPackages = () => lernaConf.packages
     return fs.existsSync(path.join(p, 'src')) && !legacyExcludes.includes(pArr.name);
   });
 
-module.exports = {
+export {
   getPackages
 };
