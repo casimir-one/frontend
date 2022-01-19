@@ -1,4 +1,3 @@
-import dotProp from 'dot-prop';
 import objectPath from 'object-path'; // switch to this from dotprop
 import kindOf from 'kind-of';
 import RecursiveIterator from 'recursive-iterator';
@@ -23,7 +22,6 @@ export * from './lib/classSingleton';
 export * from 'change-case';
 
 export {
-  dotProp,
   objectPath,
 
   RecursiveIterator,

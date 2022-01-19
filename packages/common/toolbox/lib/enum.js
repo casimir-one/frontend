@@ -36,7 +36,7 @@ export function createEnum(items) {
   const keys = () => Object.keys(enumObj)
     .reduce((res, key) => ([...res, ...(!isNumeric(key) ? [key] : [])]), []);
   const values = () => Object.keys(enumObj)
-    .reduce((res, key) => ([...res, ...(isNumeric(key) ? [parseInt(key, 10)] : [])]), []);
+    .reduce((res, key) => ([...res, ...(isNumeric(key) ? [parseInt(key)] : [])]), []);
 
   return {
     ...enumObj,
@@ -48,6 +48,6 @@ export function createEnum(items) {
 }
 
 export const mapListFromEnum = (enumObj, data) => enumObj.values().map((value) => ({
-  value: parseInt(value, 10),
+  value: parseInt(value),
   text: data[value]
 }));

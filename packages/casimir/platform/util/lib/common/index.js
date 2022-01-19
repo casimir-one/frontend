@@ -1,2 +1,2 @@
-export * from './create-app';
-export * from './define-component';
+export { CreateApp } from './CreateApp';
+export * from './defineComponent';

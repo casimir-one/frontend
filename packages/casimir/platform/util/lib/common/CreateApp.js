@@ -3,10 +3,20 @@ export class CreateApp {
 
   _modulesStorage = {}
 
-  constructor(vueInstance) {
+  /**
+   * @param {*} vueInstance
+   * @param {Object} provideOptions
+   */
+  constructor(vueInstance, provideOptions = {}) {
     this.Vue = vueInstance;
+    this.provideOptions = provideOptions;
   }
 
+  /**
+   * @param {Object} module
+   * @param {Object} options
+   * @return {CreateApp}
+   */
   addModule(module, options = {}) {
     const { name } = module;
 
@@ -22,6 +32,10 @@ export class CreateApp {
     return this;
   }
 
+  /**
+   * @param {string} name
+   * @return {Promise|Function}
+   */
   installModule(name) {
     if (this._modulesStorage[name]) {
       return this._modulesStorage[name];
@@ -44,8 +58,13 @@ export class CreateApp {
         module.init
           ? module.init()
           : Promise.resolve())
+
         .then((data) => {
-          this.Vue.use(module, options, data);
+          const mergedOpts = {
+            ...(options.provideOptions !== false ? this.provideOptions : {}),
+            ...options
+          };
+          this.Vue.use(module, mergedOpts, data);
         });
     };
 
@@ -59,6 +78,9 @@ export class CreateApp {
     return this._modulesStorage[name];
   }
 
+  /**
+   * @return {Array.<Promise>}
+   */
   bootstrap() {
     return Promise.all(
       Object.keys(this._registeredModules)

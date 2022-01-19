@@ -39,7 +39,6 @@
     "chunk": "^0.0.3",
     "colorthief": "^2.3.2",
     "crc": "^3.8.0",
-    "dot-prop": "^6.0.1",
     "filter-where": "^2.0.0",
     "find-keypath": "^1.0.0",
     "kind-of": "^6.0.3",
