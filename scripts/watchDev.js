@@ -1,11 +1,11 @@
 /* eslint-disable */
-const chokidar = require('chokidar');
-const path = require('path');
-const fs = require('fs-extra');
+import chokidar from 'chokidar';
+import path from 'path';
+import fs from 'fs-extra';
 /* eslint-enable */
 
-const { getPackages } = require('./composables/getPackages');
-const { buildPackageLib } = require('./composables/buildPackageLib');
+import { getPackages } from './composables/getPackages';
+import { buildPackageLib } from './composables/buildPackageLib';
 
 /**
  * @param {string} file

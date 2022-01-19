@@ -1,5 +1,5 @@
-const { getPackages } = require('./composables/getPackages');
-const { buildPackageLib } = require('./composables/buildPackageLib');
+import { getPackages } from './composables/getPackages';
+import { buildPackageLib } from './composables/buildPackageLib';
 
 for (const pkgPath of getPackages()) {
   buildPackageLib(pkgPath);

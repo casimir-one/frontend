@@ -1,11 +1,11 @@
-const path = require('path');
+import path from 'path';
 
 /**
  * @param {string} pkgPath
  * @param {string} filePath
  * @return {string} File path related to 'lib' directory
  */
-const changePathToLib = (pkgPath, filePath) => {
+export const changePathToLib = (pkgPath, filePath) => {
   const pathArr = path.relative(pkgPath, filePath).split(path.sep);
   pathArr[0] = 'lib';
   return path.join(pkgPath, ...pathArr);
@@ -15,10 +15,5 @@ const changePathToLib = (pkgPath, filePath) => {
  * @param {Object} attrs
  * @return {string}
  */
-const getAttrsString = (attrs) => Object.keys(attrs)
+export const getAttrsString = (attrs) => Object.keys(attrs)
   .reduce((acc, attr) => `${acc} ${attr}="${attrs[attr]}"`, '');
-
-module.exports = {
-  changePathToLib,
-  getAttrsString
-};
