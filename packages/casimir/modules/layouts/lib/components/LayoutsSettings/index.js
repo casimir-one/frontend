@@ -1,4 +1,4 @@
-import LayoutsSettings from './layout-settings';
+import LayoutsSettings from './LayoutsSettings';
 
 export default LayoutsSettings;
 export { LayoutsSettings };

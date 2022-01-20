@@ -1,4 +1,4 @@
-import { LayoutRenderer } from './layout-renderer';
+import { LayoutRenderer } from './LayoutRenderer';
 
 export { LayoutRenderer };
 export default LayoutRenderer;

@@ -1,7 +1,7 @@
 import { defineComponent } from '@deip/platform-util';
 import { AdminListPage } from '@deip/platform-components';
 import { ATTR_SCOPES_LABELS } from '@deip/constants';
-import { LayoutsDataProvider } from '../data-provider';
+import { LayoutsDataProvider } from '../LayoutsDataProvider';
 
 export default defineComponent({
   name: 'LayoutsManagement',

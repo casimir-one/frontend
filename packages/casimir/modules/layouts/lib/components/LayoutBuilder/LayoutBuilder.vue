@@ -75,10 +75,6 @@
     attributesBlocksFactory
   } from '../../blocks';
 
-  import { LayoutsRegistry } from '../../registry';
-
-  const layoutsRegistry = LayoutsRegistry.getInstance();
-
   export default defineComponent({
     name: 'LayoutBuilder',
 
@@ -111,7 +107,7 @@
     computed: {
       blocks() {
         return [
-          ...layoutsRegistry.getBlocks(),
+          ...this.$store.getters['layoutsRegistry/blocks'],
           attributesBlocksFactory(
             this.$store.getters['attributes/list']({ scope: this.formData.scope }),
             this.formData.isForm ? AttributeSet : AttributeRead

@@ -1,5 +1,5 @@
 import { defineComponent } from '@deip/platform-util';
-import { defaultLayoutComponents } from '../default-layouts-components';
+import { defaultLayoutComponents } from './defaultLayoutsComponents';
 
 const attributedDetailsFactory = (
   prop = 'value',
