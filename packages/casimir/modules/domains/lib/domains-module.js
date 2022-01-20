@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { domainsStore } from './store';
 
 // eslint-disable-next-line no-unused-vars
@@ -6,7 +5,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const store = proxydi.get('storeInstance');
+  const { store } = options;
 
   if (store) {
     store.registerModule('domains', domainsStore);

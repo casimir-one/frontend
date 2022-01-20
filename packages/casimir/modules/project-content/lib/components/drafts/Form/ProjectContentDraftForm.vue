@@ -132,7 +132,6 @@
   import { formFactory } from '@deip/platform-components';
   import { VeStack } from '@deip/vue-elements';
   import { VexFileInput } from '@deip/vuetify-extended';
-  import { proxydi } from '@deip/proxydi';
   import { VueEditorjs } from '@deip/vue-editorjs';
   import { UsersSelector } from '@deip/users-module';
   import { PROJECT_CONTENT_FORMAT } from '@deip/constants';
@@ -189,7 +188,7 @@
 
     methods: {
       getContentUrl(fileHash) {
-        const { DEIP_SERVER_URL } = proxydi.get('env');
+        const { DEIP_SERVER_URL } = this.$env;
 
         return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.draft._id}/${fileHash}?download=true&authorization=${accessService.getAccessToken()}`;
       },

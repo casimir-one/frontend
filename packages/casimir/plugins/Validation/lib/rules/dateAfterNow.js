@@ -1,6 +1,6 @@
 import { proxydi } from '@deip/proxydi';
 
-import { normalizeDates } from './helpers';
+import { normalizeDates } from '../helpers';
 
 export const dateAfterNow = {
   /**
@@ -15,7 +15,7 @@ export const dateAfterNow = {
   },
 
   message(_, values) {
-    const i18n = proxydi.get('i18nInstance');
+    const i18n = proxydi.get('i18n');
     return i18n.t('plugin.validation.dateAfterNow', values);
   }
 };

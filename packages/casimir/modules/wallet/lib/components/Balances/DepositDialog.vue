@@ -65,7 +65,7 @@
       return parseFloat(value.amount) >= parseFloat(target);
     },
     message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
+      const i18n = proxydi.get('i18n');
       return i18n.t('module.wallet.balances.validations.assetGreaterOrEqual', values);
     }
   });

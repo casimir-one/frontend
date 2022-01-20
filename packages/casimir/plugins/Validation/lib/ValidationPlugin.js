@@ -12,7 +12,6 @@ import {
 } from 'vee-validate/dist/rules';
 
 import { setLocalesMessages } from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
 import {
   email,
   number,
@@ -34,7 +33,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const i18n = proxydi.get('i18nInstance');
+  const { i18n } = options;
 
   if (i18n) {
     setLocalesMessages(i18n, locales);

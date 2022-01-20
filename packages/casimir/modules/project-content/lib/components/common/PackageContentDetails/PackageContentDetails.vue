@@ -50,7 +50,6 @@
 
 <script>
   import { defineComponent } from '@deip/platform-util';
-  import { proxydi } from '@deip/proxydi';
   import { VexTooltip } from '@deip/vuetify-extended';
   import { VeLineClamp } from '@deip/vue-elements';
   import { AccessService } from '@deip/access-service';
@@ -77,7 +76,7 @@
         return ['.png', '.jpg', '.jpeg', '.pdf'].some((e) => e === ext);
       },
       getContentUrl(fileHash, download = false) {
-        const { DEIP_SERVER_URL } = proxydi.get('env');
+        const { DEIP_SERVER_URL } = this.$env;
 
         return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.content._id}/${fileHash}?download=${download}&authorization=${accessService.getAccessToken()}`;
       }

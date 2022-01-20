@@ -58,7 +58,7 @@
       return parseFloat(value.amount) < parseFloat(target.amount);
     },
     message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
+      const i18n = proxydi.get('i18n');
       return i18n.t('module.fundraising.createForm.validations.assetSmaller', values);
     }
   });
@@ -71,7 +71,7 @@
       return parseFloat(value.amount) > parseFloat(target.amount);
     },
     message: (_, values) => {
-      const i18n = proxydi.get('i18nInstance');
+      const i18n = proxydi.get('i18n');
       return i18n.t('module.fundraising.createForm.validations.assetGreater', values);
     }
   });

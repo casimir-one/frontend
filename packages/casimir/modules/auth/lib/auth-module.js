@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { isEmpty } from '@deip/toolbox/lodash';
 import { SYSTEM_ROLE } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
@@ -15,9 +14,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const router = proxydi.get('routerInstance');
-  const store = proxydi.get('storeInstance');
-  const i18n = proxydi.get('i18nInstance');
+  const { router, store, i18n } = options;
 
   if (i18n) {
     setLocalesMessages(i18n, locales);

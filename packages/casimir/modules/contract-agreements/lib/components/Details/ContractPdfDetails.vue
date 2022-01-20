@@ -91,7 +91,6 @@
 <script>
   import pdf from 'vue-pdf';
 
-  import { proxydi } from '@deip/proxydi';
   import { VeStack } from '@deip/vue-elements';
 
   const sleep = (time) => new Promise((resolve) => { setTimeout(() => { resolve(); }, time); });
@@ -150,7 +149,7 @@
         if (!this.contract?.terms?.filename) {
           return null;
         }
-        const { DEIP_SERVER_URL } = proxydi.get('env');
+        const { DEIP_SERVER_URL } = this.$env;
         return `${DEIP_SERVER_URL}/api/contract-agreement/file/${this.contract.terms.filename}`;
       }
     },

@@ -13,7 +13,7 @@ export const equal = {
     return value === target;
   },
   message(_, values) {
-    const i18n = proxydi.get('i18nInstance');
+    const i18n = proxydi.get('i18n');
     return i18n.t('plugin.validation.equal', values);
   }
 };
