@@ -1,5 +1,5 @@
 import { blocksGenerator, normalizeBlocksObject } from '@deip/vue-layout-schema';
-import { defaultLayoutComponents } from '../default-layouts-components';
+import { defaultLayoutComponents } from '../helpers/defaultLayoutsComponents';
 
 const {
   VSimpleTable

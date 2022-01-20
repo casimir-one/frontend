@@ -1,4 +1,4 @@
-import LayoutBuilder from './layout-builder';
+import LayoutBuilder from './LayoutBuilder';
 
 export { LayoutBuilder };
 export default LayoutBuilder;

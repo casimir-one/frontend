@@ -1,4 +1,4 @@
-import LayoutsManagement from './layouts-management';
+import LayoutsManagement from './LayoutsManagement';
 
 export default LayoutsManagement;
 export { LayoutsManagement };

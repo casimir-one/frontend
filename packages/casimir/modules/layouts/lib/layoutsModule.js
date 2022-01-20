@@ -1,6 +1,4 @@
-import { proxydi } from '@deip/proxydi';
-import { layoutsStore } from './store';
-import { LayoutsRegistry } from './registry';
+import { layoutsStore, layoutsRegistry } from './store';
 
 import {
   layoutBlocks,
@@ -9,38 +7,33 @@ import {
   uiBlocks, contentBlocks
 } from './blocks';
 
-const layoutsRegistry = LayoutsRegistry.getInstance();
-
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
   const {
-    blocks = [],
-    blockSections = [],
-    blockObjects = [],
-    components = {}
+    store,
+    components = {},
+    blocks = []
   } = options;
 
-  layoutsRegistry
-    .registerBlocksObjects([
+  if (store) {
+    store.registerModule('layoutsRegistry', layoutsRegistry);
+    store.commit('layoutsRegistry/addComponents', components);
+
+    const blocksSections = [
       contentBlocks,
       layoutBlocks,
       typographyBlocks,
       tableBlocks,
       uiBlocks,
-      {
-        title: 'Components',
-        blocks
-      }
-    ])
-    .registerBlocksSections(blockSections)
-    .registerBlocksObjects(blockObjects)
-    .registerComponents(components);
+      ...blocks
+    ];
 
-  const store = proxydi.get('storeInstance');
+    for (const blocksSection of blocksSections) {
+      store.commit('layoutsRegistry/addBlocks', blocksSection);
+    }
 
-  if (store) {
     store.registerModule('layouts', layoutsStore);
     store.dispatch('layouts/getList');
     store.dispatch('layouts/getSettings');
@@ -66,7 +59,6 @@ const install = (Vue, options = {}) => {
 export const LayoutsModule = {
   name: 'LayoutsModule',
   deps: [
-    'VuetifyExtended',
     'EnvModule',
     'AttributesModule'
   ],

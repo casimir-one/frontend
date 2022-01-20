@@ -1,2 +1,2 @@
-export * from './attributed-details';
-export * from './attributed-form';
+export * from './attributedDetails';
+export * from './attributedForm';

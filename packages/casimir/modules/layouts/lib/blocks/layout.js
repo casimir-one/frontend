@@ -1,7 +1,7 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
 import { defaultBreakpoints } from '@deip/vue-elements/lib/util/breakpoint';
 import { camelCase } from '@deip/toolbox';
-import { defaultLayoutComponents } from '../default-layouts-components';
+import { defaultLayoutComponents } from '../helpers/defaultLayoutsComponents';
 
 const {
   VexHeader,
