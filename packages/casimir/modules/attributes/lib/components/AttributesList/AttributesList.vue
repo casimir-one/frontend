@@ -1,5 +1,5 @@
 <template>
-  <v-sheet>
+  <ve-stack>
     <v-sheet color="neutral lighten-5" rounded class="pa-6">
       <v-row>
         <v-col cols="2">
@@ -122,7 +122,7 @@
         </ve-stack>
       </template>
     </v-data-table>
-  </v-sheet>
+  </ve-stack>
 </template>
 
 <script>
@@ -131,7 +131,6 @@
   import { genColorsPalette } from '@deip/toolbox';
 
   import {
-
     VexTooltip
   } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
