@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { getAttributeFileSrc } from '@deip/platform-fns';
 import {
   ATTR_SCOPES, ATTR_SCOPES_LABELS, ATTR_TYPES, ATTR_TYPES_LABELS
@@ -10,7 +9,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const store = proxydi.get('storeInstance');
+  const { store } = options;
 
   if (store) {
     store.registerModule('attributes', attributesStore);

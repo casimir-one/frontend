@@ -1,11 +1,10 @@
-import { proxydi } from '@deip/proxydi';
 import { portalsStore, currentPortalStore } from './store';
 
-const install = (Vue) => {
+const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const store = proxydi.get('storeInstance');
+  const { store } = options;
 
   if (store) {
     store.registerModule('portals', portalsStore);

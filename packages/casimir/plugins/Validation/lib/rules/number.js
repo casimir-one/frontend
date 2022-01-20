@@ -11,7 +11,7 @@ export const number = {
     return integer.validate(value) || double.validate(value);
   },
   message: (_, values) => {
-    const i18n = proxydi.get('i18nInstance');
+    const i18n = proxydi.get('i18n');
     return i18n.t('plugin.validation.number', values);
   }
 };

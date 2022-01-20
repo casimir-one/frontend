@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { callForCurrentUser } from '@deip/platform-store';
 import { notificationsStore } from './store';
 
@@ -7,7 +6,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const store = proxydi.get('storeInstance');
+  const { store } = options;
 
   if (store) {
     store.registerModule('notifications', notificationsStore);

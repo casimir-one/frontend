@@ -61,7 +61,7 @@ export class CreateApp {
 
         .then((data) => {
           const mergedOpts = {
-            ...(options.provideOptions !== false ? this.provideOptions : {}),
+            ...(options.injectOptions !== false ? this.provideOptions : {}),
             ...options
           };
           this.Vue.use(module, mergedOpts, data);

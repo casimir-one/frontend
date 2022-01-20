@@ -11,7 +11,7 @@ export const AttributeAvatarRead = {
       return (
         <VexAvatar
           src={this.schemaData.getAttributeFileSrc(this.attributeId)}
-          size={this.proxyProps.VexAvatar.size}
+          { ...{ props: this.proxyProps.VexAvatar || {} }}
         />
       );
     }

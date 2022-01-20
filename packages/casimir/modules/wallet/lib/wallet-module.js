@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { setLocalesMessages } from '@deip/toolbox';
 
 import { callForCurrentUser } from '@deip/platform-store';
@@ -11,8 +10,7 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  const store = proxydi.get('storeInstance');
-  const i18n = proxydi.get('i18nInstance');
+  const { store, i18n } = options;
 
   if (i18n) {
     setLocalesMessages(i18n, locales);

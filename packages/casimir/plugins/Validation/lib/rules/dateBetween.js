@@ -1,7 +1,7 @@
 import { proxydi } from '@deip/proxydi';
 import { wrapInArray } from '@deip/toolbox';
 
-import { normalizeDates } from './helpers';
+import { normalizeDates } from '../helpers';
 
 export const dateBetween = {
   params: ['prev', 'next'],
@@ -33,7 +33,7 @@ export const dateBetween = {
   },
 
   message(name, { prev, next }) {
-    const i18n = proxydi.get('i18nInstance');
+    const i18n = proxydi.get('i18n');
     const prevDates = wrapInArray(prev);
     const nextDates = wrapInArray(next);
 

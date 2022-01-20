@@ -16,7 +16,7 @@ export const minMax = {
   },
 
   message(_, values) {
-    const i18n = proxydi.get('i18nInstance');
+    const i18n = proxydi.get('i18n');
     return i18n.t('plugin.validation.minMax', values);
   }
 };
