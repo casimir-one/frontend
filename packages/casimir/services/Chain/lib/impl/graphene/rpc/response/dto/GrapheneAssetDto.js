@@ -1,8 +1,8 @@
-import AssetDto from './../../../../../base/rpc/response/dto/AssetDto';
+import FungibleTokenDto from './../../../../../base/rpc/response/dto/FungibleTokenDto';
 import { genRipemd160Hash } from '@deip/toolbox';
 
 
-class GrapheneAssetDto extends AssetDto {
+class GrapheneAssetDto extends FungibleTokenDto {
   
   constructor(asset) {
     const symbol = asset.string_symbol;

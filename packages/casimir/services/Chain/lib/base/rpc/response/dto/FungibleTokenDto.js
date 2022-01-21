@@ -1,7 +1,7 @@
 import { assert } from '@deip/toolbox';
 
 
-class AssetDto {
+class FungibleTokenDto {
 
   constructor({
     assetId,
@@ -28,4 +28,4 @@ class AssetDto {
 }
 
 
-export default AssetDto;
+export default FungibleTokenDto;

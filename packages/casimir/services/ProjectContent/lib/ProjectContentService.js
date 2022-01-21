@@ -101,10 +101,9 @@ export class ProjectContentService {
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
-        const txBuilder = chainService.getChainTxBuilder();
-        return txBuilder
-          .begin()
-          .then(() => {
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
             const createProjectContentCmd = new CreateProjectContentCmd({
               projectId,
               teamId,
@@ -117,27 +116,33 @@ export class ProjectContentService {
             });
 
             if (isProposal) {
-              const createProposalCmd = new CreateProposalCmd({
-                creator,
-                type: APP_PROPOSAL.PROJECT_CONTENT_PROPOSAL,
-                expirationTime: proposalLifetime,
-                proposedCmds: [createProjectContentCmd]
-              });
+              const proposalBatch = [
+                createProjectContentCmd
+              ];
 
-              txBuilder.addCmd(createProposalCmd);
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    creator,
+                    type: APP_PROPOSAL.PROJECT_CONTENT_PROPOSAL,
+                    expirationTime: proposalLifetime,
+                    proposedCmds: proposalBatch
+                  });
+                  txBuilder.addCmd(createProposalCmd);
 
-              if (isProposalApproved) {
-                const createProjectContentProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: createProjectContentProposalId,
-                  account: creator
+                  if (isProposalApproved) {
+                    const createProjectContentProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: createProjectContentProposalId,
+                      account: creator,
+                      batchWeight: proposalBatchWeight
+                    });
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+                  return txBuilder.end();
                 });
-
-                txBuilder.addCmd(updateProposalCmd);
-              }
-            } else {
-              txBuilder.addCmd(createProjectContentCmd);
             }
+            txBuilder.addCmd(createProjectContentCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))

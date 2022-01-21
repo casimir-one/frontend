@@ -15,7 +15,8 @@ class ProposalDto {
     timestamp,
     serializedProposedTx,
     expirationTime,
-    failureMsg
+    failureMsg,
+    batchWeight
   }) {
     
     assert(!!proposalId, "Proposal ID is not specified");
@@ -35,6 +36,7 @@ class ProposalDto {
     this.serializedProposedTx = serializedProposedTx;
     this.expirationTime = expirationTime || null;
     this.failureMsg = failureMsg || null;
+    this.batchWeight = batchWeight || null;
   }
 
 }

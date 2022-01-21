@@ -39,20 +39,24 @@ export class ProposalsService {
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const updateProposalCmd = new AcceptProposalCmd({
-              entityId: proposalId,
-              account
-            });
-            txBuilder.addCmd(updateProposalCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.proposalsHttp.accept(msg);
-          });
+        const chainRpc = chainService.getChainRpc();
+
+        return chainRpc.getProposalAsync(proposalId)
+          .then((proposal) => chainTxBuilder.begin()
+            .then((txBuilder) => {
+              const updateProposalCmd = new AcceptProposalCmd({
+                entityId: proposalId,
+                account,
+                batchWeight: proposal.batchWeight
+              });
+              txBuilder.addCmd(updateProposalCmd);
+              return txBuilder.end();
+            })
+            .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+            .then((packedTx) => {
+              const msg = new JsonDataMsg(packedTx.getPayload());
+              return this.proposalsHttp.accept(msg);
+            }));
       });
   }
 
@@ -80,25 +84,31 @@ export class ProposalsService {
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const declineProposalCmd = new DeclineProposalCmd({
-              entityId: proposalId,
-              account
-            });
+        const chainRpc = chainService.getChainRpc();
 
-            txBuilder.addCmd(declineProposalCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.proposalsHttp.decline(msg);
-          });
+        return chainRpc.getProposalAsync(proposalId)
+          .then((proposal) => chainTxBuilder.begin()
+            .then((txBuilder) => {
+              const declineProposalCmd = new DeclineProposalCmd({
+                entityId: proposalId,
+                account,
+                batchWeight: proposal.batchWeight
+              });
+
+              txBuilder.addCmd(declineProposalCmd);
+              return txBuilder.end();
+            })
+            .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+            .then((packedTx) => {
+              const msg = new JsonDataMsg(packedTx.getPayload());
+              return this.proposalsHttp.decline(msg);
+            }));
       });
   }
 
+
   /**
+   * [DEPREACTED]
    * Get proposals by creator
    * @param {string} account
    * @returns {Promise<Object>}

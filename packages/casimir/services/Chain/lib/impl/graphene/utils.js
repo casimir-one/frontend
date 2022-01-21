@@ -1,6 +1,6 @@
 import GrapheneClient from '@deip/rpc-client';
 import crypto from '@deip/lib-crypto';
-import { TextEncoder } from '@polkadot/x-textencoder';
+import { TextEncoder } from "web-encoding"
 
 const toAssetUnits = ({ symbol, precision, amount }) => {
   let value = parseFloat(amount).toFixed(precision);

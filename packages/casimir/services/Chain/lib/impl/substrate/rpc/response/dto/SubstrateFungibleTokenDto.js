@@ -1,8 +1,8 @@
-import AssetDto from './../../../../../base/rpc/response/dto/AssetDto';
+import FungibleTokenDto from './../../../../../base/rpc/response/dto/FungibleTokenDto';
 import { fromHexFormat } from './../../../utils';
 
 
-class SubstrateAssetDto extends AssetDto {
+class SubstrateFungibleTokenDto extends FungibleTokenDto {
 
   constructor(asset, metadata) {
     const assetId = fromHexFormat(asset.assetId);
@@ -25,4 +25,4 @@ class SubstrateAssetDto extends AssetDto {
 }
 
 
-export default SubstrateAssetDto;
+export default SubstrateFungibleTokenDto;

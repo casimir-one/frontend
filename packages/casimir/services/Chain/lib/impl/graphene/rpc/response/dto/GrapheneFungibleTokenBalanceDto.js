@@ -1,8 +1,8 @@
-import AssetBalanceDto from './../../../../../base/rpc/response/dto/AssetBalanceDto';
+import FungibleTokenBalanceDto from './../../../../../base/rpc/response/dto/FungibleTokenBalanceDto';
 import { convertStringAsset } from './../utils';
 
 
-class GrapheneAssetBalanceDto extends AssetBalanceDto {
+class GrapheneFungibleTokenBalanceDto extends FungibleTokenBalanceDto {
 
   constructor(balance) {
     const account = balance.owner;
@@ -20,4 +20,4 @@ class GrapheneAssetBalanceDto extends AssetBalanceDto {
 }
 
 
-export default GrapheneAssetBalanceDto;
+export default GrapheneFungibleTokenBalanceDto;

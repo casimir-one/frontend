@@ -12,26 +12,26 @@ class SubstrateProposalDto extends ProposalDto {
 
     let status;
     let failureMsg;
-    switch (proposal.state) {
-      case 'Pending': {
+    switch (Object.keys(proposal.state)[0]) {
+      case 'pending': {
         status = PROPOSAL_STATUS.PENDING;
         break;
       }
-      case 'Done': {
+      case 'done': {
         status = PROPOSAL_STATUS.APPROVED;
         break;
       }
-      case 'Rejected': {
+      case 'rejected': {
         status = PROPOSAL_STATUS.REJECTED;
         break;
       }
+      case 'failed': {
+        status = PROPOSAL_STATUS.REJECTED;
+        failureMsg = proposal.state['failed'] || "Proposal failed";
+        break;
+      }
       default: {
-        if (proposal.state == 'Failed' || proposal.state['Failed']) {
-          status = PROPOSAL_STATUS.FAILED;
-          failureMsg = proposal.state['Failed'] || "Proposal failed";
-        } else {
-          status = PROPOSAL_STATUS.PENDING;
-        }
+        status = PROPOSAL_STATUS.PENDING;
         break;
       }
     }
@@ -48,6 +48,7 @@ class SubstrateProposalDto extends ProposalDto {
 
     const timestamp = proposal.createdAt;
     const serializedProposedTx = proposal.batch;
+    const batchWeight = proposal.batchWeight;
 
     
     super({
@@ -59,7 +60,8 @@ class SubstrateProposalDto extends ProposalDto {
       rejectors,
       timestamp,
       serializedProposedTx,
-      failureMsg
+      failureMsg,
+      batchWeight
     });
 
   }

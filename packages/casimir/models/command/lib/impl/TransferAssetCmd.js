@@ -1,40 +1,42 @@
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
+import { ASSET_TYPE } from '@deip/constants';
 
-/**
- * @typedef {{ id: string, symbol: string, amount: string, precision: number}} Asset
- */
 
-/**
- * Transfer asset command
- * @extends ProtocolCmd
- */
+// TODO: Split this command to separate TransferFungibleToken and TransferNonFungibleToken
 class TransferAssetCmd extends ProtocolCmd {
-  /**
-   *
-   * @param {Object} cmdPayload
-   * @param {string} cmdPayload.from
-   * @param {string} cmdPayload.to
-   * @param {Asset} cmdPayload.asset
-   */
+
   constructor(cmdPayload) {
     const {
       from,
       to,
-      asset
+
+      assetType, // tmp
+
+      // FT
+      tokenId,
+      symbol,
+      precision,
+      amount,
+
+      // NFT
+      classId,
+      instanceId
     } = cmdPayload;
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(
-      !!asset
-      && asset.id
-      && asset.symbol
-      && !Number.isNaN(asset.precision)
-      && asset.amount,
-      "'asset' is required and should contains 'id', 'symbol', 'precision', 'amount' fields"
-    );
+
+    if (assetType == ASSET_TYPE.NFT) {
+      assert(!!classId, "NFT 'classId' is required");
+      assert(!!instanceId && !isNaN(instanceId), "NFT 'instanceId' is required");
+    } else {
+      assert(!!tokenId, "FT 'tokenId' is required");
+      assert(!!symbol, "FT 'symbol' is required");
+      assert(!isNaN(precision), "FT 'precision' is required");
+      assert(!!amount, "FT 'amount' is required");
+    }
 
     super(APP_CMD.TRANSFER_ASSET, cmdPayload);
   }

@@ -1,7 +1,7 @@
 import BaseChainRpc from './../../../base/rpc/BaseChainRpc';
 import GrapheneDaoDto from './response/dto/GrapheneDaoDto';
 import GrapheneAssetDto from './response/dto/GrapheneAssetDto';
-import GrapheneAssetBalanceDto from './response/dto/GrapheneAssetBalanceDto';
+import GrapheneFungibleTokenBalanceDto from './response/dto/GrapheneFungibleTokenBalanceDto';
 import GrapheneProjectDto from './response/dto/GrapheneProjectDto';
 import GrapheneProjectContentDto from './response/dto/GrapheneProjectContentDto';
 import GrapheneInvestmentOpportunityDto from './response/dto/GrapheneInvestmentOpportunityDto';
@@ -96,17 +96,17 @@ class GrapheneChainRpc extends BaseChainRpc {
 
       /* ASSET */
 
-      getAssetAsync: async (assetId) => {
+      getFungibleTokenAsync: async (assetId) => {
         throw new Error("Not implemented exception");
       },
 
-      getAssetBySymbolAsync: async (symbol) => {
+      getFungibleTokenBySymbolAsync: async (symbol) => {
         const asset = await chainService.rpcToChainNode("call", ["database_api", "get_asset_by_symbol", [symbol]]);
         if (!asset) return null;
         return new GrapheneAssetDto(asset);
       },
 
-      getAssetsListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
+      getFungibleTokenListAsync: async (startIdx = 0, limit = LIST_LIMIT) => {
         const assets = await chainService.rpcToChainNode("call", ["database_api", "lookup_assets", [startIdx, limit]]);
         return assets.map((asset) => (new GrapheneAssetDto(asset)));
       },
@@ -115,7 +115,7 @@ class GrapheneChainRpc extends BaseChainRpc {
         const assets = await chainService.rpcToChainNode("call", ["database_api", "get_assets_by_type", [2]]);
         const assetsDtos = await Promise.all(assets
           .filter((asset) => asset.tokenized_research == projectId)
-          .map((asset) => this.getAssetBySymbolAsync(asset.string_symbol))
+          .map((asset) => this.getFungibleTokenBySymbolAsync(asset.string_symbol))
         );
         return assetsDtos;
       },
@@ -124,31 +124,31 @@ class GrapheneChainRpc extends BaseChainRpc {
 
       /* ASSET BALANCE */
 
-      getAssetBalanceByOwnerAsync: async (daoId, assetId) => {
+      getFungibleTokenBalanceByOwnerAsync: async (daoId, assetId) => {
         throw new Error("Not implemented exception");
       },
 
-      getAssetBalanceByOwnerAndAssetSymbolAsync: async (daoId, symbol) => {
+      getFungibleTokenBalanceByOwnerAndSymbolAsync: async (daoId, symbol) => {
         const balance = await chainService.rpcToChainNode("call", ["database_api", "get_account_asset_balance", [daoId, symbol]]);
         if (!balance) return null;
-        return new GrapheneAssetBalanceDto(balance);
+        return new GrapheneFungibleTokenBalanceDto(balance);
       },
 
-      getAssetsBalancesByOwnerAsync: async (daoId) => {
+      getFungibleTokenBalancesByOwnerAsync: async (daoId) => {
         const balances = await chainService.rpcToChainNode("call", ["database_api", "get_account_assets_balances", [daoId]]);
-        return balances.map((balance) => (new GrapheneAssetBalanceDto(balance)));
+        return balances.map((balance) => (new GrapheneFungibleTokenBalanceDto(balance)));
       },
 
-      getAssetBalancesByAssetAsync: async (assetId, startIdx = 0, limit = LIST_LIMIT) => {
+      getFungibleTokenBalancesAsync: async (assetId, startIdx = 0, limit = LIST_LIMIT) => {
         throw new Error("Not implemented exception");
       },
 
-      getAssetBalancesByAssetSymbolAsync: async (symbol, startIdx = 0, limit = LIST_LIMIT) => {
+      getFungibleTokenBalancesBySymbolAsync: async (symbol, startIdx = 0, limit = LIST_LIMIT) => {
         const balances = await chainService.rpcToChainNode("call", ["database_api", "get_accounts_asset_balances_by_asset", [symbol]]);
-        return balances.map((balance) => (new GrapheneAssetBalanceDto(balance)));
+        return balances.map((balance) => (new GrapheneFungibleTokenBalanceDto(balance)));
       },
       
-      getAssetBalancesListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
+      getFungibleTokenBalancesListAsync: (startIdx = 0, limit = LIST_LIMIT) => {
         throw new Error("Not implemented exception");
       },
 
@@ -648,10 +648,10 @@ class GrapheneChainRpc extends BaseChainRpc {
         return chainService.rpcToChainNode("call", ["fo_history_api", "get_withdrawal_requests_history_by_award_and_subaward_number", [awardNumber, subawardNumber]])
       },
 
-      getAssetsByIssuerAsync: (issuer) => {
+      getFungibleTokenByIssuerAsync: (issuer) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_assets_by_issuer", [issuer]])
       },
-      getAssetsByTypeAsync: (type) => {
+      getFungibleTokenByTypeAsync: (type) => {
         return chainService.rpcToChainNode("call", ["database_api", "get_assets_by_type", [type]])
       },
       getFundingTransactionAsync: (id) => {

@@ -17,11 +17,13 @@ class DeclineProposalCmd extends ProtocolCmd {
     const {
       // onchain
       entityId,
-      account
+      account,
+      batchWeight
     } = cmdPayload;
 
     assert(!!entityId, "'entityId' is required");
     assert(!!account, "'account' is required");
+    assert(!!batchWeight || batchWeight === 0, "'batchWeight' is required");
 
     super(APP_CMD.DECLINE_PROPOSAL, cmdPayload);
   }

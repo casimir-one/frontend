@@ -4,24 +4,19 @@ import { assert, isNumber } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
- * Create asset command
- * @extends ProtocolEntityCmd
+ * Create fungible token command
+ * @extends ProtocolCmd
  */
-class CreateAssetCmd extends ProtocolEntityCmd {
+class CreateFungibleTokenCmd extends ProtocolEntityCmd {
   /**
-   * Create command for asset creation
+   * Create fungible token
    * @param {Object} cmdPayload
-   * @param {string} cmdPayload.entityId
    * @param {string} cmdPayload.issuer
    * @param {string} cmdPayload.symbol
    * @param {number} cmdPayload.precision
-   * @param {string} cmdPayload.maxSupply
+   * @param {number} cmdPayload.minBalance
    * @param {string} cmdPayload.description
-   * @param {Object} cmdPayload.projectTokenOption
-   * @param {string} cmdPayload.projectTokenOption.projectId
-   * @param {string} cmdPayload.projectTokenOption.teamId
-   * @param {Object} cmdPayload.projectTokenOption.licenseRevenue
-   * @param {string} cmdPayload.projectTokenOption.licenseRevenue.holdersShare
+   * @param {Object} cmdPayload.projectTokenSettings
    */
   constructor(cmdPayload) {
     const {
@@ -29,17 +24,17 @@ class CreateAssetCmd extends ProtocolEntityCmd {
       issuer,
       symbol,
       precision,
-      maxSupply,
+      minBalance,
       description,
-      projectTokenOption
+      projectTokenSettings
     } = cmdPayload;
 
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
     assert(isNumber(precision), "'precision' must be a number");
 
-    if (projectTokenOption) {
-      const { projectId, teamId, licenseRevenue } = projectTokenOption; // TODO: remove 'teamId'
+    if (projectTokenSettings) { // keep this until we have working F-NFT
+      const { projectId, teamId, licenseRevenue } = projectTokenSettings;
       assert(!!projectId, "'projectId' is required for project token");
       assert(!!teamId, "'teamId' is required for project token");
 
@@ -49,8 +44,8 @@ class CreateAssetCmd extends ProtocolEntityCmd {
       }
     }
 
-    super(APP_CMD.CREATE_ASSET, cmdPayload);
+    super(APP_CMD.CREATE_FT, cmdPayload);
   }
 }
 
-export default CreateAssetCmd;
+export default CreateFungibleTokenCmd;

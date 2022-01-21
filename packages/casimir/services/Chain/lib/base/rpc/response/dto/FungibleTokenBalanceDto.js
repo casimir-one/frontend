@@ -1,7 +1,7 @@
 import { assert } from '@deip/toolbox';
 
 
-class AssetBalanceDto {
+class FungibleTokenBalanceDto {
 
   constructor({
     account,
@@ -26,4 +26,4 @@ class AssetBalanceDto {
 }
 
 
-export default AssetBalanceDto;
+export default FungibleTokenBalanceDto;

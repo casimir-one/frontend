@@ -1,7 +1,7 @@
 import BaseChainSeedAccount from './../../base/BaseChainSeedAccount';
 import GrapheneClient from '@deip/rpc-client';
 import { assert, genMd5Hash } from '@deip/toolbox';
-import { TextEncoder } from '@polkadot/x-textencoder';
+import { TextEncoder } from "web-encoding"
 import crypto from '@deip/lib-crypto';
 
 

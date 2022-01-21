@@ -19,8 +19,10 @@ import TransferAssetCmd from './impl/TransferAssetCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
-import CreateAssetCmd from './impl/CreateAssetCmd';
-import IssueAssetCmd from './impl/IssueAssetCmd';
+import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
+import CreateNonFungibleTokenCmd from './impl/CreateNonFungibleTokenCmd';
+import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
+import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
 import CreateDraftCmd from './impl/CreateDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
@@ -68,8 +70,10 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
-  [APP_CMD.CREATE_ASSET]: { class: CreateAssetCmd },
-  [APP_CMD.ISSUE_ASSET]: { class: IssueAssetCmd },
+  [APP_CMD.CREATE_FT]: { class: CreateFungibleTokenCmd },
+  [APP_CMD.CREATE_NFT]: { class: CreateNonFungibleTokenCmd },
+  [APP_CMD.ISSUE_FT]: { class: IssueFungibleTokenCmd },
+  [APP_CMD.ISSUE_NFT]: { class: IssueNonFungibleTokenCmd },
   [APP_CMD.CREATE_DRAFT]: { class: CreateDraftCmd },
   [APP_CMD.DELETE_DRAFT]: { class: DeleteDraftCmd },
   [APP_CMD.UPDATE_DRAFT]: { class: UpdateDraftCmd },

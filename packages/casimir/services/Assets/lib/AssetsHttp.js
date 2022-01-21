@@ -1,28 +1,46 @@
 import { HttpService, serializeParams } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
-/**
+ /**
  * Assets http transport
  */
 export class AssetsHttp {
   http = HttpService.getInstance();
 
   /**
-   * Create new asset
+   * Create new fungible token
    * @param {Object} req
    * @return {Promise<Object>}
    */
-  async create(req) {
-    return this.http.post('/api/v2/asset/create', req.getHttpBody());
+  async createFungibleToken(req) {
+    return this.http.post('/api/v2/asset/ft/create', req.getHttpBody());
   }
 
   /**
-   * Issue new asset tokens
+   * Create new non-fungible token class
    * @param {Object} req
    * @return {Promise<Object>}
    */
-  async issue(req) {
-    return this.http.post('/api/v2/asset/issue', req.getHttpBody());
+  async createNonFungibleToken(req) {
+    return this.http.post('/api/v2/asset/nft/create', req.getHttpBody());
+  }
+
+  /**
+   * Issue created fungible token
+   * @param {Object} req
+   * @return {Promise<Object>}
+   */
+  async issueFungibleToken(req) {
+    return this.http.post('/api/v2/asset/ft/issue', req.getHttpBody());
+  }
+
+  /**
+   * Issue an instance of non-fungible token class
+   * @param {Object} req
+   * @return {Promise<Object>}
+   */
+  async issueNonFungibleToken(req) {
+    return this.http.post('/api/v2/asset/nft/issue', req.getHttpBody());
   }
 
   /**

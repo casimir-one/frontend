@@ -49,26 +49,34 @@ export class ProjectNdaService {
               startTime,
               endTime
             });
-            const createProposalCmd = new CreateProposalCmd({
-              creator,
-              type: APP_PROPOSAL.PROJECT_NDA_PROPOSAL,
-              expirationTime: requestEndTime,
-              proposedCmds: [createProjectNdaCmd]
-            });
 
-            txBuilder.addCmd(createProposalCmd);
+            const proposalBatch = [
+              createProjectNdaCmd
+            ];
 
-            const createProjectNdaProposalId = createProposalCmd.getProtocolEntityId();
-            for (let i = 0; i < approvers.length; i++) {
-              const approver = approvers[i];
-              const updateProposalCmd = new AcceptProposalCmd({
-                entityId: createProjectNdaProposalId,
-                account: approver
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((proposalBatchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  creator,
+                  type: APP_PROPOSAL.PROJECT_NDA_PROPOSAL,
+                  expirationTime: requestEndTime,
+                  proposedCmds: proposalBatch
+                });
+                txBuilder.addCmd(createProposalCmd);
+
+                const createProjectNdaProposalId = createProposalCmd.getProtocolEntityId();
+                for (let i = 0; i < approvers.length; i++) {
+                  const approver = approvers[i];
+                  const updateProposalCmd = new AcceptProposalCmd({
+                    entityId: createProjectNdaProposalId,
+                    account: approver,
+                    batchWeight: proposalBatchWeight
+                  });
+                  txBuilder.addCmd(updateProposalCmd);
+                }
+
+                return txBuilder.end();
               });
-              txBuilder.addCmd(updateProposalCmd);
-            }
-
-            return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
