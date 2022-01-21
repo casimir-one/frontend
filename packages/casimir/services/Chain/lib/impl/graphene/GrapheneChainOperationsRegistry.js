@@ -356,18 +356,42 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_ASSET]: ({
+    [APP_CMD.CREATE_FT]: ({
+      issuer,
+      symbol,
+      precision,
+      description,
+      maxSupply
+    }) => {
+
+      const traits = [];
+
+      const createFungibleTokenOp = ['create_asset', {
+        issuer: issuer,
+        symbol: symbol,
+        precision: precision,
+        description: description,
+        max_supply: maxSupply,
+        traits: traits,
+        extensions: []
+      }];
+
+      return [createFungibleTokenOp];
+    },
+
+
+    [APP_CMD.CREATE_NFT]: ({
       issuer,
       symbol,
       precision,
       description,
       maxSupply,
-      projectTokenOption
+      projectTokenSettings
     }) => {
 
       const traits = [];
-      if (projectTokenOption) {
-        const { projectId, teamId, licenseRevenue } = projectTokenOption;
+      if (projectTokenSettings) {
+        const { projectId, teamId, licenseRevenue } = projectTokenSettings;
         traits.push(
           ['research_security_token', {
             research_external_id: projectId,
@@ -387,7 +411,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         }
       }
 
-      const createAssetOp = ['create_asset', {
+      const createNonFungibleTokenOp = ['create_asset', {
         issuer: issuer,
         symbol: symbol,
         precision: precision,
@@ -397,19 +421,22 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         extensions: []
       }];
 
-      return [createAssetOp];
+      return [createNonFungibleTokenOp];
     },
 
 
-    [APP_CMD.ISSUE_ASSET]: ({
+    [APP_CMD.ISSUE_FT]: ({
       issuer,
-      asset,
+      tokenId,
+      symbol,
+      precision,
+      amount,
       recipient,
       memo
     }) => {
-      const amountUnits = toAssetUnits(asset);
+      const amountUnits = toAssetUnits({ symbol, precision, amount });
 
-      const issueAssetOp = ['issue_asset', {
+      const issueFungibleTokenOp = ['issue_asset', {
         issuer: issuer,
         amount: amountUnits,
         recipient: recipient,
@@ -417,7 +444,27 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
         extensions: []
       }];
 
-      return [issueAssetOp];
+      return [issueFungibleTokenOp];
+    },
+
+
+    [APP_CMD.ISSUE_NFT]: ({
+      issuer,
+      asset,
+      recipient,
+      memo
+    }) => {
+      const amountUnits = toAssetUnits(asset);
+
+      const issueNonFungibleTokenOp = ['issue_asset', {
+        issuer: issuer,
+        amount: amountUnits,
+        recipient: recipient,
+        memo: memo || undefined,
+        extensions: []
+      }];
+
+      return [issueNonFungibleTokenOp];
     },
 
 

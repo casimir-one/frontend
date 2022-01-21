@@ -18,8 +18,10 @@ import TransferAssetCmd from './impl/TransferAssetCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
-import CreateAssetCmd from './impl/CreateAssetCmd';
-import IssueAssetCmd from './impl/IssueAssetCmd';
+import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
+import CreateNonFungibleTokenCmd from './impl/CreateNonFungibleTokenCmd';
+import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
+import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
 import CreateDraftCmd from './impl/CreateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
@@ -66,8 +68,10 @@ export {
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,
-  CreateAssetCmd,
-  IssueAssetCmd,
+  CreateFungibleTokenCmd,
+  CreateNonFungibleTokenCmd,
+  IssueFungibleTokenCmd,
+  IssueNonFungibleTokenCmd,
   CreateDraftCmd,
   DeleteDraftCmd,
   UpdateDraftCmd,

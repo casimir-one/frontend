@@ -86,7 +86,10 @@ export class TeamService {
               const transferAssetCmd = new TransferAssetCmd({
                 from: creator,
                 to: entityId,
-                asset: { ...CORE_ASSET, amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT }
+                tokenId: CORE_ASSET.id,
+                symbol: CORE_ASSET.symbol,
+                precision: CORE_ASSET.precision,
+                amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
               });
               txBuilder.addCmd(transferAssetCmd);
             }
@@ -114,24 +117,32 @@ export class TeamService {
                 return addTeamMemberCmd;
               });
 
-              const createProposalCmd = new CreateProposalCmd({
-                creator,
-                type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
-                expirationTime: proposalDefaultLifetime,
-                proposedCmds: [...invites]
-              });
+              const proposalBatch = [
+                ...invites
+              ];
 
-              txBuilder.addCmd(createProposalCmd);
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    creator,
+                    type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
+                    expirationTime: proposalDefaultLifetime,
+                    proposedCmds: proposalBatch
+                  });
 
-              const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-              const updateProposalCmd = new AcceptProposalCmd({
-                entityId: joinTeamProposalId,
-                account: creator
-              });
+                  txBuilder.addCmd(createProposalCmd);
 
-              txBuilder.addCmd(updateProposalCmd);
+                  const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+                  const updateProposalCmd = new AcceptProposalCmd({
+                    entityId: joinTeamProposalId,
+                    account: creator,
+                    batchWeight: proposalBatchWeight
+                  });
+
+                  txBuilder.addCmd(updateProposalCmd);
+                  return txBuilder.end();
+                });
             }
-
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -191,28 +202,35 @@ export class TeamService {
             });
 
             if (isProposal) {
-              const createProposalCmd = new CreateProposalCmd({
-                creator,
-                type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
-                expirationTime: proposalLifetime,
-                proposedCmds: [updateDaoCmd]
-              });
+              const proposalBatch = [
+                updateDaoCmd
+              ];
 
-              txBuilder.addCmd(createProposalCmd);
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    creator,
+                    type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
+                    expirationTime: proposalLifetime,
+                    proposedCmds: proposalBatch
+                  });
 
-              if (isProposalApproved) {
-                const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: teamUpdateProposalId,
-                  account: creator
+                  txBuilder.addCmd(createProposalCmd);
+
+                  if (isProposalApproved) {
+                    const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: teamUpdateProposalId,
+                      account: creator,
+                      batchWeight: proposalBatchWeight
+                    });
+
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+                  return txBuilder.end();
                 });
-
-                txBuilder.addCmd(updateProposalCmd);
-              }
-            } else {
-              txBuilder.addCmd(updateDaoCmd);
             }
-
+            txBuilder.addCmd(updateDaoCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -258,24 +276,30 @@ export class TeamService {
               isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
             });
 
-            const createProposalCmd = new CreateProposalCmd({
-              creator,
-              type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
-              expirationTime: proposalDefaultLifetime,
-              proposedCmds: [addTeamMemberCmd]
-            });
+            const proposalBatch = [
+              addTeamMemberCmd
+            ];
 
-            txBuilder.addCmd(createProposalCmd);
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((proposalBatchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  creator,
+                  type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
+                  expirationTime: proposalDefaultLifetime,
+                  proposedCmds: proposalBatch
+                });
+                txBuilder.addCmd(createProposalCmd);
 
-            const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new AcceptProposalCmd({
-              entityId: joinTeamProposalId,
-              account: creator
-            });
+                const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new AcceptProposalCmd({
+                  entityId: joinTeamProposalId,
+                  account: creator,
+                  batchWeight: proposalBatchWeight
+                });
+                txBuilder.addCmd(updateProposalCmd);
 
-            txBuilder.addCmd(updateProposalCmd);
-
-            return txBuilder.end();
+                return txBuilder.end();
+              });
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
@@ -320,24 +344,32 @@ export class TeamService {
               isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
             });
 
-            const createProposalCmd = new CreateProposalCmd({
-              creator,
-              type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
-              expirationTime: proposalDefaultLifetime,
-              proposedCmds: [removeDaoMemberCmd]
-            });
+            const proposalBatch = [
+              removeDaoMemberCmd
+            ];
 
-            txBuilder.addCmd(createProposalCmd);
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((proposalBatchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  creator,
+                  type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
+                  expirationTime: proposalDefaultLifetime,
+                  proposedCmds: proposalBatch
+                });
 
-            const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new AcceptProposalCmd({
-              entityId: leaveTeamProposalId,
-              account: creator
-            });
+                txBuilder.addCmd(createProposalCmd);
 
-            txBuilder.addCmd(updateProposalCmd);
+                const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new AcceptProposalCmd({
+                  entityId: leaveTeamProposalId,
+                  account: creator,
+                  batchWeight: proposalBatchWeight
+                });
 
-            return txBuilder.end();
+                txBuilder.addCmd(updateProposalCmd);
+
+                return txBuilder.end();
+              });
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {

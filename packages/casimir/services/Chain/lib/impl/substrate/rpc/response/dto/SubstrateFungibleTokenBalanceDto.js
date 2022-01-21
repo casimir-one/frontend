@@ -1,8 +1,8 @@
-import AssetBalanceDto from './../../../../../base/rpc/response/dto/AssetBalanceDto';
-import { fromHexFormat, addressToPubKey } from './../../../utils';
+import FungibleTokenBalanceDto from './../../../../../base/rpc/response/dto/FungibleTokenBalanceDto';
+import { fromHexFormat } from './../../../utils';
 
 
-class SubstrateAssetBalanceDto extends AssetBalanceDto {
+class SubstrateFungibleTokenBalanceDto extends FungibleTokenBalanceDto {
 
   constructor(balance, assetMetadata) {
     const assetId = fromHexFormat(balance.assetId);    
@@ -24,4 +24,4 @@ class SubstrateAssetBalanceDto extends AssetBalanceDto {
 }
 
 
-export default SubstrateAssetBalanceDto;
+export default SubstrateFungibleTokenBalanceDto;

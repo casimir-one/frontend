@@ -126,7 +126,7 @@
       assetsFilter() {
         return this.assetBalance
           ? { symbol: this.assetBalance.symbol }
-          : { type: ASSET_TYPE.COIN };
+          : { type: ASSET_TYPE.FT };
       }
     },
 

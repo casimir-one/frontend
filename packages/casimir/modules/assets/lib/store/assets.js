@@ -39,7 +39,7 @@ const ACTIONS = {
 
   async create({ dispatch }, payload) {
     const { user, data } = payload;
-    await assetsService.create(user, data);
+    await assetsService.createFungibleToken(user, data);
     await dispatch('balances/getList', { withAssetsFetch: true }, { root: true });
   }
 };

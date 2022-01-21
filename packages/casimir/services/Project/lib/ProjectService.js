@@ -213,28 +213,34 @@ export class ProjectService {
             projectId = createProjectCmd.getProtocolEntityId();
 
             if (isProposal) {
-              const createProposalCmd = new CreateProposalCmd({
-                type: APP_PROPOSAL.PROJECT_PROPOSAL,
-                creator,
-                expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [createProjectCmd]
-              });
+              const proposalBatch = [
+                createProjectCmd
+              ];
 
-              txBuilder.addCmd(createProposalCmd);
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    type: APP_PROPOSAL.PROJECT_PROPOSAL,
+                    creator,
+                    expirationTime: proposalLifetime || proposalDefaultLifetime,
+                    proposedCmds: proposalBatch
+                  });
+                  txBuilder.addCmd(createProposalCmd);
 
-              if (isProposalApproved) {
-                const projectProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: projectProposalId,
-                  account: creator
+                  if (isProposalApproved) {
+                    const projectProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: projectProposalId,
+                      account: teamId,
+                      batchWeight: proposalBatchWeight
+                    });
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+
+                  return txBuilder.end();
                 });
-
-                txBuilder.addCmd(updateProposalCmd);
-              }
-            } else {
-              txBuilder.addCmd(createProjectCmd);
             }
-
+            txBuilder.addCmd(createProjectCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -335,32 +341,41 @@ export class ProjectService {
             });
 
             if (isProposal) {
-              const createProposalCmd = new CreateProposalCmd({
-                type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
-                creator: updater,
-                expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [updateProjectCmd, ...invites, ...leavings]
-              });
+              const proposalBatch = [
+                updateProjectCmd,
+                ...invites,
+                ...leavings
+              ];
 
-              txBuilder.addCmd(createProposalCmd);
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
+                    creator: updater,
+                    expirationTime: proposalLifetime || proposalDefaultLifetime,
+                    proposedCmds: proposalBatch
+                  });
+                  txBuilder.addCmd(createProposalCmd);
 
-              if (isProposalApproved) {
-                const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: projectUpdateProposalId,
-                  account: updater
+                  if (isProposalApproved) {
+                    const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: projectUpdateProposalId,
+                      account: updater,
+                      batchWeight: proposalBatchWeight
+                    });
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+
+                  return txBuilder.end();
                 });
-
-                txBuilder.addCmd(updateProposalCmd);
-              }
-            } else {
-              txBuilder.addCmd(updateProjectCmd);
-              for (let i = 0; i < invites.length; i++) {
-                txBuilder.addCmd(invites[i]);
-              }
-              for (let i = 0; i < leavings.length; i++) {
-                txBuilder.addCmd(leavings[i]);
-              }
+            }
+            txBuilder.addCmd(updateProjectCmd);
+            for (let i = 0; i < invites.length; i++) {
+              txBuilder.addCmd(invites[i]);
+            }
+            for (let i = 0; i < leavings.length; i++) {
+              txBuilder.addCmd(leavings[i]);
             }
 
             return txBuilder.end();

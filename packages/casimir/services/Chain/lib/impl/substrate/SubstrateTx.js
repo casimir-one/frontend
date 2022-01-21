@@ -1,7 +1,7 @@
 import BaseTx from './../../base/BaseTx';
 import { PROTOCOL_CHAIN } from '@deip/constants';
 import ChainTypes from './ChainTypes';
-import { Metadata } from '@polkadot/metadata';
+import { Metadata } from '@polkadot/types';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
 import { assert, genSha256Hash } from '@deip/toolbox';
@@ -322,7 +322,7 @@ class SubstrateTx extends BaseTx {
 
                 return Promise.all([
                   api.query.multisig.multisigs(dao.multiAddress, operation.method.hash),
-                  operation.paymentInfo ? operation.paymentInfo(dao.multiAddress) : { weight: 1000000 } // todo: add fallback
+                  operation.paymentInfo ? operation.paymentInfo(dao.multiAddress) : { weight: "18446744073709551615" } // todo: add fallback
                 ])
                   .then(([multisigInfo, paymentInfo]) => {
                     const topDao = signersVector[(i + 1)];

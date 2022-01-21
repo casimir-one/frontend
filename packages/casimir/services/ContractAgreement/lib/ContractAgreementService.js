@@ -224,24 +224,31 @@ export class ContractAgreementService {
               party
             }));
 
-            const createProposalCmd = new CreateProposalCmd({
-              creator,
-              type: APP_PROPOSAL.CONTRACT_AGREEMENT_PROPOSAL,
-              expirationTime,
-              proposedCmds: [createContractAgreementCmd, ...acceptContractsCmds]
-            });
+            const proposalBatch = [
+              createContractAgreementCmd,
+              ...acceptContractsCmds
+            ];
 
-            txBuilder.addCmd(createProposalCmd);
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((proposalBatchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  creator,
+                  type: APP_PROPOSAL.CONTRACT_AGREEMENT_PROPOSAL,
+                  expirationTime,
+                  proposedCmds: proposalBatch
+                });
+                txBuilder.addCmd(createProposalCmd);
 
-            const createContractAgreementProposalId = createProposalCmd.getProtocolEntityId();
-            const updateProposalCmd = new AcceptProposalCmd({
-              entityId: createContractAgreementProposalId,
-              account: creator
-            });
+                const createContractAgreementProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new AcceptProposalCmd({
+                  entityId: createContractAgreementProposalId,
+                  account: creator,
+                  batchWeight: proposalBatchWeight
+                });
 
-            txBuilder.addCmd(updateProposalCmd);
-
-            return txBuilder.end();
+                txBuilder.addCmd(updateProposalCmd);
+                return txBuilder.end();
+              });
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {

@@ -62,6 +62,10 @@ class BaseTxBuilder {
       })
   }
 
+  getBatchWeight(cmds) {
+    return Promise.resolve(0);
+  }
+
 }
 
 

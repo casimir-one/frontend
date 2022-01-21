@@ -154,26 +154,35 @@ export class InvestmentOpportunityService {
             });
 
             if (isProposal) {
-              const createProposalCmd = new CreateProposalCmd({
-                type: APP_PROPOSAL.INVESTMENT_OPPORTUNITY_PROPOSAL,
-                creator: username,
-                expirationTime: proposalLifetime || proposalDefaultLifetime,
-                proposedCmds: [createInvestmentOpportunityCmd]
-              });
-              txBuilder.addCmd(createProposalCmd);
+              const proposalBatch = [
+                createInvestmentOpportunityCmd
+              ];
 
-              if (isProposalApproved) {
-                const updateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: updateProposalId,
-                  account: username
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    type: APP_PROPOSAL.INVESTMENT_OPPORTUNITY_PROPOSAL,
+                    creator: username,
+                    expirationTime: proposalLifetime || proposalDefaultLifetime,
+                    proposedCmds: proposalBatch
+                  });
+                  txBuilder.addCmd(createProposalCmd);
+
+                  if (isProposalApproved) {
+                    const updateProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: updateProposalId,
+                      account: username,
+                      batchWeight: proposalBatchWeight
+                    });
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+                  return txBuilder.end();
                 });
-                txBuilder.addCmd(updateProposalCmd);
-              }
             } else {
               txBuilder.addCmd(createInvestmentOpportunityCmd);
+              return txBuilder.end();
             }
-            return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {

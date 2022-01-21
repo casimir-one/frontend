@@ -253,7 +253,7 @@
             precision: DEFAULT_PRECISION,
             maxSupply: parseInt(amount),
             description: '',
-            projectTokenOption: {
+            projectTokenSettings: {
               projectId: this.project._id,
               teamId: this.project.teamId,
               licenseRevenue: {

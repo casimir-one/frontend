@@ -1,4 +1,4 @@
-import { ApiPromise } from '@polkadot/api/promise';
+import { ApiPromise } from '@polkadot/api';
 import { HttpProvider, WsProvider } from '@polkadot/rpc-provider';
 import { TypeRegistry } from '@polkadot/types/create';
 import { assert } from '@deip/toolbox';
@@ -7,7 +7,7 @@ import SubstrateChainOperationsRegistry from './SubstrateChainOperationsRegistry
 import SubstrateTxBuilder from './SubstrateTxBuilder';
 import SubstrateChainRpc from './rpc/SubstrateChainRpc';
 import ChainTypes from './ChainTypes';
-import { Metadata } from '@polkadot/metadata';
+import { Metadata } from '@polkadot/types';
 import SubstrateChainSeedAccount from './SubstrateChainSeedAccount';
 import SubstrateTx from './SubstrateTx';
 import { verifySignature, isValidPrivKey } from './utils';
@@ -23,17 +23,14 @@ class SubstrateChainService extends BaseChainService {
 
   init() {
     if (!this.isInited()) {
-
       const typesRegistry = new TypeRegistry();
       typesRegistry.register(ChainTypes);
-
       const provider = this._rpcConnectionString.indexOf('ws') !== 0 ? new HttpProvider(this._rpcConnectionString) : new WsProvider(this._rpcConnectionString);
       return ApiPromise.create({ provider, registry: typesRegistry })
         .then((chainNodeClient) => {
           this._chainNodeClient = chainNodeClient;
           this._chainOpsRegistry = new SubstrateChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
           this._chainRpc = new SubstrateChainRpc(this, { coreAsset: this._coreAsset });
-
           return Promise.all([
             this._chainNodeClient.rpc.system.chain(),
             this._chainNodeClient.rpc.system.name(),

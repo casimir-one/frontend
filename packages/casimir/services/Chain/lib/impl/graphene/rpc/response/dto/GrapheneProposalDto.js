@@ -15,6 +15,7 @@ class GrapheneProposalDto extends ProposalDto {
     const expirationTime = new Date(proposalState.expiration_time).getTime();
     const serializedProposedTx = proposalState.serialized_proposed_transaction;
     const failureMsg = proposalState.fail_reason;
+    const batchWeight = null;
 
     super({
       proposalId,
@@ -26,7 +27,8 @@ class GrapheneProposalDto extends ProposalDto {
       timestamp,
       expirationTime,
       serializedProposedTx,
-      failureMsg
+      failureMsg,
+      batchWeight
     });
 
   }

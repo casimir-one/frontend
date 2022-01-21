@@ -1,7 +1,7 @@
 
 
 const isValidAssetFormat = (asset) => {
-  return !!asset && asset.id && asset.symbol && !isNaN(asset.precision) && asset.amount;
+  return !!asset && asset.id && asset.symbol && !isNaN(asset.precision) && (asset.amount || asset.amount === 0);
 };
 
 const isValidTimestampFormat = (timestamp) => {

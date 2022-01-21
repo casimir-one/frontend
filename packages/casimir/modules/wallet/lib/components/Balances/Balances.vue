@@ -70,7 +70,7 @@
     computed: {
       balances() {
         const assets = this.$store.getters['assets/list'](
-          { type: [ASSET_TYPE.COIN, ASSET_TYPE.CORE] }
+          { type: [ASSET_TYPE.FT, ASSET_TYPE.CORE] }
         );
 
         if (!assets.length) return this.$store.getters['wallet/list']();

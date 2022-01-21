@@ -48,6 +48,26 @@ class SubstrateTxBuilder extends BaseTxBuilder {
         return super.end({ chainNodeClient: this._chainNodeClient });
       });
   }
+  
+
+  getBatchWeight(cmds) {
+    const api = this._chainNodeClient;
+
+    const batchCall = api.registry.createType('Call', {
+      args: {
+        "calls": Array.isArray(cmds)
+          ? [].concat.apply([], cmds.map((cmd) => this.cmdToOps(cmd)))
+          : this.cmdToOps(cmds)
+      },
+      callIndex: api.tx.utility.batchAll.callIndex
+    }, api.tx.utility.batchAll.meta);
+    const batchExtrinsic = api.registry.createType('Extrinsic', batchCall);
+
+    return api.rpc.payment.queryInfo(batchExtrinsic.toHex())
+      .then((queryInfo) => {
+        return queryInfo.weight.toString();
+      });
+  }
 
 }
 

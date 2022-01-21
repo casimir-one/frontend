@@ -1,5 +1,20 @@
 const CHAIN_TYPES = {
-  "PortalId": "DaoId",
+  "PortalUpdate": {
+    "delegate": "Option<PortalDelegate>",
+    "metadata": "Option<PortalMetadata>"
+  },
+  "Portal": {
+    "id": "PortalId",
+    "owner": "PortalOwner",
+    "delegate": "PortalDelegate",
+    "metadata": "PortalMetadata"
+  },
+  "PortalMetadata": "Option<H256>",
+  "PortalDelegate": "AccountId",
+  "PortalOwner": "AccountId",
+  "PortalId": "TenantId",
+  "UncheckedExtrinsic": "Extrinsic",
+  "TenantId": "DaoId",
   "InputProposalBatch": "Vec<InputProposalBatchItem>",
   "InputProposalBatchItem": {
     "account": "DeipAccountId",
@@ -65,12 +80,12 @@ const CHAIN_TYPES = {
     "author": "AccountId"
   },
   "ProposalState": {
-    "_enum": [
-      "Pending",
-      "Rejected",
-      "Done",
-      "Failed(DispatchError)"
-    ]
+    "_enum": {
+      "Pending": {},
+      "Rejected": {},
+      "Done": {},
+      "Failed": { "0": "DispatchError" }
+    }
   },
   "ProposalMemberDecision": {
     "_enum": [
@@ -364,6 +379,15 @@ const CHAIN_TYPES = {
         "0": "GeneralContract"
       }
     }
+  },
+  "VestingPlan": {
+    "start_time": "u64",
+    "cliff_duration": "u64",
+    "total_duration": "u64",
+    "interval": "u64",
+    "initial_amount": "Balance",
+    "total_amount": "Balance",
+    "vesting_during_cliff": "bool"
   }
 };
 
