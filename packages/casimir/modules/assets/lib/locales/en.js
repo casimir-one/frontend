@@ -4,7 +4,7 @@ export default {
       input: {
         amount: 'Amount'
       },
-      createTokenForm: {
+      createNFTForm: {
         submit: 'Submit',
         cancel: 'Cancel',
         title: '{entity} token details',

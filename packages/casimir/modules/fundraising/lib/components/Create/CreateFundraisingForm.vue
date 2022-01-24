@@ -5,7 +5,7 @@
         <fundraising-title-input v-model="formData.title" />
 
         <fundraising-tokens-input
-          v-if="!autoCreateSecurityToken"
+          v-if="!autoCreateNonFungibleToken"
           v-model="formData.tokens"
           :issued-tokens="issuedTokens"
           :available-tokens="availableTokens"
@@ -94,7 +94,7 @@
         type: Object,
         required: true
       },
-      autoCreateSecurityToken: {
+      autoCreateNonFungibleToken: {
         type: Boolean,
         default: false
       },
@@ -188,7 +188,7 @@
         return new Date(val).getTime();
       },
 
-      createSecurityToken() {
+      createNonFungibleToken() {
         const DEFAULT_PRECISION = 0;
         const DEFAULT_AMOUNT = '10000';
         const symbol = this.generateAssetSymbol();
@@ -271,8 +271,8 @@
       submit() {
         this.loading = true;
 
-        if (this.autoCreateSecurityToken) {
-          this.createSecurityToken()
+        if (this.autoCreateNonFungibleToken) {
+          this.createNonFungibleToken()
             .then((symbol) => {
               const { _id, currentSupply, precision } = this.$store.getters['assets/one'](symbol);
               const shares = [{

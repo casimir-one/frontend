@@ -6,7 +6,7 @@ export default {
         start: 'Start',
         titleBlock: 'Enter title of fundraise',
         title: 'Title',
-        determineNumberOfTokens: 'Determine the number of security token units',
+        determineNumberOfTokens: 'Determine the number of non-fungible token units',
         units: 'Units',
         selectDates: 'Select start and end dates of fundraise',
         startDate: 'Start date',
