@@ -36,7 +36,8 @@
   import { cloneDeep } from '@deip/toolbox/lodash';
   import { VeStack } from '@deip/vue-elements';
 
-  // import { changeable, dataReadyMixin } from '@deip/platform-fns';
+  // import { changeable, dataReadyMixin } from
+  // '@deip/attributes-module';
 
   import { hasValue } from '@deip/toolbox';
 

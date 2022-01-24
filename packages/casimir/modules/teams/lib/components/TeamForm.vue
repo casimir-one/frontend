@@ -54,8 +54,7 @@
 </template>
 
 <script>
-  import { AttributeSet } from '@deip/attributes-module'; // check
-  import { attributeMethodsFactory } from '@deip/platform-fns';
+  import { AttributeSet, attributeMethodsFactory } from '@deip/attributes-module'; // check
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VIEW_MODE } from '@deip/constants';
   import { VeRawDisplay, VeStack } from '@deip/vue-elements';

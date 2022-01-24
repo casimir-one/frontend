@@ -22,7 +22,6 @@
   "dependencies": {
     "@deip/constants": "1.366.0",
     "@deip/notification-service": "1.366.0",
-    "@deip/platform-fns": "1.366.0",
     "@deip/platform-store": "1.366.0",
     "@deip/proxydi": "1.366.0"
   },

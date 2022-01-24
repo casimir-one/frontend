@@ -8,7 +8,7 @@
 
 <script>
   import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@deip/platform-fns';
+  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
   import { SYSTEM_ROLE } from '@deip/constants';
 
   export default {

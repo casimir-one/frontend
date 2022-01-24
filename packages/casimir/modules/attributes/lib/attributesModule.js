@@ -1,5 +1,5 @@
-import { getAttributeFileSrc } from '@deip/platform-fns';
 import { attributesStore, attributesRegistry } from './store';
+import { getAttributeFileSrc } from './composables/attributes';
 
 // eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
