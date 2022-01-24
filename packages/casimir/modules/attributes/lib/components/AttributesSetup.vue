@@ -135,7 +135,6 @@
   import { formMixin } from '@deip/platform-components';
   import { VeStack } from '@deip/vue-elements';
   import draggable from 'vuedraggable';
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS } from '@deip/constants';
 
   const defaultKeys = [
     'userAvatar',
@@ -179,11 +178,15 @@
 
     computed: {
 
+      registryScopes() {
+        return this.$store.getters['attributesRegistry/scopesList']();
+      },
+
       attributes() {
-        return ATTR_SCOPES.values()
+        return this.registryScopes
           .map((scope) => ({
-            title: ATTR_SCOPES_LABELS[scope],
-            attrs: this.$store.getters['attributes/list']({ scope })
+            title: scope.label,
+            attrs: this.$store.getters['attributes/list']({ scope: scope.type })
           }));
       }
     },

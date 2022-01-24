@@ -25,15 +25,15 @@ const GETTERS = {
 const ACTIONS = {
   getList({ commit }) {
     return assetsService.lookupAssets('', 10000)
-      .then((data) => {
-        commit('setList', data);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getBySymbol({ commit }, symbol) {
     return assetsService.getAssetBySymbol(symbol)
-      .then((asset) => {
-        commit('setOne', asset);
+      .then((res) => {
+        commit('setOne', res.data);
       });
   },
 

@@ -28,9 +28,9 @@ const ACTIONS = {
     }
 
     return assetsService.getAccountAssetsBalancesByOwner(rootGetters['auth/username'])
-      .then((balances) => {
+      .then((res) => {
         commit('setList',
-          balances.filter((balance) => balance.type !== ASSET_TYPE.NFT));
+          res.data.items.filter((balance) => balance.type !== ASSET_TYPE.NFT));
       });
   },
 
@@ -49,7 +49,7 @@ const ACTIONS = {
     } = payload;
     return assetsService.getAccountDepositHistory(account, status)
       .then((res) => {
-        commit('setHistory', res);
+        commit('setHistory', res.data.items);
       });
   }
 };

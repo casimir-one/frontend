@@ -67,7 +67,7 @@ export const VlsBuilderContainer = {
         deep: true
       });
 
-      this.$watch('containerBlocks', {
+      this.$watch('blocks', {
         handler(newVal) {
           if (newVal && !isEqual(newVal, this.containerBlocks)) {
             mutations.setContainerBlocks(this.containerId, newVal);

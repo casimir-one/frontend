@@ -40,7 +40,7 @@
           <v-select
             v-model="formData.scope"
             label="Schema scope"
-            :items="scopesList"
+            :items="scopesSelector"
             hide-details="auto"
             :disabled="isEditMode"
           />
@@ -60,7 +60,6 @@
 </template>
 
 <script>
-  import { mapListFromEnum } from '@deip/toolbox';
   import { defineComponent } from '@deip/platform-util';
   import { formFactory } from '@deip/platform-components';
 
@@ -68,7 +67,7 @@
     VlsBuilder
   } from '@deip/vue-layout-schema';
 
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS, VIEW_MODE } from '@deip/constants';
+  import { VIEW_MODE } from '@deip/constants';
   import { AttributeSet, AttributeRead } from '@deip/attributes-module';
 
   import {
@@ -88,7 +87,7 @@
         'input',
         () => ({
           name: '',
-          scope: ATTR_SCOPES.PROJECT,
+          scope: 'project',
           schema: [],
           isForm: false
         })
@@ -97,21 +96,33 @@
 
     data() {
       return {
-        scopesList: mapListFromEnum(ATTR_SCOPES, ATTR_SCOPES_LABELS),
-
         activeSide: 'add',
         activeNode: null
       };
     },
 
     computed: {
+      registryAttrList() {
+        return this.$store.getters['attributesRegistry/attrList']();
+      },
+
+      registryScopesList() {
+        return this.$store.getters['attributesRegistry/scopesList']();
+      },
+
+      scopesSelector() {
+        return this.registryScopesList
+          .map((scope) => ({ text: scope.label, value: scope.type }));
+      },
+
       blocks() {
         return [
           ...this.$store.getters['layoutsRegistry/blocks'],
-          attributesBlocksFactory(
-            this.$store.getters['attributes/list']({ scope: this.formData.scope }),
-            this.formData.isForm ? AttributeSet : AttributeRead
-          )
+          attributesBlocksFactory({
+            attributes: this.$store.getters['attributes/list']({ scope: this.formData.scope }),
+            component: this.formData.isForm ? AttributeSet : AttributeRead,
+            registry: this.registryAttrList || []
+          })
         ];
       }
     },

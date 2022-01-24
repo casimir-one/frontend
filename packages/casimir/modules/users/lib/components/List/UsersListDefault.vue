@@ -15,5 +15,5 @@
         default: false
       }
     }
-  }
+  };
 </script>

@@ -53,27 +53,27 @@ const ACTIONS = {
 
   getListByProjectId({ commit }, projectId) {
     return investmentsService.getProjectTokenSalesByProject(projectId)
-      .then((tokenSales) => {
-        commit('setList', tokenSales);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getTokenSaleContributions({ commit, getters }, investmentOpportunityId) {
     return investmentsService.getInvestmentsHistoryByTokenSale(investmentOpportunityId)
-      .then((contributions) => {
+      .then((res) => {
         const tokenSale = getters.one(investmentOpportunityId);
         commit('setOne', {
           ...tokenSale,
-          contributions
+          contributions: res.data.items
         });
       });
   },
 
   getCurrentTokenSaleByProject({ commit }, projectId) {
     return investmentsService.getCurrentTokenSaleByProject(projectId)
-      .then((tokenSale) => {
-        commit('setOne', tokenSale);
-        return tokenSale;
+      .then((res) => {
+        commit('setOne', res.data);
+        return res.data;
       });
   },
 
@@ -100,7 +100,7 @@ const ACTIONS = {
   getContributionsHistory({ commit }, userId) {
     return investmentsService.getAccountInvestmentsHistory(userId)
       .then((res) => {
-        const investmentOpportunities = res.map((item) => item.investmentOpportunity);
+        const investmentOpportunities = res.data.items.map((item) => item.investmentOpportunity);
         commit('setList', investmentOpportunities);
         return res;
       });

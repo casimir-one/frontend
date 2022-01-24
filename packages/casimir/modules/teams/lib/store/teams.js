@@ -28,7 +28,7 @@ const ACTIONS = {
   getAllTeams({ commit }) {
     return teamService.getTeamsListing()
       .then((res) => {
-        commit('setList', res);
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -39,7 +39,7 @@ const ACTIONS = {
   getTeamsByIds({ commit }, ids) {
     return teamService.getTeams(ids)
       .then((res) => {
-        commit('setList', res);
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -49,7 +49,7 @@ const ACTIONS = {
   getTeamsByUser({ commit }, userId) {
     return teamService.getTeamsByUser(userId)
       .then((res) => {
-        commit('setList', res);
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -60,7 +60,7 @@ const ACTIONS = {
     return teamService
       .getTeam(payload)
       .then((res) => {
-        commit('setOne', res);
+        commit('setOne', res.data);
       })
       .catch((err) => {
         console.error(err);

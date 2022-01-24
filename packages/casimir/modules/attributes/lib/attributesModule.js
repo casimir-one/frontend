@@ -1,8 +1,5 @@
 import { getAttributeFileSrc } from '@deip/platform-fns';
-import {
-  ATTR_SCOPES, ATTR_SCOPES_LABELS, ATTR_TYPES, ATTR_TYPES_LABELS
-} from '@deip/constants';
-import { attributesStore } from './store';
+import { attributesStore, attributesRegistry } from './store';
 
 // eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
@@ -12,6 +9,8 @@ const install = (Vue, options = {}) => {
   const { store } = options;
 
   if (store) {
+    store.registerModule('attributesRegistry', attributesRegistry);
+
     store.registerModule('attributes', attributesStore);
     store.dispatch('attributes/getList');
     store.dispatch('attributes/getSettings');
@@ -38,13 +37,7 @@ const install = (Vue, options = {}) => {
           getFileSrc: (opts = {}) => getAttributeFileSrc({
             serverUrl: this.$env.DEIP_SERVER_URL,
             ...opts
-          }),
-
-          SCOPES: ATTR_SCOPES,
-          SCOPES_LABELS: ATTR_SCOPES_LABELS,
-
-          TYPES: ATTR_TYPES,
-          TYPES_LABELS: ATTR_TYPES_LABELS
+          })
         };
       }
     });

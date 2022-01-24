@@ -23,8 +23,8 @@ const ACTIONS = {
     }
 
     return bookmarkService.getProjectBookmarks(rootGetters['auth/username'])
-      .then((bookmarks) => {
-        commit('setList', bookmarks);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 

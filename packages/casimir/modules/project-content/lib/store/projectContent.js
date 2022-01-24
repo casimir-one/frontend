@@ -20,18 +20,18 @@ const GETTERS = {
 
 const ACTIONS = {
   async getList({ commit }) {
-    const contentList = await projectContentService.getPublicProjectContentListing();
-    commit('setList', contentList);
+    const res = await projectContentService.getPublicProjectContentListing();
+    commit('setList', res.data.items);
   },
 
   async getListByProjectId({ commit }, projectId) {
-    const contentList = await projectContentService.getProjectContentsByProject(projectId);
-    commit('setList', contentList);
+    const res = await projectContentService.getProjectContentsByProject(projectId);
+    commit('setList', res.data.items);
   },
 
   async getOne({ commit }, contentId) {
-    const content = await projectContentService.getProjectContent(contentId);
-    commit('setOne', content);
+    const res = await projectContentService.getProjectContent(contentId);
+    commit('setOne', res.data);
   }
 };
 

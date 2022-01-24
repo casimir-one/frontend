@@ -50,8 +50,8 @@ export class HttpService {
   logoutUser() {
     this._accessService.clearAccessToken();
 
-    const router = proxydi.get('routerInstance');
-    const store = proxydi.get('storeInstance');
+    const router = proxydi.get('router');
+    const store = proxydi.get('store');
     if (router && store) {
       const routeName = store.getters['auth/settings'].signInRedirectRouteName;
       router.push({ name: routeName });
@@ -70,7 +70,8 @@ export class HttpService {
           throw new Error('Response is not provided');
         }
 
-        return response.data.data || response.data;
+        const { data, status } = response;
+        return { status, ...data };
       },
       async (responseError) => {
         if (axios.isCancel(responseError) || !responseError.config) {

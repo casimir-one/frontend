@@ -6,7 +6,7 @@
           <v-select
             v-model.number="filter.scope"
             label="Attributes scope"
-            :items="scopesItems"
+            :items="scopesSelectorList"
             outlined
             hide-details
           />
@@ -37,15 +37,15 @@
           small
           outlined
           readonly
-          :color="scopeColors[item.scope].background"
+          :color="scopesPalette[item.scope].background"
         >
-          {{ ATTR_SCOPES_LABELS[item.scope] }}
+          {{ scopeTypeInfo(item.scope).label }}
         </v-chip>
       </template>
 
       <template #item.type="{ item }">
         <v-chip small outlined readonly>
-          {{ ATTR_TYPES_LABELS[item.type] }}
+          {{ attrTypeInfo(item.type).label }}
         </v-chip>
       </template>
 
@@ -126,22 +126,12 @@
 </template>
 
 <script>
-  // TODO: switch to prototype instance
-  import { ATTR_SCOPES, ATTR_SCOPES_LABELS, ATTR_TYPES_LABELS } from '@deip/constants';
   import { genColorsPalette } from '@deip/toolbox';
 
   import {
     VexTooltip
   } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
-
-  const scopeColors = genColorsPalette({
-    palette: ['#FFC255', '#FF8863', '#FF5484', '#CD3DA9', '#6846C0'],
-    colorsCount: ATTR_SCOPES.values().length
-  }).reduce((acc, color, index) => ({
-    ...acc,
-    ...{ [ATTR_SCOPES.values()[index]]: color }
-  }), {});
 
   export default {
     name: 'AttributesList',
@@ -164,36 +154,44 @@
 
     data() {
       return {
-        ATTR_SCOPES,
-        ATTR_SCOPES_LABELS,
-        ATTR_TYPES_LABELS,
-
         filter: {
           scope: 0,
           search: ''
         },
 
-        scopeColors,
-
-        itemsPerPage: 50,
-
-        scopesItems: [
-          { value: 0, text: 'All' },
-          ...ATTR_SCOPES.values().map((scope) => ({
-            value: scope,
-            text: ATTR_SCOPES_LABELS[scope]
-          }))
-        ]
+        itemsPerPage: 50
       };
     },
 
     computed: {
       attributes() {
-        return this.$store.getters['attributes/list'](
-          this.filter.scope
-            ? { scope: this.filter.scope }
-            : {}
-        );
+        const filter = this.filter.scope ? { scope: this.filter.scope } : {};
+        return this.$store.getters['attributes/list'](filter);
+      },
+
+      registryAttributes() {
+        return this.$store.getters['attributesRegistry/attrList']();
+      },
+
+      registryScopes() {
+        return this.$store.getters['attributesRegistry/scopesList']();
+      },
+
+      scopesSelectorList() {
+        return [
+          { value: 0, text: 'All' },
+          ...this.registryScopes.map((s) => ({ text: s.label, value: s.type }))
+        ];
+      },
+
+      scopesPalette() {
+        return genColorsPalette({
+          palette: ['#FFC255', '#FF8863', '#FF5484', '#CD3DA9', '#6846C0'],
+          colorsCount: this.registryScopes.length
+        }).reduce((acc, color, index) => ({
+          ...acc,
+          ...{ [this.registryScopes[index].type]: color }
+        }), {});
       },
 
       headers() {
@@ -237,6 +235,16 @@
 
     created() {
       this.$store.dispatch('attributes/getList');
+    },
+
+    methods: {
+      attrTypeInfo(attrType) {
+        return this.$store.getters['attributesRegistry/attrOne'](attrType) || { type: attrType, label: attrType };
+      },
+
+      scopeTypeInfo(scopeType) {
+        return this.$store.getters['attributesRegistry/scopesOne'](scopeType) || { type: scopeType, label: scopeType };
+      }
     }
 
   };

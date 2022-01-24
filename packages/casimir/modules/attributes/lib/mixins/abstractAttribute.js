@@ -5,17 +5,16 @@ import {
   wrapInArray
 } from '@deip/toolbox';
 import { isEqual, cloneDeep } from '@deip/toolbox/lodash';
-import { ATTR_TYPES_LABELS } from '@deip/constants';
 import { ValidationProvider } from '@deip/validation-plugin';
 import { VeStack } from '@deip/vue-elements';
 
 /**
  * @param {string} fnName
- * @param {number} attrType
+ * @param {string} label
  * @return {string}
  */
-const slotPlaceholder = (fnName, attrType) => `
-Need specify ${fnName} method for ${ATTR_TYPES_LABELS[attrType]} attribute
+const slotPlaceholder = (fnName, label) => `
+Need specify ${fnName} method for ${label} attribute
 `;
 
 export const AttributeMixin = {
@@ -54,6 +53,12 @@ export const AttributeMixin = {
      */
     attributeInfo() {
       return this.$store.getters['attributes/one'](this.attributeId);
+    },
+    /**
+     * @return {Object}
+     */
+    attributeTypeInfo() {
+      return this.$store.getters['attributesRegistry/attrOne'](this.attributeInfo.type);
     },
 
     /**
@@ -315,7 +320,7 @@ export const AttributeSetMixin = {
     genAttribute() {
       return (
         <div>
-          {slotPlaceholder('genMultipleItems', this.attributeInfo.type)}
+          {slotPlaceholder('genMultipleItems', this.attributeTypeInfo.label)}
         </div>
       );
     },
@@ -358,7 +363,7 @@ export const AttributeReadMixin = {
     genAttribute() {
       return (
         <div>
-          {slotPlaceholder('genSlot', this.attributeInfo.type)}
+          {slotPlaceholder('genSlot', this.attributeTypeInfo.label)}
         </div>
       );
     }
