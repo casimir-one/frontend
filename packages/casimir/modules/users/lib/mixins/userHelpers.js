@@ -1,5 +1,4 @@
 import { isEmpty } from '@deip/toolbox/lodash';
-import { ATTR_SCOPES } from '@deip/constants';
 
 export const userHelpersMixin = {
   methods: {
@@ -39,7 +38,7 @@ export const userHelpersMixin = {
       if (!avatar) return null;
 
       return this.$attributes.getFileSrc({
-        scope: ATTR_SCOPES.USER,
+        scope: 'user',
         scopeId: user._id,
         attributeId: avatar.attributeId,
         filename: avatar.value,

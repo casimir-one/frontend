@@ -1,5 +1,4 @@
 import { defineComponent } from '@deip/platform-util';
-import { ATTR_TYPES } from '@deip/constants';
 
 import { AttributeRootComponentMixinFactory } from '../mixins';
 import { AttributeTextRead } from './AttributeText';
@@ -19,21 +18,21 @@ import { AttributeVideoUrlRead } from './AttributeVideoUrl';
 import { AttributeRichtextRead } from './AttributeRichtext';
 
 const componentsMap = {
-  [ATTR_TYPES.TEXT]: AttributeTextRead,
-  [ATTR_TYPES.TEXTAREA]: AttributeTextareaRead,
-  [ATTR_TYPES.SELECT]: AttributeSelectRead,
-  [ATTR_TYPES.SWITCH]: AttributeSwitchRead,
-  [ATTR_TYPES.CHECKBOX]: AttributeCheckboxRead,
-  [ATTR_TYPES.DATE]: AttributeDateRead,
-  [ATTR_TYPES.DATE_TIME]: AttributeDateTimeRead,
-  [ATTR_TYPES.FILE]: AttributeFileRead,
-  [ATTR_TYPES.IMAGE]: AttributeImageRead,
-  [ATTR_TYPES.AVATAR]: AttributeAvatarRead,
-  [ATTR_TYPES.URL]: AttributeUrlRead,
-  [ATTR_TYPES.NUMBER]: AttributeNumberRead,
-  [ATTR_TYPES.VIDEO_URL]: AttributeVideoUrlRead,
-  [ATTR_TYPES.CUSTOM]: AttributeCustomRead,
-  [ATTR_TYPES.RICHTEXT]: AttributeRichtextRead
+  text: AttributeTextRead,
+  textarea: AttributeTextareaRead,
+  richText: AttributeRichtextRead,
+  select: AttributeSelectRead,
+  switch: AttributeSwitchRead,
+  checkbox: AttributeCheckboxRead,
+  date: AttributeDateRead,
+  dateTime: AttributeDateTimeRead,
+  file: AttributeFileRead,
+  image: AttributeImageRead,
+  avatar: AttributeAvatarRead,
+  url: AttributeUrlRead,
+  number: AttributeNumberRead,
+  videoUrl: AttributeVideoUrlRead,
+  custom: AttributeCustomRead
 };
 
 const AttributeRead = defineComponent({

@@ -1,6 +1,5 @@
 import { defineComponent } from '@deip/platform-util';
 import { AdminListPage } from '@deip/platform-components';
-import { ATTR_SCOPES_LABELS } from '@deip/constants';
 import { LayoutsDataProvider } from '../LayoutsDataProvider';
 
 export default defineComponent({
@@ -37,7 +36,7 @@ export default defineComponent({
   methods: {
     genTableSlots() {
       return {
-        'item.scope': ({ item }) => ATTR_SCOPES_LABELS[item.scope],
+        'item.scope': ({ item }) => this.$store.getters['attributesRegistry/scopesOne'](item.scope).label,
         ...AdminListPage.options.methods.genTableSlots.call(this)
       };
     },

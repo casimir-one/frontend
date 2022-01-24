@@ -11,23 +11,20 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  get({ commit, dispatch, rootGetters }) {
+  async get({ commit, dispatch, rootGetters }) {
     if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
 
-    const userId = rootGetters['auth/username'];
+    try {
+      const res = await userService.getUser(rootGetters['auth/username']);
+      commit('setData', res.data);
+    } catch (err) {
+      console.error('No currentUser data', err);
+      dispatch('auth/signOut', null, { root: true });
+    }
 
-    return userService.getUser(userId)
-      .then((res) => {
-        if (res) {
-          commit('setData', res);
-        }
-      })
-      .catch(() => {
-        console.error('No currentUser data');
-        dispatch('auth/signOut', null, { root: true });
-      });
+    return Promise.resolve(true);
   },
 
   clear({ commit }) {

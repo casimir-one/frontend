@@ -23,14 +23,14 @@ const ACTIONS = {
   getListByAccount({ commit }, account) {
     return documentTemplateService.getDocumentTemplatesByAccount(account)
       .then((res) => {
-        commit('setList', res);
+        commit('setList', res.data.items);
       });
   },
 
   getOne({ commit }, id) {
     return documentTemplateService.getDocumentTemplate(id)
       .then((res) => {
-        commit('setOne', res);
+        commit('setOne', res.data);
       });
   },
 

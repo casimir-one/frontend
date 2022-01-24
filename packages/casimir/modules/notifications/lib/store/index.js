@@ -23,8 +23,8 @@ const ACTIONS = {
     }
 
     return notificationService.getNotificationsByUser(rootGetters['auth/username'])
-      .then((notifications) => {
-        commit('setList', notifications);
+      .then((res) => {
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);

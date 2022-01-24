@@ -20,7 +20,6 @@ import { VexExpand } from '@deip/vuetify-extended';
 
 import draggable from 'vuedraggable';
 
-import { ATTR_TYPES } from '@deip/constants';
 import { convertBlockForSchema } from '../../utils/helpers';
 
 import { BuilderMixin } from '../../mixins';
@@ -142,7 +141,7 @@ export const VlsBuilderBlocks = {
           action: () => { this.$clipboard(`{{('${attributeId}')::attributeHasValue}}`); }
         },
 
-        ...(dataType === ATTR_TYPES.IMAGE
+        ...(dataType === 'image'
           ? [{
             icon: 'mdi-image-multiple-outline',
             label: 'Copy image url',

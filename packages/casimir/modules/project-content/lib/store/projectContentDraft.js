@@ -21,13 +21,13 @@ const GETTERS = {
 
 const ACTIONS = {
   async getListByProjectId({ commit }, projectId) {
-    const list = await projectContentService.getDraftsByProject(projectId);
-    commit('setList', list);
+    const res = await projectContentService.getDraftsByProject(projectId);
+    commit('setList', res.data.items);
   },
 
   async getOne({ commit }, id) {
-    const draft = await projectContentService.getDraft(id);
-    commit('setOne', draft);
+    const res = await projectContentService.getDraft(id);
+    commit('setOne', res.data);
   },
 
   async create(_, payload) {

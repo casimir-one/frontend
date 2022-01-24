@@ -1,5 +1,4 @@
 import { defineComponent } from '@deip/platform-util';
-import { ATTR_TYPES } from '@deip/constants';
 import { AttributeModelMixin, AttributeRootComponentMixinFactory } from '../mixins';
 
 import { AttributeTextSet } from './AttributeText';
@@ -20,22 +19,22 @@ import { AttributeVideoUrlSet } from './AttributeVideoUrl';
 import { AttributeCustomSet } from './AttributeCustom';
 
 const componentsMap = {
-  [ATTR_TYPES.TEXT]: AttributeTextSet,
-  [ATTR_TYPES.TEXTAREA]: AttributeTextareaSet,
-  [ATTR_TYPES.SELECT]: AttributeSelectSet,
-  [ATTR_TYPES.SWITCH]: AttributeSwitchSet,
-  [ATTR_TYPES.CHECKBOX]: AttributeCheckboxSet,
-  [ATTR_TYPES.DATE]: AttributeDateSet,
-  [ATTR_TYPES.DATE_TIME]: AttributeDateTimeSet,
-  [ATTR_TYPES.FILE]: AttributeFileSet,
-  [ATTR_TYPES.IMAGE]: AttributeImageSet,
-  [ATTR_TYPES.AVATAR]: AttributeAvatarSet,
-  [ATTR_TYPES.RICHTEXT]: AttributeRichtextSet,
-  [ATTR_TYPES.LOCATION]: AttributeLocationSet,
-  [ATTR_TYPES.URL]: AttributeUrlSet,
-  [ATTR_TYPES.NUMBER]: AttributeNumberSet,
-  [ATTR_TYPES.VIDEO_URL]: AttributeVideoUrlSet,
-  [ATTR_TYPES.CUSTOM]: AttributeCustomSet
+  text: AttributeTextSet,
+  textarea: AttributeTextareaSet,
+  richText: AttributeRichtextSet,
+  select: AttributeSelectSet,
+  switch: AttributeSwitchSet,
+  checkbox: AttributeCheckboxSet,
+  date: AttributeDateSet,
+  dateTime: AttributeDateTimeSet,
+  file: AttributeFileSet,
+  image: AttributeImageSet,
+  avatar: AttributeAvatarSet,
+  location: AttributeLocationSet,
+  url: AttributeUrlSet,
+  number: AttributeNumberSet,
+  videoUrl: AttributeVideoUrlSet,
+  custom: AttributeCustomSet
 };
 
 const AttributeSet = defineComponent({

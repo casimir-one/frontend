@@ -9,7 +9,7 @@
 <script>
   import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
   import { attributeMethodsFactory, expandAttributes } from '@deip/platform-fns';
-  import { SYSTEM_ROLE, ATTR_SCOPES } from '@deip/constants';
+  import { SYSTEM_ROLE } from '@deip/constants';
 
   export default {
     name: 'TeamDetails',
@@ -32,7 +32,7 @@
           ...attributeMethodsFactory(
             expandAttributes(this.team),
             {
-              scopeName: ATTR_SCOPES.TEAM,
+              scopeName: 'team',
               scopeId: this.team._id
             }
           ),

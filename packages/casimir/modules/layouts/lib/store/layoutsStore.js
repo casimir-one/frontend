@@ -27,14 +27,14 @@ const ACTIONS = {
         if (force) {
           commit('clearList');
         }
-        commit('setList', res);
+        commit('setList', res.data.items);
       });
   },
 
   getOne({ commit }, _id) {
     return layoutService.getOne(_id)
       .then((res) => {
-        commit('setOne', res);
+        commit('setOne', res.data);
       });
   },
 
@@ -64,9 +64,9 @@ const ACTIONS = {
   },
 
   getSettings({ commit }) {
-    return layoutService.getSettings(window.env.TENANT)
+    return layoutService.getSettings(this._vm.$env.TENANT)
       .then((res) => {
-        commit('setSettings', res);
+        commit('setSettings', res.data);
       });
   },
 

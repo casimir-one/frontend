@@ -51,14 +51,14 @@ const ACTIONS = {
   getOne({ commit }, id) {
     return contractAgreementService.getContractAgreement(id)
       .then((res) => {
-        commit('setOne', res);
+        commit('setOne', res.data);
       });
   },
 
   getList({ commit }, query) {
     return contractAgreementService.getContractAgreements(query)
       .then((res) => {
-        commit('setList', res);
+        commit('setList', res.data.items);
       });
   },
 

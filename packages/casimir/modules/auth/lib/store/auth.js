@@ -1,4 +1,3 @@
-import { proxydi } from '@deip/proxydi';
 import { AuthService } from '@deip/auth-service';
 import { UserService } from '@deip/user-service';
 import { AccessService } from '@deip/access-service';
@@ -32,67 +31,57 @@ const ACTIONS = {
     }
   },
 
-  signIn({ commit, dispatch }, { username: usernameOrEmail, password: passwordOrPrivKey }) {
-    const env = proxydi.get('env');
-    let privateKey; let publicKey;
+  async signIn({ commit, dispatch }, { username: usernameOrEmail, password: passwordOrPrivKey }) {
+    const exists = await userService.checkIfUserExists(usernameOrEmail);
 
-    return userService.checkIfUserExists(usernameOrEmail)
-      .then((exists) => {
-        if (!exists) {
-          throw new Error('Wrong email or password. Please try again.');
-        }
-        return userService.getUser(usernameOrEmail);
-      })
-      // TODO: There is no way to define programmatically what user provides exactly -
-      // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
-      .then(({ username }) => authService.generateSeedAccount(username, passwordOrPrivKey))
-      .then((seedAccount) => {
-        privateKey = seedAccount.getPrivKey();
-        publicKey = seedAccount.getPubKey();
-        return authService.signIn({
-          username: seedAccount.getUsername(),
-          secretSigHex: seedAccount.signString(env.SIG_SEED)
-        });
-      })
-      .then((response) => {
-        if (!response.success) {
-          dispatch('clear');
-          throw new Error(response.error);
-        }
+    if (!exists) {
+      throw new Error('Wrong email or password. Please try again.');
+    }
 
-        commit('setData', {
-          jwtToken: response.jwtToken,
-          privateKey,
-          publicKey
-        });
-      });
+    const { data: seedUser } = await userService.getUser(usernameOrEmail);
+    const seedAccount = await authService.generateSeedAccount(seedUser.username, passwordOrPrivKey);
+
+    const { data: signIn } = await authService.signIn({
+      username: seedAccount.getUsername(),
+      secretSigHex: seedAccount.signString(this._vm.$env.SIG_SEED)
+    });
+
+    if (!signIn.success) {
+      dispatch('clear');
+      throw new Error(signIn.error);
+    }
+
+    commit('setData', {
+      jwtToken: signIn.jwtToken,
+      privateKey: seedAccount.getPrivKey(),
+      publicKey: seedAccount.getPubKey()
+    });
   },
 
-  signUp(_, payload) {
+  async signUp(_, payload) {
     const { email, password: passwordOrPrivKey } = payload;
 
-    return userService.checkIfUserExists(email)
-      .then((exists) => {
-        if (exists) {
-          throw new Error('User with such email exists');
-        }
-      })
-      .then(() => {
-        const username = genRipemd160Hash(email);
-        // TODO: There is no way to define programmatically what user provides exactly -
-        // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
-        return authService.generateSeedAccount(username, passwordOrPrivKey);
-      })
-      .then((seedAccount) => authService.signUp({
-        privKey: seedAccount.getPrivKey(),
-        isAuthorizedCreatorRequired: seedAccount.isAuthorizedCreatorRequired()
-      }, {
-        email: payload.email,
-        username: seedAccount.getUsername(),
-        pubKey: seedAccount.getPubKey(),
-        attributes: payload.attributes,
-        ...{ roles: wrapInArray(payload.roles) }
-      }));
+    const exists = await userService.checkIfUserExists(email);
+
+    if (!exists) {
+      throw new Error('Wrong email or password. Please try again.');
+    }
+
+    const username = genRipemd160Hash(email);
+    const seedAccount = await authService.generateSeedAccount(username, passwordOrPrivKey);
+
+    const { data: signUp } = await authService.signUp({
+      privKey: seedAccount.getPrivKey(),
+      isAuthorizedCreatorRequired: seedAccount.isAuthorizedCreatorRequired()
+    }, {
+      email: payload.email,
+      username: seedAccount.getUsername(),
+      pubKey: seedAccount.getPubKey(),
+      attributes: payload.attributes,
+      ...{ roles: wrapInArray(payload.roles) }
+    });
+
+    return signUp;
   },
 
   signOut({ dispatch }) {

@@ -43,7 +43,6 @@
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VeStack } from '@deip/vue-elements';
-  import { ATTR_SCOPES } from '@deip/constants';
 
   export default {
     name: 'UserForm',
@@ -69,7 +68,7 @@
           ...attributeMethodsFactory(
             this.formData,
             {
-              scopeName: ATTR_SCOPES.USER,
+              scopeName: 'user',
               scopeId: this.formData._id
             }
           )

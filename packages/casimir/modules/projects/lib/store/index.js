@@ -59,8 +59,8 @@ const ACTIONS = {
 
   getPublicProjects({ commit }, { filter = {} }) {
     return projectService.getPublicProjectListing(filter)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
@@ -68,36 +68,36 @@ const ACTIONS = {
 
   getUserProjects({ commit }, { username }) {
     return projectService.getUserProjectListing(username)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getUserPublicProjects({ commit }, { username }) {
     return projectService.getUserPublicProjects(username)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getUserTeamsProjects({ commit }, { username }) {
     return projectService.getUserTeamsProjects(username)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getUserPersonalProjects({ commit }, { username }) {
     return projectService.getUserPersonalProjects(username)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getProjectsByIds({ commit }, projectIds) {
     return projectService.getProjects(projectIds)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
@@ -105,8 +105,8 @@ const ACTIONS = {
 
   getTeamProjects({ commit }, { teamId }) {
     return projectService.getTeamProjectListing(teamId)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
@@ -114,8 +114,8 @@ const ACTIONS = {
 
   getPortalProjects({ commit }, { portalId }) {
     return projectService.getPortalProjectListing(portalId)
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
@@ -123,8 +123,8 @@ const ACTIONS = {
 
   getProjectDetails({ commit }, projectId) {
     return projectService.getProject(projectId)
-      .then((result) => {
-        commit('setOne', result);
+      .then((res) => {
+        commit('setOne', res.data);
       });
   },
 

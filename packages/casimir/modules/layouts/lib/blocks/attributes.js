@@ -1,10 +1,17 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
-import { ATTR_TYPES_ICONS, ATTR_TYPES_PROPS } from '@deip/constants';
 
-export const attributesBlocksFactory = (attributes, component) => {
+export const attributesBlocksFactory = (opts = {}) => {
+  const {
+    attributes,
+    component,
+    registry
+  } = opts;
+
   const acc = attributes.map((attr) => {
-    const icon = ATTR_TYPES_ICONS[attr.type];
-    const proxyProps = ATTR_TYPES_PROPS[attr.type];
+    const {
+      icon = 'mdi-cancel',
+      proxyProps
+    } = registry.find((a) => a.type === attr.type) || {};
 
     return {
       component,

@@ -57,7 +57,7 @@
   import { AttributeSet } from '@deip/attributes-module'; // check
   import { attributeMethodsFactory } from '@deip/platform-fns';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { VIEW_MODE, ATTR_SCOPES } from '@deip/constants';
+  import { VIEW_MODE } from '@deip/constants';
   import { VeRawDisplay, VeStack } from '@deip/vue-elements';
 
   export default {
@@ -108,7 +108,7 @@
           ...attributeMethodsFactory(
             this.formData,
             {
-              scopeName: ATTR_SCOPES.TEAM,
+              scopeName: 'team',
               scopeId: this.formData._id
             }
           )

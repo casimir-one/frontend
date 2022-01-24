@@ -21,15 +21,15 @@ const GETTERS = {
 const ACTIONS = {
   getList({ commit }) {
     return portalService.getNetworkPortals()
-      .then((result) => {
-        commit('setList', result);
+      .then((res) => {
+        commit('setList', res.data.items);
       });
   },
 
   getOne({ commit }, portalId) {
     return portalService.getNetworkPortal(portalId)
-      .then((result) => {
-        commit('setOne', result);
+      .then((res) => {
+        commit('setOne', res.data);
       });
   }
 };

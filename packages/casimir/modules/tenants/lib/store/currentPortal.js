@@ -14,29 +14,29 @@ const GETTERS = {
 const ACTIONS = {
   get({ commit }) {
     return portalService.getPortal(proxydi.get('env').TENANT)
-      .then((result) => {
-        commit('setData', result);
+      .then((res) => {
+        commit('setData', res.data);
       });
   },
 
   updateProfile({ commit }, payload) {
     return portalService.updatePortalProfile(payload)
-      .then((result) => {
-        commit('setData', result);
+      .then((res) => {
+        commit('setData', res.data);
       });
   },
 
   updateNetworkSettings({ commit }, payload) {
     return portalService.updateNetworkSettings(payload)
-      .then((result) => {
-        commit('setData', result);
+      .then((res) => {
+        commit('setData', res.data);
       });
   },
 
   updateSettings({ commit }, payload) {
     return portalService.updatePortalSettings(payload)
-      .then((result) => {
-        commit('setData', result);
+      .then((res) => {
+        commit('setData', res.data);
       });
   }
 };

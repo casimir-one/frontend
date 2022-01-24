@@ -26,8 +26,6 @@ import { isEqual, cloneDeep } from '@deip/toolbox/lodash';
 import draggable from 'vuedraggable';
 
 import {
-  ATTR_TYPES, ATTR_TYPES_LABELS,
-  ATTR_SCOPES, ATTR_SCOPES_LABELS,
   VIEW_MODE
 } from '@deip/constants';
 
@@ -38,19 +36,9 @@ import {
   genReflectedFormBlocks
 } from '../composables/schemaPartials';
 
-/**
- * Generate items for VSelect
- * @param labels
- * @returns {Array.<{text: string, value: number}>}
- */
-const createSelectItems = (labels) => Object.keys(labels).map((key) => ({
-  value: parseInt(key),
-  text: labels[key]
-}));
-
 const defaultAttributeModel = () => ({
-  type: ATTR_TYPES.TEXT,
-  scope: ATTR_SCOPES.PROJECT,
+  type: 'text',
+  scope: 'project',
 
   title: '',
   shortTitle: '',
@@ -66,9 +54,6 @@ const defaultAttributeModel = () => ({
   isSystem: false,
 
   schemas: {},
-
-  // TODO: check what the prop
-  marker: null,
 
   portalId: null,
   blockchainFieldMeta: null
@@ -115,32 +100,28 @@ const AttributeEdit = {
   },
 
   computed: {
+    registryAttrList() {
+      return this.$store.getters['attributesRegistry/attrList']();
+    },
+    registryScopesList() {
+      return this.$store.getters['attributesRegistry/scopesList']();
+    },
+    attrTypeInfo() {
+      return this.$store.getters['attributesRegistry/attrOne'](this.attributeData.type);
+    },
+
     isEditMode() { return this.mode === VIEW_MODE.EDIT; },
     isCreateMode() { return this.mode === VIEW_MODE.CREATE; },
 
-    canHasOptions() {
-      const { type, isMultiple } = this.attributeData;
-      return type === ATTR_TYPES.SELECT
-        || ([ATTR_TYPES.SWITCH, ATTR_TYPES.CHECKBOX].includes(type) && isMultiple);
+    canHaveOptions() {
+      return this.attrTypeInfo.canHaveOptions
+        || (this.attrTypeInfo.isMultipleOptions && this.attributeData.isMultiple);
     },
-
     canBeMultiple() {
-      return [
-        // with options
-        ATTR_TYPES.SELECT,
-        ATTR_TYPES.SWITCH,
-        ATTR_TYPES.CHECKBOX,
-
-        // without options
-        ATTR_TYPES.URL,
-        ATTR_TYPES.USER,
-
-        ATTR_TYPES.CUSTOM
-      ].includes(this.attributeData.type);
+      return this.attrTypeInfo.canBeMultiple;
     },
-
-    canHasTemplate() {
-      return [ATTR_TYPES.CUSTOM].includes(this.attributeData.type);
+    canHaveTemplate() {
+      return this.attrTypeInfo.canHaveTemplate;
     },
 
     /**
@@ -186,13 +167,18 @@ const AttributeEdit = {
      * @return {JSX.Element}
      */
     genAttributeSetup() {
+      const typesList = this.registryAttrList
+        .map((attr) => ({ text: attr.label, value: attr.type }));
+      const scopesList = this.registryScopesList
+        .map((scope) => ({ text: scope.label, value: scope.type }));
+
       return (
         <VRow>
           <VCol cols={6}>
             <VSelect
               vModel={this.attributeData.type}
               label="Attribute type"
-              items={createSelectItems(ATTR_TYPES_LABELS)}
+              items={typesList}
               disabled={this.isEditMode}
               hide-details
             />
@@ -201,7 +187,7 @@ const AttributeEdit = {
             <VSelect
               vModel={this.attributeData.scope}
               label="Attribute scope"
-              items={createSelectItems(ATTR_SCOPES_LABELS)}
+              items={scopesList}
               disabled={this.isEditMode}
               hide-details
             />
@@ -529,8 +515,8 @@ const AttributeEdit = {
           {this.genAttributeSetup()}
           <VDivider/>
           {this.genAttributeMetaInfoFields()}
-          {this.canHasOptions ? this.genAttributeOptions() : null}
-          {this.canHasTemplate ? this.genAttributeSchemasComposer() : null}
+          {this.canHaveOptions ? this.genAttributeOptions() : null}
+          {this.canHaveTemplate ? this.genAttributeSchemasComposer() : null}
           {this.genAttributeFlags()}
           {
             process.env.NODE_ENV === 'development'

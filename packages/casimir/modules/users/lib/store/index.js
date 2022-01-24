@@ -40,8 +40,8 @@ const ACTIONS = {
 
   getListByNames({ commit }, { users }) {
     return userService.getUsers(users)
-      .then((data) => {
-        commit('setList', data);
+      .then((res) => {
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -50,8 +50,8 @@ const ACTIONS = {
 
   getListByTeam({ commit }, { teamId }) {
     return userService.getUsersByTeam(teamId)
-      .then((data) => {
-        commit('setList', data);
+      .then((res) => {
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -60,8 +60,8 @@ const ACTIONS = {
 
   getListByPortal({ commit }, { portalId }) {
     return userService.getUsersByPortal(portalId)
-      .then((data) => {
-        commit('setList', data);
+      .then((res) => {
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -70,8 +70,8 @@ const ACTIONS = {
 
   getListByStatus({ commit }, { status = 'approved' }) {
     return userService.getUsersListing(status)
-      .then((data) => {
-        commit('setList', data);
+      .then((res) => {
+        commit('setList', res.data.items);
       })
       .catch((err) => {
         console.error(err);
@@ -82,8 +82,8 @@ const ACTIONS = {
 
   getOne({ commit }, id) {
     return userService.getUser(id)
-      .then((user) => {
-        commit('setOne', user);
+      .then((res) => {
+        commit('setOne', res.data);
       })
       .catch((err) => {
         console.error(err);

@@ -1,5 +1,8 @@
 import { createEnum } from '@deip/toolbox';
 
+// const ATTR_MODES = ['read', 'set'] as const;
+// type AttrModes = typeof ATTR_MODES[number];
+
 const VIEW_MODE = createEnum({
   CREATE: 1,
   EDIT: 2,
