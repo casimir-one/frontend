@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix validation for dates ([872dd74](https://gitlab.com/DEIP/deip-client-modules/commit/872dd749e59daabfcff7f62fa5c36d13ac892444))
+
+
+
+
+
 # [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
 
 **Note:** Version bump only for package @deip/validation-plugin

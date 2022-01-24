@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* remove token var from npmrc ([c3c209a](https://github.com/DEIPworld/deip-modules/commit/c3c209a21e166019a920feb28736d5b1557a16f8))
+* **@deip/attributes-module:** add text instead of removed attribute title in Settings ([ab44898](https://github.com/DEIPworld/deip-modules/commit/ab44898cfe132e0f2570a6614459303a28dc6082))
+* **@deip/fundraising-module:** fix responsive for dates and amount fields ([bced848](https://github.com/DEIPworld/deip-modules/commit/bced848007441b5813bd25d7ab3da856cbe2c9f8))
+* **@deip/fundraising-module:** fix validation for dates ([872dd74](https://github.com/DEIPworld/deip-modules/commit/872dd749e59daabfcff7f62fa5c36d13ac892444))
+* **@deip/teams-module:** show debug data only in development mode ([5604dcb](https://github.com/DEIPworld/deip-modules/commit/5604dcb2542eb15048366dddddf2b04da0e444b9))
+* **@deip/vuetify-extended:** remove zoom buttons from cropper ([8aa1c60](https://github.com/DEIPworld/deip-modules/commit/8aa1c60a750f87f645b21bcc9211fe7c5e3c5e2b))
+
+
+### Features
+
+* add lib builder ([82676cc](https://github.com/DEIPworld/deip-modules/commit/82676cc6fa04ae797ae50c4930a1e3c4497061ea))
+
+
+
+
+
 # [1.365.0](https://github.com/DEIPworld/deip-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
 
 

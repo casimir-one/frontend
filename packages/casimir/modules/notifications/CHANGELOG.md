@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
+
+**Note:** Version bump only for package @deip/notifications-module
+
+
+
+
+
 # [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
 
 **Note:** Version bump only for package @deip/notifications-module

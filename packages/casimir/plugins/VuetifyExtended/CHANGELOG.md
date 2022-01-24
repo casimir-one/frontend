@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** remove zoom buttons from cropper ([8aa1c60](https://gitlab.com/DEIP/deip-client-modules/commit/8aa1c60a750f87f645b21bcc9211fe7c5e3c5e2b))
+
+
+
+
+
 # [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
 
 

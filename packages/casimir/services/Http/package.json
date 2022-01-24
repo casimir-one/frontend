@@ -1,6 +1,6 @@
 {
   "name": "@deip/http-service",
-  "version": "1.365.0",
+  "version": "1.366.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,10 +23,10 @@
     "@deip/proxydi": "1.337.0"
   },
   "dependencies": {
-    "@deip/access-service": "1.365.0",
-    "@deip/constants": "1.365.0",
-    "@deip/proxydi": "1.365.0",
-    "@deip/toolbox": "1.365.0",
+    "@deip/access-service": "1.366.0",
+    "@deip/constants": "1.366.0",
+    "@deip/proxydi": "1.366.0",
+    "@deip/toolbox": "1.366.0",
     "axios": "^0.21.1",
     "qs": "^6.10.1"
   },

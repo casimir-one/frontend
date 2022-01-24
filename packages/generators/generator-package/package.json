@@ -1,6 +1,6 @@
 {
   "name": "@casimir/generator-package",
-  "version": "0.0.0",
+  "version": "1.366.0",
   "description": "Generate Casimir monorepository package",
   "homepage": "http://casimir.world",
   "author": {

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** add text instead of removed attribute title in Settings ([ab44898](https://gitlab.com/DEIP/deip-client-modules/commit/ab44898cfe132e0f2570a6614459303a28dc6082))
+
+
+
+
+
 # [1.365.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.348.1...v1.365.0) (2022-01-05)
 
 
