@@ -2,7 +2,7 @@
   <validation-observer
     v-slot="{ invalid, handleSubmit }"
     ref="observer"
-    class="create-security-token-form"
+    class="create-nft-form"
   >
     <v-form
       :disabled="loading"
@@ -10,19 +10,19 @@
     >
       <ve-stack :gap="32">
         <vex-block
-          :title="$t('module.assets.createTokenForm.title', {entity: sentenceCase(projectAlias) })"
+          :title="$t('module.assets.createNFTForm.title', {entity: sentenceCase(projectAlias) })"
           title-margin="16"
         >
           <v-row>
             <v-col cols="8">
               <validation-provider
                 v-slot="{ errors }"
-                :name="$t('module.assets.createTokenForm.numberOfTokens')"
+                :name="$t('module.assets.createNFTForm.numberOfTokens')"
                 rules="required|integer"
               >
                 <v-text-field
                   v-model.number="formModel.maxSupply"
-                  :label="$t('module.assets.createTokenForm.totalNumberOfTokens')"
+                  :label="$t('module.assets.createNFTForm.totalNumberOfTokens')"
                   outlined
                   hide-details="auto"
                   :error-messages="errors"
@@ -33,20 +33,20 @@
             <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
-                :name="$t('module.assets.createTokenForm.ticker')"
+                :name="$t('module.assets.createNFTForm.ticker')"
                 :rules="{
                   required: true,
                   minMax: { min: 5, max: 6 },
                   unique: { list: assetsKeys }
                 }"
                 :custom-messages="{
-                  unique: $t('module.assets.createTokenForm.errors.tickerUnique')
+                  unique: $t('module.assets.createNFTForm.errors.tickerUnique')
                 }"
               >
                 <v-text-field
                   v-model="formModel.symbol"
                   v-maska="assetMask"
-                  :label="$t('module.assets.createTokenForm.ticker')"
+                  :label="$t('module.assets.createNFTForm.ticker')"
                   outlined
                   hide-details="auto"
                   :error-messages="errors"
@@ -56,13 +56,13 @@
           </v-row>
 
           <div class="text-body-2">
-            {{ $t('module.assets.createTokenForm.tokensAmountNote', {entity: projectAlias}) }}
+            {{ $t('module.assets.createNFTForm.tokensAmountNote', {entity: projectAlias}) }}
           </div>
         </vex-block>
 
-        <vex-block :title="$t('module.assets.createTokenForm.shareholders')" title-margin="16">
+        <vex-block :title="$t('module.assets.createNFTForm.shareholders')" title-margin="16">
           <div class="text-body-2">
-            {{ $t('module.assets.createTokenForm.shareholdersNote') }}
+            {{ $t('module.assets.createNFTForm.shareholdersNote') }}
           </div>
 
           <vex-timeline>
@@ -76,7 +76,7 @@
                     :value="team._id"
                     disabled
                     outlined
-                    :label="$t('module.assets.createTokenForm.shareholder')"
+                    :label="$t('module.assets.createNFTForm.shareholder')"
                     :hide-details="true"
                   >
                     <template #selection="{ item }">
@@ -94,7 +94,7 @@
                 </v-col>
                 <v-col cols="3">
                   <v-text-field
-                    :label="$t('module.assets.createTokenForm.tokens')"
+                    :label="$t('module.assets.createNFTForm.tokens')"
                     :value="teamTokens.amount"
                     outlined
                     :hide-details="true"
@@ -122,12 +122,12 @@
                 <v-col cols="6">
                   <validation-provider
                     v-slot="{ errors }"
-                    :name="$t('module.assets.createTokenForm.shareholder')"
+                    :name="$t('module.assets.createNFTForm.shareholder')"
                     rules="required"
                   >
                     <users-selector
                       v-model="item.account"
-                      :label="$t('module.assets.createTokenForm.shareholder')"
+                      :label="$t('module.assets.createNFTForm.shareholder')"
                       outlined
                       hide-details="auto"
                       :error-messages="errors"
@@ -138,12 +138,12 @@
                 <v-col cols="3">
                   <validation-provider
                     v-slot="{ errors }"
-                    :name="$t('module.assets.createTokenForm.tokens')"
+                    :name="$t('module.assets.createNFTForm.tokens')"
                     rules="integer|required"
                   >
                     <v-text-field
                       v-model="item.amount"
-                      :label="$t('module.assets.createTokenForm.tokens')"
+                      :label="$t('module.assets.createNFTForm.tokens')"
                       outlined
                       hide-details="auto"
                       :error-messages="errors"
@@ -166,19 +166,19 @@
             </vex-timeline-item>
 
             <vex-timeline-add
-              :label="$t('module.assets.createTokenForm.addShareholder')"
+              :label="$t('module.assets.createNFTForm.addShareholder')"
               :disabled="loading"
               @click="handleAddShareholderClick"
             />
           </vex-timeline>
         </vex-block>
 
-        <vex-block :title="$t('module.assets.createTokenForm.legal')">
+        <vex-block :title="$t('module.assets.createNFTForm.legal')">
           <div>
             <v-row>
               <v-col>
                 <validation-provider
-                  :name="$t('module.assets.createTokenForm.confirmation')"
+                  :name="$t('module.assets.createNFTForm.confirmation')"
                   :rules="{ required: { allowFalse: false } }"
                 >
                   <v-checkbox
@@ -187,9 +187,9 @@
                     class="ma-0 pa-0"
                   >
                     <template #label>
-                      <i18n path="module.assets.createTokenForm.agree" class="text-body-2">
+                      <i18n path="module.assets.createNFTForm.agree" class="text-body-2">
                         <a :href="tosUrl" target="_blank" @click.stop>
-                          {{ $t('module.assets.createTokenForm.tos') }}
+                          {{ $t('module.assets.createNFTForm.tos') }}
                         </a>
                       </i18n>
                     </template>
@@ -201,7 +201,7 @@
             <v-row>
               <v-col>
                 <validation-provider
-                  :name="$t('module.assets.createTokenForm.confirmation')"
+                  :name="$t('module.assets.createNFTForm.confirmation')"
                   :rules="{required: {allowFalse: false}}"
                 >
                   <v-checkbox
@@ -211,7 +211,7 @@
                   >
                     <template #label>
                       <div class="text-body-2">
-                        {{ $t('module.assets.createTokenForm.understand', {entity: projectAlias}) }}
+                        {{ $t('module.assets.createNFTForm.understand', {entity: projectAlias}) }}
                       </div>
                     </template>
                   </v-checkbox>
@@ -233,7 +233,7 @@
               :disabled="loading"
               @click="handleCancelClick"
             >
-              {{ $t('module.assets.createTokenForm.cancel') }}
+              {{ $t('module.assets.createNFTForm.cancel') }}
             </v-btn>
 
             <v-btn
@@ -242,7 +242,7 @@
               :disabled="invalid"
               :loading="loading"
             >
-              {{ $t('module.assets.createTokenForm.submit') }}
+              {{ $t('module.assets.createNFTForm.submit') }}
             </v-btn>
           </ve-stack>
         </div>
@@ -272,7 +272,7 @@
   });
 
   export default defineComponent({
-    name: 'CreateProjectSecurityTokenForm',
+    name: 'CreateNonFungibleTokenForm',
 
     components: {
       UsersSelector,
