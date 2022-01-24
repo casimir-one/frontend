@@ -3,7 +3,7 @@ import { isEqual } from '@deip/toolbox/lodash';
 import {
   compactAttributes,
   expandAttributes
-} from '@deip/platform-fns';
+} from '@deip/attributes-module';
 
 import { defineComponent } from '@deip/platform-util';
 import { formFactory } from '@deip/platform-components';

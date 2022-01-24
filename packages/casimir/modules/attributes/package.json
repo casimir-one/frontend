@@ -26,7 +26,6 @@
     "@deip/attributes-service": "1.366.0",
     "@deip/constants": "1.366.0",
     "@deip/platform-components": "1.366.0",
-    "@deip/platform-fns": "1.366.0",
     "@deip/platform-store": "1.366.0",
     "@deip/platform-util": "1.366.0",
     "@deip/proxydi": "1.366.0",
@@ -38,6 +37,7 @@
     "@deip/vuetify-extended": "1.366.0",
     "@vue/babel-preset-jsx": "^1.2.4",
     "dot-prop": "^6.0.1",
+    "qs": "^6.10.3",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"
   },

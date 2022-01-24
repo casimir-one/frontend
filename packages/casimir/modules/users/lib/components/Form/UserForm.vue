@@ -39,8 +39,7 @@
 </template>
 
 <script>
-  import { AttributeSet } from '@deip/attributes-module';
-  import { attributeMethodsFactory } from '@deip/platform-fns';
+  import { AttributeSet, attributeMethodsFactory } from '@deip/attributes-module';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VeStack } from '@deip/vue-elements';
 
