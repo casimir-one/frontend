@@ -21,7 +21,7 @@
 
           <v-btn
             v-if="tokenSale.status === TS_TYPES.ACTIVE"
-            :to="contributeLink"
+            :to="investLink"
             color="primary"
             depressed
           >
@@ -72,7 +72,7 @@
         required: true
       },
 
-      contributeLink: {
+      investLink: {
         type: Object,
         default: null
       },
@@ -187,7 +187,7 @@
         return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
           .then(() => {
             if (this.tokenSale) {
-              this.$store.dispatch('fundraising/getTokenSaleContributions', this.tokenSale._id);
+              this.$store.dispatch('fundraising/getTokenSaleInvestments', this.tokenSale._id);
             }
           })
           .catch((error) => {

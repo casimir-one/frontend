@@ -58,13 +58,13 @@ const ACTIONS = {
       });
   },
 
-  getTokenSaleContributions({ commit, getters }, investmentOpportunityId) {
+  getTokenSaleInvestments({ commit, getters }, investmentOpportunityId) {
     return investmentsService.getInvestmentsHistoryByTokenSale(investmentOpportunityId)
       .then((res) => {
         const tokenSale = getters.one(investmentOpportunityId);
         commit('setOne', {
           ...tokenSale,
-          contributions: res.data.items
+          investments: res.data.items
         });
       });
   },
@@ -77,7 +77,7 @@ const ACTIONS = {
       });
   },
 
-  contribute(_, payload) {
+  invest(_, payload) {
     const {
       user: { privKey },
       data: {
@@ -97,7 +97,7 @@ const ACTIONS = {
     );
   },
 
-  getContributionsHistory({ commit }, userId) {
+  getInvestmentsHistory({ commit }, userId) {
     return investmentsService.getAccountInvestmentsHistory(userId)
       .then((res) => {
         const investmentOpportunities = res.data.items.map((item) => item.investmentOpportunity);

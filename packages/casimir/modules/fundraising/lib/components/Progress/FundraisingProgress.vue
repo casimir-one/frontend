@@ -51,7 +51,7 @@
         <span class="font-weight-medium">
           {{ $t('module.fundraising.fundraisingProgress.investors') }}:
         </span>
-        <span>{{ contributionsCount }}</span>
+        <span>{{ investmentsCount }}</span>
       </div>
     </div>
   </div>
@@ -103,11 +103,11 @@
       beforeStartTime() {
         return this.formatTimeToNow(this.tokenSale?.startTime);
       },
-      contributionsCount() {
-        if (!this.tokenSale?.contributions) {
+      investmentsCount() {
+        if (!this.tokenSale?.investments) {
           return 0;
         }
-        return uniqBy(this.tokenSale.contributions, 'investor').length;
+        return uniqBy(this.tokenSale.investments, 'investor').length;
       },
       barColor() {
         return this.tokenSale.status === TS_TYPES.EXPIRED ? 'error' : 'success';
