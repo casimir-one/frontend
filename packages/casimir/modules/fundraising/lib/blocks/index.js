@@ -11,7 +11,7 @@ export const fundraisingBlocks = {
           props: {
             projectId: '{{fundraisingWidget.projectId}}',
             canUserStartFundraising: '{{canEdit}}',
-            contributeLink: '{{fundraisingWidget.contributeLink}}',
+            investLink: '{{fundraisingWidget.investLink}}',
             startFundraisingLink: '{{fundraisingWidget.startFundraisingLink}}'
           }
         },
@@ -19,7 +19,7 @@ export const fundraisingBlocks = {
         children: [],
         disabledProps: [
           'projectId',
-          'contributeLink',
+          'investLink',
           'startFundraisingLink',
           'canUserStartFundraising'
         ],

@@ -34,7 +34,7 @@ export default {
         beforeStart: 'Before start',
         investors: 'Investors'
       },
-      contributeForm: {
+      investForm: {
         title: 'Your investment',
         cancel: 'Cancel',
         invest: 'Invest',

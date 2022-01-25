@@ -12,11 +12,11 @@
         <ve-stack :gap="24">
           <v-divider />
           <h4 class="text-h4">
-            {{ $t('module.fundraising.contributeForm.title') }}
+            {{ $t('module.fundraising.investForm.title') }}
           </h4>
 
           <validation-provider
-            :name="$t('module.fundraising.contributeForm.amount')"
+            :name="$t('module.fundraising.investForm.amount')"
             :rules="{
               required: true,
               number: true,
@@ -45,9 +45,9 @@
               hide-details
             >
               <template #label>
-                <i18n path="module.fundraising.contributeForm.agree" class="text-body-2">
+                <i18n path="module.fundraising.investForm.agree" class="text-body-2">
                   <a :href="tosUrl" target="_blank" @click.stop>
-                    {{ $t('module.fundraising.contributeForm.tos') }}
+                    {{ $t('module.fundraising.investForm.tos') }}
                   </a>
                 </i18n>
               </template>
@@ -66,7 +66,7 @@
             :disabled="loading"
             @click="handleCancelClick"
           >
-            {{ $t('module.fundraising.contributeForm.cancel') }}
+            {{ $t('module.fundraising.investForm.cancel') }}
           </v-btn>
           <v-btn
             type="submit"
@@ -75,7 +75,7 @@
             :loading="loading"
             :disabled="invalid || loading"
           >
-            {{ $t('module.fundraising.contributeForm.invest') }}
+            {{ $t('module.fundraising.investForm.invest') }}
           </v-btn>
         </div>
       </ve-stack>
@@ -89,7 +89,7 @@
   import AmountSelector from './AmountSelector';
 
   export default {
-    name: 'ContributeForm',
+    name: 'InvestForm',
 
     components: {
       VeStack,
@@ -114,7 +114,7 @@
         internalAmount: null,
         formData: {
           agreeFundraising: false,
-          assetToContribute: null
+          assetToInvest: null
         }
       };
     },
@@ -152,7 +152,7 @@
 
     watch: {
       internalAmount(val) {
-        this.formData.assetToContribute = {
+        this.formData.assetToInvest = {
           amount: val ? val.toString() : null,
           id: this.hardCap.id,
           symbol: this.hardCap.symbol,
@@ -175,34 +175,34 @@
 
       async confirmSubmit() {
         if (!this.isUserBalanceEnough) {
-          this.$notifier.showError(this.$t('module.fundraising.contributeForm.userBalanceIsNotEnough'));
+          this.$notifier.showError(this.$t('module.fundraising.investForm.userBalanceIsNotEnough'));
           return;
         }
-        const message = this.$t('module.fundraising.contributeForm.doYouConfirm');
-        const options = { title: this.$t('module.fundraising.contributeForm.confirmTitle') };
+        const message = this.$t('module.fundraising.investForm.doYouConfirm');
+        const options = { title: this.$t('module.fundraising.investForm.confirmTitle') };
 
         const isConfirmed = await this.$confirm(message, options);
         if (isConfirmed) {
           this.loading = true;
 
-          this.contribute();
+          this.invest();
 
           this.loading = false;
         }
       },
 
-      async contribute() {
+      async invest() {
         const payload = {
           user: this.$currentUser,
           data: {
             investmentOpportunityId: this.tokenSale._id,
             investor: this.$currentUser._id,
-            asset: this.formData.assetToContribute
+            asset: this.formData.assetToInvest
           }
         };
 
         try {
-          await this.$store.dispatch('fundraising/contribute', payload);
+          await this.$store.dispatch('fundraising/invest', payload);
           this.emitSuccess();
         } catch (error) {
           this.emitError(error);
