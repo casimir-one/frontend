@@ -1,9 +1,6 @@
-import { collectionMerge, genObjectId, createInstanceGetter } from '@deip/toolbox';
+import { collectionMerge, createInstanceGetter, genObjectId } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/message-models';
-import {
-  UpdateLayoutCmd,
-  UpdateLayoutSettingsCmd
-} from '@deip/command-models';
+import { UpdateLayoutCmd, UpdateLayoutSettingsCmd } from '@deip/command-models';
 import { LayoutHttp } from './LayoutHttp';
 
 export class LayoutService {
@@ -13,51 +10,50 @@ export class LayoutService {
     return this.layoutHttp.getLayouts();
   }
 
-  async getOne(_id) {
-    return this.getLayouts()
-      .then((res) => res.find((l) => l._id === _id));
+  async #getLayoutsList() {
+    const { data: { items: layouts } } = await this.getLayouts();
+    return layouts;
   }
 
-  async updateLayouts(data) {
-    const updateLayoutCmd = new UpdateLayoutCmd(data);
+  async getOne(_id) {
+    const layouts = await this.#getLayoutsList();
+    return layouts.find((l) => l._id === _id);
+  }
+
+  async #updateLayouts(payload) {
+    const updateLayoutCmd = new UpdateLayoutCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [updateLayoutCmd] });
     return this.layoutHttp.updateLayouts(msg);
   }
 
-  async create(data) {
-    return this.getLayouts()
-      .then((res) => {
-        const _id = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
+  async create(payload) {
+    const layouts = await this.#getLayoutsList();
+    const _id = genObjectId({ salt: Math.random() + new Date().getTime().toString() });
 
-        const updated = collectionMerge(res, {
-          _id, ...data
-        }, { key: '_id' });
+    const updated = collectionMerge(layouts, {
+      _id, ...payload
+    }, { key: '_id' });
 
-        return this.updateLayouts(updated);
-      });
+    return this.#updateLayouts(updated);
   }
 
-  async update(_id, data) {
-    return this.getLayouts()
-      .then((res) => {
-        const exist = res.find((l) => l._id === _id);
-        if (!exist) {
-          throw new Error('Layout not found');
-        }
-        const updated = collectionMerge(res, {
-          _id, ...data
-        }, { key: '_id' });
-        return this.updateLayouts(updated);
-      });
+  async update(payload) {
+    const layouts = await this.#getLayoutsList();
+    const { _id } = payload;
+
+    const exist = layouts.find((l) => l._id === _id);
+    if (!exist) {
+      throw new Error('Layout not found');
+    }
+
+    const updated = collectionMerge(layouts, payload, { key: '_id' });
+    return this.#updateLayouts(updated);
   }
 
   async remove(_id) {
-    return this.getLayouts()
-      .then((res) => {
-        const updated = res.filter((l) => l._id !== _id);
-
-        return this.updateLayouts(updated);
-      });
+    const layouts = await this.#getLayoutsList();
+    const updated = layouts.filter((l) => l._id !== _id);
+    return this.#updateLayouts(updated);
   }
 
   async getSettings() {

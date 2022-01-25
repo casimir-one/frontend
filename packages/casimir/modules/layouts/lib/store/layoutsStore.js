@@ -48,7 +48,7 @@ const ACTIONS = {
   update({ dispatch }, payload) {
     const { _id } = payload;
 
-    return layoutService.update(_id, payload)
+    return layoutService.update(payload)
       .then(() => {
         dispatch('getOne', _id);
       });
