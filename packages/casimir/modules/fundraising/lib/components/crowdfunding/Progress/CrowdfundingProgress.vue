@@ -4,7 +4,7 @@
       <div class="d-flex justify-space-between align-end text-caption ">
         <div :class="collectedClass">
           <span :class="collectedTitleClass">
-            {{ $t('module.fundraising.fundraisingProgress.collected') }}:
+            {{ $t('module.crowdfunding.crowdfundingProgress.collected') }}:
           </span>
           <span
             :class="collectedAmountClass"
@@ -14,7 +14,7 @@
 
         <div>
           <span v-if="small" class="text--secondary">
-            {{ $t('module.fundraising.fundraisingProgress.goal') }}:
+            {{ $t('module.crowdfunding.crowdfundingProgress.goal') }}:
           </span>
           <span class="text--primary font-weight-medium">
             {{ hardCap.amount }} {{ hardCap.symbol }}
@@ -35,21 +35,21 @@
     <div class="text-caption text--secondary">
       <div v-if="tokenSale.status === TS_TYPES.ACTIVE">
         <span class="font-weight-medium">
-          {{ $t('module.fundraising.fundraisingProgress.untilCompletion') }}:
+          {{ $t('module.crowdfunding.crowdfundingProgress.untilCompletion') }}:
         </span>
         <span>{{ remainingTime }}</span>
       </div>
 
       <div v-else-if="tokenSale.status === TS_TYPES.INACTIVE">
         <span class="font-weight-medium">
-          {{ $t('module.fundraising.fundraisingProgress.beforeStart') }}:
+          {{ $t('module.crowdfunding.crowdfundingProgress.beforeStart') }}:
         </span>
         <span>{{ beforeStartTime }}</span>
       </div>
 
       <div>
         <span class="font-weight-medium">
-          {{ $t('module.fundraising.fundraisingProgress.investors') }}:
+          {{ $t('module.crowdfunding.crowdfundingProgress.investors') }}:
         </span>
         <span>{{ investmentsCount }}</span>
       </div>
@@ -64,7 +64,7 @@
   import { uniqBy } from '@deip/toolbox/lodash';
 
   export default {
-    name: 'FundraisingProgress',
+    name: 'CrowdfundingProgress',
 
     mixins: [dateMixin],
 

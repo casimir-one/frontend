@@ -1,11 +1,11 @@
 <template>
   <vex-block
-    :title="$t('module.fundraising.createForm.titleBlock')"
+    :title="$t('module.crowdfunding.createForm.titleBlock')"
     compact
   >
     <v-text-field
       v-model="internalTitle"
-      :label="$t('module.fundraising.createForm.title')"
+      :label="$t('module.crowdfunding.createForm.title')"
       hide-details="auto"
     />
   </vex-block>
@@ -16,7 +16,7 @@
   import { VexBlock } from '@deip/vuetify-extended';
 
   export default defineComponent({
-    name: 'FundraisingTitleInput',
+    name: 'CrowdfundingTitleInput',
 
     components: { VexBlock },
 

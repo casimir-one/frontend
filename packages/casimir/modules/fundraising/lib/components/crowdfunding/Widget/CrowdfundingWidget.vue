@@ -3,7 +3,7 @@
     <v-card-text>
       <ve-stack :gap="24">
         <template v-if="tokenSale">
-          <fundraising-progress
+          <crowdfunding-progress
             :token-sale="tokenSale"
           />
 
@@ -12,7 +12,7 @@
             outlined
             class="py-2 px-3 d-flex justify-space-between"
           >
-            <span>{{ $t('module.fundraising.fundraisingWidget.yourInvestment') }}</span>
+            <span>{{ $t('module.crowdfunding.crowdfundingWidget.yourInvestment') }}</span>
             <span
               v-if="userInvestment"
               class="primary--text font-weight-medium"
@@ -25,21 +25,21 @@
             color="primary"
             depressed
           >
-            {{ $t('module.fundraising.fundraisingWidget.invest') }}
+            {{ $t('module.crowdfunding.crowdfundingWidget.invest') }}
           </v-btn>
         </template>
 
         <span v-else>
-          {{ $t('module.fundraising.fundraisingWidget.noFundraising') }}
+          {{ $t('module.crowdfunding.crowdfundingWidget.noCrowdfunding') }}
         </span>
 
         <v-btn
-          v-if="isFundraisingCanBeStarted"
-          :to="startFundraisingLink"
+          v-if="isCrowdfundingCanBeStarted"
+          :to="startCrowdfundingLink"
           color="primary"
           depressed
         >
-          {{ $t('module.fundraising.fundraisingWidget.startFundraising') }}
+          {{ $t('module.crowdfunding.crowdfundingWidget.startCrowdfunding') }}
         </v-btn>
       </ve-stack>
     </v-card-text>
@@ -54,14 +54,14 @@
   import { assetsMixin } from '@deip/assets-module';
   import { VeStack } from '@deip/vue-elements';
 
-  import FundraisingProgress from '../Progress/FundraisingProgress';
+  import CrowdfundingProgress from '../Progress/CrowdfundingProgress';
 
   export default defineComponent({
-    name: 'FundraisingWidget',
+    name: 'CrowdfundingWidget',
 
     components: {
       VeStack,
-      FundraisingProgress
+      CrowdfundingProgress
     },
 
     mixins: [assetsMixin, dateMixin],
@@ -77,12 +77,12 @@
         default: null
       },
 
-      startFundraisingLink: {
+      startCrowdfundingLink: {
         type: Object,
         default: null
       },
 
-      canUserStartFundraising: {
+      canUserStartCrowdfunding: {
         type: Boolean,
         default: false
       },
@@ -116,8 +116,8 @@
         return sorted[0];
       },
 
-      isFundraisingCanBeStarted() {
-        return this.canUserStartFundraising
+      isCrowdfundingCanBeStarted() {
+        return this.canUserStartCrowdfunding
           && (!this.tokenSale
             || [TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(this.tokenSale?.status));
       },
@@ -127,14 +127,14 @@
           return null;
         }
 
-        if (!this.tokenSale.contributions) {
+        if (!this.tokenSale.investments) {
           return {
             ...this.tokenSale.hardCap,
             amount: 0
           };
         }
 
-        const amount = this.tokenSale.contributions.reduce((acc, current) => {
+        const amount = this.tokenSale.investments.reduce((acc, current) => {
           if (current.investor === this.$currentUser._id) {
             // eslint-disable-next-line no-param-reassign
             acc += parseFloat(current.asset.amount);

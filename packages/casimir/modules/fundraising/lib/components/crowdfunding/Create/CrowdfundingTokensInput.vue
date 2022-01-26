@@ -1,13 +1,13 @@
 <template>
   <vex-block
-    :title="$t('module.fundraising.createForm.determineNumberOfTokens')"
+    :title="$t('module.crowdfunding.createForm.determineNumberOfTokens')"
     compact
   >
     <v-row>
       <v-col cols="6">
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.fundraising.createForm.units')"
+          :name="$t('module.crowdfunding.createForm.units')"
           :rules="{
             required: true,
             minMaxValue: {
@@ -42,7 +42,7 @@
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
   export default defineComponent({
-    name: 'FundraisingTokensInput',
+    name: 'CrowdfundingTokensInput',
 
     components: {
       VexBlock

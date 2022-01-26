@@ -1,20 +1,20 @@
 <template>
   <vex-block
-    :title="$t('module.fundraising.createForm.selectDates')"
+    :title="$t('module.crowdfunding.createForm.selectDates')"
     compact
   >
     <v-row>
       <v-col cols="12" md="6">
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.fundraising.createForm.startDate')"
+          :name="$t('module.crowdfunding.createForm.startDate')"
           vid="startDate"
           rules="required|dateBefore:@endDate|dateAfterNow"
         >
           <vex-date-time-input
             v-model="startDate"
             :error-messages="errors"
-            :label="$t('module.fundraising.createForm.startDate')"
+            :label="$t('module.crowdfunding.createForm.startDate')"
             only-future
           />
         </validation-provider>
@@ -23,14 +23,14 @@
       <v-col cols="12" md="6">
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.fundraising.createForm.endDate')"
+          :name="$t('module.crowdfunding.createForm.endDate')"
           vid="endDate"
           rules="required|dateAfter:@startDate"
         >
           <vex-date-time-input
             v-model="endDate"
             :error-messages="errors"
-            :label="$t('module.fundraising.createForm.endDate')"
+            :label="$t('module.crowdfunding.createForm.endDate')"
             only-future
           />
         </validation-provider>
@@ -44,7 +44,7 @@
   import { VexBlock, VexDateTimeInput } from '@deip/vuetify-extended';
 
   export default defineComponent({
-    name: 'FundraisingDatesInput',
+    name: 'CrowdfundingDatesInput',
 
     components: { VexBlock, VexDateTimeInput },
 

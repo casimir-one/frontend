@@ -15,7 +15,7 @@ export default {
         shareholders: 'Shareholders',
         shareholder: 'Shareholder',
         addShareholder: 'Add shareholder',
-        shareholdersNote: 'Note: Only tokens that belong to a team can be used for fundraising.',
+        shareholdersNote: 'Note: Only tokens that belong to a team can be used for crowdfunding.',
         tokens: 'Tokens',
         legal: 'Legal',
         confirmation: 'Confirmation',
