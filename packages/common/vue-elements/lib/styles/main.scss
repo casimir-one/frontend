@@ -1,0 +1,6 @@
+@use './settings/variables';
+@use './tools/helper';
+
+@each $name, $data in variables.$helpers {
+  @include helper.generate-helper($data);
+}

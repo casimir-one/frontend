@@ -1,9 +1,9 @@
 @use 'sass:map';
-@use '../settings';
+@use '../settings/variables';
 
 @function is-min(
   $name,
-  $breakpoints: settings.$breakpoints
+  $breakpoints: variables.$breakpoints
 ) {
   $min: map.get($breakpoints, $name);
   @return if($min != 0, false, true);
@@ -11,16 +11,34 @@
 
 @function get-infix(
   $name,
-  $breakpoints: settings.$breakpoints
+  $breakpoints: variables.$breakpoints
 ) {
   @return if(is-min($name, $breakpoints) == true, "", "-#{$name}");
+}
+
+@mixin generate-class-queries(
+  $class,
+  $property,
+  $breakpoints: variables.$breakpoints
+) {
+  $bp-keys: map.keys($breakpoints);
+
+  @each $bp, $value in $breakpoints {
+    $infix: get-infix($bp, $breakpoints);
+
+    @media all and (min-width: #{$value}) {
+      .#{$class}#{$infix}-#{$property} {
+        @content;
+      }
+    }
+  }
 }
 
 @mixin gen-css-vars-queries(
   $var,
   $default,
   $mq-vars: false,
-  $breakpoints: settings.$breakpoints
+  $breakpoints: variables.$breakpoints
 ) {
   $bp-keys: map.keys($breakpoints);
   $in-var: --inst-#{$var};

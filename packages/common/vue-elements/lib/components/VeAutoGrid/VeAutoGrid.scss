@@ -1,4 +1,4 @@
-@use '../../styles/util/breakpoint';
+@use '../../styles/tools/breakpoint';
 
 .ve-auto-grid {
   @include breakpoint.gen-css-vars-queries(gap, 1.5rem) using ($value) {
