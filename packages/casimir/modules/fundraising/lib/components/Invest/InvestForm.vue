@@ -185,7 +185,7 @@
         if (isConfirmed) {
           this.loading = true;
 
-          this.invest();
+          await this.invest();
 
           this.loading = false;
         }
