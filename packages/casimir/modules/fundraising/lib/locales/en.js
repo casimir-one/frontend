@@ -1,14 +1,14 @@
 export default {
   module: {
-    fundraising: {
+    crowdfunding: {
       createForm: {
         cancel: 'Cancel',
         start: 'Start',
-        titleBlock: 'Enter title of fundraise',
+        titleBlock: 'Enter title of crowdfunding',
         title: 'Title',
         determineNumberOfTokens: 'Determine the number of non-fungible token units',
         units: 'Units',
-        selectDates: 'Select start and end dates of fundraise',
+        selectDates: 'Select start and end dates of crowdfunding',
         startDate: 'Start date',
         endDate: 'End date',
         selectAmounts: 'Select min and max amounts',
@@ -27,7 +27,7 @@ export default {
         amount: 'Amount',
         enterAmount: 'Enter amount'
       },
-      fundraisingProgress: {
+      crowdfundingProgress: {
         goal: 'Goal',
         collected: 'Collected',
         untilCompletion: 'Until completion',
@@ -45,11 +45,11 @@ export default {
         confirmTitle: 'Investment confirmation',
         doYouConfirm: 'Do you confirm the investment of funds from your account?'
       },
-      fundraisingWidget: {
+      crowdfundingWidget: {
         yourInvestment: 'Your investment',
         invest: 'Invest',
-        startFundraising: 'Start fundraising',
-        noFundraising: 'Fundraising has never started'
+        startCrowdfunding: 'Start crowdfunding',
+        noCrowdfunding: 'Crowdfunding has never started'
       }
     }
   }

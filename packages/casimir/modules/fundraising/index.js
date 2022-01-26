@@ -1,8 +1,8 @@
 export * from './lib/fundraising-module';
 
-export { default as CreateFundraisingForm } from './lib/components/Create/CreateFundraisingForm';
-export { default as InvestForm } from './lib/components/Invest/InvestForm';
-export { default as FundraisingProgress } from './lib/components/Progress/FundraisingProgress';
-export { default as FundraisingWidget } from './lib/components/Widget/FundraisingWidget';
+export { default as CreateCrowdfundingForm } from './lib/components/crowdfunding/Create/CreateCrowdfundingForm';
+export { default as InvestForm } from './lib/components/crowdfunding/Invest/InvestForm';
+export { default as CrowdfundingProgress } from './lib/components/crowdfunding/Progress/CrowdfundingProgress';
+export { default as CrowdfundingWidget } from './lib/components/crowdfunding/Widget/CrowdfundingWidget';
 
 export * from './lib/blocks';

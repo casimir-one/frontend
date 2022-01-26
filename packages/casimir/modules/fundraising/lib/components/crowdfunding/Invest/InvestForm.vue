@@ -5,18 +5,18 @@
         <slot name="header" />
         <v-divider />
 
-        <fundraising-progress
+        <crowdfunding-progress
           :token-sale="tokenSale"
         />
 
         <ve-stack :gap="24">
           <v-divider />
           <h4 class="text-h4">
-            {{ $t('module.fundraising.investForm.title') }}
+            {{ $t('module.crowdfunding.investForm.title') }}
           </h4>
 
           <validation-provider
-            :name="$t('module.fundraising.investForm.amount')"
+            :name="$t('module.crowdfunding.investForm.amount')"
             :rules="{
               required: true,
               number: true,
@@ -40,14 +40,14 @@
             :rules="{ required: { allowFalse: false } }"
           >
             <v-checkbox
-              v-model="formData.agreeFundraising"
+              v-model="formData.agreeCrowdfunding"
               class="align-start"
               hide-details
             >
               <template #label>
-                <i18n path="module.fundraising.investForm.agree" class="text-body-2">
+                <i18n path="module.crowdfunding.investForm.agree" class="text-body-2">
                   <a :href="tosUrl" target="_blank" @click.stop>
-                    {{ $t('module.fundraising.investForm.tos') }}
+                    {{ $t('module.crowdfunding.investForm.tos') }}
                   </a>
                 </i18n>
               </template>
@@ -66,7 +66,7 @@
             :disabled="loading"
             @click="handleCancelClick"
           >
-            {{ $t('module.fundraising.investForm.cancel') }}
+            {{ $t('module.crowdfunding.investForm.cancel') }}
           </v-btn>
           <v-btn
             type="submit"
@@ -75,7 +75,7 @@
             :loading="loading"
             :disabled="invalid || loading"
           >
-            {{ $t('module.fundraising.investForm.invest') }}
+            {{ $t('module.crowdfunding.investForm.invest') }}
           </v-btn>
         </div>
       </ve-stack>
@@ -85,7 +85,7 @@
 
 <script>
   import { VeStack } from '@deip/vue-elements';
-  import FundraisingProgress from '../Progress/FundraisingProgress';
+  import CrowdfundingProgress from '../Progress/CrowdfundingProgress';
   import AmountSelector from './AmountSelector';
 
   export default {
@@ -93,7 +93,7 @@
 
     components: {
       VeStack,
-      FundraisingProgress,
+      CrowdfundingProgress,
       AmountSelector
     },
 
@@ -113,7 +113,7 @@
         loading: false,
         internalAmount: null,
         formData: {
-          agreeFundraising: false,
+          agreeCrowdfunding: false,
           assetToInvest: null
         }
       };
@@ -175,11 +175,11 @@
 
       async confirmSubmit() {
         if (!this.isUserBalanceEnough) {
-          this.$notifier.showError(this.$t('module.fundraising.investForm.userBalanceIsNotEnough'));
+          this.$notifier.showError(this.$t('module.crowdfunding.investForm.userBalanceIsNotEnough'));
           return;
         }
-        const message = this.$t('module.fundraising.investForm.doYouConfirm');
-        const options = { title: this.$t('module.fundraising.investForm.confirmTitle') };
+        const message = this.$t('module.crowdfunding.investForm.doYouConfirm');
+        const options = { title: this.$t('module.crowdfunding.investForm.confirmTitle') };
 
         const isConfirmed = await this.$confirm(message, options);
         if (isConfirmed) {

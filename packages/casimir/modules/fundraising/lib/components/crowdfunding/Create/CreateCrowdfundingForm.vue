@@ -2,24 +2,24 @@
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form :disabled="loading" @submit.prevent="handleSubmit(submit)">
       <ve-stack :gap="32">
-        <fundraising-title-input v-model="formData.title" />
+        <crowdfunding-title-input v-model="formData.title" />
 
-        <fundraising-tokens-input
+        <crowdfunding-tokens-input
           v-if="!autoCreateNonFungibleToken"
           v-model="formData.tokens"
           :issued-tokens="issuedTokens"
           :available-tokens="availableTokens"
         />
 
-        <fundraising-dates-input v-model="formData.dates" />
+        <crowdfunding-dates-input v-model="formData.dates" />
 
-        <fundraising-isa-input
-          v-if="isaFundraise"
+        <crowdfunding-isa-input
+          v-if="isaCrowdfunding"
           v-model="formData.isa"
           :cap-assets-filter="capAssetsFilter"
         />
 
-        <fundraising-caps-input
+        <crowdfunding-caps-input
           v-else
           v-model="formData.caps"
           :no-hard-cap="noHardCap"
@@ -38,7 +38,7 @@
               :disabled="loading"
               @click="handleCancelClick"
             >
-              {{ $t('module.fundraising.createForm.cancel') }}
+              {{ $t('module.crowdfunding.createForm.cancel') }}
             </v-btn>
 
             <v-btn
@@ -48,7 +48,7 @@
               :loading="loading"
               :disabled="invalid || loading"
             >
-              {{ $t('module.fundraising.createForm.start') }}
+              {{ $t('module.crowdfunding.createForm.start') }}
             </v-btn>
           </ve-stack>
         </div>
@@ -72,21 +72,21 @@
   import { isNil } from '@deip/toolbox/lodash';
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
-  import FundraisingTitleInput from './FundraisingTitleInput';
-  import FundraisingTokensInput from './FundraisingTokensInput';
-  import FundraisingDatesInput from './FundraisingDatesInput';
-  import FundraisingCapsInput from './FundraisingCapsInput';
-  import FundraisingIsaInput from './FundraisingIsaInput';
+  import CrowdfundingTitleInput from './CrowdfundingTitleInput';
+  import CrowdfundingTokensInput from './CrowdfundingTokensInput';
+  import CrowdfundingDatesInput from './CrowdfundingDatesInput';
+  import CrowdfundingCapsInput from './CrowdfundingCapsInput';
+  import CrowdfundingIsaInput from './CrowdfundingIsaInput';
 
   export default defineComponent({
-    name: 'CreateFundraisingForm',
+    name: 'CreateCrowdfundingForm',
     components: {
       VeStack,
-      FundraisingTitleInput,
-      FundraisingTokensInput,
-      FundraisingDatesInput,
-      FundraisingCapsInput,
-      FundraisingIsaInput
+      CrowdfundingTitleInput,
+      CrowdfundingTokensInput,
+      CrowdfundingDatesInput,
+      CrowdfundingCapsInput,
+      CrowdfundingIsaInput
     },
 
     props: {
@@ -98,7 +98,7 @@
         type: Boolean,
         default: false
       },
-      isaFundraise: {
+      isaCrowdfunding: {
         type: Boolean,
         default: false
       },
@@ -192,7 +192,7 @@
         const DEFAULT_PRECISION = 0;
         const DEFAULT_AMOUNT = '10000';
         const symbol = this.generateAssetSymbol();
-        const amount = this.isaFundraise
+        const amount = this.isaCrowdfunding
           ? parseInt(this.formData.isa.quantity) * DEFAULT_AMOUNT
           : DEFAULT_AMOUNT;
 
@@ -229,7 +229,7 @@
           .then(() => symbol);
       },
 
-      createFundraising(shares) {
+      createCrowdfunding(shares) {
         const payload = {
           user: this.$currentUser,
           data: {
@@ -247,7 +247,7 @@
           }
         };
 
-        if (this.isaFundraise) {
+        if (this.isaCrowdfunding) {
           payload.data.metadata = {
             isa: {
               assetPerItem: this.formData.isa.assetPerItem,
@@ -281,7 +281,7 @@
                 symbol,
                 precision
               }];
-              this.createFundraising(shares);
+              this.createCrowdfunding(shares);
             });
         } else {
           const shares = [{
@@ -290,7 +290,7 @@
             precision: this.issuedTokens.precision,
             amount: this.formData.tokens
           }];
-          this.createFundraising(shares);
+          this.createCrowdfunding(shares);
         }
       },
 

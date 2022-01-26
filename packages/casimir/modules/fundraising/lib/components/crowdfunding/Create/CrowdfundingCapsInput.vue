@@ -1,21 +1,21 @@
 <template>
   <vex-block
     :title="noHardCap
-      ? $t('module.fundraising.createForm.selectAmount')
-      : $t('module.fundraising.createForm.selectAmounts')"
+      ? $t('module.crowdfunding.createForm.selectAmount')
+      : $t('module.crowdfunding.createForm.selectAmounts')"
     compact
   >
     <v-row>
       <v-col cols="6">
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.fundraising.createForm.min')"
+          :name="$t('module.crowdfunding.createForm.min')"
           vid="softCap"
           rules="assetSmaller:@hardCap"
         >
           <asset-input
             v-model="softCap"
-            :label="$t('module.fundraising.createForm.min')"
+            :label="$t('module.crowdfunding.createForm.min')"
             required
             :assets-filter="capAssetsFilter"
             :error-messages="errors"
@@ -26,13 +26,13 @@
       <v-col v-if="!noHardCap" cols="6">
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.fundraising.createForm.max')"
+          :name="$t('module.crowdfunding.createForm.max')"
           vid="hardCap"
           rules="assetGreater:@softCap"
         >
           <asset-input
             v-model="hardCap"
-            :label="$t('module.fundraising.createForm.max')"
+            :label="$t('module.crowdfunding.createForm.max')"
             required
             disable-assets
             :assets-filter="capAssetsFilter"
@@ -59,7 +59,7 @@
     },
     message: (_, values) => {
       const i18n = proxydi.get('i18n');
-      return i18n.t('module.fundraising.createForm.validations.assetSmaller', values);
+      return i18n.t('module.crowdfunding.createForm.validations.assetSmaller', values);
     }
   });
 
@@ -72,12 +72,12 @@
     },
     message: (_, values) => {
       const i18n = proxydi.get('i18n');
-      return i18n.t('module.fundraising.createForm.validations.assetGreater', values);
+      return i18n.t('module.crowdfunding.createForm.validations.assetGreater', values);
     }
   });
 
   export default defineComponent({
-    name: 'FundraisingAmountInput',
+    name: 'CrowdfundingAmountInput',
 
     components: { VexBlock, AssetInput },
 

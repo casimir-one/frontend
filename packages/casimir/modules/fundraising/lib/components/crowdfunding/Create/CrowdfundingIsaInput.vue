@@ -1,6 +1,6 @@
 <template>
   <vex-block
-    :title="$t('module.fundraising.createForm.selectISA')"
+    :title="$t('module.crowdfunding.createForm.selectISA')"
     compact
   >
     <v-row>
@@ -13,7 +13,7 @@
           <v-text-field
             v-model="quantity"
             :error-messages="errors"
-            :label="$t('module.fundraising.createForm.isaQuantity')"
+            :label="$t('module.crowdfunding.createForm.isaQuantity')"
             autocomplete="off"
           />
         </validation-provider>
@@ -25,7 +25,7 @@
         >
           <asset-input
             v-model="assetPerItem"
-            :label="$t('module.fundraising.createForm.isaAmountPerItem')"
+            :label="$t('module.crowdfunding.createForm.isaAmountPerItem')"
             required
             :assets-filter="capAssetsFilter"
             :error-messages="errors"
@@ -42,7 +42,7 @@
   import { AssetInput } from '@deip/assets-module';
 
   export default defineComponent({
-    name: 'FundraisingIsaInput',
+    name: 'CrowdfundingIsaInput',
 
     components: { VexBlock, AssetInput },
 

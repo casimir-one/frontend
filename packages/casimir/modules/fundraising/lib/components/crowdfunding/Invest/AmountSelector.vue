@@ -22,7 +22,7 @@
     <validation-observer ref="amountObserver">
       <validation-provider
         v-slot="{ errors }"
-        :name="$t('module.fundraising.amountSelector.amount')"
+        :name="$t('module.crowdfunding.amountSelector.amount')"
         :rules="{
           number: true,
           minMaxValue: {
@@ -34,7 +34,7 @@
         <v-text-field
           :value="textFieldValue"
           autocomplete="off"
-          :placeholder="$t('module.fundraising.amountSelector.enterAmount')"
+          :placeholder="$t('module.crowdfunding.amountSelector.enterAmount')"
           :suffix="asset"
           :error-messages="errors"
           @focus="handleTextFieldFocus"
