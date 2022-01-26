@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use 'sass:list';
+@use './breakpoint';
+
+@mixin generate-helper($data) {
+  $property: map.get($data, property);
+  $class: map.get($data, class);
+  $values: map.get($data, values);
+  $responsive: map.get($data, responsive);
+
+  @if type-of($values) == "string" or type-of(nth($values, 1)) != "list" {
+    $values: list.zip($values, $values)
+  }
+
+  @each $value in $values {
+    $value-class: list.nth($value, 1);
+    $value: list.nth($value, 2);
+
+    @if $responsive == true {
+      @include breakpoint.generate-class-queries($class, $value-class) {
+        #{$property}: $value !important;
+      }
+    } @else {
+      .#{$class}-#{$value-class} {
+        #{$property}: $value !important;
+      }
+    }
+  }
+}
