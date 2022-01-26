@@ -73,7 +73,7 @@ export const baseAttributes = [
     valueType: ['string'],
     label: 'Image',
     icon: 'mdi-file-image-outline',
-    props: {
+    proxyProps: {
       VexImageInput: {
         aspectRatio: {
           type: Number,
@@ -100,7 +100,7 @@ export const baseAttributes = [
     valueType: ['string'],
     label: 'Avatar',
     icon: 'mdi-account-circle-outline',
-    props: {
+    proxyProps: {
       VexAvatar: {
         size: {
           type: Number,
