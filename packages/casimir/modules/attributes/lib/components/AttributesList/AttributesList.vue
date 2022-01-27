@@ -220,14 +220,17 @@
             value: 'shortTitle'
           },
           {
-            align: 'start',
+            text: 'Markers',
+            align: 'end',
             sortable: false,
             value: 'markers'
           },
           {
+            text: 'Actions',
             align: 'end',
             sortable: false,
-            value: 'actions'
+            value: 'actions',
+            class: 'pr-6'
           }
         ];
       }
