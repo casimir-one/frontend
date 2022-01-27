@@ -7,7 +7,8 @@ import {
 import {
   required,
   integer,
-  regex
+  regex,
+  excluded
 
 } from 'vee-validate/dist/rules';
 
@@ -55,6 +56,7 @@ const install = (Vue, options = {}) => {
     message: (_, values) => i18n.t('plugin.validation.integer', values)
   });
   extend('regex', regex);
+  extend('excluded', excluded);
 
   extend('minMax', minMax);
   extend('minMaxValue', minMaxValue);

@@ -86,7 +86,7 @@
                       >
                         <team-avatar :team="item" :size="24" class="mr-2" />
                         <div class="text-truncate">
-                          {{ $$teamTitle(item) }}
+                          {{ $$teamName(item) }}
                         </div>
                       </div>
                     </template>
