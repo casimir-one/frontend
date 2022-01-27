@@ -1,10 +1,10 @@
 export const teamHelpersMixin = {
   methods: {
-    $$teamTitle(team) {
+    $$teamName(team) {
       if (!team) return null;
 
       const title = this.$attributes.getMappedData(
-        'teamTitle',
+        'team.name',
         team.attributes
       );
 
@@ -17,7 +17,7 @@ export const teamHelpersMixin = {
       if (!team) return null;
 
       const avatar = this.$attributes.getMappedData(
-        'teamLogo',
+        'team.logo',
         team.attributes
       );
 

@@ -171,7 +171,7 @@
           return null;
         }
         if (party.type === 'team') {
-          return this.$$teamTitle(party);
+          return this.$$teamName(party);
         }
         return this.$$userFullName(party);
       },

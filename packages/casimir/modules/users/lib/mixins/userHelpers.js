@@ -10,8 +10,8 @@ export const userHelpersMixin = {
     $$userFullName(user) {
       if (!user || isEmpty(user)) return null;
 
-      const firstName = this.$attributes.getMappedData('userFirstName', user.attributes)?.value;
-      const lastName = this.$attributes.getMappedData('userLastName', user.attributes)?.value;
+      const firstName = this.$attributes.getMappedData('user.firstName', user.attributes)?.value;
+      const lastName = this.$attributes.getMappedData('user.lastName', user.attributes)?.value;
 
       if (firstName || lastName) {
         return `${firstName} ${lastName}`;
@@ -31,7 +31,7 @@ export const userHelpersMixin = {
       if (!user || isEmpty(user)) return null;
 
       const avatar = this.$attributes.getMappedData(
-        'userAvatar',
+        'user.avatar',
         user.attributes
       );
 

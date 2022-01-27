@@ -2,108 +2,126 @@
   <validation-observer v-slot="{ handleSubmit, invalid }">
     <v-form @submit.prevent="handleSubmit(updateSettings)">
       <ve-stack :gap="32">
-        <v-row>
-          <v-col>
-            <v-card outlined>
-              <v-card-title class="py-4">
-                Globals map
-              </v-card-title>
-              <v-divider />
-              <template v-for="(item, index) of formData.map">
-                <v-row :key="index" class="pa-4">
-                  <v-col cols="3">
-                    <v-text-field
-                      v-model="item.key"
-                      hide-details
-                      :disabled="isDefaultKey(item.key)"
-                    />
-                  </v-col>
-                  <v-col class="d-flex">
-                    <v-sheet class="spacer d-flex" outlined rounded>
-                      <draggable
-                        class="attr-map-target spacer align-center d-flex px-2"
-                        :list="lazyMap"
-                        :group="{ name: 'blocks' }"
-                        @change="onMapUpdate(index, $event)"
-                      >
-                        <v-chip
-                          v-if="item.value"
-                          close
-                          label
-                          @click:close="item.value = ''"
-                        >
-                          {{ getAttrTitle(item.value) }}
-                        </v-chip>
-                      </draggable>
-                    </v-sheet>
-                  </v-col>
-                  <v-col cols="1" class="d-flex justify-end">
-                    <v-btn
-                      icon
-                      :disabled="isDefaultKey(item.key)"
-                      @click="handleRemoveKeyBtnClick(index)"
-                    >
-                      <v-icon dark>
-                        mdi-delete
-                      </v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-                <v-divider :key="`dv-${index}`" />
-              </template>
-
-              <div class="v-card__actions">
-                <v-btn
-                  text
-                  small
-                  color="primary"
-                  @click="addMapKey"
-                >
-                  Add key
-                </v-btn>
-              </div>
-            </v-card>
-          </v-col>
-
-          <v-col cols="4" class="d-flex flex-column">
-            <v-sheet outlined rounded min-height="100%">
-              <v-tabs
-                v-model="activeMap"
-                class="px-2"
-                background-color="transparent"
-                height="56"
+        <ve-stack v-for="scope in registryScopes" :key="scope.type" :gap="24">
+          <div class="text-h5">
+            {{ scope.label }}
+          </div>
+          <v-row>
+            <v-col
+              v-for="el in scope.mappedKeys"
+              :key="`${el.key}-selector`"
+              cols="6"
+            >
+              <v-select
+                :value="getMapValue(`${scope.type}.${el.key}`)"
+                :label="el.label"
+                :items="getKeyAttrsList(scope.type, el.allowedTypes)"
+                :hint="`key: ${scope.type}.${el.key}`"
+                persistent-hint
+                @change="setSystemMapValue(`${scope.type}.${el.key}`, $event)"
               >
-                <v-tab v-for="(scope, index) of attributes" :key="index">
-                  {{ scope.title }}
-                </v-tab>
-              </v-tabs>
-              <v-divider />
-              <v-tabs-items v-model="activeMap" style="background: transparent">
-                <v-tab-item
+                <template #item="{ item }">
+                  <div class="d-flex">
+                    <v-icon class="mr-4">
+                      {{ getAttributeIcon(item.value) }}
+                    </v-icon>
+                    <v-spacer>{{ item.text }}</v-spacer>
+                  </div>
+                </template>
 
-                  v-for="(scope, index) of attributes"
-                  :key="index"
+                <template #selection="{ item }">
+                  <div class="d-flex align-center">
+                    <v-icon class="mr-4">
+                      {{ getAttributeIcon(item.value) }}
+                    </v-icon>
+                    <v-spacer>{{ item.text }}</v-spacer>
+                  </div>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row>
+        </ve-stack>
+
+        <v-divider />
+
+        <ve-stack :gap="24">
+          <div class="text-h5">
+            Custom keys
+          </div>
+          <ve-stack :gap="10">
+            <v-row
+              v-for="(mapItem, index) of customMapItems"
+              :key="index"
+              no-gutters
+            >
+              <v-col
+                cols="4"
+                style="margin-right: -1px;"
+              >
+                <validation-provider
+                  v-slot="{ errors }"
+                  :rules="`excluded:${getKeyExclusionList(mapItem)}`"
+                  name="Key name"
                 >
-                  <draggable
-                    :list="scope.attrs"
-                    class="px-1 py-4"
-                    :group="{ name: 'blocks', pull: 'clone', put: false }"
-                    :sort="false"
-                    :clone="onMapClone"
-                  >
-                    <div
-                      v-for="block of scope.attrs"
-                      :key="block._id"
-                      class="text-body-2 px-5 py-2"
-                    >
-                      {{ block.title }}
+                  <v-text-field
+                    v-model="mapItem.key"
+                    label="Key name"
+                    :error-messages="errors"
+                    class="rounded-br-0 rounded-tr-0"
+                  />
+                </validation-provider>
+              </v-col>
+              <v-col>
+                <v-select
+                  v-model="mapItem.value"
+                  label="Mapped attribute"
+                  :items="attributesSelectorItems"
+                  hide-details
+                  class="rounded-bl-0 rounded-tl-0"
+                >
+                  <template #item="{ item }">
+                    <div class="d-flex">
+                      <v-icon class="mr-4">
+                        {{ getAttributeIcon(item.value) }}
+                      </v-icon>
+                      <v-spacer>{{ item.text }}</v-spacer>
                     </div>
-                  </draggable>
-                </v-tab-item>
-              </v-tabs-items>
-            </v-sheet>
-          </v-col>
-        </v-row>
+                  </template>
+
+                  <template #selection="{ item }">
+                    <div class="d-flex align-center">
+                      <v-icon class="mr-4">
+                        {{ getAttributeIcon(item.value) }}
+                      </v-icon>
+                      <v-spacer>{{ item.text }}</v-spacer>
+                    </div>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col cols="1" class="d-flex justify-end">
+                <v-btn
+                  icon
+                  @click="handleRemoveKeyBtnClick(mapItem)"
+                >
+                  <v-icon dark>
+                    mdi-delete
+                  </v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+
+            <div>
+              <v-btn
+                outlined
+                small
+                color="primary"
+                @click="addMapKey"
+              >
+                Add key
+              </v-btn>
+            </div>
+          </ve-stack>
+        </ve-stack>
 
         <v-divider />
 
@@ -134,30 +152,13 @@
 <script>
   import { formMixin } from '@deip/platform-components';
   import { VeStack } from '@deip/vue-elements';
-  import draggable from 'vuedraggable';
-
-  const defaultKeys = [
-    'userAvatar',
-    'userFirstName',
-    'userLastName',
-
-    'teamLogo',
-    'teamTitle'
-  ];
-
-  const defaultData = () => ({
-    map: defaultKeys.map((key) => ({
-      key,
-      value: ''
-    }))
-  });
+  import { collectionMerge } from '@deip/toolbox';
 
   export default {
     name: 'AttributesSetup',
 
     components: {
-      VeStack,
-      draggable
+      VeStack
     },
 
     mixins: [formMixin],
@@ -165,58 +166,96 @@
     props: {
       value: {
         type: Object,
-        default: () => defaultData()
+        default: () => ({})
       }
     },
 
     data() {
       return {
-        lazyMap: [],
-        activeMap: 0
+        innerMap: {},
+        testArray: []
       };
     },
 
     computed: {
-
       registryScopes() {
         return this.$store.getters['attributesRegistry/scopesList']();
       },
 
       attributes() {
-        return this.registryScopes
-          .map((scope) => ({
-            title: scope.label,
-            attrs: this.$store.getters['attributes/list']({ scope: scope.type })
+        return this.$store.getters['attributes/list']();
+      },
+
+      attributesSelectorItems() {
+        return this.attributes
+          .map((attr) => ({
+            text: attr.title,
+            value: attr._id
           }));
+      },
+
+      defaultMapKeys() {
+        return this.registryScopes
+          .reduce((acc, scope) => [
+            ...acc,
+            ...scope.mappedKeys.map((el) => `${scope.type}.${el.key}`)
+          ], []);
+      },
+
+      customMapItems() {
+        return this.formData.map
+          .filter((el) => !el.isSystem);
       }
     },
 
     methods: {
-      onMapClone(e) {
-        return e._id;
+      getKeyAttrsList(scope, types) {
+        return this.attributes
+          .filter((attr) => attr.scope === scope && types.includes(attr.type))
+          .map((attr) => ({
+            text: attr.title,
+            value: attr._id
+          }));
       },
-      onMapUpdate(index, e) {
-        this.lazyMap = [];
-        this.lazyFormData.map[index].value = e.added.element;
+      getAttributeIcon(id) {
+        const attr = this.attributes.find((a) => a._id === id);
+        return this.$store.getters['attributesRegistry/attrOne'](attr.type).icon;
       },
 
-      getAttrTitle(id) {
-        const attribute = this.$store.getters['attributes/one'](id);
-        return attribute ? attribute.title : 'ATTRIBUTE NOT FOUND';
+      getMapValue(elementKey) {
+        return this.formData.map.find((el) => el.key === elementKey)?.value || '';
       },
 
-      isDefaultKey(key) {
-        return defaultKeys.includes(key);
+      setSystemMapValue(key, value) {
+        this.formData.map = collectionMerge(
+          this.formData.map,
+          { key, value, isSystem: true },
+          { key: 'key' }
+        );
+      },
+
+      getKeyExclusionList(item) {
+        const customKeys = this.formData.map
+          .filter((el) => el !== item)
+          .map((el) => el.key);
+
+        return [...this.defaultMapKeys, ...customKeys];
+      },
+
+      isCustomKey(key) {
+        return !this.defaultMapKeys.includes(key);
       },
 
       addMapKey() {
         this.formData.map.push({
           key: '',
-          value: ''
+          value: '',
+          isSystem: false
         });
       },
 
-      removeMapKey(index) {
+      removeMapItem(item) {
+        const index = this.formData.map.indexOf(item);
         this.formData.map.splice(index, 1);
       },
 
@@ -237,10 +276,10 @@
           });
       },
       /**
-       * @param {number} index item index
+       * @param {Object} item item index
        */
-      handleRemoveKeyBtnClick(index) {
-        this.removeMapKey(index);
+      handleRemoveKeyBtnClick(item) {
+        this.removeMapItem(item);
       }
     }
   };

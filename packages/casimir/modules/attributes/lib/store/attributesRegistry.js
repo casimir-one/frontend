@@ -130,14 +130,44 @@ export const baseAttributes = [
 ];
 
 export const baseAttrScopes = [
-  { type: 'project', label: 'Project' },
-  { type: 'user', label: 'User' },
-  { type: 'team', label: 'Team' }
+  {
+    type: 'project',
+    label: 'Project',
+    mappedKeys: [
+      { key: 'teamId', label: 'Project team', allowedTypes: ['teamSelector'] },
+      { key: 'domains', label: 'Project domain', allowedTypes: ['domainSelector'] },
+      {
+        key: 'members', label: 'Project members', allowedTypes: ['userSelector'], isMultiple: true
+      },
+      { key: 'isPrivate', label: 'Project can be private', allowedTypes: ['checkbox', 'switch'] }
+    ]
+  },
+  {
+    type: 'user',
+    label: 'User',
+    mappedKeys: [
+      { key: 'avatar', label: 'User avatar/photo', allowedTypes: ['avatar', 'image'] },
+      { key: 'firstName', label: 'User first name', allowedTypes: ['text'] },
+      { key: 'lastName', label: 'User last name', allowedTypes: ['text'] }
+    ]
+  },
+  {
+    type: 'team',
+    label: 'Team',
+    mappedKeys: [
+      { key: 'avatar', label: 'Team avatar/logo', allowedTypes: ['avatar', 'image'] },
+      { key: 'name', label: 'Team name/title', allowedTypes: ['text'] },
+      {
+        key: 'members', label: 'Team members', allowedTypes: ['userSelector'], isMultiple: true
+      }
+    ]
+  }
 ];
 
 const STATE = {
   attributes: baseAttributes,
-  scopes: baseAttrScopes
+  scopes: baseAttrScopes,
+  mappedKeys: []
 };
 
 const GETTERS = {
