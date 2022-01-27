@@ -1,7 +1,6 @@
 **/node_modules/**
 **/dist/**
 packages/casimir/models/**
-packages/casimir/services/Project/**
 packages/common/lib-crypto/**
 packages/casimir/services/RpcClient/**
 packages/casimir/services/Chain/**

@@ -28,8 +28,8 @@ const ACTIONS = {
           .getAccountsAssetBalancesByAsset(asset.symbol));
 
       return Promise.all(balancesPromises)
-        .then((balances) => {
-          commit('setList', balances.flat(1));
+        .then((balancesResponses) => {
+          commit('setList', balancesResponses.map((b) => b.data.items).flat(1));
         });
     };
 

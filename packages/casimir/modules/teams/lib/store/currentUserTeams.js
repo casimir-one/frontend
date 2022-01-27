@@ -5,8 +5,6 @@ import {
   setListMutation
 } from '@deip/platform-store';
 
-import { teamsStore } from './teams';
-
 const STATE = {
   data: []
 };
@@ -17,12 +15,12 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  getList({ commit, rootGetters }) {
+  getList({ rootGetters, dispatch }) {
     if (!rootGetters['auth/isLoggedIn']) {
       return Promise.resolve(false);
     }
 
-    return teamsStore.actions.getTeamsByUser({ commit }, rootGetters['auth/username']);
+    return dispatch('teams/getTeamsByUser', rootGetters['auth/username'], { root: true });
   },
 
   clear({ commit }) {

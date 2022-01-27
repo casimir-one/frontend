@@ -130,7 +130,7 @@ export class UserService {
     return new Promise((resolve) => this.getUser(username)
       .then(() => resolve(true))
       .catch((error) => {
-        if (error.statusCode === 404 || (error.response && error.response.status === 404)) {
+        if (error.statusCode === 404) {
           resolve(false);
         } else {
           throw error;
