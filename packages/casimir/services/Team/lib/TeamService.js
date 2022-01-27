@@ -304,13 +304,18 @@ export class TeamService {
   }
 
   async getTeam(teamId) {
-    return Promise.all([
+    const [teamResponse, membersResponse] = await Promise.all([
       this.teamHttp.get(teamId),
       this.userService.getUsersByTeam(teamId)
-    ]).then(([team, members]) => ({
-      ...team,
-      members
-    }));
+    ]);
+
+    return {
+      ...teamResponse,
+      data: {
+        ...teamResponse.data,
+        members: membersResponse.data.items
+      }
+    };
   }
 
   async getTeams(teamsIds) {

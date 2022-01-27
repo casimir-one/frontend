@@ -37,10 +37,15 @@ export class InvestmentsService {
   }
 
   async getCurrentTokenSaleByProject(projectId) {
-    return this.investmentsHttp.getProjectTokenSalesByProject(projectId)
-      .then((tokenSales) => tokenSales.find(
-        (ts) => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE
-      ));
+    const res = await this.investmentsHttp.getProjectTokenSalesByProject(projectId);
+    return {
+      ...res,
+      data: {
+        items: res.data.items.find(
+          (ts) => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE
+        )
+      }
+    };
   }
 
   async createProjectTokenSale({ privKey, username }, {
