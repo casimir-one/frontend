@@ -128,8 +128,9 @@ const ACTIONS = {
       });
   },
 
-  getTeamDefaultProject(_, teamId) {
-    return projectService.getTeamDefaultProject(teamId);
+  async getTeamDefaultProject(_, teamId) {
+    const res = await projectService.getTeamDefaultProject(teamId);
+    return res.data;
   },
 
   create({ commit }, payload) {
