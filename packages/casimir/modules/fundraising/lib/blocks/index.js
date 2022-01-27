@@ -11,7 +11,7 @@ export const сrowdfundingBlocks = {
           props: {
             projectId: '{{сrowdfundingWidget.projectId}}',
             canUserStartCrowdfunding: '{{canEdit}}',
-            investLink: '{{fundraisingWidget.investLink}}',
+            investLink: '{{crowdfundingWidget.investLink}}',
             startCrowdfundingLink: '{{сrowdfundingWidget.startCrowdfundingLink}}'
           }
         },
