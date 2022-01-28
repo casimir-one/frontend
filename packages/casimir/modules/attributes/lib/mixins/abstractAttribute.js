@@ -58,7 +58,7 @@ export const AttributeMixin = {
      * @return {Object}
      */
     attributeTypeInfo() {
-      return this.$store.getters['attributesRegistry/attrOne'](this.attributeInfo.type);
+      return this.$store.getters['attributesRegistry/one'](this.attributeInfo.type);
     },
 
     /**

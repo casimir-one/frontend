@@ -170,11 +170,11 @@
       },
 
       registryAttributes() {
-        return this.$store.getters['attributesRegistry/attrList']();
+        return this.$store.getters['attributesRegistry/list']();
       },
 
       registryScopes() {
-        return this.$store.getters['attributesRegistry/scopesList']();
+        return this.$store.getters['scopesRegistry/list']();
       },
 
       scopesSelectorList() {
@@ -239,11 +239,11 @@
 
     methods: {
       attrTypeInfo(attrType) {
-        return this.$store.getters['attributesRegistry/attrOne'](attrType) || { type: attrType, label: attrType };
+        return this.$store.getters['attributesRegistry/one'](attrType) || { type: attrType, label: attrType };
       },
 
       scopeTypeInfo(scopeType) {
-        return this.$store.getters['attributesRegistry/scopesOne'](scopeType) || { type: scopeType, label: scopeType };
+        return this.$store.getters['scopesRegistry/one'](scopeType) || { type: scopeType, label: scopeType };
       }
     }
 

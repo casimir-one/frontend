@@ -17,7 +17,7 @@ const GETTERS = {
   ...crudGetters,
 
   settings: (state) => state.settings,
-  mappedId: (state) => (key) => collectionOne(state.settings.mapping || [], { key })?.value
+  mappedId: (state) => (key) => collectionOne(state.settings.mappedKeys || [], { key })?.value
 };
 
 const ACTIONS = {

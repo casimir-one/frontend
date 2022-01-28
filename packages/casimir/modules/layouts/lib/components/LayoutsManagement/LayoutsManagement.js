@@ -36,7 +36,7 @@ export default defineComponent({
   methods: {
     genTableSlots() {
       return {
-        'item.scope': ({ item }) => this.$store.getters['attributesRegistry/scopesOne'](item.scope).label,
+        'item.scope': ({ item }) => this.$store.getters['scopesRegistry/one'](item.scope).label,
         ...AdminListPage.options.methods.genTableSlots.call(this)
       };
     },

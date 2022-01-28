@@ -33,7 +33,7 @@ const GETTERS = {
   },
 
   settings: (state) => state.settings,
-  mappedId: (state) => (key) => collectionOne(state.settings.map || [], { key })?.value
+  mappedId: (state) => (key) => collectionOne(state.settings.mappedKeys || [], { key })?.value
 };
 
 const ACTIONS = {

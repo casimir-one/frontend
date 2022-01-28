@@ -1,141 +1,128 @@
 import { defineComponent } from '@deip/platform-util';
-import { formFactory } from '@deip/platform-components';
+import { formMixin } from '@deip/platform-components';
 
 import {
   VRow,
   VCol,
-  VTextField,
   VBtn,
-  VIcon,
   VDivider,
   VSpacer,
-  VForm
+  VForm,
+  VSelect
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import {
-  VexAutocomplete
-  // eslint-disable-next-line import/extensions,import/no-unresolved
-} from '@deip/vuetify-extended';
-
 import { VeStack } from '@deip/vue-elements';
-
-const defaultMapKeys = () => [
-  'userDetails',
-  'userEdit',
-
-  'teamDetails',
-  'teamEdit',
-
-  'projectDetails',
-  'projectEdit'
-];
-
-const defaultData = () => ({
-  mapping: defaultMapKeys().map((key) => ({
-    key,
-    value: ''
-  }))
-});
+import { collectionMerge } from '@deip/toolbox';
 
 export default defineComponent({
   name: 'LayoutsSettings',
 
-  mixins: [formFactory(
-    'value',
-    'input',
-    defaultData,
-    defaultData()
-  )],
+  mixins: [formMixin],
+
+  props: {
+    value: {
+      type: Object,
+      default: () => ({})
+    }
+  },
 
   computed: {
-    layoutsList() {
-      return this.$store.getters['layouts/list'](this.getterFilter);
+    scopes() {
+      return this.$store.getters['scopesRegistry/list']();
+    },
+
+    layouts() {
+      return this.$store.getters['layouts/list']();
     }
   },
 
   methods: {
-    handleAddRowClick() {
-      this.formData.mapping.push({ key: '', value: '' });
-    },
-
-    handleRemoveRowClick(index) {
-      this.formData.mapping.splice(index, 1);
-    },
-
-    genMapFields() {
-      return this.formData.mapping.map((item, index) => (
-        <VRow>
-          <VCol>
-            <VTextField
-              vModel={this.formData.mapping[index].key}
-              hide-details="auto"
-            />
-          </VCol>
-          <VCol>
-            <VexAutocomplete
-              vModel={this.formData.mapping[index].value}
-              items={this.layoutsList}
-              item-text={this.getLayoutName}
-              item-value="_id"
-              hide-details="auto"
-              clearable
-            />
-          </VCol>
-          <VCol class="d-flex justify-end align-center col col-1">
-            <VBtn
-              rounded
-              small
-              icon
-              onClick={() => this.handleRemoveRowClick(index)}>
-                <VIcon>mdi-delete</VIcon>
-              </VBtn>
-            </VCol>
-        </VRow>
-      ));
-    },
-
-    genMapAdd() {
+    genSelector(selector, scopeType) {
+      const keyName = `${scopeType}.${selector.key}`;
       return (
-        <VRow>
-          <VCol>
-            <VBtn
-              outlined
-              color="primary"
-              small
-              onClick={() => this.handleAddRowClick()}
-            >Add key</VBtn>
-          </VCol>
-        </VRow>
+        <VCol cols="6">
+          <VSelect
+            value={this.getMapValue(keyName)}
+            label={selector.label}
+            items={this.getSelectorList(scopeType, selector.allowedTypes)}
+            hint={`key: ${keyName}`}
+            persistent-hint
+            onChange={(val) => { this.setMapValue(keyName, val); }}
+          />
+        </VCol>
+      );
+    },
+
+    genScope(scope) {
+      const list = scope.mappedKeys.layouts
+        .map((key) => this.genSelector(key, scope.type));
+
+      return (
+        <VeStack gap={24}>
+          <div class="text-h5">
+            {scope.label}
+          </div>
+
+          <VRow>
+            {list}
+          </VRow>
+        </VeStack>
       );
     },
 
     genFormControls() {
       return (
-          <div class="d-flex">
-            <VSpacer />
-            <VBtn
-              text
-              color="primary"
-              disabled={this.loading}
-              onClick={() => this.$router.back()}
-            >Cancel</VBtn>
-            <VBtn
-              color="primary"
-              type="submit"
-              loading={this.loading}
-              disabled={this.disabled || this.loading || this.untouched}
-            >Save</VBtn>
-          </div>
+        <div class="d-flex">
+          <VSpacer />
+          <VBtn
+            text
+            color="primary"
+            disabled={this.loading}
+            onClick={() => this.$router.back()}
+          >Cancel</VBtn>
+          <VBtn
+            color="primary"
+            type="submit"
+            loading={this.loading}
+            disabled={this.disabled || this.loading || this.untouched}
+          >Save</VBtn>
+        </div>
       );
     },
 
-    getLayoutName(item) {
-      return [
-        item.name,
-        ...(item.isForm ? ['(form)'] : [])
-      ].join(' ');
+    // /////////////////////
+
+    getSelectorList(scope, types) {
+      return this.layouts
+        .filter((layout) => layout.scope === scope && types.includes(layout.type))
+        .map((layout) => ({
+          text: layout.name,
+          value: layout._id
+        }));
     },
+
+    getSelectorIcon(id) {
+      const attr = this.attributes.find((a) => a._id === id);
+      return this.$store.getters['attributesRegistry/one'](attr.type).icon;
+    },
+
+    getMapValue(elementKey) {
+      const { mappedKeys = [] } = this.formData;
+      return mappedKeys.find((el) => el.key === elementKey)?.value || '';
+    },
+
+    setMapValue(key, value) {
+      const mappedKeys = collectionMerge(
+        this.formData.mappedKeys || [],
+        { key, value },
+        { key: 'key' }
+      );
+
+      this.$set(this.formData, 'mappedKeys', mappedKeys);
+    },
+
+    // /////////////////////
 
     onSubmit() {
       // this.$emit('submit', this.lazyFormData);
@@ -158,17 +145,16 @@ export default defineComponent({
   },
 
   render() {
+    const list = this.scopes.map((scope) => this.genScope(scope));
+
     return (
       <VForm onSubmit={() => this.onSubmit()}>
         <VeStack gap={32}>
-          {this.genMapFields()}
-          {this.genMapAdd()}
+          {list}
           <VDivider />
           {this.genFormControls()}
         </VeStack>
-
       </VForm>
-
     );
   }
 });
