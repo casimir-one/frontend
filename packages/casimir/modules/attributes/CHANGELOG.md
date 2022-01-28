@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** restore attribute props ([f1b5a6d](https://gitlab.com/DEIP/deip-client-modules/commit/f1b5a6d6d3cb48f25f888f021bec1e9e22894718))
+
+
+### Features
+
+* **@deip/layouts-module,@deip/attributes-module:** switch to dinamic scopes, add items filters, add config for mapped keys ([1e77a57](https://gitlab.com/DEIP/deip-client-modules/commit/1e77a57b068ffee8b72581ef7b931dc94994ddee))
+
+
+
+
+
 # [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 

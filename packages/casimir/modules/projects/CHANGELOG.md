@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Bug Fixes
+
+* fixes for new response format ([230b495](https://gitlab.com/DEIP/deip-client-modules/commit/230b49533a52e1c61ab6e35b76adb8db378cdf09))
+
+
+### Features
+
+* **@deip/users-module,@deip/teams-module,@deip/projects-module:** switch to scopes module ([db231b6](https://gitlab.com/DEIP/deip-client-modules/commit/db231b6e79d37daf7a2159233d375e45e76cf3e2))
+
+
+
+
+
 # [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/projects-module

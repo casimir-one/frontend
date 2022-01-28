@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://github.com/DEIPworld/deip-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Bug Fixes
+
+* **@deip/layout-service:** fix create/update/delete in case of new responce ([1606d9e](https://github.com/DEIPworld/deip-modules/commit/1606d9ef9f306797b22d4b2518a7e399ae5eed84))
+
+
+### Features
+
+* **@deip/layouts-module,@deip/attributes-module:** switch to dinamic scopes, add items filters, add config for mapped keys ([1e77a57](https://github.com/DEIPworld/deip-modules/commit/1e77a57b068ffee8b72581ef7b931dc94994ddee))
+
+
+
+
+
 # [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/layouts-module

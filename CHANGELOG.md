@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://github.com/DEIPworld/deip-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Bug Fixes
+
+* fixes for new response format ([230b495](https://github.com/DEIPworld/deip-modules/commit/230b49533a52e1c61ab6e35b76adb8db378cdf09))
+* **@deip/attributes-module:** restore attribute props ([f1b5a6d](https://github.com/DEIPworld/deip-modules/commit/f1b5a6d6d3cb48f25f888f021bec1e9e22894718))
+* **@deip/layout-service:** fix create/update/delete in case of new responce ([1606d9e](https://github.com/DEIPworld/deip-modules/commit/1606d9ef9f306797b22d4b2518a7e399ae5eed84))
+
+
+### Features
+
+* **@casimir/scopes-module:** new module ([d8d0f8e](https://github.com/DEIPworld/deip-modules/commit/d8d0f8e2bc1a417e936730eeb36ea26e973d6322))
+* **@deip/layouts-module,@deip/attributes-module:** switch to dinamic scopes, add items filters, add config for mapped keys ([1e77a57](https://github.com/DEIPworld/deip-modules/commit/1e77a57b068ffee8b72581ef7b931dc94994ddee))
+* **@deip/users-module,@deip/teams-module,@deip/projects-module:** switch to scopes module ([db231b6](https://github.com/DEIPworld/deip-modules/commit/db231b6e79d37daf7a2159233d375e45e76cf3e2))
+* **@deip/vue-elements:** add css helpers generator ([18b246f](https://github.com/DEIPworld/deip-modules/commit/18b246ff2b3436466ac71e1ab294e227f1e9aad4))
+
+
+
+
+
 # [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 

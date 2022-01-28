@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.366.0",
+  "version": "1.367.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -31,7 +31,7 @@
     "@deip/constants": "1.366.0",
     "@deip/platform-store": "1.366.0",
     "@deip/proxydi": "1.366.0",
-    "@deip/vuetify-extended": "1.366.0",
+    "@deip/vuetify-extended": "1.367.0",
     "axios": "^0.21.1",
     "v-clipboard": "^2.2.3",
     "vue-deepset": "^0.6.3"

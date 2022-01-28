@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://github.com/DEIPworld/deip-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Features
+
+* **@deip/vue-elements:** add css helpers generator ([18b246f](https://github.com/DEIPworld/deip-modules/commit/18b246ff2b3436466ac71e1ab294e227f1e9aad4))
+
+
+
+
+
 # [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/vue-elements

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.367.0](https://github.com/DEIPworld/deip-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
+
+
+### Bug Fixes
+
+* fixes for new response format ([230b495](https://github.com/DEIPworld/deip-modules/commit/230b49533a52e1c61ab6e35b76adb8db378cdf09))
+
+
+
+
+
 # [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/investments-service
