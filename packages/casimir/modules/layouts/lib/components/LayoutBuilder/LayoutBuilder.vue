@@ -47,7 +47,9 @@
         </v-col>
         <v-col cols="12">
           <v-switch
-            v-model="formData.isForm"
+            v-model="formData.type"
+            false-value="details"
+            true-value="form"
             label="Schema is form"
             class="ma-0 pa-0"
             hide-details="auto"
@@ -89,7 +91,7 @@
           name: '',
           scope: 'project',
           schema: [],
-          isForm: false
+          type: 'details'
         })
       )
     ],
@@ -103,11 +105,11 @@
 
     computed: {
       registryAttrList() {
-        return this.$store.getters['attributesRegistry/attrList']();
+        return this.$store.getters['attributesRegistry/list']();
       },
 
       registryScopesList() {
-        return this.$store.getters['attributesRegistry/scopesList']();
+        return this.$store.getters['scopesRegistry/list']();
       },
 
       scopesSelector() {

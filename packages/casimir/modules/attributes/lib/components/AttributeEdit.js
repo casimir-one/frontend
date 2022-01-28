@@ -101,13 +101,13 @@ const AttributeEdit = {
 
   computed: {
     registryAttrList() {
-      return this.$store.getters['attributesRegistry/attrList']();
+      return this.$store.getters['attributesRegistry/list']();
     },
     registryScopesList() {
-      return this.$store.getters['attributesRegistry/scopesList']();
+      return this.$store.getters['scopesRegistry/list']();
     },
     attrTypeInfo() {
-      return this.$store.getters['attributesRegistry/attrOne'](this.attributeData.type);
+      return this.$store.getters['attributesRegistry/one'](this.attributeData.type);
     },
 
     isEditMode() { return this.mode === VIEW_MODE.EDIT; },
@@ -167,27 +167,30 @@ const AttributeEdit = {
      * @return {JSX.Element}
      */
     genAttributeSetup() {
-      const typesList = this.registryAttrList
-        .map((attr) => ({ text: attr.label, value: attr.type }));
       const scopesList = this.registryScopesList
         .map((scope) => ({ text: scope.label, value: scope.type }));
+
+      const typesList = this.$store.getters['attributesRegistry/list']((i) => {
+        if (!i.scopes) return true;
+        return i.scopes.includes(this.attributeData.scope);
+      }).map((attr) => ({ text: attr.label, value: attr.type }));
 
       return (
         <VRow>
           <VCol cols={6}>
             <VSelect
-              vModel={this.attributeData.type}
-              label="Attribute type"
-              items={typesList}
+              vModel={this.attributeData.scope}
+              label="Attribute scope"
+              items={scopesList}
               disabled={this.isEditMode}
               hide-details
             />
           </VCol>
           <VCol cols={6}>
             <VSelect
-              vModel={this.attributeData.scope}
-              label="Attribute scope"
-              items={scopesList}
+              vModel={this.attributeData.type}
+              label="Attribute type"
+              items={typesList}
               disabled={this.isEditMode}
               hide-details
             />
