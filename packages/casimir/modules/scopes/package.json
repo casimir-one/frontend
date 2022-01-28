@@ -1,0 +1,36 @@
+{
+  "name": "@casimir/scopes-module",
+  "version": "1.366.0",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
+  "keywords": [
+    "casimir"
+  ],
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "src": "lib",
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEIPworld/deip-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
+  },
+  "dependencies": {
+    "@deip/constants": "1.366.0",
+    "@deip/platform-store": "^1.366.0",
+    "@deip/toolbox": "1.366.0"
+  }
+}
