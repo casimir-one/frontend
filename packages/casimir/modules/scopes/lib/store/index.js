@@ -1,0 +1,1 @@
+export { scopesRegistry } from './scopesRegistry';

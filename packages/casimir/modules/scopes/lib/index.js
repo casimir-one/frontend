@@ -1,0 +1,1 @@
+export { ScopesModule } from './scopesModule';
