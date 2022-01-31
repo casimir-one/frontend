@@ -63,8 +63,8 @@ const ACTIONS = {
 
     const exists = await userService.checkIfUserExists(email);
 
-    if (!exists) {
-      throw new Error('Wrong email or password. Please try again.');
+    if (exists) {
+      throw new Error('User with such email exists');
     }
 
     const username = genRipemd160Hash(email);
