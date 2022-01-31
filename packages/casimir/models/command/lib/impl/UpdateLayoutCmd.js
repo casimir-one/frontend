@@ -1,13 +1,19 @@
 import AppCmd from './../base/AppCmd';
 import { APP_CMD } from '@deip/constants';
-import { assert } from '@deip/toolbox';
+import { assert, isArray } from '@deip/toolbox';
 
 class UpdateLayoutCmd extends AppCmd {
 
   constructor(cmdPayload) {
-    const layout = cmdPayload
+    const {
+      _id: layoutId,
+      name,
+      value
+    } = cmdPayload
 
-    assert(!!layout, "'layout' is required");
+    assert(!!layoutId, "'layoutId' is required");
+    assert(!!name, "'name' is required");
+    assert(!!value && isArray(value), "'value' is required and should be an aray");
 
     super(APP_CMD.UPDATE_LAYOUT, cmdPayload);
   }
