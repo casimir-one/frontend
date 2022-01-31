@@ -34,7 +34,9 @@ import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
 import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
 import DeleteUserProfileCmd from './impl/DeleteUserProfileCmd';
 import UpdateAttributeSettingsCmd from './impl/UpdateAttributeSettingsCmd';
+import CreateLayoutCmd from './impl/CreateLayoutCmd';
 import UpdateLayoutCmd from './impl/UpdateLayoutCmd';
+import DeleteLayoutCmd from './impl/DeleteLayoutCmd';
 import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
@@ -80,7 +82,9 @@ export {
   RejectContractAgreementCmd,
   DeleteUserProfileCmd,
   UpdateAttributeSettingsCmd,
+  CreateLayoutCmd,
   UpdateLayoutCmd,
+  DeleteLayoutCmd,
   UpdateLayoutSettingsCmd,
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,

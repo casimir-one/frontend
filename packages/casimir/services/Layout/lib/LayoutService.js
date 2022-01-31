@@ -1,13 +1,41 @@
 import { collectionMerge, createInstanceGetter, genObjectId } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/message-models';
-import { UpdateLayoutCmd, UpdateLayoutSettingsCmd } from '@deip/command-models';
+import {
+  CreateLayoutCmd, UpdateLayoutCmd, DeleteLayoutCmd, UpdateLayoutSettingsCmd
+} from '@deip/command-models';
 import { LayoutHttp } from './LayoutHttp';
 
 export class LayoutService {
   layoutHttp = LayoutHttp.getInstance();
 
+  async getLayout(layoutId) {
+    return this.layoutHttp.getLayout(layoutId);
+  }
+
   async getLayouts() {
     return this.layoutHttp.getLayouts();
+  }
+
+  async getLayoutsByScope(scope) {
+    return this.layoutHttp.getLayoutsByScope(scope);
+  }
+
+  async createLayout(payload) {
+    const createLayoutCmd = new CreateLayoutCmd(payload);
+    const msg = new JsonDataMsg({ appCmds: [createLayoutCmd] });
+    return this.layoutHttp.createLayout(msg);
+  }
+
+  async updateLayout(payload) {
+    const updateLayoutCmd = new UpdateLayoutCmd(payload);
+    const msg = new JsonDataMsg({ appCmds: [updateLayoutCmd] });
+    return this.layoutHttp.updateLayout(msg);
+  }
+
+  async deleteLayout(layoutId) {
+    const deleteLayoutCmd = new DeleteLayoutCmd({ layoutId });
+    const msg = new JsonDataMsg({ appCmds: [deleteLayoutCmd] });
+    return this.layoutHttp.deleteLayout(msg);
   }
 
   async #getLayoutsList() {

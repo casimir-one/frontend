@@ -35,7 +35,9 @@ import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
 import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
 import DeleteUserProfileCmd from './impl/DeleteUserProfileCmd';
 import UpdateAttributeSettingsCmd from './impl/UpdateAttributeSettingsCmd';
+import CreateLayoutCmd from './impl/CreateLayoutCmd';
 import UpdateLayoutCmd from './impl/UpdateLayoutCmd';
+import DeleteLayoutCmd from './impl/DeleteLayoutCmd';
 import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
@@ -82,7 +84,9 @@ const APP_CMD_INFO = {
   [APP_CMD.REJECT_CONTRACT_AGREEMENT]: { class: RejectContractAgreementCmd },
   [APP_CMD.UPDATE_PORTAL_PROFILE]: { class: UpdatePortalProfileCmd },
   [APP_CMD.UPDATE_PORTAL_SETTINGS]: { class: UpdatePortalSettingsCmd },
+  [APP_CMD.CREATE_LAYOUT]: { class: CreateLayoutCmd },
   [APP_CMD.UPDATE_LAYOUT]: { class: UpdateLayoutCmd },
+  [APP_CMD.DELETE_LAYOUT]: { class: DeleteLayoutCmd },
   [APP_CMD.UPDATE_LAYOUT_SETTINGS]: { class: UpdateLayoutSettingsCmd },
   [APP_CMD.UPDATE_ATTRIBUTE_SETTINGS]: { class: UpdateAttributeSettingsCmd },
   [APP_CMD.UPDATE_NETWORK_SETTINGS]: { class: UpdateNetworkSettingsCmd },
