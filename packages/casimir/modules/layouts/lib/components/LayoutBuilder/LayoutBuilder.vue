@@ -5,7 +5,7 @@
     class="d-flex"
   >
     <vls-builder
-      :value="formData.schema"
+      :value="formData.value"
       :blocks="blocks"
       :disabled="invalid || loading"
       :loading="loading"
@@ -122,7 +122,7 @@
           ...this.$store.getters['layoutsRegistry/blocks'],
           attributesBlocksFactory({
             attributes: this.$store.getters['attributes/list']({ scope: this.formData.scope }),
-            component: this.formData.isForm ? AttributeSet : AttributeRead,
+            component: this.formData.type === 'details' ? AttributeRead : AttributeSet,
             registry: this.registryAttrList || []
           })
         ];

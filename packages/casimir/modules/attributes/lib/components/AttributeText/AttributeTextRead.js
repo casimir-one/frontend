@@ -9,7 +9,7 @@ export const AttributeTextRead = {
   methods: {
     genAttribute() {
       return (
-        <VeLineClamp lines={this.proxyProps.VeLineClamp.lines}>
+        <VeLineClamp { ...{ props: this.proxyProps.VeLineClamp || {} }}>
           {this.internalValue}
         </VeLineClamp>
       );

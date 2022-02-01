@@ -5,7 +5,14 @@ export const baseAttributes = [
     type: 'text',
     label: 'Text field',
     icon: 'mdi-form-textbox',
-    validateRule: 'required'
+    validateRule: 'required',
+    proxyProps: {
+      VeLineClamp: {
+        lines: {
+          type: Number
+        }
+      }
+    }
   },
   {
     type: 'textarea',
