@@ -11,14 +11,16 @@ class BaseChainService extends Singleton {
   _chainOpsRegistry;
   _chainRpc;
   _coreAsset;
+  _portalId;
 
-  constructor({ connectionString, coreAsset }) {
+  constructor({ connectionString, coreAsset, portalId }) {
     assert(!!connectionString, `Node rpc connection string is not specified`);
     assert(!!coreAsset && coreAsset.id && coreAsset.symbol && (coreAsset.precision || coreAsset.precision === 0), 
       `Chain Core Asset should be specified in format { id, symbol, precision }`);
     super();
     this._rpcConnectionString = connectionString;
     this._coreAsset = coreAsset;
+    this._portalId = portalId;
   }
 
   init() { 
@@ -47,6 +49,11 @@ class BaseChainService extends Singleton {
   getChainRpc() {
     assert(this.isInited() && !!this._chainRpc, `Chain RPC is not available until initialization`);
     return this._chainRpc;
+  }
+
+  getPortalId() {
+    assert(this.isInited(), `Portal Id is not available until initialization`);
+    return this._portalId;
   }
 
   getChainTxBuilder() {

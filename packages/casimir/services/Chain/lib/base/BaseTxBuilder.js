@@ -9,13 +9,15 @@ class BaseTxBuilder {
   _chainNodeClient;
   _chainOpsRegistry;
   _isTxBuilding;
+  _portalId;
 
-  constructor(chainNodeClient, chainOpsRegistry) {
+  constructor(chainNodeClient, chainOpsRegistry, portalId) {
     this._tx = null;
     this._chainNodeClient = chainNodeClient;
     this._chainOpsRegistry = chainOpsRegistry;
     this._protocolCmds = [];
     this._isTxBuilding = false;
+    this._portalId = portalId || null;
   }
 
   clear() {

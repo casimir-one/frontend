@@ -637,6 +637,38 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
     
 
+    [APP_CMD.CREATE_PORTAL]: ({
+      entityId,
+      owner,
+      delegate,
+      metadata
+    }) => {
+
+      const createPortalOp = ['create_account', {
+        fee: toAssetUnits({ ...coreAsset, amount: 0 }),
+        creator: owner,
+        new_account_name: entityId,
+        owner: {
+          account_auths: [[owner, 1]],
+          key_auths: [],
+          weight_threshold: 1
+        },
+        active: {
+          account_auths: [[delegate, 1]],
+          key_auths: [],
+          weight_threshold: 1
+        },
+        active_overrides: [],
+        memo_key: crypto.generateKeys().public, // @deprecated
+        json_metadata: JSON.stringify({ metadata }),
+        traits: [["research_group", { description: "", extensions: [] }]], // @deprecated
+        extensions: []
+      }];
+
+      return [createPortalOp];
+
+    }
+
   }
 }
 

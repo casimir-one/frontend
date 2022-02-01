@@ -1,7 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { HttpProvider, WsProvider } from '@polkadot/rpc-provider';
 import { TypeRegistry } from '@polkadot/types/create';
-import { assert } from '@deip/toolbox';
 import BaseChainService from './../../base/BaseChainService';
 import SubstrateChainOperationsRegistry from './SubstrateChainOperationsRegistry';
 import SubstrateTxBuilder from './SubstrateTxBuilder';
@@ -15,8 +14,8 @@ import { verifySignature, isValidPrivKey } from './utils';
 
 class SubstrateChainService extends BaseChainService {
 
-  constructor({ connectionString, coreAsset }) {
-    super({ connectionString, coreAsset });
+  constructor({ connectionString, coreAsset, portalId }) {
+    super({ connectionString, coreAsset, portalId });
   }
 
   _chainMetadata;
@@ -59,7 +58,8 @@ class SubstrateChainService extends BaseChainService {
   getChainTxBuilder() {
     return new SubstrateTxBuilder(
       this.getChainNodeClient(), 
-      this.getChainOperationsRegistry()
+      this.getChainOperationsRegistry(),
+      this.getPortalId()
     );
   }
 

@@ -97,6 +97,16 @@ const encodeAddressFormat = (address, addressFormat = 42) => {
 }
 
 
+const toAddress = (value, registry) => {
+  const address = isAddress(value) 
+    ? value 
+    : isValidPubKey(toHexFormat(value)) 
+      ? pubKeyToAddress(toHexFormat(value)) 
+      : daoIdToAddress(toHexFormat(value), registry);
+  return address;
+}
+
+
 export {
   pubKeyToAddress,
   daoIdToAddress,
@@ -110,5 +120,6 @@ export {
   verifySignature,
   isValidPrivKey,
   isValidPubKey,
-  encodeAddressFormat
+  encodeAddressFormat,
+  toAddress
 }

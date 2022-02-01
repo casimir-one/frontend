@@ -1,8 +1,8 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
-import { hexToU8a, stringToHex, stringToU8a } from '@polkadot/util';
+import { hexToU8a, stringToHex } from '@polkadot/util';
 import { APP_CMD, ASSET_TYPE, CONTRACT_AGREEMENT_TYPE, PROJECT_CONTENT_TYPES } from '@deip/constants';
-import { daoIdToAddress, pubKeyToAddress, isAddress, isValidPubKey, getMultiAddress } from './utils';
+import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress } from './utils';
 import { pascalCase } from 'change-case';
 
 
@@ -95,12 +95,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       isThresholdPreserved
     }) => {
 
-      const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
+      const address = toAddress(member, chainNodeClient.registry);
       const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deipDao.alterAuthority(
           /* "alteration_type": */ { 
           "AddMember" : {
-            "member": account,
+            "member": address,
             "preserve_threshold": isThresholdPreserved
           } 
         })
@@ -116,12 +116,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       isThresholdPreserved
     }) => {
 
-      const account = isValidPubKey(`0x${member}`) ? pubKeyToAddress(`0x${member}`) : daoIdToAddress(`0x${member}`, chainNodeClient.registry);
+      const address = toAddress(member, chainNodeClient.registry);
       const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deipDao.alterAuthority(
           /* "alteration_type": */ { 
           "RemoveMember" : {
-            "member": account,
+            "member": address,
             "preserve_threshold": isThresholdPreserved
           } 
         })
@@ -581,41 +581,60 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       instanceId,
     }) => {
 
-      const toAddress = isValidPubKey(`0x${to}`) ? pubKeyToAddress(`0x${to}`) : daoIdToAddress(`0x${to}`, chainNodeClient.registry);
-      
-        if (assetType === ASSET_TYPE.NFT) {
-          const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-            chainNodeClient.tx.uniques.deipTransfer(
-              /* assetId: */ `0x${classId}`,
-              /* instance: */ instanceId,
-              /* to: */ { Native: toAddress }
+      const recipientAddress = toAddress(to, chainNodeClient.registry);
+
+      if (assetType === ASSET_TYPE.NFT) {
+        const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+          chainNodeClient.tx.uniques.deipTransfer(
+            /* assetId: */ `0x${classId}`,
+            /* instance: */ instanceId,
+            /* to: */ { Native: recipientAddress }
+          )
+        );
+        return [transferNftOp];
+      } else { // ASSET_TYPE.FT
+        if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
+          const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+            chainNodeClient.tx.balances.transfer(
+              /* to: */ recipientAddress,
+              /* amount: */ amount
             )
           );
-          return [transferNftOp];
-        } else { // ASSET_TYPE.FT
-          if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
-            const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-              chainNodeClient.tx.balances.transfer(
-                /* to: */ toAddress,
-                /* amount: */ amount
-              )
-            );
-            return [transferCoreAssetOp];
-          } else {
-            const transferFtOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-              chainNodeClient.tx.assets.deipTransfer(
-                /* assetId: */ `0x${tokenId}`,
-                /* to: */ { Native: toAddress },
-                /* amount: */ amount
-              )
-            );
-            return [transferFtOp];
-          }
+          return [transferCoreAssetOp];
+        } else {
+          const transferFtOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+            chainNodeClient.tx.assets.deipTransfer(
+              /* assetId: */ `0x${tokenId}`,
+              /* to: */ { Native: recipientAddress },
+              /* amount: */ amount
+            )
+          );
+          return [transferFtOp];
         }
       }
-    }
-}
+    },
 
+
+    [APP_CMD.CREATE_PORTAL]: ({
+      owner,
+      verificationPubKey,
+      metadata
+    }) => {
+
+      const address = toAddress(verificationPubKey, chainNodeClient.registry);
+      const createPortalOp = chainNodeClient.tx.deipDao.onBehalf(`0x${owner}`,
+        chainNodeClient.tx.deipPortal.create(
+          /* delegate: */ address,
+          /* metadata: */ metadata ? `0x${metadata}` : null
+        )
+      );
+
+      return [createPortalOp];
+    }
+    
+  }
+
+}
 
 class SubstrateChainOperationsRegistry extends BaseOperationsRegistry {
   constructor(chainNodeClient, settings) {

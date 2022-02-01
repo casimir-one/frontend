@@ -5,7 +5,7 @@ import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
  * Create fungible token command
- * @extends ProtocolCmd
+ * @extends ProtocolEntityCmd
  */
 class CreateFungibleTokenCmd extends ProtocolEntityCmd {
   /**
