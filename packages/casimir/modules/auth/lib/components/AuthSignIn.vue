@@ -18,6 +18,7 @@
               <v-text-field
                 ref="usernameFieldRef"
                 v-model="formModel.username"
+                name="username"
                 :label="usernameLabel"
                 :error-messages="errors"
                 v-bind="fieldsProps"
@@ -32,6 +33,7 @@
               <vex-password-input
                 ref="passwordFieldRef"
                 v-model="formModel.password"
+                name="password"
                 :label="passwordLabel"
                 :error-messages="errors"
                 v-bind="fieldsProps"
