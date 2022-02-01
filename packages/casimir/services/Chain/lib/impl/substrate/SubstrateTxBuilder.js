@@ -6,14 +6,15 @@ import { daoIdToAddress } from './utils';
 
 class SubstrateTxBuilder extends BaseTxBuilder {
 
-  constructor(chainNodeClient, chainOpsRegistry) {
-    super(chainNodeClient, chainOpsRegistry);
+  constructor(chainNodeClient, chainOpsRegistry, portalId) {
+    super(chainNodeClient, chainOpsRegistry, portalId);
   }
 
-  begin() {
+  begin(opts = { ignorePortalSig: false }) {
     return this._chainNodeClient.rpc.state.getMetadata()
       .then((chainMetadata) => {
-        this._tx = new SubstrateTx(null, chainMetadata.toHex());
+        const portalId = opts.ignorePortalSig ? null : this._portalId || null;
+        this._tx = new SubstrateTx(null, chainMetadata.toHex(), portalId);
         return super.begin();
       });
   }

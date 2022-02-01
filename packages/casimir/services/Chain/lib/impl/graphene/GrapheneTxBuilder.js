@@ -4,8 +4,8 @@ import GrapheneTx from './../graphene/GrapheneTx';
 
 class GrapheneTxBuilder extends BaseTxBuilder {
 
-  constructor(chainNodeClient, chainOpsRegistry) {
-    super(chainNodeClient, chainOpsRegistry);
+  constructor(chainNodeClient, chainOpsRegistry, portalId) {
+    super(chainNodeClient, chainOpsRegistry, portalId);
   }
 
   begin() {

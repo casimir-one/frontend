@@ -27,10 +27,12 @@ class GrapheneTx extends BaseTx {
     return !!this.getTx() && !!this.getTx().signatures.length;
   }
 
-  signByTenantAsync({ tenant, tenantPrivKey }, chainNodeClient) {
+  verifyByPortalAsync({ verificationPubKey, verificationPrivKey }, chainNodeClient) {
+    assert(!!this.isOnBehalfPortal(), `Transaction is not supposed for tenant verification`);
     assert(super.isFinalized(), 'Transaction is not finalized');
-    chainNodeClient.auth.signTransaction(this.getTx(), {}, { tenant, tenantPrivKey });
-    return Promise.resolve(this);
+    assert(!!this.isSigned(), `Transaction is not signed for sending`);
+    chainNodeClient.auth.signTransaction(this.getTx(), {}, { tenant: verifier, tenantPrivKey: verificationKey });
+    return this.getRawTx();
   }
 
   getRawTx() {
@@ -38,10 +40,10 @@ class GrapheneTx extends BaseTx {
     return JSON.parse(JSON.stringify(this.getTx()));
   }
 
-  sendAsync(chainRpc) {
+  getSignedRawTx() {
     assert(super.isFinalized(), 'Transaction is not finalized');
     assert(!!this.isSigned(), `Transaction is not signed for sending`);
-    return chainRpc.sendTxAsync(this.getRawTx());
+    return this.getRawTx();
   }
 
   finalize({ chainNodeClient }) {

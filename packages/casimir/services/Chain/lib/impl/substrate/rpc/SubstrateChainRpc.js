@@ -1,6 +1,6 @@
 import BaseChainRpc from './../../../base/rpc/BaseChainRpc';
-import { isAddress, daoIdToAddress, toHexFormat, fromHexFormat, encodeAddressFormat, addressToPubKey } from './../utils';
-import { u8aToHex, hexToString, u8aToString } from '@polkadot/util';
+import { isAddress, isValidPubKey, pubKeyToAddress, toHexFormat, fromHexFormat, encodeAddressFormat, addressToPubKey, toAddress } from './../utils';
+import { u8aToHex, hexToString } from '@polkadot/util';
 import SubstrateFungibleTokenDto from './response/dto/SubstrateFungibleTokenDto';
 import SubstrateNonFungibleTokenDto from './response/dto/SubstrateNonFungibleTokenDto';
 import SubstrateDaoDto from './response/dto/SubstrateDaoDto';
@@ -14,6 +14,7 @@ import SubstrateProposalDto from './response/dto/SubstrateProposalDto';
 import SubstrateReviewDto from './response/dto/SubstrateReviewDto';
 import SubstrateReviewUpvoteDto from './response/dto/SubstrateReviewUpvoteDto';
 import SubstrateDomainDto from './response/dto/SubstrateDomainDto';
+import SubstratePortalDto from './response/dto/SubstratePortalDto';
 
 
 
@@ -45,6 +46,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       const metadataOpt = await api.query.assets.assetMetadataMap(toHexFormat(assetId));
       const metadata = metadataOpt.isSome ? metadataOpt.unwrap().toJSON() : null;
+
       if (!metadata) return null;
       return {
         id: fromHexFormat(assetId),
@@ -69,9 +71,9 @@ class SubstrateChainRpc extends BaseChainRpc {
     }
 
 
-    const getCoreAssetBalanceDtoAsync = async (daoIdOrAddress) => {
+    const getCoreAssetBalanceDtoAsync = async (daoIdOrPubKeyOrAddress) => {
       const api = chainService.getChainNodeClient();
-      const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+      const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
 
       const account = await api.query.system.account(accountId);
       const daoId = await getDaoIdByAddressAsync(accountId);
@@ -219,6 +221,26 @@ class SubstrateChainRpc extends BaseChainRpc {
       },
 
 
+      /* PORTAL */
+
+      getPortalAsync: async (tenantId) => {
+        const api = chainService.getChainNodeClient();
+        const portalOpt = await api.query.deipPortal.portalRepository(toHexFormat(tenantId));
+        const portal = portalOpt.isSome ? portalOpt.unwrap().toJSON() : null;
+        if (!portal) return null;
+        return new SubstratePortalDto(portal);
+      },
+
+      getPortalsAsync: async () => {
+        const api = chainService.getChainNodeClient();
+        const entries = await api.query.deipPortal.portalRepository.entries();
+        const list = await Promise.all(entries.map(async ([{ args: [key] }, value]) => {
+          const portal = value.toJSON();
+          return new SubstratePortalDto(portal);
+        }));
+        return list;
+      },
+
 
       /* PROJECT */
 
@@ -233,9 +255,9 @@ class SubstrateChainRpc extends BaseChainRpc {
         return projects.map(({ value: project }) => new SubstrateProjectDto(project));
       },
 
-      getProjectsByTeamAsync: async (daoIdOrAddress, startIdx = null, limit = LIST_LIMIT) => {
+      getProjectsByTeamAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
         const api = chainService.getChainNodeClient();
-        const teamId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const teamId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
         const projects = await chainService.rpcToChainNode("deip_getProjectListByTeam", [null, teamId, limit, toHexFormat(startIdx)]);
         return projects.map(({ value: project }) => new SubstrateProjectDto(project));
       },
@@ -382,6 +404,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       getProjectAssetsAsync: async (projectId) => {
         const api = chainService.getChainNodeClient();
         const assetsOpt = await api.query.assets.assetIdByProjectId(toHexFormat(projectId));
+
         const assets = assetsOpt.isSome ? assetsOpt.unwrap().toJSON() : null;
         if (!assets) return [];
         const assetsDtos = await Promise.all(assets.map((assetId) => this.getFungibleTokenAsync(assetId)));
@@ -392,41 +415,44 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       /* FUNGIBLE TOKEN BALANCE */
 
-      getFungibleTokenBalanceByOwnerAsync: async (daoIdOrAddress, assetId) => {
+      getFungibleTokenBalanceByOwnerAsync: async (daoIdOrPubKeyOrAddress, assetId) => {
         if (assetId == coreAsset.id) {
-          const coreAssetBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrAddress);
+          const coreAssetBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
           return coreAssetBalanceDto;
         }
 
         const api = chainService.getChainNodeClient();
-        const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
         const balance = await chainService.rpcToChainNode("assets_getAssetBalanceByOwner", [null, accountId, toHexFormat(assetId)]);
         if (!balance) return null;
         let daoId;
-        if (isAddress(daoIdOrAddress)) {
-          daoId = await getDaoIdByAddressAsync(daoIdOrAddress);
+        if (isAddress(daoIdOrPubKeyOrAddress)) {
+          daoId = await getDaoIdByAddressAsync(daoIdOrPubKeyOrAddress);
+        } else if (isValidPubKey(toHexFormat(daoIdOrPubKeyOrAddress))) {
+          const id = await getDaoIdByAddressAsync(pubKeyToAddress(daoIdOrPubKeyOrAddress));
+          daoId = id || daoIdOrPubKeyOrAddress;
         } else {
-          daoId = daoIdOrAddress;
+          daoId = daoIdOrPubKeyOrAddress;
         }
         const assetMetadata = await getFungibleTokenMetadataAsync(assetId);
-        return new SubstrateFungibleTokenBalanceDto({ assetId, daoId, account: daoIdOrAddress, ...balance }, assetMetadata);
+        return new SubstrateFungibleTokenBalanceDto({ assetId, daoId, account: daoIdOrPubKeyOrAddress, ...balance }, assetMetadata);
       },
 
-      getFungibleTokenBalanceByOwnerAndSymbolAsync: async (daoIdOrAddress, symbol) => {
+      getFungibleTokenBalanceByOwnerAndSymbolAsync: async (daoIdOrPubKeyOrAddress, symbol) => {
         if (symbol == coreAsset.symbol) {
-          const coreAssetBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrAddress);
+          const coreAssetBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
           return coreAssetBalanceDto;
         }
 
         const assetDto = await this.getFungibleTokenBySymbolAsync(symbol);
         if (!assetDto) return null;
-        const balanceDto = await this.getFungibleTokenBalanceByOwnerAsync(daoIdOrAddress, assetDto.assetId);
+        const balanceDto = await this.getFungibleTokenBalanceByOwnerAsync(daoIdOrPubKeyOrAddress, assetDto.assetId);
         return balanceDto;
       },
 
-      getFungibleTokenBalancesByOwnerAsync: async (daoIdOrAddress) => {
+      getFungibleTokenBalancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
         const balancesDtos = await this.getFungibleTokenBalancesListAsync();
-        return balancesDtos.filter((balanceDto) => balanceDto.account == daoIdOrAddress);
+        return balancesDtos.filter((balanceDto) => balanceDto.account == daoIdOrPubKeyOrAddress);
       },
 
       getFungibleTokenBalancesAsync: async (assetId, startIdx = null, limit = LIST_LIMIT) => {
@@ -499,9 +525,9 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       /* NON-FUNGIBLE TOKEN CLASS INSTANCES */
 
-      getNonFungibleTokenClassInstancesByOwnerAsync: async (daoIdOrAddress, classId) => {
+      getNonFungibleTokenClassInstancesByOwnerAsync: async (daoIdOrPubKeyOrAddress, classId) => {
         const api = chainService.getChainNodeClient();
-        const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
 
         const classIdIntOpt = await api.query.uniques.nftClassIdByDeipNftClassId(toHexFormat(classId));
         const classIdInt = classIdIntOpt.isSome ? classIdIntOpt.unwrap().toNumber() : null;
@@ -517,13 +543,13 @@ class SubstrateChainRpc extends BaseChainRpc {
           return arr;
         }, []);
 
-        return new SubstrateNonFungibleTokenInstancesDto({ classId, account: daoIdOrAddress, instancesIds: instancesIds.sort() }, metadata);
+        return new SubstrateNonFungibleTokenInstancesDto({ classId, account: daoIdOrPubKeyOrAddress, instancesIds: instancesIds.sort() }, metadata);
       },
 
 
-      getNonFungibleTokenClassesInstancesByOwnerAsync: async (daoIdOrAddress) => {
+      getNonFungibleTokenClassesInstancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
         const api = chainService.getChainNodeClient();
-        const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
         const classInstancesByAccount = await api.query.parityTechUniques.account.entries(accountId);
 
         const classesMap = await classInstancesByAccount.reduce(async (mapP, [{ args: [accountId, u32, instanceId] }, value]) => {
@@ -548,7 +574,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
         return Object.keys(classesMap).map((classIdInt) => {
           const { classId, instancesIds, metadata } = classesMap[classIdInt];
-          return new SubstrateNonFungibleTokenInstancesDto({ classId, account: daoIdOrAddress, instancesIds: instancesIds.sort() }, metadata);
+          return new SubstrateNonFungibleTokenInstancesDto({ classId, account: daoIdOrPubKeyOrAddress, instancesIds: instancesIds.sort() }, metadata);
         });
 
       },
@@ -590,9 +616,9 @@ class SubstrateChainRpc extends BaseChainRpc {
         return list;
       },
 
-      getReviewsByAuthorAsync: async (daoIdOrAddress, startIdx = null, limit = LIST_LIMIT) => {
+      getReviewsByAuthorAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
         const api = chainService.getChainNodeClient();
-        const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
         const reviews = await chainService.rpcToChainNode("deip_getReviewListByReviewer", [null, accountId, limit, toHexFormat(startIdx)]);
         const list = await Promise.all(reviews.map(async ({ value: review }) => {
           const item = await getPreProcessedReviewAsync(review);
@@ -614,9 +640,9 @@ class SubstrateChainRpc extends BaseChainRpc {
         return list;
       },
 
-      getReviewUpvotesByUpvoterAsync: async (daoIdOrAddress, startIdx = null, limit = LIST_LIMIT) => {
+      getReviewUpvotesByUpvoterAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
         const api = chainService.getChainNodeClient();
-        const accountId = isAddress(daoIdOrAddress) ? daoIdOrAddress : daoIdToAddress(toHexFormat(daoIdOrAddress), api.registry);
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
         const reviewsUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByUpvoter", [null, accountId, limit, toHexFormat(startIdx)]);
         const list = await Promise.all(reviewsUpvotes.map(async ({ value: reviewUpvote }) => {
           const item = await getPreProcessedReviewUpvoteAsync(reviewUpvote);

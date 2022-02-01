@@ -12,9 +12,10 @@ class GrapheneChainService extends BaseChainService {
 
   _chainId;
   _reconnectTimeout = 3000;
-  
-  constructor({ connectionString, chainId, coreAsset }) {
-    super({ connectionString, coreAsset });
+  _portalId;
+
+  constructor({ connectionString, chainId, coreAsset, portalId }) {
+    super({ connectionString, coreAsset, portalId });
     assert(!!chainId, `Graphene CHAIN ID is not specified`);
     this._chainId = chainId;
   }
@@ -47,7 +48,11 @@ class GrapheneChainService extends BaseChainService {
   }
 
   getChainTxBuilder() {
-    return new GrapheneTxBuilder(this.getChainNodeClient(), this.getChainOperationsRegistry());
+    return new GrapheneTxBuilder(
+      this.getChainNodeClient(), 
+      this.getChainOperationsRegistry(),
+      this.getPortalId()
+    );
   }
  
   generateChainSeedAccount({ username, password, privateKey }) {

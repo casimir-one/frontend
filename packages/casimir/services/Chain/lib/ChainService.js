@@ -6,13 +6,14 @@ import GrapheneChainService from './impl/graphene/GrapheneChainService';
 
 class ChainService extends Singleton {
 
-  constructor({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET }) {
+  constructor({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, PORTAL_ID }) {
     let impl;
     switch (CHAIN_PROTOCOL) {
       case PROTOCOL_CHAIN.SUBSTRATE: {
         impl = SubstrateChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
-          coreAsset: CORE_ASSET
+          coreAsset: CORE_ASSET,
+          portalId: PORTAL_ID
         });
         break;
       }
@@ -20,7 +21,8 @@ class ChainService extends Singleton {
         impl = GrapheneChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
           coreAsset: CORE_ASSET,
-          chainId: CHAIN_ID
+          chainId: CHAIN_ID,
+          portalId: PORTAL_ID
         });
         break;
       }
@@ -36,8 +38,8 @@ class ChainService extends Singleton {
     return this.impl.init();
   }
 
-  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET }) {
-    const chainService = ChainService.getInstance({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET });
+  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, TENANT: PORTAL_ID }) {
+    const chainService = ChainService.getInstance({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, PORTAL_ID });
     return chainService.init();
   }
 
