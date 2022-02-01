@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.368.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix sign up ([f476f28](https://gitlab.com/DEIP/deip-client-modules/commit/f476f285ed7a81a517b44878ad42edb64593d330))
+
+
+
+
+
 # [1.367.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
 
 **Note:** Version bump only for package @deip/auth-module

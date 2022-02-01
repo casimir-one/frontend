@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.368.0](https://github.com/DEIPworld/deip-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
+
+**Note:** Version bump only for package @deip/document-template-service
+
+
+
+
+
 # [1.366.0](https://github.com/DEIPworld/deip-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/document-template-service

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.368.0](https://github.com/DEIPworld/deip-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix sign up ([f476f28](https://github.com/DEIPworld/deip-modules/commit/f476f285ed7a81a517b44878ad42edb64593d330))
+
+
+### Features
+
+* **@deip/layout-service:** new api ([89d1418](https://github.com/DEIPworld/deip-modules/commit/89d14187c6929ddb2e17f5f40508893ad175f0df))
+
+
+
+
+
 # [1.367.0](https://github.com/DEIPworld/deip-modules/compare/v1.366.0...v1.367.0) (2022-01-28)
 
 

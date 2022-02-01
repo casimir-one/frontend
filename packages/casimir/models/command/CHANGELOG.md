@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.368.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
+
+
+### Features
+
+* **@deip/layout-service:** new api ([89d1418](https://gitlab.com/DEIP/deip-client-modules/commit/89d14187c6929ddb2e17f5f40508893ad175f0df))
+
+
+
+
+
 # [1.366.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.365.0...v1.366.0) (2022-01-24)
 
 **Note:** Version bump only for package @deip/command-models
