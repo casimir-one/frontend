@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.368.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.0...v1.368.1) (2022-02-01)
+
+
+### Bug Fixes
+
+* **@deip/layouts-module:** attributes blocks ([1df512e](https://gitlab.com/DEIP/deip-client-modules/commit/1df512eaa35a7729668f956f133db6c62cc45fbe))
+
+
+
+
+
 # [1.368.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
 
 **Note:** Version bump only for package @deip/attributes-module

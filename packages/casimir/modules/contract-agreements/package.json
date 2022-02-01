@@ -1,6 +1,6 @@
 {
   "name": "@deip/contract-agreements-module",
-  "version": "1.368.0",
+  "version": "1.368.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,9 +23,9 @@
     "@deip/platform-store": "1.366.0",
     "@deip/proposals-service": "1.368.0",
     "@deip/proxydi": "1.366.0",
-    "@deip/teams-module": "1.368.0",
+    "@deip/teams-module": "1.368.1",
     "@deip/toolbox": "1.366.0",
-    "@deip/users-module": "1.368.0",
+    "@deip/users-module": "1.368.1",
     "@deip/vue-elements": "1.367.0",
     "@deip/vuetify-extended": "1.368.0",
     "vue-pdf": "^4.3.0"
