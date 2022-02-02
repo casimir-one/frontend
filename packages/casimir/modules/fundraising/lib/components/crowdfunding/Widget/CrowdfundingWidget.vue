@@ -2,13 +2,13 @@
   <v-card v-if="!loading" elevation="0" light>
     <v-card-text>
       <ve-stack :gap="24">
-        <template v-if="tokenSale">
+        <template v-if="investmentOpportunity">
           <crowdfunding-progress
-            :token-sale="tokenSale"
+            :investment-opportunity="investmentOpportunity"
           />
 
           <v-card
-            v-if="tokenSale.status != TS_TYPES.INACTIVE"
+            v-if="investmentOpportunity.status != TS_TYPES.INACTIVE"
             outlined
             class="py-2 px-3 d-flex justify-space-between"
           >
@@ -20,7 +20,7 @@
           </v-card>
 
           <v-btn
-            v-if="tokenSale.status === TS_TYPES.ACTIVE"
+            v-if="investmentOpportunity.status === TS_TYPES.ACTIVE"
             :to="investLink"
             color="primary"
             depressed
@@ -102,39 +102,39 @@
     },
 
     computed: {
-      tokenSale() {
-        const projectTokenSales = this.$store.getters['fundraising/list']({
+      investmentOpportunity() {
+        const projectInvestmentOpportunities = this.$store.getters['fundraising/list']({
           projectId: this.projectId
         });
 
-        if (!projectTokenSales.length) {
+        if (!projectInvestmentOpportunities.length) {
           return null;
         }
 
-        const sorted = orderBy(projectTokenSales, ['startTime'], ['desc']);
+        const sorted = orderBy(projectInvestmentOpportunities, ['startTime'], ['desc']);
 
         return sorted[0];
       },
 
       isCrowdfundingCanBeStarted() {
         return this.canUserStartCrowdfunding
-          && (!this.tokenSale
-            || [TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(this.tokenSale?.status));
+          && (!this.investmentOpportunity
+            || [TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(this.investmentOpportunity?.status));
       },
 
       userInvestment() {
-        if (!this.tokenSale) {
+        if (!this.investmentOpportunity) {
           return null;
         }
 
-        if (!this.tokenSale.investments) {
+        if (!this.investmentOpportunity.investments) {
           return {
-            ...this.tokenSale.hardCap,
+            ...this.investmentOpportunity.hardCap,
             amount: 0
           };
         }
 
-        const amount = this.tokenSale.investments.reduce((acc, current) => {
+        const amount = this.investmentOpportunity.investments.reduce((acc, current) => {
           if (current.investor === this.$currentUser._id) {
             // eslint-disable-next-line no-param-reassign
             acc += parseFloat(current.asset.amount);
@@ -143,7 +143,7 @@
         }, 0);
 
         return {
-          ...this.tokenSale.hardCap,
+          ...this.investmentOpportunity.hardCap,
           amount
         };
       }
@@ -153,7 +153,7 @@
       this.timerId = setInterval(this.updateComponentData.bind(this), this.autoUpdateTime);
 
       this.loading = true;
-      this.getProjectTokenSaleData().finally(() => {
+      this.getProjectInvestmentOpportunityData().finally(() => {
         this.loading = false;
       });
     },
@@ -164,8 +164,8 @@
 
     methods: {
       updateComponentData() {
-        if (!this.tokenSale) return null;
-        const { status } = this.tokenSale;
+        if (!this.investmentOpportunity) return null;
+        const { status } = this.investmentOpportunity;
         const {
           INACTIVE, EXPIRED, FINISHED
         } = TS_TYPES;
@@ -177,17 +177,17 @@
 
         if ([FINISHED, EXPIRED].includes(status)) {
           this.cancelAutoUpdate();
-          return this.getProjectTokenSaleData();
+          return this.getProjectInvestmentOpportunityData();
         }
 
-        return this.getProjectTokenSaleData();
+        return this.getProjectInvestmentOpportunityData();
       },
 
-      getProjectTokenSaleData() {
+      getProjectInvestmentOpportunityData() {
         return this.$store.dispatch('fundraising/getListByProjectId', this.projectId)
           .then(() => {
-            if (this.tokenSale) {
-              this.$store.dispatch('fundraising/getTokenSaleInvestments', this.tokenSale._id);
+            if (this.investmentOpportunity) {
+              this.$store.dispatch('fundraising/getInvestmentOpportunityInvestments', this.investmentOpportunity._id);
             }
           })
           .catch((error) => {

@@ -33,14 +33,14 @@
     />
 
     <div class="text-caption text--secondary">
-      <div v-if="tokenSale.status === TS_TYPES.ACTIVE">
+      <div v-if="investmentOpportunity.status === TS_TYPES.ACTIVE">
         <span class="font-weight-medium">
           {{ $t('module.crowdfunding.crowdfundingProgress.untilCompletion') }}:
         </span>
         <span>{{ remainingTime }}</span>
       </div>
 
-      <div v-else-if="tokenSale.status === TS_TYPES.INACTIVE">
+      <div v-else-if="investmentOpportunity.status === TS_TYPES.INACTIVE">
         <span class="font-weight-medium">
           {{ $t('module.crowdfunding.crowdfundingProgress.beforeStart') }}:
         </span>
@@ -69,7 +69,7 @@
     mixins: [dateMixin],
 
     props: {
-      tokenSale: {
+      investmentOpportunity: {
         type: Object,
         required: true,
         default() { return {}; }
@@ -88,29 +88,29 @@
 
     computed: {
       hardCap() {
-        return this.tokenSale?.hardCap;
+        return this.investmentOpportunity?.hardCap;
       },
       collected() {
-        return this.tokenSale?.totalInvested;
+        return this.investmentOpportunity?.totalInvested;
       },
       currentPercent() {
         if (!this.hardCap) { return 0; }
         return (this.collected.amount * 100) / this.hardCap.amount;
       },
       remainingTime() {
-        return this.formatTimeToNow(this.tokenSale?.endTime);
+        return this.formatTimeToNow(this.investmentOpportunity?.endTime);
       },
       beforeStartTime() {
-        return this.formatTimeToNow(this.tokenSale?.startTime);
+        return this.formatTimeToNow(this.investmentOpportunity?.startTime);
       },
       investmentsCount() {
-        if (!this.tokenSale?.investments) {
+        if (!this.investmentOpportunity?.investments) {
           return 0;
         }
-        return uniqBy(this.tokenSale.investments, 'investor').length;
+        return uniqBy(this.investmentOpportunity.investments, 'investor').length;
       },
       barColor() {
-        return this.tokenSale.status === TS_TYPES.EXPIRED ? 'error' : 'success';
+        return this.investmentOpportunity.status === TS_TYPES.EXPIRED ? 'error' : 'success';
       },
       barHeight() {
         return this.small ? 4 : 8;

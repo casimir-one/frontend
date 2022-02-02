@@ -58,18 +58,18 @@ const ACTIONS = {
       });
   },
 
-  getTokenSaleInvestments({ commit, getters }, investmentOpportunityId) {
+  getInvestmentOpportunityInvestments({ commit, getters }, investmentOpportunityId) {
     return investmentsService.getInvestmentsHistoryByTokenSale(investmentOpportunityId)
       .then((res) => {
-        const tokenSale = getters.one(investmentOpportunityId);
+        const investmentOpportunity = getters.one(investmentOpportunityId);
         commit('setOne', {
-          ...tokenSale,
+          ...investmentOpportunity,
           investments: res.data.items
         });
       });
   },
 
-  getCurrentTokenSaleByProject({ commit }, projectId) {
+  getCurrentInvestmentOpportunityByProject({ commit }, projectId) {
     return investmentsService.getCurrentTokenSaleByProject(projectId)
       .then((res) => {
         commit('setOne', res.data);

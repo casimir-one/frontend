@@ -4,9 +4,8 @@
       <ve-stack :gap="32">
         <slot name="header" />
         <v-divider />
-
         <crowdfunding-progress
-          :token-sale="tokenSale"
+          :investment-opportunity="investmentOpportunity"
         />
 
         <ve-stack :gap="24">
@@ -98,7 +97,7 @@
     },
 
     props: {
-      tokenSale: {
+      investmentOpportunity: {
         type: Object,
         required: true
       },
@@ -121,18 +120,18 @@
 
     computed: {
       hardCap() {
-        return this.tokenSale?.hardCap
+        return this.investmentOpportunity?.hardCap
           ? {
-            ...this.tokenSale.hardCap,
-            amount: parseInt(this.tokenSale.hardCap.amount)
+            ...this.investmentOpportunity.hardCap,
+            amount: parseInt(this.investmentOpportunity.hardCap.amount)
           }
           : {};
       },
 
       collected() {
-        return this.tokenSale?.totalInvested ? {
-          ...this.tokenSale.totalInvested,
-          amount: parseInt(this.tokenSale.totalInvested.amount)
+        return this.investmentOpportunity?.totalInvested ? {
+          ...this.investmentOpportunity.totalInvested,
+          amount: parseInt(this.investmentOpportunity.totalInvested.amount)
         }
           : {};
       },
@@ -195,7 +194,7 @@
         const payload = {
           user: this.$currentUser,
           data: {
-            investmentOpportunityId: this.tokenSale._id,
+            investmentOpportunityId: this.investmentOpportunity._id,
             investor: this.$currentUser._id,
             asset: this.formData.assetToInvest
           }
