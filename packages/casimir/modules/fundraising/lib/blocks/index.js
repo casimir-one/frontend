@@ -1,7 +1,7 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
 import CrowdfundingWidget from '../components/crowdfunding/Widget/CrowdfundingWidget';
 
-export const сrowdfundingBlocks = {
+export const crowdfundingBlocks = {
   title: 'Crowdfunding',
   blocks: [
     ...blocksGenerator([
@@ -9,10 +9,10 @@ export const сrowdfundingBlocks = {
         component: CrowdfundingWidget,
         data: {
           props: {
-            projectId: '{{сrowdfundingWidget.projectId}}',
+            projectId: '{{crowdfundingWidget.projectId}}',
             canUserStartCrowdfunding: '{{canEdit}}',
             investLink: '{{crowdfundingWidget.investLink}}',
-            startCrowdfundingLink: '{{сrowdfundingWidget.startCrowdfundingLink}}'
+            startCrowdfundingLink: '{{crowdfundingWidget.startCrowdfundingLink}}'
           }
         },
         icon: 'mdi-cash',
