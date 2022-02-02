@@ -29,7 +29,7 @@ export default {
         status: 'Status'
       },
       details: {
-        sign: 'Accept and sign',
+        sign: 'Accept and Sign',
         agreementMessage: 'I have read the terms of the {0}',
         tos: 'User Agreement',
         noFile: 'No file'
