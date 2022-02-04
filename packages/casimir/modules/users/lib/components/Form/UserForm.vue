@@ -1,5 +1,11 @@
 <template>
   <validation-observer v-slot="{ handleSubmit, invalid }">
+    <ve-raw-display
+      v-if="$env.NODE_ENV === 'development'"
+      :value="formData"
+      class="mb-6"
+    />
+
     <v-form @submit.prevent="handleSubmit(updateUser)">
       <ve-stack :gap="32">
         <layout-renderer
@@ -8,7 +14,6 @@
           v-model="formData"
           :schema="schema"
           :schema-data="schemaData"
-          :components="rendererComponents"
         />
 
         <v-divider />
@@ -30,7 +35,7 @@
             :disabled="disabled || untouched || invalid"
             :loading="loading"
           >
-            Save
+            {{ submitLabelText }}
           </v-btn>
         </div>
       </ve-stack>
@@ -39,39 +44,45 @@
 </template>
 
 <script>
-  import { AttributeSet, attributeMethodsFactory } from '@deip/attributes-module';
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { VeStack } from '@deip/vue-elements';
+  import { VeStack, VeRawDisplay } from '@deip/vue-elements';
+  import { VIEW_MODE } from '@deip/constants';
 
   export default {
     name: 'UserForm',
 
     components: {
       LayoutRenderer,
-      VeStack
+      VeStack,
+      VeRawDisplay
     },
 
-    mixins: [attributedFormFactory('user')],
+    mixins: [attributedFormFactory('user', 'user')],
 
-    data() {
-      return {
-        rendererComponents: {
-          AttributeSet
+    props: {
+      cancelLabel: {
+        type: String,
+        default() {
+          return this.$t('module.users.form.cancel');
         }
-      };
+      },
+      submitLabel: {
+        type: String,
+        default() {
+          return null;
+        }
+      }
     },
 
     computed: {
-      schemaData() {
-        return {
-          ...attributeMethodsFactory(
-            this.formData,
-            {
-              scopeName: 'user',
-              scopeId: this.formData._id
-            }
-          )
-        };
+      submitLabelText() {
+        if (this.submitLabel) {
+          return this.submitLabel;
+        }
+
+        return this.mode === VIEW_MODE.CREATE
+          ? this.$t('module.users.form.create')
+          : this.$t('module.users.form.update');
       }
     },
 

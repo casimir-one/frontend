@@ -1,6 +1,7 @@
 <template>
   <vex-avatar
     :src="avatarSrc"
+    :title="userName"
     v-bind="avatarProps"
   />
 </template>
@@ -29,6 +30,10 @@
     computed: {
       avatarProps() {
         return getBindableProps.call(this, VexAvatar.options.props);
+      },
+
+      userName() {
+        return this.$$userFullName(this.user);
       },
 
       /** @returns {null | string} */
