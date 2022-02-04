@@ -121,7 +121,6 @@
       fieldsProps: {
         type: Object,
         default: () => ({
-          outlined: true,
           autocomplete: 'new-password'
         })
       },
