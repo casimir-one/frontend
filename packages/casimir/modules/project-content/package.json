@@ -32,8 +32,7 @@
     "@deip/users-module": "1.368.1",
     "@deip/vue-editorjs": "1.366.0",
     "@deip/vue-elements": "1.367.0",
-    "@deip/vuetify-extended": "1.368.0",
-    "vuetify": "^2.6.1"
+    "@deip/vuetify-extended": "1.368.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
