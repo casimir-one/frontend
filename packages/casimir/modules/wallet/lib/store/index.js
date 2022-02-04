@@ -38,8 +38,9 @@ const ACTIONS = {
     commit('clear');
   },
 
-  deposit(_, payload) {
-    return assetsService.depositAssets(payload);
+  async deposit(_, payload) {
+    const response = await assetsService.depositAssets(payload);
+    return response.data;
   },
 
   getHistory({ commit }, payload) {
