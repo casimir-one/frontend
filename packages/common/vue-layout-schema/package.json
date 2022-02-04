@@ -33,7 +33,7 @@
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
-    "@deip/vuetify-extended": "^1.341.0",
+    "@deip/vuetify-extended": "^1.367.0",
     "@mdi/font": "^6.5.95",
     "@mdi/svg": "^6.5.95",
     "vue": "^2.6.14",

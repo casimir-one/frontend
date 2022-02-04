@@ -29,6 +29,6 @@
     "@deip/toolbox": "1.366.0"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.341.0"
+    "@deip/app-config-service": "^1.366.0"
   }
 }
