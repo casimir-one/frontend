@@ -13,7 +13,9 @@ import {
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
 import { TeamService } from '@deip/team-service';
-import { createInstanceGetter, genSha256Hash } from '@deip/toolbox';
+import {
+  createFormData, createInstanceGetter, genSha256Hash, replaceFileWithName
+} from '@deip/toolbox';
 import { ProjectHttp } from './ProjectHttp';
 
 // TODO: move to constants
@@ -23,6 +25,27 @@ export class ProjectService {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
   teamService = TeamService.getInstance();
+
+  static #convertFormData(data) {
+    const formData = createFormData(data);
+    const attributes = replaceFileWithName(data.attributes);
+    const description = genSha256Hash(attributes);
+
+    return {
+      formData,
+      attributes,
+      description
+    };
+  }
+
+  static #convertProposalInfo(proposalInfo) {
+    return {
+      isProposal: false,
+      isProposalApproved: true,
+      proposalLifetime: proposalDefaultLifetime,
+      ...proposalInfo
+    };
+  }
 
   async getProject(projectId) {
     return this.projectHttp.getProject(projectId);
@@ -36,31 +59,41 @@ export class ProjectService {
     return this.projectHttp.getTeamDefaultProject(teamId);
   }
 
-  async createProject({ privKey }, {
-    isAdmin,
-    teamId,
-    creator,
-    domains,
-    isPrivate,
-    members,
-    attributes,
-    formData
-  },
-  proposalInfo) {
-    const { isProposal, isProposalApproved, proposalLifetime } = {
-      isProposal: false,
-      isProposalApproved: true,
-      proposalLifetime: proposalDefaultLifetime,
-      ...proposalInfo
-    };
-
+  async createProject(payload) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET } = env;
-    const isNewProjectTeam = teamId === null;
+
+    const {
+      initiator: { privKey, username: creator },
+      proposalInfo,
+      ...data
+    } = payload;
+
+    const {
+      teamId = null,
+      members = [],
+      isPrivate = false,
+      isAdmin = false,
+      domains = []
+    } = data;
+
+    const {
+      isProposal,
+      isProposalApproved,
+      proposalLifetime
+    } = ProjectService.#convertProposalInfo(proposalInfo);
+
+    const {
+      formData,
+      attributes,
+      description
+    } = ProjectService.#convertFormData(data);
+
+    const needProjectTeam = teamId === null;
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
-      isNewProjectTeam ? Promise.resolve({ data: {} }) : this.teamService.getTeam(teamId)
+      needProjectTeam ? Promise.resolve({ data: {} }) : this.teamService.getTeam(teamId)
     ])
       .then(([chainService, teamResponse]) => {
         const team = teamResponse?.data;
@@ -73,9 +106,12 @@ export class ProjectService {
         const chainTxBuilder = chainService.getChainTxBuilder();
 
         let projectId;
+
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            if (isNewProjectTeam) {
+            let projectTeamId = teamId;
+
+            if (needProjectTeam) {
               const authoritySetup = {
                 auths: [],
                 weight: 1
@@ -100,25 +136,22 @@ export class ProjectService {
                 isTeamAccount: true,
                 fee: { ...CORE_ASSET, amount: 0 },
                 creator,
-                authority: {
-                  owner: authoritySetup
-                },
+                authority: { owner: authoritySetup },
                 description: genSha256Hash(JSON.stringify({})),
                 attributes: []
               });
 
               txBuilder.addCmd(createDaoCmd);
-              // eslint-disable-next-line no-param-reassign
-              teamId = createDaoCmd.getProtocolEntityId();
+              projectTeamId = createDaoCmd.getProtocolEntityId();
             }
 
             const createProjectCmd = new CreateProjectCmd({
-              teamId,
-              description: genSha256Hash(JSON.stringify(attributes)),
+              teamId: projectTeamId,
+              description,
               domains,
               isPrivate,
               isDefault: false,
-              members: undefined,
+              members: undefined, // ???
               attributes
             });
 
@@ -157,31 +190,42 @@ export class ProjectService {
       });
   }
 
-  async updateProject({ privKey }, {
-    projectId,
-    teamId,
-    isPrivate,
-    members,
-    updater,
-    attributes,
-    formData
-  },
-  proposalInfo) {
-    const { isProposal, isProposalApproved, proposalLifetime } = {
-      isProposal: false,
-      isProposalApproved: true,
-      proposalLifetime: proposalDefaultLifetime,
-      ...proposalInfo
-    };
-
+  async updateProject(payload) {
     const env = this.proxydi.get('env');
     const { TENANT } = env;
+
+    const {
+      initiator: { privKey, username: updater },
+      proposalInfo,
+      ...data
+    } = payload;
+
+    const {
+      _id,
+      teamId = null,
+      members = undefined,
+      isPrivate = false
+    } = data;
+
+    const {
+      isProposal,
+      isProposalApproved,
+      proposalLifetime
+    } = ProjectService.#convertProposalInfo(proposalInfo);
+
+    const {
+      formData,
+      attributes,
+      description
+    } = ProjectService.#convertFormData(data);
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
       this.teamService.getTeam(teamId)
     ])
-      .then(([chainService, team]) => {
+      .then(([chainService, teamResponse]) => {
+        const team = teamResponse?.data;
+
         const teamMembers = [];
         const list = team.members ? team.members.map((m) => m.username) : [];
         teamMembers.push(...list);
@@ -194,38 +238,31 @@ export class ProjectService {
             const joinedMembers = members
               ? members.filter((member) => !teamMembers.includes(member))
               : [];
+
             const leftMembers = members
-              ? teamMembers.filter((member) => !members.includes(member) && member != TENANT)
+              ? teamMembers.filter((member) => !members.includes(member) && member !== TENANT)
               : [];
 
-            const invites = joinedMembers.map((invitee) => {
-              const addTeamMemberCmd = new AddDaoMemberCmd({
-                member: invitee,
-                teamId,
-                projectId,
-                isThresholdPreserved: true
-              });
+            const invites = joinedMembers.map((invitee) => new AddDaoMemberCmd({
+              member: invitee,
+              teamId,
+              projectId: _id,
+              isThresholdPreserved: true
+            }));
 
-              return addTeamMemberCmd;
-            });
-
-            const leavings = leftMembers.map((leaving) => {
-              const removeDaoMemberCmd = new RemoveDaoMemberCmd({
-                member: leaving,
-                teamId,
-                projectId,
-                isThresholdPreserved: true
-              });
-
-              return removeDaoMemberCmd;
-            });
+            const leavings = leftMembers.map((leaving) => new RemoveDaoMemberCmd({
+              member: leaving,
+              teamId,
+              projectId: _id,
+              isThresholdPreserved: true
+            }));
 
             const updateProjectCmd = new UpdateProjectCmd({
-              entityId: projectId,
+              entityId: _id,
               teamId,
-              description: genSha256Hash(JSON.stringify(attributes)),
+              description,
               isPrivate,
-              members: undefined,
+              members: undefined, // ???
               attributes
             });
 
@@ -262,7 +299,7 @@ export class ProjectService {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
+            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': _id });
             return this.projectHttp.updateProject(msg);
           });
       });
