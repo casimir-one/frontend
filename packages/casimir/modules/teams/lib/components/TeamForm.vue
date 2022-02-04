@@ -21,7 +21,6 @@
           v-model="formData"
           :schema="schema"
           :schema-data="schemaData"
-          :components="rendererComponents"
         />
 
         <v-divider />
@@ -54,7 +53,6 @@
 </template>
 
 <script>
-  import { AttributeSet, attributeMethodsFactory } from '@deip/attributes-module'; // check
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VIEW_MODE } from '@deip/constants';
   import { VeRawDisplay, VeStack } from '@deip/vue-elements';
@@ -69,7 +67,7 @@
       LayoutRenderer
     },
 
-    mixins: [attributedFormFactory('team')],
+    mixins: [attributedFormFactory('team', 'team')],
 
     props: {
       withDefaultProject: {
@@ -90,30 +88,7 @@
       }
     },
 
-    data() {
-      return {
-        rendererComponents: {
-          ...this.components,
-          ...{
-            AttributeSet
-          }
-        }
-      };
-    },
-
     computed: {
-      schemaData() {
-        return {
-          ...attributeMethodsFactory(
-            this.formData,
-            {
-              scopeName: 'team',
-              scopeId: this.formData._id
-            }
-          )
-        };
-      },
-
       submitLabelText() {
         if (this.submitLabel) {
           return this.submitLabel;

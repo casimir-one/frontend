@@ -67,31 +67,26 @@ const ACTIONS = {
       });
   },
 
-  create({ dispatch }, payload) {
+  async create({ dispatch }, payload) {
     const {
       isCreateDefaultProject,
       members = [],
       ...data
     } = payload;
 
-    return teamService
-      .createTeam({ ...data, members }, isCreateDefaultProject)
-      .then((res) => {
-        dispatch('getOne', res._id);
-        dispatch('currentUser/get', null, { root: true }); // update current user roles
+    const res = await teamService
+      .createTeam({ ...data, members }, isCreateDefaultProject);
+    dispatch('getOne', res.data._id);
+    dispatch('currentUser/get', null, { root: true }); // update current user roles
 
-        return res;
-      });
+    return res.data;
   },
 
-  update({ dispatch }, payload) {
-    return teamService
-      .updateTeam(payload)
-      .then((res) => {
-        dispatch('getOne', res._id);
+  async update({ dispatch }, payload) {
+    const res = await teamService.updateTeam(payload);
+    dispatch('getOne', res.data._id);
 
-        return res;
-      });
+    return res.data;
   }
 };
 
