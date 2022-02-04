@@ -108,9 +108,7 @@
       },
       fieldsProps: {
         type: Object,
-        default: () => ({
-          outlined: true
-        })
+        default: () => ({ })
       }
     },
 
