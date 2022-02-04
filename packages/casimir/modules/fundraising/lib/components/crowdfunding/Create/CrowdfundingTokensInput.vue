@@ -12,7 +12,7 @@
             required: true,
             minMaxValue: {
               min: MIN_TOKEN_UNITS_TO_SELL,
-              max: issuedTokens.amount
+              max: availableTokens.amount
             }
           }"
         >
@@ -21,7 +21,7 @@
             outlined
             persistent-hint
             :error-messages="errors"
-            :suffix="issuedTokens.symbol"
+            :suffix="availableTokens.symbol"
             :hint="tokensHint"
             autocomplete="off"
           >
@@ -92,7 +92,10 @@
         const messages = [
           `${this.toPercent(this.internalTokens, this.issuedTokens)} of ${this.$$formatAsset(this.issuedTokens)} issued tokens`
         ];
-        if (this.issuedTokens?.amount > this.availableTokens?.amount) {
+
+        if (this.issuedTokens
+          && this.availableTokens
+          && parseFloat(this.issuedTokens.amount) > parseFloat(this.availableTokens.amount)) {
           messages.push(
             `${this.toPercent(this.internalTokens, this.availableTokens)} of ${this.$$formatAsset(this.availableTokens)} team's tokens`
           );
