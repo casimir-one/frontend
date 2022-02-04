@@ -1,7 +1,8 @@
 import { VueEditorjsParser } from '@deip/vue-editorjs';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeRichtextRead = {
+export const AttributeRichtextRead = defineComponent({
   name: 'AttributeRichtextRead',
 
   mixins: [AttributeReadMixin],
@@ -13,4 +14,4 @@ export const AttributeRichtextRead = {
       );
     }
   }
-};
+});

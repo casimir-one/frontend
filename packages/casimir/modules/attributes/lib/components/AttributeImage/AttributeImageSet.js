@@ -1,8 +1,9 @@
 import { VexImageInput } from '@deip/vuetify-extended';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeImageSet = {
+export const AttributeImageSet = defineComponent({
   name: 'AttributeImageSet',
 
   mixins: [AttributeSetMixin],
@@ -20,4 +21,4 @@ export const AttributeImageSet = {
       );
     }
   }
-};
+});

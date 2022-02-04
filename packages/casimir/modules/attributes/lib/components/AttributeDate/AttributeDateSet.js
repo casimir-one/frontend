@@ -1,8 +1,9 @@
 import { VexDateInput } from '@deip/vuetify-extended';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeDateSet = {
+export const AttributeDateSet = defineComponent({
   name: 'AttributeDateSet',
 
   mixins: [AttributeSetMixin],
@@ -18,4 +19,4 @@ export const AttributeDateSet = {
       );
     }
   }
-};
+});

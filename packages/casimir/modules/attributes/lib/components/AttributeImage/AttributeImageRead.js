@@ -2,9 +2,10 @@ import {
   VImg
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeImageRead = {
+export const AttributeImageRead = defineComponent({
   name: 'AttributeImageRead',
 
   mixins: [AttributeReadMixin],
@@ -18,4 +19,4 @@ export const AttributeImageRead = {
       );
     }
   }
-};
+});

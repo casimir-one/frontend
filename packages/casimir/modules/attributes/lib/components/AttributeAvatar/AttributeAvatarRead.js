@@ -1,7 +1,8 @@
 import { VexAvatar } from '@deip/vuetify-extended';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeAvatarRead = {
+export const AttributeAvatarRead = defineComponent({
   name: 'AttributeAvatarRead',
 
   mixins: [AttributeReadMixin],
@@ -20,4 +21,4 @@ export const AttributeAvatarRead = {
   render() {
     return this.genAttribute();
   }
-};
+});

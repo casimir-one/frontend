@@ -70,11 +70,9 @@
   } from '@deip/vue-layout-schema';
 
   import { VIEW_MODE } from '@deip/constants';
-  import { AttributeSet, AttributeRead } from '@deip/attributes-module';
 
-  import {
-    attributesBlocksFactory
-  } from '../../blocks';
+  import { wrapInArray } from '@deip/toolbox';
+  import { attributesBlocksFactory } from '../../blocks';
 
   export default defineComponent({
     name: 'LayoutBuilder',
@@ -90,7 +88,7 @@
         () => ({
           name: '',
           scope: 'project',
-          schema: [],
+          value: [],
           type: 'details'
         })
       )
@@ -118,20 +116,52 @@
       },
 
       blocks() {
-        return [
-          ...this.$store.getters['layoutsRegistry/blocks'],
-          attributesBlocksFactory({
-            attributes: this.$store.getters['attributes/list']({ scope: this.formData.scope }),
-            component: this.formData.type === 'details' ? AttributeRead : AttributeSet,
+        const normalBlocks = this.$store.getters['layoutsRegistry/blocks'];
+
+        const attributesBlocks = {
+          title: 'Attributes',
+          blocks: attributesBlocksFactory({
+            attributes: this.$store.getters['attributes/list'](),
             registry: this.registryAttrList || []
           })
-        ];
+        };
+
+        return [...normalBlocks, attributesBlocks]
+          .filter((section) => section.blocks && section.blocks.length)
+          .map((section) => {
+            const {
+              title,
+              blocks
+            } = section;
+
+            const filtered = blocks.filter((block) => {
+              const {
+                scope,
+                layoutType
+              } = block;
+
+              const allowedScope = scope
+                ? wrapInArray(scope).includes(this.formData.scope)
+                : true;
+
+              const allowedType = layoutType
+                ? wrapInArray(layoutType).includes(this.formData.type)
+                : true;
+
+              return allowedScope && allowedType;
+            });
+
+            return {
+              title,
+              blocks: filtered
+            };
+          });
       }
     },
 
     methods: {
       reset() {
-        this.formData.schema = [];
+        this.formData.value = [];
       },
 
       onSuccess() {
@@ -169,7 +199,7 @@
       },
 
       handleBuilderSubmit(schema) {
-        this.formData.schema = schema;
+        this.formData.value = schema;
 
         if (this.mode === VIEW_MODE.CREATE) {
           this.createLayout();

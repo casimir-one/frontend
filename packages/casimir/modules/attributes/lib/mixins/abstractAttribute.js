@@ -1,6 +1,5 @@
 import {
   collectionList,
-  hasOwnProperty,
   isFile,
   wrapInArray
 } from '@deip/toolbox';
@@ -72,10 +71,10 @@ export const AttributeMixin = {
 };
 
 /**
- * @param {Object} componentsMap
+ * @param {string} componentType
  * @return {Vue.Component}
  */
-export const AttributeRootComponentMixinFactory = (componentsMap) => ({
+export const AttributeRootComponentMixinFactory = (componentType) => ({
   name: 'AttributeComponentMixin',
 
   mixins: [AttributeMixin],
@@ -94,12 +93,9 @@ export const AttributeRootComponentMixinFactory = (componentsMap) => ({
      * @return {null|Vue.Component}
      */
     getAttributeComponent() {
-      const { type } = this.attributeInfo;
+      const component = this.attributeTypeInfo?.components?.[componentType]?.component;
 
-      if (hasOwnProperty(type, componentsMap)) {
-        return componentsMap[type];
-      }
-
+      if (component) return component;
       return null;
     },
 

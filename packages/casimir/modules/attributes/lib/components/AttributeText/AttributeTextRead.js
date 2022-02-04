@@ -1,7 +1,8 @@
 import { VeLineClamp } from '@deip/vue-elements';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeTextRead = {
+export const AttributeTextRead = defineComponent({
   name: 'AttributeTextRead',
 
   mixins: [AttributeReadMixin],
@@ -15,4 +16,4 @@ export const AttributeTextRead = {
       );
     }
   }
-};
+});

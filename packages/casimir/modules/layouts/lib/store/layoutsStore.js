@@ -22,7 +22,7 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }, force) {
-    return layoutService.getLayouts()
+    return layoutService.getList()
       .then((res) => {
         if (force) {
           commit('clearList');
@@ -47,7 +47,6 @@ const ACTIONS = {
 
   update({ dispatch }, payload) {
     const { _id } = payload;
-
     return layoutService.update(payload)
       .then(() => {
         dispatch('getOne', _id);

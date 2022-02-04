@@ -1,8 +1,9 @@
 import { VexRichedit } from '@deip/vuetify-extended';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeRichtextSet = {
+export const AttributeRichtextSet = defineComponent({
   name: 'AttributeTextSet',
 
   mixins: [AttributeSetMixin],
@@ -18,4 +19,4 @@ export const AttributeRichtextSet = {
       );
     }
   }
-};
+});

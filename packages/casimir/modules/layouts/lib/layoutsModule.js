@@ -4,7 +4,8 @@ import {
   layoutBlocks,
   typographyBlocks,
   tableBlocks,
-  uiBlocks, contentBlocks
+  uiBlocks,
+  contentBlocks
 } from './blocks';
 
 const install = (Vue, options = {}) => {
