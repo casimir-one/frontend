@@ -1,3 +1,3 @@
-export * from './lib/bookmarks-module';
+export * from './lib/bookmarksModule';
 
 export { default as ToggleBookmarkBtn } from './lib/components/ToggleBookmarkBtn';

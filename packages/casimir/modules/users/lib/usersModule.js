@@ -1,24 +1,26 @@
-import { assert } from '@deip/toolbox';
+import { assert, setLocalesMessages } from '@deip/toolbox';
 import { usersStore } from './store';
 
 import { userScope, userAttributes } from './config';
 
+const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 const moduleName = 'UsersModule';
 
 const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  if (!Vue.prototype.$deipModules) Vue.prototype.$deipModules = [];
-  Vue.prototype.$deipModules.push(moduleName);
-
   const {
     store,
+    i18n,
     attributesMappedKeys = [],
     layoutsMappedKeys = []
   } = options;
 
   assert(!!store, `[${moduleName}]: store instance is not provided`);
+  assert(!!i18n, `[${moduleName}]: i18n instance is not provided`);
+
+  setLocalesMessages(i18n, locales);
 
   store.registerModule('users', usersStore);
   store.dispatch('scopesRegistry/addScope', userScope);

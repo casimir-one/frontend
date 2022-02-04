@@ -1,1 +1,1 @@
-export * from './lib/portals-module';
+export * from './lib/portalsModule';

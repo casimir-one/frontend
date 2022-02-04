@@ -1,4 +1,4 @@
-export * from './lib/assets-module';
+export * from './lib/assetsModule';
 
 export { default as CreateNonFungibleTokenForm } from './lib/components/CreateTokenForm/CreateNonFungibleTokenForm';
 export { default as AssetInput } from './lib/components/AssetInput/AssetInput';

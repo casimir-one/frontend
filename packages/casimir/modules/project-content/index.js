@@ -1,4 +1,4 @@
-export * from './lib/project-content-module';
+export * from './lib/projectContentModule';
 
 export { default as ProjectContentDraftsDataProvider } from './lib/components/drafts/DataProvider';
 export { default as ProjectContentDraftsList } from './lib/components/drafts/List';

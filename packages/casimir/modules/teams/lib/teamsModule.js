@@ -11,9 +11,6 @@ const install = (Vue, options = {}) => {
   if (install.installed) return;
   install.installed = true;
 
-  if (!Vue.prototype.$deipModules) Vue.prototype.$deipModules = [];
-  Vue.prototype.$deipModules.push(moduleName);
-
   const {
     store,
     i18n,
