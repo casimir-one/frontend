@@ -37,9 +37,10 @@ const ACTIONS = {
       });
   },
 
-  create(_, payload) {
+  async create({ dispatch }, payload) {
     const { user, data } = payload;
-    return assetsService.createAsset(user, data);
+    await assetsService.createAsset(user, data);
+    await dispatch('balances/getList', { withAssetsFetch: true }, { root: true });
   }
 };
 
