@@ -10,7 +10,7 @@ export const crowdfundingBlocks = {
         data: {
           props: {
             projectId: '{{crowdfundingWidget.projectId}}',
-            canUserStartCrowdfunding: '{{canEdit}}',
+            canUserStartCrowdfunding: '{{crowdfundingWidget.canUserStartCrowdfunding}}',
             investLink: '{{crowdfundingWidget.investLink}}',
             startCrowdfundingLink: '{{crowdfundingWidget.startCrowdfundingLink}}'
           }
@@ -23,7 +23,9 @@ export const crowdfundingBlocks = {
           'startCrowdfundingLink',
           'canUserStartCrowdfunding'
         ],
-        blockType: 'simple'
+        blockType: 'simple',
+        layoutType: 'details',
+        scope: ['project', 'team']
       }
     ])
   ]
