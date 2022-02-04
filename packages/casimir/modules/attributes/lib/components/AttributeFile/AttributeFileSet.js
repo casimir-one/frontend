@@ -1,8 +1,9 @@
 import { VexFileInputExtended } from '@deip/vuetify-extended';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeFileSet = {
+export const AttributeFileSet = defineComponent({
   name: 'AttributeFileSet',
 
   mixins: [AttributeSetMixin],
@@ -25,4 +26,4 @@ export const AttributeFileSet = {
       );
     }
   }
-};
+});

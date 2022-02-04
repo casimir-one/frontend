@@ -1,6 +1,7 @@
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeLocationRead = {
+export const AttributeLocationRead = defineComponent({
   name: 'AttributeLocationRead',
 
   mixins: [AttributeReadMixin],
@@ -12,4 +13,4 @@ export const AttributeLocationRead = {
       );
     }
   }
-};
+});

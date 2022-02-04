@@ -3,9 +3,10 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeNumberSet = {
+export const AttributeNumberSet = defineComponent({
   name: 'AttributeNumberSet',
 
   mixins: [AttributeSetMixin],
@@ -22,4 +23,4 @@ export const AttributeNumberSet = {
       );
     }
   }
-};
+});

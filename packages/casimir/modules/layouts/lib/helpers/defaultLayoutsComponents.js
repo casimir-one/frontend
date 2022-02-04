@@ -23,7 +23,8 @@ import {
   VSimpleTable,
   VIcon,
   VDivider,
-  VImg
+  VImg,
+  VCard
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
@@ -58,6 +59,7 @@ export const defaultLayoutComponents = {
   VDivider,
   VexMiniMetaItem,
   VexTooltip,
+  VCard,
 
   // other
   VexAvatar,

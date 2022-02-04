@@ -1,8 +1,9 @@
 import { VexPlacesAutocomplete } from '@deip/vuetify-extended';
 
+import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
-export const AttributeLocationSet = {
+export const AttributeLocationSet = defineComponent({
   name: 'AttributeLocationSet',
 
   mixins: [AttributeSetMixin],
@@ -18,4 +19,4 @@ export const AttributeLocationSet = {
       );
     }
   }
-};
+});

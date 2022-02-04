@@ -1,6 +1,7 @@
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin, AttributeOptionsReadMixin } from '../../mixins';
 
-export const AttributeCheckboxRead = {
+export const AttributeCheckboxRead = defineComponent({
   name: 'AttributeCheckboxRead',
 
   mixins: [
@@ -27,4 +28,4 @@ export const AttributeCheckboxRead = {
         : this.genSingleAttribute();
     }
   }
-};
+});

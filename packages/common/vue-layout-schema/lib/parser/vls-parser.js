@@ -122,9 +122,11 @@ export const VlsParser = {
         is: nodeComponent = 'div',
         data = {},
         children = [],
-        condition = true,
+        condition: rawCondition = true,
         text
       } = node;
+
+      const condition = rawCondition !== '' ? rawCondition : true;
 
       if (data.proxyProps) {
         objectPath.set(data, ['props', 'proxyProps'], data.proxyProps);

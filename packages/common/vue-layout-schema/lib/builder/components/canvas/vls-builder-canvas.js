@@ -4,7 +4,7 @@ import './vls-builder-canvas.scss';
 import {
   VIcon, VSheet,
   VDivider, VSpacer,
-  VBtn
+  VBtn, VAlert, VCol
 } from 'vuetify/lib/components';
 import { ClickOutside } from 'vuetify/lib/directives';
 
@@ -31,7 +31,8 @@ export const VlsBuilderCanvas = {
       hoverBox: {},
       focusBox: {},
 
-      isMoved: false
+      isMoved: false,
+      cleanedBlocks: []
     };
   },
 
@@ -214,7 +215,7 @@ export const VlsBuilderCanvas = {
             <VIcon size={18}>{icon}</VIcon>
           </VSheet>
           <VDivider vertical class="mr-3"/>
-          <div class="text-caption font-weight-medium">{title}</div>
+          <div class="text-caption font-weight-medium pr-3">{title}</div>
         </VSheet>
       );
     },
@@ -335,6 +336,12 @@ export const VlsBuilderCanvas = {
     genNodes(nodes) {
       return nodes.map((node) => {
         const blockType = this.getBlockType(node.id);
+
+        if (blockType === 'undefined') {
+          this.cleanedBlocks.push(node.name || node.is || node.id);
+          this.removeContainerNode(node.id);
+        }
+
         const generator = this.getNodeGenerator(blockType);
 
         const classList = {
@@ -410,6 +417,31 @@ export const VlsBuilderCanvas = {
           </div>
         </div>
       );
+    },
+
+    genCleanedBox() {
+      const list = [...new Set(this.cleanedBlocks)].join(', ');
+
+      return (
+        <VAlert text color="error">
+          <VRow>
+            <VCol>
+              <div className="text-body-2">
+                <strong>{list}</strong> was cleaned as not allowed for current layout settings
+              </div>
+            </VCol>
+            <VCol cols="auto">
+              <VBtn
+                color="error"
+                icon
+                onClick={() => { this.cleanedBlocks = []; }}
+              >
+                <VIcon>mdi-close</VIcon>
+              </VBtn>
+            </VCol>
+          </VRow>
+        </VAlert>
+      );
     }
   },
 
@@ -420,6 +452,7 @@ export const VlsBuilderCanvas = {
 
     return (
       <div class="vls-builder-canvas">
+        {this.cleanedBlocks.length ? this.genCleanedBox() : null}
         <div
           class="vls-builder-canvas__pane"
           vClickOutside={{

@@ -15,6 +15,8 @@ export const RENDERER_BLOCK_KEYS = [
   'is',
 
   'name',
+  'scope',
+  'layoutType',
 
   'data',
   'children',

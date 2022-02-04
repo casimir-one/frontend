@@ -1,7 +1,8 @@
 import { VexVideoEmbed } from '@deip/vuetify-extended';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
-export const AttributeVideoUrlRead = {
+export const AttributeVideoUrlRead = defineComponent({
   name: 'AttributeVideoUrlRead',
 
   mixins: [AttributeReadMixin],
@@ -13,4 +14,4 @@ export const AttributeVideoUrlRead = {
       );
     }
   }
-};
+});

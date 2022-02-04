@@ -4,9 +4,10 @@ import {
 } from 'vuetify/lib/components';
 
 import { VeStack } from '@deip/vue-elements';
+import { defineComponent } from '@deip/platform-util';
 import { AttributeMultipleModelMixin, AttributeSetMixin } from '../../mixins';
 
-export const AttributeSwitchSet = {
+export const AttributeSwitchSet = defineComponent({
   name: 'AttributeSwitchSet',
 
   mixins: [AttributeSetMixin, AttributeMultipleModelMixin],
@@ -49,4 +50,4 @@ export const AttributeSwitchSet = {
         : this.genSingleAttribute(errors);
     }
   }
-};
+});

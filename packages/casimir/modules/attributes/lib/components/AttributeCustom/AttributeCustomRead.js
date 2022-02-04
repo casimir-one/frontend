@@ -1,10 +1,11 @@
 import { VlsParser } from '@deip/vue-layout-schema';
 import { VeStack } from '@deip/vue-elements';
+import { defineComponent } from '@deip/platform-util';
 import { schemaLayoutComponents } from '../../composables/schemaPartials';
 
 import { AttributeReadMixin, AttributeSchemaMixin } from '../../mixins';
 
-export const AttributeCustomRead = {
+export const AttributeCustomRead = defineComponent({
   name: 'AttributeCustomRead',
 
   mixins: [
@@ -40,4 +41,4 @@ export const AttributeCustomRead = {
         : this.genSingleAttribute();
     }
   }
-};
+});

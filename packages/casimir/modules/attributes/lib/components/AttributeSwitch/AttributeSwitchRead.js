@@ -1,6 +1,7 @@
+import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin, AttributeOptionsReadMixin } from '../../mixins';
 
-export const AttributeSwitchRead = {
+export const AttributeSwitchRead = defineComponent({
   name: 'AttributeSwitchRead',
 
   mixins: [
@@ -15,4 +16,4 @@ export const AttributeSwitchRead = {
       );
     }
   }
-};
+});

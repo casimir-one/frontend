@@ -1,7 +1,14 @@
 import qs from 'qs';
-import { hasValue } from '@deip/toolbox';
+import { hasValue, wrapInArray } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 
+/**
+ * Convert array attributes from model to object
+ * @param {Object} obj
+ * @param {string} [idKey=attributeId]
+ * @param [valueKey=value]
+ * @return {Object}
+ */
 export const expandAttributes = (
   obj,
   idKey = 'attributeId',
@@ -22,6 +29,13 @@ export const expandAttributes = (
   };
 };
 
+/**
+ * Convert object attributes from model to array
+ * @param obj
+ * @param {string} [idKey=attributeId]
+ * @param [valueKey=value]
+ * @return {Object}
+ */
 export const compactAttributes = (
   obj,
   idKey = 'attributeId',
@@ -41,6 +55,41 @@ export const compactAttributes = (
   };
 };
 
+/**
+ * Map attributes value to main model object keys
+ * @param {Object} model
+ * @param {Object} attributes
+ * @param {Array} map
+ * @param {Array} mapInfo
+ * @return {Object}
+ */
+export const mapAttributesToModel = (model, attributes, map, mapInfo) => map.reduce((acc, i) => {
+  const { isMultiple } = mapInfo.find((a) => a.key === i.key);
+  const res = {
+    [i.key]: isMultiple ? wrapInArray(attributes[i.value]) : attributes[i.value]
+  };
+  return { ...acc, ...res };
+}, model);
+
+/**
+ * Map main model object keys to attributes
+ * @param {Object} model
+ * @param {Object} attributes
+ * @param {Array} map
+ * @return {Object}
+ */
+export const mapModelToAttributes = (model, attributes, map) => map.reduce((acc, i) => {
+  const res = model[i.key] && attributes[i.value] !== model[i.key]
+    ? { [i.value]: model[i.key] }
+    : {};
+  return { ...acc, ...res };
+}, attributes);
+
+/**
+ * Build file url string
+ * @param {Object} opts
+ * @return {string|null}
+ */
 export const getAttributeFileSrc = (opts = {}) => {
   const {
     serverUrl,
@@ -82,6 +131,12 @@ export const getAttributeFileSrc = (opts = {}) => {
   return [url, ...(query ? [query] : [])].join('?');
 };
 
+/**
+ * Create helpers for attributes operations
+ * @param {Object} data
+ * @param {Object} scopeData
+ * @return {Object}
+ */
 export const attributeMethodsFactory = (data, scopeData = {}) => {
   const { DEIP_SERVER_URL } = proxydi.get('env');
 
@@ -95,7 +150,7 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
 
     // attrHasValue
     attributeHasValue(id) {
-      return hasValue(data?.attributes?.[id]?.value);
+      return hasValue(data?.attributes?.[id]);
     },
 
     // attrFileSrc
