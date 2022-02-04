@@ -183,7 +183,7 @@
           this.isIframeSrcLoading = true;
         } catch (error) {
           console.error(error);
-          this.$notifier.showError(error.response.data);
+          this.$notifier.showError(error);
         }
 
         this.isLoading = false;
