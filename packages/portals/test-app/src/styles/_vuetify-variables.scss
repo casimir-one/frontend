@@ -1,0 +1,25 @@
+@use 'sass:map';
+//@import "~vuetify/src/styles/main.sass";
+
+// COLORS
+
+$shades: (
+  'black': #1E1D23,
+  'white': #FFFFFF,
+);
+
+// utils
+
+$utilities: (
+  "justify-items": (
+    responsive: true,
+    property: justify-items,
+    values: (
+      start: start,
+      end: end,
+      center: center,
+      space-between: space-between,
+      space-around: space-around,
+    )
+  )
+);
