@@ -24,6 +24,15 @@
 
   export default defineComponent({
     name: 'VexAvatar',
+
+    inject: {
+      theme: {
+        default: {
+          isDark: false
+        }
+      }
+    },
+
     props: {
       ...VAvatar.options.props,
       ...VListItemAvatar.options.props,
@@ -70,13 +79,13 @@
 
       iconStyles() {
         return {
-          color: 'var(--v-core-color-divider)'
+          color: this.theme.isDark ? 'rgba(255,255,255,.2)' : 'rgba(0,0,0,.2)'
         };
       },
 
       avatarStyle() {
         return {
-          backgroundColor: 'var(--v-core-color-hover)'
+          backgroundColor: this.theme.isDark ? 'rgba(255,255,255,.1)' : 'rgba(0,0,0,.1)'
         };
       }
     }
