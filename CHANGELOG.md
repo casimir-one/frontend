@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.369.0](https://github.com/DEIPworld/deip-modules/compare/v1.368.1...v1.369.0) (2022-02-04)
+
+
+### Bug Fixes
+
+* **@casimir/test-app:** fix default funding amount in config ([b8c1f88](https://github.com/DEIPworld/deip-modules/commit/b8c1f88540dc8b92b3ef66bfb7c2fc4a0c308585))
+* **@deip/assets-module:** update balances after asset creation ([3bfa0e1](https://github.com/DEIPworld/deip-modules/commit/3bfa0e15bd0010d3b8abdede857bceadc806cced))
+* **@deip/auth-module:** remove outlined style ([e7e4d2d](https://github.com/DEIPworld/deip-modules/commit/e7e4d2d343a61e7b03ff4f2aa6fd5ff67332d636))
+* **@deip/fundraising-module:** fix getInvestmentsHistory ([2dfa61f](https://github.com/DEIPworld/deip-modules/commit/2dfa61f491e2c0549c2fa3f9b29929d972a2d3f9))
+* **@deip/fundraising-module:** fix tokens amount validation in Create crowdfunding form ([9f08668](https://github.com/DEIPworld/deip-modules/commit/9f086688b51c0a3395385ea73710c035bb101949))
+* **@deip/wallet-module:** fix deposit ([7604a6e](https://github.com/DEIPworld/deip-modules/commit/7604a6e00fab4b6f3b4d37cbd07b1601a7d1652b))
+* **@deip/wallet-module:** fix deposit to empty balance ([fe41dcc](https://github.com/DEIPworld/deip-modules/commit/fe41dccb31690459e58afa90bf6c3f5839600dcc))
+
+
+### Features
+
+* **@casimir/test-app:** add test-app ([cec112b](https://github.com/DEIPworld/deip-modules/commit/cec112b6bed76ae92b5c330126d14491632d7d99))
+* **@deip/projects-module:** add components ([bb234eb](https://github.com/DEIPworld/deip-modules/commit/bb234eb2f56a080cb581e9d52a91c8bc2962556a))
+
+
+
+
+
 ## [1.368.1](https://github.com/DEIPworld/deip-modules/compare/v1.368.0...v1.368.1) (2022-02-01)
 
 

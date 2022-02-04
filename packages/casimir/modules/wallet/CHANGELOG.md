@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.369.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.1...v1.369.0) (2022-02-04)
+
+
+### Bug Fixes
+
+* **@deip/wallet-module:** fix deposit ([7604a6e](https://gitlab.com/DEIP/deip-client-modules/commit/7604a6e00fab4b6f3b4d37cbd07b1601a7d1652b))
+* **@deip/wallet-module:** fix deposit to empty balance ([fe41dcc](https://gitlab.com/DEIP/deip-client-modules/commit/fe41dccb31690459e58afa90bf6c3f5839600dcc))
+
+
+
+
+
 ## [1.368.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.0...v1.368.1) (2022-02-01)
 
 **Note:** Version bump only for package @deip/wallet-module

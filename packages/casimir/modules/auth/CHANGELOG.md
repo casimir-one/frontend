@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.369.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.1...v1.369.0) (2022-02-04)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** remove outlined style ([e7e4d2d](https://gitlab.com/DEIP/deip-client-modules/commit/e7e4d2d343a61e7b03ff4f2aa6fd5ff67332d636))
+
+
+
+
+
 # [1.368.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.367.0...v1.368.0) (2022-02-01)
 
 

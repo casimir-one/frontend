@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.369.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.1...v1.369.0) (2022-02-04)
+
+
+### Bug Fixes
+
+* **@deip/fundraising-module:** fix getInvestmentsHistory ([2dfa61f](https://gitlab.com/DEIP/deip-client-modules/commit/2dfa61f491e2c0549c2fa3f9b29929d972a2d3f9))
+* **@deip/fundraising-module:** fix tokens amount validation in Create crowdfunding form ([9f08668](https://gitlab.com/DEIP/deip-client-modules/commit/9f086688b51c0a3395385ea73710c035bb101949))
+
+
+
+
+
 ## [1.368.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.368.0...v1.368.1) (2022-02-01)
 
 **Note:** Version bump only for package @deip/fundraising-module
