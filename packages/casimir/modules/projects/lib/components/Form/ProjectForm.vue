@@ -1,188 +1,138 @@
 <template>
-  <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
-    <v-form v-if="$$ready" :disabled="isLoading" @submit.prevent="handleSubmit(onSubmit)">
-      <!-- TODO: form renderer will be here -->
+  <validation-observer
+    v-slot="{ invalid, handleSubmit }"
+    ref="observer"
+    tag="div"
+    style="min-width: 0px"
+  >
+    <v-form :disabled="loading" @submit.prevent="handleSubmit(onSubmit)">
+      <ve-stack>
+        <layout-renderer
+          v-if="schema.length"
+          v-model="formData"
+          :schema="schema"
+          :schema-data="schemaData"
+        />
 
-      <v-divider class="mt-8 mb-6" />
+        <v-divider />
 
-      <div class="d-flex justify-end align-center">
-        <ve-stack flow="column" :gap="8">
-          <v-btn
-            text
-            color="primary"
-            :disabled="isLoading"
-            @click="$router.back()"
-          >
-            {{ $t('module.projects.form.cancel') }}
-          </v-btn>
+        <div class="d-flex">
+          <v-spacer />
+          <ve-stack flow="column" :gap="8">
+            <v-btn
+              text
+              color="primary"
+              :disabled="loading || disabled"
+              @click="$router.back()"
+            >
+              {{ cancelLabel }}
+            </v-btn>
 
-          <v-btn
-            type="submit"
-            color="primary"
-            :disabled="isDisabled || invalid"
-            :loading="isLoading"
-          >
-            {{ formModel._id
-              ? $t('module.projects.form.update')
-              : $t('module.projects.form.create') }}
-          </v-btn>
-        </ve-stack>
-      </div>
+            <v-btn
+              type="submit"
+              color="primary"
+              :disabled="disabled || untouched || invalid"
+              :loading="loading"
+            >
+              {{ submitLabelText }}
+            </v-btn>
+          </ve-stack>
+        </div>
+      </ve-stack>
     </v-form>
   </validation-observer>
 </template>
 
 <script>
-  import { cloneDeep } from '@deip/toolbox/lodash';
+  import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VeStack } from '@deip/vue-elements';
-
-  import { hasValue } from '@deip/toolbox';
+  import { defineComponent } from '@deip/platform-util';
 
   import { VIEW_MODE } from '@deip/constants';
 
-  export default {
+  export default defineComponent({
     name: 'ProjectForm',
 
     components: {
-      VeStack
+      VeStack,
+      LayoutRenderer
     },
 
-    // mixins: [changeable, dataReadyMixin],
+    mixins: [attributedFormFactory('project', 'project')],
 
     props: {
-      mode: {
-        type: [String, Number],
-        default: VIEW_MODE.CREATE,
-        validation(value) {
-          return VIEW_MODE.keys().indexOf(value) !== -1;
-        }
+      teamId: {
+        type: String,
+        default: null
       },
-      project: {
-        type: Object,
-        default: () => ({})
+      cancelLabel: {
+        type: String,
+        default() {
+          return this.$t('module.projects.form.cancel');
+        }
       },
       submitLabel: {
         type: String,
-        default() { return this.$t('module.projects.form.create'); }
-      }
-    },
-
-    data() {
-      return {
-        isLoading: false,
-        lazyFormModel: {
-          attributes: {}
+        default() {
+          return null;
         }
-      };
+      }
     },
 
     computed: {
-      formModel: {
-        get() {
-          return this.lazyFormModel;
-        },
-
-        set(val) {
-          this.lazyFormModel = val;
+      submitLabelText() {
+        if (this.submitLabel) {
+          return this.submitLabel;
         }
-      },
 
-      isDisabled() {
-        return this.isLoading
-          || !this.$$isChanged(this.formModel);
+        return this.mode === VIEW_MODE.CREATE
+          ? this.$t('module.projects.form.create')
+          : this.$t('module.projects.form.update');
       }
-    },
-
-    created() {
-      if (hasValue(this.project)) {
-        this.formModel = {
-          ...this.formModel,
-          ...cloneDeep(this.project)
-        };
-      }
-
-      this.$$storeCache(this.formModel);
-      this.$$setReady();
     },
 
     methods: {
-      onSubmit() {
-        this.isLoading = true;
+      async onSubmit() {
+        this.loading = true;
         if (this.mode === VIEW_MODE.CREATE) {
-          this.createProject();
+          await this.createProject();
         } else if (this.mode === VIEW_MODE.EDIT) {
-          this.updateProject();
+          await this.updateProject();
+        }
+        this.loading = false;
+      },
+
+      async createProject() {
+        const payload = {
+          initiator: this.$currentUser,
+          creator: this.$currentUser._id,
+          teamId: this.teamId,
+          ...this.lazyFormData
+        };
+
+        try {
+          const project = await this.$store.dispatch('projects/create', payload);
+          this.$emit('success', project._id);
+        } catch (error) {
+          console.error(error);
+          this.$emit('error', error);
         }
       },
 
-      createProject() {
+      async updateProject() {
         const payload = {
-          creator: this.$currentUser,
-          data: {
-            creator: this.$currentUser._id
-            // TODO
-            // teamId,
-            // domains,
-            // isPrivate,
-            // members,
-            // inviteLifetime,
-            // reviewShare,
-            // compensationShare,
-            // attributes,
-            // formData
-          },
-          proposal: {
-            // isProposal
-          }
+          initiator: this.$currentUser,
+          ...this.lazyFormData
         };
 
-        return this.$store.dispatch('projects/create', payload)
-          .then((project) => {
-            this.$emit('success', project);
-          })
-          .catch((err) => {
-            console.error(err);
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
-      },
-
-      updateProject() {
-        const payload = {
-          creator: this.$currentUser,
-          data: {
-            updater: this.$currentUser._id
-            // TODO
-            // projectId,
-            // teamId,
-            // domains,
-            // isPrivate,
-            // members,
-            // inviteLifetime,
-            // reviewShare,
-            // compensationShare,
-            // attributes,
-            // formData
-          },
-          proposal: {
-            // isProposal
-          }
-        };
-
-        return this.$store.dispatch('projects/update', payload)
-          .then((project) => {
-            this.$emit('success', project);
-          })
-          .catch((err) => {
-            console.error(err);
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
+        try {
+          const project = await this.$store.dispatch('projects/update', payload);
+          this.$emit('success', project._id);
+        } catch (error) {
+          console.error(error);
+          this.$emit('error', error);
+        }
       }
     }
-  };
+  });
 </script>

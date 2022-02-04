@@ -6,24 +6,28 @@ export const projectScope = {
       {
         key: 'teamId',
         label: 'Project team',
-        allowedTypes: ['teamSelector']
+        allowedTypes: ['teamSelector'],
+        mapToModel: true
       },
       {
         key: 'domains',
         label: 'Project domain',
-        allowedTypes: ['domainSelector']
+        allowedTypes: ['domainSelector'],
+        mapToModel: true
       },
       {
 
         key: 'members',
         label: 'Project members',
         allowedTypes: ['userSelector'],
-        isMultiple: true
+        isMultiple: true,
+        mapToModel: true
       },
       {
         key: 'isPrivate',
         label: 'Project can be private',
-        allowedTypes: ['checkbox', 'switch']
+        allowedTypes: ['checkbox', 'switch'],
+        mapToModel: true
       }
     ],
     layouts: [
