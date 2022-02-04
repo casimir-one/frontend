@@ -1,4 +1,4 @@
-export * from './lib/teams-module';
+export * from './lib/teamsModule';
 
 export { default as TeamForm } from './lib/components/TeamForm';
 export { default as TeamDetails } from './lib/components/TeamDetails';
