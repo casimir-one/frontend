@@ -42,7 +42,7 @@ const GETTERS = {
 
 const ACTIONS = {
   // list
-  getProjects({ dispatch }, payload = {}) {
+  getList({ dispatch }, payload = {}) {
     const target = [payload.scope];
 
     if (payload.username) target.push('user');
@@ -121,7 +121,7 @@ const ACTIONS = {
 
   // one
 
-  getProjectDetails({ commit }, projectId) {
+  getOne({ commit }, projectId) {
     return projectService.getProject(projectId)
       .then((res) => {
         commit('setOne', res.data);
@@ -133,90 +133,23 @@ const ACTIONS = {
     return res.data;
   },
 
-  create({ commit }, payload) {
-    const {
-      creator: { privKey },
-      data: {
-        teamId,
-        creator,
-        domains,
-        isPrivate,
-        members,
-        inviteLifetime,
-        reviewShare,
-        compensationShare,
-        attributes,
-        formData
-      },
-      proposal: {
-        isProposal,
-        isProposalApproved,
-        proposalLifetime
-      }
-    } = payload;
+  async create({ dispatch }, payload) {
+    const res = await projectService.createProject({
+      ...payload,
+      proposalInfo: { isProposal: false }
+    });
 
-    return projectService.createProject(
-      { privKey },
-      {
-        teamId,
-        creator,
-        domains,
-        isPrivate,
-        members,
-        inviteLifetime,
-        reviewShare,
-        compensationShare,
-        attributes,
-        formData
-      },
-      { isProposal, isProposalApproved, proposalLifetime }
-    )
-      .then((result) => {
-        commit('setOne', result);
-      });
+    dispatch('getOne', res.data._id);
+    return res.data;
   },
 
-  update({ commit }, payload) {
-    const {
-      creator: { privKey },
-      data: {
-        projectId,
-        teamId,
-        isPrivate,
-        members,
-        inviteLifetime,
-        reviewShare,
-        compensationShare,
-        updater,
-        attributes,
-        formData
-      },
-      proposal: {
-        isProposal,
-        isProposalApproved,
-        proposalLifetime
-      }
-    } = payload;
-
-    return projectService.updateProject(
-      { privKey },
-      {
-        projectId,
-        teamId,
-        isPrivate,
-        members,
-        inviteLifetime,
-        reviewShare,
-        compensationShare,
-        updater,
-        attributes,
-        formData
-      },
-      { isProposal, isProposalApproved, proposalLifetime }
-    )
-      .then((result) => {
-        commit('setOne', result);
-      });
+  async update({ dispatch }, payload) {
+    const res = await projectService.updateProject({
+      ...payload,
+      proposalInfo: { isProposal: false }
+    });
+    dispatch('getOne', res.data._id);
+    return res.data;
   }
 };
 

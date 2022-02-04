@@ -72,9 +72,7 @@
               break;
           }
         } else if (this.teamId) {
-          filter.team = {
-            _id: this.teamId
-          };
+          filter.teamId = this.teamId;
         } else if (this.portalId) {
           filter.portalId = this.portalId;
         } else {
@@ -122,7 +120,7 @@
           payload.filter = filterItems;
         }
 
-        this.$store.dispatch('projects/getProjects', payload)
+        this.$store.dispatch('projects/getList', payload)
           .then(() => {
             this.loading = false;
             this.ready = true;

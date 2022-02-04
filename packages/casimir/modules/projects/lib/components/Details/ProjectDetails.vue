@@ -1,16 +1,38 @@
 <template>
-  <div>
-    <!-- TODO: schema renderer will be here -->
-  </div>
+  <layout-renderer
+    :value="project"
+    :schema="internalSchema"
+    :schema-data="internalSchemaData"
+  />
 </template>
 
 <script>
+  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
+
   export default {
     name: 'ProjectDetails',
-    props: {
-      project: {
-        type: Object,
-        required: true
+
+    components: {
+      LayoutRenderer
+    },
+
+    mixins: [
+      attributedDetailsFactory('project')
+    ],
+
+    computed: {
+      internalSchemaData() {
+        return {
+          ...attributeMethodsFactory(
+            expandAttributes(this.project),
+            {
+              scopeName: 'project',
+              scopeId: this.project._id
+            }
+          ),
+          ...this.schemaData
+        };
       }
     }
   };
