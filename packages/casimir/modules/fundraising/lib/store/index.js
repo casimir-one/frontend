@@ -102,7 +102,7 @@ const ACTIONS = {
       .then((res) => {
         const investmentOpportunities = res.data.items.map((item) => item.investmentOpportunity);
         commit('setList', investmentOpportunities);
-        return res;
+        return res.data.items;
       });
   }
 };
