@@ -5,7 +5,6 @@
       <user-form
         :schema="$layouts.getMappedData('user.form').value"
         :user="$currentUser"
-        :mode="VIEW_MODE.EDIT"
         @success="handleSuccess"
         @error="handleError"
       />
