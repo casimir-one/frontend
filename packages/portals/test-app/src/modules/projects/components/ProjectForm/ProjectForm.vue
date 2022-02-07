@@ -12,6 +12,7 @@
         :mode="mode"
         @success="handleSuccess"
         @error="handleError"
+        @cancel="handleCancel"
       />
     </ve-stack>
   </vex-section>
@@ -112,6 +113,10 @@
 
       handleError(error) {
         this.$notifier.showError(error);
+      },
+
+      handleCancel() {
+        this.$router.back();
       }
     }
   };
