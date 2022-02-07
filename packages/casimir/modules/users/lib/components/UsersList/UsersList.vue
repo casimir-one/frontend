@@ -12,17 +12,15 @@
 
 <script>
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-  import { componentViewType } from '@deip/platform-util';
-  import UsersDataProvider from '../DataProvider/UsersDataProvider';
+  import { defineComponent, componentViewType } from '@deip/platform-util';
 
-  import UsersListDefault from './UsersListDefault';
-  import UsersListStack from './UsersListStack';
+  import { UsersDataProvider } from '../UsersDataProvider';
+  import { UsersListStack } from '../UsersListStack';
 
-  export default {
+  export default defineComponent({
     name: 'UsersList',
     components: {
       UsersDataProvider,
-      UsersListDefault,
       UsersListStack
     },
     props: {
@@ -30,7 +28,7 @@
 
       viewType: {
         type: String,
-        default: ''
+        default: 'stack'
       }
     },
 
@@ -55,5 +53,5 @@
         this.$emit('click-item', e);
       }
     }
-  };
+  });
 </script>

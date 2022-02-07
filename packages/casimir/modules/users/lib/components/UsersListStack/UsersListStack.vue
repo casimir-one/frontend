@@ -19,8 +19,8 @@
 
     <template v-else>
       <div
-        v-for="(user, index) in displayedUsers"
-        :key="index"
+        v-for="user in displayedUsers"
+        :key="user._id"
         :class="$style.item"
       >
         <user-avatar
@@ -42,13 +42,18 @@
 </template>
 
 <script>
-  import { userHelpersMixin } from '../../mixins';
-  import UserAvatar from '../Avatar/UserAvatar';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  import { userHelpersMixin } from '../../mixins';
+  import { UserAvatar } from '../UserAvatar';
+
+  export default defineComponent({
     name: 'UsersListStack',
+
     components: { UserAvatar },
+
     mixins: [userHelpersMixin],
+
     props: {
       users: {
         type: Array,
@@ -60,6 +65,7 @@
         default: 5
       }
     },
+
     computed: {
       displayedUsers() {
         return this.users.slice(0, this.stackLength);
@@ -73,12 +79,13 @@
         return !!this.$listeners['click-item'];
       }
     },
+
     methods: {
       onClickItem(e) {
         this.$emit('click-item', e);
       }
     }
-  };
+  });
 </script>
 
 <style lang="scss" module>
