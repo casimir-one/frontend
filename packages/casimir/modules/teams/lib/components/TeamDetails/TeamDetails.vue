@@ -9,9 +9,9 @@
 <script>
   import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
   import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
-  import { SYSTEM_ROLE } from '@deip/constants';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  export default defineComponent({
     name: 'TeamDetails',
 
     components: {
@@ -25,10 +25,6 @@
     computed: {
       internalSchemaData() {
         return {
-          canEdit: this.$currentUser.hasRole(
-            SYSTEM_ROLE.TEAM_ADMIN,
-            { name: 'teamId', id: this.team._id }
-          ),
           ...attributeMethodsFactory(
             expandAttributes(this.team),
             {
@@ -40,5 +36,5 @@
         };
       }
     }
-  };
+  });
 </script>

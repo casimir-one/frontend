@@ -31,7 +31,7 @@
             color="primary"
             text
             :disabled="loading || disabled"
-            @click="$router.back()"
+            @click="handleCancelClick"
           >
             {{ cancelLabel }}
           </v-btn>
@@ -56,8 +56,9 @@
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VIEW_MODE } from '@deip/constants';
   import { VeRawDisplay, VeStack } from '@deip/vue-elements';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  export default defineComponent({
     name: 'TeamForm',
 
     components: {
@@ -101,56 +102,60 @@
     },
 
     methods: {
-      onSubmit() {
+      async onSubmit() {
+        this.loading = true;
+
         if (this.mode === VIEW_MODE.CREATE) {
-          this.createTeam();
+          await this.createTeam();
         } else if (this.mode === VIEW_MODE.EDIT) {
-          this.updateTeam();
+          await this.updateTeam();
+        }
+
+        this.loading = false;
+      },
+
+      async createTeam() {
+        try {
+          const team = await this.$store.dispatch(
+            'teams/create',
+            {
+              isCreateDefaultProject: this.withDefaultProject,
+              initiator: this.$currentUser,
+              ...this.lazyFormData
+            }
+          );
+          this.emitSuccess(team._id);
+        } catch (err) {
+          this.emitError(err);
         }
       },
 
-      createTeam() {
-        this.loading = true;
-
-        return this.$store.dispatch(
-          'teams/create',
-          {
-            isCreateDefaultProject: this.withDefaultProject,
-            initiator: this.$currentUser,
-            ...this.lazyFormData
-          }
-        )
-          .then((res) => {
-            this.$emit('success', res._id);
-          })
-          .catch((err) => {
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+      async updateTeam() {
+        try {
+          const team = await this.$store.dispatch(
+            'teams/update',
+            {
+              initiator: this.$currentUser,
+              ...this.lazyFormData
+            }
+          );
+          this.emitSuccess(team._id);
+        } catch (err) {
+          this.emitError(err);
+        }
       },
 
-      updateTeam() {
-        this.loading = true;
+      emitSuccess(id) {
+        this.$emit('success', id);
+      },
 
-        return this.$store.dispatch(
-          'teams/update',
-          {
-            initiator: this.$currentUser,
-            ...this.lazyFormData
-          }
-        )
-          .then((res) => {
-            this.$emit('success', res._id);
-          })
-          .catch((err) => {
-            this.$emit('error', err);
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+      emitError(err) {
+        this.$emit('error', err);
+      },
+
+      handleCancelClick() {
+        this.$emit('cancel');
       }
     }
-  };
+  });
 </script>
