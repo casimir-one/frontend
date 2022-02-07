@@ -22,8 +22,8 @@ const formFactory = (
     mode: {
       type: [String, Number],
       default: VIEW_MODE.CREATE,
-      validation(value) {
-        return VIEW_MODE.keys().indexOf(value) !== -1;
+      validator(value) {
+        return VIEW_MODE.values().indexOf(value) !== -1;
       }
     }
   },
