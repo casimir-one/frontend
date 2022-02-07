@@ -25,6 +25,7 @@
     "@deip/layouts-module": "1.369.1",
     "@deip/platform-components": "1.369.0",
     "@deip/platform-store": "1.366.0",
+    "@deip/platform-util": "^1.369.0",
     "@deip/proxydi": "1.366.0",
     "@deip/team-service": "1.369.1",
     "@deip/toolbox": "1.366.0",
