@@ -23,7 +23,7 @@
               text
               color="primary"
               :disabled="loading || disabled"
-              @click="$router.back()"
+              @click="handleCancelClick"
             >
               {{ cancelLabel }}
             </v-btn>
@@ -94,11 +94,13 @@
     methods: {
       async onSubmit() {
         this.loading = true;
+
         if (this.mode === VIEW_MODE.CREATE) {
           await this.createProject();
         } else if (this.mode === VIEW_MODE.EDIT) {
           await this.updateProject();
         }
+
         this.loading = false;
       },
 
@@ -112,10 +114,9 @@
 
         try {
           const project = await this.$store.dispatch('projects/create', payload);
-          this.$emit('success', project._id);
-        } catch (error) {
-          console.error(error);
-          this.$emit('error', error);
+          this.emitSuccess(project._id);
+        } catch (err) {
+          this.emitError(err);
         }
       },
 
@@ -127,11 +128,23 @@
 
         try {
           const project = await this.$store.dispatch('projects/update', payload);
-          this.$emit('success', project._id);
-        } catch (error) {
-          console.error(error);
-          this.$emit('error', error);
+          this.emitSuccess(project._id);
+        } catch (err) {
+          this.emitError(err);
         }
+      },
+
+      emitSuccess(id) {
+        this.$emit('success', id);
+      },
+
+      emitError(err) {
+        console.error(err);
+        this.$emit('error', err);
+      },
+
+      handleCancelClick() {
+        this.$emit('cancel');
       }
     }
   });

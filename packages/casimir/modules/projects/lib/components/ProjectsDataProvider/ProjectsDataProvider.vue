@@ -5,7 +5,9 @@
 </template>
 
 <script>
-  export default {
+  import { defineComponent } from '@deip/platform-util';
+
+  export default defineComponent({
     name: 'ProjectsDataProvider',
     props: {
       tag: {
@@ -129,5 +131,5 @@
           });
       }
     }
-  };
+  });
 </script>
