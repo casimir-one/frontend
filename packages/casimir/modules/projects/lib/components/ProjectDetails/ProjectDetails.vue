@@ -9,8 +9,9 @@
 <script>
   import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
   import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  export default defineComponent({
     name: 'ProjectDetails',
 
     components: {
@@ -35,5 +36,5 @@
         };
       }
     }
-  };
+  });
 </script>
