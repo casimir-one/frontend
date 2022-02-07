@@ -90,17 +90,21 @@
 
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import { VexAutocomplete } from '@deip/vuetify-extended';
-  import UsersDataProvider from '../DataProvider/UsersDataProvider';
-  import UserAvatar from '../Avatar/UserAvatar';
+  import { defineComponent } from '@deip/platform-util';
+
+  import { UsersDataProvider } from '../UsersDataProvider';
+  import { UserAvatar } from '../UserAvatar';
   import { userHelpersMixin } from '../../mixins';
 
-  export default {
+  export default defineComponent({
     name: 'UsersSelector',
+
     components: {
       UsersDataProvider,
       UserAvatar,
       VexAutocomplete
     },
+
     mixins: [
       Proxyable,
       userHelpersMixin
@@ -136,5 +140,5 @@
         };
       }
     }
-  };
+  });
 </script>

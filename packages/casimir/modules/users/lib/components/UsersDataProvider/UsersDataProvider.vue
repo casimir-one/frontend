@@ -6,8 +6,9 @@
 
 <script>
   import { wrapInArray } from '@deip/toolbox';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  export default defineComponent({
     name: 'UsersDataProvider',
     props: {
       tag: {
@@ -95,5 +96,5 @@
           });
       }
     }
-  };
+  });
 </script>

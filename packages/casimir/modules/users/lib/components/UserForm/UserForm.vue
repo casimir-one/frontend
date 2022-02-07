@@ -6,7 +6,7 @@
       class="mb-6"
     />
 
-    <v-form @submit.prevent="handleSubmit(updateUser)">
+    <v-form @submit.prevent="handleSubmit(onSubmit)">
       <ve-stack :gap="32">
         <layout-renderer
           v-if="schema.length"
@@ -22,17 +22,17 @@
           <v-spacer />
           <v-btn
             color="primary"
-            :disabled="loading || disabled"
+            :disabled="loading"
             text
             class="mr-2"
-            @click="handleClick"
+            @click="handleCancelClick"
           >
-            Cancel
+            {{ cancelLabel }}
           </v-btn>
           <v-btn
             type="submit"
             color="primary"
-            :disabled="disabled || untouched || invalid"
+            :disabled="untouched || invalid"
             :loading="loading"
           >
             {{ submitLabelText }}
@@ -47,8 +47,9 @@
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VeStack, VeRawDisplay } from '@deip/vue-elements';
   import { VIEW_MODE } from '@deip/constants';
+  import { defineComponent } from '@deip/platform-util';
 
-  export default {
+  export default defineComponent({
     name: 'UserForm',
 
     components: {
@@ -71,6 +72,14 @@
         default() {
           return null;
         }
+      },
+      // override mixin prop
+      mode: {
+        type: [String, Number],
+        default: VIEW_MODE.EDIT,
+        validator(value) {
+          return value === VIEW_MODE.EDIT;
+        }
       }
     },
 
@@ -80,38 +89,45 @@
           return this.submitLabel;
         }
 
-        return this.mode === VIEW_MODE.CREATE
-          ? this.$t('module.users.form.create')
-          : this.$t('module.users.form.update');
+        return this.$t('module.users.form.update');
       }
     },
 
     methods: {
-      updateUser() {
-        this.disabled = true;
+      async  onSubmit() {
         this.loading = true;
 
+        await this.updateUser();
+
+        this.loading = false;
+      },
+
+      async updateUser() {
         const payload = {
           initiator: this.$currentUser,
           ...this.lazyFormData
         };
 
-        this.$store.dispatch('users/update', payload)
-          .then(() => {
-            this.$emit('success');
-          })
-          .catch((error) => {
-            this.$emit('error', error);
-          })
-          .finally(() => {
-            this.disabled = false;
-            this.loading = false;
-          });
+        try {
+          await this.$store.dispatch('users/update', payload);
+          this.emitSuccess();
+        } catch (err) {
+          this.emitError(err);
+        }
       },
 
-      handleClick() {
+      emitSuccess() {
+        this.$emit('success');
+      },
+
+      emitError(err) {
+        console.error(err);
+        this.$emit('error', err);
+      },
+
+      handleCancelClick() {
         this.restoreOldValue(true);
       }
     }
-  };
+  });
 </script>

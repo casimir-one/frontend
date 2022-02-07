@@ -9,9 +9,11 @@
 <script>
   import { VexAvatar } from '@deip/vuetify-extended';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
+  import { defineComponent } from '@deip/platform-util';
+
   import { userHelpersMixin } from '../../mixins';
 
-  export default {
+  export default defineComponent({
     name: 'UserAvatar',
 
     components: { VexAvatar },
@@ -55,5 +57,5 @@
 
     }
 
-  };
+  });
 </script>
