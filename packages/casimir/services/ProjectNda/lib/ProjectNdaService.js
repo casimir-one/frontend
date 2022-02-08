@@ -6,7 +6,7 @@ import {
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
 import { ProjectNdaHttp } from './ProjectNdaHttp';
 

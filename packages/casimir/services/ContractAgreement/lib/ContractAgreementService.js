@@ -12,7 +12,7 @@ import {
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
+import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
 import { ContractAgreementHttp } from './ContractAgreementHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();

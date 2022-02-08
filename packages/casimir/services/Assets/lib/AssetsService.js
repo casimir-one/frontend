@@ -1,6 +1,6 @@
 import { genRipemd160Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import {
   AcceptProposalCmd,
   CreateProposalCmd,

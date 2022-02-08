@@ -1,5 +1,5 @@
 import { createInstanceGetter } from '@deip/toolbox';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import {
   MarkNotificationsAsReadCmd
 } from '@deip/command-models';
