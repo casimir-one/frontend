@@ -2,7 +2,7 @@ import {
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
 import { DocumentTemplateHttp } from './DocumentTemplateHttp';

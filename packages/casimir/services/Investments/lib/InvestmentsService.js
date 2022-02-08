@@ -6,7 +6,7 @@ import {
   CreateProposalCmd,
   CreateInvestmentOpportunityCmd,
   InvestCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { createInstanceGetter } from '@deip/toolbox';
 import { InvestmentsHttp } from './InvestmentsHttp';

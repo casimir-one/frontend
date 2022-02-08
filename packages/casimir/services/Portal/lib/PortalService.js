@@ -6,7 +6,7 @@ import {
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,
   UpdatePortalSettingsCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import { PortalHttp } from './PortalHttp';

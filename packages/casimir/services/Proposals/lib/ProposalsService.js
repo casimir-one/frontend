@@ -1,5 +1,5 @@
 import { proxydi } from '@deip/proxydi';
-import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/command-models';
+import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { ChainService } from '@deip/chain-service';
 import { createInstanceGetter } from '@deip/toolbox';
