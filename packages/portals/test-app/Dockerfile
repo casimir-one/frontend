@@ -6,7 +6,7 @@ WORKDIR /var/app
 # Install dependencies
 COPY package.json ./
 COPY .npmrc ./
-RUN npm ci
+RUN npm i
 
 # Build
 COPY . .
