@@ -2,7 +2,7 @@ import { createInstanceGetter } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/messages';
 import {
   MarkNotificationsAsReadCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { NotificationHttp } from './NotificationHttp';
 
 export class NotificationService {

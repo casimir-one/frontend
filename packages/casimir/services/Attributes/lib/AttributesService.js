@@ -3,7 +3,7 @@ import {
   UpdateAttributeCmd,
   DeleteAttributeCmd,
   UpdateAttributeSettingsCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
 import { AttributesHttp } from './AttributesHttp';

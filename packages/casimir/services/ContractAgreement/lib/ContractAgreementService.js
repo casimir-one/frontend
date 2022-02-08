@@ -8,7 +8,7 @@ import {
   RejectContractAgreementCmd,
   CreateProposalCmd,
   AcceptProposalCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';

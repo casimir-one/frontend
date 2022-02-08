@@ -4,7 +4,7 @@ import {
   DeclineReviewRequestCmd,
   CreateReviewCmd,
   UpvoteReviewCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/messages';

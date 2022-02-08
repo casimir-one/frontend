@@ -7,7 +7,8 @@ import {
   TransferAssetCmd,
   CreateAssetCmd,
   IssueAssetCmd
-} from '@deip/command-models';
+} from '@deip/commands';
+
 import { APP_PROPOSAL } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
 import { ChainService } from '@deip/chain-service';

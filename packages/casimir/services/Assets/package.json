@@ -24,7 +24,7 @@
   "dependencies": {
     "@deip/access-service": "1.369.0",
     "@deip/chain-service": "1.369.0",
-    "@deip/command-models": "1.369.0",
+    "@deip/commands": "1.369.0",
     "@deip/constants": "1.369.0",
     "@deip/http-service": "1.369.0",
     "@deip/lib-crypto": "1.365.0",

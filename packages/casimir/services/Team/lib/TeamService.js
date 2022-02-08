@@ -18,7 +18,7 @@ import {
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
   TransferAssetCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
 

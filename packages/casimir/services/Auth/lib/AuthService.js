@@ -1,6 +1,6 @@
 import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { CreateDaoCmd } from '@deip/command-models';
+import { CreateDaoCmd } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/messages';
 import { AuthHttp } from './AuthHttp';

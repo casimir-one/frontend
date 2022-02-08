@@ -2,7 +2,7 @@ import { createInstanceGetter } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/messages';
 import {
   CreateLayoutCmd, UpdateLayoutCmd, DeleteLayoutCmd, UpdateLayoutSettingsCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { LayoutHttp } from './LayoutHttp';
 
 export class LayoutService {

@@ -10,7 +10,7 @@ import {
   AddDaoMemberCmd,
   AcceptProposalCmd,
   RemoveDaoMemberCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { TeamService } from '@deip/team-service';
 import {

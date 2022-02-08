@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@deip/chain-service": "1.369.0",
-    "@deip/command-models": "1.369.0",
+    "@deip/commands": "1.369.0",
     "@deip/constants": "1.369.0",
     "@deip/http-service": "1.369.0",
     "@deip/messages": "1.369.0",

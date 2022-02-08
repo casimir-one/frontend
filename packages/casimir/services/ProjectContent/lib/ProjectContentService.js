@@ -14,7 +14,7 @@ import {
   CreateDraftCmd,
   DeleteDraftCmd,
   UpdateDraftCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { ProjectContentHttp } from './ProjectContentHttp';
 import { projectContentTypes } from './lists';

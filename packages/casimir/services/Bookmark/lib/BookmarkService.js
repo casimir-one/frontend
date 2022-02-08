@@ -3,7 +3,7 @@ import { JsonDataMsg } from '@deip/messages';
 import {
   CreateBookmarkCmd,
   DeleteBookmarkCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { USER_BOOKMARK_TYPE } from '@deip/constants';
 import { BookmarkHttp } from './BookmarkHttp';
 

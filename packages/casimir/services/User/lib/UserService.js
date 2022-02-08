@@ -3,7 +3,7 @@ import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import {
   UpdateDaoCmd,
   AlterDaoAuthorityCmd
-} from '@deip/command-models';
+} from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import {
   replaceFileWithName,
