@@ -71,7 +71,7 @@
             case 'teams':
               filter.researchGroup = { isPersonal: false };
               break;
-            case ' personal':
+            case 'personal':
               filter.researchGroup = { isPersonal: true };
               break;
             default:
