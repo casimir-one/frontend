@@ -4,9 +4,9 @@ RUN mkdir -p /var/app
 WORKDIR /var/app
 
 # Install dependencies
-COPY package.json ./
+COPY package.json package-lock.json ./
 COPY .npmrc ./
-RUN npm i
+RUN npm ci
 
 # Build
 COPY . .
