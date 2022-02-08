@@ -1,5 +1,5 @@
 import { proxydi } from '@deip/proxydi';
-import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import { APP_PROPOSAL } from '@deip/constants';
 import {
   CreateProjectCmd,

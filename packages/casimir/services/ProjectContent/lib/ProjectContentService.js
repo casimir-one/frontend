@@ -5,7 +5,7 @@ import {
   createInstanceGetter
 } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg, MultFormDataMsg } from '@deip/message-models';
+import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
 import { APP_PROPOSAL } from '@deip/constants';
 import {
   CreateProposalCmd,

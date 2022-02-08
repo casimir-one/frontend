@@ -7,7 +7,7 @@ import {
 } from '@deip/command-models';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import { ReviewHttp } from './ReviewHttp';
 
 export class ReviewService {

@@ -4,7 +4,7 @@ import {
   DeleteAttributeCmd,
   UpdateAttributeSettingsCmd
 } from '@deip/command-models';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
 import { AttributesHttp } from './AttributesHttp';
 

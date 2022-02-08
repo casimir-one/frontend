@@ -1,5 +1,5 @@
 import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
 import {
   AcceptProposalCmd,

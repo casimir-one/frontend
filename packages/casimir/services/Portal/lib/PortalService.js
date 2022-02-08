@@ -8,7 +8,7 @@ import {
   UpdatePortalSettingsCmd
 } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
-import { MultFormDataMsg, JsonDataMsg } from '@deip/message-models';
+import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import { PortalHttp } from './PortalHttp';
 
 export class PortalService {

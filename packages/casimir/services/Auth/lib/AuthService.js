@@ -2,7 +2,7 @@ import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { CreateDaoCmd } from '@deip/command-models';
 import { ChainService } from '@deip/chain-service';
-import { JsonDataMsg } from '@deip/message-models';
+import { JsonDataMsg } from '@deip/messages';
 import { AuthHttp } from './AuthHttp';
 
 export class AuthService {
