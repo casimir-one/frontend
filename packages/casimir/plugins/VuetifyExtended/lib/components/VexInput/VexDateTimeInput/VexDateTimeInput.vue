@@ -56,7 +56,7 @@
       return {
         internalValue: {
           date: '',
-          time: ''
+          time: '00:00'
         }
       };
     },
