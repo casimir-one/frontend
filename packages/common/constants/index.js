@@ -8,7 +8,6 @@ export * from './lib/entity';
 export * from './lib/expertise-contributions';
 export * from './lib/investment-opportunity';
 export * from './lib/grants';
-export * from './lib/investments';
 export * from './lib/project-content';
 export * from './lib/project-content-reviews';
 export * from './lib/schema-renderer';

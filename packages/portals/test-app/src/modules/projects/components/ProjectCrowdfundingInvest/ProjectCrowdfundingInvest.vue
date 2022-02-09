@@ -19,7 +19,7 @@
 
 <script>
   import { InvestForm } from '@deip/investment-opportunities-module';
-  import { TS_TYPES } from '@deip/constants';
+  import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { VexSection } from '@deip/vuetify-extended';
 
   export default {
@@ -50,7 +50,7 @@
         }
 
         const projectInvestmentOpportunities = this.$store.getters['investmentOpportunities/list']({
-          status: TS_TYPES.ACTIVE,
+          status: INVESTMENT_OPPORTUNITY_STATUS.ACTIVE,
           projectId: this.project._id
         });
 

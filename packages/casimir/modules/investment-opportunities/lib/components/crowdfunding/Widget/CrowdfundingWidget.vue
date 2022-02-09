@@ -8,7 +8,7 @@
           />
 
           <v-card
-            v-if="investmentOpportunity.status != TS_TYPES.INACTIVE"
+            v-if="investmentOpportunity.status != INVESTMENT_OPPORTUNITY_STATUS.INACTIVE"
             outlined
             class="py-2 px-3 d-flex justify-space-between"
           >
@@ -20,7 +20,7 @@
           </v-card>
 
           <v-btn
-            v-if="investmentOpportunity.status === TS_TYPES.ACTIVE"
+            v-if="investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.ACTIVE"
             :to="investLink"
             color="primary"
             depressed
@@ -50,7 +50,7 @@
   import { defineComponent } from '@deip/platform-util';
   import { dateMixin } from '@deip/platform-components';
   import { orderBy } from '@deip/toolbox/lodash';
-  import { TS_TYPES } from '@deip/constants';
+  import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
   import { VeStack } from '@deip/vue-elements';
 
@@ -96,7 +96,7 @@
     data() {
       return {
         loading: false,
-        TS_TYPES,
+        INVESTMENT_OPPORTUNITY_STATUS,
         timerId: ''
       };
     },
@@ -119,7 +119,8 @@
       isCrowdfundingCanBeStarted() {
         return this.canUserStartCrowdfunding
           && (!this.investmentOpportunity
-            || [TS_TYPES.FINISHED, TS_TYPES.EXPIRED].includes(this.investmentOpportunity?.status));
+            || [INVESTMENT_OPPORTUNITY_STATUS.FINISHED, INVESTMENT_OPPORTUNITY_STATUS.EXPIRED]
+              .includes(this.investmentOpportunity?.status));
       },
 
       userInvestment() {
@@ -168,7 +169,7 @@
         const { status } = this.investmentOpportunity;
         const {
           INACTIVE, EXPIRED, FINISHED
-        } = TS_TYPES;
+        } = INVESTMENT_OPPORTUNITY_STATUS;
 
         if (status === INACTIVE) {
           return this.$store.dispatch('investmentOpportunities/getListByProjectId', this.projectId)

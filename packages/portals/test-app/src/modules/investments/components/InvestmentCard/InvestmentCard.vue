@@ -37,7 +37,7 @@
 <script>
   import { CrowdfundingProgress } from '@deip/investment-opportunities-module';
   import { VeStack } from '@deip/vue-elements';
-  import { TS_TYPES } from '@deip/constants';
+  import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
 
   export default {
     name: 'InvestmentCard',
@@ -56,13 +56,15 @@
 
     computed: {
       statusText() {
-        return this.$t(`constants.investmentOpportunityStatus.${TS_TYPES[this.investment.investmentOpportunity.status]}`);
+        return this.$t(`constants.investmentOpportunityStatus.${INVESTMENT_OPPORTUNITY_STATUS[this.investment.investmentOpportunity.status]}`);
       },
       statusColor() {
-        if (this.investment.investmentOpportunity.status === TS_TYPES.FINISHED) {
+        if (this.investment.investmentOpportunity.status
+          === INVESTMENT_OPPORTUNITY_STATUS.FINISHED) {
           return 'success';
         }
-        if (this.investment.investmentOpportunity.status === TS_TYPES.EXPIRED) {
+        if (this.investment.investmentOpportunity.status
+          === INVESTMENT_OPPORTUNITY_STATUS.EXPIRED) {
           return 'error';
         }
         return 'info';

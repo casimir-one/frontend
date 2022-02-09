@@ -33,14 +33,14 @@
     />
 
     <div class="text-caption text--secondary">
-      <div v-if="investmentOpportunity.status === TS_TYPES.ACTIVE">
+      <div v-if="investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.ACTIVE">
         <span class="font-weight-medium">
           {{ $t('module.crowdfunding.crowdfundingProgress.untilCompletion') }}:
         </span>
         <span>{{ remainingTime }}</span>
       </div>
 
-      <div v-else-if="investmentOpportunity.status === TS_TYPES.INACTIVE">
+      <div v-else-if="investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.INACTIVE">
         <span class="font-weight-medium">
           {{ $t('module.crowdfunding.crowdfundingProgress.beforeStart') }}:
         </span>
@@ -59,7 +59,7 @@
 
 <script>
   import { dateMixin } from '@deip/platform-components';
-  import { TS_TYPES } from '@deip/constants';
+  import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { isString } from '@deip/toolbox';
   import { uniqBy } from '@deip/toolbox/lodash';
 
@@ -82,7 +82,7 @@
 
     data() {
       return {
-        TS_TYPES
+        INVESTMENT_OPPORTUNITY_STATUS
       };
     },
 
@@ -110,7 +110,7 @@
         return uniqBy(this.investmentOpportunity.investments, 'investor').length;
       },
       barColor() {
-        return this.investmentOpportunity.status === TS_TYPES.EXPIRED ? 'error' : 'success';
+        return this.investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.EXPIRED ? 'error' : 'success';
       },
       barHeight() {
         return this.small ? 4 : 8;
