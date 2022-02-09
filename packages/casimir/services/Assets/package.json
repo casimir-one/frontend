@@ -1,6 +1,6 @@
 {
   "name": "@deip/assets-service",
-  "version": "1.369.0",
+  "version": "1.369.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -24,11 +24,11 @@
   "dependencies": {
     "@deip/access-service": "1.369.0",
     "@deip/chain-service": "1.369.0",
-    "@deip/commands": "1.369.0",
+    "@deip/commands": "1.369.1",
     "@deip/constants": "1.369.0",
     "@deip/http-service": "1.369.0",
     "@deip/lib-crypto": "1.365.0",
-    "@deip/messages": "1.369.0",
+    "@deip/messages": "1.369.1",
     "@deip/proxydi": "1.366.0",
     "@deip/toolbox": "1.366.0"
   },

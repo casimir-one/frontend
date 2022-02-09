@@ -1,6 +1,6 @@
 {
   "name": "@deip/portals-module",
-  "version": "1.369.0",
+  "version": "1.369.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@deip/constants": "1.369.0",
     "@deip/platform-store": "1.366.0",
-    "@deip/portal-service": "1.369.0",
+    "@deip/portal-service": "1.369.1",
     "@deip/proxydi": "1.366.0"
   },
   "devDependencies": {

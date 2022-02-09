@@ -1,6 +1,6 @@
 {
   "name": "@deip/wallet-module",
-  "version": "1.369.0",
+  "version": "1.369.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
@@ -20,8 +20,8 @@
     "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
   },
   "dependencies": {
-    "@deip/assets-module": "1.369.0",
-    "@deip/assets-service": "1.369.0",
+    "@deip/assets-module": "1.369.1",
+    "@deip/assets-service": "1.369.1",
     "@deip/constants": "1.369.0",
     "@deip/platform-store": "1.366.0",
     "@deip/platform-util": "1.369.0",

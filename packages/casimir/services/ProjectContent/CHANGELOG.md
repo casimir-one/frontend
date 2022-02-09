@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.369.1](https://github.com/DEIPworld/deip-modules/compare/v1.369.0...v1.369.1) (2022-02-09)
+
+**Note:** Version bump only for package @deip/project-content-service
+
+
+
+
+
 # [1.369.0](https://github.com/DEIPworld/deip-modules/compare/v1.368.1...v1.369.0) (2022-02-04)
 
 **Note:** Version bump only for package @deip/project-content-service
