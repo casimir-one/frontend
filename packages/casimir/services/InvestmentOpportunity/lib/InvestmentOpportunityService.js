@@ -1,6 +1,6 @@
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
-import { APP_PROPOSAL, TS_TYPES } from '@deip/constants';
+import { APP_PROPOSAL, INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
 import {
   AcceptProposalCmd,
   CreateProposalCmd,
@@ -42,7 +42,8 @@ export class InvestmentOpportunityService {
       ...res,
       data: {
         items: res.data.items.find(
-          (ts) => ts.status === TS_TYPES.ACTIVE || ts.status === TS_TYPES.INACTIVE
+          (ts) => ts.status === INVESTMENT_OPPORTUNITY_STATUS.ACTIVE
+          || ts.status === INVESTMENT_OPPORTUNITY_STATUS.INACTIVE
         )
       }
     };
