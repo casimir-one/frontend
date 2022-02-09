@@ -1,6 +1,6 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
 
-import { crowdfundingBlocks, CrowdfundingWidget } from '@deip/fundraising-module';
+import { crowdfundingBlocks, CrowdfundingWidget } from '@deip/investment-opportunities-module';
 import { ProjectNftWidget } from '@/modules/projects/components/ProjectNftWidget';
 
 export const layoutBuilderElements = {

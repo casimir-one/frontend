@@ -1,7 +1,7 @@
 import Maska from 'maska';
 
 import { setLocalesMessages } from '@deip/toolbox';
-import { fundraisingStore } from './store';
+import { investmentOpportunitiesStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
@@ -15,20 +15,20 @@ const install = (Vue, options = {}) => {
   if (i18n) {
     setLocalesMessages(i18n, locales);
   } else {
-    throw Error('[FundraisingModule]: i18nInstance is not provided');
+    throw Error('[InvestmentOpportunitiesModule]: i18nInstance is not provided');
   }
 
   if (store) {
-    store.registerModule('fundraising', fundraisingStore);
+    store.registerModule('investmentOpportunities', investmentOpportunitiesStore);
   } else {
-    throw Error('[FundraisingModule]: storeInstance is not provided');
+    throw Error('[InvestmentOpportunitiesModule]: storeInstance is not provided');
   }
 
   Vue.use(Maska);
 };
 
-export const FundraisingModule = {
-  name: 'FundraisingModule',
+export const InvestmentOpportunitiesModule = {
+  name: 'InvestmentOpportunitiesModule',
   deps: [
     'EnvModule',
     'ValidationPlugin',

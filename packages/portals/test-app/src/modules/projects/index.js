@@ -21,7 +21,7 @@ export const TestAppProjectsModule = {
     'EnvModule',
     'AuthModule',
     'ProjectsModule',
-    'FundraisingModule'
+    'InvestmentOpportunitiesModule'
   ],
   install
 };

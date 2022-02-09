@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { InvestForm } from '@deip/fundraising-module';
+  import { InvestForm } from '@deip/investment-opportunities-module';
   import { TS_TYPES } from '@deip/constants';
   import { VexSection } from '@deip/vuetify-extended';
 
@@ -49,7 +49,7 @@
           return null;
         }
 
-        const projectInvestmentOpportunities = this.$store.getters['fundraising/list']({
+        const projectInvestmentOpportunities = this.$store.getters['investmentOpportunities/list']({
           status: TS_TYPES.ACTIVE,
           projectId: this.project._id
         });
@@ -101,9 +101,9 @@
 
       async getCurrentInvestmentOpportunity() {
         try {
-          await this.$store.dispatch('fundraising/getCurrentInvestmentOpportunityByProject', this.project._id);
+          await this.$store.dispatch('investmentOpportunities/getCurrentInvestmentOpportunityByProject', this.project._id);
           if (this.investmentOpportunity) {
-            this.$store.dispatch('fundraising/getInvestmentOpportunityInvestments', this.investmentOpportunity._id);
+            this.$store.dispatch('investmentOpportunities/getInvestmentOpportunityInvestments', this.investmentOpportunity._id);
           } else {
             this.$router.replace({ name: this.$route.meta.redirectTo, params: this.$route.params });
           }

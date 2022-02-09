@@ -17,7 +17,7 @@
     "@deip/auth-module": "1.369.1",
     "@deip/constants": "1.369.0",
     "@deip/env-module": "1.369.0",
-    "@deip/fundraising-module": "1.369.1",
+    "@deip/investment-opportunities-module": "1.369.1",
     "@deip/layouts-module": "1.369.1",
     "@deip/platform-components": "1.369.0",
     "@deip/platform-util": "1.369.0",

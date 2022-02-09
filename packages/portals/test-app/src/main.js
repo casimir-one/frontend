@@ -19,7 +19,7 @@ import { PortalsModule } from '@deip/portals-module';
 import { ProjectsModule } from '@deip/projects-module';
 import { WalletModule } from '@deip/wallet-module';
 import { AssetsModule } from '@deip/assets-module';
-import { FundraisingModule } from '@deip/fundraising-module';
+import { InvestmentOpportunitiesModule } from '@deip/investment-opportunities-module';
 
 import { TestAppAccountModule } from '@/modules/account';
 import { TestAppAdminModule } from '@/modules/admin';
@@ -89,7 +89,7 @@ testApp
   .addModule(ProjectsModule, projectsModuleOptions)
   .addModule(WalletModule)
   .addModule(AssetsModule)
-  .addModule(FundraisingModule)
+  .addModule(InvestmentOpportunitiesModule)
 
   .addModule(TestAppAccountModule)
   .addModule(TestAppAdminModule)
