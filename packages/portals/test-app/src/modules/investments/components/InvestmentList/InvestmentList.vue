@@ -57,7 +57,7 @@
         return this.investmentsHistory.map((i) => ({
           ...i,
           project: this.$store.getters['projects/one'](i.projectId),
-          investmentOpportunity: this.$store.getters['fundraising/one'](i.investmentOpportunity._id)
+          investmentOpportunity: this.$store.getters['investmentOpportunities/one'](i.investmentOpportunity._id)
         }));
       }
     },
@@ -86,7 +86,7 @@
        */
       async getInvestorsByInvestmentOpportunityIds(investmentOpportunityIds) {
         try {
-          const action = (id) => this.$store.dispatch('fundraising/getInvestmentOpportunityInvestments', id);
+          const action = (id) => this.$store.dispatch('investmentOpportunities/getInvestmentOpportunityInvestments', id);
           await Promise.all(investmentOpportunityIds.map((id) => action(id)));
         } catch (error) {
           console.error(error);
@@ -99,7 +99,7 @@
        */
       async getInvestmentsHistoryByUserId(id) {
         try {
-          return this.$store.dispatch('fundraising/getInvestmentsHistory', id);
+          return this.$store.dispatch('investmentOpportunities/getInvestmentsHistory', id);
         } catch (error) {
           console.error(error);
 

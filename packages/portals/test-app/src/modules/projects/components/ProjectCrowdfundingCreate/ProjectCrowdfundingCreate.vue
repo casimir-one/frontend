@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { CreateCrowdfundingForm } from '@deip/fundraising-module';
+  import { CreateCrowdfundingForm } from '@deip/investment-opportunities-module';
   import { ASSET_TYPE, TS_TYPES } from '@deip/constants';
   import { VexSection } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
@@ -76,7 +76,7 @@
       await this.getProject();
       await this.getInvestmentOpportunities();
 
-      const activeInvestmentOpportunities = this.$store.getters['fundraising/list']({
+      const activeInvestmentOpportunities = this.$store.getters['investmentOpportunities/list']({
         status: [TS_TYPES.ACTIVE, TS_TYPES.INACTIVE],
         projectId: this.project._id
       });
@@ -104,7 +104,7 @@
 
       async getInvestmentOpportunities() {
         try {
-          await this.$store.dispatch('fundraising/getCurrentInvestmentOpportunityByProject', this.project._id);
+          await this.$store.dispatch('investmentOpportunities/getCurrentInvestmentOpportunityByProject', this.project._id);
         } catch (error) {
           console.error(error);
         }

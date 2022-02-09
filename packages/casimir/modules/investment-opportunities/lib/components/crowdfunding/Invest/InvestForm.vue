@@ -201,7 +201,7 @@
         };
 
         try {
-          await this.$store.dispatch('fundraising/invest', payload);
+          await this.$store.dispatch('investmentOpportunities/invest', payload);
           this.emitSuccess();
         } catch (error) {
           this.emitError(error);

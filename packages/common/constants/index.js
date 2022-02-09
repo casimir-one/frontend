@@ -6,7 +6,7 @@ export * from './lib/chain';
 export * from './lib/commands';
 export * from './lib/entity';
 export * from './lib/expertise-contributions';
-export * from './lib/fundraising';
+export * from './lib/investment-opportunity';
 export * from './lib/grants';
 export * from './lib/investments';
 export * from './lib/project-content';

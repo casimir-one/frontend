@@ -35,7 +35,7 @@
 </template>
 
 <script>
-  import { CrowdfundingProgress } from '@deip/fundraising-module';
+  import { CrowdfundingProgress } from '@deip/investment-opportunities-module';
   import { VeStack } from '@deip/vue-elements';
   import { TS_TYPES } from '@deip/constants';
 

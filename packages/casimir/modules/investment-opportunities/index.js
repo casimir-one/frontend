@@ -1,4 +1,4 @@
-export * from './lib/fundraisingModule';
+export * from './lib/investmentOpportunitiesModule';
 
 export { default as CreateCrowdfundingForm } from './lib/components/crowdfunding/Create/CreateCrowdfundingForm';
 export { default as InvestForm } from './lib/components/crowdfunding/Invest/InvestForm';

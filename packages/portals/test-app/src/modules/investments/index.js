@@ -20,7 +20,7 @@ export const TestAppInvestmentsModule = {
   deps: [
     'EnvModule',
     'AuthModule',
-    'FundraisingModule'
+    'InvestmentOpportunitiesModule'
   ],
   install
 };
