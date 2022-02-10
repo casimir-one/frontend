@@ -12,7 +12,6 @@
         >
           <v-text-field
             v-model="formData.title"
-            outlined
             :label="$t('module.projectContent.form.title')"
             :error-messages="errors"
             hide-details="auto"
@@ -30,7 +29,6 @@
             :label="$t('module.projectContent.form.type')"
             :error-messages="errors"
             item-value="value"
-            outlined
             hide-details="auto"
           />
         </validation-provider>

@@ -18,7 +18,6 @@
         >
           <v-text-field
             v-model="internalTokens"
-            outlined
             persistent-hint
             :error-messages="errors"
             :suffix="availableTokens.symbol"

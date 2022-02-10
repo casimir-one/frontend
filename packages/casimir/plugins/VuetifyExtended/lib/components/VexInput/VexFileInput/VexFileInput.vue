@@ -20,10 +20,6 @@
         type: String,
         default: 'primary'
       },
-      outlined: {
-        type: Boolean,
-        default: true
-      },
       prependIcon: {
         type: String,
         default: null

@@ -19,7 +19,7 @@
       <v-card-text>
         <ve-stack :gap="16">
           <v-chip-group>
-            <v-chip small outlined :color="statusColor">
+            <v-chip small :color="statusColor">
               {{ statusText }}
             </v-chip>
           </v-chip-group>

@@ -42,7 +42,6 @@
 
     <template #item.status="{ item }">
       <v-chip
-        outlined
         :color="getStatusColor(item.status)"
       >
         {{ formatStatus(item.status) }}
