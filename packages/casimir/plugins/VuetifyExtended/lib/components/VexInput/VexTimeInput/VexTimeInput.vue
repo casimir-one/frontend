@@ -4,7 +4,6 @@
     :label="label"
     :placeholder="placeholder"
     :items="list"
-    outlined
     hide-details="auto"
     autocomplete="off"
   />

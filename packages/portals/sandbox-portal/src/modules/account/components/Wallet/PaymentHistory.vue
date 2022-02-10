@@ -13,7 +13,7 @@
     :items-per-page="10"
   >
     <template #item.currency="{ item }">
-      <v-chip outlined>
+      <v-chip>
         <v-icon
           left
           :size="20"
@@ -37,7 +37,6 @@
 
     <template #item.status="{ item }">
       <v-chip
-        outlined
         :color="getColorByDepositStatus(item.status)"
       >
         {{ formatStatus(item.status) }}

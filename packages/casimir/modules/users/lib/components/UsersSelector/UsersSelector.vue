@@ -36,7 +36,6 @@
             <v-chip
               v-if="multiple"
               :disabled="disabled"
-              outlined
               class="ml-0 mr-2"
             >
               <user-avatar

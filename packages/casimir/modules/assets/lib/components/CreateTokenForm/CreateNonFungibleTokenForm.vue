@@ -23,7 +23,6 @@
                 <v-text-field
                   v-model.number="formModel.maxSupply"
                   :label="$t('module.assets.createNFTForm.totalNumberOfTokens')"
-                  outlined
                   hide-details="auto"
                   :error-messages="errors"
                 />
@@ -47,7 +46,6 @@
                   v-model="formModel.symbol"
                   v-maska="assetMask"
                   :label="$t('module.assets.createNFTForm.ticker')"
-                  outlined
                   hide-details="auto"
                   :error-messages="errors"
                 />
@@ -75,7 +73,6 @@
                     item-value="_id"
                     :value="team._id"
                     disabled
-                    outlined
                     :label="$t('module.assets.createNFTForm.shareholder')"
                     :hide-details="true"
                   >
@@ -96,7 +93,6 @@
                   <v-text-field
                     :label="$t('module.assets.createNFTForm.tokens')"
                     :value="teamTokens.amount"
-                    outlined
                     :hide-details="true"
                     disabled
                   />
@@ -128,7 +124,6 @@
                     <users-selector
                       v-model="item.account"
                       :label="$t('module.assets.createNFTForm.shareholder')"
-                      outlined
                       hide-details="auto"
                       :error-messages="errors"
                       :filter-items="shareholdersFilter(item.account)"
@@ -144,7 +139,6 @@
                     <v-text-field
                       v-model="item.amount"
                       :label="$t('module.assets.createNFTForm.tokens')"
-                      outlined
                       hide-details="auto"
                       :error-messages="errors"
                     />
@@ -229,7 +223,6 @@
           <ve-stack flow="column" :gap="16">
             <v-btn
               color="primary"
-              outlined
               :disabled="loading"
               @click="handleCancelClick"
             >

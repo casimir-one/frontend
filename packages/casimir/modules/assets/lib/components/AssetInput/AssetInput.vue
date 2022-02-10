@@ -15,7 +15,6 @@
           :value="internalValue.amount"
           class="rounded-br-0 rounded-tr-0"
           :label="label"
-          outlined
           hide-details="auto"
           :error-messages="[...errors, ...errorMessages]"
           :name="$t('module.assets.input.amount')"
@@ -31,7 +30,6 @@
         :items="assetsListKeys"
         :hide-details="true"
         :disabled="disableAssets"
-        outlined
         @change="handleSymbolChange"
       />
     </v-col>

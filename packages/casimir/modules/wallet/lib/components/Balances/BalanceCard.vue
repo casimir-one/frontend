@@ -12,7 +12,6 @@
           <div>
             <v-chip
               small
-              outlined
               readonly
               color="white"
             >

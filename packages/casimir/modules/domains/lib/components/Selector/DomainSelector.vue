@@ -10,17 +10,11 @@
       <template #activator="{ on, attrs }">
         <v-text-field
           v-model="search"
-
           :label="label"
-
           hide-details="auto"
           :error-messages="errors"
-
           :disabled="disabled"
-
-          outlined
           autocomplete="off"
-
           :append-icon="'mdi-menu-down'"
           :class="{'icon-upended': open}"
 
@@ -59,7 +53,6 @@
       <v-chip
         v-for="domain in selectedDomains"
         :key="domain._id"
-        outlined
         class="ma-1"
         :disabled="disabled"
       >

@@ -10,12 +10,6 @@
   export default defineComponent({
     name: 'VexAutocomplete',
     mixins: [VAutocomplete],
-    props: {
-      outlined: {
-        type: Boolean,
-        default: true
-      }
-    },
     computed: {
       labelValue() {
         return !this.isSingle
@@ -141,8 +135,7 @@
           props: {
             disabled: isDisabled,
             inputValue: index === this.selectedIndex,
-            small: this.smallChips,
-            outlined: true
+            small: this.smallChips
           },
           on: {
             click: (e) => {

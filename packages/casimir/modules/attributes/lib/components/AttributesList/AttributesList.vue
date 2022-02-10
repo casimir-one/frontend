@@ -7,7 +7,6 @@
             v-model.number="filter.scope"
             label="Attributes scope"
             :items="scopesSelectorList"
-            outlined
             hide-details
           />
         </v-col>
@@ -15,7 +14,6 @@
           <v-text-field
             v-model="filter.search"
             label="Search"
-            outlined
             hide-details
           />
         </v-col>
@@ -35,7 +33,6 @@
       <template #item.scope="{ item }">
         <v-chip
           small
-          outlined
           readonly
           :color="scopesPalette[item.scope].background"
         >
@@ -44,7 +41,7 @@
       </template>
 
       <template #item.type="{ item }">
-        <v-chip small outlined readonly>
+        <v-chip small readonly>
           {{ attrTypeInfo(item.type).label }}
         </v-chip>
       </template>

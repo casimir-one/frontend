@@ -15,7 +15,6 @@
         append-icon="mdi-calendar"
         autocomplete="off"
         v-bind="internalFieldProps"
-        outlined
         @focus="handleTextFieldFocus"
         @blur="handleTextFieldBlur"
       />
