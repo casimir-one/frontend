@@ -9,17 +9,17 @@ import {
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { createInstanceGetter } from '@deip/toolbox';
-import { InvestmentsHttp } from './InvestmentsHttp';
+import { InvestmentOpportunityHttp } from './InvestmentOpportunityHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
-export class InvestmentsService {
-  investmentsHttp = InvestmentsHttp.getInstance();
+export class InvestmentOpportunityService {
+  investmentOpportunityHttp = InvestmentOpportunityHttp.getInstance();
 
   proxydi = proxydi;
 
   async getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
-    return this.investmentsHttp.getAccountRevenueHistoryByAsset(
+    return this.investmentOpportunityHttp.getAccountRevenueHistoryByAsset(
       account,
       symbol,
       cursor,
@@ -29,15 +29,15 @@ export class InvestmentsService {
   }
 
   async getAccountRevenueHistory(account, cursor = 0) {
-    return this.investmentsHttp.getAccountRevenueHistory(account, cursor);
+    return this.investmentOpportunityHttp.getAccountRevenueHistory(account, cursor);
   }
 
   async getAssetRevenueHistory(symbol, cursor = 0) {
-    return this.investmentsHttp.getAssetRevenueHistory(symbol, cursor);
+    return this.investmentOpportunityHttp.getAssetRevenueHistory(symbol, cursor);
   }
 
-  async getCurrentTokenSaleByProject(projectId) {
-    const res = await this.investmentsHttp.getProjectTokenSalesByProject(projectId);
+  async getCurrentInvestmentOpportunityByProject(projectId) {
+    const res = await this.investmentOpportunityHttp.getInvestmentOpportunitiesByProject(projectId);
     return {
       ...res,
       data: {
@@ -48,7 +48,7 @@ export class InvestmentsService {
     };
   }
 
-  async createProjectTokenSale({ privKey, username }, {
+  async createInvestmentOpportunity({ privKey, username }, {
     teamId,
     projectId,
     startTime,
@@ -111,12 +111,12 @@ export class InvestmentsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.investmentsHttp.createProjectTokenSale(msg);
+            return this.investmentOpportunityHttp.createInvestmentOpportunity(msg);
           });
       });
   }
 
-  async investProjectTokenSale({ privKey }, {
+  async invest({ privKey }, {
     investmentOpportunityId,
     investor,
     asset
@@ -140,31 +140,31 @@ export class InvestmentsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.investmentsHttp.investProjectTokenSale(msg);
+            return this.investmentOpportunityHttp.invest(msg);
           });
       });
   }
 
-  async getProjectTokenSalesByProject(projectId) {
-    return this.investmentsHttp.getProjectTokenSalesByProject(projectId);
+  async getInvestmentOpportunitiesByProject(projectId) {
+    return this.investmentOpportunityHttp.getInvestmentOpportunitiesByProject(projectId);
   }
 
-  async getProjectTokenSaleInvestmentsByProject(projectId) {
-    return this.investmentsHttp.getProjectTokenSaleInvestmentsByProject(projectId);
+  async getInvestmentsByProject(projectId) {
+    return this.investmentOpportunityHttp.getInvestmentsByProject(projectId);
   }
 
-  async getAccountInvestmentsHistory(account) {
-    return this.investmentsHttp.getAccountInvestmentsHistory(account);
+  async getAccountInvestmentOpportunityHistory(account) {
+    return this.investmentOpportunityHttp.getAccountInvestmentOpportunityHistory(account);
   }
 
-  async getInvestmentsHistoryByTokenSale(tokenSaleId) {
-    return this.investmentsHttp.getInvestmentsHistoryByTokenSale(tokenSaleId);
+  async getInvestmentOpportunityHistoryById(id) {
+    return this.investmentOpportunityHttp.getInvestmentOpportunityHistoryById(id);
   }
 
-  async getProjectTokenSale(investmentOpportunityId) {
-    return this.investmentsHttp.getProjectTokenSale(investmentOpportunityId);
+  async getInvestmentOpportunity(investmentOpportunityId) {
+    return this.investmentOpportunityHttp.getInvestmentOpportunity(investmentOpportunityId);
   }
 
-  /** @type {() => InvestmentsService} */
-  static getInstance = createInstanceGetter(InvestmentsService);
+  /** @type {() => InvestmentOpportunityService} */
+  static getInstance = createInstanceGetter(InvestmentOpportunityService);
 }
