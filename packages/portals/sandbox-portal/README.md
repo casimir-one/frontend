@@ -1,4 +1,4 @@
-# test-app
+# sandbox-portal
 
 ## Project setup
 ```
