@@ -1,85 +1,87 @@
 <template>
-  <v-data-table
-    :headers="tableHeaders"
-    :items="drafts"
-    :loading="loading"
-    disable-sort
-    disable-pagination
-    hide-default-footer
-    @click:row="handleRowClick"
+  <project-content-drafts-data-provider
+    v-bind="providerProps"
   >
-    <template #item.type>
-      {{ $t('module.projectContent.draftList.draft') }}
-    </template>
-
-    <template #item.title="{item}">
-      <span>{{ item.title }}</span>
-      <span v-if="isDraftProposed(item)" class="ml-2 orange--text">
-        ({{ $t('module.projectContent.draftList.proposed') }})
-      </span>
-    </template>
-
-    <template #item.actions="{item}">
-      <vex-tooltip
-        v-if="isDraftInProgress(item)"
-        :tooltip="$t('module.projectContent.draft.publish')"
-        bottom
+    <template #default="{drafts, loading}">
+      <v-data-table
+        :headers="tableHeaders"
+        :items="drafts"
+        :loading="loading"
+        disable-sort
+        disable-pagination
+        hide-default-footer
+        @click:row="handleRowClick"
       >
-        <v-btn
-          icon
-          small
-          :loading="publishingDraftId === item._id"
-          :disabled="publishingDraftId === item._id"
-          @click.stop="handlePublishClick(item)"
-        >
-          <v-icon small>
-            mdi-publish
-          </v-icon>
-        </v-btn>
-      </vex-tooltip>
+        <template #item.type>
+          {{ $t('module.projectContent.draftList.draft') }}
+        </template>
 
-      <vex-tooltip
-        v-if="isDraftInProgress(item)"
-        :tooltip="$t('module.projectContent.draft.delete')"
-        bottom
-      >
-        <v-btn
-          icon
-          small
-          :loading="removingDraftId === item._id"
-          :disabled="removingDraftId === item._id "
-          @click.stop="handleRemoveClick(item)"
-        >
-          <v-icon small>
-            mdi-delete
-          </v-icon>
-        </v-btn>
-      </vex-tooltip>
+        <template #item.title="{item}">
+          <span>{{ item.title }}</span>
+          <span v-if="isDraftProposed(item)" class="ml-2 orange--text">
+            ({{ $t('module.projectContent.draftList.proposed') }})
+          </span>
+        </template>
+
+        <template #item.actions="{item}">
+          <vex-tooltip
+            v-if="isDraftInProgress(item)"
+            :tooltip="$t('module.projectContent.draft.publish')"
+            bottom
+          >
+            <v-btn
+              icon
+              small
+              :loading="publishingDraftId === item._id"
+              :disabled="publishingDraftId === item._id"
+              @click.stop="handlePublishClick(item)"
+            >
+              <v-icon small>
+                mdi-publish
+              </v-icon>
+            </v-btn>
+          </vex-tooltip>
+
+          <vex-tooltip
+            v-if="isDraftInProgress(item)"
+            :tooltip="$t('module.projectContent.draft.delete')"
+            bottom
+          >
+            <v-btn
+              icon
+              small
+              :loading="removingDraftId === item._id"
+              :disabled="removingDraftId === item._id "
+              @click.stop="handleRemoveClick(item)"
+            >
+              <v-icon small>
+                mdi-delete
+              </v-icon>
+            </v-btn>
+          </vex-tooltip>
+        </template>
+      </v-data-table>
     </template>
-  </v-data-table>
+  </project-content-drafts-data-provider>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
+  import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import { VexTooltip } from '@deip/vuetify-extended';
   import { PROJECT_CONTENT_STATUS } from '@deip/constants';
+  import ProjectContentDraftsDataProvider from '../DataProvider';
 
   export default defineComponent({
     name: 'ProjectContentDraftsList',
 
     components: {
+      ProjectContentDraftsDataProvider,
       VexTooltip
     },
 
     props: {
-      drafts: {
-        type: Array,
-        default: () => []
-      },
-      loading: {
-        type: Boolean,
-        default: true
-      }
+      ...ProjectContentDraftsDataProvider.options.props
     },
 
     data() {
@@ -102,6 +104,12 @@
           }
         ]
       };
+    },
+
+    computed: {
+      providerProps() {
+        return getBindableProps.call(this, ProjectContentDraftsDataProvider.options.props);
+      }
     },
 
     methods: {
