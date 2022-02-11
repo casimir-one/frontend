@@ -77,6 +77,9 @@
           projectNftWidget: {
             nfts: this.project.nfts,
             canUserIssueTokens: this.$$isTeamAdmin
+          },
+          projectContent: {
+            projectId: this.projectId
           }
         };
       },
