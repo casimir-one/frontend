@@ -10,7 +10,10 @@ export default {
     error: 'An error occurred, please try again later'
   },
   details: {
-    edit: 'Edit'
+    edit: 'Edit',
+    content: 'Content',
+    drafts: 'Drafts',
+    create: 'Create'
   },
   nftWidget: {
     title: 'Non-fungible tokens',
@@ -27,5 +30,18 @@ export default {
   },
   invest: {
     success: 'You have invested to crowdfunding successfully!'
+  },
+  contentDraft: {
+    details: {
+      backToProject: 'Back to project',
+      successPublish: 'Content published successfully!',
+      successRemove: 'Content draft removed successfully!'
+    },
+    form: {
+      titleCreate: 'Create content draft for \'{name}\'',
+      titleEdit: 'Edit content draft for \'{name}\'',
+      successCreate: 'Content draft created successfully!',
+      successEdit: 'Content draft saved successfully!'
+    }
   }
 };
