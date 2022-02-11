@@ -8,6 +8,9 @@ import { ProjectDetails } from '@/modules/projects/components/ProjectDetails';
 import { ProjectNftCreate } from '@/modules/projects/components/ProjectNftCreate';
 import { ProjectCrowdfundingCreate } from '@/modules/projects/components/ProjectCrowdfundingCreate';
 import { ProjectCrowdfundingInvest } from '@/modules/projects/components/ProjectCrowdfundingInvest';
+import { ProjectContentDraftForm } from '@/modules/projects/components/content/ProjectContentDraftForm';
+import { ProjectContentDraftDetails } from '@/modules/projects/components/content/ProjectContentDraftDetails';
+import { ProjectContentDetails } from '@/modules/projects/components/content/ProjectContentDetails';
 
 const formViewMeta = (redirectTo, roles = [SYSTEM_ROLE.TEAM_ADMIN, SYSTEM_ROLE.ADMIN]) => ({
   auth: roles,
@@ -84,6 +87,47 @@ export const projectsRouter = [
         meta: formViewMeta('projects.details', [SYSTEM_ROLE.ANY]),
         props: (route) => ({
           projectId: route.params.projectId
+        })
+      },
+      {
+        name: 'projects.content.draft.create',
+        path: ':projectId/content/draft/create',
+        component: ProjectContentDraftForm,
+        meta: formViewMeta('projects.details', [SYSTEM_ROLE.ANY]),
+        props: (route) => ({
+          projectId: route.params.projectId,
+          mode: VIEW_MODE.CREATE
+        })
+      },
+      {
+        name: 'projects.content.draft.details',
+        path: ':projectId/content/draft/:draftId',
+        component: ProjectContentDraftDetails,
+        meta: { auth: [SYSTEM_ROLE.ANY] },
+        props: (route) => ({
+          projectId: route.params.projectId,
+          draftId: route.params.draftId
+        })
+      },
+      {
+        name: 'projects.content.draft.edit',
+        path: ':projectId/content/draft/:draftId/edit',
+        component: ProjectContentDraftForm,
+        meta: formViewMeta('projects.details', [SYSTEM_ROLE.ANY]),
+        props: (route) => ({
+          projectId: route.params.projectId,
+          draftId: route.params.draftId,
+          mode: VIEW_MODE.EDIT
+        })
+      },
+      {
+        name: 'projects.content.details',
+        path: ':projectId/content/:contentId',
+        component: ProjectContentDetails,
+        meta: { auth: [SYSTEM_ROLE.ANY] },
+        props: (route) => ({
+          projectId: route.params.projectId,
+          contentId: route.params.contentId
         })
       }
     ]

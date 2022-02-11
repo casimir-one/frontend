@@ -20,6 +20,7 @@ import { ProjectsModule } from '@deip/projects-module';
 import { WalletModule } from '@deip/wallet-module';
 import { AssetsModule } from '@deip/assets-module';
 import { InvestmentOpportunitiesModule } from '@deip/investment-opportunities-module';
+import { ProjectContentModule } from '@deip/project-content-module';
 
 import { TestAppAccountModule } from '@/modules/account';
 import { TestAppAdminModule } from '@/modules/admin';
@@ -90,6 +91,7 @@ testApp
   .addModule(WalletModule)
   .addModule(AssetsModule)
   .addModule(InvestmentOpportunitiesModule)
+  .addModule(ProjectContentModule)
 
   .addModule(TestAppAccountModule)
   .addModule(TestAppAdminModule)
