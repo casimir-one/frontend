@@ -1,6 +1,6 @@
 {
   "name": "@deip/domains-service",
-  "version": "1.369.0",
+  "version": "1.369.2",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,9 +22,9 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/access-service": "1.369.0",
-    "@deip/constants": "1.369.0",
-    "@deip/http-service": "1.369.0",
+    "@deip/access-service": "1.369.2",
+    "@deip/constants": "1.369.2",
+    "@deip/http-service": "1.369.2",
     "@deip/toolbox": "1.366.0"
   },
   "peerDependencies": {

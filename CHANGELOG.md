@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.369.2](https://github.com/DEIPworld/deip-modules/compare/v1.369.1...v1.369.2) (2022-02-11)
+
+
+### Bug Fixes
+
+* **@deip/platform-components:** fix form mode prop ([14552bb](https://github.com/DEIPworld/deip-modules/commit/14552bbd4122edd5664e1944537f658262a4adc2))
+
+
+
+
+
 ## [1.369.1](https://github.com/DEIPworld/deip-modules/compare/v1.369.0...v1.369.1) (2022-02-09)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@deip/app-config-service",
-  "version": "1.369.0",
+  "version": "1.369.2",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/constants": "1.369.0",
+    "@deip/constants": "1.369.2",
     "@deip/proxydi": "1.366.0",
     "@deip/toolbox": "1.366.0"
   }
