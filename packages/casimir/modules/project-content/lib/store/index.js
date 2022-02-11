@@ -1,7 +1,7 @@
 import { projectContentStore } from './projectContent';
-import { projectContentDraftStore } from './projectContentDraft';
+import { projectContentDraftsStore } from './projectContentDrafts';
 
 export {
   projectContentStore,
-  projectContentDraftStore
+  projectContentDraftsStore
 };

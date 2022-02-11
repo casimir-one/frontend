@@ -131,7 +131,7 @@
             initiator: this.$currentUser,
             data: draft
           };
-          await this.$store.dispatch('projectContentDraft/publish', payload);
+          await this.$store.dispatch('projectContentDrafts/publish', payload);
           this.emitSuccessPublish();
         } catch (error) {
           console.error(error);
@@ -140,7 +140,7 @@
 
       async removeDraft(draft) {
         try {
-          await this.$store.dispatch('projectContentDraft/remove', draft._id);
+          await this.$store.dispatch('projectContentDrafts/remove', draft._id);
           this.emitSuccessRemove();
         } catch (error) {
           console.error(error);

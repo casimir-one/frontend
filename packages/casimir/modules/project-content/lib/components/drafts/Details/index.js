@@ -1,3 +1,3 @@
-import ProjectContentDetails from './ProjectContentDetails';
+import ProjectContentDraftDetails from './ProjectContentDraftDetails';
 
-export default ProjectContentDetails;
+export default ProjectContentDraftDetails;
