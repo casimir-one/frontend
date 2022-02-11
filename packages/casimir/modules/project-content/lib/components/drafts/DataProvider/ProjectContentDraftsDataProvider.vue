@@ -46,7 +46,7 @@
       },
 
       drafts() {
-        return this.$store.getters['projectContentDraft/list'](this.getterFilter);
+        return this.$store.getters['projectContentDrafts/list'](this.getterFilter);
       },
 
       slotProps() {
@@ -74,7 +74,7 @@
         this.loading = true;
 
         try {
-          await this.$store.dispatch('projectContentDraft/getListByProjectId', this.projectId);
+          await this.$store.dispatch('projectContentDrafts/getListByProjectId', this.projectId);
           this.handleReady();
         } catch (error) {
           console.error(error);

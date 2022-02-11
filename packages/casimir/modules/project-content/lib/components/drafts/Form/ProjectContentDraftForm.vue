@@ -109,7 +109,7 @@
               :disabled="loading || disabled"
               @click="handleCancelClick"
             >
-              {{ $t('module.documentTemplates.form.cancel') }}
+              {{ $t('module.projectContent.form.cancel') }}
             </v-btn>
             <v-btn
               type="submit"
@@ -177,8 +177,8 @@
     computed: {
       submitLabel() {
         return this.isEditMode
-          ? this.$t('module.documentTemplates.form.update')
-          : this.$t('module.documentTemplates.form.create');
+          ? this.$t('module.projectContent.form.update')
+          : this.$t('module.projectContent.form.create');
       }
     },
 
@@ -205,14 +205,13 @@
           } catch (error) {
             console.error('Failed to upload files', error);
           }
-
           this.filesInputLoading = false;
         }
       },
 
       async createDraft(payload) {
         try {
-          await this.$store.dispatch('projectContentDraft/create', payload);
+          await this.$store.dispatch('projectContentDrafts/create', payload);
           this.emitSuccess();
         } catch (error) {
           console.error(error);
@@ -221,7 +220,7 @@
 
       async updateDraft(payload) {
         try {
-          await this.$store.dispatch('projectContentDraft/update', { ...this.draft, ...payload });
+          await this.$store.dispatch('projectContentDrafts/update', { ...this.draft, ...payload });
           this.emitSuccess();
         } catch (error) {
           console.error(error);

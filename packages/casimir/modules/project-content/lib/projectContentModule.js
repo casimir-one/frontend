@@ -1,5 +1,5 @@
 import { setLocalesMessages } from '@deip/toolbox';
-import { projectContentStore, projectContentDraftStore } from './store';
+import { projectContentStore, projectContentDraftsStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
 
@@ -17,7 +17,7 @@ const install = (Vue, options = {}) => {
 
   if (store) {
     store.registerModule('projectContent', projectContentStore);
-    store.registerModule('projectContentDraft', projectContentDraftStore);
+    store.registerModule('projectContentDrafts', projectContentDraftsStore);
   } else {
     throw Error('[ProjectContentModule]: storeInstance is not provided');
   }

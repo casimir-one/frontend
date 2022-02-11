@@ -84,6 +84,7 @@ const ACTIONS = {
         projectId,
         teamId,
         contentType,
+        content: hash,
         title,
         hash,
         authors,
@@ -100,7 +101,7 @@ const MUTATIONS = {
   remove: removeFromListMutation
 };
 
-export const projectContentDraftStore = {
+export const projectContentDraftsStore = {
   namespaced: true,
   state: STATE,
   getters: GETTERS,

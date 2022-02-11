@@ -72,7 +72,7 @@
   import JsonContentDetails from '../../common/JsonContentDetails';
 
   export default defineComponent({
-    name: 'ProjectContentDetails',
+    name: 'ProjectContentDraftDetails',
 
     components: {
       VexBlock,
@@ -109,7 +109,7 @@
 
     computed: {
       draft() {
-        return this.$store.getters['projectContentDraft/one'](this.contentId);
+        return this.$store.getters['projectContentDrafts/one'](this.contentId);
       }
     },
 
@@ -133,7 +133,7 @@
       async getDraft() {
         this.loading = true;
         try {
-          await this.$store.dispatch('projectContentDraft/getOne', this.contentId);
+          await this.$store.dispatch('projectContentDrafts/getOne', this.contentId);
         } catch (error) {
           console.error(error);
         }
@@ -146,7 +146,7 @@
             initiator: this.$currentUser,
             data: this.draft
           };
-          await this.$store.dispatch('projectContentDraft/publish', payload);
+          await this.$store.dispatch('projectContentDrafts/publish', payload);
           this.emitSuccessPublish();
         } catch (error) {
           console.error(error);
@@ -155,7 +155,7 @@
 
       async removeDraft() {
         try {
-          await this.$store.dispatch('projectContentDraft/remove', this.draft._id);
+          await this.$store.dispatch('projectContentDrafts/remove', this.draft._id);
           this.emitSuccessRemove();
         } catch (error) {
           console.error(error);
