@@ -24,7 +24,7 @@
       UsersListStack
     },
     props: {
-      ...UsersDataProvider.props,
+      ...UsersDataProvider.options.props,
 
       viewType: {
         type: String,
@@ -34,7 +34,7 @@
 
     computed: {
       providerProps() {
-        return getBindableProps.call(this, UsersDataProvider.props);
+        return getBindableProps.call(this, UsersDataProvider.options.props);
       },
 
       listComponent() {

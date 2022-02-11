@@ -112,7 +112,7 @@
 
     props: {
       ...VAutocomplete.options.props,
-      ...UsersDataProvider.props,
+      ...UsersDataProvider.options.props,
 
       ...{
         label: {
@@ -124,7 +124,7 @@
 
     computed: {
       providerProps() {
-        return getBindableProps.call(this, UsersDataProvider.props);
+        return getBindableProps.call(this, UsersDataProvider.options.props);
       },
 
       fieldProps() {
