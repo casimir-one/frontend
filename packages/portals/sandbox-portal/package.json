@@ -1,5 +1,5 @@
 {
-  "name": "@casimir/test-app",
+  "name": "@casimir/sandbox-portal",
   "version": "1.369.2",
   "private": true,
   "scripts": {
