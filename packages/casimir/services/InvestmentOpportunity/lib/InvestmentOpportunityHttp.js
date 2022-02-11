@@ -1,26 +1,26 @@
 import { HttpService } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
-export class InvestmentsHttp {
+export class InvestmentOpportunityHttp {
   http = HttpService.getInstance();
 
-  async getProjectTokenSale(investmentOpportunityId) {
+  async getInvestmentOpportunity(investmentOpportunityId) {
     return this.http.get(`/api/v2/investments/investment-opportunity/${investmentOpportunityId}`);
   }
 
-  async getProjectTokenSalesByProject(projectId) {
+  async getInvestmentOpportunitiesByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}`);
   }
 
-  async getProjectTokenSaleInvestmentsByProject(projectId) {
+  async getInvestmentsByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}/contributions`);
   }
 
-  async createProjectTokenSale(req) {
+  async createInvestmentOpportunity(req) {
     return this.http.post('/api/v2/investments', req.getHttpBody());
   }
 
-  async investProjectTokenSale(req) {
+  async invest(req) {
     return this.http.post('/api/v2/investments/contributions', req.getHttpBody());
   }
 
@@ -32,18 +32,18 @@ export class InvestmentsHttp {
     return this.http.get(`/api/v2/investments/history/account/${account}/${cursor}`);
   }
 
-  async getAccountInvestmentsHistory(account) {
+  async getAccountInvestmentOpportunityHistory(account) {
     return this.http.get(`/api/v2/investments/history/contributions/account/${account}`);
   }
 
-  async getInvestmentsHistoryByTokenSale(tokenSaleId) {
-    return this.http.get(`/api/v2/investments/history/contributions/investment-opportunity/${tokenSaleId}`);
+  async getInvestmentOpportunityHistoryById(id) {
+    return this.http.get(`/api/v2/investments/history/contributions/investment-opportunity/${id}`);
   }
 
   async getAssetRevenueHistory(symbol, cursor) {
     return this.http.get(`/api/v2/investments/history/symbol/${symbol}/${cursor}`);
   }
 
-  /** @type {() => InvestmentsHttp} */
-  static getInstance = createInstanceGetter(InvestmentsHttp);
+  /** @type {() => InvestmentOpportunityHttp} */
+  static getInstance = createInstanceGetter(InvestmentOpportunityHttp);
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@deip/investments-service",
+  "name": "@deip/investment-opportunity-service",
   "version": "1.369.1",
   "description": "",
   "main": "index.js",

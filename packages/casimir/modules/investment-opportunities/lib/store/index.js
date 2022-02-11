@@ -1,4 +1,4 @@
-import { InvestmentsService } from '@deip/investments-service';
+import { InvestmentOpportunityService } from '@deip/investment-opportunity-service';
 import {
   listGetter,
   oneGetter,
@@ -6,7 +6,7 @@ import {
   setOneMutation
 } from '@deip/platform-store';
 
-const investmentsService = InvestmentsService.getInstance();
+const investmentOpportunityService = InvestmentOpportunityService.getInstance();
 
 const STATE = {
   data: []
@@ -34,7 +34,7 @@ const ACTIONS = {
       }, proposalInfo
     } = payload;
 
-    return investmentsService.createProjectTokenSale(
+    return investmentOpportunityService.createInvestmentOpportunity(
       { privKey, username },
       {
         teamId,
@@ -52,14 +52,15 @@ const ACTIONS = {
   },
 
   getListByProjectId({ commit }, projectId) {
-    return investmentsService.getProjectTokenSalesByProject(projectId)
+    return investmentOpportunityService.getInvestmentOpportunitiesByProject(projectId)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getInvestmentOpportunityInvestments({ commit, getters }, investmentOpportunityId) {
-    return investmentsService.getInvestmentsHistoryByTokenSale(investmentOpportunityId)
+    return investmentOpportunityService
+      .getInvestmentOpportunityHistoryById(investmentOpportunityId)
       .then((res) => {
         const investmentOpportunity = getters.one(investmentOpportunityId);
         commit('setOne', {
@@ -70,7 +71,7 @@ const ACTIONS = {
   },
 
   getCurrentInvestmentOpportunityByProject({ commit }, projectId) {
-    return investmentsService.getCurrentTokenSaleByProject(projectId)
+    return investmentOpportunityService.getCurrentInvestmentOpportunityByProject(projectId)
       .then((res) => {
         commit('setOne', res.data);
         return res.data;
@@ -87,7 +88,7 @@ const ACTIONS = {
       }
     } = payload;
 
-    return investmentsService.investProjectTokenSale(
+    return investmentOpportunityService.invest(
       { privKey },
       {
         investmentOpportunityId,
@@ -98,7 +99,7 @@ const ACTIONS = {
   },
 
   getInvestmentsHistory({ commit }, userId) {
-    return investmentsService.getAccountInvestmentsHistory(userId)
+    return investmentOpportunityService.getAccountInvestmentOpportunityHistory(userId)
       .then((res) => {
         const investmentOpportunities = res.data.items.map((item) => item.investmentOpportunity);
         commit('setList', investmentOpportunities);
