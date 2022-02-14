@@ -238,6 +238,11 @@ class SubstrateChainRpc extends BaseChainRpc {
         return new SubstrateProjectContentDto(item);
       },
 
+      getProjectContentsAsync: async (ids) => {
+        const list = await Promise.all(ids.map((id) => this.getProjectContentAsync(id)));
+        return list;
+      },
+
       getProjectContentsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
         const contents = await chainService.rpcToChainNode("deip_getProjectContentList", [null, limit, toHexFormat(startIdx)]);
         const list = await Promise.all(contents.map(async ({ value: content }) => {
@@ -713,7 +718,6 @@ class SubstrateChainRpc extends BaseChainRpc {
       getProposalsStatesAsync: async function (ids) { throw Error(`Not implemented exception`); },
       lookupProposalsStatesAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
       getContractAgreementsByCreatorAsync: (creator) => { throw Error(`Not implemented exception`); },
-      getProjectContentsAsync: (ids) => { throw Error(`Not implemented exception`); },
     }
     return super(rpc);
   }
