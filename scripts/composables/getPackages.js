@@ -14,6 +14,7 @@ const lernaConf = fs.readJsonSync(path.join(rootPath, 'lerna.json'));
  */
 const getPackages = (forBuild = true) => lernaConf.packages
   .filter((pattern) => !pattern.includes('generators'))
+  .filter((pattern) => !pattern.includes('portals'))
   .reduce((acc, pattern) => [...acc, ...glob.sync(pattern, { absolute: true })], [])
   .filter((p) => {
     const pArr = path.parse(p);

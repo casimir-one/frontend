@@ -1,7 +1,7 @@
 /* eslint-disable */
-import vueCompiler from 'vue-template-compiler';
+import { parseComponent } from 'vue-template-compiler';
 import fs from 'fs-extra';
-import babel from '@babel/core';
+import { transformSync } from '@babel/core';
 import shell from 'shelljs';
 import path from 'path';
 import glob from 'glob';
@@ -23,11 +23,11 @@ const processVue = (pkgPath) => {
   const files = glob.sync(pattern);
 
   for (const file of files) {
-    const { template, script, styles } = vueCompiler.parseComponent(fs.readFileSync(file, 'utf8'));
+    const { template, script, styles } = parseComponent(fs.readFileSync(file, 'utf8'));
 
     const processedTemplate = `<template>\n${template.content.trim()}\n</template>`;
 
-    const compiledScript = babel.transformSync(
+    const compiledScript = transformSync(
       script.content.trim(),
       {
         babelrc: true,
@@ -69,6 +69,11 @@ const processScripts = (pkgPath) => {
     `cross-env NODE_ENV=lib babel --config-file ${babelConfPath} ${pkgPath}/src --out-dir ${pkgPath}/lib --extensions "${babelExt}"`,
     { silent: true }
   );
+
+  shell.exec(
+    `tsc ${pkgPath}/src/*.ts --declaration --emitDeclarationOnly --outFile ${pkgPath}/lib/index.d.ts`,
+    { silent: true }
+  );
 };
 
 /**
@@ -76,8 +81,7 @@ const processScripts = (pkgPath) => {
  */
 const processOtherFiles = (pkgPath) => {
   const pattern = path.join(pkgPath, 'src', '**', '*.*');
-  const files = glob.sync(pattern, { ignore: [`**/*.{${['vue', ...scriptExtensions].join(',')}`] });
-
+  const files = glob.sync(pattern, { ignore: [`**/*.{${['vue', ...scriptExtensions].join(',')}}`] });
   for (const file of files) {
     try {
       fs.copySync(file, changePathToLib(pkgPath, file));
