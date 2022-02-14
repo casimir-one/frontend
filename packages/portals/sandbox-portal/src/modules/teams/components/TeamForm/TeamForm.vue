@@ -9,7 +9,6 @@
         :schema="schema"
         :team="team"
         :mode="mode"
-        v-bind="formProps"
         @success="handleSuccess"
         @error="handleError"
         @cancel="handleCancel"
@@ -22,7 +21,7 @@
   import { VIEW_MODE } from '@deip/constants';
   import { formMixin } from '@deip/platform-components';
   import { filterObjectKeys } from '@deip/toolbox';
-  import { VexSection, VexSectionTitle, getBindableProps } from '@deip/vuetify-extended';
+  import { VexSection, VexSectionTitle } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
   import { TeamForm as CTeamForm } from '@deip/teams-module';
 
@@ -46,8 +45,7 @@
         default: null
       },
 
-      ...CTeamForm.props,
-      ...filterObjectKeys(formMixin.props, ['mode']) // need check
+      ...filterObjectKeys(formMixin.props, ['mode'])
     },
 
     data() {
@@ -63,10 +61,6 @@
 
       team() {
         return this.teamId ? this.$store.getters['teams/one'](this.teamId) : {};
-      },
-
-      formProps() {
-        return getBindableProps.call(this, CTeamForm.props);
       },
 
       title() {
