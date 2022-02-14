@@ -8,7 +8,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+    "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

@@ -3,7 +3,7 @@
   "version": "1.369.2",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
-  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
   "publishConfig": {
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+    "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "peerDependencies": {
     "vuetify": "^2.5.3"

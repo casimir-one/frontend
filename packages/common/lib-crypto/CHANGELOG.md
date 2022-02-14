@@ -217,12 +217,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.21.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.20.0...v1.21.0) (2020-06-05)
+# [1.21.0](https://github.com/DEIPworld/deip-modules/compare/v1.20.0...v1.21.0) (2020-06-05)
 
 
 ### Features
 
-* **@deip/research-group-service:** Posting authorities replaced with active overrides ([c832136](https://gitlab.com/DEIP/deip-client-modules/commit/c832136a7b0875171db05f69d445d1dd95d11379))
+* **@deip/research-group-service:** Posting authorities replaced with active overrides ([c832136](https://github.com/DEIPworld/deip-modules/commit/c832136a7b0875171db05f69d445d1dd95d11379))
 
 
 

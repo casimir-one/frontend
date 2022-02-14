@@ -4,7 +4,7 @@
   "description": "> TODO: description",
   "author": "",
   "license": "ISC",
-  "homepage": "https://gitlab.com/DEIP/deip-client-modules#readme",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/DEIP/deip-client-modules.git"
+    "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://gitlab.com/DEIP/deip-client-modules/issues"
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

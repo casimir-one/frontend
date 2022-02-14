@@ -568,18 +568,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.110.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
+# [1.110.0](https://github.com/DEIPworld/deip-modules/compare/v1.109.5...v1.110.0) (2021-05-03)
 
 
 ### Features
 
-* **@deip/research-group-service:** change create/update group ([a05a4bc](https://gitlab.com/DEIP/deip-client-modules/commit/a05a4bc5ac43cb862707ddb8de7eba7fb0be3649))
+* **@deip/research-group-service:** change create/update group ([a05a4bc](https://github.com/DEIPworld/deip-modules/commit/a05a4bc5ac43cb862707ddb8de7eba7fb0be3649))
 
 
 
 
 
-# [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
+# [1.104.0](https://github.com/DEIPworld/deip-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 **Note:** Version bump only for package @deip/attributes-service
 
@@ -587,31 +587,31 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.103.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.102.0...v1.103.0) (2021-04-12)
+# [1.103.0](https://github.com/DEIPworld/deip-modules/compare/v1.102.0...v1.103.0) (2021-04-12)
 
 
 ### Features
 
-* **@deip/attributes-service:** Attributes service constants ([6b1bcb5](https://gitlab.com/DEIP/deip-client-modules/commit/6b1bcb5c6a80b8f0f7e08475c7a49eb80cb31baa))
+* **@deip/attributes-service:** Attributes service constants ([6b1bcb5](https://github.com/DEIPworld/deip-modules/commit/6b1bcb5c6a80b8f0f7e08475c7a49eb80cb31baa))
 
 
 
 
 
-# [1.102.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.101.0...v1.102.0) (2021-04-12)
-
-
-### Features
-
-* **@deip/attributes-service:** Attributes service build fixed ([1507305](https://gitlab.com/DEIP/deip-client-modules/commit/150730530708ec6e492c7f04be70ba4e8a9549cd))
-
-
-
-
-
-# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+# [1.102.0](https://github.com/DEIPworld/deip-modules/compare/v1.101.0...v1.102.0) (2021-04-12)
 
 
 ### Features
 
-* new service @deip/attributes-service ([8dbcff0](https://gitlab.com/DEIP/deip-client-modules/commit/8dbcff0770a8e5705ef6191467f97d5c931215ac))
+* **@deip/attributes-service:** Attributes service build fixed ([1507305](https://github.com/DEIPworld/deip-modules/commit/150730530708ec6e492c7f04be70ba4e8a9549cd))
+
+
+
+
+
+# [1.97.0](https://github.com/DEIPworld/deip-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+
+
+### Features
+
+* new service @deip/attributes-service ([8dbcff0](https://github.com/DEIPworld/deip-modules/commit/8dbcff0770a8e5705ef6191467f97d5c931215ac))
