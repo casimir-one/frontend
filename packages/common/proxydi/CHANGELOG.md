@@ -278,7 +278,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.104.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
+# [1.104.0](https://github.com/DEIPworld/deip-modules/compare/v1.103.0...v1.104.0) (2021-04-13)
 
 **Note:** Version bump only for package @deip/proxydi
 
@@ -286,7 +286,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.97.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
+# [1.97.0](https://github.com/DEIPworld/deip-modules/compare/v1.96.1...v1.97.0) (2021-03-26)
 
 **Note:** Version bump only for package @deip/proxydi
 
@@ -294,7 +294,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.95.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
+# [1.95.0](https://github.com/DEIPworld/deip-modules/compare/v1.94.0...v1.95.0) (2021-03-18)
 
 **Note:** Version bump only for package @deip/proxydi
 
@@ -302,7 +302,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-## [1.85.1](https://gitlab.com/DEIP/deip-client-modules/compare/v1.85.0...v1.85.1) (2021-02-17)
+## [1.85.1](https://github.com/DEIPworld/deip-modules/compare/v1.85.0...v1.85.1) (2021-02-17)
 
 **Note:** Version bump only for package @deip/proxydi
 
@@ -310,12 +310,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.78.0](https://gitlab.com/DEIP/deip-client-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
+# [1.78.0](https://github.com/DEIPworld/deip-modules/compare/v1.77.0...v1.78.0) (2021-01-22)
 
 
 ### Features
 
-* **@deip/proxydi:** new utility ([9edb533](https://gitlab.com/DEIP/deip-client-modules/commit/9edb533a5eccd786a6eef2470b42576eb166e6de))
+* **@deip/proxydi:** new utility ([9edb533](https://github.com/DEIPworld/deip-modules/commit/9edb533a5eccd786a6eef2470b42576eb166e6de))
 
 
 
