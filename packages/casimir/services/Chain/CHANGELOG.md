@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.370.0](https://github.com/DEIPworld/deip-modules/compare/v1.369.2...v1.370.0) (2022-02-14)
+
+
+### Features
+
+* **@deip/chain-service:** add getProjectContentsAsync method ([2347d9a](https://github.com/DEIPworld/deip-modules/commit/2347d9a39f31fcd9499a349644ad72aabf07b87e))
+
+
+
+
+
 ## [1.369.2](https://github.com/DEIPworld/deip-modules/compare/v1.369.1...v1.369.2) (2022-02-11)
 
 **Note:** Version bump only for package @deip/chain-service

@@ -5,7 +5,7 @@
     "packages/generators/*",
     "packages/portals/*"
   ],
-  "version": "1.369.2",
+  "version": "1.370.0",
   "npmClient": "npm",
   "command": {
     "version": {
