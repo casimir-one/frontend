@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 const ora = require('ora');
 const execa = require('execa');
 const chalk = require('chalk');
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const argv = require('yargs/yargs')(process.argv.slice(2)).argv
 /* eslint-enable */
@@ -17,7 +17,8 @@ const rootDir = path.resolve(__dirname, '..');
 
 const spinner = ora();
 const prompt = inquirer.createPromptModule();
-const allowBranch = ['master', 'develop'];
+
+const { command: { version: allowBranch } } = fs.readJsonSync(path.join(rootDir, 'lerna.json'));
 
 /**
  * @return {string} Current branch name
@@ -110,9 +111,18 @@ const makePublish = async (publishBranch) => {
  * @return {Promise<void>}
  */
 const revertPublish = async () => {
-  const { version } = JSON.parse(fs.readFileSync(path.join(rootDir, 'lerna.json')));
+  const { version } = fs.readJsonSync(path.join(rootDir, 'lerna.json'));
   await execa.command('git reset --hard HEAD~1');
   await execa.command(`git tag -d v${version}`);
+};
+
+/**
+ * @return {Promise<void>}
+ */
+const equalizeDevelop = async () => {
+  await execa.command('git checkout develop');
+  await execa.command('git fetch');
+  await execa.command('git rebase origin/master');
 };
 
 prompt([{
@@ -172,6 +182,14 @@ Make sure everything is done correctly.
         await revertPublish();
         spinner.succeed('Reverted');
       }
+    }
+
+    spinner.info('Equalize develop branch...');
+
+    try {
+      await equalizeDevelop();
+    } catch (err) {
+      errorHandler(err);
     }
 
     process.exit();
