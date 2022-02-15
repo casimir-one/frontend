@@ -18,7 +18,6 @@
       ],
       "includeMergedTags": true,
       "allowBranch": [
-        "develop",
         "master"
       ]
     },
