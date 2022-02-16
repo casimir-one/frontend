@@ -10,27 +10,33 @@ import { BookmarkHttp } from './BookmarkHttp';
 export class BookmarkService {
   bookmarkHttp = BookmarkHttp.getInstance();
 
-  async getProjectBookmarks(username) {
-    return this.bookmarkHttp.getProjectBookmarks(username);
+  async getListByUsername(username) {
+    return this.bookmarkHttp.getListByUsername(username);
   }
 
-  async createProjectBookmark(username, projectId, type = USER_BOOKMARK_TYPE.PROJECT) {
+  async create(payload) {
+    const {
+      username,
+      projectId,
+      type = USER_BOOKMARK_TYPE.PROJECT
+    } = payload;
+
     const createBookmarkCmd = new CreateBookmarkCmd({
       username,
       ref: projectId,
       type
     });
     const msg = new JsonDataMsg({ appCmds: [createBookmarkCmd] });
-    return this.bookmarkHttp.createProjectBookmark(msg);
+    return this.bookmarkHttp.create(msg);
   }
 
-  async deleteProjectBookmark(username, bookmarkId) {
+  async delete(username, bookmarkId) {
     const deleteBookmarkCmd = new DeleteBookmarkCmd({
       username,
       bookmarkId
     });
     const msg = new JsonDataMsg({ appCmds: [deleteBookmarkCmd] });
-    return this.bookmarkHttp.deleteProjectBookmark(msg);
+    return this.bookmarkHttp.delete(msg);
   }
 
   /** @type {() => BookmarkService} */

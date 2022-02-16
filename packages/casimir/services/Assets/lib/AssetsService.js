@@ -23,7 +23,7 @@ export class AssetsService {
 
   assetsHttp = AssetsHttp.getInstance();
 
-  transferAssets({ privKey, username }, {
+  transfer({ privKey, username }, {
     from,
     to,
     asset
@@ -76,12 +76,12 @@ export class AssetsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.transferAssets(msg);
+            return this.assetsHttp.transfer(msg);
           });
       });
   }
 
-  createAsset({ privKey }, {
+  create({ privKey }, {
     symbol,
     issuer,
     precision,
@@ -132,12 +132,12 @@ export class AssetsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createAsset(msg);
+            return this.assetsHttp.create(msg);
           });
       });
   }
 
-  issueAsset({ privKey }, {
+  issue({ privKey }, {
     issuer,
     asset,
     recipient
@@ -161,7 +161,7 @@ export class AssetsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.issueAsset(msg);
+            return this.assetsHttp.issue(msg);
           });
       });
   }
@@ -170,20 +170,20 @@ export class AssetsService {
     return this.assetsHttp.getAccountDepositHistory(account, status);
   }
 
-  getAssetById(assetId) {
-    return this.assetsHttp.getAssetById(assetId);
+  getOne(id) {
+    return this.assetsHttp.getOne(id);
   }
 
-  getAssetBySymbol(symbol) {
-    return this.assetsHttp.getAssetBySymbol(symbol);
+  getOneBySymbol(symbol) {
+    return this.assetsHttp.getOneBySymbol(symbol);
   }
 
-  getAssetsByType(type) {
-    return this.assetsHttp.getAssetsByType(type);
+  getListByType(type) {
+    return this.assetsHttp.getListByType(type);
   }
 
-  getAssetsByIssuer(issuer) {
-    return this.assetsHttp.getAssetsByIssuer(issuer);
+  getListByIssuer(issuer) {
+    return this.assetsHttp.getListByIssuer(issuer);
   }
 
   lookupAssets(lowerBoundSymbol, limit) {
@@ -202,7 +202,7 @@ export class AssetsService {
     return this.assetsHttp.getAccountsAssetBalancesByAsset(symbol);
   }
 
-  createAssetsExchangeProposal({ privKey, username }, {
+  createExchangeProposal({ privKey, username }, {
     party1,
     party2,
     asset1,
@@ -258,12 +258,12 @@ export class AssetsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createAssetsExchangeProposal(msg);
+            return this.assetsHttp.createExchangeProposal(msg);
           });
       });
   }
 
-  depositAssets(payload) {
+  deposit(payload) {
     const {
       initiator: { privKey, username },
       redirectUrl,
@@ -289,7 +289,7 @@ export class AssetsService {
         });
         const sigSource = JSON.stringify(depositData, Object.keys(depositData).sort());
         const sigHex = seedAccount.signString(sigSource);
-        return this.assetsHttp.depositAssets(
+        return this.assetsHttp.deposit(
           {
             ...depositData,
             sigSource,

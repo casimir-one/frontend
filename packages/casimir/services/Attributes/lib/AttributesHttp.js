@@ -4,20 +4,20 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class AttributesHttp {
   http = HttpService.getInstance();
 
-  async getAttributes() {
+  async getList() {
     return this.http.get('/api/v2/attributes');
   }
 
-  async getAttributesByScope(scope) {
+  async getOne(id) {
+    return this.http.get(`/api/v2/attribute/${id}`);
+  }
+
+  async getListByScope(scope) {
     return this.http.get(`/api/v2/attributes/scope/${scope}`);
   }
 
   async getNetworkAttributesByScope(scope) {
     return this.http.get(`/api/v2/attributes/scope/network/${scope}`);
-  }
-
-  async getAttribute(id) {
-    return this.http.get(`/api/v2/attribute/${id}`);
   }
 
   async getNetworkAttributes() {
@@ -28,15 +28,15 @@ export class AttributesHttp {
     return this.http.get('/api/v2/attributes/system');
   }
 
-  async createAttribute(req) {
+  async create(req) {
     return this.http.post('/api/v2/attribute', req.getHttpBody());
   }
 
-  async updateAttribute(req) {
+  async update(req) {
     return this.http.put('/api/v2/attribute', req.getHttpBody());
   }
 
-  async deleteAttribute(req) {
+  async delete(req) {
     return this.http.put('/api/v2/attribute/delete', req.getHttpBody());
   }
 

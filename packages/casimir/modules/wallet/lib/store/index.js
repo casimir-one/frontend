@@ -39,7 +39,7 @@ const ACTIONS = {
   },
 
   async deposit(_, payload) {
-    const response = await assetsService.depositAssets(payload);
+    const response = await assetsService.deposit(payload);
     return response.data;
   },
 
