@@ -11,46 +11,46 @@ import { AttributesHttp } from './AttributesHttp';
 export class AttributesService {
   attributesHttp = AttributesHttp.getInstance();
 
-  async getAttributes() {
-    return this.attributesHttp.getAttributes();
+  async getList() {
+    return this.attributesHttp.getList();
   }
 
-  async getAttributesByScope(scope) {
-    return this.attributesHttp.getAttributesByScope(scope);
+  async getListByScope(scope) {
+    return this.attributesHttp.getListByScope(scope);
   }
 
-  async getNetworkAttributesByScope(scope) {
-    return this.attributesHttp.getNetworkAttributesByScope(scope);
-  }
-
-  async getAttribute(id) {
-    return this.attributesHttp.getAttribute(id);
+  async getOne(id) {
+    return this.attributesHttp.getOne(id);
   }
 
   async getNetworkAttributes() {
     return this.attributesHttp.getNetworkAttributes();
   }
 
+  async getNetworkAttributesByScope(scope) {
+    return this.attributesHttp.getNetworkAttributesByScope(scope);
+  }
+
   async getSystemAttributes() {
     return this.attributesHttp.getSystemAttributes();
   }
 
-  async createAttribute(attribute) {
+  async create(attribute) {
     const createAttributeCmd = new CreateAttributeCmd(attribute);
     const msg = new JsonDataMsg({ appCmds: [createAttributeCmd] });
-    return this.attributesHttp.createAttribute(msg);
+    return this.attributesHttp.create(msg);
   }
 
-  async updateAttribute(attribute) {
+  async update(attribute) {
     const updateAttributeCmd = new UpdateAttributeCmd(attribute);
     const msg = new JsonDataMsg({ appCmds: [updateAttributeCmd] });
-    return this.attributesHttp.updateAttribute(msg);
+    return this.attributesHttp.update(msg);
   }
 
-  async deleteAttribute(attributeId) {
+  async delete(attributeId) {
     const deleteAttributeCmd = new DeleteAttributeCmd({ attributeId });
     const msg = new JsonDataMsg({ appCmds: [deleteAttributeCmd] });
-    return this.attributesHttp.deleteAttribute(msg);
+    return this.attributesHttp.delete(msg);
   }
 
   async getSettings() {

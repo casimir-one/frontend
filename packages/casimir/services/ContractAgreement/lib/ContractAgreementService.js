@@ -22,7 +22,7 @@ export class ContractAgreementService {
 
   proxydi = proxydi;
 
-  async createContractAgreement(payload) {
+  async create(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -66,12 +66,12 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload());
-            return this.contractAgreementHttp.createContractAgreement(msg);
+            return this.contractAgreementHttp.create(msg);
           });
       });
   }
 
-  async acceptContractAgreement(payload) {
+  async accept(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -99,12 +99,12 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.contractAgreementHttp.acceptContractAgreement(msg);
+            return this.contractAgreementHttp.accept(msg);
           });
       });
   }
 
-  async rejectContractAgreement(payload) {
+  async reject(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -132,12 +132,12 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.contractAgreementHttp.rejectContractAgreement(msg);
+            return this.contractAgreementHttp.reject(msg);
           });
       });
   }
 
-  async proposeContractAgreement(payload) {
+  async propose(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -203,12 +203,12 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload());
-            return this.contractAgreementHttp.createContractAgreement(msg);
+            return this.contractAgreementHttp.create(msg);
           });
       });
   }
 
-  async getContractAgreements({
+  async getList({
     parties,
     type,
     status,
@@ -220,11 +220,11 @@ export class ContractAgreementService {
       status: status || '',
       creator: creator || ''
     };
-    return this.contractAgreementHttp.getContractAgreements(query);
+    return this.contractAgreementHttp.getList(query);
   }
 
-  async getContractAgreement(contractAgreementId) {
-    return this.contractAgreementHttp.getContractAgreement(contractAgreementId);
+  async getOne(id) {
+    return this.contractAgreementHttp.getOne(id);
   }
 
   /** @type {() => ContractAgreementService} */

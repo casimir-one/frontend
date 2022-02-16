@@ -33,7 +33,7 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
-    return domainsService.getAllDomains()
+    return domainsService.getList()
       .then((res) => {
         commit('setList', res.data.items);
       });

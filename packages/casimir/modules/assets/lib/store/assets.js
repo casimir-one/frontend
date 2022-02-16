@@ -31,7 +31,7 @@ const ACTIONS = {
   },
 
   getBySymbol({ commit }, symbol) {
-    return assetsService.getAssetBySymbol(symbol)
+    return assetsService.getOneBySymbol(symbol)
       .then((res) => {
         commit('setOne', res.data);
       });
@@ -39,7 +39,7 @@ const ACTIONS = {
 
   async create({ dispatch }, payload) {
     const { user, data } = payload;
-    await assetsService.createAsset(user, data);
+    await assetsService.create(user, data);
     await dispatch('balances/getList', { withAssetsFetch: true }, { root: true });
   }
 };

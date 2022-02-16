@@ -4,19 +4,19 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class AssetsHttp {
   http = HttpService.getInstance();
 
-  async createAsset(req) {
+  async create(req) {
     return this.http.post('/api/v2/asset/create', req.getHttpBody());
   }
 
-  async issueAsset(req) {
+  async issue(req) {
     return this.http.post('/api/v2/asset/issue', req.getHttpBody());
   }
 
-  async transferAssets(req) {
+  async transfer(req) {
     return this.http.post('/api/v2/assets/transfer', req.getHttpBody());
   }
 
-  async createAssetsExchangeProposal(req) {
+  async createExchangeProposal(req) {
     return this.http.post('/api/v2/assets/exchange', req.getHttpBody());
   }
 
@@ -25,19 +25,19 @@ export class AssetsHttp {
     return this.http.get(`/api/v2/assets/deposit/history/account/${account}?${query}`);
   }
 
-  async getAssetById(assetId) {
+  async getOne(assetId) {
     return this.http.get(`/api/v2/assets/id/${assetId}`);
   }
 
-  async getAssetBySymbol(symbol) {
+  async getOneBySymbol(symbol) {
     return this.http.get(`/api/v2/assets/symbol/${symbol}`);
   }
 
-  async getAssetsByType(type) {
+  async getListByType(type) {
     return this.http.get(`/api/v2/assets/type/${type}`);
   }
 
-  async getAssetsByIssuer(issuer) {
+  async getListByIssuer(issuer) {
     return this.http.get(`/api/v2/assets/issuer/${issuer}`);
   }
 
@@ -57,7 +57,7 @@ export class AssetsHttp {
     return this.http.get(`/api/v2/assets/accounts/symbol/${symbol}`);
   }
 
-  async depositAssets(payload) {
+  async deposit(payload) {
     return this.http.post('/webhook/assets/deposit', payload);
   }
 

@@ -4,11 +4,11 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class DomainsHttp {
   http = HttpService.getInstance();
 
-  async getAllDomains() {
+  async getList() {
     return this.http.get('/api/v2/domains');
   }
 
-  async getDomainsByProject(projectId) {
+  async getListByProject(projectId) {
     return this.http.get(`/api/v2/domains/project/${projectId}`);
   }
 

@@ -7,12 +7,12 @@ export class DomainsService {
 
   domainsHttp = DomainsHttp.getInstance();
 
-  async getAllDomains() {
-    return this.domainsHttp.getAllDomains();
+  async getList() {
+    return this.domainsHttp.getList();
   }
 
-  async getDomainsByProject(projectId) {
-    return this.domainsHttp.getDomainsByProject(projectId);
+  async getListByProject(projectId) {
+    return this.domainsHttp.getListByProject(projectId);
   }
 
   /** @type {() => DomainsService} */

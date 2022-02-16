@@ -22,7 +22,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return bookmarkService.getProjectBookmarks(rootGetters['auth/username'])
+    return bookmarkService.getListByUsername(rootGetters['auth/username'])
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -33,7 +33,12 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return bookmarkService.createProjectBookmark(rootGetters['auth/username'], projectId)
+    const payload = {
+      username: rootGetters['auth/username'],
+      projectId
+    };
+
+    return bookmarkService.create(payload)
       .then((bookmark) => {
         commit('add', bookmark);
       });
@@ -44,7 +49,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return bookmarkService.deleteProjectBookmark(rootGetters['auth/username'], bookmarkId)
+    return bookmarkService.delete(rootGetters['auth/username'], bookmarkId)
       .then(() => {
         commit('remove', bookmarkId);
       });
