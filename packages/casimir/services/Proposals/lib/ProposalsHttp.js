@@ -4,20 +4,20 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class ProposalsHttp {
   http = HttpService.getInstance();
 
-  async acceptProposal(req) {
+  async accept(req) {
     return this.http.put('/api/v2/proposals/update', req.getHttpBody());
   }
 
-  async declineProposal(req) {
+  async decline(req) {
     return this.http.put('/api/v2/proposals/decline', req.getHttpBody());
   }
 
-  async getAccountProposals(account, status) {
+  async getListByAccount(account, status) {
     return this.http.get(`/api/v2/proposals/${account}/${status}`);
   }
 
-  async getProposal(proposalId) {
-    return this.http.get(`/api/v2/proposals/${proposalId}`);
+  async getOne(id) {
+    return this.http.get(`/api/v2/proposals/${id}`);
   }
 
   /** @type {() => ProposalsHttp} */

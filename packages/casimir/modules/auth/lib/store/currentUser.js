@@ -17,7 +17,7 @@ const ACTIONS = {
     }
 
     try {
-      const res = await userService.getUser(rootGetters['auth/username']);
+      const res = await userService.getOne(rootGetters['auth/username']);
       commit('setData', res.data);
     } catch (err) {
       console.error('No currentUser data', err);

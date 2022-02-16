@@ -39,7 +39,7 @@ const ACTIONS = {
   },
 
   getListByNames({ commit }, { users }) {
-    return userService.getUsers(users)
+    return userService.getListByIds(users)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -49,7 +49,7 @@ const ACTIONS = {
   },
 
   getListByTeam({ commit }, { teamId }) {
-    return userService.getUsersByTeam(teamId)
+    return userService.getListByTeam(teamId)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -59,7 +59,7 @@ const ACTIONS = {
   },
 
   getListByPortal({ commit }, { portalId }) {
-    return userService.getUsersByPortal(portalId)
+    return userService.getListByPortal(portalId)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -69,7 +69,7 @@ const ACTIONS = {
   },
 
   getListByStatus({ commit }, { status = 'approved' }) {
-    return userService.getUsersListing(status)
+    return userService.getListByStatus(status)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -81,7 +81,7 @@ const ACTIONS = {
   // one
 
   getOne({ commit }, id) {
-    return userService.getUser(id)
+    return userService.getOne(id)
       .then((res) => {
         commit('setOne', res.data);
       })
@@ -92,7 +92,7 @@ const ACTIONS = {
 
   update({ dispatch, rootGetters }, payload) {
     const { _id } = payload;
-    return userService.updateUser(payload)
+    return userService.update(payload)
       .then(() => {
         dispatch('getOne', _id);
         if (rootGetters['auth/username'] === _id) {

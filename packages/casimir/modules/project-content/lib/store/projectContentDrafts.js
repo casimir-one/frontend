@@ -42,7 +42,7 @@ const ACTIONS = {
       jsonData
     } = payload;
 
-    return projectContentService.createProjectContentDraft({
+    return projectContentService.createDraft({
       projectId,
       title,
       contentType,
@@ -55,11 +55,11 @@ const ACTIONS = {
   },
 
   async update(_, payload) {
-    return projectContentService.updateProjectContentDraft(payload);
+    return projectContentService.updateDraft(payload);
   },
 
   async remove({ commit }, id) {
-    await projectContentService.deleteProjectContentDraft(id);
+    await projectContentService.deleteDraft(id);
     commit('remove', id);
   },
 
@@ -77,7 +77,7 @@ const ACTIONS = {
         hash
       }
     } = payload;
-    await projectContentService.createProjectContent(
+    await projectContentService.createContent(
       {
         initiator,
         proposalInfo: { isProposal: false },
