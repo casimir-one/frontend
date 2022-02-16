@@ -21,35 +21,35 @@ const GETTERS = {
 
 const ACTIONS = {
   getListByAccount({ commit }, account) {
-    return documentTemplateService.getDocumentTemplatesByAccount(account)
+    return documentTemplateService.getListByAccount(account)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getOne({ commit }, id) {
-    return documentTemplateService.getDocumentTemplate(id)
+    return documentTemplateService.getOne(id)
       .then((res) => {
         commit('setOne', res.data);
       });
   },
 
   create({ dispatch }, payload) {
-    return documentTemplateService.createDocumentTemplate(payload)
+    return documentTemplateService.create(payload)
       .then(() => {
         dispatch('getListByAccount', payload.account);
       });
   },
 
   update({ dispatch }, payload) {
-    return documentTemplateService.updateDocumentTemplate(payload)
+    return documentTemplateService.update(payload)
       .then(() => {
         dispatch('getListByAccount', payload.account);
       });
   },
 
   remove({ commit }, templateId) {
-    return documentTemplateService.deleteDocumentTemplate(templateId)
+    return documentTemplateService.delete(templateId)
       .then(() => {
         commit('remove', templateId);
       });

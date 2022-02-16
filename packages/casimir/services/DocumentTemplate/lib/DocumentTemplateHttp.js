@@ -4,23 +4,23 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class DocumentTemplateHttp {
   http = HttpService.getInstance();
 
-  async getDocumentTemplate(id) {
+  async getOne(id) {
     return this.http.get(`/api/v2/document-template/${id}`);
   }
 
-  async getDocumentTemplatesByAccount(account) {
+  async getListByAccount(account) {
     return this.http.get(`/api/v2/document-templates/account/${account}`);
   }
 
-  async createDocumentTemplate(req) {
+  async create(req) {
     return this.http.post('/api/v2/document-template', req.getHttpBody());
   }
 
-  async updateDocumentTemplate(req) {
+  async update(req) {
     return this.http.put('/api/v2/document-template', req.getHttpBody());
   }
 
-  async deleteDocumentTemplate(req) {
+  async delete(req) {
     return this.http.put('/api/v2/document-template/delete', req.getHttpBody());
   }
 

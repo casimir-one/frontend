@@ -49,14 +49,14 @@ const GETTERS = {
 
 const ACTIONS = {
   getOne({ commit }, id) {
-    return contractAgreementService.getContractAgreement(id)
+    return contractAgreementService.getOne(id)
       .then((res) => {
         commit('setOne', res.data);
       });
   },
 
   getList({ commit }, query) {
-    return contractAgreementService.getContractAgreements(query)
+    return contractAgreementService.getList(query)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -64,12 +64,12 @@ const ACTIONS = {
 
   create(_, payload) {
     const data = convertPayloadForCreation(payload);
-    return contractAgreementService.createContractAgreement(data);
+    return contractAgreementService.create(data);
   },
 
   propose(_, payload) {
     const data = convertPayloadForCreation(payload);
-    return contractAgreementService.proposeContractAgreement(data);
+    return contractAgreementService.propose(data);
   },
 
   discard(_, payload) {
@@ -95,7 +95,7 @@ const ACTIONS = {
       }
     } = payload;
 
-    return contractAgreementService.acceptContractAgreement({ initiator, contractAgreementId });
+    return contractAgreementService.accept({ initiator, contractAgreementId });
   },
 
   acceptProposed(_, payload) {

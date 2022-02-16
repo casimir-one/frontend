@@ -38,7 +38,7 @@ const GETTERS = {
 
 const ACTIONS = {
   async getList({ commit }) {
-    const res = await attributesService.getAttributes();
+    const res = await attributesService.getList();
     commit('setList', res.data.items);
   },
 
@@ -53,17 +53,17 @@ const ACTIONS = {
   },
 
   async create({ dispatch }, attribute) {
-    await attributesService.createAttribute(attribute);
+    await attributesService.create(attribute);
     dispatch('getList');
   },
 
   async update({ dispatch }, attribute) {
-    await attributesService.updateAttribute(attribute);
+    await attributesService.update(attribute);
     dispatch('getList');
   },
 
   async remove({ commit }, attributeId) {
-    await attributesService.deleteAttribute(attributeId);
+    await attributesService.delete(attributeId);
     commit('remove', attributeId);
   },
 

@@ -5,17 +5,15 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class BookmarkHttp {
   http = HttpService.getInstance();
 
-  // Bookmarks
-
-  async getProjectBookmarks(username) {
+  async getListByUsername(username) {
     return this.http.get(`/api/v2/bookmarks/user/${username}?type=${USER_BOOKMARK_TYPE.PROJECT}`);
   }
 
-  async createProjectBookmark(req) {
+  async create(req) {
     return this.http.post('/api/v2/bookmarks', req.getHttpBody());
   }
 
-  async deleteProjectBookmark(req) {
+  async delete(req) {
     return this.http.post('/api/v2/bookmarks/delete', req.getHttpBody());
   }
 
