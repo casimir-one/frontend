@@ -38,7 +38,7 @@ const ACTIONS = {
       throw new Error('Wrong email or password. Please try again.');
     }
 
-    const { data: seedUser } = await userService.getUser(usernameOrEmail);
+    const { data: seedUser } = await userService.getOne(usernameOrEmail);
     const seedAccount = await authService.generateSeedAccount(seedUser.username, passwordOrPrivKey);
 
     const { data: signIn } = await authService.signIn({

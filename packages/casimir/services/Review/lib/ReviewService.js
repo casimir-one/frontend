@@ -15,24 +15,24 @@ export class ReviewService {
 
   proxydi = proxydi;
 
-  async createReviewRequest(reviewRequest) {
+  async createRequest(reviewRequest) {
     const createReviewRequestCmd = new CreateReviewRequestCmd(reviewRequest);
     const msg = new JsonDataMsg({ appCmds: [createReviewRequestCmd] });
-    return this.reviewHttp.createReviewRequest(msg);
+    return this.reviewHttp.createRequest(msg);
   }
 
-  async denyReviewRequest(reviewRequestId) {
+  async denyRequest(reviewRequestId) {
     const declineReviewRequestCmd = new DeclineReviewRequestCmd({ reviewRequestId });
     const msg = new JsonDataMsg({ appCmds: [declineReviewRequestCmd] });
-    return this.reviewHttp.denyReviewRequest(msg);
+    return this.reviewHttp.denyRequest(msg);
   }
 
-  async getReviewRequestsByExpert(username, status) {
-    return this.reviewHttp.getReviewRequestsByExpert(username, status);
+  async getListByExpert(username, status) {
+    return this.reviewHttp.getListByExpert(username, status);
   }
 
-  async getReviewRequestsByRequestor(username, status) {
-    return this.reviewHttp.getReviewRequestsByRequestor(username, status);
+  async getListByRequestor(username, status) {
+    return this.reviewHttp.getListByRequestor(username, status);
   }
 
   async createReview(payload) {
@@ -76,7 +76,7 @@ export class ReviewService {
       });
   }
 
-  async upvoteReview(payload) {
+  async upvote(payload) {
     const env = this.proxydi.get('env');
 
     const {
@@ -109,25 +109,25 @@ export class ReviewService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.reviewHttp.upvoteReview(msg);
+            return this.reviewHttp.upvote(msg);
           });
       });
   }
 
-  async getReview(reviewId) {
-    return this.reviewHttp.getReview(reviewId);
+  async getOne(id) {
+    return this.reviewHttp.getOne(id);
   }
 
-  async getReviewsByProject(projectId) {
-    return this.reviewHttp.getReviewsByProject(projectId);
+  async getListByProject(projectId) {
+    return this.reviewHttp.getListByProject(projectId);
   }
 
-  async getReviewsByProjectContent(projectContentId) {
-    return this.reviewHttp.getReviewsByProjectContent(projectContentId);
+  async getListByProjectContent(projectContentId) {
+    return this.reviewHttp.getListByProjectContent(projectContentId);
   }
 
-  async getReviewsByAuthor(author) {
-    return this.reviewHttp.getReviewsByAuthor(author);
+  async getListByAuthor(author) {
+    return this.reviewHttp.getListByAuthor(author);
   }
 
   async getReviewUpvotes(reviewId) {

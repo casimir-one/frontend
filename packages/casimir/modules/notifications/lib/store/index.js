@@ -22,7 +22,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return notificationService.getNotificationsByUser(rootGetters['auth/username'])
+    return notificationService.getListByUser(rootGetters['auth/username'])
       .then((res) => {
         commit('setList', res.data.items);
       })

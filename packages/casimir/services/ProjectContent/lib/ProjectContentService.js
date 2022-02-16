@@ -26,7 +26,7 @@ export class ProjectContentService {
 
   projectContentHttp = ProjectContentHttp.getInstance();
 
-  async createProjectContent(payload) {
+  async createContent(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -96,36 +96,36 @@ export class ProjectContentService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'project-id': projectId });
-            return this.projectContentHttp.publishProjectContent(msg);
+            return this.projectContentHttp.publishContent(msg);
           });
       });
   }
 
-  async getProjectContent(projectContentId) {
-    return this.projectContentHttp.getProjectContent(projectContentId);
+  async getContent(id) {
+    return this.projectContentHttp.getContent(id);
   }
 
   async getDraftsByProject(projectId) {
     return this.projectContentHttp.getDraftsByProject(projectId);
   }
 
-  async getDraft(draftId) {
-    return this.projectContentHttp.getDraft(draftId);
+  async getDraft(id) {
+    return this.projectContentHttp.getDraft(id);
   }
 
-  async getProjectContentsByPortal(portalId) {
-    return this.projectContentHttp.getProjectContentsByPortal(portalId);
+  async getContentListByPortal(portalId) {
+    return this.projectContentHttp.getContentListByPortal(portalId);
   }
 
-  async getProjectContentsByProject(projectId) {
-    return this.projectContentHttp.getProjectContentsByProject(projectId);
+  async getContentListByProject(projectId) {
+    return this.projectContentHttp.getContentListByProject(projectId);
   }
 
-  async getProjectContentRef(refId) {
-    return this.projectContentHttp.getProjectContentRef(refId);
+  async getContentRef(refId) {
+    return this.projectContentHttp.getContentRef(refId);
   }
 
-  async createProjectContentDraft(payload) {
+  async createDraft(payload) {
     const draftId = genRipemd160Hash({
       ...payload, __timestamp: new Date().getTime()
     }).slice(0, 24);
@@ -138,38 +138,39 @@ export class ProjectContentService {
 
     const createDraftCmd = new CreateDraftCmd(draftData);
     const msg = new MultFormDataMsg(formData, { appCmds: [createDraftCmd] }, { 'project-id': draftData.projectId });
-    return this.projectContentHttp.createProjectContentDraft(msg);
+    return this.projectContentHttp.createDraft(msg);
   }
 
-  async deleteProjectContentDraft(draftId) {
+  async deleteDraft(draftId) {
     const deleteDraftCmd = new DeleteDraftCmd({ draftId });
     const msg = new JsonDataMsg({ appCmds: [deleteDraftCmd] }, { 'entity-id': draftId });
-    return this.projectContentHttp.deleteProjectContentDraft(msg);
+    return this.projectContentHttp.deleteDraft(msg);
   }
 
-  async updateProjectContentDraft(payload) {
+  async updateDraft(payload) {
     const formData = createFormData(payload);
 
     const updateDraftCmd = new UpdateDraftCmd(payload);
     const msg = new MultFormDataMsg(formData, { appCmds: [updateDraftCmd] }, { 'project-id': payload.projectId, 'entity-id': payload._id });
-    return this.projectContentHttp.updateProjectContentDraft(msg);
+    return this.projectContentHttp.updateDraft(msg);
   }
 
   async unlockDraft(draft) {
     const updateDraftCmd = new UpdateDraftCmd({ ...draft });
     const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': draft._id });
-    return this.projectContentHttp.unlockProjectContentDraft(msg);
+    return this.projectContentHttp.unlockDraft(msg);
   }
 
-  async getPublicProjectContentListing() {
-    return this.projectContentHttp.getPublicProjectContentListing();
+  async getPublicContentList() {
+    return this.projectContentHttp.getPublicContentList();
   }
 
-  async getProjectContentReferencesGraph(contentId) {
-    return this.projectContentHttp.getProjectContentReferencesGraph(contentId);
+  async getContentReferencesGraph(contentId) {
+    return this.projectContentHttp.getContentReferencesGraph(contentId);
   }
 
-  getProjectContentType(type) {
+  /** @deprecated */
+  getContentType(type) {
     return projectContentTypes.find((t) => t.type === type || t.id === type);
   }
 

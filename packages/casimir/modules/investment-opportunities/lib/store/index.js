@@ -34,7 +34,7 @@ const ACTIONS = {
       }, proposalInfo
     } = payload;
 
-    return investmentOpportunityService.createInvestmentOpportunity(
+    return investmentOpportunityService.create(
       { privKey, username },
       {
         teamId,
@@ -52,7 +52,7 @@ const ACTIONS = {
   },
 
   getListByProjectId({ commit }, projectId) {
-    return investmentOpportunityService.getInvestmentOpportunitiesByProject(projectId)
+    return investmentOpportunityService.getListByProject(projectId)
       .then((res) => {
         commit('setList', res.data.items);
       });

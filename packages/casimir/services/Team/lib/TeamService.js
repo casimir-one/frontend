@@ -29,7 +29,7 @@ export class TeamService {
   teamHttp = TeamHttp.getInstance();
   userService = UserService.getInstance();
 
-  async createTeam(payload, isCreateDefaultProject = false) {
+  async create(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT } = env;
     const {
@@ -303,10 +303,10 @@ export class TeamService {
       });
   }
 
-  async getTeam(teamId) {
+  async getOne(teamId) {
     const [teamResponse, membersResponse] = await Promise.all([
-      this.teamHttp.get(teamId),
-      this.userService.getUsersByTeam(teamId)
+      this.teamHttp.getOne(teamId),
+      this.userService.getListByTeam(teamId)
     ]);
 
     return {
@@ -318,19 +318,19 @@ export class TeamService {
     };
   }
 
-  async getTeams(teamsIds) {
-    return this.teamHttp.getList(teamsIds);
+  async getListByIds(ids) {
+    return this.teamHttp.getListByIds(ids);
   }
 
-  async getTeamsListing(withPortalTeam = false) {
-    return this.teamHttp.getListing(withPortalTeam);
+  async getList(withPortalTeam = false) {
+    return this.teamHttp.getList(withPortalTeam);
   }
 
-  async getTeamsByUser(user, withPortalTeam = false) {
+  async getListByUser(user, withPortalTeam = false) {
     return this.teamHttp.getListByUser(user, withPortalTeam);
   }
 
-  async getTeamsByPortal(portalId, withPortalTeam = false) {
+  async getListByPortal(portalId, withPortalTeam = false) {
     return this.teamHttp.getListByPortal(portalId, withPortalTeam);
   }
 

@@ -4,7 +4,7 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class NotificationHttp {
   http = HttpService.getInstance();
 
-  async getNotificationsByUser(username) {
+  async getListByUser(username) {
     return this.http.get(`/api/v2/notifications/user/${username}`);
   }
 

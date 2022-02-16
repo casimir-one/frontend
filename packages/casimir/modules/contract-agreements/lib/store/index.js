@@ -81,7 +81,7 @@ const ACTIONS = {
       }
     } = payload;
 
-    return proposalsService.declineProposal(initiator, {
+    return proposalsService.decline(initiator, {
       proposalId,
       account
     });
@@ -107,8 +107,7 @@ const ACTIONS = {
       }
     } = payload;
 
-    return proposalsService
-      .acceptProposal(initiator, { proposalId, account: contractParty });
+    return proposalsService.accept(initiator, { proposalId, account: contractParty });
   }
 };
 

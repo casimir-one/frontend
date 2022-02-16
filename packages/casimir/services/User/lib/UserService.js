@@ -18,7 +18,7 @@ export class UserService {
 
   proxydi = proxydi;
 
-  async updateUser(payload) {
+  async update(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
@@ -58,7 +58,7 @@ export class UserService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': updater });
-            return this.userHttp.updateUser(msg);
+            return this.userHttp.update(msg);
           });
       });
   }
@@ -101,33 +101,31 @@ export class UserService {
     return this.userHttp.getInvitesByUser(username);
   }
 
-  async getUsers(usernames) {
-    return this.userHttp.getUsers(usernames);
+  async getListByIds(usernames) {
+    return this.userHttp.getListByIds(usernames);
   }
 
-  async getUsersByTeam(teamId) {
-    return this.userHttp.getUsersByTeam(teamId);
+  async getListByTeam(teamId) {
+    return this.userHttp.getListByTeam(teamId);
   }
 
-  async getUsersByPortal(portalId) {
-    return this.userHttp.getUsersByPortal(portalId);
+  async getListByPortal(portalId) {
+    return this.userHttp.getListByPortal(portalId);
   }
 
-  async getUsersListing(query = {}) {
-    return this.userHttp.getUsersListing(query);
+  async getList(query = {}) {
+    return this.userHttp.getList(query);
   }
 
-  // ONE
-
-  async getUser(username) {
+  async getOne(username) {
     if (username.includes('@')) {
-      return this.userHttp.getUserByEmail(username);
+      return this.userHttp.getOneByEmail(username);
     }
-    return this.userHttp.getUser(username);
+    return this.userHttp.getOne(username);
   }
 
   async checkIfUserExists(username) {
-    return new Promise((resolve) => this.getUser(username)
+    return new Promise((resolve) => this.getOne(username)
       .then(() => resolve(true))
       .catch((error) => {
         if (error.statusCode === 404) {

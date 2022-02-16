@@ -26,7 +26,7 @@ const ACTIONS = {
   },
 
   getAllTeams({ commit }) {
-    return teamService.getTeamsListing()
+    return teamService.getList()
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -37,7 +37,7 @@ const ACTIONS = {
 
   /** @return {Promise<object[]>} */
   getTeamsByIds({ commit }, ids) {
-    return teamService.getTeams(ids)
+    return teamService.getListByIds(ids)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -47,7 +47,7 @@ const ACTIONS = {
   },
 
   getTeamsByUser({ commit }, userId) {
-    return teamService.getTeamsByUser(userId)
+    return teamService.getListByUser(userId)
       .then((res) => {
         commit('setList', res.data.items);
       })
@@ -56,9 +56,9 @@ const ACTIONS = {
       });
   },
 
-  getOne({ commit }, payload) {
+  getOne({ commit }, teamId) {
     return teamService
-      .getTeam(payload)
+      .getOne(teamId)
       .then((res) => {
         commit('setOne', res.data);
       })
@@ -74,8 +74,7 @@ const ACTIONS = {
       ...data
     } = payload;
 
-    const res = await teamService
-      .createTeam({ ...data, members }, isCreateDefaultProject);
+    const res = await teamService.create({ ...data, members }, isCreateDefaultProject);
     dispatch('getOne', res.data._id);
     dispatch('currentUser/get', null, { root: true }); // update current user roles
 
@@ -83,7 +82,7 @@ const ACTIONS = {
   },
 
   async update({ dispatch }, payload) {
-    const res = await teamService.updateTeam(payload);
+    const res = await teamService.update(payload);
     dispatch('getOne', res.data._id);
 
     return res.data;

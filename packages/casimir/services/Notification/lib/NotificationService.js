@@ -8,8 +8,8 @@ import { NotificationHttp } from './NotificationHttp';
 export class NotificationService {
   notificationHttp = NotificationHttp.getInstance();
 
-  async getNotificationsByUser(username) {
-    return this.notificationHttp.getNotificationsByUser(username);
+  async getListByUser(username) {
+    return this.notificationHttp.getListByUser(username);
   }
 
   async markUserNotificationAsRead(username, notificationId) {

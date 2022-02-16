@@ -8,19 +8,19 @@ export class ProjectContentHttp {
     return this.http.get(`/api/v2/project-content/draft/${draftId}`);
   }
 
-  async getProjectContentRef(refId) {
+  async getContentRef(refId) {
     return this.http.get(`/api/v2/project-content/ref/${refId}`);
   }
 
-  async getProjectContent(projectContentid) {
+  async getContent(projectContentid) {
     return this.http.get(`/api/v2/project-content/${projectContentid}`);
   }
 
-  async getProjectContentsByProject(projectId) {
+  async getContentListByProject(projectId) {
     return this.http.get(`/api/v2/project-content/project/${projectId}`);
   }
 
-  async publishProjectContent(req) {
+  async publishContent(req) {
     return this.http.post('/api/v2/project-content/ref/publish', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
@@ -28,31 +28,31 @@ export class ProjectContentHttp {
     return this.http.get(`/api/v2/project-content/drafts/project/${projectId}`);
   }
 
-  async createProjectContentDraft(req) {
+  async createDraft(req) {
     return this.http.post('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async updateProjectContentDraft(req) {
+  async updateDraft(req) {
     return this.http.put('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async deleteProjectContentDraft(req) {
+  async deleteDraft(req) {
     return this.http.put('/api/v2/project-content/draft/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async unlockProjectContentDraft(req) {
+  async unlockDraft(req) {
     return this.http.put('/api/v2/project-content/draft/unlock', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async getProjectContentsByPortal(portalId) {
+  async getContentListByPortal(portalId) {
     return this.http.get(`/api/v2/project-content/portal/${portalId}`);
   }
 
-  async getPublicProjectContentListing() {
+  async getPublicContentList() {
     return this.http.get('/api/v2/project-content/listing');
   }
 
-  async getProjectContentReferencesGraph(contentId) {
+  async getContentReferencesGraph(contentId) {
     return this.http.get(`/api/v2/project-content/ref/graph/${contentId}`);
   }
 

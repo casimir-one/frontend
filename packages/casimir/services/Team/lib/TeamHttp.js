@@ -36,11 +36,11 @@ export class TeamHttp {
     );
   }
 
-  async get(teamId) {
+  async getOne(teamId) {
     return this.http.get(`/api/v2/team/${teamId}`);
   }
 
-  async getList(teamsIds) {
+  async getListByIds(teamsIds) {
     const query = serializeParams({ teamsIds });
     return this.http.get(`/api/v2/teams?${query}`);
   }
@@ -50,7 +50,7 @@ export class TeamHttp {
     return this.http.get(`/api/v2/teams/member/${username}?${query}`);
   }
 
-  async getListing(withPortalTeam) {
+  async getList(withPortalTeam) {
     const query = serializeParams({ withPortalTeam });
     return this.http.get(`/api/v2/teams/listing?${query}`);
   }

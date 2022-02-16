@@ -4,11 +4,11 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class InvestmentOpportunityHttp {
   http = HttpService.getInstance();
 
-  async getInvestmentOpportunity(investmentOpportunityId) {
-    return this.http.get(`/api/v2/investments/investment-opportunity/${investmentOpportunityId}`);
+  async getOne(id) {
+    return this.http.get(`/api/v2/investments/investment-opportunity/${id}`);
   }
 
-  async getInvestmentOpportunitiesByProject(projectId) {
+  async getListByProject(projectId) {
     return this.http.get(`/api/v2/investments/project/${projectId}`);
   }
 
@@ -16,7 +16,7 @@ export class InvestmentOpportunityHttp {
     return this.http.get(`/api/v2/investments/project/${projectId}/contributions`);
   }
 
-  async createInvestmentOpportunity(req) {
+  async create(req) {
     return this.http.post('/api/v2/investments', req.getHttpBody());
   }
 
