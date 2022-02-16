@@ -4,11 +4,11 @@ import { createInstanceGetter } from '@deip/toolbox';
 export class ProjectHttp {
   http = HttpService.getInstance();
 
-  async getProject(projectId) {
+  async getOne(projectId) {
     return this.http.get(`/api/v2/project/${projectId}`);
   }
 
-  async getProjects(projectsIds) {
+  async getListByIds(projectsIds) {
     const query = serializeParams({ projectsIds });
     return this.http.get(`/api/v2/projects?${query}`);
   }
@@ -17,33 +17,33 @@ export class ProjectHttp {
     return this.http.get(`/api/v2/project/default/${teamId}`);
   }
 
-  async createProject(req) {
+  async create(req) {
     return this.http.post('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async updateProject(req) {
+  async update(req) {
     return this.http.put('/api/v2/project', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async deleteProject(req) {
-    return this.http.put(`/api/v2/project/delete`, req.getHttpBody(), { headers: req.getHttpHeaders() });
+  async delete(req) {
+    return this.http.put('/api/v2/project/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
-  async getPublicProjectListing(filter) {
-    let query = serializeParams({ filter });
+  async getPublicProjectList(filter) {
+    const query = serializeParams({ filter });
     return this.http.get(`/api/v2/projects/listing?${query}`);
   }
 
-  async getUserProjectListing(username) {
+  async getUserProjectList(username) {
     return this.http.get(`/api/v2/projects/user/listing/${username}`);
   }
 
-  async getTeamProjectListing(teamId) {
+  async getTeamProjectList(teamId) {
     return this.http.get(`/api/v2/projects/team/listing/${teamId}`);
   }
 
-  async getPortalProjectListing() {
-    return this.http.get(`/api/v2/projects/portal/listing`);
+  async getPortalProjectList() {
+    return this.http.get('/api/v2/projects/portal/listing');
   }
 
   /** @type {() => ProjectHttp} */

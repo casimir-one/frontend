@@ -47,19 +47,19 @@ export class ProjectService {
     };
   }
 
-  async getProject(projectId) {
-    return this.projectHttp.getProject(projectId);
+  async getOne(projectId) {
+    return this.projectHttp.getOne(projectId);
   }
 
-  async getProjects(projectsIds) {
-    return this.projectHttp.getProjects(projectsIds);
+  async getListByIds(ids) {
+    return this.projectHttp.getListByIds(ids);
   }
 
   async getTeamDefaultProject(teamId) {
     return this.projectHttp.getTeamDefaultProject(teamId);
   }
 
-  async createProject(payload) {
+  async create(payload) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET } = env;
 
@@ -93,7 +93,7 @@ export class ProjectService {
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
-      needProjectTeam ? Promise.resolve({ data: {} }) : this.teamService.getTeam(teamId)
+      needProjectTeam ? Promise.resolve({ data: {} }) : this.teamService.getOne(teamId)
     ])
       .then(([chainService, teamResponse]) => {
         const team = teamResponse?.data;
@@ -185,12 +185,12 @@ export class ProjectService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
-            return this.projectHttp.createProject(msg);
+            return this.projectHttp.create(msg);
           });
       });
   }
 
-  async updateProject(payload) {
+  async update(payload) {
     const env = this.proxydi.get('env');
     const { TENANT } = env;
 
@@ -221,7 +221,7 @@ export class ProjectService {
 
     return Promise.all([
       ChainService.getInstanceAsync(env),
-      this.teamService.getTeam(teamId)
+      this.teamService.getOne(teamId)
     ])
       .then(([chainService, teamResponse]) => {
         const team = teamResponse?.data;
@@ -300,20 +300,20 @@ export class ProjectService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': _id });
-            return this.projectHttp.updateProject(msg);
+            return this.projectHttp.update(msg);
           });
       });
   }
 
-  async deleteProject(projectId) {
+  async delete(projectId) {
     const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
     const msg = new JsonDataMsg({ appCmds: [deleteProjectCmd] }, { 'entity-id': projectId });
-    return this.projectHttp.deleteProject(msg);
+    return this.projectHttp.delete(msg);
   }
 
   // Change all methods to cmd
 
-  async getPublicProjectListing({
+  async getPublicProjectList({
     searchTerm,
     domains,
     organizations,
@@ -328,38 +328,34 @@ export class ProjectService {
       portalIds: portalIds || []
     };
 
-    return this.projectHttp.getPublicProjectListing(filter);
+    return this.projectHttp.getPublicProjectList(filter);
   }
 
-  async getUserProjectListing(username) {
-    return this.projectHttp.getUserProjectListing(username);
+  async getUserProjectList(username) {
+    return this.projectHttp.getUserProjectList(username);
   }
 
-  async getUserPublicProjects(username) {
-    return this.projectHttp.getUserProjectListing(username)
+  async getUserPublicProjectList(username) {
+    return this.projectHttp.getUserProjectList(username)
       .then((projects) => projects.filter((p) => !p.is_private));
   }
 
-  async getUserPrivateProjects(username) {
-    return this.projectHttp.getUserProjectListing(username)
+  async getUserPrivateProjectList(username) {
+    return this.projectHttp.getUserProjectList(username)
       .then((projects) => projects.filter((p) => p.is_private));
   }
 
-  async getUserTeamsProjects(username) {
-    return this.projectHttp.getUserProjectListing(username);
-  }
-
-  getUserPersonalProjects(username) {
-    return this.projectHttp.getUserProjectListing(username)
+  async getUserPersonalProjectList(username) {
+    return this.projectHttp.getUserProjectList(username)
       .then((projects) => projects.filter((p) => p.is_personal));
   }
 
-  async getTeamProjectListing(teamId) {
-    return this.projectHttp.getTeamProjectListing(teamId);
+  async getTeamProjectList(teamId) {
+    return this.projectHttp.getTeamProjectList(teamId);
   }
 
-  async getPortalProjectListing() {
-    return this.projectHttp.getPortalProjectListing();
+  async getPortalProjectList() {
+    return this.projectHttp.getPortalProjectList();
   }
 
   /** @type {() => ProjectService} */

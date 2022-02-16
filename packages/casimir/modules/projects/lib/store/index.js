@@ -19,7 +19,6 @@ const actionsMap = {
       all: 'getUserProjects',
       following: 'getProjectsByIds',
       public: 'getUserPublicProjects',
-      teams: 'getUserTeamsProjects',
       personal: 'getUserPersonalProjects'
     },
     team: {
@@ -58,7 +57,7 @@ const ACTIONS = {
   // public
 
   getPublicProjects({ commit }, { filter = {} }) {
-    return projectService.getPublicProjectListing(filter)
+    return projectService.getPublicProjectList(filter)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -67,35 +66,28 @@ const ACTIONS = {
   // user
 
   getUserProjects({ commit }, { username }) {
-    return projectService.getUserProjectListing(username)
+    return projectService.getUserProjectList(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getUserPublicProjects({ commit }, { username }) {
-    return projectService.getUserPublicProjects(username)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
-  },
-
-  getUserTeamsProjects({ commit }, { username }) {
-    return projectService.getUserTeamsProjects(username)
+    return projectService.getUserPublicProjectList(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getUserPersonalProjects({ commit }, { username }) {
-    return projectService.getUserPersonalProjects(username)
+    return projectService.getUserPersonalProjectList(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getProjectsByIds({ commit }, projectIds) {
-    return projectService.getProjects(projectIds)
+    return projectService.getListByIds(projectIds)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -104,7 +96,7 @@ const ACTIONS = {
   // team
 
   getTeamProjects({ commit }, { teamId }) {
-    return projectService.getTeamProjectListing(teamId)
+    return projectService.getTeamProjectList(teamId)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -113,7 +105,7 @@ const ACTIONS = {
   // portal
 
   getPortalProjects({ commit }, { portalId }) {
-    return projectService.getPortalProjectListing(portalId)
+    return projectService.getPortalProjectList(portalId)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -122,7 +114,7 @@ const ACTIONS = {
   // one
 
   getOne({ commit }, projectId) {
-    return projectService.getProject(projectId)
+    return projectService.getOne(projectId)
       .then((res) => {
         commit('setOne', res.data);
       });
@@ -134,7 +126,7 @@ const ACTIONS = {
   },
 
   async create({ dispatch }, payload) {
-    const res = await projectService.createProject({
+    const res = await projectService.create({
       ...payload,
       proposalInfo: { isProposal: false }
     });
@@ -144,7 +136,7 @@ const ACTIONS = {
   },
 
   async update({ dispatch }, payload) {
-    const res = await projectService.updateProject({
+    const res = await projectService.update({
       ...payload,
       proposalInfo: { isProposal: false }
     });

@@ -37,7 +37,7 @@ export class InvestmentOpportunityService {
   }
 
   async getCurrentInvestmentOpportunityByProject(projectId) {
-    const res = await this.investmentOpportunityHttp.getInvestmentOpportunitiesByProject(projectId);
+    const res = await this.investmentOpportunityHttp.getListByProject(projectId);
     return {
       ...res,
       data: {
@@ -49,7 +49,7 @@ export class InvestmentOpportunityService {
     };
   }
 
-  async createInvestmentOpportunity({ privKey, username }, {
+  async create({ privKey, username }, {
     teamId,
     projectId,
     startTime,
@@ -112,7 +112,7 @@ export class InvestmentOpportunityService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.investmentOpportunityHttp.createInvestmentOpportunity(msg);
+            return this.investmentOpportunityHttp.create(msg);
           });
       });
   }
@@ -146,8 +146,12 @@ export class InvestmentOpportunityService {
       });
   }
 
-  async getInvestmentOpportunitiesByProject(projectId) {
-    return this.investmentOpportunityHttp.getInvestmentOpportunitiesByProject(projectId);
+  async getOne(id) {
+    return this.investmentOpportunityHttp.getOne(id);
+  }
+
+  async getListByProject(projectId) {
+    return this.investmentOpportunityHttp.getListByProject(projectId);
   }
 
   async getInvestmentsByProject(projectId) {
@@ -158,12 +162,9 @@ export class InvestmentOpportunityService {
     return this.investmentOpportunityHttp.getAccountInvestmentOpportunityHistory(account);
   }
 
-  async getInvestmentOpportunityHistoryById(id) {
-    return this.investmentOpportunityHttp.getInvestmentOpportunityHistoryById(id);
-  }
-
-  async getInvestmentOpportunity(investmentOpportunityId) {
-    return this.investmentOpportunityHttp.getInvestmentOpportunity(investmentOpportunityId);
+  async getInvestmentOpportunityHistoryById(investmentOpportunityId) {
+    return this.investmentOpportunityHttp
+      .getInvestmentOpportunityHistoryById(investmentOpportunityId);
   }
 
   /** @type {() => InvestmentOpportunityService} */

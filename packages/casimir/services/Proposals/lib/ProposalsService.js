@@ -12,7 +12,7 @@ export class ProposalsService {
 
   // TODO: add createProposal endpoint and support proposal of APP_PROPOSAL.CUSTOM type
 
-  async acceptProposal({ privKey }, {
+  async accept({ privKey }, {
     proposalId,
     account
   }) {
@@ -33,12 +33,12 @@ export class ProposalsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.proposalsHttp.acceptProposal(msg);
+            return this.proposalsHttp.accept(msg);
           });
       });
   }
 
-  async declineProposal({ privKey }, {
+  async decline({ privKey }, {
     proposalId,
     account
   }) {
@@ -60,12 +60,12 @@ export class ProposalsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.proposalsHttp.declineProposal(msg);
+            return this.proposalsHttp.decline(msg);
           });
       });
   }
 
-  async getProposalsByCreator(account) {
+  async getListByCreator(account) {
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -89,12 +89,12 @@ export class ProposalsService {
       });
   }
 
-  async getAccountProposals(account, status = 0) {
-    return this.proposalsHttp.getAccountProposals(account, status);
+  async getListByAccount(account, status = 0) {
+    return this.proposalsHttp.getListByAccount(account, status);
   }
 
-  async getProposal(proposalId) {
-    return this.proposalsHttp.getProposal(proposalId);
+  async getOne(id) {
+    return this.proposalsHttp.getOne(id);
   }
 
   /** @type {() => ProposalsService} */
