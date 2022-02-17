@@ -1,2 +1,2 @@
-export * from './format-date';
+export * from './formatDate';
 export * from './form';

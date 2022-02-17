@@ -1,6 +1,14 @@
 import { cloneDeep, isEqual } from '@deip/toolbox/lodash';
 import { VIEW_MODE } from '@deip/constants';
 
+/**
+ * Create form mixin
+ * @param {string} [prop=value]
+ * @param {string} [event=input]
+ * @param {Function} [defaultPropValue=() => ({})]
+ * @param {Object} [lazyFormData={}]
+ * @returns {Object} Vue mixin object
+ */
 const formFactory = (
   prop = 'value',
   event = 'input',
@@ -93,6 +101,9 @@ const formFactory = (
   }
 });
 
+/**
+ * Create form mixin with default params
+ */
 const formMixin = formFactory();
 
 export { formFactory, formMixin };

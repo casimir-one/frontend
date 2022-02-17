@@ -6,7 +6,7 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 import { collectionOne } from '@deip/toolbox';
 
 const attributesService = AttributesService.getInstance();

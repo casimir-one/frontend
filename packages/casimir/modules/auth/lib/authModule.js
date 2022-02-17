@@ -2,7 +2,7 @@ import { isEmpty } from '@deip/toolbox/lodash';
 import { SYSTEM_ROLE } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
 import { setLocalesMessages, hasValue } from '@deip/toolbox';
-import { awaitForStore, callForCurrentUser } from '@deip/platform-store';
+import { awaitForStore, callForCurrentUser } from '@deip/platform-util';
 
 import { hasRoles } from './util/roles';
 import { authStore, currentUserStore } from './store';

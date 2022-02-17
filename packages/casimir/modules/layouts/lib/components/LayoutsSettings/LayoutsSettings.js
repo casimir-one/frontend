@@ -1,6 +1,3 @@
-import { defineComponent } from '@deip/platform-util';
-import { formMixin } from '@deip/platform-components';
-
 import {
   VRow,
   VCol,
@@ -9,8 +6,11 @@ import {
   VSpacer,
   VForm,
   VSelect
-// eslint-disable-next-line import/extensions,import/no-unresolved
+  // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
+
+import { defineComponent } from '@deip/platform-util';
+import { formMixin } from '@deip/platform-components';
 
 import { VeStack } from '@deip/vue-elements';
 import { collectionMerge } from '@deip/toolbox';

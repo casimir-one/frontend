@@ -6,7 +6,7 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 const projectContentService = ProjectContentService.getInstance();
 

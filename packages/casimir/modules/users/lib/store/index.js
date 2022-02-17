@@ -6,7 +6,7 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 import { hasValue } from '@deip/toolbox';
 

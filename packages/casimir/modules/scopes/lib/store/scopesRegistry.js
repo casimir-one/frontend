@@ -1,4 +1,8 @@
-import { listGetterFactory, oneGetterFactory, setOneMutationFactory } from '@deip/platform-store';
+import {
+  listGetterFactory,
+  oneGetterFactory,
+  setOneMutationFactory
+} from '@deip/platform-util';
 import { collectionMerge, collectionOne } from '@deip/toolbox';
 
 const STATE = {
