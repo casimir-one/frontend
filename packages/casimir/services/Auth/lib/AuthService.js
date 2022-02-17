@@ -5,28 +5,52 @@ import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/messages';
 import { AuthHttp } from './AuthHttp';
 
+/**
+ * Auth transport
+ */
 export class AuthService {
   proxydi = proxydi;
 
   http = AuthHttp.getInstance();
 
-  async signIn(model) {
-    return this.http.signIn(model);
+  /**
+   * @param {Object} data
+   * @return {Promise<Object>}
+   */
+  async signIn(data) {
+    return this.http.signIn(data);
   }
 
-  async adminSignIn(model) {
-    return this.http.adminSignIn(model);
+  /**
+   * @param {Object} data
+   * @return {Promise<Object>}
+   */
+  async adminSignIn(data) {
+    return this.http.adminSignIn(data);
   }
 
-  async signUp({ privKey, isAuthorizedCreatorRequired }, {
-    email,
-    attributes,
-    username,
-    pubKey,
-    roles
-  }) {
+  /**
+   * Create new user
+   * @param {Object} initiator
+   * @param {Object} userData
+   * @return {Promise<Object>}
+   */
+  async signUp(initiator, userData) {
     const env = this.proxydi.get('env');
     const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME } = env;
+
+    const {
+      privKey,
+      isAuthorizedCreatorRequired
+    } = initiator;
+
+    const {
+      email,
+      attributes,
+      username,
+      pubKey,
+      roles
+    } = userData;
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -66,6 +90,11 @@ export class AuthService {
       });
   }
 
+  /**
+   * @param {string} username
+   * @param {string} passwordOrPrivKey
+   * @return {Promise<Object>}
+   */
   async generateSeedAccount(username, passwordOrPrivKey) {
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)

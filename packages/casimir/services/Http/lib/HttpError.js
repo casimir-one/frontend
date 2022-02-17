@@ -33,6 +33,10 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * @param {Error} e
+ * @return {HttpError}
+ */
 export const handleHttpError = (e) => {
   if (typeof e !== 'object' || !Object.hasOwnProperty.call(e, 'message')) {
     return new HttpError('Undefined Error');
