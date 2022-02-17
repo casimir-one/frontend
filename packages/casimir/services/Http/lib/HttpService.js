@@ -5,6 +5,11 @@ import { proxydi } from '@deip/proxydi';
 import { createInstanceGetter } from '@deip/toolbox';
 import { handleHttpError } from './HttpError';
 
+/**
+ * @typedef {import("axios").AxiosRequestConfig} AxiosRequestConfig
+ * @typedef {import("axios").AxiosInstance} AxiosInstance
+ */
+
 export class HttpService {
   /**
    * @private
@@ -21,15 +26,15 @@ export class HttpService {
   }
 
   /**
-   * @param {import("axios").AxiosRequestConfig?} config
-   * @return {import("axios").AxiosInstance}
+   * @param {AxiosRequestConfig?} config
+   * @return {AxiosInstance}
    */
   makeAxiosInstance(config = {}) {
     return axios.create(config);
   }
 
   /**
-   * @param {import("axios").AxiosInstance} axiosInstance
+   * @param {AxiosInstance} axiosInstance
    */
   setRequestInterceptors(axiosInstance) {
     axiosInstance.interceptors.request.use(
@@ -61,7 +66,7 @@ export class HttpService {
   }
 
   /**
-   * @param {import("axios").AxiosInstance} axiosInstance
+   * @param {AxiosInstance} axiosInstance
    */
   setResponseInterceptors(axiosInstance) {
     axiosInstance.interceptors.response.use(
@@ -91,12 +96,24 @@ export class HttpService {
   }
 
   /**
-   * @param {import("axios").AxiosInstance} axiosInstance
+   * @param {AxiosInstance} axiosInstance
    */
   addMethods(axiosInstance) {
+    /**
+     * @type {(url: string, data?: any, config?: AxiosRequestConfig) => Promise<Object>}
+     */
     this.post = axiosInstance.post;
+    /**
+     * @type {(url: string, config?: AxiosRequestConfig) => Promise<Object>}
+     */
     this.delete = axiosInstance.delete;
+    /**
+     * @type {(url: string, data?: any, config?: AxiosRequestConfig) => Promise<Object>}
+     */
     this.put = axiosInstance.put;
+    /**
+     * @type {(url: string, config?: import("axios").AxiosRequestConfig) => Promise<Object>}
+     */
     this.get = axiosInstance.get;
   }
 

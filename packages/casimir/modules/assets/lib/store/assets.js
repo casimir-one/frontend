@@ -24,7 +24,7 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
-    return assetsService.lookupAssets('', 10000)
+    return assetsService.lookupAssets(10000)
       .then((res) => {
         commit('setList', res.data.items);
       });
