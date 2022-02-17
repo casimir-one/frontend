@@ -1,4 +1,5 @@
 import { UserService } from '@deip/user-service';
+import { USER_PROFILE_STATUS } from '@deip/constants';
 
 import {
   listGetter,
@@ -68,8 +69,8 @@ const ACTIONS = {
       });
   },
 
-  getListByStatus({ commit }, { status = 'approved' }) {
-    return userService.getListByStatus(status)
+  getListByStatus({ commit }, { status = USER_PROFILE_STATUS.APPROVED }) {
+    return userService.getList({ status })
       .then((res) => {
         commit('setList', res.data.items);
       })
