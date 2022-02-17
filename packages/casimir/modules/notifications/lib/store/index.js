@@ -4,7 +4,7 @@ import {
   listGetter,
   setListMutation,
   removeFromListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 const notificationService = NotificationService.getInstance();
 

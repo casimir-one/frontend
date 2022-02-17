@@ -1,4 +1,8 @@
-import { listGetterFactory, oneGetterFactory, setOneMutationFactory } from '@deip/platform-store';
+import {
+  listGetterFactory,
+  oneGetterFactory,
+  setOneMutationFactory
+} from '@deip/platform-util';
 import { baseAttributes } from '../config';
 
 const STATE = {

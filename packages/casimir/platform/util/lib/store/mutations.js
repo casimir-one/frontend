@@ -1,5 +1,12 @@
 import { collectionMerge } from '@deip/toolbox';
 
+/**
+ * Factory for generating mutation for merging list of items into store
+ * @param {Object} [opts={}]
+ * @param {string} [options.mergeKey=_id]
+ * @param {string} [options.storeKey=data]
+ * @returns {Function} mutation
+ */
 export const setListMutationFactory = (opts = {}) => {
   const {
     mergeKey = '_id',
@@ -18,6 +25,13 @@ export const setListMutationFactory = (opts = {}) => {
 };
 export const setListMutation = setListMutationFactory();
 
+/**
+ * Factory for generating mutation for merging one item into store
+ * @param {Object} [opts={}]
+ * @param {string} [options.mergeKey=_id]
+ * @param {string} [options.storeKey=data]
+ * @returns {Function} mutation
+ */
 export const setOneMutationFactory = (opts = {}) => {
   const {
     mergeKey = '_id',
@@ -36,6 +50,13 @@ export const setOneMutationFactory = (opts = {}) => {
 };
 export const setOneMutation = setOneMutationFactory();
 
+/**
+ * Factory for generating mutation for removing item from store
+ * @param {Object} [opts={}]
+ * @param {string} [options.mergeKey=_id]
+ * @param {string} [options.storeKey=data]
+ * @returns {Function} mutation
+ */
 export const removeFromListMutationFactory = (opts = {}) => {
   const {
     mergeKey = '_id',
@@ -54,6 +75,13 @@ export const removeFromListMutationFactory = (opts = {}) => {
 };
 export const removeFromListMutation = removeFromListMutationFactory();
 
+/**
+ * Factory for generating mutation for removing all items from store
+ * @param {Object} [opts={}]
+ * @param {string} [options.storeKey=data]
+ * @param {Array} [options.emptyData=[]]
+ * @returns {Function} mutation
+ */
 export const clearMutationFactory = (opts = {}) => {
   const {
     storeKey = 'data',
@@ -65,20 +93,3 @@ export const clearMutationFactory = (opts = {}) => {
   };
 };
 export const clearMutation = clearMutationFactory();
-
-export const crudMutationsFactory = (opts = {}) => {
-  const {
-    dataKey: mergeKey = '_id',
-    storeKey = 'data',
-    emptyData = []
-  } = opts;
-
-  return {
-    setList: setListMutationFactory({ mergeKey, storeKey }),
-    setOne: setOneMutationFactory({ mergeKey, storeKey }),
-    removeFromList: removeFromListMutationFactory({ mergeKey, storeKey }),
-    clearList: clearMutationFactory(storeKey, emptyData)
-  };
-};
-
-export const crudMutations = crudMutationsFactory();

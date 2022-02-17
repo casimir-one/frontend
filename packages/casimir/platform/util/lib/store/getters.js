@@ -3,6 +3,12 @@ import {
   collectionOne
 } from '@deip/toolbox';
 
+/**
+ * Factory for generating list getter
+ * @param {Object} [opts={}]
+ * @param {string} [options.storeKey=data]
+ * @returns {Function}
+ */
 export const listGetterFactory = (opts = {}) => {
   const {
     storeKey = 'data'
@@ -18,6 +24,13 @@ export const listGetterFactory = (opts = {}) => {
 };
 export const listGetter = listGetterFactory();
 
+/**
+ * Factory for generating one getter
+ * @param {Object} [opts={}]
+ * @param {string} [options.selectorKey=_id]
+ * @param {string} [options.storeKey=data]
+ * @returns {Function}
+ */
 export const oneGetterFactory = (opts = {}) => {
   const {
     selectorKey = '_id',
@@ -39,17 +52,3 @@ export const oneGetterFactory = (opts = {}) => {
   };
 };
 export const oneGetter = oneGetterFactory();
-
-export const crudGettersFactory = (opts = {}) => {
-  const {
-    dataKey: selectorKey = '_id',
-    storeKey = 'data'
-  } = opts;
-
-  return {
-    list: listGetter,
-    one: oneGetterFactory({ selectorKey, storeKey })
-  };
-};
-
-export const crudGetters = crudGettersFactory();

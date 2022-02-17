@@ -1,3 +1,6 @@
+/**
+ * Class for bootstrapping app with Casimir
+ */
 export class CreateApp {
   #registeredModules = {}
 
@@ -13,6 +16,7 @@ export class CreateApp {
   }
 
   /**
+   * Install module
    * @param {string} name
    * @return {Promise|Function}
    */
@@ -62,6 +66,7 @@ export class CreateApp {
   }
 
   /**
+   * Add module to registred modules
    * @param {Object} module
    * @param {Object} options
    * @return {CreateApp}
@@ -82,6 +87,7 @@ export class CreateApp {
   }
 
   /**
+   * Install registered modules
    * @return {Array.<Promise>}
    */
   async bootstrap() {

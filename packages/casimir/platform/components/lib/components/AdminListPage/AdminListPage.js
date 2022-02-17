@@ -10,7 +10,11 @@ import { defineComponent } from '@deip/platform-util';
 import { isFunction, pascalCase } from '@deip/toolbox';
 import { VexSection, VexSectionTitle } from '@deip/vuetify-extended';
 
-export const defaultAdminListItemActions = () => [
+/**
+ * Generate default list item actions
+ * @returns {Array} item actions
+ */
+const defaultAdminListItemActions = () => [
   {
     icon: 'mdi-pencil',
     clickEvent: 'click-edit'
@@ -21,7 +25,11 @@ export const defaultAdminListItemActions = () => [
   }
 ];
 
-export const defaultAdminHeaderActions = () => [
+/**
+ * Generate default header action
+ * @returns {Array}
+ */
+const defaultAdminHeaderActions = () => [
   {
     icon: 'mdi-tune-vertical',
     clickEvent: 'click-settings',
@@ -41,7 +49,10 @@ export const defaultAdminHeaderActions = () => [
   }
 ];
 
-export const AdminListPage = defineComponent({
+/**
+ * Basic list component for admin pages
+ */
+const AdminListPage = defineComponent({
   name: 'AdminListPage',
 
   props: {
@@ -129,7 +140,7 @@ export const AdminListPage = defineComponent({
     // BLOCKS GENERATORS
 
     onRowClick(item) {
-      this.$emit('click-row', item)
+      this.$emit('click-row', item);
     },
 
     genTable(items, scopedSlots) {
@@ -195,3 +206,5 @@ export const AdminListPage = defineComponent({
     return this.genWrapper();
   }
 });
+
+export default AdminListPage;

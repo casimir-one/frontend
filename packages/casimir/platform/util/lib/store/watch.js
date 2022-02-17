@@ -1,5 +1,11 @@
 import { isNil } from '@deip/toolbox/lodash';
 
+/**
+ * Wait until some value appears in getter
+ * @param {Object} store
+ * @param {string} getter
+ * @returns {Promise}
+ */
 export const awaitForStore = (store, getter) => new Promise((resolve) => {
   if (!isNil(store.getters[getter])) {
     resolve(store.getters[getter]);
@@ -15,6 +21,12 @@ export const awaitForStore = (store, getter) => new Promise((resolve) => {
   );
 });
 
+/**
+ * Watch current user username and dispatch actions on change
+ * @param {Object} store
+ * @param {string} getAction
+ * @param {string} clearAction
+ */
 export const callForCurrentUser = (store, getAction, clearAction) => {
   store.dispatch(getAction);
 

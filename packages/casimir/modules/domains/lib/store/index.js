@@ -6,7 +6,7 @@ import {
   listGetter,
   oneGetter,
   setListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 import { collectionList } from '@deip/toolbox';
 

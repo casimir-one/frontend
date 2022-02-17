@@ -4,7 +4,7 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 import { DocumentTemplateService } from '@deip/document-template-service';
 
