@@ -16,6 +16,9 @@ import { AssetsHttp } from './AssetsHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+ * Assets data provider
+ */
 export class AssetsService {
   proxydi = proxydi;
 
@@ -23,11 +26,24 @@ export class AssetsService {
 
   assetsHttp = AssetsHttp.getInstance();
 
-  transfer({ privKey, username }, {
-    from,
-    to,
-    asset
-  }, proposalInfo) {
+  /**
+   * Transfer asset
+   * TODO: change params to object payload
+   * @param {Object} initiator
+   * @param {string} initiator.privKey
+   * @param {string} initiator.username
+   * @param {Object} transferInfo
+   * @param {string} transferInfo.from
+   * @param {string} transferInfo.to
+   * @param {Object} transferInfo.asset
+   * @param {Object} proposalInfo
+   * @return {Promise<Object>}
+   */
+  transfer(
+    { privKey, username },
+    { from, to, asset },
+    proposalInfo
+  ) {
     const { isProposal, isProposalApproved, proposalLifetime } = {
       isProposal: false,
       isProposalApproved: true,
@@ -81,15 +97,34 @@ export class AssetsService {
       });
   }
 
-  create({ privKey }, {
-    symbol,
-    issuer,
-    precision,
-    maxSupply,
-    description,
-    projectTokenOption,
-    holders
-  }) {
+  /**
+   * Create new asset
+   * TODO: change params to object payload
+   * @typedef {{amount: number, symbol: string, precision: number}} Asset
+   * @param {Object} initiator
+   * @param {string} initiator.privKey
+   * @param {Object} assetInfo
+   * @param {string} assetInfo.symbol
+   * @param {string} assetInfo.issuer
+   * @param {number} assetInfo.precision
+   * @param {number} assetInfo.maxSupply
+   * @param {string} assetInfo.description
+   * @param {Object} assetInfo.projectTokenOption
+   * @param {Array.<{account: string, asset: Asset}>} assetInfo.holders
+   * @return {Promise<Object>}
+   */
+  create(
+    { privKey },
+    {
+      symbol,
+      issuer,
+      precision,
+      maxSupply,
+      description,
+      projectTokenOption,
+      holders
+    }
+  ) {
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -137,11 +172,25 @@ export class AssetsService {
       });
   }
 
-  issue({ privKey }, {
-    issuer,
-    asset,
-    recipient
-  }) {
+  /**
+   * Issue new tokens for asset
+   * TODO: change params to object payload
+   * @param {Object} initiator
+   * @param {string} initiator.privKey
+   * @param {Object} assetInfo
+   * @param {string} assetInfo.issuer
+   * @param {Object} assetInfo.asset
+   * @param {string} assetInfo.recipient
+   * @return {Promise<Object>}
+   */
+  issue(
+    { privKey },
+    {
+      issuer,
+      asset,
+      recipient
+    }
+  ) {
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -166,48 +215,114 @@ export class AssetsService {
       });
   }
 
+  /**
+   * Deposit history for certain account
+   * @param {string} account
+   * @param {string} status
+   * @return {Promise<Object>}
+   */
   getAccountDepositHistory(account, status) {
     return this.assetsHttp.getAccountDepositHistory(account, status);
   }
 
-  getOne(id) {
-    return this.assetsHttp.getOne(id);
+  /**
+   * Get certain asset information
+   * @param {string} assetId
+   * @return {Promise<Object>}
+   */
+  getOne(assetId) {
+    return this.assetsHttp.getOne(assetId);
   }
 
+  /**
+   * Get asset information by asset symbol
+   * @param {string} symbol
+   * @return {Promise<Object>}
+   */
   getOneBySymbol(symbol) {
     return this.assetsHttp.getOneBySymbol(symbol);
   }
 
+  /**
+   * Get assets by asset type
+   * @param {number} type
+   * @return {Promise<Object>}
+   */
   getListByType(type) {
     return this.assetsHttp.getListByType(type);
   }
 
+  /**
+   * Get assets by tokens issuer
+   * @param {string} issuer
+   * @return {Promise<Object>}
+   */
   getListByIssuer(issuer) {
     return this.assetsHttp.getListByIssuer(issuer);
   }
 
-  lookupAssets(lowerBoundSymbol, limit) {
-    return this.assetsHttp.lookupAssets(lowerBoundSymbol, limit);
+  /**
+   * Get list of assets
+   * @param {number} limit
+   * @param {string} lowerBoundSymbol
+   * @return {Promise<Object>}
+   */
+  lookupAssets(limit, lowerBoundSymbol) {
+    return this.assetsHttp.lookupAssets(limit, lowerBoundSymbol);
   }
 
+  /**
+   * Get asset balances by symbol for certain account
+   * @param {string} owner
+   * @param {string} symbol
+   * @return {Promise<Object>}
+   */
   getAccountAssetBalance(owner, symbol) {
     return this.assetsHttp.getAccountAssetBalance(owner, symbol);
   }
 
+  /**
+   * Get asset balances by owner
+   * @param {string} owner
+   * @return {Promise<Object>}
+   */
   getAccountAssetsBalancesByOwner(owner) {
     return this.assetsHttp.getAccountAssetsBalancesByOwner(owner);
   }
 
+  /**
+   * Get certain assets balances for all accounts
+   * @param {string} symbol
+   * @return {Promise<Object>}
+   */
   getAccountsAssetBalancesByAsset(symbol) {
     return this.assetsHttp.getAccountsAssetBalancesByAsset(symbol);
   }
 
-  createExchangeProposal({ privKey, username }, {
-    party1,
-    party2,
-    asset1,
-    asset2
-  }, proposalInfo) {
+  /**
+   * Create proposal for asset exchange
+   * TODO: change params to object payload
+   * @param {Object} initiator
+   * @param {string} initiator.privKey
+   * @param {string} initiator.username
+   * @param {Object} transferInfo
+   * @param {string} transferInfo.party1
+   * @param {string} transferInfo.party2
+   * @param {Object} transferInfo.asset1
+   * @param {Object} transferInfo.asset2
+   * @param {Object} proposalInfo
+   * @return {Promise}
+   */
+  createExchangeProposal(
+    { privKey, username },
+    {
+      party1,
+      party2,
+      asset1,
+      asset2
+    },
+    proposalInfo
+  ) {
     const { isProposalApproved, proposalLifetime } = {
       isProposalApproved: true,
       proposalLifetime: proposalDefaultLifetime,
@@ -263,6 +378,19 @@ export class AssetsService {
       });
   }
 
+  /**
+   * Deposit asset tokens
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {string} payload.redirectUrl
+   * @param {string} payload.amount
+   * @param {string} payload.currency
+   * @param {string} payload.account
+   * @param {timestamp} payload.timestamp
+   * @return {Promise<Object>}
+   */
   deposit(payload) {
     const {
       initiator: { privKey, username },
