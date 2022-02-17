@@ -1,5 +1,5 @@
 import { assert, setLocalesMessages } from '@deip/toolbox';
-import { callForCurrentUser } from '@deip/platform-store';
+import { callForCurrentUser } from '@deip/platform-util';
 import { teamsStore, currentUserTeamsStore } from './store';
 import { teamScope } from './config';
 

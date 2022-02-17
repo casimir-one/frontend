@@ -3,7 +3,7 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 import { ContractAgreementService } from '@deip/contract-agreement-service';
 import { ProposalsService } from '@deip/proposals-service';

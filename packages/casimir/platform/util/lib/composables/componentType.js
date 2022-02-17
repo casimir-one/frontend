@@ -1,5 +1,9 @@
 import { pascalCase } from '@deip/toolbox';
 
+/**
+ * Generate component name by this.viewType
+ * @returns {string} component name
+ */
 export function componentViewType() {
   const defaultView = `${this.$options.name}${pascalCase(this.defaultViewType || 'default')}`;
   if (this.viewType) {

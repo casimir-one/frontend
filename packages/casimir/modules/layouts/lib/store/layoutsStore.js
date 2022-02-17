@@ -1,9 +1,13 @@
 import { LayoutService } from '@deip/layout-service';
 
 import {
-  crudGetters,
-  crudMutations
-} from '@deip/platform-store';
+  listGetterFactory,
+  oneGetterFactory,
+  setListMutationFactory,
+  setOneMutationFactory,
+  removeFromListMutationFactory,
+  clearMutationFactory
+} from '@deip/platform-util';
 import { collectionOne } from '@deip/toolbox';
 
 const layoutService = LayoutService.getInstance();
@@ -14,7 +18,8 @@ const STATE = {
 };
 
 const GETTERS = {
-  ...crudGetters,
+  list: listGetterFactory(),
+  one: oneGetterFactory(),
 
   settings: (state) => state.settings,
   mappedId: (state) => (key) => collectionOne(state.settings.mappedKeys || [], { key })?.value
@@ -78,7 +83,10 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  ...crudMutations,
+  setList: setListMutationFactory(),
+  setOne: setOneMutationFactory(),
+  removeFromList: removeFromListMutationFactory(),
+  clearList: clearMutationFactory(),
 
   setSettings(state, payload) {
     state.settings = state.settings === null

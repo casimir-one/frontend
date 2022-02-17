@@ -3,7 +3,7 @@ import {
   listGetter,
   oneGetter,
   setListMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 const STATE = {
   data: []

@@ -1,4 +1,4 @@
-import { callForCurrentUser } from '@deip/platform-store';
+import { callForCurrentUser } from '@deip/platform-util';
 import { notificationsStore } from './store';
 
 // eslint-disable-next-line no-unused-vars

@@ -1,10 +1,11 @@
 import { TeamService } from '@deip/team-service';
 
 import {
-  crudGetters,
+  listGetterFactory,
+  oneGetterFactory,
   setListMutation,
   setOneMutation
-} from '@deip/platform-store';
+} from '@deip/platform-util';
 
 const teamService = TeamService.getInstance();
 
@@ -13,7 +14,8 @@ const STATE = {
 };
 
 const GETTERS = {
-  ...crudGetters
+  list: listGetterFactory(),
+  one: oneGetterFactory()
 };
 
 const ACTIONS = {

@@ -5,7 +5,7 @@ import {
   setOneMutationFactory,
   removeFromListMutation,
   removeFromListMutationFactory
-} from '../lib/mutations';
+} from '../lib/store';
 
 describe('setListMutation', () => {
   it('should add object', () => {

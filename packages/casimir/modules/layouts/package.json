@@ -22,7 +22,6 @@
     "@deip/constants": "1.370.0",
     "@deip/layout-service": "1.370.0",
     "@deip/platform-components": "1.370.0",
-    "@deip/platform-store": "1.370.0",
     "@deip/platform-util": "1.370.0",
     "@deip/proxydi": "1.370.0",
     "@deip/toolbox": "1.370.0",

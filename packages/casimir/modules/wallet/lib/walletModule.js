@@ -1,6 +1,6 @@
 import { setLocalesMessages } from '@deip/toolbox';
 
-import { callForCurrentUser } from '@deip/platform-store';
+import { callForCurrentUser } from '@deip/platform-util';
 import { walletStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
