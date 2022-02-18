@@ -9,7 +9,7 @@
   ],
   "license": "ISC",
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./lib/types.d.ts",
   "directories": {
     "src": "src",
     "lib": "lib",
@@ -30,7 +30,6 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "<%= packageVersion %>",
     "@deip/toolbox": "<%= packageVersion %>"
   }
 }

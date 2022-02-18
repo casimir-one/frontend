@@ -2,10 +2,13 @@
 import chokidar from 'chokidar';
 import path from 'path';
 import fs from 'fs-extra';
+import ora from 'ora';
 /* eslint-enable */
 
 import { getPackages } from './composables/getPackages';
 import { buildPackageLib } from './composables/buildPackageLib';
+
+const spinner = ora();
 
 /**
  * @param {string} file
@@ -30,5 +33,7 @@ const watcher = chokidar.watch(packagesSrcFiles, {
 });
 
 watcher.on('all', (event, file) => {
-  buildPackageLib(findPackageRoot(file));
+  buildPackageLib(findPackageRoot(file)).then((result) => {
+    spinner.succeed(`Success: ${result}`);
+  });
 });
