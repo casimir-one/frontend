@@ -48,14 +48,14 @@ const processVue = async (pkgPath) => {
       ...processedStyles
     ].join('\n\n');
 
-    operations.push(fs.outputFile(
+    operations.push(() => fs.outputFile(
       changePathToLib(pkgPath, file),
       processedResult
     ));
   }
 
   try {
-    await Promise.all(operations);
+    await Promise.all(operations.map((fn) => fn()));
   } catch (err) {
     console.error(err);
   }
@@ -111,11 +111,11 @@ const processOtherFiles = async (pkgPath) => {
   const operations = [];
 
   for (const file of files) {
-    operations.push(fs.copy(file, changePathToLib(pkgPath, file)));
+    operations.push(() => fs.copy(file, changePathToLib(pkgPath, file)));
   }
 
   try {
-    await Promise.all(operations);
+    await Promise.all(operations.map((fn) => fn()));
   } catch (err) {
     console.info(err);
   }
