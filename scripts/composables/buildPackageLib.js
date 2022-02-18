@@ -73,14 +73,6 @@ const cleanLib = async (pkgPath) => {
  * @param {string} pkgPath
  * @return {Promise<void>}
  */
-const lintLib = async (pkgPath) => {
-  await asyncExec(`eslint --fix ${pkgPath}/lib`);
-};
-
-/**
- * @param {string} pkgPath
- * @return {Promise<void>}
- */
 const generateTsDefinitions = async (pkgPath) => {
   const tscCommandStack = [
     `-p ${pkgPath}/tsconfig.build.json`,
@@ -144,7 +136,6 @@ export const buildPackageLib = async (pkgPath) => {
     generateTsDefinitions(pkgPath),
     processOtherFiles(pkgPath)
   ]);
-  await lintLib(pkgPath);
 
   return name;
 };
