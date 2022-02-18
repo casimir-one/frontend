@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "extends": [
-    "./packages/common/eslint-config",
-    "./packages/common/eslint-config/vue"
-  ]
-}

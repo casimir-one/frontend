@@ -2,9 +2,14 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "none",
-    "noEmit": true,
-    "baseUrl": "src",
+    "declaration": true,
+    "removeComments": true,
     "downlevelIteration": true,
-    "strict": true
-  }
+    "moduleResolution": "node",
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "**/*.еуые.ts"
+  ]
 }
