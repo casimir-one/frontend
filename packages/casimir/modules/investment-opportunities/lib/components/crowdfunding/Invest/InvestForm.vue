@@ -192,7 +192,7 @@
 
       async invest() {
         const payload = {
-          user: this.$currentUser,
+          initiator: this.$currentUser,
           data: {
             investmentOpportunityId: this.investmentOpportunity._id,
             investor: this.$currentUser._id,

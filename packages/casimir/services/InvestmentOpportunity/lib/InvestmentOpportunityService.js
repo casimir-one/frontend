@@ -13,11 +13,37 @@ import { InvestmentOpportunityHttp } from './InvestmentOpportunityHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+ * @typedef {{isProposal: boolean,
+ *  isProposalApproved: boolean,
+ *  proposalLifetime: number}} ProposalInfo
+ */
+
+/**
+ * @typedef {{privKey: string, username: string}} Initiator
+ */
+
+/**
+ * @typedef {{ id: string, symbol: string, amount: string, precision: number}} Asset
+ */
+
+/**
+ * Investment opportunity data transport
+ */
 export class InvestmentOpportunityService {
   investmentOpportunityHttp = InvestmentOpportunityHttp.getInstance();
 
   proxydi = proxydi;
 
+  /**
+   * Get account revenue history by asset
+   * @param {string} account
+   * @param {string} symbol asset symbol
+   * @param {number} [step=0]
+   * @param {number} [cursor=0]
+   * @param {string} [targetAsset=USD]
+   * @returns {Promise<Object>}
+   */
   async getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
     return this.investmentOpportunityHttp.getAccountRevenueHistoryByAsset(
       account,
@@ -28,14 +54,31 @@ export class InvestmentOpportunityService {
     );
   }
 
+  /**
+   * Get account revenue history
+   * @param {string} account
+   * @param {number} [cursor=0]
+   * @returns {Promise<Object>}
+   */
   async getAccountRevenueHistory(account, cursor = 0) {
     return this.investmentOpportunityHttp.getAccountRevenueHistory(account, cursor);
   }
 
+  /**
+   * Get asset revenue history
+   * @param {string} symbol
+   * @param {number} [cursor=0]
+   * @returns {Promise<Object>}
+   */
   async getAssetRevenueHistory(symbol, cursor = 0) {
     return this.investmentOpportunityHttp.getAssetRevenueHistory(symbol, cursor);
   }
 
+  /**
+   * Get current investment opportunity for project
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async getCurrentInvestmentOpportunityByProject(projectId) {
     const res = await this.investmentOpportunityHttp.getListByProject(projectId);
     return {
@@ -49,17 +92,40 @@ export class InvestmentOpportunityService {
     };
   }
 
-  async create({ privKey, username }, {
-    teamId,
-    projectId,
-    startTime,
-    endTime,
-    shares,
-    softCap,
-    hardCap,
-    title,
-    metadata
-  }, proposalInfo) {
+  /**
+   * Create investment opportunity
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.teamId
+   * @param {string} payload.data.projectId
+   * @param {number} payload.data.startTime
+   * @param {number} payload.data.endTime
+   * @param {Array.<Asset>} payload.data.shares
+   * @param {Object} payload.data.softCap
+   * @param {Object} payload.data.hardCap
+   * @param {Object} payload.data.title
+   * @param {Object} payload.data.metadata
+   * @param {ProposalInfo} payload.proposalInfo
+   * @returns {Promise<Object>}
+   */
+  async create(payload) {
+    const {
+      initiator: { privKey, username },
+      data: {
+        teamId,
+        projectId,
+        startTime,
+        endTime,
+        shares,
+        softCap,
+        hardCap,
+        title,
+        metadata
+      },
+      proposalInfo
+    } = payload;
+
     const { isProposal, isProposalApproved, proposalLifetime } = {
       isProposal: false,
       isProposalApproved: true,
@@ -117,11 +183,26 @@ export class InvestmentOpportunityService {
       });
   }
 
-  async invest({ privKey }, {
-    investmentOpportunityId,
-    investor,
-    asset
-  }) {
+  /**
+   * Invest to investment opportunity
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.investmentOpportunityId
+   * @param {string} payload.data.investor
+   * @param {Asset} payload.data.asset
+   * @returns {Promise<Object>}
+   */
+  async invest(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        investmentOpportunityId,
+        investor,
+        asset
+      }
+    } = payload;
+
     const env = this.proxydi.get('env');
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -146,25 +227,50 @@ export class InvestmentOpportunityService {
       });
   }
 
+  /**
+   * Get investment opportunity
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
   async getOne(id) {
     return this.investmentOpportunityHttp.getOne(id);
   }
 
+  /**
+   * Get investment opportunities by project ids
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async getListByProject(projectId) {
     return this.investmentOpportunityHttp.getListByProject(projectId);
   }
 
+  /**
+   * Get investments by project
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async getInvestmentsByProject(projectId) {
     return this.investmentOpportunityHttp.getInvestmentsByProject(projectId);
   }
 
+  /**
+   * Get investment opportunity history for account
+   * @param {string} account
+   * @returns {Promise<Object>}
+   */
   async getAccountInvestmentOpportunityHistory(account) {
     return this.investmentOpportunityHttp.getAccountInvestmentOpportunityHistory(account);
   }
 
-  async getInvestmentOpportunityHistoryById(investmentOpportunityId) {
+  /**
+   * Get investment opportunity history
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
+  async getInvestmentOpportunityHistoryById(id) {
     return this.investmentOpportunityHttp
-      .getInvestmentOpportunityHistoryById(investmentOpportunityId);
+      .getInvestmentOpportunityHistoryById(id);
   }
 
   /** @type {() => InvestmentOpportunityService} */

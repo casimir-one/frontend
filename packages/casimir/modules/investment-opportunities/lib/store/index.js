@@ -19,36 +19,7 @@ const GETTERS = {
 
 const ACTIONS = {
   create(_, payload) {
-    const {
-      user: { privKey, username },
-      data: {
-        teamId,
-        projectId,
-        startTime,
-        endTime,
-        shares,
-        softCap,
-        hardCap,
-        title,
-        metadata
-      }, proposalInfo
-    } = payload;
-
-    return investmentOpportunityService.create(
-      { privKey, username },
-      {
-        teamId,
-        projectId,
-        startTime,
-        endTime,
-        shares,
-        softCap,
-        hardCap,
-        title,
-        metadata
-      },
-      proposalInfo
-    );
+    return investmentOpportunityService.create(payload);
   },
 
   getListByProjectId({ commit }, projectId) {
@@ -79,23 +50,7 @@ const ACTIONS = {
   },
 
   invest(_, payload) {
-    const {
-      user: { privKey },
-      data: {
-        investmentOpportunityId,
-        investor,
-        asset
-      }
-    } = payload;
-
-    return investmentOpportunityService.invest(
-      { privKey },
-      {
-        investmentOpportunityId,
-        investor,
-        asset
-      }
-    );
+    return investmentOpportunityService.invest(payload);
   },
 
   getInvestmentsHistory({ commit }, userId) {
