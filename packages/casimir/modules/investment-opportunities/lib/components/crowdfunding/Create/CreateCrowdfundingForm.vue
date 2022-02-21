@@ -231,7 +231,7 @@
 
       createCrowdfunding(shares) {
         const payload = {
-          user: this.$currentUser,
+          initiator: this.$currentUser,
           data: {
             title: this.formData.title,
             teamId: this.project.teamId,
