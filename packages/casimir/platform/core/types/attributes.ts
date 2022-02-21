@@ -4,7 +4,7 @@ import {
 } from 'vue/types/options';
 
 import { ATTRIBUTE_TYPES } from '../src';
-import { ServiceBasePayload } from './servisePayload';
+import { ServiceBasePayload } from './servicePayload';
 
 export type AttributeTypes = typeof ATTRIBUTE_TYPES[number];
 

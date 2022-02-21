@@ -1,12 +1,9 @@
-import { ServiceBasePayload } from './servisePayload';
+import { ServiceBasePayload } from './servicePayload';
 
-export type AssetBase = {
+export type Asset = {
+  _id: string,
   symbol: string,
-  precision: number
-  issuer?: string,
-};
-
-export type Asset = AssetBase & {
+  precision: number,
   amount: number
 };
 
@@ -16,21 +13,22 @@ export type AssetProjectTokenOption = {
   licenseRevenue: Record<string, unknown>
 };
 
-export type AssetHolder = {
+export type AssetCreateHolder = {
   account: string,
-  asset: Asset
+  asset: Omit<Asset, '_id'>
 };
 
 // Payload data types
 
-export type AssetCreateData = AssetBase & {
+export type AssetCreateData = Omit<Asset, '_id' | 'amount'> & {
+  issuer?: string,
   maxSupply?: number,
   description?: string,
   projectTokenOption?: AssetProjectTokenOption,
-  holders?: Array<AssetHolder>
+  holders?: Array<AssetCreateHolder>
 };
 
-export type AssetIssueData = AssetBase & {
+export type AssetIssueData = {
   issuer: string,
   recipient: string
   asset: Asset
