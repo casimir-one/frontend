@@ -21,11 +21,56 @@ import { projectContentTypes } from './lists';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+  * @typedef {{isProposal: boolean,
+  *  isProposalApproved: boolean,
+  *  proposalLifetime: number}} ProposalInfo
+  */
+
+/**
+  * @typedef {{privKey: string, username: string}} Initiator
+  */
+
+/**
+ * Project content data transport
+ */
 export class ProjectContentService {
   proxydi = proxydi;
 
   projectContentHttp = ProjectContentHttp.getInstance();
 
+  /**
+   * Parse proposalInfo and set default values
+   * @param {ProposalInfo} proposalInfo
+   * @returns {ProposalInfo} result
+   */
+  static #convertProposalInfo(proposalInfo) {
+    return {
+      isProposal: false,
+      isProposalApproved: true,
+      proposalLifetime: proposalDefaultLifetime,
+      ...proposalInfo
+    };
+  }
+
+  /**
+   * Create project content
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.projectId
+   * @param {string} payload.data.teamId
+   * @param {string} payload.data.title
+   * @param {number} payload.data.contentType
+   * @param {string} payload.data.content
+   * @param {Array.<string>} payload.data.authors
+   * @param {Array.<string>} payload.data.references
+   * @param {number} payload.data.formatType
+   * @param {Array.<File>} payload.data.files
+   * @param {Object} payload.data.jsonData
+   * @param {ProposalInfo} payload.proposalInfo
+   * @returns {Promise<Object>}
+   */
   async createContent(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -33,15 +78,11 @@ export class ProjectContentService {
         privKey,
         username: creator
       },
-      ...data
+      data,
+      proposalInfo
     } = payload;
 
     const {
-      proposalInfo: {
-        isProposal = false,
-        isProposalApproved = true,
-        proposalLifetime = proposalDefaultLifetime
-      } = {},
       projectId,
       teamId,
       contentType,
@@ -50,6 +91,12 @@ export class ProjectContentService {
       authors,
       references
     } = data;
+
+    const {
+      isProposal,
+      isProposalApproved,
+      proposalLifetime
+    } = ProjectContentService.#convertProposalInfo(proposalInfo);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -101,36 +148,81 @@ export class ProjectContentService {
       });
   }
 
+  /**
+   * Get project content by id
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
   async getContent(id) {
     return this.projectContentHttp.getContent(id);
   }
 
+  /**
+   * Get project content draft list by project
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async getDraftsByProject(projectId) {
     return this.projectContentHttp.getDraftsByProject(projectId);
   }
 
+  /**
+   * Get project content draft by id
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
   async getDraft(id) {
     return this.projectContentHttp.getDraft(id);
   }
 
+  /**
+   * Get project content list by portal
+   * @param {string} portalId
+   * @returns {Promise<Object>}
+   */
   async getContentListByPortal(portalId) {
     return this.projectContentHttp.getContentListByPortal(portalId);
   }
 
+  /**
+   * Get project content list by project
+   * @param {String} projectId
+   * @returns {Promise<Object>}
+   */
   async getContentListByProject(projectId) {
     return this.projectContentHttp.getContentListByProject(projectId);
   }
 
+  /**
+   * @deprecated
+   * Get project content onchain entity by id
+   * @param {String} refId
+   * @returns {Promise<Object>}
+   */
   async getContentRef(refId) {
     return this.projectContentHttp.getContentRef(refId);
   }
 
+  /**
+   * Create project content draft
+   * @param {Object} payload
+   * @param {Object} payload.data
+   * @param {string} payload.data.projectId
+   * @param {string} payload.data.title
+   * @param {number} payload.data.contentType
+   * @param {Array.<string>} payload.data.authors
+   * @param {Array.<string>} payload.data.references
+   * @param {number} payload.data.formatType
+   * @param {Array.<File>} payload.data.files
+   * @param {Object} payload.data.jsonData
+   * @returns {Promise<Object>}
+   */
   async createDraft(payload) {
     const draftId = genRipemd160Hash({
       ...payload, __timestamp: new Date().getTime()
     }).slice(0, 24);
     const draftData = {
-      ...payload,
+      ...payload.data,
       draftId
     };
 
@@ -141,32 +233,76 @@ export class ProjectContentService {
     return this.projectContentHttp.createDraft(msg);
   }
 
+  /**
+   * Delete project content draft
+   * @param {string} draftId
+   * @returns {Promise<Object>}
+   */
   async deleteDraft(draftId) {
     const deleteDraftCmd = new DeleteDraftCmd({ draftId });
     const msg = new JsonDataMsg({ appCmds: [deleteDraftCmd] }, { 'entity-id': draftId });
     return this.projectContentHttp.deleteDraft(msg);
   }
 
+  /**
+   * Update project content draft
+   * @param {Object} payload
+   * @param {Object} payload.data
+   * @param {string} payload.data.projectId
+   * @param {string} payload.data.title
+   * @param {number} payload.data.contentType
+   * @param {Array.<string>} payload.data.authors
+   * @param {Array.<string>} payload.data.references
+   * @param {number} payload.data.formatType
+   * @param {Array.<File>} payload.data.files
+   * @param {Object} payload.data.jsonData
+   * @returns {Promise<Object>}
+   */
   async updateDraft(payload) {
-    const formData = createFormData(payload);
+    const { data } = payload;
+    const formData = createFormData(data);
 
-    const updateDraftCmd = new UpdateDraftCmd(payload);
-    const msg = new MultFormDataMsg(formData, { appCmds: [updateDraftCmd] }, { 'project-id': payload.projectId, 'entity-id': payload._id });
+    const updateDraftCmd = new UpdateDraftCmd(data);
+    const msg = new MultFormDataMsg(formData, { appCmds: [updateDraftCmd] }, { 'project-id': data.projectId, 'entity-id': data._id });
     return this.projectContentHttp.updateDraft(msg);
   }
 
-  async unlockDraft(draft) {
-    const updateDraftCmd = new UpdateDraftCmd({ ...draft });
-    const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': draft._id });
+  /**
+   * Unlock project content draft
+   * @param {Object} payload
+   * @param {Object} payload.data
+   * @param {string} payload.data.projectId
+   * @param {string} payload.data.title
+   * @param {number} payload.data.contentType
+   * @param {Array.<string>} payload.data.authors
+   * @param {Array.<string>} payload.data.references
+   * @param {number} payload.data.formatType
+   * @param {Array.<File>} payload.data.files
+   * @param {Object} payload.data.jsonData
+   * @returns {Promise<Object>}
+   */
+  async unlockDraft(payload) {
+    const { data } = payload;
+    const updateDraftCmd = new UpdateDraftCmd({ ...data });
+    const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': data._id });
     return this.projectContentHttp.unlockDraft(msg);
   }
 
+  /**
+   * Get public project content list
+   * @returns {Promise<Object>}
+   */
   async getPublicContentList() {
     return this.projectContentHttp.getPublicContentList();
   }
 
-  async getContentReferencesGraph(contentId) {
-    return this.projectContentHttp.getContentReferencesGraph(contentId);
+  /**
+   * Get project content references graph
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
+  async getContentReferencesGraph(id) {
+    return this.projectContentHttp.getContentReferencesGraph(id);
   }
 
   /** @deprecated */
