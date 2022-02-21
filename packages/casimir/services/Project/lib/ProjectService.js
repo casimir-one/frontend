@@ -21,11 +21,32 @@ import { ProjectHttp } from './ProjectHttp';
 // TODO: move to constants
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+  * @typedef {{isProposal: boolean,
+  *  isProposalApproved: boolean,
+  *  proposalLifetime: number}} ProposalInfo
+ */
+
+/**
+  * @typedef {{privKey: string, username: string}} Initiator
+*/
+
+/**
+ * Projects data transport
+ */
 export class ProjectService {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
   teamService = TeamService.getInstance();
 
+  /**
+   * Extract FormData from data
+   * @param {Object} data
+   * @returns {Object} convertedData
+   * @returns {FormData} convertedData.formData
+   * @returns {Array} convertedData.attributes
+   * @returns {string} convertedData.description
+   */
   static #convertFormData(data) {
     const formData = createFormData(data);
     const attributes = replaceFileWithName(data.attributes);
@@ -38,6 +59,11 @@ export class ProjectService {
     };
   }
 
+  /**
+   * Parse proposalInfo and set default values
+   * @param {ProposalInfo} proposalInfo
+   * @returns {ProposalInfo} result
+   */
   static #convertProposalInfo(proposalInfo) {
     return {
       isProposal: false,
@@ -47,26 +73,55 @@ export class ProjectService {
     };
   }
 
+  /**
+   * Get project by id
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async getOne(projectId) {
     return this.projectHttp.getOne(projectId);
   }
 
+  /**
+   * Get project list by ids
+   * @param {Array.<string>} ids
+   * @returns {Promise<Object>}
+   */
   async getListByIds(ids) {
     return this.projectHttp.getListByIds(ids);
   }
 
+  /**
+   * Get team default project
+   * @param {string} teamId
+   * @returns {Promise<Object>}
+   */
   async getTeamDefaultProject(teamId) {
     return this.projectHttp.getTeamDefaultProject(teamId);
   }
 
+  /**
+   * Create project
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.teamId
+   * @param {Array.<string>} payload.data.members
+   * @param {Array.<string>} payload.data.domains
+   * @param {Array.<Object>} payload.data.attributes
+   * @param {boolean} payload.data.isPrivate
+   * @param {boolean} payload.data.isAdmin
+   * @param {ProposalInfo} payload.proposalInfo
+   * @returns {Promise<Object>}
+   */
   async create(payload) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET } = env;
 
     const {
       initiator: { privKey, username: creator },
-      proposalInfo,
-      ...data
+      data,
+      proposalInfo
     } = payload;
 
     const {
@@ -190,14 +245,27 @@ export class ProjectService {
       });
   }
 
+  /**
+   * Update project
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data._id
+   * @param {string} payload.data.teamId
+   * @param {Array.<string>} payload.data.members
+   * @param {Array.<Object>} payload.data.attributes
+   * @param {boolean} payload.data.isPrivate
+   * @param {ProposalInfo} payload.proposalInfo
+   * @returns {Promise<Object>}
+   */
   async update(payload) {
     const env = this.proxydi.get('env');
     const { TENANT } = env;
 
     const {
       initiator: { privKey, username: updater },
-      proposalInfo,
-      ...data
+      data,
+      proposalInfo
     } = payload;
 
     const {
@@ -305,6 +373,11 @@ export class ProjectService {
       });
   }
 
+  /**
+   * Delete project
+   * @param {string} projectId
+   * @returns {Promise<Object>}
+   */
   async delete(projectId) {
     const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
     const msg = new JsonDataMsg({ appCmds: [deleteProjectCmd] }, { 'entity-id': projectId });
@@ -313,47 +386,76 @@ export class ProjectService {
 
   // Change all methods to cmd
 
-  async getPublicProjectList({
-    searchTerm,
-    domains,
-    organizations,
-    projectAttributes,
-    portalIds
-  }) {
-    const filter = {
-      searchTerm: searchTerm || '',
-      domains: domains || [],
-      organizations: organizations || [],
-      projectAttributes: projectAttributes || [],
-      portalIds: portalIds || []
-    };
+  /**
+   * Get public projects
+   * @param {Object} filter
+   * @param {string} filter.searchTerm
+   * @param {Array.<string>} filter.domains
+   * @param {Array.<string>} filter.organizations
+   * @param {Array} filter.projectAttributes
+   * @param {Array.<string>} filter.projectAttributes
+   * @returns {Promise<Object>}
+   */
+  async getPublicProjectList(filter) {
+    const {
+      searchTerm = '',
+      domains = [],
+      organizations = [],
+      projectAttributes = [],
+      portalIds = []
+    } = filter;
 
-    return this.projectHttp.getPublicProjectList(filter);
+    return this.projectHttp.getPublicProjectList({
+      searchTerm,
+      domains,
+      organizations,
+      projectAttributes,
+      portalIds
+    });
   }
 
+  /**
+   * Get projects where user is member
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async getUserProjectList(username) {
     return this.projectHttp.getUserProjectList(username);
   }
 
+  /**
+   * Get public projects where user is member
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async getUserPublicProjectList(username) {
     return this.projectHttp.getUserProjectList(username)
       .then((projects) => projects.filter((p) => !p.is_private));
   }
 
+  /**
+   * Get private projects where user is member
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async getUserPrivateProjectList(username) {
     return this.projectHttp.getUserProjectList(username)
       .then((projects) => projects.filter((p) => p.is_private));
   }
 
-  async getUserPersonalProjectList(username) {
-    return this.projectHttp.getUserProjectList(username)
-      .then((projects) => projects.filter((p) => p.is_personal));
-  }
-
+  /**
+   * Get projects for team
+   * @param {string} teamId
+   * @returns {Promise<Object>}
+   */
   async getTeamProjectList(teamId) {
     return this.projectHttp.getTeamProjectList(teamId);
   }
 
+  /**
+   * Get projects for portal
+   * @returns {Promise<Object>}
+   */
   async getPortalProjectList() {
     return this.projectHttp.getPortalProjectList();
   }

@@ -107,9 +107,11 @@
       async createProject() {
         const payload = {
           initiator: this.$currentUser,
-          creator: this.$currentUser._id,
-          teamId: this.teamId,
-          ...this.lazyFormData
+          data: {
+            creator: this.$currentUser._id,
+            teamId: this.teamId,
+            ...this.lazyFormData
+          }
         };
 
         try {
@@ -123,7 +125,7 @@
       async updateProject() {
         const payload = {
           initiator: this.$currentUser,
-          ...this.lazyFormData
+          data: this.lazyFormData
         };
 
         try {
