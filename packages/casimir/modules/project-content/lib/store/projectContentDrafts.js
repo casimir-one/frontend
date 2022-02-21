@@ -31,27 +31,7 @@ const ACTIONS = {
   },
 
   async create(_, payload) {
-    const {
-      projectId,
-      title,
-      contentType,
-      authors,
-      references,
-      formatType,
-      files,
-      jsonData
-    } = payload;
-
-    return projectContentService.createDraft({
-      projectId,
-      title,
-      contentType,
-      authors,
-      references,
-      formatType,
-      files,
-      jsonData
-    });
+    return projectContentService.createDraft(payload);
   },
 
   async update(_, payload) {
@@ -77,18 +57,22 @@ const ACTIONS = {
         hash
       }
     } = payload;
+
     await projectContentService.createContent(
       {
         initiator,
-        proposalInfo: { isProposal: false },
-        projectId,
-        teamId,
-        contentType,
-        content: hash,
-        title,
-        hash,
-        authors,
-        references
+        data: {
+          _id,
+          projectId,
+          teamId,
+          contentType,
+          title,
+          authors,
+          references,
+          hash,
+          content: hash
+        },
+        proposalInfo: { isProposal: false }
       }
     );
     commit('remove', _id);
