@@ -18,8 +18,7 @@ const actionsMap = {
     user: {
       all: 'getUserProjects',
       following: 'getProjectsByIds',
-      public: 'getUserPublicProjects',
-      personal: 'getUserPersonalProjects'
+      public: 'getUserPublicProjects'
     },
     team: {
       all: 'getTeamProjects'
@@ -74,13 +73,6 @@ const ACTIONS = {
 
   getUserPublicProjects({ commit }, { username }) {
     return projectService.getUserPublicProjectList(username)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
-  },
-
-  getUserPersonalProjects({ commit }, { username }) {
-    return projectService.getUserPersonalProjectList(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
