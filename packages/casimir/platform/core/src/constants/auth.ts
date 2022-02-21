@@ -4,7 +4,7 @@ export const SYSTEM_ROLE = {
   ANY: '*'
 };
 
-export const SIGN_UP_POLICY = {
-  FREE: 1,
-  ADMIN_APPROVAL: 2
+export const enum SignUpPolicy {
+  FREE = 1,
+  ADMIN_APPROVAL
 };
