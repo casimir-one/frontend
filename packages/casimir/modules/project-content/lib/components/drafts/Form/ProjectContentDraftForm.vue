@@ -207,18 +207,18 @@
         }
       },
 
-      async createDraft(payload) {
+      async createDraft(data) {
         try {
-          await this.$store.dispatch('projectContentDrafts/create', payload);
+          await this.$store.dispatch('projectContentDrafts/create', { data });
           this.emitSuccess();
         } catch (error) {
           console.error(error);
         }
       },
 
-      async updateDraft(payload) {
+      async updateDraft(data) {
         try {
-          await this.$store.dispatch('projectContentDrafts/update', { ...this.draft, ...payload });
+          await this.$store.dispatch('projectContentDrafts/update', { data: { ...this.draft, ...data } });
           this.emitSuccess();
         } catch (error) {
           console.error(error);
@@ -227,26 +227,25 @@
 
       async submit() {
         this.loading = true;
-        const payload = {
+        const data = {
           projectId: this.project._id,
           title: this.formData.title,
           contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,
           references: this.formData.references,
           formatType: this.formData.formatType
-
         };
 
         if (this.formData.formatType === PROJECT_CONTENT_FORMAT.JSON) {
-          payload.jsonData = this.formData.jsonData;
+          data.jsonData = this.formData.jsonData;
         } else if (this.formData.formatType === PROJECT_CONTENT_FORMAT.PACKAGE) {
-          payload.files = this.formData.files;
+          data.files = this.formData.files;
         }
 
         if (this.isEditMode) {
-          await this.updateDraft(payload);
+          await this.updateDraft(data);
         } else {
-          await this.createDraft(payload);
+          await this.createDraft(data);
         }
         this.loading = false;
       },
