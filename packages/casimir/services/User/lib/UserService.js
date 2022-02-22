@@ -18,6 +18,17 @@ export class UserService {
 
   proxydi = proxydi;
 
+  /**
+   * Update user information
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {string} payload.email
+   * @param {number} payload.status
+   * @param {Object[]} payload.attributes
+   * @return {Promise<Object>}
+   */
   async update(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -63,6 +74,15 @@ export class UserService {
       });
   }
 
+  /**
+   * Change user password
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {Object} payload.authority
+   * @return {Promise<Object>}
+   */
   async changePassword(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -97,26 +117,56 @@ export class UserService {
       });
   }
 
+  /**
+   * Get user invites by username
+   * @param {string} username
+   * @return {Promise<Object>}
+   */
   async getUserInvites(username) {
     return this.userHttp.getInvitesByUser(username);
   }
 
-  async getListByIds(usernames) {
-    return this.userHttp.getListByIds(usernames);
+  /**
+   * Get users by ids
+   * @param {string[]} ids
+   * @return {Promise<Object>}
+   */
+  async getListByIds(ids) {
+    return this.userHttp.getListByIds(ids);
   }
 
+  /**
+   * Get users by team id
+   * @param {string} teamId
+   * @return {Promise<Object>}
+   */
   async getListByTeam(teamId) {
     return this.userHttp.getListByTeam(teamId);
   }
 
+  /**
+   * Get users by portal id
+   * @param {string} portalId
+   * @return {Promise<Object>}
+   */
   async getListByPortal(portalId) {
     return this.userHttp.getListByPortal(portalId);
   }
 
+  /**
+   * Get users by several parameters
+   * @param {Object} query
+   * @return {Promise<Object>}
+   */
   async getList(query = {}) {
     return this.userHttp.getList(query);
   }
 
+  /**
+   * Get user by username or email
+   * @param {string} username
+   * @return {Promise<Object>}
+   */
   async getOne(username) {
     if (username.includes('@')) {
       return this.userHttp.getOneByEmail(username);
@@ -124,6 +174,11 @@ export class UserService {
     return this.userHttp.getOne(username);
   }
 
+  /**
+   * Check if user exists by username
+   * @param {string} username
+   * @return {Promise<Object>}
+   */
   async checkIfUserExists(username) {
     return new Promise((resolve) => this.getOne(username)
       .then(() => resolve(true))
