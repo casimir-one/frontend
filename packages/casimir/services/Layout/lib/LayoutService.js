@@ -55,6 +55,7 @@ export class LayoutService {
   /**
    * Update layout
    * @param {Object} payload
+   * @param {string} payload._id
    * @param {string} payload.name
    * @param {string} payload.scope
    * @param {string} payload.type
