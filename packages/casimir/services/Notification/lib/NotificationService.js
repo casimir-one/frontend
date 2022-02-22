@@ -5,13 +5,27 @@ import {
 } from '@deip/commands';
 import { NotificationHttp } from './NotificationHttp';
 
+/**
+ * Notification data transport
+ */
 export class NotificationService {
   notificationHttp = NotificationHttp.getInstance();
 
+  /**
+   * Get notifications by username
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async getListByUser(username) {
     return this.notificationHttp.getListByUser(username);
   }
 
+  /**
+   * Mark user notification as read
+   * @param {string} username
+   * @param {string} notificationId
+   * @returns {Promise<Object>}
+   */
   async markUserNotificationAsRead(username, notificationId) {
     const markNotificationsAsReadCmd = new MarkNotificationsAsReadCmd({
       username,
@@ -22,6 +36,11 @@ export class NotificationService {
     return this.notificationHttp.markUserNotificationsAsRead(msg);
   }
 
+  /**
+   * Mark all user notifications as read
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async markAllUserNotificationAsRead(username) {
     const markNotificationsAsReadCmd = new MarkNotificationsAsReadCmd({
       username,
