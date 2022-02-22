@@ -88,12 +88,38 @@ const ACTIONS = {
     dispatch('getOne', res.data._id);
 
     return res.data;
+  },
+
+  async addTeamMember({ commit, rootGetters }, payload) {
+    const res = await teamService.addTeamMember(payload);
+    const user = rootGetters['users/one'](payload.member);
+    const { teamId } = payload;
+    commit('addMember', { teamId, user });
+
+    return res.data;
+  },
+
+  async removeTeamMember({ commit }, payload) {
+    await teamService.removeTeamMember(payload);
+    const userId = payload.member;
+    const { teamId } = payload;
+    commit('removeMember', { teamId, userId });
   }
 };
 
 const MUTATIONS = {
   setList: setListMutation,
-  setOne: setOneMutation
+  setOne: setOneMutation,
+  addMember(state, { teamId, user }) {
+    const currentTeam = state.data.find((x) => x._id === teamId);
+    if (!currentTeam.members.some((x) => x._id === user._id)) {
+      currentTeam.members.push(user);
+    }
+  },
+  removeMember(state, { teamId, userId }) {
+    const currentTeam = state.data.find((x) => x._id === teamId);
+    currentTeam.members.splice(currentTeam.members.findIndex((x) => x._id === userId), 1);
+  }
 };
 
 export const teamsStore = {

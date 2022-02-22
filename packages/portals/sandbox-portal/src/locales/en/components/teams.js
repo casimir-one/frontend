@@ -14,6 +14,12 @@ export default {
     members: 'Members',
     projects: 'Projects',
     edit: 'Edit',
-    createProject: 'Create project'
+    createProject: 'Create project',
+    inviteMembers: 'Invite members'
+  },
+  cards: {
+    successAdd: 'User added successfully!',
+    successRemove: 'User removed successfully!',
+    error: 'An error occurred, please try again later'
   }
 };
