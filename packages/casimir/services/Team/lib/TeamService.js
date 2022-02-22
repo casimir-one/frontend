@@ -29,6 +29,17 @@ export class TeamService {
   teamHttp = TeamHttp.getInstance();
   userService = UserService.getInstance();
 
+  /**
+   * Create new team
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {Object[]} payload.attributes
+   * @param {string[]} payload.members
+   * @param {boolean} isCreateDefaultProject
+   * @return {Promise<Object>}
+   */
   async create(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
     const { TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT } = env;
@@ -131,6 +142,17 @@ export class TeamService {
       });
   }
 
+  /**
+   * Update team
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {string} payload.entityId
+   * @param {Object} payload.proposalInfo
+   * @param {Object[]} payload.attributes
+   * @return {Promise<Object>}
+   */
   async updateTeam(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -201,6 +223,17 @@ export class TeamService {
       });
   }
 
+  /**
+   * Add member to team
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {string} payload.teamId
+   * @param {string} payload.member - Member id
+   * @param {boolean} payload.isThresholdPreserved
+   * @return {Promise<Object>}
+   */
   async addTeamMember(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -252,6 +285,17 @@ export class TeamService {
       });
   }
 
+  /**
+   * Remove member from team
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {string} payload.initiator.username
+   * @param {string} payload.teamId
+   * @param {string} payload.member - Member id
+   * @param {boolean} payload.isThresholdPreserved
+   * @return {Promise<Object>}
+   */
   async removeTeamMember(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -303,6 +347,11 @@ export class TeamService {
       });
   }
 
+  /**
+   * Get team by team id
+   * @param {string} teamId
+   * @return {Promise<Object>}
+   */
   async getOne(teamId) {
     const [teamResponse, membersResponse] = await Promise.all([
       this.teamHttp.getOne(teamId),
@@ -318,18 +367,40 @@ export class TeamService {
     };
   }
 
+  /**
+   * Get teams by ids
+   * @param {string[]} ids - Team ids
+   * @return {Promise<Object>}
+   */
   async getListByIds(ids) {
     return this.teamHttp.getListByIds(ids);
   }
 
+  /**
+   * Get list of teams
+   * @param {boolean} withPortalTeam
+   * @return {Promise<Object>}
+   */
   async getList(withPortalTeam = false) {
     return this.teamHttp.getList(withPortalTeam);
   }
 
+  /**
+   * Get list of teams  by username
+   * @param {string} user
+   * @param {boolean} withPortalTeam
+   * @return {Promise<Object>}
+   */
   async getListByUser(user, withPortalTeam = false) {
     return this.teamHttp.getListByUser(user, withPortalTeam);
   }
 
+  /**
+   * Get list of teams by portal id
+   * @param {string} portalId
+   * @param {boolean} withPortalTeam
+   * @return {Promise<Object>}
+   */
   async getListByPortal(portalId, withPortalTeam = false) {
     return this.teamHttp.getListByPortal(portalId, withPortalTeam);
   }
