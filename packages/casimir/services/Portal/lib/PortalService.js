@@ -11,35 +11,70 @@ import { ChainService } from '@deip/chain-service';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import { PortalHttp } from './PortalHttp';
 
+/**
+ * Portal data transport
+ */
 export class PortalService {
   portalHttp = PortalHttp.getInstance();
 
   proxydi = proxydi;
 
+  /**
+   * Get portal
+   * @returns {Promise<Object>}
+   */
   async getPortal() {
     return this.portalHttp.getPortal();
   }
 
+  /**
+   * Get network portal by portal id
+   * @param {string} portalId
+   * @returns {Promise<Object>}
+   */
   async getNetworkPortal(portalId) {
     return this.portalHttp.getNetworkPortal(portalId);
   }
 
+  /**
+   * Get network portal list
+   * @returns {Promise<Object>}
+   */
   async getNetworkPortals() {
     return this.portalHttp.getNetworkPortals();
   }
 
+  /**
+   * Update portal profile
+   * @param {Object} data
+   * @param {Object} data.settings
+   * @returns {Promise<Object>}
+   */
   async updatePortalProfile(data) {
     const updatePortalProfileCmd = new UpdatePortalProfileCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updatePortalProfileCmd] });
     return this.portalHttp.updatePortalProfile(msg);
   }
 
+  /**
+   * Update portal network settings
+   * @param {Object} data - Network settings
+   * @returns {Promise<Object>}
+   */
   async updateNetworkSettings(data) {
     const updateNetworkSettingsCmd = new UpdateNetworkSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateNetworkSettingsCmd] });
     return this.portalHttp.updateNetworkSettings(msg);
   }
 
+  /**
+   * Update portal settings
+   * @param {Object} data
+   * @param {string} data.title
+   * @param {string} data.banner
+   * @param {string} data.logo
+   * @returns {Promise<Object>}
+   */
   async updatePortalSettings(data) {
     const {
       title,
@@ -58,6 +93,17 @@ export class PortalService {
     return this.portalHttp.updatePortalSettings(msg);
   }
 
+  /**
+   * Post sign up
+   * @param {Object} obj
+   * @param {string} obj.creator
+   * @param {string} obj.email
+   * @param {Array.<Object>} obj.attributes
+   * @param {string} obj.username
+   * @param {string} obj.pubKey
+   * @param {Array.<Object>} obj.roles
+   * @returns {Promise<Object>}
+   */
   async postSignUp({
     creator,
     email,
@@ -106,10 +152,19 @@ export class PortalService {
       });
   }
 
+  /**
+   * Get sign up requests
+   * @returns {Promise<Object>}
+   */
   async getSignUpRequests() {
     return this.portalHttp.getSignUpRequests();
   }
 
+  /**
+   * Approve sign up request
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async approveSignUpRequest(username) {
     // TODO: replace with a specific command
     return this.getSignUpRequests()
@@ -156,6 +211,11 @@ export class PortalService {
       });
   }
 
+  /**
+   * Reject sign up request
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async rejectSignUpRequest(username) {
     const deleteUserProfileCmd = new DeleteUserProfileCmd({ username });
     const msg = new JsonDataMsg({ appCmds: [deleteUserProfileCmd] });
