@@ -153,7 +153,7 @@ export class TeamService {
    * @param {Object[]} payload.attributes
    * @return {Promise<Object>}
    */
-  async updateTeam(payload) {
+  async update(payload) {
     const env = this.proxydi.get('env');
     const {
       initiator: {
