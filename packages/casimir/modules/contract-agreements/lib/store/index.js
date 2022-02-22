@@ -73,18 +73,7 @@ const ACTIONS = {
   },
 
   discard(_, payload) {
-    const {
-      initiator,
-      data: {
-        proposalId,
-        account
-      }
-    } = payload;
-
-    return proposalsService.decline(initiator, {
-      proposalId,
-      account
-    });
+    return proposalsService.decline(payload);
   },
 
   accept(_, payload) {
@@ -99,15 +88,7 @@ const ACTIONS = {
   },
 
   acceptProposed(_, payload) {
-    const {
-      initiator,
-      data: {
-        proposalId,
-        contractParty
-      }
-    } = payload;
-
-    return proposalsService.accept(initiator, { proposalId, account: contractParty });
+    return proposalsService.accept(payload);
   }
 };
 

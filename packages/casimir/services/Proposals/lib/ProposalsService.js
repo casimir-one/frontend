@@ -6,17 +6,35 @@ import { createInstanceGetter } from '@deip/toolbox';
 import { PROTOCOL_CHAIN } from '@deip/constants';
 import { ProposalsHttp } from './ProposalsHttp';
 
+/**
+ *  Proposals data transport
+ */
 export class ProposalsService {
   proposalsHttp = ProposalsHttp.getInstance();
   proxydi = proxydi;
 
   // TODO: add createProposal endpoint and support proposal of APP_PROPOSAL.CUSTOM type
 
-  async accept({ privKey }, {
-    proposalId,
-    account
-  }) {
+  /**
+   * Accept proposal
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {Object} payload.data
+   * @param {string} payload.data.proposalId
+   * @param {string} payload.data.account
+   * @returns {Promise<Object>}
+   */
+  async accept(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        proposalId,
+        account
+      }
+    } = payload;
     const env = this.proxydi.get('env');
+
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
@@ -38,11 +56,26 @@ export class ProposalsService {
       });
   }
 
-  async decline({ privKey }, {
-    proposalId,
-    account
-  }) {
+  /**
+   * Decline proposal
+   * @param {Object} payload
+   * @param {Object} payload.initiator
+   * @param {string} payload.initiator.privKey
+   * @param {Object} payload.data
+   * @param {string} payload.data.proposalId
+   * @param {string} payload.data.account
+   * @returns {Promise<Object>}
+   */
+  async decline(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        proposalId,
+        account
+      }
+    } = payload;
     const env = this.proxydi.get('env');
+
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
@@ -65,6 +98,11 @@ export class ProposalsService {
       });
   }
 
+  /**
+   * Get proposals by creator
+   * @param {string} account
+   * @returns {Promise<Object>}
+   */
   async getListByCreator(account) {
     const env = this.proxydi.get('env');
 
@@ -89,10 +127,21 @@ export class ProposalsService {
       });
   }
 
+  /**
+   * Get proposals by account and status
+   * @param {string} account
+   * @param {number} [status=0]
+   * @returns {Promise<Object>}
+   */
   async getListByAccount(account, status = 0) {
     return this.proposalsHttp.getListByAccount(account, status);
   }
 
+  /**
+   * Get proposal
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
   async getOne(id) {
     return this.proposalsHttp.getOne(id);
   }
