@@ -1,7 +1,7 @@
 import { ServiceBasePayload } from './servicePayload';
 
 export type Asset = {
-  _id: string,
+  id: string,
   symbol: string,
   precision: number,
   amount: number
@@ -15,12 +15,12 @@ export type AssetProjectTokenOption = {
 
 export type AssetCreateHolder = {
   account: string,
-  asset: Omit<Asset, '_id'>
+  asset: Omit<Asset, 'id'>
 };
 
 // Payload data types
 
-export type AssetCreateData = Omit<Asset, '_id' | 'amount'> & {
+export type AssetCreateData = Omit<Asset, 'id' | 'amount'> & {
   issuer?: string,
   maxSupply?: number,
   description?: string,
