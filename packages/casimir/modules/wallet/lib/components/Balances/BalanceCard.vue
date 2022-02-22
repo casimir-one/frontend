@@ -114,3 +114,10 @@
     }
   };
 </script>
+
+<style lang="scss">
+  .page-content.ve-stack {
+      max-width: 100%;
+
+  }
+</style>
