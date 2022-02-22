@@ -207,7 +207,7 @@
         const payload = {
           initiator: this.$currentUser,
           data: {
-            contractParty: this.currentPartyId,
+            account: this.currentPartyId,
             proposalId: this.contract.proposalId
           }
         };
