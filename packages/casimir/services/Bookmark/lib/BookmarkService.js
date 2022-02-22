@@ -10,10 +10,23 @@ import { BookmarkHttp } from './BookmarkHttp';
 export class BookmarkService {
   bookmarkHttp = BookmarkHttp.getInstance();
 
+  /**
+   * Get bookmarks by username
+   * @param {string} username
+   * @returns {Promise<Object>}
+   */
   async getListByUsername(username) {
     return this.bookmarkHttp.getListByUsername(username);
   }
 
+  /**
+   * Create bookmark
+   * @param {Object} payload
+   * @param {string} payload.username
+   * @param {string} payload.projectId
+   * @param {number} payload.type
+   * @returns {Promise<Object>}
+   */
   async create(payload) {
     const {
       username,
@@ -30,6 +43,12 @@ export class BookmarkService {
     return this.bookmarkHttp.create(msg);
   }
 
+  /**
+   * Delete bookmark
+   * @param {string} username
+   * @param {string} bookmarkId
+   * @returns {Promise<Object>}
+   */
   async delete(username, bookmarkId) {
     const deleteBookmarkCmd = new DeleteBookmarkCmd({
       username,
