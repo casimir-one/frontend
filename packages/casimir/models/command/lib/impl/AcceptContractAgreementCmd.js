@@ -1,14 +1,22 @@
-import ProtocolCmd from '../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolCmd from '../base/ProtocolCmd';
 
+/**
+ * Accept contract agreement command
+ * @extends ProtocolCmd
+ */
 class AcceptContractAgreementCmd extends ProtocolCmd {
-
+  /**
+   * Create command for acceprting contract agreement
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.entityId
+   * @param {party} cmdPayload.party
+   */
   constructor(cmdPayload) {
-
     const {
       entityId,
-      party,
+      party
     } = cmdPayload;
 
     assert(!!entityId, "'entityId' is required");
@@ -16,7 +24,6 @@ class AcceptContractAgreementCmd extends ProtocolCmd {
 
     super(APP_CMD.ACCEPT_CONTRACT_AGREEMENT, cmdPayload);
   }
-
 }
 
 export default AcceptContractAgreementCmd;

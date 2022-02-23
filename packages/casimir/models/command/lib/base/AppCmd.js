@@ -1,9 +1,11 @@
-import BaseCmd from './../base/BaseCmd';
+import BaseCmd from './BaseCmd';
 
+/**
+ * Class for application command
+ * @extends BaseCmd
+ */
 class AppCmd extends BaseCmd {
-  constructor(cmdNum, cmdPayload) {
-    super(cmdNum, cmdPayload);
-  }
+
 }
 
 export default AppCmd;
