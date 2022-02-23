@@ -17,31 +17,47 @@ import { ContractAgreementHttp } from './ContractAgreementHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+  * @typedef {{privKey: string, username: string}} Initiator
+  */
 export class ContractAgreementService {
   contractAgreementHttp = ContractAgreementHttp.getInstance();
 
   proxydi = proxydi;
 
+  /**
+   * Create contract agreement
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.creator
+   * @param {Object} payload.data.terms
+   * @param {string} payload.data.hash
+   * @param {Array.<string>} payload.data.parties
+   * @param {number} payload.data.activationTime
+   * @param {number} payload.data.expirationTime
+   * @param {number} payload.data.type
+   * @param {string} payload.data.pdfContent
+   * @returns {Promise<Object>}
+   */
   async create(payload) {
     const env = this.proxydi.get('env');
 
     const {
       initiator: { privKey, username },
-      ...data
+      data: {
+        creator = username,
+        terms,
+        hash,
+        parties,
+        activationTime,
+        expirationTime = proposalDefaultLifetime,
+        type,
+        pdfContent
+      }
     } = payload;
 
-    const {
-      creator = username,
-      terms,
-      hash,
-      parties,
-      activationTime,
-      expirationTime = proposalDefaultLifetime,
-      type,
-      pdfContent
-    } = data;
-
-    const formData = createFormData(data);
+    const formData = createFormData(payload.data);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -71,6 +87,13 @@ export class ContractAgreementService {
       });
   }
 
+  /**
+   * Accept contract agreement
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {string} payload.contractAgreementId
+   * @returns {Promise<Object>}
+   */
   async accept(payload) {
     const env = this.proxydi.get('env');
 
@@ -104,6 +127,13 @@ export class ContractAgreementService {
       });
   }
 
+  /**
+   * Reject contract agreement
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {string} payload.contractAgreementId
+   * @returns {Promise<Object>}
+   */
   async reject(payload) {
     const env = this.proxydi.get('env');
 
@@ -137,26 +167,39 @@ export class ContractAgreementService {
       });
   }
 
+  /**
+   * Propose contract agreement
+   * @param {Object} payload
+   * @param {Initiator} payload.initiator
+   * @param {Object} payload.data
+   * @param {string} payload.data.creator
+   * @param {Object} payload.data.terms
+   * @param {string} payload.data.hash
+   * @param {Array.<string>} payload.data.parties
+   * @param {number} payload.data.activationTime
+   * @param {number} payload.data.expirationTime
+   * @param {number} payload.data.type
+   * @param {string} payload.data.pdfContent
+   * @returns {Promise<Object>}
+   */
   async propose(payload) {
     const env = this.proxydi.get('env');
 
     const {
       initiator: { privKey, username },
-      ...data
+      data: {
+        creator = username,
+        terms,
+        hash,
+        parties,
+        activationTime,
+        expirationTime = proposalDefaultLifetime,
+        type,
+        pdfContent
+      }
     } = payload;
 
-    const {
-      creator = username,
-      terms,
-      hash,
-      parties,
-      activationTime,
-      expirationTime = proposalDefaultLifetime,
-      type,
-      pdfContent
-    } = data;
-
-    const formData = createFormData(data);
+    const formData = createFormData(payload.data);
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
@@ -208,6 +251,15 @@ export class ContractAgreementService {
       });
   }
 
+  /**
+   * Get contract agreement list
+   * @param {Object} obj
+   * @param {Array.<string>} obj.parties
+   * @param {number} obj.type
+   * @param {number} obj.status
+   * @param {string} obj.creator
+   * @returns {Promise<Object>}
+   */
   async getList({
     parties,
     type,
@@ -223,6 +275,11 @@ export class ContractAgreementService {
     return this.contractAgreementHttp.getList(query);
   }
 
+  /**
+   * Get contract agreement by id
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
   async getOne(id) {
     return this.contractAgreementHttp.getOne(id);
   }
