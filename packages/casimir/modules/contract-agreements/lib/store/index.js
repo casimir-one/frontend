@@ -11,33 +11,6 @@ import { ProposalsService } from '@deip/proposals-service';
 const contractAgreementService = ContractAgreementService.getInstance();
 const proposalsService = ProposalsService.getInstance();
 
-const convertPayloadForCreation = (payload) => {
-  const {
-    initiator: { privKey, username },
-    data: {
-      creator,
-      hash,
-      terms,
-      parties,
-      startTime,
-      endTime,
-      type,
-      pdfContent
-    }
-  } = payload;
-  return {
-    initiator: { privKey, username },
-    hash,
-    creator,
-    terms,
-    parties,
-    startTime,
-    endTime,
-    type,
-    pdfContent
-  };
-};
-
 const STATE = {
   data: []
 };
@@ -63,13 +36,11 @@ const ACTIONS = {
   },
 
   create(_, payload) {
-    const data = convertPayloadForCreation(payload);
-    return contractAgreementService.create(data);
+    return contractAgreementService.create(payload);
   },
 
   propose(_, payload) {
-    const data = convertPayloadForCreation(payload);
-    return contractAgreementService.propose(data);
+    return contractAgreementService.propose(payload);
   },
 
   discard(_, payload) {
