@@ -1,12 +1,20 @@
-import ProtocolCmd from '../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert, isBoolean } from '@deip/toolbox';
+import ProtocolCmd from '../base/ProtocolCmd';
 
-
+/**
+ * Add DAO member command
+ */
 class AddDaoMemberCmd extends ProtocolCmd {
-
+  /**
+   * Create command for adding DAO member
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.member
+   * @param {string} cmdPayload.teamId
+   * @param {boolean} cmdPayload.isThresholdPreserved
+   * @param {*} cmdPayload.notes
+   */
   constructor(cmdPayload) {
-
     const {
       // onchain
       member,
@@ -14,6 +22,7 @@ class AddDaoMemberCmd extends ProtocolCmd {
       isThresholdPreserved,
 
       // offchain
+      // eslint-disable-next-line no-unused-vars
       notes
     } = cmdPayload;
 
@@ -24,6 +33,5 @@ class AddDaoMemberCmd extends ProtocolCmd {
     super(APP_CMD.ADD_DAO_MEMBER, cmdPayload);
   }
 }
-
 
 export default AddDaoMemberCmd;
