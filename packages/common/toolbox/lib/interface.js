@@ -1,3 +1,8 @@
+/**
+  * @param {string} interfaceName
+  * @param {Object} interfaceMembers
+  * @returns {Interface}
+*/
 export const Interface = function Interface(interfaceName, interfaceMembers) {
   if (!(this instanceof Interface)) {
     return new Interface(interfaceName, interfaceMembers);
@@ -11,10 +16,21 @@ export const Interface = function Interface(interfaceName, interfaceMembers) {
   return interfaceObj;
 };
 
+/**
+  * @param {string} interfaceName
+  * @param {string} interfaceMember
+  * @param {number} argsCount
+  * @throws {Error}
+*/
 Interface.interfaceError = function interfaceError(interfaceName, interfaceMember, argsCount) {
   throw Error(`InterfaceError: Class does not implement interface member ${interfaceName}.${interfaceMember}(args: [${argsCount}])`);
 };
 
+/**
+  * @param {Object} obj
+  * @param {...Array.<Object>} list
+  * @returns {boolean}
+*/
 Interface.implement = function implement(obj, ...list) {
   const interfaces = [...list];
 

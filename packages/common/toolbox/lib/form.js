@@ -1,6 +1,11 @@
 import { isJsonString } from './validation';
 import { extractFilesFromModel, replaceFileWithName } from './files';
 
+/**
+  * Parse form data
+  * @param {FormData} formData
+  * @returns {Object}
+*/
 export const parseFormData = (formData) => {
   if (!(formData instanceof FormData)) {
     throw new Error('Expected formData parameter to be an instance of FormData');
@@ -13,6 +18,11 @@ export const parseFormData = (formData) => {
     }), {});
 };
 
+/**
+  * Create form data
+  * @param {Object} model
+  * @returns {FormData}
+*/
 export const createFormData = (model) => {
   const formData = new FormData();
   const files = extractFilesFromModel(model);

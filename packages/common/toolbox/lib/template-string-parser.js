@@ -4,6 +4,12 @@ import { isNil } from 'lodash';
 const mainPattern = /{{\s*([\w\d.:,()'"\s]*?)\s*}}/g;
 const fnSubPattern = /^\(([\w\d.,_\s'"]*)\)(::[\w\d]+)+/g;
 
+/**
+ * Check if has single match
+ * @param {string} str
+ * @param {Array.<Array.<string>>} matches
+ * @returns {boolean}
+ */
 export const isSingleMatch = (str, matches) => {
   if (matches.length === 1) {
     return str
@@ -13,6 +19,11 @@ export const isSingleMatch = (str, matches) => {
   return false;
 };
 
+/**
+ * Check for function
+ * @param {string} str
+ * @returns {boolean}
+ */
 export const isFunctionMatch = (str) => !![...str.matchAll(fnSubPattern)].length;
 
 export class TemplateStringParser {
@@ -22,10 +33,19 @@ export class TemplateStringParser {
     this.isTemplateShown = isTemplateShown;
   }
 
+  /**
+ * Set context
+ * @param {Object} ctx
+ */
   setCtx(ctx) {
     this.ctx = ctx;
   }
 
+  /**
+ * Parse string
+ * @param {*} str
+ * @returns {string}
+ */
   parse(str) {
     if (typeof str !== 'string') {
       throw new Error('The argument must be a string type');
@@ -47,14 +67,31 @@ export class TemplateStringParser {
     return str;
   }
 
+  /**
+ * Get value from context
+ * @param {string} prop
+ * @returns {*}
+ */
   getValueFromContext(prop) {
     return objectPath.get(this.ctx, prop);
   }
 
+  /**
+ * Check for property in context
+ * @param {string} prop
+ * @returns {boolean}
+ */
   isCtxHas(prop) {
     return objectPath.has(this.ctx, prop);
   }
 
+  /**
+ * Parse chain match
+ * @param {Array} chain
+ * @param {string} match
+ * @param {...Array.<string>} params
+ * @returns {string}
+ */
   parseChainMatch(chain, match, ...params) {
     if (!chain.length) {
       throw new Error('Chain not exist');
@@ -79,6 +116,11 @@ export class TemplateStringParser {
     return result;
   }
 
+  /**
+ * Parse match
+ * @param {string} match
+ * @returns {string}
+ */
   parseMatch(match) {
     if (isFunctionMatch(match)) {
       const [params, ...fns] = match.split('::');

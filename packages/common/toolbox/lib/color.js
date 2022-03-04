@@ -4,17 +4,42 @@ import { chunkIt } from '@array-utils/chunk-it';
 
 // BASIC HELPERS
 
+/**
+  * @typedef {string|Object|number|Array.<number>} Color
+*/
+
+/**
+  * Convert from rgb to hex
+  * @param {Color} rgb
+  * @returns {string}
+*/
 export const rgbToHex = (rgb) => chroma(rgb).hex();
 
+/**
+  * Set the color opacity
+  * @param {Color} color
+  * @param {number} alpha
+  * @returns {Object} Chroma object
+*/
 export const setAlpha = (color, alpha = 0.5) => {
   if (!color) return false;
   return chroma(color).alpha(alpha);
 };
 
+/**
+  * Checks if color relative brightness is less than 0.5
+  * @param {Color} color
+  * @returns {boolean}
+*/
 export const isDarkColor = (color = '#000') => chroma(color).luminance() < 0.5;
 
 // GET DOMINANT
 
+/**
+  * Generate image with upload resolution from another source
+  * @param {string} imageURL
+  * @returns {Image}
+*/
 const genTempImage = (imageURL) => {
   const img = new Image();
   img.crossOrigin = 'Anonymous';
@@ -26,6 +51,11 @@ const genTempImage = (imageURL) => {
   return img;
 };
 
+/**
+  * Get dominant color from image by url
+  * @param {string} imageURL
+  * @returns {Promise} Promise object represents the dominant color from an image
+*/
 export const getDominantColor = (imageURL) => {
   if (!imageURL) return false;
 
@@ -45,6 +75,13 @@ export const getDominantColor = (imageURL) => {
 
 // GENERATE PALETTE
 
+/**
+  * Generate colors gradient
+  * @param {number} [colorsCount=24]
+  * @param {Array.<number>} [gradientRange=[0, 24]]
+  * @param {Array.<string>} [palette=['#feff9a', '#7eccbb', '#4cb1d0', '#5569ed', '#6846c0']]
+  * @returns {Array.<string>}
+*/
 export const genColorsGradient = (
   colorsCount = 24,
   gradientRange = [0, 100],
@@ -73,6 +110,13 @@ export const genColorsGradient = (
   return result;
 };
 
+/**
+  * Generate color pair
+  * @param {Color} [bg=#000]
+  * @param {boolean} [darkOnly=false]
+  * @param {boolean} [lightOnly=false]
+  * @returns {string}
+*/
 export const genColorPair = (
   bg = '#000',
   darkOnly = false,
@@ -94,6 +138,14 @@ export const genColorPair = (
   return luminance > 0.5 ? dark : light;
 };
 
+/**
+  * Generate color palette
+  * @param {Object} options
+  * @param {number} options.colorsCount
+  * @param {Array.<number>} options.gradientRange
+  * @param {Array.<string>} options.palette
+  * @returns {Array.<Object>}
+*/
 export const genColorsPalette = (options = {}) => {
   const {
     colorsCount,
