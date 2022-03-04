@@ -1,3 +1,10 @@
+/**
+ * List parser
+ * @param {Object} data
+ * @param {string} data.style
+ * @param {Array} data.items
+ * @returns {string}
+*/
 export const list = ({ style, items }) => {
   const parent = style === 'ordered' ? 'ol' : 'ul';
   const listItems = items
