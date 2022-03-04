@@ -1,5 +1,9 @@
 <template>
   <component :is="tag">
+    <!--
+      @slot
+      @binding {Object} slotProps
+    -->
     <slot v-bind="slotProps" />
   </component>
 </template>
@@ -10,37 +14,62 @@
   export default defineComponent({
     name: 'ProjectsDataProvider',
     props: {
+      /**
+       * Tag name
+       */
       tag: {
         type: String,
         default: 'div'
       },
-
+      /**
+       * Scope name
+       *
+       * @example 'projects'
+       */
       scope: {
         type: String,
         default: 'projects'
       },
+      /**
+       * Type
+       *
+       * @example 'all'
+       */
       type: {
         type: String,
         default: 'all'
       },
-
+      /**
+       * Username
+       */
       username: {
         type: String,
         default: null
       },
+      /**
+       * Team id
+       */
       teamId: {
         type: String,
         default: null
       },
+      /**
+       * Portal id
+       */
       portalId: {
         type: String,
         default: null
       },
+      /**
+       * Project list
+       */
       projects: {
         type: Array,
         default: () => []
       },
-
+      /**
+       * Filter for items
+       */
       filterItems: {
         type: Object,
         default: null
@@ -55,6 +84,9 @@
     },
 
     computed: {
+      /**
+       * Get computed filter for items
+       */
       getterFilter() {
         const filter = {
           ...this.filterItems
@@ -84,10 +116,16 @@
         return filter;
       },
 
+      /**
+       * Get computed project list
+       */
       projectsList() {
         return this.$store.getters['projects/list'](this.getterFilter);
       },
 
+      /**
+       * Get computed binding slot properties
+       */
       slotProps() {
         return {
           projects: this.projectsList,
@@ -103,6 +141,9 @@
     },
 
     methods: {
+      /**
+       * Load project list
+       */
       loadProjects() {
         this.loading = true;
 
@@ -127,6 +168,11 @@
             this.loading = false;
             this.ready = true;
 
+            /**
+             * Triggers when project list is ready
+             *
+             * @type {Array.<Object>}
+             */
             this.$emit('ready', this.projectsList);
           });
       }
