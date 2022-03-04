@@ -6,6 +6,11 @@ import {
   isObject
 } from './validation';
 
+/**
+  * Generate sha256 hash
+  * @param {*} val
+  * @returns {string}
+*/
 export const genSha256Hash = (val) => {
   if (isNil(val)) return undefined;
 
@@ -18,6 +23,11 @@ export const genSha256Hash = (val) => {
   return crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(string).buffer));
 };
 
+/**
+  * Generate ripemd160 hash
+  * @param {*} val
+  * @returns {string}
+*/
 export const genRipemd160Hash = (val) => {
   if (isNil(val)) return undefined;
 
@@ -30,6 +40,11 @@ export const genRipemd160Hash = (val) => {
   return crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(string).buffer));
 };
 
+/**
+  * Generate md5 hash
+  * @param {*} val
+  * @returns {string}
+*/
 export const genMd5Hash = (val) => {
   if (isNil(val)) return undefined;
 

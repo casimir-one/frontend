@@ -2,6 +2,12 @@ import {
   isObject, isString, isNumeric, isArray
 } from './validation';
 
+/**
+  * Add value to enum
+  * @param {Object} enumObj
+  * @param {string} key
+  * @param {string|number} value
+*/
 export function addValueToEnum(enumObj, key, value) {
   if (typeof value === 'undefined') {
     // eslint-disable-next-line no-param-reassign
@@ -20,6 +26,11 @@ export function addValueToEnum(enumObj, key, value) {
   }
 }
 
+/**
+  * Create enum object from items
+  * @param {Array|Object} items
+  * @returns {Object}
+*/
 export function createEnum(items) {
   const enumObj = {};
 
@@ -47,6 +58,12 @@ export function createEnum(items) {
   };
 }
 
+/**
+  * Map list from enum
+  * @param {Object} enumObj
+  * @param {Array} data
+  * @returns {Array.<Object>}
+*/
 export const mapListFromEnum = (enumObj, data) => enumObj.values().map((value) => ({
   value: parseInt(value),
   text: data[value]
