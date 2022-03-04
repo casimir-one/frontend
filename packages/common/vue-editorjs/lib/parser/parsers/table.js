@@ -6,6 +6,13 @@ const classNames = {
   cell: 'de-cell'
 };
 
+/**
+ * Table parser
+ * @param {Object} data
+ * @param {boolean} data.withHeadings
+ * @param {Array.<Array.<string>>} data.content
+ * @returns {string}
+*/
 export const table = ({ withHeadings, content }) => {
   if (!content || content.length === 0) return '';
 
