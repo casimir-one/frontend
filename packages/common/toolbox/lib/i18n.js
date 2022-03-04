@@ -1,5 +1,10 @@
 import { merge } from 'lodash';
 
+/**
+  * Get messages by locales
+  * @param {Object} locales
+  * @returns {Object}
+*/
 const getMessagesByLocales = (locales) => {
   const messages = {};
   locales.keys().forEach((key) => {
@@ -14,6 +19,11 @@ const getMessagesByLocales = (locales) => {
   return messages;
 };
 
+/**
+  * Get locales messages
+  * @param {Object} i18n VueI18n
+  * @param {Object} locales
+*/
 export const setLocalesMessages = (i18n, locales) => {
   const messagesByLocales = getMessagesByLocales(locales);
   for (const [locale, messages] of Object.entries(messagesByLocales)) {

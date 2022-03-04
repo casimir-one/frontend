@@ -8,11 +8,25 @@ const defaultOpts = { // as object for future extensions
   mergeItem: false
 };
 
+/**
+  * Wrap value in array
+  * @param {*} v
+  * @returns {Array}
+*/
 export const wrapInArray = (v) => {
   if (!v) return [];
   return isArray(v) ? v : [v];
 };
 
+/**
+  * Merge collections
+  * @param {Array} c1 - First collection
+  * @param {Array} c2 - Second collection
+  * @param {Object} opts
+  * @param {string} opts.key
+  * @param {boolean} opts.mergeItem
+  * @returns {Array}
+*/
 export const collectionMerge = (
   c1 = [],
   c2 = [],
@@ -36,5 +50,18 @@ export const collectionMerge = (
   return result;
 };
 
+/**
+  * Find item in collection by query
+  * @param {Array.<Object>} collection
+  * @param {Object} query
+  * @returns {Object}
+*/
 export const collectionOne = (collection, query) => collection.find(where(query));
+
+/**
+  * Get item list from collection by query
+  * @param {Array.<Object>} collection
+  * @param {Object} query
+  * @returns {Array.<Object>}
+*/
 export const collectionList = (collection, query) => collection.filter(where(query));

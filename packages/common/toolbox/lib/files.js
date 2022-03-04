@@ -2,6 +2,11 @@ import RecursiveIterator from 'recursive-iterator';
 import { cloneDeep } from 'lodash';
 import { isFile } from './validation';
 
+/**
+  * Convert URL to Base64
+  * @param {string} url
+  * @returns {Promise.<string>}
+*/
 export const toBase64 = (url) => fetch(url)
   .then((response) => response.blob())
   .then((blob) => new Promise((resolve, reject) => {
@@ -15,6 +20,11 @@ export const toBase64 = (url) => fetch(url)
     reader.readAsDataURL(blob);
   }));
 
+/**
+  * Replace file with name
+  * @param {Object|Array} obj
+  * @returns {Object|Array}
+*/
 export const replaceFileWithName = (obj) => {
   const clone = cloneDeep(obj);
 
@@ -27,6 +37,11 @@ export const replaceFileWithName = (obj) => {
   return clone;
 };
 
+/**
+  * Extract files from model
+  * @param {Object|Array} obj
+  * @returns {Array.<Array>}
+*/
 export const extractFilesFromModel = (obj) => { // TODO: fix and make more universal
   const res = [];
 
@@ -44,6 +59,11 @@ export const extractFilesFromModel = (obj) => { // TODO: fix and make more unive
   return res;
 };
 
+/**
+  * Get file name from url
+  * @param {string} url
+  * @returns {string}
+*/
 export const fileNameFromUrl = (url) => {
   const matches = url.match(/\/([^/?#]+)[^/]*$/);
   if (matches && matches.length > 1) {
