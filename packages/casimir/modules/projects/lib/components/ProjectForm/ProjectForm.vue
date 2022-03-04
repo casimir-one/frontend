@@ -61,16 +61,29 @@
     mixins: [attributedFormFactory('project', 'project')],
 
     props: {
+      /**
+       * Id of the team
+       */
       teamId: {
         type: String,
         default: null
       },
+      /**
+       * Cancel label
+       *
+       * @example 'Cancel'
+       */
       cancelLabel: {
         type: String,
         default() {
           return this.$t('module.projects.form.cancel');
         }
       },
+      /**
+       * Submit label
+       *
+       * @example 'Submit'
+       */
       submitLabel: {
         type: String,
         default() {
@@ -80,6 +93,9 @@
     },
 
     computed: {
+      /**
+       * Get computed text for submit label
+       */
       submitLabelText() {
         if (this.submitLabel) {
           return this.submitLabel;
@@ -92,6 +108,11 @@
     },
 
     methods: {
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       async onSubmit() {
         this.loading = true;
 
@@ -104,6 +125,9 @@
         this.loading = false;
       },
 
+      /**
+       * Create project
+       */
       async createProject() {
         const payload = {
           initiator: this.$currentUser,
@@ -122,6 +146,9 @@
         }
       },
 
+      /**
+       * Update project
+       */
       async updateProject() {
         const payload = {
           initiator: this.$currentUser,
@@ -137,15 +164,28 @@
       },
 
       emitSuccess(id) {
+        /**
+         * Success event
+         *
+         * @property {string} id
+         */
         this.$emit('success', id);
       },
 
       emitError(err) {
         console.error(err);
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} err
+       */
         this.$emit('error', err);
       },
 
       handleCancelClick() {
+        /**
+       * Triggers by clicking on cancel button
+       */
         this.$emit('cancel');
       }
     }
