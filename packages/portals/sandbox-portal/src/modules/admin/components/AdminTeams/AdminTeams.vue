@@ -9,7 +9,7 @@
             small
             outlined
             color="primary"
-            :to="{ name: 'admin.teams.create' }"
+            :to="{ name: 'teams.create' }"
           >
             {{ $t('admin.teams.add') }}
           </v-btn>
