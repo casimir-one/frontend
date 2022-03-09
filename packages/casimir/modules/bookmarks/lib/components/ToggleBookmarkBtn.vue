@@ -14,14 +14,29 @@
 </template>
 
 <script>
+  /**
+  * Component for creating bookmarks of user-selected projects
+  * with this component you can add content to favorites by its id
+  * @displayName  ToggleBookmarkBtn
+  */
   export default {
     name: 'ToggleBookmarkBtn',
 
     props: {
+      /**
+      * Type of bookmark content
+      * If you are implementing bookmarks for different content types,
+      * use this property to separate these types by passing a number
+      * corresponding to the type
+      *
+      */
       type: {
         type: Number,
         default: 1
       },
+      /**
+       * ID to remember
+       */
       refId: {
         type: String,
         required: true
@@ -45,12 +60,18 @@
     },
 
     methods: {
+      /**
+       * Update Bookmark
+       */
       updateBookmark() {
         return this.bookmarkId
           ? this.$store.dispatch('bookmarks/remove', this.bookmarkId)
           : this.$store.dispatch('bookmarks/add', this.refId);
       },
 
+      /**
+       * Toggle Bookmark
+       */
       toggleBookmark() {
         this.loading = true;
 
