@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.371.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.370.0...v1.371.0) (2022-03-09)
+
+
+### Bug Fixes
+
+* **@deip/team-service:** fix method name ([74efcdd](https://github.com/DEIPworld/casimir-frontend/commit/74efcdd47336706d0b562c64232a3f1d178e317d))
+
+
+
+
+
 # [1.370.0](https://github.com/DEIPworld/deip-modules/compare/v1.369.2...v1.370.0) (2022-02-14)
 
 **Note:** Version bump only for package @deip/team-service

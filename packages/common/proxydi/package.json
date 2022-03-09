@@ -1,6 +1,6 @@
 {
   "name": "@deip/proxydi",
-  "version": "1.370.0",
+  "version": "1.371.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,6 +22,6 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/toolbox": "1.370.0"
+    "@deip/toolbox": "1.371.0"
   }
 }

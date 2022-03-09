@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.371.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.370.0...v1.371.0) (2022-03-09)
+
+
+### Bug Fixes
+
+* publish script ([4e730e5](https://github.com/DEIPworld/casimir-frontend/commit/4e730e5b355619baba74e3b2c3f9baa231559647))
+* **@casimir/sandbox-portal:** fix team create button on Admin Teams page ([6f76d38](https://github.com/DEIPworld/casimir-frontend/commit/6f76d38937545fb733a434f3b765cb8991c237d0))
+* **@casimir/sandbox-portal:** fix TeamForm ([047d57f](https://github.com/DEIPworld/casimir-frontend/commit/047d57f06247f2b8416349ee45d764436c94e69b))
+* **@deip/team-service:** fix method name ([74efcdd](https://github.com/DEIPworld/casimir-frontend/commit/74efcdd47336706d0b562c64232a3f1d178e317d))
+
+
+### Features
+
+* **@casimir/platform-core:** new package ([39f2978](https://github.com/DEIPworld/casimir-frontend/commit/39f29789178e1457a84765bfd5784407459a5531))
+* **@casimir/sandbox-portal:** add project content ([ee6bca9](https://github.com/DEIPworld/casimir-frontend/commit/ee6bca9be30ef0ee0f141e313477069171d15c5d))
+* **@casimir/sandbox-portal:** adding and removing users from team ([83f27c7](https://github.com/DEIPworld/casimir-frontend/commit/83f27c741d9dee043dbfa1408db43928d96f2223))
+
+
+
+
+
 # [1.370.0](https://github.com/DEIPworld/deip-modules/compare/v1.369.2...v1.370.0) (2022-02-14)
 
 

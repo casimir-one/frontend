@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.371.0](https://github.com/DEIPworld/deip-modules/compare/v1.370.0...v1.371.0) (2022-03-09)
+
+
+### Features
+
+* **@casimir/sandbox-portal:** adding and removing users from team ([83f27c7](https://github.com/DEIPworld/deip-modules/commit/83f27c741d9dee043dbfa1408db43928d96f2223))
+
+
+
+
+
 # [1.370.0](https://github.com/DEIPworld/deip-modules/compare/v1.369.2...v1.370.0) (2022-02-14)
 
 **Note:** Version bump only for package @deip/teams-module
