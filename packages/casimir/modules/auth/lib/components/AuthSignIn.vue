@@ -83,6 +83,11 @@
   import { VexPasswordInput } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
 
+  /**
+   * Component for user authorization and login to the application
+   * @requires VexPasswordInput
+   * @requires VeStack
+   */
   export default {
     name: 'AuthSignIn',
 
@@ -92,22 +97,42 @@
     },
 
     props: {
+      /**
+       * Label for username field
+       * @example "username"
+       */
       usernameLabel: {
         type: String,
         default() { return this.$t('module.auth.username'); }
       },
+      /**
+       * Label for password field
+       * @example "password"
+       */
       passwordLabel: {
         type: String,
         default() { return this.$t('module.auth.password'); }
       },
+      /**
+       * Label for password restore button
+       * @example "forgot password?"
+       */
       passwordRestoreLabel: {
         type: String,
         default() { return this.$t('module.auth.forgotPasswordQuestion'); }
       },
+      /**
+       * Label for password submit button
+       * @example "sign in"
+       */
       submitLabel: {
         type: String,
         default() { return this.$t('module.auth.signIn'); }
       },
+      /**
+       * Object that includes various properties that will be applied
+       * to the fields in addition to the properties of this component.
+       */
       fieldsProps: {
         type: Object,
         default: () => ({ })
@@ -136,24 +161,47 @@
     },
 
     mounted() {
-      // selected delay 500ms is a magic number
+      // selected delay 500ms is a magic number.
       setTimeout(this.activateFieldWhenHasAutofill, 500);
     },
 
     methods: {
+      /**
+       * Сhanges the state to show that the data is being loaded and
+       * changing the fields is not yet possible.
+       * Fires on form submission
+       * @param {boolean} state
+       */
       setLoading(state) {
         this.loading = state;
         this.disabled = state;
       },
 
+      /**
+       * Success event.
+       * Fired on successful form submission
+       * @event success
+       * @type {object}
+       */
       emitSuccess(data) {
         this.$emit('success', data);
       },
 
+      /**
+       * Error event.
+       * Fires on form submission error
+       * @event error
+       * @type {object}
+       */
       emitError(error) {
         this.$emit('error', error);
       },
 
+      /**
+       * Login user
+       * Gets called when the user clicks on the submit button
+       * Triggers emitSuccess/emitError events and loading spinner
+       */
       async signIn() {
         this.setLoading(true);
         try {
