@@ -11,7 +11,7 @@
             ref="cropper"
             class="cropper grey lighten-4"
             :debounce="100"
-            :src="image"
+            :src="image.src"
             :default-size="defaultSize"
             :stencil-size="fullArea"
             :stencil-component="stencilType"
@@ -102,6 +102,32 @@
   } from 'vue-advanced-cropper';
   import 'vue-advanced-cropper/dist/style.css';
 
+  // This function is used to detect the actual image type,
+  function getMimeType(file, fallback = null) {
+    const byteArray = new Uint8Array(file).subarray(0, 4);
+    let header = '';
+    for (let i = 0; i < byteArray.length; i++) {
+      header += byteArray[i].toString(16);
+    }
+
+    switch (header) {
+      case '52494646':
+        return 'image/webp';
+      case '89504e47':
+        return 'image/png';
+      case '47494638':
+        return 'image/gif';
+      case 'ffd8ffe0':
+      case 'ffd8ffe1':
+      case 'ffd8ffe2':
+      case 'ffd8ffe3':
+      case 'ffd8ffe8':
+        return 'image/jpeg';
+      default:
+        return fallback;
+    }
+  }
+
   const imageNameFromUrl = (url) => {
     const { pathname } = parsePath(url);
     return pathname.split('/').pop();
@@ -163,7 +189,10 @@
 
     data() {
       return {
-        image: null,
+        image: {
+          src: null,
+          type: null
+        },
         imageLoading: false,
         ready: false,
 
@@ -189,14 +218,14 @@
       },
 
       isActionsDisabled() {
-        return this.disabled || !this.image || this.imageLoading;
+        return this.disabled || !this.image.src || this.imageLoading;
       }
     },
 
     async created() {
       if (this.initialImage) {
         const ok = await this.checkInitialImage();
-        if (ok) this.image = this.initialImage;
+        if (ok) this.image.src = this.initialImage;
         this.ready = true;
       } else {
         this.ready = true;
@@ -205,8 +234,8 @@
 
     destroyed() {
       // Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
-      if (this.image) {
-        URL.revokeObjectURL(this.image);
+      if (this.image.src) {
+        URL.revokeObjectURL(this.image.src);
       }
     },
 
@@ -252,7 +281,7 @@
         this.resetCropper();
         this.setChosenFileName(null);
         this.internalValue = null;
-        this.image = null;
+        this.image.src = null;
       },
 
       handleChange({ canvas }) {
@@ -263,7 +292,7 @@
             }
 
             this.internalValue = new File([blob], this.chosenFileName);
-          });
+          }, this.image.type);
         }
       },
 
@@ -296,16 +325,29 @@
       handleImageLoad(event) {
         this.imageLoading = true;
         const { files } = event.target;
+
         this.loadImage(files);
       },
 
       loadImage(files) {
         if (files && files[0]) {
-          if (this.image) {
-            URL.revokeObjectURL(this.image);
+          if (this.image.src) {
+            URL.revokeObjectURL(this.image.src);
           }
           const blob = URL.createObjectURL(files[0]);
-          this.image = blob;
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            this.image = {
+              src: blob,
+              // Determine the image type to preserve it
+              // during the extracting the image from canvas:
+              type: getMimeType(e.target.result, files[0].type)
+            };
+          };
+
+          reader.readAsArrayBuffer(files[0]);
+
           this.setChosenFileName(files[0].name);
           this.resetCropper();
         }
