@@ -81,6 +81,11 @@
   import { VexPasswordRepeatInput } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
 
+  /**
+  * Component for user registration and login to the application
+  * @requires VexPasswordRepeatInput
+  * @requires VeStack
+  */
   export default {
     name: 'AuthSignUp',
 
@@ -90,56 +95,85 @@
     },
 
     props: {
+      /**
+       * Label for password field
+       * @example "password"
+       */
       passwordLabel: {
         type: String,
         default() {
           return this.$t('module.auth.password');
         }
       },
-
+      /**
+       * Label for repeat password field
+       * @example "repeat password"
+       */
       repeatPasswordLabel: {
         type: String,
         default() {
           return this.$t('module.auth.repeatPassword');
         }
       },
-
+      /**
+       * Label for user email field
+       * @example "email"
+       */
       emailLabel: {
         type: String,
         default() {
           return this.$t('module.auth.email');
         }
       },
-
+      /**
+       * Label for sign up button
+       * @example "sign up"
+       */
       submitLabel: {
         type: String,
         default() {
           return this.$t('module.auth.signUp');
         }
       },
-
+      /**
+       * Object that includes various properties that will be applied
+       * to the fields in addition to the properties of this component
+       */
       fieldsProps: {
         type: Object,
         default: () => ({
           autocomplete: 'new-password'
         })
       },
-
+      /**
+       * Whether the user should be automatically logged in
+       * after registration
+       * Enabled by default
+       */
       autologin: {
         type: Boolean,
         default: true
       },
-
+      /**
+       * Array of roles depending on the status of this user
+       * in the application
+       */
       roles: {
         type: Array,
         default: () => []
       },
-
+      /**
+       * Minimum password length
+       * Default: 10 characters
+       */
       newPasswordMinLentgh: {
         type: Number,
         default: 10
       },
-
+      /**
+       * Maximum password length
+       * Default: 64 characters
+       */
       newPasswordMaxLentgh: {
         type: Number,
         default: 64
@@ -169,21 +203,41 @@
     },
 
     methods: {
+      /**
+       * Сhanges the state to show that the data is being loaded and
+       * changing the fields is not yet possible.
+       * Fires on form submission and
+       * @param {boolean} state
+       */
       setLoading(state) {
         this.loading = state;
         this.disabled = state;
       },
-
+      /**
+       * Success event.
+       * Fired on successful form submission
+       * @event success
+       * @type {object}
+       */
       emitSuccess(data) {
         this.setLoading(false);
         this.$emit('success', data);
       },
-
+      /**
+       * Error event.
+       * Fires on error form submission
+       * @event error
+       * @type {object}
+       */
       emitError(error) {
         this.setLoading(false);
         this.$emit('error', error);
       },
-
+      /**
+       * User registration
+       * Gets called when the user clicks on the submit button
+       * Triggers emitSuccess/emitError events and loading screen
+       */
       signUp() {
         this.setLoading(true);
 
