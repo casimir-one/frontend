@@ -18,7 +18,7 @@ const rootDir = path.resolve(__dirname, '..');
 const spinner = ora();
 const prompt = inquirer.createPromptModule();
 
-const { command: { version: { allowBranch } } } = fs.readJsonSync(path.join(rootDir, 'lerna.json'));
+const { command: { version: allowBranch } } = fs.readJsonSync(path.join(rootDir, 'lerna.json'));
 
 /**
  * @return {string} Current branch name

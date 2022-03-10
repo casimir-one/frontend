@@ -35,8 +35,8 @@
         default: 1
       },
       /**
-       * ID to remember
-       */
+      * ID to remember
+      */
       refId: {
         type: String,
         required: true
@@ -61,8 +61,8 @@
 
     methods: {
       /**
-       * Update Bookmark
-       */
+      * Update Bookmark
+      */
       updateBookmark() {
         return this.bookmarkId
           ? this.$store.dispatch('bookmarks/remove', this.bookmarkId)
@@ -70,8 +70,8 @@
       },
 
       /**
-       * Toggle Bookmark
-       */
+      * Toggle Bookmark
+      */
       toggleBookmark() {
         this.loading = true;
 
