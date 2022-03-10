@@ -71,6 +71,12 @@
   import { VexPasswordInput, VexPasswordRepeatInput } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
 
+  /**
+  * Component for change user password
+  * @requires VexPasswordRepeatInput
+  * @requires VexPasswordInput
+  * @requires VeStack
+  */
   export default {
     name: 'AuthChangePassword',
     components: {
@@ -79,46 +85,78 @@
       VexPasswordRepeatInput
     },
     props: {
+      /**
+      * Label for old password field
+      * @example "password"
+      */
       oldPasswordLabel: {
         type: String,
         default() {
           return this.$t('module.auth.resetPassword.oldPasswordLabel');
         }
       },
+      /**
+      * Label for new password field
+      * @example "new password"
+      */
       newPasswordLabel: {
         type: String,
         default() {
           return this.$t('module.auth.resetPassword.newPasswordLabel');
         }
       },
+      /**
+      * Label for repeat password field
+      * @example "repeat password"
+      */
       repeatPasswordLabel: {
         type: String,
         default() {
           return this.$t('module.auth.resetPassword.repeatPasswordLabel');
         }
       },
+      /**
+      * Label for password submit button
+      * @example "change password"
+      */
       submitLabel: {
         type: String,
         default() {
           return this.$t('module.auth.resetPassword.submitBtn');
         }
       },
+      /**
+      * Label for cancel button
+      * @example "cancel"
+      */
       cancelBtn: {
         type: String,
         default() {
           return this.$t('module.auth.resetPassword.cancelBtn');
         }
       },
+      /**
+      * Сharacter counter
+      * Enabled by default
+      */
       fieldsProps: {
         type: Object,
         default: () => ({
           counter: true
         })
       },
+      /**
+      * Minimum password length
+      * Default: 10 characters
+      */
       newPasswordMinLentgh: {
         type: Number,
         default: 10
       },
+      /**
+       * Maximum password length
+       * Default: 64 characters
+       */
       newPasswordMaxLentgh: {
         type: Number,
         default: 64
@@ -143,21 +181,51 @@
       }
     },
     methods: {
+      /**
+       * Сhanges the state to show that the data is being loaded and
+       * changing the fields is not yet possible.
+       * Fires on form submission
+       * @param {boolean} state
+       */
       setLoading(state) {
         this.loading = state;
         this.disabled = state;
       },
+      /**
+       * Success event.
+       * Fired on successful form submission
+       * @event success
+       * @type {object}
+       */
       emitSuccess(data) {
         this.$emit('success', data);
       },
+      /**
+       * Error event.
+       * Fires on error form submission
+       * @event error
+       * @type {object}
+       */
       emitError(error) {
         this.$emit('error', error);
       },
+      /**
+       * Cancel event.
+       * Fires on cancel form submission
+       * @event cancel
+       */
       cleanForm() {
         this.$emit('cancel');
         this.$refs.changePasswordForm.reset();
         this.$refs.observer.reset();
       },
+      /**
+       * Update user password
+       * Gets called when the user clicks on the submit button
+       * Triggers emitSuccess/emitError events and loading spinner
+       * Triggers the cleanForm event for a form after an attempt
+       * to update a password
+       */
       updatePassword() {
         this.setLoading(true);
         return this.$store.dispatch('auth/changePassword', {

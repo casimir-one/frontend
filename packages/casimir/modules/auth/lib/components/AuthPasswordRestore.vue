@@ -59,40 +59,65 @@
 <script>
   import { VeStack } from '@deip/vue-elements';
 
+  /**
+  * Component for restore user password
+  * @requires VeStack
+  */
   export default {
     name: 'AuthPasswordRestore',
 
     components: { VeStack },
 
     props: {
+      /**
+       * Label for user email field
+       * @example "email"
+       */
       emailLabel: {
         type: String,
         default() { return this.$t('module.auth.email'); }
       },
+      /**
+       * Label for message field
+       * @example "message"
+       */
       messageLabel: {
         type: String,
         default() { return this.$t('module.auth.message'); }
       },
+      /**
+       * Label for submit restore button
+       * @example "restore"
+       */
       submitLabel: {
         type: String,
         default() { return this.$t('module.auth.restore'); }
       },
-
+      /**
+       * Gap for restore form
+       */
       formGap: {
         type: [String, Number],
         default: 48
       },
-
+      /**
+       * Gap between form fields
+       */
       fieldsGap: {
         type: [String, Number],
         default: 8
       },
-
+      /**
+       * Gap between fields and submit button
+       */
       submitGap: {
         type: [String, Number],
         default: 16
       },
-
+      /**
+       * Object that includes various properties that will be applied
+       * to the fields in addition to the properties of this component
+       */
       fieldsProps: {
         type: Object,
         default: () => ({})
@@ -110,6 +135,10 @@
     },
 
     methods: {
+      /**
+       * Recover your password by receiving it by email
+       * This method is not yet available
+       */
       restore() {
       }
     }
