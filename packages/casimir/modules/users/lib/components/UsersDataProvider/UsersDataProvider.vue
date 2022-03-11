@@ -1,5 +1,9 @@
 <template>
   <component :is="tag">
+    <!--
+      @slot
+      @binding {Object} slotProps
+    -->
     <slot v-bind="slotProps" />
   </component>
 </template>
@@ -11,24 +15,37 @@
   export default defineComponent({
     name: 'UsersDataProvider',
     props: {
+      /**
+       * Tag name
+       */
       tag: {
         type: String,
         default: 'div'
       },
-
+      /**
+       * User list
+       */
       users: {
         type: [Array, String],
         default: () => ([])
       },
+      /**
+       * Team id
+       */
       teamId: {
         type: String,
         default: null
       },
+      /**
+       * Portal id
+       */
       portalId: {
         type: String,
         default: null
       },
-
+      /**
+       * Filter for items
+       */
       filterItems: {
         type: Object,
         default: () => ({})
@@ -44,6 +61,9 @@
     },
 
     computed: {
+      /**
+       * Get computed filter for items
+       */
       getterFilter() {
         const filter = { ...this.filterItems };
 
@@ -59,11 +79,15 @@
 
         return filter;
       },
-
+      /**
+       * Get computed user list
+       */
       usersList() {
         return this.$store.getters['users/list'](this.getterFilter);
       },
-
+      /**
+       * Get computed binding slot properties
+       */
       slotProps() {
         return {
           users: this.usersList,
@@ -80,6 +104,9 @@
     },
 
     methods: {
+      /**
+       * Load user list
+       */
       loadUsers() {
         this.loading = true;
 
@@ -91,7 +118,11 @@
           .then(() => {
             this.loading = false;
             this.ready = true;
-
+            /**
+             * Triggers when user list is ready
+             *
+             * @type {Array.<Object>}
+             */
             this.$emit('ready', this.usersList);
           });
       }

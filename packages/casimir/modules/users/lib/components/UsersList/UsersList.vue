@@ -25,7 +25,11 @@
     },
     props: {
       ...UsersDataProvider.options.props,
-
+      /**
+       * Type of view
+       *
+       * @example 'stack'
+       */
       viewType: {
         type: String,
         default: 'stack'
@@ -33,14 +37,21 @@
     },
 
     computed: {
+      /**
+       * Get computed binding provider properties
+       */
       providerProps() {
         return getBindableProps.call(this, UsersDataProvider.options.props);
       },
-
+      /**
+       * Get computed component name by view type
+       */
       listComponent() {
         return componentViewType.call(this);
       },
-
+      /**
+       * Get computed component events
+       */
       componentEvents() {
         return {
           ...(this.$listeners['click-item'] ? { 'click-item': this.onClickItem } : {})
@@ -50,6 +61,11 @@
 
     methods: {
       onClickItem(e) {
+        /**
+         * Click handler
+         *
+         * @property {Event} e The received event
+         */
         this.$emit('click-item', e);
       }
     }
