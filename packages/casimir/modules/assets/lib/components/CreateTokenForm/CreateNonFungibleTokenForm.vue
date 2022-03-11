@@ -264,6 +264,17 @@
     amount: 0
   });
 
+  /**
+   * Component for creating non fungible token form
+   * @displayName  CreateNonFungibleTokenForm
+   * @requires VexBlock
+   * @requires VexTimeline
+   * @requires VexTimelineItem
+   * @requires VexTimelineAdd
+   * @requires VeStack
+   * @requires UsersSelector
+   * @requires TeamAvatar
+   */
   export default defineComponent({
     name: 'CreateNonFungibleTokenForm',
 
@@ -280,18 +291,30 @@
     mixins: [teamHelpersMixin],
 
     props: {
+      /**
+       * Project info
+       */
       project: {
         type: Object,
         required: true
       },
+      /**
+       * Team info
+       */
       team: {
         type: Object,
         required: true
       },
+      /**
+       * Project alias
+       */
       projectAlias: {
         type: String,
         required: true
       },
+      /**
+       * Redirect url
+       */
       tosUrl: {
         type: String,
         required: true
@@ -321,8 +344,13 @@
     },
 
     computed: {
+      /**
+       *  Get assets keys
+       */
       assetsKeys() { return this.$store.getters['assets/listKeys'](); },
-
+      /**
+       *  Get team tokens
+       */
       teamTokens() {
         const tokensSpend = this.formModel.holders
           .map((s) => parseFloat(s.amount))
@@ -338,14 +366,20 @@
 
     methods: {
       sentenceCase,
-
+      /**
+       *  Add shareholder to holders array
+       */
       addShareholder() {
         this.formModel.holders = [
           ...this.formModel.holders,
           ...[shareholderModel()]
         ];
       },
-
+      /**
+       *  Remove shareholder
+       *
+       * @param {Object} item
+       */
       removeShareholder(item) {
         const idx = this.formModel.holders.indexOf(item);
         if (idx !== -1) {
@@ -353,13 +387,21 @@
           this.formModel.holders = [...new Set(this.formModel.holders)];
         }
       },
-
+      /**
+       *  Get shareholders filter
+       *
+       * @param {string} keepUser
+       */
       shareholdersFilter(keepUser) {
         return {
           '!_id': this.formModel.holders.map((h) => h.account).filter((u) => u !== keepUser)
         };
       },
-
+      /**
+       * Convert amount to percent
+       *
+       * @param {number} amount
+       */
       convertAmountToPercent(amount) {
         return currency(
           (amount / this.formModel.maxSupply) * 100,
@@ -372,25 +414,47 @@
       },
 
       emitSuccess() {
+        /**
+       * Success event.
+       */
         this.$emit('success');
       },
 
       emitError(error) {
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} error
+       */
         this.$emit('error', error);
       },
-
+      /**
+       * Triggers by clicking on add shareholder button
+       *
+       * @event click
+       */
       handleAddShareholderClick() {
         this.addShareholder();
       },
-
+      /**
+       * Triggers by clicking on remove shareholder button
+       *
+       * @param {Object} item
+       * @event click
+       */
       handleRemoveShareholderClick(item) {
         this.removeShareholder(item);
       },
 
       handleCancelClick() {
+        /**
+         * Triggers by clicking on cancel button
+         */
         this.$emit('cancel');
       },
-
+      /**
+       * Create asset
+       */
       async createAsset() {
         this.loading = true;
         const DEFAULT_PRECISION = 0;
