@@ -43,11 +43,22 @@
     },
 
     props: {
+      /**
+       * Shows dialog
+       *
+       * @model
+      */
       value: Boolean,
+      /**
+       * Id of the team
+       */
       teamId: {
         type: String,
         required: true
       },
+      /**
+       * Team member list
+       */
       teamMembers: {
         type: Array,
         default: () => []
@@ -66,18 +77,30 @@
           return this.value;
         },
         set(value) {
+          /** Triggers after a value is modified by the user
+           *
+           * @property {boolean} value
+           */
           this.$emit('input', value);
         }
       }
     },
 
     methods: {
+      /**
+       * Get filter for users who are not team members
+       */
       filterMembers() {
         const ids = this.teamMembers.map((a) => a._id);
         return {
           '!_id': ids
         };
       },
+      /**
+       * Add member to team
+       *
+       * @event click
+       */
       async handleAddMemberClick() {
         if (this.teamId) {
           try {
@@ -95,15 +118,26 @@
           }
         }
       },
-
+      /**
+       * Close dialog
+       *
+       * @event click
+       */
       handleCloseClick() {
         this.show = false;
       },
       emitSuccess() {
+        /**
+       * Success event.
+      */
         this.$emit('success');
       },
-
       emitError(error) {
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} error
+       */
         this.$emit('error', error);
       }
     }

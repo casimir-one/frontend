@@ -50,16 +50,23 @@
     mixins: [userHelpersMixin],
 
     props: {
+      /**
+       * Team member list
+       */
       users: {
         type: Array,
         default: () => []
       },
-
+      /**
+       * Id of the team
+       */
       teamId: {
         type: String,
         required: true
       },
-
+      /**
+       * If current user is team admin
+       */
       canEdit: {
         type: Boolean,
         default: false
@@ -74,6 +81,9 @@
     },
 
     methods: {
+      /**
+       * Remove user from team
+       */
       async removeMember() {
         if (this.teamId) {
           this.loading = true;
@@ -92,6 +102,12 @@
         }
         this.loading = false;
       },
+      /**
+       * Triggers by clicking on remove button
+       *
+       * @param {Object} user member to remove from team
+       * @event click
+       */
       async handleItemClick(user) {
         this.dialog = true;
         this.chosenUser = user;
@@ -107,17 +123,35 @@
           this.removeMember();
         }
       },
+      /**
+       * Check if button is loading
+       *
+       * @param {Object} user
+       */
       checkLoadingButton(user) {
         return this.loading && user._id === this.chosenUser._id;
       },
+      /**
+       * Check if current user is team admin
+       *
+       * @param {Object} user
+       */
       checkForTeamAdmin(user) {
         return this.canEdit && user._id !== this.$currentUser._id;
       },
       emitSuccess() {
+        /**
+         * Success event.
+         */
         this.$emit('success');
       },
 
       emitError(error) {
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} error
+       */
         this.$emit('error', error);
       }
     }

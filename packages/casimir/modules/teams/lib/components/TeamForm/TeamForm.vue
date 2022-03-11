@@ -71,16 +71,30 @@
     mixins: [attributedFormFactory('team', 'team')],
 
     props: {
+      /**
+       * Add default project to team
+       * @values 'true','false'
+      */
       withDefaultProject: {
         type: Boolean,
         default: false
       },
+      /**
+       * Cancel label
+       *
+       * @example 'Cancel'
+      */
       cancelLabel: {
         type: String,
         default() {
           return this.$t('module.teams.form.cancel');
         }
       },
+      /**
+       * Submit label
+       *
+       * @example 'Submit'
+       */
       submitLabel: {
         type: String,
         default() {
@@ -90,6 +104,9 @@
     },
 
     computed: {
+      /**
+       * Get computed text for submit label
+       */
       submitLabelText() {
         if (this.submitLabel) {
           return this.submitLabel;
@@ -102,6 +119,11 @@
     },
 
     methods: {
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       async onSubmit() {
         this.loading = true;
 
@@ -113,7 +135,9 @@
 
         this.loading = false;
       },
-
+      /**
+       * Create team
+       */
       async createTeam() {
         try {
           const team = await this.$store.dispatch(
@@ -130,6 +154,9 @@
         }
       },
 
+      /**
+       * Update team
+       */
       async updateTeam() {
         try {
           const team = await this.$store.dispatch(
@@ -146,14 +173,26 @@
       },
 
       emitSuccess(id) {
+        /**
+       * Success event
+       *
+       * @property {string} id
+       */
         this.$emit('success', id);
       },
 
       emitError(err) {
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} error
+       */
         this.$emit('error', err);
       },
-
       handleCancelClick() {
+        /**
+         * Triggers by clicking on cancel button
+         */
         this.$emit('cancel');
       }
     }
