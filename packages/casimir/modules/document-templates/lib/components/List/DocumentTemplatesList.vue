@@ -12,10 +12,18 @@
     mixins: [AdminListPage, dateMixin],
 
     props: {
+      /**
+       * User or team account
+       */
       account: {
         type: String,
         default: null
       },
+      /**
+       * Page title
+       *
+       * @example 'Documents'
+       */
       pageTitle: {
         type: String,
         default: 'Documents'
@@ -43,17 +51,26 @@
     },
 
     methods: {
+      /**
+       * Format created date
+       *
+       * @param {string} date
+       */
       formatCreatedDate(date) {
         return this.$$formatDate(this.$$parseISO(date));
       },
-
+      /**
+       * Generate table slots
+       */
       genTableSlots() {
         return {
           'item.createdAt': ({ item }) => this.formatCreatedDate(item.createdAt),
           ...AdminListPage.options.methods.genTableSlots.call(this)
         };
       },
-
+      /**
+       * Generate provider
+       */
       genProvider() {
         return (
           <DocumentTemplatesDataProvider

@@ -77,10 +77,16 @@
     mixins: [formFactory('template')],
 
     props: {
+      /**
+       * User or team account
+       */
       account: {
         type: String,
         required: true
       },
+      /**
+       * Placeholders list
+       */
       placeholders: {
         type: Array,
         default: () => []
@@ -102,6 +108,9 @@
     },
 
     computed: {
+      /**
+       * Get computed text for submit label
+       */
       submitLabel() {
         return this.isEditMode
           ? this.$t('module.documentTemplates.form.update')
@@ -110,10 +119,19 @@
     },
 
     methods: {
+      /**
+       * Format placeholder
+       *
+       * @param {string} placeholder
+       */
       formatPlaceholder(placeholder) {
         return `{{${placeholder}}}`;
       },
-
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       onSubmit() {
         if (this.isEditMode) {
           this.updateTemplate();
@@ -121,7 +139,9 @@
           this.createTemplate();
         }
       },
-
+      /**
+       * Create document template
+       */
       createTemplate() {
         this.loading = true;
 
@@ -130,23 +150,45 @@
           ...this.lazyFormData
         })
           .then((res) => {
+            /**
+              * Success event
+              *
+              * @property {Object} res
+            */
             this.$emit('success', res);
           })
           .catch((err) => {
+            /**
+             * Triggers when error occurs
+             *
+             * @property {Error} err
+            */
             this.$emit('error', err);
           })
           .finally(() => {
             this.loading = false;
           });
       },
-
+      /**
+       * Update document template
+       */
       updateTemplate() {
         this.loading = true;
         this.$store.dispatch('documentTemplates/update', this.lazyFormData)
           .then((res) => {
+            /**
+              * Success event
+              *
+              * @property {Object} res
+            */
             this.$emit('success', res);
           })
           .catch((err) => {
+            /**
+             * Triggers when error occurs
+             *
+             * @property {Error} err
+            */
             this.$emit('error', err);
           })
           .finally(() => {
