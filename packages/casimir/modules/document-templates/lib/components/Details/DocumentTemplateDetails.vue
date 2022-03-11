@@ -19,6 +19,9 @@
     components: { VeStack, VueEditorjsParser },
 
     props: {
+      /**
+       * Document template
+       */
       template: {
         type: Object,
         default: () => {}
