@@ -40,6 +40,11 @@
   import { assetsMixin } from '@deip/assets-module';
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
+  /**
+   * Component for creating crowdfunding tokens input
+   * @displayName  CrowdfundingTokensInput
+   * @requires VexBlock
+   */
   export default defineComponent({
     name: 'CrowdfundingTokensInput',
 
@@ -55,14 +60,25 @@
     },
 
     props: {
+      /**
+       * Tokens
+       *
+       * @model
+       */
       tokens: {
         type: String,
         default: null
       },
+      /**
+       * Issued tokens
+       */
       issuedTokens: {
         type: Object,
         default: null
       },
+      /**
+       * Available tokens
+       */
       availableTokens: {
         type: Object,
         default: null
@@ -81,10 +97,18 @@
           return this.tokens;
         },
         set(value) {
+          /**
+           * Triggers when value changes
+           *
+           * @property {string} value
+           */
           this.$emit('input', value);
         }
       },
 
+      /**
+       * Get tokens hint
+       */
       tokensHint() {
         if (!this.internalTokens) return '';
 
@@ -105,6 +129,12 @@
     },
 
     methods: {
+      /**
+       * Convert value to percent
+       *
+       * @param {string} val
+       * @param {Object} from
+       */
       toPercent(val, from) {
         if (!val) return '';
         const pc = (val / from.amount) * 100;

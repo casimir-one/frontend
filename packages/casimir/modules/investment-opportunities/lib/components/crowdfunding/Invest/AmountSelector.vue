@@ -51,6 +51,12 @@
 
   const NUMBER_OF_STEPS = 6;
 
+  /**
+   * Component for creating amount selector
+   * @displayName AmountSelector
+   * @requires VeAutoGrid
+   * @requires VeStack
+   */
   export default {
     name: 'AmountSelector',
     components: {
@@ -64,22 +70,37 @@
     },
 
     props: {
+      /**
+       * Goal amount
+       */
       goalAmount: {
         type: Number,
         default: 1000
       },
+      /**
+       * Remaining amount
+       */
       remainingAmount: {
         type: Number,
         default: 0
       },
+      /**
+       * Asset
+       */
       asset: {
         type: String,
         default: null
       },
+      /**
+       * @model
+       */
       value: {
         type: Number,
         default: null
       },
+      /**
+       * Item should be disabled
+       */
       disabled: {
         type: Boolean,
         default: false
@@ -94,6 +115,9 @@
     },
 
     computed: {
+      /**
+       * Get computed amounts
+       */
       amounts() {
         const step = Math.floor(this.goalAmount / NUMBER_OF_STEPS);
         const result = [];
@@ -119,24 +143,48 @@
 
     watch: {
       internalValue(val) {
+        /**
+           * Triggers when value changes
+           *
+           * @property {number} val
+           */
         this.$emit('change', val);
       }
     },
 
     methods: {
+      /**
+       * Triggers by clicking on item
+       *
+       * @event click
+       * @param {number} amount
+       */
       handleSelect(amount) {
         this.textFieldValue = null;
         this.internalValue = amount;
       },
-
+      /**
+       * Triggers by focus on text field
+       *
+       * @event focus
+       */
       handleTextFieldFocus() {
         this.internalValue = null;
       },
-
+      /**
+       * Text field input trigger
+       *
+       * @event input
+       * @param {string} val
+       */
       handleTextFieldInput(val) {
         this.textFieldValue = val;
       },
-
+      /**
+       * Text field blur trigger
+       *
+       * @event blur
+       */
       handleTextFieldBlur() {
         this.$refs.amountObserver.validate()
           .then((isValid) => {
@@ -145,7 +193,13 @@
             }
           });
       },
-
+      /**
+       * Get amount class
+       *
+       * @param {number} amount
+       * @param {boolean} active
+       * @param {boolean} disabled
+       */
       getAmountClass(amount, active, disabled) {
         return [
           'amount outlined rounded p-2 d-flex justify-center align-center',

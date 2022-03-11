@@ -78,6 +78,16 @@
   import CrowdfundingCapsInput from './CrowdfundingCapsInput';
   import CrowdfundingIsaInput from './CrowdfundingIsaInput';
 
+  /**
+   * Component for creating crowdfunding form
+   * @displayName  CreateCrowdfundingForm
+   * @requires VeStack
+   * @requires CrowdfundingTitleInput
+   * @requires CrowdfundingTokensInput
+   * @requires CrowdfundingDatesInput
+   * @requires CrowdfundingIsaInput
+   * @requires CrowdfundingCapsInput
+   */
   export default defineComponent({
     name: 'CreateCrowdfundingForm',
     components: {
@@ -90,26 +100,44 @@
     },
 
     props: {
+      /**
+      * Project info
+      */
       project: {
         type: Object,
         required: true
       },
+      /**
+       * Should create non fungible token
+       */
       autoCreateNonFungibleToken: {
         type: Boolean,
         default: false
       },
+      /**
+       * Should have ISA input
+       */
       isaCrowdfunding: {
         type: Boolean,
         default: false
       },
+      /**
+       * Shouldn't have limit on the absolute maximum
+      */
       noHardCap: {
         type: Boolean,
         default: false
       },
+      /**
+       * Filter for cap assets
+      */
       capAssetsFilter: {
         type: Object,
         default() { return {}; }
       },
+      /**
+       * Should create proposal
+      */
       isProposal: {
         type: Boolean,
         default: false
@@ -145,7 +173,9 @@
 
     computed: {
       // TODO rethink logic, maybe security token should be passed in props;
-      // select asset for fundraising from team assets that weren't sold
+      /**
+       * Select asset for fundraising from team assets that weren't sold
+      */
       issuedTokens() {
         if (hasValue(this.project.nfts)) {
           return this.project.nfts[0];
@@ -153,7 +183,9 @@
 
         return null;
       },
-
+      /**
+       * Get computed available tokens
+       */
       availableTokens() {
         const teamBalance = this.$store.getters['balances/list']({
           owner: this.project.teamId,
@@ -184,10 +216,18 @@
     },
 
     methods: {
+      /**
+       * Convert date to timestamp
+       *
+       * @param {string} val
+       */
       convertDateToTimestamp(val) {
         return new Date(val).getTime();
       },
 
+      /**
+       * Create non fungible token
+       */
       createNonFungibleToken() {
         const DEFAULT_PRECISION = 0;
         const DEFAULT_AMOUNT = '10000';
@@ -229,6 +269,11 @@
           .then(() => symbol);
       },
 
+      /**
+       * Create crowdfunding
+       *
+       * @param {Array.<Object>} shares
+       */
       createCrowdfunding(shares) {
         const payload = {
           initiator: this.$currentUser,
@@ -258,9 +303,17 @@
 
         this.$store.dispatch('investmentOpportunities/create', payload)
           .then(() => {
+            /**
+             * Success event.
+             */
             this.$emit('success');
           })
           .catch((err) => {
+            /**
+             * Triggers when error occurs
+             *
+             * @property {Error} err
+             */
             this.$emit('error', err);
           })
           .finally(() => {
@@ -268,6 +321,11 @@
           });
       },
 
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       submit() {
         this.loading = true;
 
@@ -294,6 +352,9 @@
         }
       },
 
+      /**
+       * Generate asset symbol
+       */
       generateAssetSymbol() {
         const existingSymbols = this.$store.getters['assets/listKeys']();
 
@@ -314,6 +375,9 @@
       },
 
       handleCancelClick() {
+        /**
+         * Triggers by clicking on cancel button
+         */
         this.$emit('cancel');
       }
     }

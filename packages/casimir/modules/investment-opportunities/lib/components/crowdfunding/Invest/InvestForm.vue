@@ -87,6 +87,13 @@
   import CrowdfundingProgress from '../Progress/CrowdfundingProgress';
   import AmountSelector from './AmountSelector';
 
+  /**
+   * Component for creating invest form
+   * @displayName  InvestForm
+   * @requires VeStack
+   * @requires CrowdfundingProgress
+   * @requires AmountSelector
+   */
   export default {
     name: 'InvestForm',
 
@@ -97,10 +104,16 @@
     },
 
     props: {
+      /**
+       * Investment opportunity info
+       */
       investmentOpportunity: {
         type: Object,
         required: true
       },
+      /**
+       * Redirect url
+       */
       tosUrl: {
         type: String,
         required: true
@@ -119,6 +132,9 @@
     },
 
     computed: {
+      /**
+       * Get computed hard cap info
+       */
       hardCap() {
         return this.investmentOpportunity?.hardCap
           ? {
@@ -127,7 +143,9 @@
           }
           : {};
       },
-
+      /**
+       * Get computed collected amount info
+       */
       collected() {
         return this.investmentOpportunity?.totalInvested ? {
           ...this.investmentOpportunity.totalInvested,
@@ -135,11 +153,15 @@
         }
           : {};
       },
-
+      /**
+       * Get computed remaining amount
+       */
       remainingAmount() {
         return this.hardCap.amount - this.collected.amount;
       },
-
+      /**
+       * If user balance is enough for investment
+       */
       isUserBalanceEnough() {
         const userBalance = this.$store.getters['wallet/one'](this.hardCap.symbol);
         if (!userBalance) return false;
@@ -162,16 +184,31 @@
 
     methods: {
       handleCancelClick() {
+        /**
+         * Triggers by clicking on cancel button
+         */
         this.$emit('cancel');
       },
 
       emitSuccess() {
+        /**
+         * Success event
+         */
         this.$emit('success');
       },
       emitError(error) {
+        /**
+         * Triggers when error occurs
+         *
+         * @property {Error} error
+         */
         this.$emit('error', error);
       },
-
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       async confirmSubmit() {
         if (!this.isUserBalanceEnough) {
           this.$notifier.showError(this.$t('module.crowdfunding.investForm.userBalanceIsNotEnough'));
@@ -189,7 +226,9 @@
           this.loading = false;
         }
       },
-
+      /**
+       * Invest
+       */
       async invest() {
         const payload = {
           initiator: this.$currentUser,

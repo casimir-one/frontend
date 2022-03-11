@@ -56,6 +56,12 @@
 
   import CrowdfundingProgress from '../Progress/CrowdfundingProgress';
 
+  /**
+   * Component for crowdfunding widget
+   * @displayName  CrowdfundingWidget
+   * @requires VeStack
+   * @requires CrowdfundingProgress
+   */
   export default defineComponent({
     name: 'CrowdfundingWidget',
 
@@ -67,26 +73,37 @@
     mixins: [assetsMixin, dateMixin],
 
     props: {
+      /**
+       * Project id
+       */
       projectId: {
         type: String,
         required: true
       },
-
+      /**
+       * Invest link info
+       */
       investLink: {
         type: Object,
         default: null
       },
-
+      /**
+       * Start crowdfunding link info
+       */
       startCrowdfundingLink: {
         type: Object,
         default: null
       },
-
+      /**
+       * Can user start crowdfunding
+       */
       canUserStartCrowdfunding: {
         type: Boolean,
         default: false
       },
-
+      /**
+       * Auto update time in milliseconds
+       */
       autoUpdateTime: {
         type: Number,
         default: 60000 // 1 minute
@@ -102,6 +119,9 @@
     },
 
     computed: {
+      /**
+       * Get computed project investment opportunity
+       */
       investmentOpportunity() {
         const projectInvestmentOpportunities = this.$store.getters['investmentOpportunities/list']({
           projectId: this.projectId
@@ -115,14 +135,18 @@
 
         return sorted[0];
       },
-
+      /**
+       * Checks if user can start crowdfunding
+       */
       isCrowdfundingCanBeStarted() {
         return this.canUserStartCrowdfunding
           && (!this.investmentOpportunity
             || [INVESTMENT_OPPORTUNITY_STATUS.FINISHED, INVESTMENT_OPPORTUNITY_STATUS.EXPIRED]
               .includes(this.investmentOpportunity?.status));
       },
-
+      /**
+       * Get computed user investment info
+       */
       userInvestment() {
         if (!this.investmentOpportunity) {
           return null;
@@ -164,6 +188,9 @@
     },
 
     methods: {
+      /**
+       * Update project investment opportunity data
+       */
       updateComponentData() {
         if (!this.investmentOpportunity) return null;
         const { status } = this.investmentOpportunity;
@@ -183,7 +210,9 @@
 
         return this.getProjectInvestmentOpportunityData();
       },
-
+      /**
+       * Get project investment opportunity data
+       */
       getProjectInvestmentOpportunityData() {
         return this.$store.dispatch('investmentOpportunities/getListByProjectId', this.projectId)
           .then(() => {
@@ -195,7 +224,9 @@
             console.error(error);
           });
       },
-
+      /**
+       * Cancel auto update
+       */
       cancelAutoUpdate() {
         clearInterval(this.timerId);
       }
