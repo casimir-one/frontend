@@ -43,6 +43,12 @@
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock, VexDateTimeInput } from '@deip/vuetify-extended';
 
+  /**
+   * Component for creating crowdfunding dates input
+   * @displayName  CrowdfundingDatesInput
+   * @requires VexBlock
+   * @requires VexDateTimeInput
+   */
   export default defineComponent({
     name: 'CrowdfundingDatesInput',
 
@@ -54,6 +60,11 @@
     },
 
     props: {
+      /**
+       * Dates info
+       *
+       * @model
+       */
       dates: {
         type: Object,
         default: () => ({
@@ -69,6 +80,13 @@
           return this.dates.start;
         },
         set(value) {
+          /**
+           * Triggers when start date changes
+           *
+           * @property {Object} dates
+           * @property {string} dates.start
+           * @property {string} dates.end
+           */
           this.$emit('change', { start: value, end: this.endDate });
         }
       },
@@ -77,6 +95,13 @@
           return this.dates.end;
         },
         set(value) {
+          /**
+           * Triggers when end date changes
+           *
+           * @property {Object} dates
+           * @property {string} dates.start
+           * @property {string} dates.end
+           */
           this.$emit('change', { start: this.startDate, end: value });
         }
       }

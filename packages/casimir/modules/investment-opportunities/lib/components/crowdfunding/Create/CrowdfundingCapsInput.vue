@@ -76,6 +76,12 @@
     }
   });
 
+  /**
+   * Component for creating crowdfunding amount input
+   * @displayName  CrowdfundingAmountInput
+   * @requires VexBlock
+   * @requires AssetInput
+   */
   export default defineComponent({
     name: 'CrowdfundingAmountInput',
 
@@ -87,6 +93,11 @@
     },
 
     props: {
+      /**
+       * Caps info
+       *
+       * @model
+       */
       caps: {
         type: Object,
         default: () => ({
@@ -94,10 +105,16 @@
           hard: undefined
         })
       },
+      /**
+       * Shouldn't have limit on the absolute maximum
+      */
       noHardCap: {
         type: Boolean,
         default: false
       },
+      /**
+       * Filter for cap assets
+       */
       capAssetsFilter: {
         type: Object,
         default() { return {}; }
@@ -133,6 +150,11 @@
 
     methods: {
       emitValueChange(value) {
+        /**
+         * Triggers when value changes
+         *
+         * @property {Object} value
+         */
         this.$emit('change', value);
       }
     }
