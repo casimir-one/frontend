@@ -23,6 +23,9 @@
     ],
 
     computed: {
+      /**
+       * Get computed schema data
+       */
       internalSchemaData() {
         return {
           ...attributeMethodsFactory(

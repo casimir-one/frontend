@@ -61,12 +61,22 @@
     mixins: [attributedFormFactory('user', 'user')],
 
     props: {
+      /**
+       * Cancel label
+       *
+       * @example 'Cancel'
+       */
       cancelLabel: {
         type: String,
         default() {
           return this.$t('module.users.form.cancel');
         }
       },
+      /**
+       * Submit label
+       *
+       * @example 'Submit'
+       */
       submitLabel: {
         type: String,
         default() {
@@ -74,6 +84,11 @@
         }
       },
       // override mixin prop
+      /**
+       * View mode
+       *
+       * @example 'Edit'
+       */
       mode: {
         type: [String, Number],
         default: VIEW_MODE.EDIT,
@@ -84,6 +99,9 @@
     },
 
     computed: {
+      /**
+       * Get computed text for submit label
+       */
       submitLabelText() {
         if (this.submitLabel) {
           return this.submitLabel;
@@ -94,6 +112,11 @@
     },
 
     methods: {
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       async  onSubmit() {
         this.loading = true;
 
@@ -101,7 +124,9 @@
 
         this.loading = false;
       },
-
+      /**
+       * Update user
+       */
       async updateUser() {
         const payload = {
           initiator: this.$currentUser,
@@ -117,14 +142,26 @@
       },
 
       emitSuccess() {
+        /**
+         * Success event
+         */
         this.$emit('success');
       },
 
       emitError(err) {
         console.error(err);
+        /**
+       * Triggers when error occurs
+       *
+       * @property {Error} err
+       */
         this.$emit('error', err);
       },
-
+      /**
+       * Triggers by clicking on cancel button
+       *
+       * @event click
+       */
       handleCancelClick() {
         this.restoreOldValue(true);
       }

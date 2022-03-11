@@ -23,6 +23,9 @@
     props: {
       ...VexAvatar.options.props,
 
+      /**
+       * User info
+       */
       user: {
         type: Object,
         default: null
@@ -30,15 +33,24 @@
     },
 
     computed: {
+      /**
+       * Get computed avatar properties
+       */
       avatarProps() {
         return getBindableProps.call(this, VexAvatar.options.props);
       },
 
+      /**
+       * Get computed username
+       */
       userName() {
         return this.$$userFullName(this.user);
       },
 
-      /** @returns {null | string} */
+      /**
+       * Get computed avatar src
+       * @returns {null | string}
+       */
       avatarSrc() {
         /**
          * @summary If you need trim image on server add options param
