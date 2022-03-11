@@ -55,26 +55,46 @@
     },
 
     props: {
+      /**
+       * Internal value
+       *
+       * @model
+       */
       value: {
         type: Object,
         default() { return {}; }
       },
+      /**
+       * Asset input label
+       */
       label: {
         type: String,
         default: null
       },
+      /**
+       * If amount is required
+       */
       required: {
         type: Boolean,
         default: false
       },
+      /**
+       * If assets are disabled in select component
+       */
       disableAssets: {
         type: Boolean,
         default: false
       },
+      /**
+       * Filter for assets
+       */
       assetsFilter: {
         type: Object,
         default() { return {}; }
       },
+      /**
+       * Error message list
+       */
       errorMessages: {
         type: Array,
         default: () => ([])
@@ -94,10 +114,15 @@
     },
 
     computed: {
+      /**
+       * Get computed asset key list by filter
+       */
       assetsListKeys() {
         return this.$store.getters['assets/listKeys'](this.assetsFilter);
       },
-
+      /**
+       * Get selected asset
+       */
       selectedAsset() {
         if (this.internalValue.symbol) return this.$store.getters['assets/one'](this.internalValue.symbol);
         if (this.assetsListKeys.length) return this.$store.getters['assets/one'](this.assetsListKeys[0]);
@@ -151,16 +176,31 @@
 
     methods: {
       emitValueChange(val) {
+        /**
+          * Triggers when value changes
+          *
+          * @property {Object} val
+          */
         this.$emit('change', val);
       },
-
+      /**
+       * Amount input handler
+       *
+       * @event input
+       * @param {string} value
+       */
       handleAmountInput(value) {
         this.internalValue = {
           ...this.internalValue,
           amount: value
         };
       },
-
+      /**
+       * Symbol change handler
+       *
+       * @event change
+       * @param {string} value
+       */
       handleSymbolChange(value) {
         this.internalValue = {
           ...this.internalValue,
