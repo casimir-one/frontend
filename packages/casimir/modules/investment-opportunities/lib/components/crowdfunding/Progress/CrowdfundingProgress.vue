@@ -62,18 +62,27 @@
   import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { isString } from '@deip/toolbox';
   import { uniqBy } from '@deip/toolbox/lodash';
-
+  /**
+   * Component for crowdfunding progress
+   * @displayName  CrowdfundingProgress
+   */
   export default {
     name: 'CrowdfundingProgress',
 
     mixins: [dateMixin],
 
     props: {
+      /**
+       * Investment opportunity info
+       */
       investmentOpportunity: {
         type: Object,
         required: true,
         default() { return {}; }
       },
+      /**
+       * Should have small size
+       */
       small: {
         type: Boolean,
         default: false
@@ -87,43 +96,79 @@
     },
 
     computed: {
+      /**
+       * Get computed hard cap info
+       */
       hardCap() {
         return this.investmentOpportunity?.hardCap;
       },
+      /**
+       * Get computed collected amount info
+       */
       collected() {
         return this.investmentOpportunity?.totalInvested;
       },
+      /**
+       * Get computed current progress
+       */
       currentPercent() {
         if (!this.hardCap) { return 0; }
         return (this.collected.amount * 100) / this.hardCap.amount;
       },
+      /**
+       * Get computed remaining time
+       */
       remainingTime() {
         return this.formatTimeToNow(this.investmentOpportunity?.endTime);
       },
+      /**
+       * Get computed time distance before investment opportunity start time
+       */
       beforeStartTime() {
         return this.formatTimeToNow(this.investmentOpportunity?.startTime);
       },
+      /**
+       * Get investments count
+       */
       investmentsCount() {
         if (!this.investmentOpportunity?.investments) {
           return 0;
         }
         return uniqBy(this.investmentOpportunity.investments, 'investor').length;
       },
+      /**
+       * Get bar color depending on investment opportunity status
+       */
       barColor() {
         return this.investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.EXPIRED ? 'error' : 'success';
       },
+      /**
+       * Get bar height
+       */
       barHeight() {
         return this.small ? 4 : 8;
       },
+      /**
+       * Get header wrapper class
+       */
       headerWrapperClass() {
         return ['pos-relative', { 'mb-1': this.small, 'mb-2': !this.small }];
       },
+      /**
+       * Get collected class
+       */
       collectedClass() {
         return { 'd-flex flex-column': !this.small };
       },
+      /**
+       * Get collected title class
+       */
       collectedTitleClass() {
         return ['text--secondary', { 'text-overline': !this.small }];
       },
+      /**
+       * Get collected amount class
+       */
       collectedAmountClass() {
         return ['text--primary font-weight-medium',
                 { 'text-h3': !this.small }];
@@ -131,6 +176,11 @@
     },
 
     methods: {
+      /**
+       * Get time distance from param to now
+       *
+       * @param {string} time
+       */
       formatTimeToNow(time) {
         const timeToFormat = isString(time)
           ? this.$$parseISO(time, true)

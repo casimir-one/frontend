@@ -41,6 +41,12 @@
   import { VexBlock } from '@deip/vuetify-extended';
   import { AssetInput } from '@deip/assets-module';
 
+  /**
+   * Component for creating crowdfunding isa input
+   * @displayName  CrowdfundingIsaInput
+   * @requires VexBlock
+   * @requires AssetInput
+   */
   export default defineComponent({
     name: 'CrowdfundingIsaInput',
 
@@ -52,6 +58,11 @@
     },
 
     props: {
+      /**
+       * Isa info
+       *
+       * @model
+       */
       isa: {
         type: Object,
         default: () => ({
@@ -59,6 +70,9 @@
           quantity: null
         })
       },
+      /**
+       * Filter for cap assets
+       */
       capAssetsFilter: {
         type: Object,
         default() { return {}; }
@@ -72,6 +86,13 @@
         },
 
         set(value) {
+          /**
+           * Triggers when asset per item changes
+           *
+           * @property {Object} isa
+           * @property {Object} isa.assetPerItem
+           * @property {string} isa.quantity
+           */
           this.$emit('change', { assetPerItem: value, quantity: this.quantity });
         }
       },
@@ -80,7 +101,13 @@
         get() {
           return this.isa.quantity;
         },
-
+        /**
+         * Triggers when quantity changes
+         *
+         * @property {Object} isa
+         * @property {Object} isa.assetPerItem
+         * @property {string} isa.quantity
+         */
         set(value) {
           this.$emit('change', { quantity: value, assetPerItem: this.assetPerItem });
         }
