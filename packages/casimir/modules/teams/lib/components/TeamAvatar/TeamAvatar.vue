@@ -23,6 +23,9 @@
     props: {
       ...VexAvatar.options.props,
 
+      /**
+       * Team info
+       */
       team: {
         type: Object,
         default() { return {}; }
@@ -30,9 +33,15 @@
     },
 
     computed: {
+      /**
+       * Get computed avatar props
+      */
       avatarProps() {
         return getBindableProps.call(this, VexAvatar.options.props);
       },
+      /**
+       * Get computed avatar options
+      */
       avatarOptions() {
         return {
           width: this.$props.size,

@@ -1,4 +1,7 @@
 export const teamHelpersMixin = {
+  /**
+ * @mixin
+ */
   methods: {
     $$teamName(team) {
       if (!team) return null;
