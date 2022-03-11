@@ -1,5 +1,9 @@
 <template>
   <component :is="tag">
+    <!--
+      @slot
+      @binding {Object} slotProps
+    -->
     <slot v-bind="slotProps" />
   </component>
 </template>
@@ -11,16 +15,23 @@
   export default defineComponent({
     name: 'TeamsDataProvider',
     props: {
+      /**
+       * Tag name
+       */
       tag: {
         type: String,
         default: 'div'
       },
-
+      /**
+       * Team list
+       */
       teams: {
         type: [Array, String],
         default: () => ([])
       },
-
+      /**
+       * Filter for items
+       */
       filterItems: {
         type: Object,
         default: () => ({})
@@ -36,6 +47,9 @@
     },
 
     computed: {
+      /**
+       * Get computed filter for items
+       */
       getterFilter() {
         const filter = { ...this.filterItems };
 
@@ -45,11 +59,15 @@
 
         return filter;
       },
-
+      /**
+       * Get computed team list
+       */
       teamsList() {
         return this.$store.getters['teams/list'](this.getterFilter);
       },
-
+      /**
+       * Get computed binding slot properties
+       */
       slotProps() {
         return {
           teams: this.teamsList,
@@ -66,6 +84,9 @@
     },
 
     methods: {
+      /**
+       * Load team list
+       */
       loadTeams() {
         this.loading = true;
 
@@ -75,7 +96,11 @@
           .then(() => {
             this.loading = false;
             this.ready = true;
-
+            /**
+             * Triggers when team list is ready
+             *
+             * @type {Array.<Object>}
+             */
             this.$emit('ready', this.teamsList);
           });
       }
