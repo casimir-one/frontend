@@ -55,11 +55,16 @@
     mixins: [userHelpersMixin],
 
     props: {
+      /**
+       * User list
+       */
       users: {
         type: Array,
         default: () => ([])
       },
-
+      /**
+       * Length of stack
+       */
       stackLength: {
         type: Number,
         default: 5
@@ -67,14 +72,21 @@
     },
 
     computed: {
+      /**
+       * Get users depending on the stack length
+       */
       displayedUsers() {
         return this.users.slice(0, this.stackLength);
       },
-
+      /**
+       * Get remaining users count depending on the stack length
+       */
       remainingUsersCount() {
         return this.users.length - this.stackLength;
       },
-
+      /**
+       * Check if item is clickable
+       */
       clickable() {
         return !!this.$listeners['click-item'];
       }
@@ -82,6 +94,11 @@
 
     methods: {
       onClickItem(e) {
+        /**
+         * Click handler
+         *
+         * @property {Event} e
+         */
         this.$emit('click-item', e);
       }
     }

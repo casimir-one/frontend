@@ -114,6 +114,11 @@
       ...UsersDataProvider.options.props,
 
       ...{
+        /**
+         * Label for user selector
+         *
+         * @example 'Select members'
+         */
         label: {
           type: String,
           default: 'Select members'
@@ -122,10 +127,16 @@
     },
 
     computed: {
+      /**
+       * Get computed binding provider properties
+       */
       providerProps() {
         return getBindableProps.call(this, UsersDataProvider.options.props);
       },
 
+      /**
+       * Get computed binding field properties
+       */
       fieldProps() {
         return {
           ...getBindableProps.call(this, VAutocomplete.options.props),
