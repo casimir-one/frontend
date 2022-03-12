@@ -1,15 +1,26 @@
-import AppCmd from './../base/AppCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert, isArray } from '@deip/toolbox';
+import AppCmd from '../base/AppCmd';
 
+/**
+ * Update layout command
+ * @extends AppCmd
+ */
 class UpdateLayoutCmd extends AppCmd {
-
+  /**
+   * Command for layout creation
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload._id
+   * @param {string} cmdPayload.name
+   * @param {Array.<Object>} cmdPayload.value
+   * @param {string} cmdPayload.scope
+   */
   constructor(cmdPayload) {
     const {
       _id: layoutId,
       name,
       value
-    } = cmdPayload
+    } = cmdPayload;
 
     assert(!!layoutId, "'layoutId' is required");
     assert(!!name, "'name' is required");
@@ -17,7 +28,6 @@ class UpdateLayoutCmd extends AppCmd {
 
     super(APP_CMD.UPDATE_LAYOUT, cmdPayload);
   }
-
 }
 
 export default UpdateLayoutCmd;

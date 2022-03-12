@@ -1,12 +1,25 @@
-import ProtocolEntityCmd from './../base/ProtocolEntityCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
-
+/**
+ * Create project content command
+ * @extends ProtocolEntityCmd
+ */
 class CreateProjectContentCmd extends ProtocolEntityCmd {
-
+  /**
+   * Create command for project content creation
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.projectId
+   * @param {string} cmdPayload.teamId
+   * @param {string} cmdPayload.title
+   * @param {number} cmdPayload.contentType
+   * @param {string} cmdPayload.content
+   * @param {string} cmdPayload.description
+   * @param {Array.<string>} cmdPayload.authors
+   * @param {Array.<string>} cmdPayload.references
+   */
   constructor(cmdPayload) {
-
     const {
       // onchain
       projectId,
@@ -15,9 +28,11 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
       description,
       content,
       authors,
+      // eslint-disable-next-line no-unused-vars
       references,
 
       // offchain
+      // eslint-disable-next-line no-unused-vars
       title
     } = cmdPayload;
 
@@ -30,8 +45,6 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
 
     super(APP_CMD.CREATE_PROJECT_CONTENT, cmdPayload);
   }
-
 }
-
 
 export default CreateProjectContentCmd;

@@ -1,11 +1,24 @@
-import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
+/**
+ * Create contract agreement command
+ * @extends ProtocolEntityCmd
+ */
 class CreateContractAgreementCmd extends ProtocolEntityCmd {
-
+  /**
+   * Create command for contract agreement creation
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.creator
+   * @param {Array.<string>} cmdPayload.parties
+   * @param {string} cmdPayload.hash
+   * @param {number} cmdPayload.activationTime
+   * @param {number} cmdPayload.expirationTime
+   * @param {number} cmdPayload.type
+   * @param {Object} cmdPayload.terms
+   */
   constructor(cmdPayload) {
-
     const {
       creator,
       parties,
@@ -25,21 +38,20 @@ class CreateContractAgreementCmd extends ProtocolEntityCmd {
     if (expirationTime && activationTime) {
       assert(new Date(expirationTime) > new Date(activationTime), "'expirationTime' must be greater than 'activationTime'");
     } else if (expirationTime) {
-      assert(new Date(expirationTime) > new Date(), "'expirationTime' must be greater than current time"); 
+      assert(new Date(expirationTime) > new Date(), "'expirationTime' must be greater than current time");
     } else if (activationTime) {
       assert(new Date(activationTime) > new Date(), "'activationTime' must be greater than current time");
     }
 
-    if (type == CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE) {
+    if (type === CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE) {
       assert(!!terms.projectId, "'projectId' is required");
       assert(!!terms.price, "'price' is required");
-    } else if (type == CONTRACT_AGREEMENT_TYPE.PROJECT_ACCESS) {
+    } else if (type === CONTRACT_AGREEMENT_TYPE.PROJECT_ACCESS) {
       assert(!!terms.projectId, "'projectId' is required");
     }
 
     super(APP_CMD.CREATE_CONTRACT_AGREEMENT, cmdPayload);
   }
-
 }
 
 export default CreateContractAgreementCmd;

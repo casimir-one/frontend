@@ -1,12 +1,23 @@
-import ProtocolCmd from './../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolCmd from '../base/ProtocolCmd';
 
-
+/**
+ * Update project command
+ */
 class UpdateProjectCmd extends ProtocolCmd {
-
+  /**
+   * Create command for project update
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.entityId
+   * @param {string} cmdPayload.teamId
+   * @param {string} cmdPayload.description
+   * @param {Array.<string>} cmdPayload.domains
+   * @param {Array.<string>} cmdPayload.members
+   * @param {Array.<Object>} cmdPayload.attributes
+   * @param {boolean} cmdPayload.isPrivate
+   */
   constructor(cmdPayload) {
-
     const {
       // onchain
       entityId,
@@ -14,6 +25,7 @@ class UpdateProjectCmd extends ProtocolCmd {
       description,
 
       // offchain
+      // eslint-disable-next-line no-unused-vars
       attributes
     } = cmdPayload;
 
@@ -24,6 +36,5 @@ class UpdateProjectCmd extends ProtocolCmd {
     super(APP_CMD.UPDATE_PROJECT, cmdPayload);
   }
 }
-
 
 export default UpdateProjectCmd;

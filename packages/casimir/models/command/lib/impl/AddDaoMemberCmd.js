@@ -4,6 +4,7 @@ import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
  * Add DAO member command
+ * @extends ProtocolCmd
  */
 class AddDaoMemberCmd extends ProtocolCmd {
   /**

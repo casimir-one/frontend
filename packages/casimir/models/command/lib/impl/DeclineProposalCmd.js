@@ -1,12 +1,19 @@
-import ProtocolCmd from './../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolCmd from '../base/ProtocolCmd';
 
-
+/**
+ * Decline proposal command
+ * @extends ProtocolCmd
+ */
 class DeclineProposalCmd extends ProtocolCmd {
-
+  /**
+   * Create command for proposal rejection
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.entityId
+   * @param {string} cmdPayload.account
+   */
   constructor(cmdPayload) {
-
     const {
       // onchain
       entityId,
@@ -19,6 +26,5 @@ class DeclineProposalCmd extends ProtocolCmd {
     super(APP_CMD.DECLINE_PROPOSAL, cmdPayload);
   }
 }
-
 
 export default DeclineProposalCmd;

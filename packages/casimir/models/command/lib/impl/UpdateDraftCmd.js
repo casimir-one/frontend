@@ -1,11 +1,26 @@
-import AppCmd from '../base/AppCmd';
 import { APP_CMD, PROJECT_CONTENT_FORMAT } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import AppCmd from '../base/AppCmd';
 
+/**
+ * Update project content draft command
+ * @extends AppCmd
+ */
 class UpdateDraftCmd extends AppCmd {
-
+  /**
+   * Create command for project content draft update
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload._id
+   * @param {Object} cmdPayload.formatType
+   * @param {Object} cmdPayload.jsonData
+   * @param {string} cmdPayload.title
+   * @param {number} cmdPayload.contentType
+   * @param {Array.<string>} cmdPayload.authors
+   * @param {Array.<string>} cmdPayload.references
+   * @param {number} cmdPayload.formatType
+   * @param {Object} cmdPayload.jsonData
+   */
   constructor(cmdPayload) {
-
     const {
       _id: draftId,
       formatType,
@@ -19,7 +34,6 @@ class UpdateDraftCmd extends AppCmd {
 
     super(APP_CMD.UPDATE_DRAFT, cmdPayload);
   }
-
 }
 
 export default UpdateDraftCmd;
