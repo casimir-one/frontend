@@ -1,12 +1,21 @@
-import ProtocolCmd from '../base/ProtocolCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert, isBoolean } from '@deip/toolbox';
+import ProtocolCmd from '../base/ProtocolCmd';
 
-
+/**
+ * Remove DAO member command
+ * @extends ProtocolCmd
+ */
 class RemoveDaoMemberCmd extends ProtocolCmd {
-
+  /**
+   * Create command for DAO member removal
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.member
+   * @param {string} cmdPayload.teamId
+   * @param {boolean} cmdPayload.isThresholdPreserved
+   * @param {string} cmdPayload.notes
+   */
   constructor(cmdPayload) {
-
     const {
       // onchain
       member,
@@ -14,6 +23,7 @@ class RemoveDaoMemberCmd extends ProtocolCmd {
       isThresholdPreserved,
 
       // offchain
+      // eslint-disable-next-line no-unused-vars
       notes
     } = cmdPayload;
 
@@ -24,6 +34,5 @@ class RemoveDaoMemberCmd extends ProtocolCmd {
     super(APP_CMD.REMOVE_DAO_MEMBER, cmdPayload);
   }
 }
-
 
 export default RemoveDaoMemberCmd;

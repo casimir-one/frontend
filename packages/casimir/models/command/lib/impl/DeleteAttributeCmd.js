@@ -1,11 +1,18 @@
-import AppCmd from './../base/AppCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import AppCmd from '../base/AppCmd';
 
+/**
+ * Delete attribute command
+ * @extends AppCmd
+ */
 class DeleteAttributeCmd extends AppCmd {
-
+  /**
+   * Create command for attribute deletion
+   * @param {Object} cmdPayload
+   * @param {Object} cmdPayload.attributeId
+   */
   constructor(cmdPayload) {
-
     const {
       attributeId
     } = cmdPayload;
@@ -14,7 +21,6 @@ class DeleteAttributeCmd extends AppCmd {
 
     super(APP_CMD.DELETE_ATTRIBUTE, cmdPayload);
   }
-
 }
 
 export default DeleteAttributeCmd;

@@ -1,16 +1,29 @@
-import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 import { APP_CMD } from '@deip/constants';
 import { assert } from '@deip/toolbox';
+import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
+/**
+ * Create project NDA command
+ * @extends ProtocolEntityCmd
+ */
 class CreateProjectNdaCmd extends ProtocolEntityCmd {
-
+  /**
+   * Create command for project NDA creation
+   * @param {Object} cmdPayload
+   * @param {string} cmdPayload.creator
+   * @param {Array.<string>} cmdPayload.parties
+   * @param {string} cmdPayload.description
+   * @param {string} cmdPayload.projectId
+   * @param {number} cmdPayload.startTime
+   * @param {number} cmdPayload.endTime
+   */
   constructor(cmdPayload) {
-
     const {
       creator,
       parties,
       description,
       projectId,
+      // eslint-disable-next-line no-unused-vars
       startTime,
       endTime
     } = cmdPayload;
@@ -23,7 +36,6 @@ class CreateProjectNdaCmd extends ProtocolEntityCmd {
 
     super(APP_CMD.CREATE_PROJECT_NDA, cmdPayload);
   }
-
 }
 
 export default CreateProjectNdaCmd;
