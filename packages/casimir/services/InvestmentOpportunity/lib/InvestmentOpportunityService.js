@@ -102,9 +102,9 @@ export class InvestmentOpportunityService {
    * @param {number} payload.data.startTime
    * @param {number} payload.data.endTime
    * @param {Array.<Asset>} payload.data.shares
-   * @param {Object} payload.data.softCap
-   * @param {Object} payload.data.hardCap
-   * @param {Object} payload.data.title
+   * @param {Asset} payload.data.softCap
+   * @param {Asset} payload.data.hardCap
+   * @param {string} payload.data.title
    * @param {Object} payload.data.metadata
    * @param {ProposalInfo} payload.proposalInfo
    * @returns {Promise<Object>}
