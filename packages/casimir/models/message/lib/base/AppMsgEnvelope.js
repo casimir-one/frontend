@@ -2,23 +2,55 @@ import { assert } from '@deip/toolbox';
 import { APP_CMD_INFO } from '@deip/commands';
 import AppMsg from './AppMsg';
 
+/**
+ * App message envelope
+ */
 class AppMsgEnvelope {
+  /**
+   * Create app message envelope
+   * @param {AppMsg} appMsg
+   */
   constructor(appMsg) {
     this._appMsg = appMsg;
   }
 
+  /**
+   * Get app message
+   * @returns {AppMsg} app message
+   */
   unwrap() {
     return this._appMsg;
   }
 
+  /**
+   * Serialize app message envelope
+   * @returns {Object}
+   */
   serialize() {
     return AppMsgEnvelope.Serialize(this);
   }
 
+  /**
+   * Deserialize app message envelope
+   * @param {Object} serialized
+   * @param {Object} serialized.PROTOCOL_CHAIN
+   * @param {string} serialized.MESSAGE
+   * @param {*} TxClass
+   * @param {*} chainMetadata
+   * @returns
+   */
   deserialize(serialized, TxClass, chainMetadata) {
     return AppMsgEnvelope.Deserialize(serialized, TxClass, chainMetadata);
   }
 
+  /**
+   * Serialize app message envelope
+   * @param {AppMsgEnvelope} envelope
+   * @returns {Object} result
+   * @returns {Object} result.PROTOCOL_CHAIN
+   * @returns {string} result.MESSAGE
+   * @static
+   */
   static Serialize(envelope) {
     const { tx, appCmds } = envelope.unwrap();
     return {
@@ -30,6 +62,16 @@ class AppMsgEnvelope {
     };
   }
 
+  /**
+   * Deserialize app message envelope
+   * @param {Object} serializedTx
+   * @param {Object} serializedTx.PROTOCOL_CHAIN
+   * @param {string} serializedTx.MESSAGE
+   * @param {*} TxClass
+   * @param {*} chainMetadata
+   * @returns {AppMsgEnvelope}
+   * @static
+   */
   static Deserialize(serializedTx, TxClass, chainMetadata) {
     const { PROTOCOL_CHAIN, MESSAGE } = serializedTx;
     const msg = JSON.parse(MESSAGE);

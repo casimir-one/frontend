@@ -23,6 +23,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
+    "@deip/chain-service": "^1.371.0",
     "@deip/commands": "1.371.0",
     "@deip/toolbox": "1.371.0"
   },
