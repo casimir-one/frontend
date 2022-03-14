@@ -89,7 +89,14 @@
     [CONTRACT_AGREEMENT_STATUS.APPROVED]: 'success',
     [CONTRACT_AGREEMENT_STATUS.REJECTED]: 'error'
   };
-
+  /**
+  * Component for creating a table of contracts
+  * @requires VDataTable
+  * @requires CONTRACT_AGREEMENT_STATUS
+  * @requires dateMixin
+  * @requires userHelpersMixin
+  * @requires teamHelpersMixin
+  */
   export default {
     name: 'ContractsTable',
 
@@ -106,23 +113,40 @@
 
     props: {
       ...VDataTable.options.props,
-
+      /**
+       * Contracts list
+       */
       contracts: {
         type: Array,
         default: () => []
       },
+      /**
+       * Сontract sender data
+       */
       parties: {
         type: Array,
         default: () => []
       },
+      /**
+       * Account ID
+       */
       currentPartyId: {
         type: String,
         default: null
       },
+      /**
+       * Interaction with the contract
+       * default: false
+       */
       canPerformActionsWithContract: {
         type: Function,
         default: () => false
       },
+      /**
+       * Contract statuses object
+       * all contract statuses
+       * @example {APPROVED: "Signed",PENDING: "Pending"}
+       */
       statusLocale: {
         type: Object,
         default: null
@@ -157,13 +181,20 @@
     },
 
     methods: {
+      /**
+       * Get date
+       * @property {string,number} date
+       */
       formatDate(date) {
         if (typeof date === 'string') {
           return this.$$formatDate(this.$$parseISO(date), 'PP');
         }
         return this.$$formatDate(new Date(date), 'PP'); // millis
       },
-
+      /**
+       * Get the name of the contract to which the user is a party
+       * @property {string} id
+       */
       getPartyNameById(id) {
         const party = this.parties.find((p) => p._id === id);
         if (!party) {
@@ -174,16 +205,25 @@
         }
         return this.$$userFullName(party);
       },
-
+      /**
+       * Check status contract
+       * @property {number} status
+       */
       isPendingStatus(status) {
         return [CONTRACT_AGREEMENT_STATUS.PENDING,
                 CONTRACT_AGREEMENT_STATUS.PROPOSED].includes(status);
       },
-
+      /**
+       * Get color for current status
+       * @property {number} status
+       */
       getStatusColor(status) {
         return colorByStatus[status];
       },
-
+      /**
+       * Get status string for view from i18n
+       * @property {number} status
+       */
       formatStatus(status) {
         const statusName = CONTRACT_AGREEMENT_STATUS[status];
         if (this.statusLocale) {
@@ -191,11 +231,20 @@
         }
         return this.$t(`module.contractAgreements.status.${statusName}`);
       },
-
+      /**
+       * Select contract event
+       * Triggers when the contract selected on table row by click
+       * @event click-row
+       * @property {object} contract data
+       */
       handleContractRowClick(contract) {
         this.$emit('click-row', contract);
       },
-
+      /**
+       * Get confirm discard contract popup
+       * Triggers when user click cancel button
+       * @property {object} contract data
+       */
       handleDiscardContract(contract) {
         this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),
                       { title: this.$t('module.contractAgreements.discardAction.confirm.title') })

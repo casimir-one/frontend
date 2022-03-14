@@ -1,19 +1,33 @@
 <template>
   <component :is="tag">
+    <!--
+      @slot Provide data
+      @binding {Object} slotProps
+    -->
     <slot v-bind="slotProps" />
   </component>
 </template>
 
 <script>
-
+ /**
+  * Component for sorting data and providing contract data to nested components
+  */
   export default {
     name: 'ContractAgreementsDataProvider',
 
     props: {
+      /**
+       * Tag name
+       */
       tag: {
         type: String,
         default: 'div'
       },
+      /**
+       * Filter for items
+       * @see See [filter-where](https://www.npmjs.com/package/filter-where) pattern
+       * @example {status: APPROVED}
+       */
       filterItems: {
         type: Object,
         default: () => ({})
@@ -70,6 +84,9 @@
     },
 
     methods: {
+      /**
+       * Get all contracts by filter
+       */
       getContracts() {
         const {
           parties,
@@ -98,7 +115,9 @@
             this.loading = false;
           });
       },
-
+      /**
+       * Get a list of users and teams related to a content creator
+       */
       getParties() {
         return Promise.all([
           this.$store.dispatch('users/getList', { users: this.partyIds }),
