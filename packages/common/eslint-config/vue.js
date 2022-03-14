@@ -38,6 +38,7 @@ module.exports = {
       'always',
       {
         js: 'never',
+        jsx: 'never',
         vue: 'never'
       }
     ],
@@ -76,6 +77,7 @@ module.exports = {
       node: {
         extensions: [
           '.js',
+          '.jsx',
           '.vue'
         ]
       }
