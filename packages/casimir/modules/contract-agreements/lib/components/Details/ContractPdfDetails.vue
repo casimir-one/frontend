@@ -94,7 +94,11 @@
   import { VeStack } from '@deip/vue-elements';
 
   const sleep = (time) => new Promise((resolve) => { setTimeout(() => { resolve(); }, time); });
-
+  /**
+  * Component for creating contract text in PDF format
+  * @requires vue-pdf
+  * @requires VeStack
+  */
   export default {
     name: 'ContractPdfDetails',
 
@@ -104,22 +108,41 @@
     },
 
     props: {
+      /**
+       * Contract ID
+       */
       contractId: {
         type: String,
         default: null
       },
+      /**
+       * Account ID
+       */
       currentPartyId: {
         type: String,
         default: null
       },
+      /**
+       * Сan the user Sign a contract
+       * whether the Sign contract button will be available
+       * default: false
+       */
       canSign: {
         type: Boolean,
         default: false
       },
+      /**
+       * Can the user Discard a contract
+       * whether the Discard contract button will be available
+       * default: false
+       */
       canDiscard: {
         type: Boolean,
         default: false
       },
+      /**
+       * Contract URL for user viewing
+       */
       tosUrl: {
         type: String,
         required: true
@@ -177,14 +200,18 @@
     },
 
     methods: {
+      /**
+       * Get contract agreement
+       */
       getContract() {
         return this.$store.dispatch('contractAgreements/getOne', this.contractId);
       },
-
       handlePdfError(error) {
         console.error(error);
       },
-
+      /**
+       * Discard contract
+       */
       async discardContract() {
         const payload = {
           initiator: this.$currentUser,
@@ -202,7 +229,9 @@
           this.$notifier.showError(error.message);
         }
       },
-
+      /**
+       * Sign contract
+       */
       async signContract() {
         const payload = {
           initiator: this.$currentUser,
@@ -222,7 +251,9 @@
           this.$notifier.showError(error.message);
         }
       },
-
+      /**
+       * Confirm Discard contract
+       */
       async handleDiscardContract() {
         const isConfirmed = await this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),
                                                 { title: this.$t('module.contractAgreements.discardAction.confirm.title') });
@@ -232,7 +263,9 @@
           this.discardLoading = false;
         }
       },
-
+      /**
+       * Confirm Sign contract
+       */
       async handleSignContract() {
         const isConfirmed = await this.$confirm(this.$t('module.contractAgreements.signAction.confirm.message'),
                                                 { title: this.$t('module.contractAgreements.signAction.confirm.title') });
