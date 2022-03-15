@@ -69,7 +69,9 @@
       return i18n.t('module.wallet.balances.validations.assetGreaterOrEqual', values);
     }
   });
-
+  /**
+   * Component for creating a deposit in various assets
+   */
   export default {
     name: 'DepositDialog',
     components: {
@@ -78,11 +80,25 @@
     },
 
     props: {
+      /**
+       * Сan the user make a deposit
+       * default: true
+       */
       value: {
         type: Boolean,
         default: false
       },
-
+      /**
+       * Balance
+       * @example {
+       *  amount: string,    - the amount of money in the balance
+       *  precision: number, - a number of simbols after comma
+       *  symbol: string,    - short currency symbol USD,EUR, etc.
+       *  type: number,      - currency type: COIN - 1, NFT - 2, CORE - 3,
+       *  owner: string      - user _id or blockchain wallet
+       * }
+       *
+       */
       assetBalance: {
         type: Object,
         default: null
@@ -148,6 +164,12 @@
     },
 
     methods: {
+      /**
+       * Check receive message
+       * Fires on a message event
+       * @property {object} e - MessageEvent
+       * @event payment-processed
+       */
       handleMessageReceive(e) {
         if (!e.origin.startsWith(this.$env.DEIP_PAYMENT_SERVICE_URL)) return;
 
@@ -158,10 +180,12 @@
         }
 
         if (e.data.name === 'document-size') {
-          this.iframeHeight = e.data.height + 50;
+          this.iframeHeight = e.data.height + 40;
         }
       },
-
+      /**
+       * Make a deposit
+       */
       async deposit() {
         this.isLoading = true;
 
@@ -188,15 +212,22 @@
 
         this.isLoading = false;
       },
-
+      /**
+       * Submit deposit form
+       */
       submitForm() {
         this.$refs.observer.handleSubmit(this.deposit);
       },
-
+      /**
+       * Handle iframe loading
+       * Disables iframe loading spinner
+       */
       handleIframeLoad() {
         this.isIframeSrcLoading = false;
       },
-
+      /**
+       * Close deposit popup
+       */
       closeDialog() {
         this.isDialogOpened = false;
       }
