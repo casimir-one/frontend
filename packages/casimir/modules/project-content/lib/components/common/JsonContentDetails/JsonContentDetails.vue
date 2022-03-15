@@ -7,12 +7,19 @@
 
   import { VueEditorjsParser } from '@deip/vue-editorjs';
 
+  /**
+   * Component for json content details
+   * @requires VueEditorjsParser
+   */
   export default defineComponent({
     name: 'JsonContentDetails',
 
     components: { VueEditorjsParser },
 
     props: {
+      /**
+       * Content info
+       */
       content: {
         type: Object,
         required: true

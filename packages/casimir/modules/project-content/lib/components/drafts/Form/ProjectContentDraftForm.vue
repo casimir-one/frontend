@@ -141,6 +141,14 @@
 
   const accessService = AccessService.getInstance();
 
+  /**
+   * Project content draft form component
+   * @required VeStack
+   * @required VexFileInput
+   * @required ReferencesSelector
+   * @required UsersSelector
+   * @required VueEditorjs
+   */
   export default defineComponent({
     name: 'ProjectContentDraftForm',
 
@@ -155,6 +163,9 @@
     mixins: [formFactory('draft')],
 
     props: {
+      /**
+       * Project info
+       */
       project: {
         type: Object,
         default: () => {}
@@ -173,6 +184,9 @@
     },
 
     computed: {
+      /**
+       * Get computed submit label
+       */
       submitLabel() {
         return this.isEditMode
           ? this.$t('module.projectContent.form.update')
@@ -185,12 +199,19 @@
     },
 
     methods: {
+      /**
+       * Get content url by file hash
+       *
+       * @param {string} fileHash
+       */
       getContentUrl(fileHash) {
         const { DEIP_SERVER_URL } = this.$env;
 
         return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.draft._id}/${fileHash}?download=true&authorization=${accessService.getAccessToken()}`;
       },
-
+      /**
+       * Set form data files
+       */
       async setExistingFiles() {
         if (this.formData.packageFiles?.length > 0) {
           this.filesInputLoading = true;
@@ -206,7 +227,11 @@
           this.filesInputLoading = false;
         }
       },
-
+      /**
+       * Create draft
+       *
+       * @param {Object} data
+       */
       async createDraft(data) {
         try {
           await this.$store.dispatch('projectContentDrafts/create', { data });
@@ -215,7 +240,11 @@
           console.error(error);
         }
       },
-
+      /**
+       * Update draft
+       *
+       * @param {Object} data
+       */
       async updateDraft(data) {
         try {
           await this.$store.dispatch('projectContentDrafts/update', { data: { ...this.draft, ...data } });
@@ -224,7 +253,11 @@
           console.error(error);
         }
       },
-
+      /**
+       * Triggers when user submits form
+       *
+       * @event submit
+       */
       async submit() {
         this.loading = true;
         const data = {
@@ -251,13 +284,23 @@
       },
 
       emitSuccess() {
+        /**
+         * Success event
+         */
         this.$emit('success');
       },
 
       emitCancel() {
+        /**
+         * Triggers by clicking on cancel button
+         */
         this.$emit('cancel');
       },
-
+      /**
+       * Handle cancel click
+       *
+       * @event click
+       */
       handleCancelClick() {
         this.emitCancel();
       }

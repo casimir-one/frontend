@@ -71,6 +71,13 @@
   import PackageContentDetails from '../../common/PackageContentDetails';
   import JsonContentDetails from '../../common/JsonContentDetails';
 
+  /**
+   * Project content drafts details component
+   * @required VexBlock
+   * @required UsersList
+   * @required PackageContentDetails
+   * @required JsonContentDetails
+   */
   export default defineComponent({
     name: 'ProjectContentDraftDetails',
 
@@ -84,14 +91,23 @@
     mixins: [contextMixin],
 
     props: {
+      /**
+       * Content id
+       */
       contentId: {
         type: String,
         required: true
       },
+      /**
+       * Should contain delete, edit and publish drafts buttons
+       */
       withActions: {
         type: Boolean,
         default: false
       },
+      /**
+       * Can manage drafts
+       */
       canManage: {
         type: Boolean,
         default: false
@@ -108,6 +124,9 @@
     },
 
     computed: {
+      /**
+       * Get computed project content draft by content id
+       */
       draft() {
         return this.$store.getters['projectContentDrafts/one'](this.contentId);
       }
@@ -119,17 +138,28 @@
 
     methods: {
       emitSuccessPublish() {
+        /**
+         * Triggers when draft is successfully published
+         */
         this.$emit('publish-success');
       },
 
       emitSuccessRemove() {
+        /**
+         * Triggers when draft is successfully removed
+         */
         this.$emit('remove-success');
       },
 
       emitEditClick() {
+        /**
+         * Triggers when draft is clicked to edit
+         */
         this.$emit('edit-click');
       },
-
+      /**
+       * Get draft by content id
+       */
       async getDraft() {
         this.loading = true;
         try {
@@ -139,7 +169,9 @@
         }
         this.loading = false;
       },
-
+      /**
+       * Publish draft
+       */
       async publishDraft() {
         try {
           const payload = {
@@ -152,7 +184,9 @@
           console.error(error);
         }
       },
-
+      /**
+       * Remove draft
+       */
       async removeDraft() {
         try {
           await this.$store.dispatch('projectContentDrafts/remove', this.draft._id);
@@ -161,7 +195,11 @@
           console.error(error);
         }
       },
-
+      /**
+       * Handle publish draft click
+       *
+       * @event click
+       */
       async handlePublishClick() {
         this.actionLoading = true;
         const isConfirmed = await this.$confirm(
@@ -174,7 +212,11 @@
         }
         this.actionLoading = false;
       },
-
+      /**
+       * Handle remove draft click
+       *
+       * @event click
+       */
       async handleRemoveClick() {
         this.actionLoading = true;
         const isConfirmed = await this.$confirm(
@@ -187,7 +229,11 @@
         }
         this.actionLoading = false;
       },
-
+      /**
+       * Handle edit draft click
+       *
+       * @event click
+       */
       handleEditClick() {
         this.emitEditClick();
       }

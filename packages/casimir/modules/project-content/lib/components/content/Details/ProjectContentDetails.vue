@@ -33,6 +33,13 @@
   import PackageContentDetails from '../../common/PackageContentDetails';
   import JsonContentDetails from '../../common/JsonContentDetails';
 
+  /**
+   * Component for project content details
+   * @requires VexBlock
+   * @requires UsersList
+   * @requires PackageContentDetails
+   * @requires JsonContentDetails
+   */
   export default defineComponent({
     name: 'ProjectContentDetails',
 
@@ -44,6 +51,9 @@
     },
 
     props: {
+      /**
+       * Content id
+       */
       contentId: {
         type: String,
         required: true
@@ -59,6 +69,9 @@
     },
 
     computed: {
+      /**
+       * Get computed project content by content id
+       */
       content() {
         return this.$store.getters['projectContent/one'](this.contentId);
       }
@@ -69,6 +82,9 @@
     },
 
     methods: {
+      /**
+       * Get project content by content id
+       */
       async getContent() {
         this.loading = true;
         try {

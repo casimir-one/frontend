@@ -7,19 +7,30 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
 
+  /**
+   * Project content drafts data provider
+   */
   export default defineComponent({
     name: 'ProjectContentDraftsDataProvider',
     props: {
+      /**
+       * Tag name
+       * @example 'div'
+       */
       tag: {
         type: String,
         default: 'div'
       },
-
+      /**
+       * Project id
+       */
       projectId: {
         type: String,
         required: true
       },
-
+      /**
+       * Filter for items
+       */
       filterItems: {
         type: Object,
         default: () => ({})
@@ -35,6 +46,9 @@
     },
 
     computed: {
+      /**
+       * Get computed filter for items
+       */
       getterFilter() {
         const filter = { ...this.filterItems };
 
@@ -44,11 +58,15 @@
 
         return filter;
       },
-
+      /**
+       * Get computed project content drafts list
+       */
       drafts() {
         return this.$store.getters['projectContentDrafts/list'](this.getterFilter);
       },
-
+      /**
+       * Get computed slot properties
+       */
       slotProps() {
         return {
           drafts: this.drafts,
@@ -67,9 +85,16 @@
     methods: {
       handleReady() {
         this.ready = true;
+        /**
+         * Triggers when the drafts list is ready
+         *
+         * @property {Array.<Object>} drafts
+         */
         this.$emit('ready', this.drafts);
       },
-
+      /**
+       * Get project content drafts by project id
+       */
       async getContent() {
         this.loading = true;
 

@@ -33,6 +33,10 @@
 
   import ProjectContentDataProvider from '../DataProvider';
 
+  /**
+   * Component for project content list
+   * @requires ProjectContentDataProvider
+   */
   export default defineComponent({
     name: 'ProjectContentList',
 
@@ -43,6 +47,9 @@
     props: {
       ...ProjectContentDataProvider.options.props,
 
+      /**
+       * If content click is disabled
+       */
       disableContentClick: {
         type: Boolean,
         default: false
@@ -66,16 +73,28 @@
     },
 
     computed: {
+      /**
+       * Get computed provider properties
+       */
       providerProps() {
         return getBindableProps.call(this, ProjectContentDataProvider.options.props);
       }
     },
 
     methods: {
+      /**
+       * Get content type
+       *
+       * @param {string} type
+       */
       getContentType(type) {
         return this.$t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[type]}`);
       },
-
+      /**
+       * Triggers when user clicks the row
+       * @event click-row
+       * @property {Object} content
+       */
       handleRowClick(content) {
         if (this.$isUser && !this.disableContentClick) {
           this.$emit('click-row', content);
