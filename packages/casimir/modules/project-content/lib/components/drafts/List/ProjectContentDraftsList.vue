@@ -72,6 +72,11 @@
   import { PROJECT_CONTENT_STATUS } from '@deip/constants';
   import ProjectContentDraftsDataProvider from '../DataProvider';
 
+  /**
+   * Project content drafts list component
+   * @required ProjectContentDraftsDataProvider
+   * @required VexTooltip
+   */
   export default defineComponent({
     name: 'ProjectContentDraftsList',
 
@@ -107,32 +112,59 @@
     },
 
     computed: {
+      /**
+       * Get computed provider properties
+       */
       providerProps() {
         return getBindableProps.call(this, ProjectContentDraftsDataProvider.options.props);
       }
     },
 
     methods: {
+      /**
+       * Check if draft status is proposed
+       *
+       * @param {Object} draft
+       */
       isDraftProposed(draft) {
         return draft.status === PROJECT_CONTENT_STATUS.PROPOSED;
       },
-
+      /**
+       * Check if draft status is in progress
+       *
+       * @param {Object} draft
+       */
       isDraftInProgress(draft) {
         return draft.status === PROJECT_CONTENT_STATUS.IN_PROGRESS;
       },
 
       handleRowClick(draft) {
+        /**
+         * Triggers when user clicks the row
+         *
+         * @property {Object} draft
+         */
         this.$emit('click-row', draft);
       },
 
       emitSuccessPublish() {
+        /**
+         * Triggers when draft is successfully published
+         */
         this.$emit('publish-success');
       },
 
       emitSuccessRemove() {
+        /**
+         * Triggers when draft is successfully removed
+         */
         this.$emit('remove-success');
       },
-
+      /**
+       * Publish draft
+       *
+       * @param {Object} draft
+       */
       async publishDraft(draft) {
         try {
           const payload = {
@@ -145,7 +177,11 @@
           console.error(error);
         }
       },
-
+      /**
+       * Remove draft
+       *
+       * @param {Object} draft
+       */
       async removeDraft(draft) {
         try {
           await this.$store.dispatch('projectContentDrafts/remove', draft._id);
@@ -154,7 +190,12 @@
           console.error(error);
         }
       },
-
+      /**
+       * Handle publish draft click
+       *
+       * @event click
+       * @param {Object} draft
+       */
       async handlePublishClick(draft) {
         this.publishingDraftId = draft._id;
         const isConfirmed = await this.$confirm(
@@ -167,7 +208,12 @@
         }
         this.publishingDraftId = null;
       },
-
+      /**
+       * Handle remove draft click
+       *
+       * @event click
+       * @param {Object} draft
+       */
       async handleRemoveClick(draft) {
         this.removingDraftId = draft._id;
         const isConfirmed = await this.$confirm(

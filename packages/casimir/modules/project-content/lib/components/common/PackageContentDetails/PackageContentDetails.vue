@@ -55,7 +55,11 @@
   import { AccessService } from '@deip/access-service';
 
   const accessService = AccessService.getInstance();
-
+  /**
+   * Component for package content details
+   * @requires VexTooltip
+   * @requires VeLineClamp
+   */
   export default defineComponent({
     name: 'PackageContentDetails',
 
@@ -65,6 +69,9 @@
     },
 
     props: {
+      /**
+       * Content info
+       */
       content: {
         type: Object,
         required: true
@@ -72,9 +79,20 @@
     },
 
     methods: {
+      /**
+       * Check if preview is available by file extension
+       *
+       * @param {string} ext
+       */
       isPreviewAvailable(ext) {
         return ['.png', '.jpg', '.jpeg', '.pdf'].some((e) => e === ext);
       },
+      /**
+       * Get content url by file hash
+       *
+       * @param {string} fileHash
+       * @param {boolean} download
+       */
       getContentUrl(fileHash, download = false) {
         const { DEIP_SERVER_URL } = this.$env;
 

@@ -25,6 +25,10 @@
   import { defineComponent } from '@deip/platform-util';
   import { VexAutocomplete } from '@deip/vuetify-extended';
 
+  /**
+   * Component for references selector
+   * @requires VexAutocomplete
+   */
   export default defineComponent({
     name: 'ReferencesSelector',
 
@@ -45,6 +49,9 @@
     },
 
     computed: {
+      /**
+       * Get computed references list
+       */
       references() {
         return this.$store.getters['projectContent/list']();
       },
@@ -54,9 +61,17 @@
           return this.value;
         },
         set(value) {
+          /**
+            * Triggers when value changes
+            *
+            * @property {Object} value
+            */
           this.$emit('change', value);
         }
       },
+      /**
+       * Get computed field properties
+       */
       fieldProps() {
         return {
           ...getBindableProps.call(this, VAutocomplete.options.props),
@@ -75,6 +90,9 @@
     },
 
     methods: {
+      /**
+       * Get references list
+       */
       async getReferences() {
         try {
           await this.$store.dispatch('projectContent/getList');
