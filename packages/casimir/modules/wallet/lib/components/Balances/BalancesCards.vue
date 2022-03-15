@@ -15,7 +15,9 @@
   import { genColorsPalette } from '@deip/toolbox';
   import { VeAutoGrid } from '@deip/vue-elements';
   import BalanceCard from './BalanceCard';
-
+  /**
+   * Сomponent displays a list of cards of all available balances
+   */
   export default {
     name: 'BalancesCards',
 
@@ -25,10 +27,17 @@
     },
 
     props: {
+      /**
+       * Balance list
+       */
       balances: {
         type: Array,
         default() { return []; }
       },
+      /**
+       * Сan the user make a deposit
+       * default: true
+       */
       withDeposit: {
         type: Boolean,
         default: true
@@ -42,6 +51,12 @@
     },
 
     methods: {
+      /**
+       * Open deposit popup
+       * Fires when the user clicks on the deposit button
+       * @property {object} e - balance data
+       * @event deposit
+       */
       handleDeposit(e) {
         this.$emit('deposit', e);
       }

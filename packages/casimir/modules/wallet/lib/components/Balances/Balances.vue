@@ -37,7 +37,10 @@
 
   import BalancesCards from './BalancesCards';
   import DepositDialog from './DepositDialog';
-
+  /**
+  * Wallet component to display all available balances
+  * and the possibility of replenishing the deposit
+  */
   export default {
     name: 'Balances',
 
@@ -48,12 +51,19 @@
       BalancesCards,
       DepositDialog
     },
-
+    /**
+     * Type of view
+     * @example 'cards'
+     */
     props: {
       viewType: {
         type: String,
         default: 'cards'
       },
+      /**
+       * Сan the user make a deposit
+       * default: true
+       */
       withDeposit: {
         type: Boolean,
         default: true
@@ -102,10 +112,20 @@
     },
 
     methods: {
+      /**
+       * Open deposit popup
+       * Fires when the user clicks on the deposit button
+       * @property {object} balance data
+       */
       handleDeposit(balance) {
         this.selectedAssetBalance = balance;
         this.isDialogOpened = true;
       },
+      /**
+       * Open Payment popup
+       * Fires when the user payment process button
+       * @event payment-processed
+       */
       handlePaymentProcessed() {
         this.$store.dispatch('wallet/get');
         this.$emit('payment-processed');
