@@ -1,5 +1,3 @@
-import './vls-builder-canvas.scss';
-
 /* eslint-disable */
 import {
   VIcon, VSheet,
@@ -17,14 +15,28 @@ import { merge } from '@deip/toolbox/lodash';
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 
-export const VlsBuilderCanvas = {
-  name: 'VlsBuilderCanvas',
+/**
+ * @typedef {Object} SchemaNode
+ * @property {string} is
+ * @property {string} uid
+ * @property {Object} data
+ * @property {string} [model]
+ * @property {Array} [children]
+ * @property {boolean} [condition]
+ * @property {string} [text]
+ */
 
-  mixins: [BuilderMixin],
+/**
+ * Builder canvas
+ */
+export default {
+  name: 'VlsBuilderCanvas',
 
   directives: {
     ClickOutside
   },
+
+  mixins: [BuilderMixin],
 
   data() {
     return {
@@ -66,7 +78,8 @@ export const VlsBuilderCanvas = {
     },
 
     /**
-     * @param {Object} node
+     * Get node attributes
+     * @param {SchemaNode} node
      * @return {Object}
      */
     getNodeAttrs(node) {
@@ -135,7 +148,7 @@ export const VlsBuilderCanvas = {
     },
 
     /**
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @return {boolean}
      */
     isFocused(node) {
@@ -181,7 +194,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Wrapper for {@link genHost}. Set additional data and point list to node children
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @returns {JSX.Element|*[]}
      */
     genChildrenHost(node) {
@@ -245,7 +258,7 @@ export const VlsBuilderCanvas = {
     // //////////////////////////
 
     /**
-     * Generate undefined node if canvas cant get node info from blocks
+     * Generate undefined node if canvas can't get node info from blocks
      * @returns {JSX.Element}
      */
     genUndefinedNode() {
@@ -257,7 +270,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Generate simple node (without children)
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @returns {JSX.Element}
      */
     genSimpleNode(node) {
@@ -267,7 +280,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Generate container node with children host and icon at left side
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @returns {JSX.Element}
      */
     genExtendedNode(node) {
@@ -277,7 +290,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Generate container node with children host and icon at left side
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @returns {JSX.Element}
      */
     genContentNode(node) {
@@ -292,7 +305,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Generate container node with children host
-     * @param {Object} node
+     * @param {SchemaNode} node
      * @returns {JSX.Element}
      */
     genDefaultNode(node) {
@@ -330,7 +343,7 @@ export const VlsBuilderCanvas = {
 
     /**
      * Generate list of nodes on canvas
-     * @param {Object[]} nodes
+     * @param {Array.<SchemaNode>} nodes
      * @returns {JSX.Element[]}
      */
     genNodes(nodes) {

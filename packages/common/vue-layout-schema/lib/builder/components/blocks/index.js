@@ -1,5 +1,5 @@
-import './vls-builder-blocks.scss';
-import { VlsBuilderBlocks } from './vls-builder-blocks';
+import './VlsBuilderBlocks.scss';
+import VlsBuilderBlocks from './VlsBuilderBlocks';
 
 export { VlsBuilderBlocks };
 export default VlsBuilderBlocks;

@@ -18,11 +18,65 @@ import {
   RENDERER_BLOCK_KEYS
 } from '@deip/constants';
 
+/**
+ * @typedef {Object} InitialBlock
+ * @property {string} blockType
+ * @property {Object} [data]
+ * @property {Object} [data.props]
+ * @property {Object} [data.proxyProps]
+ * @property {Array.<string>} [disabledProps]
+ * @property {string} icon
+ * @property {string} [id]
+ * @property {VNode} component
+ * @property {string} [layoutType]
+ * @property {string} name
+ * @property {Array.<string>} [scope]
+ * @property {string} [text]
+ */
+
+/**
+ * @typedef {Object} Block
+ * @property {string} blockType
+ * @property {Object} [data]
+ * @property {Object} [data.props]
+ * @property {Object} [data.proxyProps]
+ * @property {Array.<string>} [disabledProps]
+ * @property {string} icon
+ * @property {string} [id]
+ * @property {string} is
+ * @property {string} [layoutType]
+ * @property {string} name
+ * @property {Array.<string>} [scope]
+ * @property {string} [text]
+ */
+
+/**
+ * @typedef {Object} SchemaNode
+ * @property {string} is
+ * @property {string} uid
+ * @property {Object} data
+ * @property {string} [model]
+ * @property {Array} [children]
+ * @property {boolean} [condition]
+ * @property {string} [text]
+ */
+
+/**
+ * Check if node is valid
+ * @param {Object} node
+ * @param {string} node.is
+ * @returns {boolean}
+ */
 export const ifValidBlock = (node) => (
   isObject(node)
   && Object.prototype.hasOwnProperty.call(node, 'is')
 );
 
+/**
+ * Prepare block props for being used in component
+ * @param {Object} props
+ * @returns {Object}
+ */
 export const convertBlockPropsValueForCanvas = (props) => Object.keys(props)
   .reduce((acc, prop) => {
     let propVal;
@@ -46,6 +100,11 @@ export const convertBlockPropsValueForCanvas = (props) => Object.keys(props)
     };
   }, {});
 
+/**
+ * Prepare block props for being user on canvas
+ * @param {SchemaNode} node
+ * @returns {SchemaNode}
+ */
 export const convertBlockPropsForCanvas = (node) => {
   const res = cloneDeep(node);
   const props = node?.data?.props;
@@ -63,9 +122,15 @@ export const convertBlockPropsForCanvas = (node) => {
         ...{ [component]: convertBlockPropsValueForCanvas(proxyProps[component]) }
       }), {})));
   }
+
   return res;
 };
 
+/**
+ * Prepare block for being used in schema - add id and prepare children
+ * @param {Block} node
+ * @returns {SchemaNode}
+ */
 export const convertBlockForSchema = (node) => {
   const res = filterObjectKeys(cloneDeep(node), RENDERER_SCHEMA_BLOCK_KEYS);
 
@@ -82,6 +147,11 @@ export const convertBlockForSchema = (node) => {
   return convertBlockPropsForCanvas(res);
 };
 
+/**
+ * Generate readable name form component name
+ * @param {string} name
+ * @returns {string}
+ */
 export const generateBlockName = (name) => {
   let res = paramCase(name);
 
@@ -90,6 +160,11 @@ export const generateBlockName = (name) => {
   return capitalCase(res);
 };
 
+/**
+ * Check block and add id if not presented
+ * @param {Block} obj
+ * @returns {Block}
+ */
 export const normalizeBlocksObject = (obj) => {
   for (const { node } of new RecursiveIterator(wrapInArray(obj), 1, true)) {
     if (ifValidBlock(node)) {
@@ -101,6 +176,11 @@ export const normalizeBlocksObject = (obj) => {
   return obj;
 };
 
+/**
+ * Cast prop to object
+ * @param {Function|Object|string} prop
+ * @returns
+ */
 const normalizeBlockProp = (prop) => {
   if (isFunction(prop)) {
     return {
@@ -122,6 +202,11 @@ const normalizeBlockProp = (prop) => {
   return prop;
 };
 
+/**
+ * Cast props to object
+ * @param {Array|Object} props
+ * @returns {Object}
+ */
 const normalizeBlockProps = (props) => {
   if (!props || !Object.keys(props).length) return {};
 
@@ -145,6 +230,13 @@ const normalizeBlockProps = (props) => {
     }), {});
 };
 
+/**
+ * Filter props by name
+ * @param {Object} componentProps
+ * @param {Array.<string>} filter
+ * @param {boolean} exclude flag -exlude or include props
+ * @returns {Object}
+ */
 const filterProps = (
   componentProps,
   filter,
@@ -161,6 +253,11 @@ const filterProps = (
   return filterObjectKeys(componentProps, filter, exclude);
 };
 
+/**
+ * Prepare blocks for being used in builder
+ * @param {InitialBlock|Array.<InitialBlock>} blocks
+ * @returns {Array.<Block>}
+ */
 export const blocksGenerator = (blocks) => wrapInArray(blocks)
   .map((block) => {
     const { component } = block;

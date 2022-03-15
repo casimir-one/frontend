@@ -1,4 +1,4 @@
-import { VlsParser } from './vls-parser';
+import VlsParser from './VlsParser';
 
 export { VlsParser };
 export default VlsParser;

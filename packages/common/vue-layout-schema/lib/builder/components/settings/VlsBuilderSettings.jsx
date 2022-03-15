@@ -28,16 +28,41 @@ import { BuilderMixin } from '../../mixins';
 
 const PERM_DISABLED = ['proxyProps'];
 
-export const VlsBuilderSettings = {
+/**
+ * @typedef {Object} Block
+ * @property {string} blockType
+ * @property {Object} [data]
+ * @property {Array.<string>} [disabledProps]
+ * @property {string} icon
+ * @property {string} id
+ * @property {string} is
+ * @property {string} [layoutType]
+ * @property {string} name
+ * @property {Array.<string>} [scope]
+ * @property {string} [text]
+ */
+
+/**
+ * Builder node settings
+ */
+export default {
   name: 'VlsBuilderSettings',
 
   mixins: [BuilderMixin],
 
   computed: {
+    /**
+     * Node path
+     * @returns {Array.<string>}
+     */
     nodePath() {
       return deepFindParentByValue(this.schemaAcc, this.containerActiveNode, true).path;
     },
 
+    /**
+     * Node info
+     * @returns {Block}
+     */
     nodeInfo() {
       const { id } = objectPath.get(this.schemaAcc, this.nodePath);
       return this.getContainerNodeInfo(id);

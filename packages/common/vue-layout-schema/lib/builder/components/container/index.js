@@ -1,4 +1,4 @@
-import { VlsBuilderContainer } from './vls-builder-container';
+import VlsBuilderContainer from './VlsBuilderContainer';
 
 export { VlsBuilderContainer };
 export default VlsBuilderContainer;

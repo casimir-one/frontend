@@ -11,7 +11,10 @@ import {
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 
-export const VlsBuilderTree = {
+/**
+ * Builder nodes tree
+ */
+export default {
   name: 'VlsBuilderTree',
 
   mixins: [BuilderMixin],

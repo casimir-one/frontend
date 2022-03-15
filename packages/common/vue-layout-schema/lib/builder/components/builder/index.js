@@ -1,3 +1,5 @@
-import './vls-builder.scss';
+import './VlsBuilder.scss';
+import VlsBuilder from './VlsBuilder';
 
-export { VlsBuilder } from './vls-builder';
+export { VlsBuilder };
+export default VlsBuilder;

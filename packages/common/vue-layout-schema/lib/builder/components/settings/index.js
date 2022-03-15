@@ -1,5 +1,4 @@
-import './vls-builder-settings.scss';
-import { VlsBuilderSettings } from './vls-builder-settings';
+import VlsBuilderSettings from './VlsBuilderSettings';
 
 export { VlsBuilderSettings };
 export default VlsBuilderSettings;
