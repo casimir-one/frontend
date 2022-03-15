@@ -24,14 +24,37 @@ import { convertBlockForSchema } from '../../utils/helpers';
 
 import { BuilderMixin } from '../../mixins';
 
-export const VlsBuilderBlocks = {
-  name: 'VlsBuilderBlocks',
+/**
+ * @typedef {Object} Block
+ * @property {string} blockType
+ * @property {Array.<Block>} [children]
+ * @property {Object} [data]
+ * @property {Array.<string>} [disabledProps]
+ * @property {string} icon
+ * @property {string} id
+ * @property {string} is
+ * @property {string} [layoutType]
+ * @property {string} name
+ * @property {Array.<string>} [scope]
+ * @property {string} [text]
+ *
+ * @typedef {Object} BlockWithUid
+ * @property {string} uid
+ *
+ * @typedef {Block & BlockWithUid} BlockForSchema
+ */
 
-  mixins: [BuilderMixin],
+/**
+ * Builder blocks
+ */
+export default {
+  name: 'VlsBuilderBlocks',
 
   directives: {
     Ripple
   },
+
+  mixins: [BuilderMixin],
 
   data() {
     return {
@@ -40,13 +63,28 @@ export const VlsBuilderBlocks = {
   },
 
   methods: {
+    /**
+     * Clone dragged block
+     * @param {Block} block
+     * @returns {BlockForSchema}
+     */
     onClone(block) {
+      /**
+       * Clone block event
+       */
       this.$emit('clone');
       this.setContainerActiveNode(null);
 
       return convertBlockForSchema(block);
     },
 
+    /**
+     * Generate section
+     * @param {Object} section
+     * @param {string} section.title
+     * @param {array} section.array
+     * @returns {JSX.Element}
+     */
     genSection(section) {
       const expandActivatorSlots = {
         scopedSlots: {
@@ -70,6 +108,11 @@ export const VlsBuilderBlocks = {
       );
     },
 
+    /**
+     * Generate container with draggable blocks
+     * @param {Array.<Block>} blocks
+     * @returns {JSX.Element}
+     */
     genDragOut(blocks) {
       return (
         <draggable
@@ -84,6 +127,14 @@ export const VlsBuilderBlocks = {
       );
     },
 
+    /**
+     * Generate block menu
+     * @param {Array.<Object>} menu
+     * @param {Function} menu.action
+     * @param {string} menu.icon
+     * @param {string} menu.label
+     * @returns {JSX.Element}
+     */
     genBlockMenu(menu) {
       const scopedSlots = {
         activator: ({ on }) => (
@@ -118,6 +169,11 @@ export const VlsBuilderBlocks = {
       );
     },
 
+    /**
+     * Generate attribute menu
+     * @param {Block} block
+     * @returns {JSX.Element}
+     */
     genAttributeMenu(block) {
       const { dataType } = block;
       const { attributeId } = block.data.props;
@@ -153,6 +209,11 @@ export const VlsBuilderBlocks = {
       return this.genBlockMenu(menu);
     },
 
+    /**
+     * Generate value menu
+     * @param {Block} block
+     * @returns {JSX.Element}
+     */
     genValueMenu(block) {
       const menu = [
         {
@@ -166,6 +227,11 @@ export const VlsBuilderBlocks = {
       return this.genBlockMenu(menu);
     },
 
+    /**
+     * Generate block
+     * @param {Block} block
+     * @returns {JSX.Element}
+     */
     genBlock(block) {
       return (
         <VSheet

@@ -1,5 +1,4 @@
-import './vls-builder-tree.scss';
-import { VlsBuilderTree } from './vls-builder-tree';
+import VlsBuilderTree from './VlsBuilderTree';
 
 export { VlsBuilderTree };
 export default VlsBuilderTree;

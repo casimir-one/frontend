@@ -1,1 +1,1 @@
-export * from './builder-mixin';
+export * from './builderMixin';

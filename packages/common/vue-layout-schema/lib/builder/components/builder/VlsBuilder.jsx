@@ -16,25 +16,37 @@ import { VlsBuilderTree } from '../tree';
 import { VlsBuilderCanvas } from '../canvas';
 import { VlsBuilderSettings } from '../settings';
 
-export const VlsBuilder = {
+/**
+ * Schema builder
+ */
+export default {
   name: 'VlsBuilder',
 
   props: {
+    /**
+     * Schema value
+     */
     value: {
       type: Array,
       default: () => []
     },
-
+    /**
+     * Schema blocks
+     */
     blocks: {
       type: Array,
       default: () => []
     },
-
+    /**
+     * Is builder disabled
+     */
     disabled: {
       type: Boolean,
       default: false
     },
-
+    /**
+     * Is builder loading
+     */
     loading: {
       type: Boolean,
       default: false
@@ -61,7 +73,13 @@ export const VlsBuilder = {
   },
 
   methods: {
+    /**
+     * Handle "Save" button click
+     */
     handleSaveBtnClick() {
+      /**
+       * Submit event
+       */
       this.$emit('submit', this.schema);
     }
   },

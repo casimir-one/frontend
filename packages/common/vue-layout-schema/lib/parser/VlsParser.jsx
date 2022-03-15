@@ -15,7 +15,21 @@ import {
 
 import { cloneDeep, merge } from '@deip/toolbox/lodash';
 
-export const VlsParser = {
+/**
+ * @typedef {Object} SchemaNode
+ * @property {string} is
+ * @property {string} uid
+ * @property {Object} data
+ * @property {string} [model]
+ * @property {Array} [children]
+ * @property {boolean} [condition]
+ * @property {string} [text]
+ */
+
+/**
+ * Schema parser
+ */
+export default {
   name: 'VlsParser',
 
   model: {
@@ -24,23 +38,39 @@ export const VlsParser = {
   },
 
   props: {
+    /**
+     * Schema
+     */
     schema: {
       type: Array,
       default: () => []
     },
+    /**
+     * Data used in schema
+     */
     schemaData: {
       type: Object,
       default: () => ({})
     },
+    /**
+     * Element in which schema will be rendered
+     */
     tag: {
       type: String,
       default: 'div'
     },
+    /**
+     * Components used in schema that need to be registered
+     */
     components: {
       type: Object,
       default: () => ({})
     },
 
+    /**
+     * Value
+     * @model
+     */
     value: {
       type: [String, Object, Array, Boolean, Number, File],
       default: () => ({})
@@ -54,13 +84,26 @@ export const VlsParser = {
   },
 
   computed: {
+    /**
+     * Internal value
+     *
+     */
     internalValue: {
+      /**
+       * Get value
+       * @returns {string|Object|Array|boolean|number|File}
+       */
       get() {
         return this.lazyValue;
       },
 
+      /**
+       * Set value
+       * @param {string|Object|Array|boolean|number|File} val
+       */
       set(val) {
         this.lazyValue = val;
+        /** Input event */
         this.$emit('input', this.lazyValue);
       }
     }
@@ -80,6 +123,10 @@ export const VlsParser = {
   },
 
   methods: {
+    /**
+     * Register components used in schema
+     * @param {Object} components
+     */
     registerComponents(components = {}) {
       for (const key of Object.keys(components)) {
         if (key !== this.$options.name) {
@@ -88,6 +135,11 @@ export const VlsParser = {
       }
     },
 
+    /**
+     * Put data passed in schemaData to schema. Parse schema with TemplateStringParser
+     * @param {Array} schema
+     * @returns {Array} normalized schema
+     */
     normalizeSchema(schema) {
       if (!schema) return false;
       if (!isArray(schema)) throw Error('Schema mus be an Array');
@@ -104,6 +156,11 @@ export const VlsParser = {
       return clone;
     },
 
+    /**
+     * Generate node childred
+     * @param {Array.<SchemaNode>|SchemaNode|string} children
+     * @returns {Array.<VNode>|VNode|string}
+     */
     getChildren(children) {
       if (!children) return false;
 
@@ -114,6 +171,11 @@ export const VlsParser = {
       throw new Error('Children must be an Array, Object or String');
     },
 
+    /**
+     * Generate node
+     * @param {SchemaNode} node
+     * @returns {VNode|string|null}
+     */
     generateNode(node) {
       if (!node) return null;
       if (!isObject(node)) throw new Error('Node must be an Object');
@@ -149,6 +211,11 @@ export const VlsParser = {
       ) : null;
     },
 
+    /**
+     * Check if node is native input
+     * @param {SchemaNode} node
+     * @returns {boolean}
+     */
     isNativeInput(node) {
       return [
         'input',
@@ -157,6 +224,14 @@ export const VlsParser = {
       ].includes(node.is);
     },
 
+    /**
+     * Get node model (prop and event names)
+     * @param {SchemaNode} node
+     * @returns {Object} result
+     * @returns {string} result.prop
+     * @returns {string} result.event
+     * @returns {Array.<string>|boolean} result.path
+     */
     getNodeModelProps(node) {
       if (!node?.model) return {};
 
@@ -179,6 +254,14 @@ export const VlsParser = {
       return modelProps;
     },
 
+    /**
+     * Get node model prop and listener for setting them to component
+     * @param {SchemaNode} node
+     * @returns {Object} result
+     * @returns {Object} [result.attrs]
+     * @returns {Object} [result.props]
+     * @returns {Object} result.on
+     */
     getNodeModelData(node) {
       if (!node?.model) return {};
       if (

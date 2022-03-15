@@ -4,8 +4,17 @@ import { isEqual } from '@deip/toolbox/lodash';
 import { mutations, getters } from '../../store';
 import { normalizeBlocksObject } from '../../utils/helpers';
 
-export const VlsBuilderContainer = {
+/**
+ * Builder container
+ */
+export default {
   name: 'VlsBuilderContainer',
+
+  provide() {
+    return {
+      containerId: this.containerId
+    };
+  },
 
   model: {
     prop: 'value',
@@ -13,11 +22,17 @@ export const VlsBuilderContainer = {
   },
 
   props: {
+    /**
+     * Blocks
+     */
     blocks: {
       type: Array,
       default: () => []
     },
-
+    /**
+     * Value
+     * @model
+     */
     value: {
       type: Array,
       default: () => []
@@ -32,8 +47,20 @@ export const VlsBuilderContainer = {
   },
 
   computed: {
+    /**
+     * Container blocks
+     * @returns {Array}
+     */
     containerBlocks() { return getters.containerBlocks(this.containerId); },
+    /**
+     * Container schema
+     * @returns {Array}
+     */
     containerSchema() { return getters.containerSchema(this.containerId); },
+    /**
+     * Container active node
+     * @returns {Object}
+     */
     containerActiveNode() { return getters.containerActiveNode(this.containerId); }
   },
 
@@ -46,6 +73,9 @@ export const VlsBuilderContainer = {
   },
 
   methods: {
+    /**
+     * Init container
+     */
     initContainer() {
       mutations.createContainer(this.containerId);
       mutations.setContainerBlocks(this.containerId, normalizeBlocksObject(this.blocks));
@@ -53,6 +83,9 @@ export const VlsBuilderContainer = {
 
       this.$watch('containerSchema', {
         handler(newVal) {
+          /**
+           * Change event
+           */
           this.$emit('change', newVal);
         },
         deep: true
@@ -80,12 +113,19 @@ export const VlsBuilderContainer = {
       this.ready = true;
     },
 
+    /**
+     * Destroy container
+     */
     destroyContainer() {
       mutations.removeContainer(this.containerId);
 
       window.removeEventListener('keydown', this.deleteKeyListener);
     },
 
+    /**
+     * Delete key listener
+     * @param {KeyboardEvent} e
+     */
     deleteKeyListener(e) {
       if (
         ['Backspace', 'Delete'].includes(e.key)
@@ -103,11 +143,5 @@ export const VlsBuilderContainer = {
         {this.ready ? this.$slots.default : null}
       </div>
     );
-  },
-
-  provide() {
-    return {
-      containerId: this.containerId
-    };
   }
 };
