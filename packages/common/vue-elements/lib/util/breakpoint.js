@@ -1,7 +1,22 @@
 import { camelCase, paramCase } from '@deip/toolbox';
 
+/**
+ * Default screen breakpoints
+ */
 export const defaultBreakpoints = ['sm', 'md', 'lg', 'xl'];
 
+/**
+ * Generat component props for all breakpoints
+ * @param {string} prop
+ * @param {*} [propType=String]
+ * @param {Function} [validator = () => true]
+ * @param {*} defaultValue
+ * @param {Array.<string>} [breakpoints=['sm', 'md', 'lg', 'xl']]
+ * @returns {Array.<Object>} result
+ * @returns {*} result.type
+ * @returns {*} result.default
+ * @returns {Function} result.validator
+ */
 export const genBreakpointProps = (
   prop,
   propType = String,
@@ -27,6 +42,15 @@ export const genBreakpointProps = (
   };
 };
 
+/**
+ * Generate CSS styles for all breakpoints
+ * @param {string} prop
+ * @param {Function} [transformer=(val)=>val]
+ * @param {string} [varKey]
+ * @param {Array.<string>} breakpoints
+ * @param {sting} [varPrefix=this]
+ * @returns
+ */
 export function genBreakpointCssVarsStyles(
   prop,
   transformer = (val) => val,

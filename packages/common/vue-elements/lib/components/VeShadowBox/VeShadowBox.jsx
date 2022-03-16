@@ -2,17 +2,29 @@ import { defineComponent } from '@deip/platform-util';
 
 import { convertToUnit } from '@deip/toolbox';
 
+/**
+ * Container with shadow
+ */
 export default defineComponent({
   name: 'VeShadowBox',
   props: {
+    /**
+     * Blur value
+     */
     blur: {
       type: [String, Number],
       default: 16
     },
+    /**
+     * Scale value
+     */
     scale: {
       type: [String, Number],
       default: 0.86
     },
+    /**
+     * Opacity value
+     */
     opacity: {
       type: [String, Number],
       default: 1

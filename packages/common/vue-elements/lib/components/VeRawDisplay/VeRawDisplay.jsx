@@ -1,12 +1,21 @@
 import { defineComponent } from '@deip/platform-util';
 
-export const VeRawDisplay = defineComponent({
+/**
+ * Display raw data toggled by a button
+ */
+export default defineComponent({
   name: 'VeRawDisplay',
   props: {
+    /**
+     * Button label
+     */
     label: {
       type: String,
       default: 'Debug'
     },
+    /**
+     * Data
+     */
     value: {
       type: [Object, Array, String],
       required: true

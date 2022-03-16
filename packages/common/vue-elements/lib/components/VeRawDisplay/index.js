@@ -1,5 +1,5 @@
 import './VeRawDisplay.scss';
-import { VeRawDisplay } from './VeRawDisplay';
+import VeRawDisplay from './VeRawDisplay';
 
 export { VeRawDisplay };
 export default VeRawDisplay;
