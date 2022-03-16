@@ -2,6 +2,7 @@ module.exports = {
   moduleFileExtensions: [
     'js',
     'json',
+    'jsx',
     'vue'
   ],
   moduleNameMapper: {
@@ -12,7 +13,7 @@ module.exports = {
     '/node_modules/(?!vuetify)/'
   ],
   transform: {
-    '^.+\\.(js)?$': 'babel-jest',
+    '^.+\\.(js|jsx)?$': 'babel-jest',
     '^.*\\.(vue)$': 'vue-jest'
   },
   testPathIgnorePatterns: [
