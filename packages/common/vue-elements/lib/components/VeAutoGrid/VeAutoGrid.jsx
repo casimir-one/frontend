@@ -17,7 +17,10 @@ function hasPropsVal(props) {
   );
 }
 
-const VeAutoGrid = defineComponent({
+/**
+ * Grid component
+ */
+export default defineComponent({
   name: 'VeAutoGrid',
 
   props: {
@@ -27,6 +30,10 @@ const VeAutoGrid = defineComponent({
   },
 
   computed: {
+    /**
+     * Styles
+     * @returns {Object}
+     */
     styles() {
       const unitTransformer = (val) => convertToUnit(val);
       return {
@@ -35,15 +42,29 @@ const VeAutoGrid = defineComponent({
         ...genBreakpointCssVarsStyles.call(this, 'cols')
       };
     },
+    /**
+     * Classes
+     * @returns {Object} result
+     * @returns {string} result['ve-auto-grid']
+     * @returns {string} result['ve-auto-grid--auto-fill']
+     */
     classes() {
       return {
         've-auto-grid': true,
         've-auto-grid--auto-fill': this.hasItemWidthProps
       };
     },
+    /**
+     * Is itemWidth prop presented
+     * @returns {boolean}
+     */
     hasItemWidthProps() {
       return hasPropsVal.call(this, itemWidthProps);
     },
+    /**
+     * Is cols prop presented
+     * @returns {boolean}
+     */
     hasColsProps() {
       return hasPropsVal.call(this, colsProps);
     }
@@ -66,5 +87,3 @@ const VeAutoGrid = defineComponent({
     );
   }
 });
-
-export default VeAutoGrid;

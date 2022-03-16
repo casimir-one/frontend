@@ -4,7 +4,10 @@ import { defineComponent } from '@deip/platform-util';
 import { convertToUnit } from '@deip/toolbox';
 import { genBreakpointCssVarsStyles, genBreakpointProps } from '../../util/breakpoint';
 
-const VeStack = defineComponent({
+/**
+ * Simple grid that can be displayed as rows or columns
+ */
+export default defineComponent({
   name: 'VeStack',
 
   props: {
@@ -39,5 +42,3 @@ const VeStack = defineComponent({
     );
   }
 });
-
-export default VeStack;
