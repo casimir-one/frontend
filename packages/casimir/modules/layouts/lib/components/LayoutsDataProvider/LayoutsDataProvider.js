@@ -1,17 +1,28 @@
+/**
+ * Component for layouts data provider
+ */
 export const LayoutsDataProvider = {
   name: 'LayoutsDataProvider',
 
   props: {
+    /**
+     * Layouts list or single layout
+     */
     layouts: {
       type: [Array, String],
       default: () => ([])
     },
-
+    /**
+     * Filter for layouts
+     */
     filterItems: {
       type: Object,
       default: () => ({})
     },
-
+    /**
+     * Tag name
+     * @example 'div'
+     */
     tag: {
       type: String,
       default: 'div'
@@ -27,14 +38,21 @@ export const LayoutsDataProvider = {
   },
 
   computed: {
+    /**
+     * Get computed filter for layouts
+     */
     getterFilter() {
       return this.filterItems;
     },
-
+    /**
+     * Get computed filtered layouts
+     */
     dataList() {
       return this.$store.getters['layouts/list'](this.getterFilter);
     },
-
+    /**
+     * Get computed slot properties
+     */
     slotProps() {
       return {
         layouts: this.dataList,
@@ -51,6 +69,9 @@ export const LayoutsDataProvider = {
   },
 
   methods: {
+    /**
+     * Load layouts list
+     */
     loadData() {
       this.loading = true;
 
@@ -63,7 +84,11 @@ export const LayoutsDataProvider = {
         });
     }
   },
-
+  /**
+   * Render function
+   *
+   * @param {CreateElement} h createElement
+   */
   render(h) {
     return h(this.tag, [
       this.$scopedSlots.default(this.slotProps)

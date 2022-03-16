@@ -19,6 +19,9 @@ export const attributedFormFactory = (
   mixins: [formFactory(prop, event)],
 
   props: {
+    /**
+     * Schema info
+     */
     schema: {
       type: Array,
       default: () => []
@@ -26,11 +29,17 @@ export const attributedFormFactory = (
   },
 
   computed: {
+    /**
+     * Get computed attributes by scope
+     */
     attributesMap() {
       return this.$store.getters['attributes/settings'].mappedKeys
         .filter((i) => i.key.split('.')[0] === scope && i.mapToModel)
         .map((i) => ({ key: i.key.split('.')[1], value: i.value }));
     },
+    /**
+     * Get computed attributes info by scope
+     */
     attributesMapInfo() {
       return this.$store.getters['scopesRegistry/one'](scope).mappedKeys.attributes;
     },
@@ -64,7 +73,9 @@ export const attributedFormFactory = (
         this.$emit(event, val);
       }
     },
-
+    /**
+     * Get computed schema data
+     */
     schemaData() {
       return {
         ...attributeMethodsFactory(

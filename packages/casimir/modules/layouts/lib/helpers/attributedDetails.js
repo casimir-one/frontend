@@ -11,17 +11,23 @@ const attributedDetailsFactory = (
       type: Object,
       default: () => ({})
     },
-
+    /**
+     * Schema
+     */
     schema: {
       type: Array,
       default: () => []
     },
-
+    /**
+     * Schema data
+     */
     schemaData: {
       type: Object,
       default: () => {}
     },
-
+    /**
+     * Layout components
+     */
     components: {
       type: Object,
       default: () => ({})
@@ -29,10 +35,15 @@ const attributedDetailsFactory = (
   },
 
   computed: {
+    /**
+      * Get computed internal schema
+      */
     internalSchema() {
       return this.schema.length ? this.schema : [];
     },
-
+    /**
+      * Get computed internal layout components
+      */
     internalComponents() {
       return {
         ...this.components,
