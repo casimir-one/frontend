@@ -1,6 +1,13 @@
 import { blocksGenerator } from '@deip/vue-layout-schema';
 import { AttributeSet, AttributeRead } from '@deip/attributes-module';
 
+/**
+ * Attributes blocks factory
+ * @param {Object} opts
+ * @param {Array.<Object>} opts.attributes
+ * @param {Array.<Object>} opts.registry
+ * @returns {Object}
+ */
 export const attributesBlocksFactory = (opts) => {
   const {
     attributes,

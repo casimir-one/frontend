@@ -74,6 +74,10 @@
   import { wrapInArray } from '@deip/toolbox';
   import { attributesBlocksFactory } from '../../blocks';
 
+  /**
+   * Component for building layouts
+   * @requires VlsBuilder
+   */
   export default defineComponent({
     name: 'LayoutBuilder',
 
@@ -102,19 +106,28 @@
     },
 
     computed: {
+      /**
+       * Get computed registry attributes list
+       */
       registryAttrList() {
         return this.$store.getters['attributesRegistry/list']();
       },
-
+      /**
+       * Get computed registry scopes list
+       */
       registryScopesList() {
         return this.$store.getters['scopesRegistry/list']();
       },
-
+      /**
+       * Get scopes as options for the select component
+       */
       scopesSelector() {
         return this.registryScopesList
           .map((scope) => ({ text: scope.label, value: scope.type }));
       },
-
+      /**
+       * Get computed filtered blocks for builder
+       */
       blocks() {
         const normalBlocks = this.$store.getters['layoutsRegistry/blocks'];
 
@@ -160,18 +173,33 @@
     },
 
     methods: {
+      /**
+       * Reset value
+       */
       reset() {
         this.formData.value = [];
       },
 
       onSuccess() {
+        /**
+         * Success event
+         *
+         * @property {Object} lazyFormData
+         */
         this.$emit('success', this.lazyFormData);
       },
 
       onError(err) {
+        /**
+         * Triggers when error occurs
+         *
+         * @property {Error} err
+         */
         this.$emit('error', err);
       },
-
+      /**
+       * Create layout
+       */
       async createLayout() {
         this.loading = true;
 
@@ -184,7 +212,9 @@
 
         this.loading = false;
       },
-
+      /**
+       * Update layout
+       */
       async updateLayout() {
         this.loading = true;
 
@@ -197,7 +227,12 @@
 
         this.loading = false;
       },
-
+      /**
+       * Triggers after submit
+       *
+       * @event submit
+       * @param {Array} schema
+       */
       handleBuilderSubmit(schema) {
         this.formData.value = schema;
 

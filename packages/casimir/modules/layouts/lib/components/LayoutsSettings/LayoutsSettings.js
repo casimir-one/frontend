@@ -15,6 +15,9 @@ import { formMixin } from '@deip/platform-components';
 import { VeStack } from '@deip/vue-elements';
 import { collectionMerge } from '@deip/toolbox';
 
+/**
+ * Component for layouts settings
+ */
 export default defineComponent({
   name: 'LayoutsSettings',
 
@@ -28,16 +31,27 @@ export default defineComponent({
   },
 
   computed: {
+    /**
+     * Get computed scopes list
+     */
     scopes() {
       return this.$store.getters['scopesRegistry/list']();
     },
-
+    /**
+     * Get computed layouts list
+     */
     layouts() {
       return this.$store.getters['layouts/list']();
     }
   },
 
   methods: {
+    /**
+     * Generate layouts selector
+     *
+     * @param {Object} selector
+     * @param {string} scopeType
+     */
     genSelector(selector, scopeType) {
       const keyName = `${scopeType}.${selector.key}`;
       return (
@@ -53,7 +67,11 @@ export default defineComponent({
         </VCol>
       );
     },
-
+    /**
+     * Generate scope
+     *
+     * @param {Object} scope
+     */
     genScope(scope) {
       const list = scope.mappedKeys.layouts
         .map((key) => this.genSelector(key, scope.type));
@@ -70,7 +88,9 @@ export default defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate form buttons
+     */
     genFormControls() {
       return (
         <div class="d-flex">
@@ -92,7 +112,12 @@ export default defineComponent({
     },
 
     // /////////////////////
-
+    /**
+     * Get selector list
+     *
+     * @param {Object} scope
+     * @param {Array.<string>} types allowed types
+     */
     getSelectorList(scope, types) {
       return this.layouts
         .filter((layout) => layout.scope === scope && types.includes(layout.type))
@@ -101,17 +126,30 @@ export default defineComponent({
           value: layout._id
         }));
     },
-
+    /**
+     * Get selector icon
+     *
+     * @param {string} id attribute id
+     */
     getSelectorIcon(id) {
       const attr = this.attributes.find((a) => a._id === id);
       return this.$store.getters['attributesRegistry/one'](attr.type).icon;
     },
-
+    /**
+     * Get map value by element key
+     *
+     * @param {string} elementKey
+     */
     getMapValue(elementKey) {
       const { mappedKeys = [] } = this.formData;
       return mappedKeys.find((el) => el.key === elementKey)?.value || '';
     },
-
+    /**
+      * Set map value
+      *
+      * @param {string} key
+      * @param {*} value
+      */
     setMapValue(key, value) {
       const mappedKeys = collectionMerge(
         this.formData.mappedKeys || [],
@@ -123,7 +161,11 @@ export default defineComponent({
     },
 
     // /////////////////////
-
+    /**
+      * Triggers after submit
+      *
+      * @event submit
+      */
     onSubmit() {
       // this.$emit('submit', this.lazyFormData);
       this.loading = true;
@@ -143,7 +185,9 @@ export default defineComponent({
         });
     }
   },
-
+  /**
+   * Render form
+   */
   render() {
     const list = this.scopes.map((scope) => this.genScope(scope));
 
