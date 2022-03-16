@@ -37,7 +37,7 @@ class AppMsgEnvelope {
    * @param {string} serialized.MESSAGE
    * @param {*} TxClass
    * @param {*} chainMetadata
-   * @returns
+   * @returns {AppMsgEnvelope}
    */
   deserialize(serialized, TxClass, chainMetadata) {
     return AppMsgEnvelope.Deserialize(serialized, TxClass, chainMetadata);
