@@ -74,24 +74,39 @@
 
 <script>
   import { VexTreeview } from '@deip/vuetify-extended';
-
+  /**
+   * Сomponent - selector to select different domains
+   */
   export default {
     name: 'DomainSelector',
     components: { VexTreeview },
 
     props: {
+      /**
+       * Allows one to control which nodes are selected.
+       * The array consists of the item-key of each selected item.
+       */
       value: {
         type: Array,
         default: () => []
       },
+      /**
+       * Label content
+       */
       label: {
         type: String,
         default: null
       },
+      /**
+       * Disables selection for all nodes
+       */
       disabled: {
         type: Boolean,
         default: false
       },
+      /**
+       * Errors
+       */
       errors: {
         type: Array,
         default: null
@@ -125,6 +140,10 @@
     },
 
     methods: {
+      /**
+       * Remove item of domain
+       * @property {String} item id
+       */
       removeItem(id) {
         const idx = this.internalValue.indexOf(id);
         if (idx !== -1) {
@@ -132,8 +151,19 @@
           this.handleInput(this.internalValue);
         }
       },
+      /**
+       * Handle input values
+       * Emits the array of selected items when this value changes
+       * @property {Array} selected items
+       */
       handleInput(value) {
         this.internalValue = [...value];
+        /**
+         * Input event
+         * Fires when a new value is entered
+         * @property {Array} value - selected items
+         * @event input
+         */
         this.$emit('input', value);
       }
     }
