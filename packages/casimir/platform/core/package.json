@@ -1,6 +1,6 @@
 {
   "name": "@casimir/platform-core",
-  "version": "1.371.0",
+  "version": "1.372.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -29,7 +29,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.371.0",
+    "@deip/constants": "1.372.0",
     "@deip/toolbox": "1.371.0"
   },
   "peerDependencies": {

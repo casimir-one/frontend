@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.372.0](https://github.com/DEIPworld/deip-modules/compare/v1.371.0...v1.372.0) (2022-03-16)
+
+
+### Features
+
+* **@deip/assets-service:** split asset to FT and NFT ([9bfe8b6](https://github.com/DEIPworld/deip-modules/commit/9bfe8b68fd2b5fae91e01975b565473686144efd))
+
+
+
+
+
 # [1.371.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.370.0...v1.371.0) (2022-03-09)
 
 **Note:** Version bump only for package @deip/investment-opportunity-service
