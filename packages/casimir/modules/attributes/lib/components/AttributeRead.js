@@ -2,6 +2,9 @@ import { defineComponent } from '@deip/platform-util';
 
 import { AttributeRootComponentMixinFactory } from '../mixins';
 
+/**
+ * Component for read only attribute
+ */
 const AttributeRead = defineComponent({
   name: 'AttributeRead',
 
@@ -10,6 +13,9 @@ const AttributeRead = defineComponent({
   ],
 
   methods: {
+  /**
+   * Generate read only attribute
+   */
     genFallback() {
       return (
         <div>{this.internalValue}</div>

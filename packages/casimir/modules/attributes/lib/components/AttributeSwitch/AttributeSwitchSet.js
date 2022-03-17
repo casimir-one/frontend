@@ -7,12 +7,20 @@ import { VeStack } from '@deip/vue-elements';
 import { defineComponent } from '@deip/platform-util';
 import { AttributeMultipleModelMixin, AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for changing switch attribute
+ */
 export const AttributeSwitchSet = defineComponent({
   name: 'AttributeSwitchSet',
 
   mixins: [AttributeSetMixin, AttributeMultipleModelMixin],
 
   methods: {
+    /**
+     * Generate single changing switch attribute
+     *
+     * @param {Array} errors
+     */
     genSingleAttribute(errors) {
       return (
         <VSwitch
@@ -22,6 +30,11 @@ export const AttributeSwitchSet = defineComponent({
         />
       );
     },
+    /**
+     * Generate changing switch attribute with multiple option values
+     *
+     * @param {Array} errors
+     */
     genMultipleAttribute(errors) {
       const items = this.attributeInfo.valueOptions
         .map((v) => (
@@ -43,7 +56,11 @@ export const AttributeSwitchSet = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate changing switch attribute depending on options count
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute(errors)

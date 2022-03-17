@@ -6,12 +6,18 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
+/**
+ * Component for read only url attribute
+ */
 export const AttributeUrlRead = defineComponent({
   name: 'AttributeTextRead',
 
   mixins: [AttributeReadMixin],
 
   methods: {
+    /**
+     * Generate read only single url attribute
+     */
     genSingleAttribute(value = this.internalValue) {
       const { url, label } = value;
       return (
@@ -23,7 +29,9 @@ export const AttributeUrlRead = defineComponent({
         </div>
       );
     },
-
+    /**
+     * Generate read only multiple url attribute
+     */
     genMultipleAttribute() {
       const items = this.internalValue
         .map((value) => this.genSingleAttribute(value));
@@ -34,7 +42,9 @@ export const AttributeUrlRead = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate read only url attribute depending on values count
+     */
     genAttribute() {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute()

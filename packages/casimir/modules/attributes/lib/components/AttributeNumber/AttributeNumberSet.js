@@ -6,12 +6,20 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for changing number attribute
+ */
 export const AttributeNumberSet = defineComponent({
   name: 'AttributeNumberSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate changing number attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VTextField

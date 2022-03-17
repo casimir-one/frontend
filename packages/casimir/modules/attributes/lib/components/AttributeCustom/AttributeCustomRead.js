@@ -5,6 +5,9 @@ import { schemaLayoutComponents } from '../../composables/schemaPartials';
 
 import { AttributeReadMixin, AttributeSchemaMixin } from '../../mixins';
 
+/**
+ * Component for custom read only attribute
+ */
 export const AttributeCustomRead = defineComponent({
   name: 'AttributeCustomRead',
 
@@ -14,6 +17,11 @@ export const AttributeCustomRead = defineComponent({
   ],
 
   methods: {
+    /**
+     * Generate single custom attribute for read only
+     *
+     * @param {*} value
+     */
     genSingleAttribute(value = this.internalValue) {
       return (
         <VlsParser
@@ -23,7 +31,9 @@ export const AttributeCustomRead = defineComponent({
         />
       );
     },
-
+    /**
+     * Generate custom attribute with multiple values for read only
+     */
     genMultipleAttribute() {
       const items = this.internalValue
         .map((value) => this.genSingleAttribute(value));
@@ -34,7 +44,9 @@ export const AttributeCustomRead = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate custom attribute for read only
+     */
     genAttribute() {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute()

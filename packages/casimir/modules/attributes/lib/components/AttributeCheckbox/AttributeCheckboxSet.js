@@ -7,12 +7,20 @@ import { VeStack } from '@deip/vue-elements';
 import { defineComponent } from '@deip/platform-util';
 import { AttributeMultipleModelMixin, AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for editable attribute checkbox
+ */
 export const AttributeCheckboxSet = defineComponent({
   name: 'AttributeCheckboxSet',
 
   mixins: [AttributeSetMixin, AttributeMultipleModelMixin],
 
   methods: {
+    /**
+     * Generate editable checkbox with one option
+     *
+     * @param {Array} errors
+     */
     genSingleAttribute(errors) {
       return (
         <VCheckbox
@@ -22,6 +30,11 @@ export const AttributeCheckboxSet = defineComponent({
         />
       );
     },
+    /**
+     * Generate editable checkbox with multiple options
+     *
+     * @param {Array} errors
+     */
     genMultipleAttribute(errors) {
       const items = this.attributeInfo.valueOptions
         .map((v) => (
@@ -43,7 +56,11 @@ export const AttributeCheckboxSet = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate editable checkbox depending on options count
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute(errors)

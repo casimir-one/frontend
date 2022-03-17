@@ -73,6 +73,9 @@
   import { VeStack } from '@deip/vue-elements';
   import { collectionMerge } from '@deip/toolbox';
 
+  /**
+   * Component for attributes setup
+   */
   export default {
     name: 'AttributesSetup',
 
@@ -90,16 +93,27 @@
     },
 
     computed: {
+      /**
+       * Get computed scopes list
+       */
       scopes() {
         return this.$store.getters['scopesRegistry/list']();
       },
-
+      /**
+       * Get computed attributes list
+       */
       attributes() {
         return this.$store.getters['attributes/list']();
       }
     },
 
     methods: {
+      /**
+       * Get key attributes list
+       *
+       * @param {string} scope
+       * @param {Array.<string>} types
+       */
       getKeyAttrsList(scope, types) {
         return this.attributes
           .filter((attr) => attr.scope === scope && types.includes(attr.type))
@@ -108,17 +122,30 @@
             value: attr._id
           }));
       },
-
+      /**
+       * Get attribute icon
+       *
+       * @param {string} id
+       */
       getAttributeIcon(id) {
         const attr = this.attributes.find((a) => a._id === id);
         return this.$store.getters['attributesRegistry/one'](attr.type).icon;
       },
-
+      /**
+       * Get map value by element key
+       *
+       * @param {string} elementKey
+       */
       getMapValue(elementKey) {
         const { mappedKeys = [] } = this.formData;
         return mappedKeys.find((el) => el.key === elementKey)?.value || '';
       },
-
+      /**
+       * Set map value
+       *
+       * @param {string} key
+       * @param {*} value
+       */
       setMapValue(key, value) {
         const mappedKeys = collectionMerge(
           this.formData.mappedKeys || [],
@@ -128,16 +155,26 @@
 
         this.$set(this.formData, 'mappedKeys', mappedKeys);
       },
-
+      /**
+       * Update settings
+       */
       updateSettings() {
         this.disabled = true;
         this.loading = true;
 
         this.$store.dispatch('attributes/updateSettings', this.lazyFormData)
           .then(() => {
+            /**
+             * Success event.
+             */
             this.$emit('success');
           })
           .catch((error) => {
+            /**
+             * Triggers when error occurs
+             *
+             * @property {Error} error
+             */
             this.$emit('error', error);
           })
           .finally(() => {

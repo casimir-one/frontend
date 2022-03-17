@@ -3,12 +3,20 @@ import { VexImageInput } from '@deip/vuetify-extended';
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for editable attribute avatar
+ */
 export const AttributeAvatarSet = defineComponent({
   name: 'AttributeAvatarSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate editable attribute avatar
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VexImageInput
