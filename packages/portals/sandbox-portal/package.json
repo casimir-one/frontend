@@ -55,6 +55,7 @@
     "@babel/plugin-proposal-private-methods": "^7.14.5",
     "@deip/eslint-config": "1.370.0",
     "@intlify/vue-i18n-loader": "^1.0.0",
+    "@open-wc/webpack-import-meta-loader": "^0.4.7",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.2.1",
     "@vue/babel-preset-jsx": "^1.2.4",
     "@vue/cli-plugin-babel": "~4.5.13",
