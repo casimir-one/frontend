@@ -16,6 +16,11 @@ const iconsMap = [
   { icon: 'mdi-file-powerpoint-outline', ext: ['ppt', 'pptx'] }
 ];
 
+/**
+ * Get file icon
+ *
+ * @param {string} fileName
+ */
 const getFileIcon = (fileName) => {
   if (!fileName) return false;
 
@@ -27,12 +32,18 @@ const getFileIcon = (fileName) => {
   return target.icon;
 };
 
+/**
+ * Component for read only file attribute
+ */
 export const AttributeFileRead = defineComponent({
   name: 'AttributeFileRead',
 
   mixins: [AttributeReadMixin],
 
   methods: {
+    /**
+     * Generate file attribute for read only
+     */
     genAttribute() {
       return (
         <VeStack gap={16}>

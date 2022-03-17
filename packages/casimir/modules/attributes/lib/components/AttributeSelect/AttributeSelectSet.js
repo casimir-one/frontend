@@ -6,12 +6,20 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+  * Component for changing select attribute
+  */
 export const AttributeSelectSet = defineComponent({
   name: 'AttributeSelectSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate changing select attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VSelect

@@ -13,6 +13,9 @@ import { AttributeSetMixin, AttributeMultipleModelMixin } from '../../mixins';
 
 const defaultUrlModel = () => ({ url: '', label: '' });
 
+/**
+ * Component for changing url attribute
+ */
 export const AttributeUrlSet = defineComponent({
   name: 'AttributeUrlSet',
 
@@ -29,6 +32,14 @@ export const AttributeUrlSet = defineComponent({
   },
 
   methods: {
+    /**
+     * Generate url field
+     *
+     * @param {Array} errors
+     * @param {*} target
+     * @param {string} label
+     * @param {boolean} hideDetails
+     */
     genUrlField(
       errors,
       target = this.internalValue,
@@ -46,7 +57,12 @@ export const AttributeUrlSet = defineComponent({
         />
       );
     },
-
+    /**
+     * Generate url label field
+     *
+     * @param {*} target
+     * @param {string} label
+     */
     genLabelField(
       target = this.internalValue,
       label = 'Link',
@@ -60,7 +76,11 @@ export const AttributeUrlSet = defineComponent({
         />
       );
     },
-
+    /**
+     * Generate single changing url attribute
+     *
+     * @param {Array} errors
+     */
     genSingleAttribute(errors) {
       return (
         <VRow noGutters>
@@ -73,7 +93,11 @@ export const AttributeUrlSet = defineComponent({
         </VRow>
       );
     },
-
+    /**
+     * Generate multiple changing url attribute
+     *
+     * @param {Array} errors
+     */
     genMultipleAttribute(errors) {
       const addBtn = () => (
         <VBtn
@@ -120,7 +144,11 @@ export const AttributeUrlSet = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate changing url attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute(errors)

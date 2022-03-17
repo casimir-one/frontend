@@ -6,12 +6,20 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for changing video url attribute
+ */
 export const AttributeVideoUrlSet = defineComponent({
   name: 'AttributeVideoUrlSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate changing video url attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VTextField

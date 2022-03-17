@@ -6,12 +6,20 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for changing textarea attribute
+ */
 export const AttributeTextareaSet = defineComponent({
   name: 'AttributeTextareaSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate changing textarea attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VTextarea

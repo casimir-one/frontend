@@ -130,6 +130,9 @@
   } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
 
+  /**
+   * Component for creating list of attributes
+   */
   export default {
     name: 'AttributesList',
 
@@ -139,10 +142,16 @@
     },
 
     props: {
+      /**
+       * Function that is executed when the Edit button is clicked
+       */
       onClickEdit: {
         type: Function,
         default: () => {}
       },
+      /**
+       * Function that is executed when the Remove button is clicked
+       */
       onClickRemove: {
         type: Function,
         default: () => {}
@@ -161,26 +170,37 @@
     },
 
     computed: {
+      /**
+       * Get computed attributes list
+       */
       attributes() {
         const filter = this.filter.scope ? { scope: this.filter.scope } : {};
         return this.$store.getters['attributes/list'](filter);
       },
-
+      /**
+       * Get computed registry attributes list
+       */
       registryAttributes() {
         return this.$store.getters['attributesRegistry/list']();
       },
-
+      /**
+       * Get computed registry scopes list
+       */
       registryScopes() {
         return this.$store.getters['scopesRegistry/list']();
       },
-
+      /**
+       * Get computed scopes selector list
+       */
       scopesSelectorList() {
         return [
           { value: 0, text: 'All' },
           ...this.registryScopes.map((s) => ({ text: s.label, value: s.type }))
         ];
       },
-
+      /**
+       * Get computed scopes palette
+       */
       scopesPalette() {
         return genColorsPalette({
           palette: ['#FFC255', '#FF8863', '#FF5484', '#CD3DA9', '#6846C0'],
@@ -190,7 +210,9 @@
           ...{ [this.registryScopes[index].type]: color }
         }), {});
       },
-
+      /**
+       * Get computed headers array
+       */
       headers() {
         return [
           ...(!this.filter.scope ? [{
@@ -235,10 +257,19 @@
     },
 
     methods: {
+      /**
+       * Get attribute info by attribute type
+       *
+       * @param {string} attrType
+       */
       attrTypeInfo(attrType) {
         return this.$store.getters['attributesRegistry/one'](attrType) || { type: attrType, label: attrType };
       },
-
+      /**
+       * Get scope info by scope type
+       *
+       * @param {string} scopeType
+       */
       scopeTypeInfo(scopeType) {
         return this.$store.getters['scopesRegistry/one'](scopeType) || { type: scopeType, label: scopeType };
       }

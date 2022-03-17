@@ -15,6 +15,9 @@ import {
   schemaFormComponents
 } from '../../composables/schemaPartials';
 
+/**
+ * Component for custom editable attribute
+ */
 export const AttributeCustomSet = defineComponent({
   name: 'AttributeCustomSet',
 
@@ -29,6 +32,11 @@ export const AttributeCustomSet = defineComponent({
   },
 
   methods: {
+    /**
+     * Generate single changing custom attribute
+     *
+     * @param {Array} errors
+     */
     genSingleAttribute(errors) {
       return (
         <VeStack gap={4}>
@@ -42,7 +50,11 @@ export const AttributeCustomSet = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate changing custom attribute with multiple values
+     *
+     * @param {Array} errors
+     */
     genMultipleAttribute(errors) {
       const items = () => this.internalValue
         .map((_, index) => {
@@ -89,7 +101,11 @@ export const AttributeCustomSet = defineComponent({
         </VeStack>
       );
     },
-
+    /**
+     * Generate changing custom attribute
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return this.attributeInfo.isMultiple
         ? this.genMultipleAttribute(errors)

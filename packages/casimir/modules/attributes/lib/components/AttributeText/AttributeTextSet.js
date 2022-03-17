@@ -6,12 +6,20 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
+/**
+ * Component for changing text field attribute
+ */
 export const AttributeTextSet = defineComponent({
   name: 'AttributeTextSet',
 
   mixins: [AttributeSetMixin],
 
   methods: {
+    /**
+     * Generate changing text field
+     *
+     * @param {Array} errors
+     */
     genAttribute(errors) {
       return (
         <VTextField

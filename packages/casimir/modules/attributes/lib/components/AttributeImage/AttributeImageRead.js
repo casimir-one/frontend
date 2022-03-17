@@ -5,12 +5,18 @@ import {
 import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
+/**
+ * Component for read only image attribute
+ */
 export const AttributeImageRead = defineComponent({
   name: 'AttributeImageRead',
 
   mixins: [AttributeReadMixin],
 
   methods: {
+    /**
+     * Generate image attribute for read only
+     */
     genAttribute() {
       const src = this.schemaData.getAttributeFileSrc(this.attributeId);
 
