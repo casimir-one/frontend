@@ -9,6 +9,11 @@ module.exports = {
     for (const module of ['vue', 'vuex', 'vue-router', 'vuetify']) {
       config.resolve.alias.set(module, path.join(__dirname, 'node_modules', module));
     }
+    config.module
+      .rule('import-meta')
+      .test(/\.js$/)
+      .use('@open-wc/webpack-import-meta-loader')
+      .loader('@open-wc/webpack-import-meta-loader');
   },
 
   devServer: {
@@ -31,7 +36,8 @@ module.exports = {
 
   transpileDependencies: [
     '@deip/*',
-    'vuetify'
+    'vuetify',
+    '@polkadot/*'
   ],
 
   runtimeCompiler: true
