@@ -76,7 +76,6 @@
 
   /**
    * Component for building layouts
-   * @requires VlsBuilder
    */
   export default defineComponent({
     name: 'LayoutBuilder',
@@ -230,7 +229,6 @@
       /**
        * Triggers after submit
        *
-       * @event submit
        * @param {Array} schema
        */
       handleBuilderSubmit(schema) {

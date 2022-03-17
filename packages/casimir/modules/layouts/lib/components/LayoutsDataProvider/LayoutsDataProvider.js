@@ -84,11 +84,6 @@ export const LayoutsDataProvider = {
         });
     }
   },
-  /**
-   * Render function
-   *
-   * @param {CreateElement} h createElement
-   */
   render(h) {
     return h(this.tag, [
       this.$scopedSlots.default(this.slotProps)
