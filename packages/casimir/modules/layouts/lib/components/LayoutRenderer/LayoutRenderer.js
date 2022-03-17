@@ -4,7 +4,6 @@ import { defaultLayoutComponents } from '../../helpers/defaultLayoutsComponents'
 
 /**
   * Component for rendering layouts
-  * @requires defaultLayoutComponents
   */
 export const LayoutRenderer = defineComponent({
   name: 'LayoutRenderer',

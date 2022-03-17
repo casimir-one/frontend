@@ -163,8 +163,6 @@ export default defineComponent({
     // /////////////////////
     /**
       * Triggers after submit
-      *
-      * @event submit
       */
     onSubmit() {
       // this.$emit('submit', this.lazyFormData);
