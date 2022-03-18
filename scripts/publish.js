@@ -116,15 +116,6 @@ const revertPublish = async () => {
   await execa.command(`git tag -d v${version}`);
 };
 
-/**
- * @return {Promise<void>}
- */
-const equalizeDevelop = async () => {
-  await execa.command('git checkout develop');
-  await execa.command('git fetch');
-  await execa.command('git rebase origin/master');
-};
-
 prompt([{
   type: 'list',
   name: 'startPublish',
@@ -182,14 +173,6 @@ Make sure everything is done correctly.
         await revertPublish();
         spinner.succeed('Reverted');
       }
-    }
-
-    spinner.info('Equalize develop branch...');
-
-    try {
-      await equalizeDevelop();
-    } catch (err) {
-      errorHandler(err);
     }
 
     process.exit();
