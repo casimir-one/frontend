@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.372.1](https://github.com/DEIPworld/deip-modules/compare/v1.372.0...v1.372.1) (2022-03-18)
+
+**Note:** Version bump only for package @deip/bookmarks-module
+
+
+
+
+
 # [1.372.0](https://github.com/DEIPworld/deip-modules/compare/v1.371.0...v1.372.0) (2022-03-16)
 
 **Note:** Version bump only for package @deip/bookmarks-module

@@ -1,6 +1,6 @@
 {
   "name": "@deip/review-service",
-  "version": "1.372.0",
+  "version": "1.372.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -26,7 +26,7 @@
     "@deip/commands": "1.372.0",
     "@deip/constants": "1.372.0",
     "@deip/http-service": "1.372.0",
-    "@deip/messages": "1.372.0",
+    "@deip/messages": "1.372.1",
     "@deip/proxydi": "1.371.0",
     "@deip/toolbox": "1.371.0"
   },

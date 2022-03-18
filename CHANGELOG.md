@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.372.1](https://github.com/DEIPworld/casimir-frontend/compare/v1.372.0...v1.372.1) (2022-03-18)
+
+
+### Bug Fixes
+
+* **@casimir/sandbox-portal:** fix build after polkadot update ([4df496d](https://github.com/DEIPworld/casimir-frontend/commit/4df496d0ed8eb0a969adcd468505f972f60f0110))
+* jest config ([ee1b346](https://github.com/DEIPworld/casimir-frontend/commit/ee1b346f099f7963f3cc838a0136ee380aed6e0d))
+
+
+
+
+
 # [1.372.0](https://github.com/DEIPworld/deip-modules/compare/v1.371.0...v1.372.0) (2022-03-16)
 
 
