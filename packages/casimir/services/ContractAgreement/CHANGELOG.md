@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.373.0](https://github.com/DEIPworld/deip-modules/compare/v1.372.1...v1.373.0) (2022-03-19)
+
+**Note:** Version bump only for package @deip/contract-agreement-service
+
+
+
+
+
 ## [1.372.1](https://github.com/DEIPworld/casimir-frontend/compare/v1.372.0...v1.372.1) (2022-03-18)
 
 **Note:** Version bump only for package @deip/contract-agreement-service

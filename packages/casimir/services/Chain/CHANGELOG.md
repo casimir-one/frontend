@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.373.0](https://github.com/DEIPworld/deip-modules/compare/v1.372.1...v1.373.0) (2022-03-19)
+
+
+### Features
+
+* **@deip/chain-service:** Verifying transaction by portal ([a31c3bf](https://github.com/DEIPworld/deip-modules/commit/a31c3bf4ffe4e62e9270168a6c461debb51983b3))
+
+
+
+
+
 # [1.372.0](https://github.com/DEIPworld/deip-modules/compare/v1.371.0...v1.372.0) (2022-03-16)
 
 

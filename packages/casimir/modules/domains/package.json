@@ -1,6 +1,6 @@
 {
   "name": "@deip/domains-module",
-  "version": "1.372.1",
+  "version": "1.373.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,12 +23,12 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.372.0",
-    "@deip/domains-service": "1.372.0",
+    "@deip/constants": "1.373.0",
+    "@deip/domains-service": "1.373.0",
     "@deip/platform-util": "1.371.0",
     "@deip/proxydi": "1.371.0",
     "@deip/toolbox": "1.371.0",
-    "@deip/vuetify-extended": "1.372.1",
+    "@deip/vuetify-extended": "1.373.0",
     "performant-array-to-tree": "^1.9.1"
   },
   "devDependencies": {
