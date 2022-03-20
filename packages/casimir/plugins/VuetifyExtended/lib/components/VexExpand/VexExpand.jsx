@@ -7,7 +7,10 @@ import { getSlot } from 'vuetify/lib/util/helpers';
 /* eslint-enable */
 import { defineComponent } from '@deip/platform-util';
 
-export const VexExpand = defineComponent({
+/**
+ * Component for expand/collapse content on activator click
+ */
+export default defineComponent({
   name: 'VexExpand',
 
   directives: {
@@ -17,22 +20,27 @@ export const VexExpand = defineComponent({
   mixins: [Toggleable, Bootable],
 
   props: {
+    /** Disabled */
     disabled: {
       type: Boolean,
       default: false
     },
+    /** Ripple on the activator */
     ripple: {
       type: [Boolean, Object],
       default: true
     },
+    /** Activator tag */
     activatorTag: {
       type: String,
       default: 'div'
     },
+    /** Content tag */
     contentTag: {
       type: String,
       default: 'div'
     },
+    /** Tag */
     tag: {
       type: String,
       default: 'div'
@@ -40,21 +48,30 @@ export const VexExpand = defineComponent({
   },
 
   methods: {
-    click(e) {
+    /**
+     * Handle click event
+     * @param {Event} e
+     */
+    handleActivatorClick(e) {
       if (this.disabled) return;
       this.isBooted = true;
+      /** Click event */
       this.$emit('click', e);
       this.$nextTick(() => {
         this.isActive = !this.isActive;
       });
     },
 
+    /**
+     * Generate activator
+     * @returns {VNode}
+     */
     genActivator() {
       return this.$createElement(
         this.activatorTag,
         {
           on: {
-            click: this.click
+            click: this.handleActivatorClick
           },
           directives: [{
             name: 'ripple',
@@ -64,12 +81,16 @@ export const VexExpand = defineComponent({
         [
           this.$scopedSlots.activator({
             active: this.isActive,
-            toggle: this.click
+            toggle: this.handleActivatorClick
           })
         ]
       );
     },
 
+    /**
+     * Generate content
+     * @returns {VNode}
+     */
     genContent() {
       return this.$createElement(
         this.contentTag,

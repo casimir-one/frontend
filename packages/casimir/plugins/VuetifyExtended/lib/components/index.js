@@ -3,6 +3,7 @@ export * from './VexAvatar';
 export * from './VexBlock';
 export * from './VexDialog';
 export * from './VexDotList';
+export * from './VexExpand';
 export * from './VexHeader';
 export * from './VexImageInput';
 export * from './VexInput';
@@ -18,5 +19,3 @@ export * from './VexTooltip';
 export * from './VexTreeview';
 export * from './VexVideoEmbed';
 export * from './VexPlacesAutocomplete';
-
-export * from './vex-expand';

@@ -30,6 +30,9 @@
   import VexDotListItem from './VexDotListItem';
   import { contextMixin } from '../../composables';
 
+  /**
+   * List with dots aside
+   */
   export default defineComponent({
     name: 'VexDotList',
     components: {
@@ -38,10 +41,20 @@
     },
     mixins: [contextMixin],
     props: {
+      /** Items */
       items: {
         type: Array,
         default: () => ([])
       },
+      /**
+       * Row align
+       * @see See [Flex align](https://vuetifyjs.com/en/styles/flex/#flex-align)
+       * @values start, end, center, baseline, stretch,
+       * sm-start, sm-end, sm-center, sm-baseline, sm-stretch
+       * md-start, md-end, md-center, md-baseline, md-stretch
+       * lg-start, lg-end, lg-center, lg-baseline, lg-stretch
+       * xl-start, xl-end, xl-center, xl-baseline, xl-stretch
+       */
       rowAlign: {
         type: String,
         default: null

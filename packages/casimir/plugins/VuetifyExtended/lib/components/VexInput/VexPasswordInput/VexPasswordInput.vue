@@ -4,6 +4,10 @@
   import { VTextField } from 'vuetify/lib/components';
   /* eslint-enable */
 
+  /**
+   * Password input
+   * @see See [text field](https://vuetifyjs.com/en/components/text-fields/)
+   */
   export default defineComponent({
     name: 'VexPasswordInput',
 

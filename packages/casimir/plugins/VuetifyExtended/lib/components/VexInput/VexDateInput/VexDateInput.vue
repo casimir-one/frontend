@@ -38,23 +38,35 @@
   /* eslint-enable */
 
   import { isArray } from '@deip/toolbox';
-
+  /**
+   * Date input with datepicker
+   */
   export default defineComponent({
     name: 'VexDateInput',
     mixins: [Proxyable],
     props: {
+      /** Label */
       label: {
         type: String,
         default: null
       },
+      /**
+       * Date picker props
+       * @see See [props](https://vuetifyjs.com/en/api/v-date-picker/#props)
+       */
       pickerProps: {
         type: Object,
         default: () => ({})
       },
+      /**
+       * Text field props
+       * @see See [props](https://vuetifyjs.com/en/api/v-text-field/#props)
+       */
       fieldProps: {
         type: Object,
         default: () => ({})
       },
+      /** Enable only future dates */
       onlyFuture: {
         type: Boolean,
         default: false
@@ -112,10 +124,23 @@
       }
     },
     methods: {
+      /**
+       * Handle date picker change
+       * @param {string} e
+       */
       handleDatePickerChange(e) {
+        /**
+         * Change event
+         * @param {string} value
+         */
         this.$emit('change', e);
         this.toggleCalendar();
       },
+      /**
+       * Check if date is allowed
+       * @param {string} val
+       * @returns {boolean} check result
+       */
       allowedDates(val) {
         if (this.onlyFuture) {
           const date = parseISO(val);
@@ -124,21 +149,23 @@
 
         return true;
       },
+      /** Toggle calendar */
       toggleCalendar() {
         this.isOpen = !this.isOpen;
       },
+      /** Toggle focus */
       toggleFocus() {
         this.isFocus = !this.isFocus;
       },
+      /** Handle text field focus */
       handleTextFieldFocus() {
         this.toggleFocus();
         this.isOpen = true;
       },
+      /** Handle text field blur */
       handleTextFieldBlur() {
         this.toggleFocus();
       }
-
     }
-
   });
 </script>

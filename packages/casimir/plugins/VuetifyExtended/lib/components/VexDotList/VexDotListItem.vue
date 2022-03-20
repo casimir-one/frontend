@@ -23,18 +23,32 @@
   import { defineComponent } from '@deip/platform-util';
   import { contextMixin } from '../../composables';
 
+  /**
+   * Dot list item
+   */
   export default defineComponent({
     name: 'VexDotListItem',
     mixins: [contextMixin],
     props: {
+      /** Item label */
       label: {
         type: [String, Number],
         default: null
       },
+      /** Item value */
       value: {
         type: [String, Number],
         default: null
       },
+      /**
+       * Label and velut align
+       * @see See [Flex align](https://vuetifyjs.com/en/styles/flex/#flex-align)
+       * @values start, end, center, baseline, stretch,
+       * sm-start, sm-end, sm-center, sm-baseline, sm-stretch
+       * md-start, md-end, md-center, md-baseline, md-stretch
+       * lg-start, lg-end, lg-center, lg-baseline, lg-stretch
+       * xl-start, xl-end, xl-center, xl-baseline, xl-stretch
+       */
       align: {
         type: String,
         default: null

@@ -4,30 +4,40 @@
   import { VFileInput, VChip, VTextField } from 'vuetify/lib/components';
   /* eslint-enable */
 
+  /**
+   * Simpe file input
+   * @see See [file inputs](https://vuetifyjs.com/en/components/file-inputs/)
+   */
   export default defineComponent({
     name: 'VexFileInput',
     mixins: [VFileInput],
     props: {
+      /** Small chips with file names */
       smallChips: {
         type: Boolean,
         default: true
       },
+      /** Chip as label */
       chipAsLabel: {
         type: Boolean,
         default: true
       },
+      /** Chip color */
       chipColor: {
         type: String,
         default: 'primary'
       },
+      /** Prepend icon */
       prependIcon: {
         type: String,
         default: null
       },
+      /** Append icon */
       appendIcon: {
         type: String,
         default: '$file'
       },
+      /** Initial files */
       existsFiles: {
         type: [String, Array],
         default: undefined
@@ -43,6 +53,10 @@
       }
     },
     methods: {
+      /**
+       * Generate chips
+       * @returns {Array.<VNode>}
+       */
       genChips() {
         if (!this.isDirty) return [];
 

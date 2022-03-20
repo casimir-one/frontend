@@ -24,28 +24,41 @@
 
   import { VexAutocomplete } from '../../VexAutocomplete';
 
+  /**
+   * Format time
+   * @param {string} h
+   * @param {string} m
+   * @returns {string}
+   */
   const formatTime = (h, m) => {
     const addLeadingZero = (s) => padStart(s, 2, '0');
     return `${addLeadingZero(h)}:${addLeadingZero(m)}`;
   };
 
+  /**
+   * Time input
+   */
   export default defineComponent({
     name: 'VexTimeInput',
     components: { VexAutocomplete },
     mixins: [Proxyable],
     props: {
-      graduate: {
+      /** Minute step */
+      minuteStep: {
         type: Number,
         default: 5
       },
+      /** Placeholder */
       placeholder: {
         type: String,
         default: undefined
       },
+      /** Label */
       label: {
         type: String,
         default: undefined
       },
+      /** Date */
       date: {
         type: String,
         default: ''
@@ -65,7 +78,7 @@
 
         hours.forEach((h) => {
           minutes.forEach((m) => {
-            if (m % this.graduate === 0) {
+            if (m % this.minuteStep === 0) {
               if (this.date) {
                 if ((h === getHours(currentDate) && m > getMinutes(currentDate))
                   || h !== getHours(currentDate)) {
