@@ -14,7 +14,8 @@ const init = async () => {
     DEIP_FULL_NODE_URL: env.DEIP_FULL_NODE_URL,
     CHAIN_ID: env.CHAIN_ID,
     PROTOCOL: env.PROTOCOL,
-    CORE_ASSET: env.CORE_ASSET
+    CORE_ASSET: env.CORE_ASSET,
+    PORTAL_ID: env.TENANT
   });
 
   proxydi.register('env', env);
