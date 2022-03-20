@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.374.0](https://github.com/DEIPworld/deip-modules/compare/v1.373.0...v1.374.0) (2022-03-20)
+
+
+### Features
+
+* **@deip/chain-service:** Rpc call for core token balance is fixed; PORTAL_ID param ([93a1e68](https://github.com/DEIPworld/deip-modules/commit/93a1e68ff24ebcc071366d7f18551a1f1b3d1437))
+
+
+
+
+
 # [1.373.0](https://github.com/DEIPworld/deip-modules/compare/v1.372.1...v1.373.0) (2022-03-19)
 
 **Note:** Version bump only for package @deip/env-module

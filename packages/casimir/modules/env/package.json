@@ -1,6 +1,6 @@
 {
   "name": "@deip/env-module",
-  "version": "1.373.0",
+  "version": "1.374.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@deip/app-config-service": "1.373.0",
-    "@deip/chain-service": "1.373.0",
+    "@deip/chain-service": "1.374.0",
     "@deip/constants": "1.373.0",
     "@deip/platform-util": "1.371.0",
     "@deip/proxydi": "1.371.0",

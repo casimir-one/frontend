@@ -1,6 +1,6 @@
 {
   "name": "@deip/proposals-service",
-  "version": "1.373.0",
+  "version": "1.374.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@deip/access-service": "1.373.0",
-    "@deip/chain-service": "1.373.0",
+    "@deip/chain-service": "1.374.0",
     "@deip/commands": "1.373.0",
     "@deip/constants": "1.373.0",
     "@deip/http-service": "1.373.0",
-    "@deip/messages": "1.373.0",
+    "@deip/messages": "1.374.0",
     "@deip/proxydi": "1.371.0",
     "@deip/toolbox": "1.371.0"
   },
