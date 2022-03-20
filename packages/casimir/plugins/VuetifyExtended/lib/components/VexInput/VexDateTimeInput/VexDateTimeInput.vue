@@ -30,6 +30,9 @@
   import { VexDateInput } from '../VexDateInput';
   import { VexTimeInput } from '../VexTimeInput';
 
+  /**
+   * Date and time input
+   */
   export default defineComponent({
     name: 'VexDateTimeInput',
     components: { VexDateInput, VexTimeInput },
@@ -39,14 +42,20 @@
       event: 'change'
     },
     props: {
+      /** Label */
       label: {
         type: String,
         default: null
       },
+      /** Only future time */
       onlyFuture: {
         type: Boolean,
         default: false
       },
+      /**
+       * Value
+       * @model
+       */
       value: {
         type: String,
         default: ''
@@ -64,6 +73,10 @@
       internalValue: {
         handler(val) {
           if (this.stringifyVal(val) === this.value) return;
+          /**
+           * Change event
+           * @param {string} value
+           */
           this.$emit('change', this.stringifyVal(val));
         },
         deep: true
@@ -78,13 +91,26 @@
       }
     },
     methods: {
+      /**
+       * Parse string dateTime
+       * @param {string} dateTime
+       * @returns {Object} result
+       * @returns {string} result.date
+       * @returns {string} result.time
+       */
       parseVal(dateTime) {
         const [date, time] = dateTime.split('T');
         const [hours = '00', min = '00'] = time.split(':');
 
         return { date, time: `${hours}:${min}` };
       },
-
+      /**
+       * Stringify datetime value
+       * @param {Object} dateTime
+       * @param {string} dateTime.date
+       * @param {string} dateTime.time
+       * @returns {string}
+       */
       stringifyVal(dateTime) {
         const { date, time } = dateTime;
         const [hours = '00', min = '00', sec = '00'] = time.split(':');

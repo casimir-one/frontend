@@ -77,6 +77,10 @@
   } from 'vuetify/lib/components';
   /* eslint-enable import/extensions, import/no-unresolved */
 
+  /**
+   * Dialogs inform users about a task and can contain critical information,
+   * require decisions, or involve multiple tasks.
+   */
   export default defineComponent({
     name: 'VexDialog',
     components: {
@@ -93,43 +97,52 @@
     },
     mixins: [Toggleable],
     props: {
+      /** Title */
       title: {
         type: String,
         default: null
       },
+      /** Message */
       message: {
         type: String,
         default: null
       },
+      /** Confirm button label */
       buttonTrueText: {
         type: String,
         default: 'Confirm'
       },
+      /** Cancel button label */
       buttonFalseText: {
         type: [String, Boolean],
         default: 'Cancel'
       },
-
+      /** Confirm button props */
       buttonTrueProps: {
         type: Object,
         default: () => ({ text: true, color: 'primary' })
       },
-
+      /** Cancel buttons props */
       buttonFalseProps: {
         type: Object,
         default: () => ({ text: true, color: 'primary' })
       },
-
+      /** Maximum width of the component */
       maxWidth: {
         type: [String, Number],
         default: 420
       },
+      /** Clicking outside of the element or pressing esc key will not deactivate it. */
       persistent: Boolean,
+      /** Hides buttons panel */
       hideButtons: Boolean,
+      /** Disables the ability to open the component. */
       disabled: Boolean,
+      /** Disables Cancel button */
       cancelDisabled: Boolean,
+      /** Disables Confirm button */
       trueDisabled: Boolean,
-      loading: Boolean,
+      /** Makes dialog  */
       confirm: Boolean
     },
 
@@ -143,48 +156,51 @@
 
     },
 
-    // mounted() {
-    //   document.addEventListener('keyup', this.onEnterPressed);
-    // },
-    // destroyed() {
-    //   document.removeEventListener('keyup', this.onEnterPressed);
-    // },
-
     methods: {
-      // onEnterPressed(e) {
-      //   if (e.keyCode === 13) {
-      //     e.stopPropagation();
-      //     this.choose(true);
-      //   }
-      // },
-
-      call(eventName, e) {
+      /** Emit events on user choice */
+      emitEvent(eventName, e) {
         if (!this.$listeners[eventName]) {
           this.choose(e);
         }
+        /**
+         * @event click:cancel
+         * @event click:confirm
+         * @param {boolean} e user decision
+         */
         this.$emit(eventName, e);
       },
 
+      /** Handle Cancel button click */
       cancelButtonClick() {
-        this.call('click:cancel', false);
+        this.emitEvent('click:cancel', false);
       },
 
+      /** Handle Confirm button click */
       confirmButtonClick() {
-        this.call('click:confirm', true);
+        this.emitEvent('click:confirm', true);
       },
 
+      /** Handle user choice */
       choose(resultValue) {
         this.confirmValue = resultValue;
+        /**
+         * @param {boolean} resultValue user decision
+         */
         this.$emit('result', resultValue);
         this.closeDialog();
       },
 
+      /**
+       * Handle dialog close
+       * @param {boolean} e the updated bound model
+       */
       closeDialog(e) {
         if (this.confirm) {
           this.$destroy();
         } else {
           this.isActive = false;
         }
+        /** @param {boolean} e the updated bound model */
         this.$emit('close', e);
       }
     }

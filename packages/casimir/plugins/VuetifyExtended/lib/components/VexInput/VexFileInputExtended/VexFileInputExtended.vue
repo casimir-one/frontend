@@ -49,15 +49,18 @@
     { icon: 'mdi-file-powerpoint-outline', ext: ['ppt', 'pptx'] }
   ];
 
+  /** File input with file icons */
   export default defineComponent({
     name: 'VexFileInputExtended',
     components: { VeStack, VexFileInput },
     mixins: [Proxyable, BindsAttrs],
     props: {
+      /** Function for building download URL */
       urlBuilder: {
         type: Function,
         default: (val) => val
       },
+      /** Label */
       label: {
         type: String,
         default: undefined
@@ -98,6 +101,7 @@
       }
     },
     methods: {
+      /** Generate file icon by extention */
       fileIcon(name) {
         if (!name) return false;
 

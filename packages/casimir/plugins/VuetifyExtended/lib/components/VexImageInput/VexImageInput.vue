@@ -128,11 +128,20 @@
     }
   }
 
+  /**
+   * Get file name from url
+   * @param {string} url
+   * @return {string}
+   */
   const imageNameFromUrl = (url) => {
     const { pathname } = parsePath(url);
     return pathname.split('/').pop();
   };
 
+  /**
+   * Image input
+   * @see See [Cropper](https://norserium.github.io/vue-advanced-cropper/)
+   */
   export default defineComponent({
     name: 'VexImageInput',
 
@@ -147,40 +156,42 @@
     mixins: [Proxyable],
 
     props: {
+      /** Initial image source */
       initialImage: {
         type: String,
         default: null
       },
+      /** Initial image file name */
       initialImageName: {
         type: String,
         default: null
       },
-
+      /** Input aspect ratio */
       aspectRatio: {
         type: [Number, String],
         default: 16 / 9
       },
-
+      /** Input label */
       label: {
         type: String,
         default: null
       },
-
+      /** Hide flip buttons */
       noFlip: {
         type: Boolean,
         default: false
       },
-
+      /** Hide rotate buttons */
       noRotate: {
         type: Boolean,
         default: false
       },
-
+      /** Round image */
       round: {
         type: Boolean,
         default: false
       },
-
+      /** Disable control */
       disabled: {
         type: Boolean,
         default: false
@@ -201,22 +212,21 @@
     },
 
     computed: {
+      /** Aspect ratio */
       _aspectRatio() {
         return parseFloat(this.aspectRatio);
       },
-
+      /** Cropper container style */
       cropperContainerStyle() {
         return this._aspectRatio
           ? { paddingBottom: `${(1 / this.aspectRatio) * 100}%` }
           : undefined;
       },
-
+      /** Stencil type */
       stencilType() {
-        return this.round
-          ? this.$options.components.CircleStencil
-          : this.$options.components.RectangleStencil;
+        return this.round ? CircleStencil : RectangleStencil;
       },
-
+      /** Is actions buttons disabled */
       isActionsDisabled() {
         return this.disabled || !this.image.src || this.imageLoading;
       }
@@ -240,25 +250,45 @@
     },
 
     methods: {
+      /**
+       * Fetch initial image
+       * @returns {Promise}
+       */
       checkInitialImage() {
         return fetch(this.initialImage)
           .then((res) => res.ok);
       },
 
+      /** Set initial file name as chosen file name  */
       setInitialChosenFileName() {
         if (!this.chosenFileName) {
           this.chosenFileName = this.initialImageName || imageNameFromUrl(this.initialImage);
         }
       },
 
+      /** Set chosen file name */
       setChosenFileName(value) {
         this.chosenFileName = value;
       },
 
+      /** Reset cropper */
       resetCropper() {
         this.$refs.cropper.reset();
       },
 
+      /**
+       * Calculate cropper default size
+       * @params {Object} payload
+       * @params {Object} imageSize
+       * @params {number} imageSize.width
+       * @params {number} imageSize.height
+       * @params {Object} visibleArea
+       * @params {number} visibleArea.width
+       * @params {number} visibleArea.height
+       * @returns {Object} result
+       * @returns {number} result.width
+       * @returns {number} result.height
+       */
       defaultSize({ imageSize, visibleArea }) {
         return {
           width: (visibleArea || imageSize).width,
@@ -266,6 +296,16 @@
         };
       },
 
+      /**
+       * Calculate cropper full area
+       * @params {Object} payload
+       * @params {Object} imageSize
+       * @params {number} boundaries.width
+       * @params {number} boundaries.height
+       * @returns {Object} result
+       * @returns {number} result.width
+       * @returns {number} result.height
+       */
       fullArea({ boundaries }) {
         return {
           width: boundaries.width,
@@ -273,10 +313,12 @@
         };
       },
 
+      /** Handle image upload click */
       handleImageUploadClick() {
         this.$refs.file.click();
       },
 
+      /** Handle remove image click */
       handleRemoveImageClick() {
         this.resetCropper();
         this.setChosenFileName(null);
@@ -284,6 +326,11 @@
         this.image.src = null;
       },
 
+      /**
+       * Handle image in cropper change
+       * @param {Object} payload
+       * @param {HTMLCanvasElement} payload.canvas
+       */
       handleChange({ canvas }) {
         if (canvas) {
           canvas.toBlob((blob) => {
@@ -296,32 +343,45 @@
         }
       },
 
+      /** Handle horizontal flip click */
       hanldleFlipHorizontalClick() {
         this.$refs.cropper.flip(true, false);
       },
 
+      /** Handle vertical flip click */
       handleFlipVertialClick() {
         this.$refs.cropper.flip(false, true);
       },
 
+      /** Handle right rotation click */
       handleRotateRightClick() {
         this.$refs.cropper.rotate(90);
       },
 
+      /** Handle left rotation click */
       handleRotateLeftClick() {
         this.$refs.cropper.rotate(-90);
       },
 
+      /** Handle initial image loading ready */
       handleReady() {
         this.imageLoading = false;
         this.setInitialChosenFileName();
       },
 
+      /**
+       * Handle error
+       * @param {Error} error
+       */
       handleError(error) {
         console.error(error);
         this.imageLoading = false;
       },
 
+      /**
+       * Handle image load
+       * @param {Event} event
+       */
       handleImageLoad(event) {
         this.imageLoading = true;
         const { files } = event.target;
@@ -329,6 +389,10 @@
         this.loadImage(files);
       },
 
+      /**
+       * Load image
+       * @param {Array.<File>} files
+       */
       loadImage(files) {
         if (files && files[0]) {
           if (this.image.src) {

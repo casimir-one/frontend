@@ -24,6 +24,7 @@
   import { getDominantColor, isDarkColor } from '@deip/toolbox';
   import { VexSection } from '../VexSection';
 
+  /** Page header with background */
   export default defineComponent({
     name: 'VexHeader',
 
@@ -32,18 +33,22 @@
     },
 
     props: {
+      /** Background image source */
       backgroundImage: {
         type: String,
         default: null
       },
+      /** Background video source */
       backgroundVideo: {
         type: String,
         default: null
       },
+      /** Overlay style value */
       overlay: {
         type: String,
         default: 'rgba(0, 0, 0, .6)'
       },
+      /** Pass dominant image color to slot  */
       returnDominant: {
         type: Boolean,
         default: false
@@ -57,6 +62,7 @@
     },
 
     computed: {
+      /** Overlay styles */
       overlayStyles() {
         return {
           ...(this.overlay ? {
@@ -64,13 +70,14 @@
           } : {})
         };
       },
-
+      /** Is image dark */
       imageIsDark() {
         return this.dominantColor
           ? isDarkColor(this.dominantColor)
           : false;
       },
 
+      /** Default slot bind properties */
       slotBinds() {
         return {
           ...(this.dominantColor && this.returnDominant
@@ -89,6 +96,7 @@
     },
 
     methods: {
+      /** Set image dominant color */
       getDominantColor() {
         if (this.backgroundImage && this.returnDominant) {
           getDominantColor(this.backgroundImage)

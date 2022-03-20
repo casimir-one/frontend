@@ -7,6 +7,9 @@
   /* eslint-enable */
   import { defineComponent } from '@deip/platform-util';
 
+  /**
+   * Selector with autocomplete
+   */
   export default defineComponent({
     name: 'VexAutocomplete',
     mixins: [VAutocomplete],
@@ -17,6 +20,10 @@
       }
     },
     methods: {
+      /**
+       * Generate selected items in different modes
+       * @returns {VNode}
+       */
       genSelectionsMod() {
         let { length } = this.selectedItems;
         const children = new Array(length);
@@ -48,10 +55,12 @@
         }, children);
       },
 
+      /** Generate selected items */
       genSelections() {
         return this.hasSlot || this.multiple ? this.genSelectionsMod() : [];
       },
 
+      /** Generate legend */
       genLegend() {
         const width = !this.singleLine && (this.labelValue || (!this.multiple && this.isDirty))
           ? this.labelWidth : 0;
@@ -66,6 +75,10 @@
         }, [span]);
       },
 
+      /**
+       * Generate autocomplete control
+       * @returns {VNode}
+       */
       genControl() {
         return this.$createElement('div', {
           staticClass: 'v-input__control'
@@ -76,6 +89,10 @@
         ]);
       },
 
+      /**
+       * Generate default slot
+       * @returns {Array}
+       */
       genDefaultSlot() {
         const selections = this.multiple ? [] : this.genSelections();
         const input = this.genInput();
@@ -107,6 +124,10 @@
         ];
       },
 
+      /**
+       * Generate selected items as chips
+       * @returns {VNode}
+       */
       genChipSelection(item, index) {
         const isDisabled = !this.isInteractive || this.getDisabled(item);
 

@@ -3,14 +3,20 @@
   import marked from 'marked';
   import DOMPurify from 'dompurify';
 
+  /** Component displays parsed markdown   */
   export default defineComponent({
     name: 'VexMarkdown',
 
     props: {
+      /** Source text */
       source: {
         type: String,
         default: ''
       },
+      /**
+       * Options
+       * @see See [options](https://marked.js.org/using_advanced#options)
+       */
       options: {
         type: Object,
         default: () => ({})

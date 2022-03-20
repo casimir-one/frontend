@@ -41,6 +41,7 @@
   import { VeStack } from '@deip/vue-elements';
   import { VexPasswordInput } from '../VexPasswordInput';
 
+  /** Control for creating password with repeat */
   export default {
     name: 'VexPasswordRepeatInput',
     components: {
@@ -52,28 +53,40 @@
       event: 'change'
     },
     props: {
+      /** Password label */
       passwordLabel: {
         type: String,
         default: 'Password'
       },
+      /** Repeat password label */
       repeatPasswordLabel: {
         type: String,
         default: 'Repeat password'
       },
+      /**
+       * Fields props
+       * @see See [text field](https://vuetifyjs.com/en/components/text-fields/)
+       */
       fieldsProps: {
         type: Object,
         default: () => ({
           counter: true
         })
       },
+      /** Password minimum length */
       passwordMinLentgh: {
         type: Number,
         default: 10
       },
+      /** Password maximum length */
       passwordMaxLentgh: {
         type: Number,
         default: 64
       },
+      /**
+       * Password
+       * @model
+       */
       password: {
         type: String,
         default: ''
