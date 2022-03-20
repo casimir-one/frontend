@@ -116,7 +116,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
     const getCoreAssetDtoAsync = async () => {
       const api = chainService.getChainNodeClient();
-      const totalIssuance = await api.query.balances.totalIssuance();
+      const totalIssuance = await api.query.parityTechBalances.totalIssuance();
       const metadata = await getFungibleTokenMetadataAsync(coreAsset.id);
       return new SubstrateFungibleTokenDto({ 
         assetId: coreAsset.id, 

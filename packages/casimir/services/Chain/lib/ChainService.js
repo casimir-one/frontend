@@ -38,7 +38,7 @@ class ChainService extends Singleton {
     return this.impl.init();
   }
 
-  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, TENANT: PORTAL_ID }) {
+  static getInstanceAsync({ PROTOCOL: CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, PORTAL_ID }) {
     const chainService = ChainService.getInstance({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, PORTAL_ID });
     return chainService.init();
   }
