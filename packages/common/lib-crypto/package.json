@@ -4,12 +4,13 @@
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {
-        "prepublish": "node ./scripts/build.js",
+        "postinstall": "npm run build",
+        "prepublishOnly": "npm run build",
         "clean": "shx rm -rf lib",
         "fmt": "prettier --write '{src,scripts}/**/*.js' && eslint '{src,scripts}/**/*.js'",
         "build": "node ./scripts/build.js",
         "sjcl-test": "node ./scripts/test.js",
-        "test": "node ./scripts/build.js && node ./scripts/test.js && node ./scripts/test.js && tape 'test/*.test.js'"
+        "test": "node ./scripts/build.js && node ./scripts/test.js && tape 'test/*.test.js'"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",
