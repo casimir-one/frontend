@@ -33,19 +33,31 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
 
+  /**
+   * Component for displaying the section title
+   */
   export default defineComponent({
     name: 'VexSectionTitle',
     props: {
+      /** Text title */
       title: {
         type: [String],
         default: ''
       },
+      /**
+       * Any content you want injected
+       * as text into the badge
+       */
       titleBadge: {
         type: [String, Number],
         default: ''
       }
     },
     methods: {
+      /**
+       * Whether title is given
+       * @returns {string} title or empty string
+       */
       hasTitle() {
         return this.title || this.$slots.title;
       }

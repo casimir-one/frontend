@@ -23,21 +23,32 @@
 
 <script>
   import { defineComponent } from '@deip/platform-util';
-
+  /**
+   * Component for adding a new point on the timeline
+   */
   export default defineComponent({
     name: 'VexTimelineAdd',
     props: {
+      /**
+       * Specify icon for dot container
+       */
       icon: {
         type: String,
         default: 'mdi-plus'
       },
+      /**
+       * Label for button
+       * @example 'Add item'
+       */
       label: {
         type: String,
         default: 'Add item'
       }
     },
     methods: {
+      /** Add new timeline */
       handleClick() {
+        /** Click event */
         this.$emit('click');
       }
     }

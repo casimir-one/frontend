@@ -12,6 +12,9 @@
 
   import { getBindableProps } from '../../composables';
 
+  /**
+   * Text editor component
+   */
   export default defineComponent({
     name: 'VexRichedit',
 
@@ -25,6 +28,11 @@
 
     props: {
       ...VueEditorjs.options.props,
+      /**
+       * Inverts the style, inheriting the currently applied color,
+       * applying it to the text and border,
+       * and making its background transparent.
+       */
       outlined: {
         type: Boolean,
         default: true
@@ -46,6 +54,11 @@
         },
         set(val) {
           this.lazyValue = val;
+          /**
+           * Triggers when data is entered
+           * @arg {string} lazyValue input data
+           * @event input
+           */
           this.$emit('input', this.lazyValue);
         }
       },
@@ -91,22 +104,35 @@
     },
 
     methods: {
+      /**
+       * Input handler
+       * Fires when text is entered in a field.
+       * @param {string} input value
+       */
       onInput(value) {
         this.internalValue = value;
       },
-
+      /**
+       * Focus handler
+       * Fires when the field has focus
+       */
       onFocus() {
         if (this.isFocused || this.isDisabled) return;
 
         this.isFocused = true;
       },
-
+      /**
+       * Blur handler
+       * Fires when the field is not in focus
+       */
       onBlur() {
         if (!this.isFocused || this.isDisabled) return;
 
         this.isFocused = false;
       },
-
+      /**
+       * Calculate field label width
+       */
       setLabelWidth() {
         if (!this.outlined) return;
 
@@ -114,7 +140,9 @@
           ? Math.min(this.$refs.label.scrollWidth * 0.75 + 6, this.$el.offsetWidth - 24)
           : 0;
       },
-
+      /**
+       * Create text editor
+       */
       genEditor() {
         return this.$createElement('VueEditorjs', {
           props: {
@@ -139,7 +167,9 @@
           }]
         });
       },
-
+      /**
+       * Create text field
+       */
       genTextFieldSlot() {
         return this.$createElement('div', {
                                      staticClass: 'v-text-field__slot'
@@ -149,14 +179,19 @@
                                      this.genEditor()
                                    ]);
       },
-
+      /**
+       * Create initial fieldset and text field
+       */
       genDefaultSlot() {
         return [
           this.genFieldset(),
           this.genTextFieldSlot()
         ];
       },
-
+      /**
+       * Create fieldset element
+       * Designed to group form elements
+       */
       genFieldset() {
         if (!this.outlined) return null;
 
@@ -166,7 +201,10 @@
           }
         }, [this.genLegend()]);
       },
-
+      /**
+       * Create label element,
+       * assigning styles and handlers
+       */
       genLabel() {
         if (!this.hasLabel) return null;
 
@@ -183,7 +221,9 @@
           }
         }, this.$slots.label || this.label);
       },
-
+      /**
+       * Creating a heading for a group of form elements
+       */
       genLegend() {
         const width = (this.labelValue || this.isDirty) ? this.labelWidth : 0;
         const span = this.$createElement('span', {
@@ -197,7 +237,10 @@
           }
         }, [span]);
       },
-
+      /**
+       * Update text field value,
+       * @param {string} val input value
+       */
       updateValue(val) {
         // Sets validationState from validatable
         this.hasColor = val;
@@ -205,6 +248,11 @@
         if (val) {
           this.initialValue = this.lazyValue;
         } else if (!isEqual(this.initialValue, this.lazyValue)) {
+          /**
+           * Triggers when new data is entered
+           * @arg {string} lazyValue input data
+           * @event change
+           */
           this.$emit('change', this.lazyValue);
         }
       },

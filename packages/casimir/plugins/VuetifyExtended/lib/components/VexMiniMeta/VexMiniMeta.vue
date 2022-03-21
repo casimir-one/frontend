@@ -14,11 +14,17 @@
   import VexMiniMetaItem from './VexMiniMetaItem';
 
   import { getBindableProps } from '../../composables';
-
+  /**
+   * Component for displaying a list with icons
+   */
   export default defineComponent({
     name: 'VexMiniMeta',
     components: { VeStack, VexMiniMetaItem },
     props: {
+      /**
+       *  Items for displaing
+       *  @example [{icon:'map-marker-outline', label:'GPS', title:'London'},...]
+       */
       items: {
         type: Array,
         default: () => ([])

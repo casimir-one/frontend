@@ -29,6 +29,9 @@
   } from 'vuetify/lib/components';
   /* eslint-enable */
 
+  /**
+   * Component for displaying popup messages
+   */
   export default defineComponent({
     name: 'VexNotifier',
 
@@ -40,6 +43,10 @@
     mixins: [Toggleable],
 
     props: {
+      /**
+       * Text message
+       * For other possible properties @see see [ v-snackbar API ](https://vuetifyjs.com/en/api/v-snackbar/)
+       */
       message: {
         type: String,
         default: null
@@ -55,6 +62,10 @@
     },
 
     methods: {
+      /**
+       * Close notifier
+       * Fires when the user clicks the close button on the notification
+       */
       closeSnackbar() {
         this.isActive = false;
 

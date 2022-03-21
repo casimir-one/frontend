@@ -4,21 +4,35 @@
   import { VSheet } from 'vuetify/lib/components/VSheet';
   import { convertToUnit } from 'vuetify/lib/util/helpers';
   /* eslint-enable */
-
+  /**
+   * Component is the baseline for numerous components and pages
+   * Is a content container built with a grid
+   */
   export default defineComponent({
     name: 'VexSectionSplit',
     mixins: [VSheet],
     props: {
+      /**
+       * Sets the number of columns "columns" in the grid
+       * and can determine the width of each of them
+       */
       template: {
         type: String,
         default: '1 1'
       },
-
+      /**
+       * Width of the gutter separating the grid lines
+       */
       gutter: {
         type: [Number, String],
         default: 48
       },
-
+      /**
+       * Component backround color
+       * Accepts custom @See [Material Design Color](https://vuetifyjs.com/en/styles/colors/) values
+       * as well as rgb, rgba, and hexadecimal values
+       * @example 'amber darken-3' or '#FFE082', 'rgba(255, 224, 130, 1)'
+       */
       color: {
         type: String,
         default: 'transparent'

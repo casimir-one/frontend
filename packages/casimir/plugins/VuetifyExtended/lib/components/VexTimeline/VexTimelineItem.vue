@@ -41,42 +41,73 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { contextMixin } from '../../composables';
-
+  /**
+   * Timeline list item component
+   * Used in conjunction with VexTimeLine
+   */
   export default defineComponent({
     name: 'VexTimelineItem',
     mixins: [contextMixin],
     props: {
+      /**
+       * Dot min height
+       */
       dotTop: {
         type: Number,
         default: 4
       },
+      /**
+       * Dot size
+       */
       dotSize: {
         type: Number,
         default: 24
       },
+      /**
+       * Dot color
+       */
       dotColor: {
         type: String,
         default: 'primary'
       },
-
+      /**
+       * Height
+       * For list item action
+       */
       ctrlHeight: {
         type: Number,
         default: 40
       },
-
+      /**
+       * Background color
+       * For both lines
+       */
       lineColor: {
         type: String,
         default: 'rgba(26, 27, 34, 0.12)'
       },
+      /**
+       * Use background color
+       * For top line
+       * default: false
+       */
       topLineColor: {
         type: [String, Boolean],
         default: false
       },
+      /**
+       * Use background color
+       * For bottom line
+       * default: false
+       */
       bottomLineColor: {
         type: [String, Boolean],
         default: false
       },
-
+      /**
+       * Line Width
+       * For both lines
+       */
       lineWidth: {
         type: Number,
         default: 2
@@ -100,6 +131,10 @@
     },
 
     methods: {
+      /**
+       * Click on timeline dot
+       * @event click:dot
+       */
       onClickDot() {
         this.$emit('click:dot');
       }
