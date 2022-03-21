@@ -21,14 +21,21 @@
   import { isNil, get, difference } from '@deip/toolbox/lodash';
 
   import { getBindableProps } from '../../composables/props';
-
+  /**
+   * Component for displaying large amounts of nested data
+   */
   export default defineComponent({
     name: 'VexTreeview',
     components: { VTreeview },
 
     props: {
       ...VTreeview.options.props,
-      autoselectParents: { // works only with independent selection type
+      /**
+       * Autoselect Parents.
+       * Works only with "independent" selection type
+       * (selection-type: independent)
+       */
+      autoselectParents: {
         type: Boolean,
         default: false
       }
@@ -75,6 +82,11 @@
     },
 
     methods: {
+      /**
+       * Input field handler
+       * Allows you to select elements depending on the specified type
+       * @param {Array} value selected items
+       */
       handleInput(value) {
         if (this.selectionType === 'independent' && this.autoselectParents) {
           const removed = this.oldValue.length > value.length;
@@ -94,16 +106,26 @@
         } else {
           this.internalValue = [...value];
         }
-
+        /**
+         * Send input value event
+         * @arg {Array} internalValue selected items
+         * @event input
+         */
         this.$emit('input', this.internalValue);
       },
-
+      /**
+       * Allows user to mark a node as active by clicking on it
+       * @param {Array} value selected items
+       */
       handleActivate(value) {
         if (this.activatable) {
           this.handleInput(value);
         }
       },
-
+      /**
+       * Remove children
+       * @param {string} id
+       */
       removeChildren(id) {
         const target = this.getItemObject(id);
         this.removeItem(target[this.itemKey]);
@@ -114,7 +136,10 @@
           }
         }
       },
-
+      /**
+       * Add selected units to another parent category
+       * @param {string} id id of new parent
+       */
       addParents(id) {
         const path = this.getItemPath(id);
         let target = this.items;
@@ -126,17 +151,26 @@
           }
         }
       },
-
+      /**
+       * Сompute path to category base
+       * @param {string} id
+       */
       getItemPath(id) {
         const path = deepFind(this.items, id);
         path.pop();
         return path;
       },
-
+      /**
+       * Get all nested children of a category
+       * @param {string} id
+       */
       getItemObject(id) {
         return get(this.items, this.getItemPath(id));
       },
-
+      /**
+       * Remove item/leaf
+       * @param {string} id id of item
+       */
       removeItem(id) {
         const idx = this.internalValue.indexOf(id);
         if (idx !== -1) {
@@ -144,7 +178,10 @@
           this.internalValue = [...new Set(this.internalValue)];
         }
       },
-
+      /**
+       * Add new item/leaf
+       * @param {string} id id of item
+       */
       addItem(id) {
         this.internalValue.push(id);
         this.internalValue = [...new Set(this.internalValue)];

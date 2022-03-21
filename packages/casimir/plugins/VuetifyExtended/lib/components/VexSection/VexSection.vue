@@ -4,10 +4,20 @@
   import { VSheet } from 'vuetify/lib/components/VSheet';
   /* eslint-enable */
 
+  /**
+   * Component is the baseline for numerous components and pages
+   * Is a content container
+   */
   export default defineComponent({
     name: 'VexSection',
     mixins: [VSheet],
     props: {
+      /**
+       * Component backround color
+       * Accepts custom @link [Material Design Color](https://vuetifyjs.com/en/styles/colors/) values
+       * as well as rgb, rgba, and hexadecimal values
+       * @example 'amber darken-3' or '#FFE082', 'rgba(255, 224, 130, 1)'
+       */
       color: {
         type: String,
         default: 'transparent'

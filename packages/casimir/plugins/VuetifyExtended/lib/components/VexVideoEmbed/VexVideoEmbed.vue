@@ -18,7 +18,6 @@
   /* eslint-disable */
   import Measurable from 'vuetify/lib/mixins/measurable';
   /* eslint-enable */
-
   export const allowedVideoServices = [
     {
       key: 'youtube',
@@ -61,23 +60,37 @@
       }
     }
   ];
-
+  /**
+   * The plugin allows you to embed videos
+   * allowed platforms: youtube, vimeo, dailymotion, coub
+   */
   export default defineComponent({
     name: 'VexVideoEmbed',
     props: {
+      /**
+       * Video aspect ratio
+       * Sets a base aspect ratio, calculated as width/height
+       * @example 1.7778 for 16/9
+       */
       aspectRatio: {
         type: Number,
         default: 16 / 9
       },
 
       ...Measurable.options.props,
-
+      /**
+       * Video URL.
+       * This prop is mandatory
+       * Allowed platforms: youtube, vimeo, dailymotion, coub
+       */
       src: {
         type: String,
         required: true,
         default: undefined
       },
-
+      /**
+       * Additional video options if available
+       */
       params: {
         type: Object,
         default: () => ({})

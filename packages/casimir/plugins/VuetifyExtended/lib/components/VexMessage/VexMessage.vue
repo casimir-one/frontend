@@ -10,12 +10,18 @@
 
 <script>
   import { VexTextExpand } from '../VexTextExpand';
-
+  /**
+   * Сomponent for displaying a message for the user, highlighted in color
+   */
   export default {
     name: 'VexMessage',
     components: { VexTextExpand },
 
     props: {
+      /**
+       * Hide some text
+       * default: false
+       */
       expandable: {
         type: Boolean,
         default: false

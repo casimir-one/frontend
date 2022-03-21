@@ -23,7 +23,10 @@
     city: '(cities)',
     address: 'address'
   };
-
+  /**
+   * Component for changing location and specifying an address
+   * uses google maps api
+   */
   export default defineComponent({
     name: 'VexPlacesAutocomplete',
     components: { VexAutocomplete },
@@ -34,11 +37,14 @@
     },
 
     props: {
+      /** Name of place */
       value: {
         type: String,
         default: ''
       },
-
+      /** Location type
+        * @values city, address
+        */
       placeType: {
         type: String,
         default: 'city',
@@ -71,6 +77,10 @@
           if (val === this.lazyLocation) return;
 
           this.lazyLocation = val;
+          /**
+           * Change event
+           * @arg {string} val input text
+           */
           this.$emit('change', val);
         }
       },
@@ -99,6 +109,7 @@
     },
 
     methods: {
+      /** Create new instance of google maps api service */
       makeAutocompleteService() {
         try {
           this.apiService = new window.google.maps.places.AutocompleteService();
@@ -108,6 +119,7 @@
       },
 
       /**
+       * Search for a place by query
        * @param {string} val search query
        * @return {Promise<void>}
        */
