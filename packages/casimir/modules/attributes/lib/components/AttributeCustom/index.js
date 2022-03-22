@@ -1,2 +1,7 @@
-export { AttributeCustomRead } from './AttributeCustomRead';
-export { AttributeCustomSet } from './AttributeCustomSet';
+import AttributeCustomRead from './AttributeCustomRead';
+import AttributeCustomSet from './AttributeCustomSet';
+
+export {
+  AttributeCustomRead,
+  AttributeCustomSet
+};

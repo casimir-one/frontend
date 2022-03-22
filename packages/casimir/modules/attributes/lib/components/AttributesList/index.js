@@ -1,1 +1,3 @@
-export { default as AttributesList } from './AttributesList';
+import AttributesList from './AttributesList';
+
+export { AttributesList };

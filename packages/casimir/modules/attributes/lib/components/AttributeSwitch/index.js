@@ -1,2 +1,7 @@
-export { AttributeSwitchRead } from './AttributeSwitchRead';
-export { AttributeSwitchSet } from './AttributeSwitchSet';
+import AttributeSwitchRead from './AttributeSwitchRead';
+import AttributeSwitchSet from './AttributeSwitchSet';
+
+export {
+  AttributeSwitchRead,
+  AttributeSwitchSet
+};

@@ -1,2 +1,7 @@
-export { AttributeUrlRead } from './AttributeUrlRead';
-export { AttributeUrlSet } from './AttributeUrlSet';
+import AttributeUrlRead from './AttributeUrlRead';
+import AttributeUrlSet from './AttributeUrlSet';
+
+export {
+  AttributeUrlRead,
+  AttributeUrlSet
+};

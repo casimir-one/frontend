@@ -1,2 +1,7 @@
-export { AttributeVideoUrlRead } from './AttributeVideoUrlRead';
-export { AttributeVideoUrlSet } from './AttributeVideoUrlSet';
+import AttributeVideoUrlRead from './AttributeVideoUrlRead';
+import AttributeVideoUrlSet from './AttributeVideoUrlSet';
+
+export {
+  AttributeVideoUrlRead,
+  AttributeVideoUrlSet
+};

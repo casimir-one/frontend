@@ -1,2 +1,7 @@
-export { AttributeNumberRead } from './AttributeNumberRead';
-export { AttributeNumberSet } from './AttributeNumberSet';
+import AttributeNumberRead from './AttributeNumberRead';
+import AttributeNumberSet from './AttributeNumberSet';
+
+export {
+  AttributeNumberRead,
+  AttributeNumberSet
+};
