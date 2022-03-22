@@ -1,2 +1,7 @@
-export { AttributeSelectRead } from './AttributeSelectRead';
-export { AttributeSelectSet } from './AttributeSelectSet';
+import AttributeSelectRead from './AttributeSelectRead';
+import AttributeSelectSet from './AttributeSelectSet';
+
+export {
+  AttributeSelectRead,
+  AttributeSelectSet
+};

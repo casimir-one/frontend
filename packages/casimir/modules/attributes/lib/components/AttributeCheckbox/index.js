@@ -1,2 +1,7 @@
-export { AttributeCheckboxRead } from './AttributeCheckboxRead';
-export { AttributeCheckboxSet } from './AttributeCheckboxSet';
+import AttributeCheckboxRead from './AttributeCheckboxRead';
+import AttributeCheckboxSet from './AttributeCheckboxSet';
+
+export {
+  AttributeCheckboxRead,
+  AttributeCheckboxSet
+};

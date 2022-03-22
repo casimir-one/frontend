@@ -1,2 +1,7 @@
-export { AttributeTextareaRead } from './AttributeTextareaRead';
-export { AttributeTextareaSet } from './AttributeTextareaSet';
+import AttributeTextareaRead from './AttributeTextareaRead';
+import AttributeTextareaSet from './AttributeTextareaSet';
+
+export {
+  AttributeTextareaRead,
+  AttributeTextareaSet
+};

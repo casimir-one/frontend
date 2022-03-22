@@ -1,2 +1,7 @@
-export { AttributeRichtextRead } from './AttributeRichtextRead';
-export { AttributeRichtextSet } from './AttributeRichtextSet';
+import AttributeRichtextRead from './AttributeRichtextRead';
+import AttributeRichtextSet from './AttributeRichtextSet';
+
+export {
+  AttributeRichtextRead,
+  AttributeRichtextSet
+};

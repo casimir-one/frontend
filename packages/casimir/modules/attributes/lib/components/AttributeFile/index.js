@@ -1,2 +1,7 @@
-export { AttributeFileRead } from './AttributeFileRead';
-export { AttributeFileSet } from './AttributeFileSet';
+import AttributeFileRead from './AttributeFileRead';
+import AttributeFileSet from './AttributeFileSet';
+
+export {
+  AttributeFileRead,
+  AttributeFileSet
+};

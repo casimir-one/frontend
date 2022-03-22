@@ -1,2 +1,7 @@
-export { AttributeDateTimeRead } from './AttributeDateTimeRead';
-export { AttributeDateTimeSet } from './AttributeDateTimeSet';
+import AttributeDateTimeRead from './AttributeDateTimeRead';
+import AttributeDateTimeSet from './AttributeDateTimeSet';
+
+export {
+  AttributeDateTimeRead,
+  AttributeDateTimeSet
+};
