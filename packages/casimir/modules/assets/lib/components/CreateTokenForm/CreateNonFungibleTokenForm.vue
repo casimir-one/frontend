@@ -460,7 +460,7 @@
         const DEFAULT_PRECISION = 0;
 
         const payload = {
-          user: this.$currentUser,
+          initiator: this.$currentUser,
           data: {
             symbol: this.formModel.symbol,
             issuer: this.team._id,
