@@ -8,7 +8,7 @@ const prompt = inquirer.createPromptModule();
 prompt([{
   type: 'list',
   name: 'update',
-  message: 'This update all @deip dependencies in packages',
+  message: 'This will update all @deip dependencies in packages',
   default: [1],
   choices: [
     {
@@ -26,6 +26,6 @@ prompt([{
       process.exit();
     }
 
-    await execa.command('npx lerna exec -- npx ncu /^@deip/.*$/ -u', { stdio: 'inherit', shell: true });
+    await execa.command('npx lerna exec -- "npx ncu \'/^@(deip|casimir)\\/.*$/\' -u"', { stdio: 'inherit', shell: true });
     process.exit();
   });

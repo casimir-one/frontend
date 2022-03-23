@@ -34,6 +34,6 @@
     "@deip/user-service": "1.374.0"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.368.0"
+    "@deip/app-config-service": "^1.373.0"
   }
 }
