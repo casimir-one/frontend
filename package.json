@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precommit": "lint-staged && lerna exec --scope '@casimir/*-portal' -- npx lint-staged",
+    "precommit": "lint-staged",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "cross-env NODE_ENV=test jest",

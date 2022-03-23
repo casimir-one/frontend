@@ -5,4 +5,3 @@ packages/casimir/services/RpcClient/**
 packages/casimir/services/Chain/**
 packages/casimir/services/Grants/**
 packages/generators/**/generators/*/templates/**
-packages/portals/*
