@@ -11,7 +11,7 @@ export default {
         numberOfTokens: 'Number of tokens',
         totalNumberOfTokens: 'Total number of tokens to issue',
         ticker: 'Ticker (abbreviation)',
-        tokensAmountNote: 'Note: 2,000 to 20,000 tokens are usualy issued per {entity}',
+        tokensAmountNote: 'Note: 2,000 to 20,000 tokens are usually issued per {entity}',
         shareholders: 'Shareholders',
         shareholder: 'Shareholder',
         addShareholder: 'Add shareholder',
