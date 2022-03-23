@@ -40,11 +40,13 @@ export class AssetsService {
    * @param {Object} proposalInfo
    * @return {Promise<Object>}
    */
-  transfer(
-    { privKey, username },
-    { from, to, asset },
-    proposalInfo
-  ) {
+  transfer(payload) {
+    const {
+      initiator: { privKey, username },
+      data: { from, to, asset },
+      proposalInfo
+    } = payload;
+
     const { isProposal, isProposalApproved, proposalLifetime } = {
       isProposal: false,
       isProposalApproved: true,
@@ -108,7 +110,6 @@ export class AssetsService {
       });
   }
 
-
   /**
    * Create new asset
    * TODO: change params to object payload
@@ -126,18 +127,20 @@ export class AssetsService {
    * @param {Array.<{account: string, asset: Asset}>} assetInfo.holders
    * @return {Promise<Object>}
    */
-  createFungibleToken(
-  { privKey }, 
-  {
-    symbol,
-    issuer,
-    precision,
-    maxSupply,
-    minBalance,
-    description,
-    projectTokenSettings,
-    holders
-  }) {
+  createFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        symbol,
+        issuer,
+        precision,
+        maxSupply,
+        minBalance,
+        description,
+        projectTokenSettings,
+        holders
+      }
+    } = payload;
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -186,12 +189,16 @@ export class AssetsService {
       });
   }
 
-  createNonFungibleToken({ privKey }, {
-    symbol,
-    issuer,
-    description,
-    projectTokenSettings
-  }) {
+  createNonFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        symbol,
+        issuer,
+        description,
+        projectTokenSettings
+      }
+    } = payload;
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -221,11 +228,15 @@ export class AssetsService {
       });
   }
 
-  issueFungibleToken({ privKey }, {
-    issuer,
-    asset,
-    recipient
-  }) {
+  issueFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        asset,
+        recipient
+      }
+    } = payload;
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -265,15 +276,16 @@ export class AssetsService {
    * @param {string} assetInfo.recipient
    * @return {Promise<Object>}
    */
-  issueNonFungibleToken(
-    { privKey }, 
-    {
-      issuer,
-      classId,
-      instanceId,
-      recipient
-    }
-  ) {
+  issueNonFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        classId,
+        instanceId,
+        recipient
+      }
+    } = payload;
     const env = this.proxydi.get('env');
 
     return ChainService.getInstanceAsync(env)
@@ -397,17 +409,18 @@ export class AssetsService {
    * @param {Object} proposalInfo
    * @return {Promise}
    */
-  createExchangeProposal( // TODO: support NFT
-    { privKey, username }, 
-    {
-      party1,
-      party2,
-      asset1,
-      asset2
-    }, 
-    proposalInfo
-  ) {
-    
+  createExchangeProposal(payload) { // TODO: support NFT
+    const {
+      initiator: { privKey, username },
+      data: {
+        party1,
+        party2,
+        asset1,
+        asset2
+      },
+      proposalInfo
+    } = payload;
+
     const { isProposalApproved, proposalLifetime } = {
       isProposalApproved: true,
       proposalLifetime: proposalDefaultLifetime,

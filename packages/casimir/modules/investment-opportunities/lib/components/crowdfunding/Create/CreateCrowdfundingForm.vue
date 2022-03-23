@@ -246,7 +246,7 @@
         }];
 
         const data = {
-          user: this.$currentUser,
+          initiator: this.$currentUser,
           data: {
             issuer: this.project.teamId,
             symbol,
