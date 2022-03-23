@@ -2,8 +2,7 @@
   "packages": [
     "packages/common/*",
     "packages/casimir/*/*",
-    "packages/generators/*",
-    "packages/portals/*"
+    "packages/generators/*"
   ],
   "version": "1.374.0",
   "npmClient": "npm",
