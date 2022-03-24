@@ -73,9 +73,6 @@
 
   /**
   * Component for change user password
-  * @requires VexPasswordRepeatInput
-  * @requires VexPasswordInput
-  * @requires VeStack
   */
   export default {
     name: 'AuthChangePassword',
@@ -195,7 +192,7 @@
        * Success event.
        * Fired on successful form submission
        * @event success
-       * @type {object}
+       * @type {Object}
        */
       emitSuccess(data) {
         this.$emit('success', data);
@@ -204,7 +201,7 @@
        * Error event.
        * Fires on error form submission
        * @event error
-       * @type {object}
+       * @type {Object}
        */
       emitError(error) {
         this.$emit('error', error);

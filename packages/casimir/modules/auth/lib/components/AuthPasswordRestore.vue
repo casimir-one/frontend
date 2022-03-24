@@ -61,7 +61,6 @@
 
   /**
   * Component for restore user password
-  * @requires VeStack
   */
   export default {
     name: 'AuthPasswordRestore',

@@ -191,7 +191,7 @@ export class ProjectContentService {
 
   /**
    * Get project content list by project
-   * @param {String} projectId
+   * @param {string} projectId
    * @returns {Promise<Object>}
    */
   async getContentListByProject(projectId) {
@@ -201,7 +201,7 @@ export class ProjectContentService {
   /**
    * @deprecated
    * Get project content onchain entity by id
-   * @param {String} refId
+   * @param {string} refId
    * @returns {Promise<Object>}
    */
   async getContentRef(refId) {

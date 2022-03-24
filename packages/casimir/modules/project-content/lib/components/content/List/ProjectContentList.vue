@@ -35,7 +35,6 @@
 
   /**
    * Component for project content list
-   * @requires ProjectContentDataProvider
    */
   export default defineComponent({
     name: 'ProjectContentList',
@@ -91,12 +90,16 @@
         return this.$t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[type]}`);
       },
       /**
-       * Triggers when user clicks the row
-       * @event click-row
-       * @property {Object} content
+       * Row click handler
+       * @param {Object} content
        */
       handleRowClick(content) {
         if (this.$isUser && !this.disableContentClick) {
+          /**
+           * Triggers when user clicks the row
+           * @property {Object} content
+           * @event click-row
+           */
           this.$emit('click-row', content);
         }
       }

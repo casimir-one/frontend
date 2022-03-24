@@ -35,10 +35,6 @@
 
   /**
    * Component for project content details
-   * @requires VexBlock
-   * @requires UsersList
-   * @requires PackageContentDetails
-   * @requires JsonContentDetails
    */
   export default defineComponent({
     name: 'ProjectContentDetails',

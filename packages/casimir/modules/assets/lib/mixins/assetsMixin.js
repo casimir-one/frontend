@@ -31,10 +31,10 @@ export const assetsMixin = {
 
     /**
      * Format asset
-     * @param {Object | String | Number} value
+     * @param {Object | string | number} value
      * @param {Boolean} isFormatted
      * @param {Object | undefined} options
-     * @returns {String}
+     * @returns {string}
      */
     $$formatAsset(value, isFormatted = true, options = {}) {
       if (isNil(value)) return null;

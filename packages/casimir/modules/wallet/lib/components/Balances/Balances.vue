@@ -115,19 +115,19 @@
       /**
        * Open deposit popup
        * Fires when the user clicks on the deposit button
-       * @property {object} balance data
+       * @param {Object} balance data
        */
       handleDeposit(balance) {
         this.selectedAssetBalance = balance;
         this.isDialogOpened = true;
       },
-      /**
-       * Open Payment popup
-       * Fires when the user payment process button
-       * @event payment-processed
-       */
+      /** Open Payment popup */
       handlePaymentProcessed() {
         this.$store.dispatch('wallet/get');
+        /**
+         * Fires when the user payment process button
+         * @event payment-processed
+         */
         this.$emit('payment-processed');
       }
     }

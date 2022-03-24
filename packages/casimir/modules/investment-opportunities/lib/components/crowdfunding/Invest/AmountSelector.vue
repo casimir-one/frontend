@@ -53,9 +53,6 @@
 
   /**
    * Component for creating amount selector
-   * @displayName AmountSelector
-   * @requires VeAutoGrid
-   * @requires VeStack
    */
   export default {
     name: 'AmountSelector',

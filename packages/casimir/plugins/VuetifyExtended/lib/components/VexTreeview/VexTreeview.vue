@@ -108,7 +108,7 @@
         }
         /**
          * Send input value event
-         * @arg {Array} internalValue selected items
+         * @property {Array} internalValue selected items
          * @event input
          */
         this.$emit('input', this.internalValue);

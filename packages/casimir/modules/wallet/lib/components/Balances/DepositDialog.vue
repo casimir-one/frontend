@@ -166,15 +166,18 @@
     methods: {
       /**
        * Check receive message
-       * Fires on a message event
-       * @property {object} e - MessageEvent
-       * @event payment-processed
+       * @param {Object} e MessageEvent
        */
       handleMessageReceive(e) {
         if (!e.origin.startsWith(this.$env.DEIP_PAYMENT_SERVICE_URL)) return;
 
         if (e.data === 'stripe-payment-processed') {
           this.closeDialog();
+          /**
+           * Fires on a message event
+           * @property {Object} e - MessageEvent
+           * @event payment-processed
+           */
           this.$emit('payment-processed');
           this.$notifier.showSuccess(this.$t('module.wallet.balances.paymentProcessed'));
         }

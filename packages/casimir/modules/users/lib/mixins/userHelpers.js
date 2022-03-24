@@ -4,7 +4,7 @@ export const userHelpersMixin = {
   methods: {
     /**
      *
-     * @param {object} user
+     * @param {Object} user
      * @returns {null | string}
      */
     $$userFullName(user) {
@@ -20,8 +20,8 @@ export const userHelpersMixin = {
     },
 
     /**
-    * @param {object} user
-    * @param {object} opts - add this parameter if you need to crop the image on the server
+    * @param {Object} user
+    * @param {Object} opts - add this parameter if you need to crop the image on the server
     * @param {number} opts.width
     * @param {number} opts.height
     * @param {boolean} opts.image

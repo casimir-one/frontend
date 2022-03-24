@@ -82,7 +82,7 @@ export default {
      * Generate section
      * @param {Object} section
      * @param {string} section.title
-     * @param {array} section.array
+     * @param {Array} section.array
      * @returns {JSX.Element}
      */
     genSection(section) {

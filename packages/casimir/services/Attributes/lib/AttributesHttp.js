@@ -35,7 +35,7 @@ export class AttributesHttp {
 
   /**
    * Get network attributes by scope
-   * @param {String} scope
+   * @param {string} scope
    * @return {Promise<Object>}
    */
   async getNetworkAttributesByScope(scope) {

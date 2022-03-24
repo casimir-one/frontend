@@ -17,8 +17,6 @@
 
   /**
    * Component for creating crowdfunding title input
-   * @displayName  CrowdfundingTitleInput
-   * @requires VexBlock
    */
   export default defineComponent({
     name: 'CrowdfundingTitleInput',

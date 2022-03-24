@@ -58,9 +58,6 @@
 
   /**
    * Component for crowdfunding widget
-   * @displayName  CrowdfundingWidget
-   * @requires VeStack
-   * @requires CrowdfundingProgress
    */
   export default defineComponent({
     name: 'CrowdfundingWidget',

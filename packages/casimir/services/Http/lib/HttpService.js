@@ -122,7 +122,7 @@ export class HttpService {
 }
 
 /**
- * @param {object} params
+ * @param {Object} params
  * @return {string}
  */
 export const serializeParams = (params) => qs.stringify(params);
