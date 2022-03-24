@@ -56,7 +56,7 @@
           this.lazyValue = val;
           /**
            * Triggers when data is entered
-           * @arg {string} lazyValue input data
+           * @property {string} lazyValue input data
            * @event input
            */
           this.$emit('input', this.lazyValue);
@@ -250,7 +250,7 @@
         } else if (!isEqual(this.initialValue, this.lazyValue)) {
           /**
            * Triggers when new data is entered
-           * @arg {string} lazyValue input data
+           * @property {string} lazyValue input data
            * @event change
            */
           this.$emit('change', this.lazyValue);

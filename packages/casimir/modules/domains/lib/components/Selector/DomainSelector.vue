@@ -142,7 +142,7 @@
     methods: {
       /**
        * Remove item of domain
-       * @property {String} item id
+       * @param {string} item id
        */
       removeItem(id) {
         const idx = this.internalValue.indexOf(id);
@@ -154,7 +154,7 @@
       /**
        * Handle input values
        * Emits the array of selected items when this value changes
-       * @property {Array} selected items
+       * @param {Array} selected items
        */
       handleInput(value) {
         this.internalValue = [...value];

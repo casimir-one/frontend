@@ -54,7 +54,7 @@
       /**
        * Open deposit popup
        * Fires when the user clicks on the deposit button
-       * @property {object} e - balance data
+       * @property {Object} e - balance data
        * @event deposit
        */
       handleDeposit(e) {

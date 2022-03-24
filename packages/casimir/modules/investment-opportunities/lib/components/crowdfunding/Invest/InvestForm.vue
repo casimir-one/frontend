@@ -89,10 +89,6 @@
 
   /**
    * Component for creating invest form
-   * @displayName  InvestForm
-   * @requires VeStack
-   * @requires CrowdfundingProgress
-   * @requires AmountSelector
    */
   export default {
     name: 'InvestForm',

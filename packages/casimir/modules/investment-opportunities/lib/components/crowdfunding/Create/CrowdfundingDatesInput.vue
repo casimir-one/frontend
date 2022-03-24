@@ -45,9 +45,6 @@
 
   /**
    * Component for creating crowdfunding dates input
-   * @displayName  CrowdfundingDatesInput
-   * @requires VexBlock
-   * @requires VexDateTimeInput
    */
   export default defineComponent({
     name: 'CrowdfundingDatesInput',

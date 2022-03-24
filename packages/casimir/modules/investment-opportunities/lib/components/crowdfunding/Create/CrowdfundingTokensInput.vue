@@ -42,8 +42,6 @@
 
   /**
    * Component for creating crowdfunding tokens input
-   * @displayName  CrowdfundingTokensInput
-   * @requires VexBlock
    */
   export default defineComponent({
     name: 'CrowdfundingTokensInput',

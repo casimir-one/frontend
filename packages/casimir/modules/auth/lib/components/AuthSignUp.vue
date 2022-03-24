@@ -83,8 +83,6 @@
 
   /**
   * Component for user registration and login to the application
-  * @requires VexPasswordRepeatInput
-  * @requires VeStack
   */
   export default {
     name: 'AuthSignUp',
@@ -217,7 +215,7 @@
        * Success event.
        * Fired on successful form submission
        * @event success
-       * @type {object}
+       * @type {Object}
        */
       emitSuccess(data) {
         this.setLoading(false);
@@ -227,7 +225,7 @@
        * Error event.
        * Fires on error form submission
        * @event error
-       * @type {object}
+       * @type {Object}
        */
       emitError(error) {
         this.setLoading(false);

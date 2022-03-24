@@ -57,8 +57,6 @@
   const accessService = AccessService.getInstance();
   /**
    * Component for package content details
-   * @requires VexTooltip
-   * @requires VeLineClamp
    */
   export default defineComponent({
     name: 'PackageContentDetails',

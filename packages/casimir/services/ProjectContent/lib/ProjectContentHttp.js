@@ -19,7 +19,7 @@ export class ProjectContentHttp {
   /**
    * @deprecated
    * Get project content onchain entity by id
-   * @param {String} refId
+   * @param {string} refId
    * @returns {Promise<Object>}
    */
   async getContentRef(refId) {
@@ -37,7 +37,7 @@ export class ProjectContentHttp {
 
   /**
    * Get project content list by project
-   * @param {String} id
+   * @param {string} id
    * @returns {Promise<Object>}
    */
   async getContentListByProject(projectId) {

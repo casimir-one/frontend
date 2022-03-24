@@ -27,7 +27,6 @@
 
   /**
    * Component for references selector
-   * @requires VexAutocomplete
    */
   export default defineComponent({
     name: 'ReferencesSelector',

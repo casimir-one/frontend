@@ -85,8 +85,6 @@
 
   /**
    * Component for user authorization and login to the application
-   * @requires VexPasswordInput
-   * @requires VeStack
    */
   export default {
     name: 'AuthSignIn',
@@ -181,7 +179,7 @@
        * Success event.
        * Fired on successful form submission
        * @event success
-       * @type {object}
+       * @type {Object}
        */
       emitSuccess(data) {
         this.$emit('success', data);
@@ -191,7 +189,7 @@
        * Error event.
        * Fires on form submission error
        * @event error
-       * @type {object}
+       * @type {Object}
        */
       emitError(error) {
         this.$emit('error', error);

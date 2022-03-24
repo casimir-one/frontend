@@ -96,8 +96,6 @@
   const sleep = (time) => new Promise((resolve) => { setTimeout(() => { resolve(); }, time); });
   /**
   * Component for creating contract text in PDF format
-  * @requires vue-pdf
-  * @requires VeStack
   */
   export default {
     name: 'ContractPdfDetails',

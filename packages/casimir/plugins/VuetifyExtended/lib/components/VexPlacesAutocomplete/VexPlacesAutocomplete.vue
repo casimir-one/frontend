@@ -79,7 +79,7 @@
           this.lazyLocation = val;
           /**
            * Change event
-           * @arg {string} val input text
+           * @property {string} val input text
            */
           this.$emit('change', val);
         }

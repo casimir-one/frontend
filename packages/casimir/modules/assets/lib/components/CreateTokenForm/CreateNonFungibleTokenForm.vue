@@ -266,14 +266,6 @@
 
   /**
    * Component for creating non fungible token form
-   * @displayName  CreateNonFungibleTokenForm
-   * @requires VexBlock
-   * @requires VexTimeline
-   * @requires VexTimelineItem
-   * @requires VexTimelineAdd
-   * @requires VeStack
-   * @requires UsersSelector
-   * @requires TeamAvatar
    */
   export default defineComponent({
     name: 'CreateNonFungibleTokenForm',

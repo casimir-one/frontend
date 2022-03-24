@@ -91,11 +91,6 @@
   };
   /**
   * Component for creating a table of contracts
-  * @requires VDataTable
-  * @requires CONTRACT_AGREEMENT_STATUS
-  * @requires dateMixin
-  * @requires userHelpersMixin
-  * @requires teamHelpersMixin
   */
   export default {
     name: 'ContractsTable',
@@ -183,7 +178,7 @@
     methods: {
       /**
        * Get date
-       * @property {string,number} date
+       * @param {string,number} date
        */
       formatDate(date) {
         if (typeof date === 'string') {
@@ -193,7 +188,7 @@
       },
       /**
        * Get the name of the contract to which the user is a party
-       * @property {string} id
+       * @param {string} id
        */
       getPartyNameById(id) {
         const party = this.parties.find((p) => p._id === id);
@@ -207,7 +202,7 @@
       },
       /**
        * Check status contract
-       * @property {number} status
+       * @param {number} status
        */
       isPendingStatus(status) {
         return [CONTRACT_AGREEMENT_STATUS.PENDING,
@@ -215,7 +210,7 @@
       },
       /**
        * Get color for current status
-       * @property {number} status
+       * @param {number} status
        */
       getStatusColor(status) {
         return colorByStatus[status];
@@ -232,18 +227,22 @@
         return this.$t(`module.contractAgreements.status.${statusName}`);
       },
       /**
-       * Select contract event
-       * Triggers when the contract selected on table row by click
-       * @event click-row
-       * @property {object} contract data
+       * Contract select handler
+       * @param {Object} contract data
        */
       handleContractRowClick(contract) {
+        /**
+         * Select contract event
+         * Triggers when the contract selected on table row by click
+         * @property {Object} contract data
+         * @event click-row
+         */
         this.$emit('click-row', contract);
       },
       /**
        * Get confirm discard contract popup
        * Triggers when user click cancel button
-       * @property {object} contract data
+       * @param {Object} contract data
        */
       handleDiscardContract(contract) {
         this.$confirm(this.$t('module.contractAgreements.discardAction.confirm.message'),

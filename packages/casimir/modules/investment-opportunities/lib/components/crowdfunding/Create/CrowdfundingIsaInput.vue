@@ -43,9 +43,6 @@
 
   /**
    * Component for creating crowdfunding isa input
-   * @displayName  CrowdfundingIsaInput
-   * @requires VexBlock
-   * @requires AssetInput
    */
   export default defineComponent({
     name: 'CrowdfundingIsaInput',

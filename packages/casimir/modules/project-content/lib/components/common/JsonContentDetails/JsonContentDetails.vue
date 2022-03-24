@@ -9,7 +9,6 @@
 
   /**
    * Component for json content details
-   * @requires VueEditorjsParser
    */
   export default defineComponent({
     name: 'JsonContentDetails',

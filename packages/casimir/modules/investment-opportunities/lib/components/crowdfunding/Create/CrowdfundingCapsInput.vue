@@ -78,9 +78,6 @@
 
   /**
    * Component for creating crowdfunding amount input
-   * @displayName  CrowdfundingAmountInput
-   * @requires VexBlock
-   * @requires AssetInput
    */
   export default defineComponent({
     name: 'CrowdfundingAmountInput',

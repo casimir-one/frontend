@@ -80,13 +80,6 @@
 
   /**
    * Component for creating crowdfunding form
-   * @displayName  CreateCrowdfundingForm
-   * @requires VeStack
-   * @requires CrowdfundingTitleInput
-   * @requires CrowdfundingTokensInput
-   * @requires CrowdfundingDatesInput
-   * @requires CrowdfundingIsaInput
-   * @requires CrowdfundingCapsInput
    */
   export default defineComponent({
     name: 'CreateCrowdfundingForm',
