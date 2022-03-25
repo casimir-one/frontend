@@ -8,7 +8,7 @@
         height="184px"
         class="pa-6"
       >
-        <ve-stack class="white--text">
+        <ve-stack class="white--text" :gap="16">
           <div>
             <v-chip
               small
@@ -91,6 +91,7 @@
       },
       /**
        * Balance card color
+       * default: '#4CB0D1'
        */
       backgroundColor: {
         type: String,
