@@ -54,8 +54,16 @@ module.exports = {
     ],
     'no-plusplus': 'off',
     'class-methods-use-this': 'off',
-    'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
-    radix: ['error', 'as-needed']
+    'lines-between-class-members': [
+      'error',
+      'always',
+      { exceptAfterSingleLine: true }
+    ],
+    radix: ['error', 'as-needed'],
+    'max-len': [
+      'error',
+      { code: 100, ignoreComments: true }
+    ]
   },
   settings: {
     'import/resolver': {
