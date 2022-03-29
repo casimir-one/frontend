@@ -28,16 +28,200 @@ export class AssetsService {
   assetsHttp = AssetsHttp.getInstance();
 
   /**
+   * Create new fungible token
+   * @param {import('@casimir/platform-core').FungibleTokenCreatePayload} payload
+   * @return {Promise<Object>}
+   */
+  createFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        symbol,
+        issuer,
+        precision,
+        maxSupply,
+        minBalance,
+        description,
+        projectTokenSettings,
+        holders
+      }
+    } = payload;
+    const env = this.proxydi.get('env');
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const entityId = genRipemd160Hash(symbol);
+            const createFungibleTokenCmd = new CreateFungibleTokenCmd({
+              entityId,
+              issuer,
+              symbol,
+              precision,
+              maxSupply,
+              minBalance,
+              description,
+              projectTokenSettings
+            });
+            txBuilder.addCmd(createFungibleTokenCmd);
+            const tokenId = createFungibleTokenCmd.getProtocolEntityId();
+
+            if (holders && holders.length) {
+              for (let i = 0; i < holders.length; i++) {
+                const { account, asset } = holders[i];
+                const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
+                  tokenId,
+                  symbol: asset.symbol,
+                  precision: asset.precision,
+                  amount: asset.amount,
+                  issuer,
+                  recipient: account
+                });
+                txBuilder.addCmd(issueFungibleTokenCmd);
+              }
+            }
+
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.createFungibleToken(msg);
+          });
+      });
+  }
+
+  /**
+   * Create new non-fungible token
+   * @param {import('@casimir/platform-core').NonFungibleTokenCreatePayload} payload
+   * @return {Promise<Object>}
+   */
+  createNonFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        symbol,
+        issuer,
+        description,
+        projectTokenSettings
+      }
+    } = payload;
+    const env = this.proxydi.get('env');
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const entityId = genRipemd160Hash(symbol);
+            const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
+              entityId,
+              issuer,
+              symbol,
+              description,
+              projectTokenSettings
+            });
+
+            txBuilder.addCmd(createNonFungibleTokenCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.createNonFungibleToken(msg);
+          });
+      });
+  }
+
+  /**
+   * Issue fungible token
+   * @param {import('@casimir/platform-core').FungibleTokenIssuePayload} payload
+   * @return {Promise<Object>}
+   */
+  issueFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        asset,
+        recipient
+      }
+    } = payload;
+    const env = this.proxydi.get('env');
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
+              issuer,
+              tokenId: asset.id,
+              symbol: asset.symbol,
+              precision: asset.precision,
+              amount: asset.amount,
+              recipient
+            });
+            txBuilder.addCmd(issueFungibleTokenCmd);
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.issueFungibleToken(msg);
+          });
+      });
+  }
+
+  /**
+   * Issue non-fungible token
+   * @param {import('@casimir/platform-core').NonFungibleTokenIssuePayload} payload
+   * @return {Promise<Object>}
+   */
+  issueNonFungibleToken(payload) {
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        classId,
+        instanceId,
+        recipient
+      }
+    } = payload;
+    const env = this.proxydi.get('env');
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
+              issuer,
+              classId,
+              instanceId,
+              recipient
+            });
+            txBuilder.addCmd(issueNonFungibleTokenCmd);
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.issueNonFungibleToken(msg);
+          });
+      });
+  }
+
+  /**
    * Transfer asset
-   * TODO: change params to object payload
-   * @param {Object} initiator
-   * @param {string} initiator.privKey
-   * @param {string} initiator.username
-   * @param {Object} transferInfo
-   * @param {string} transferInfo.from
-   * @param {string} transferInfo.to
-   * @param {Object} transferInfo.asset
-   * @param {Object} proposalInfo
+   * @param {import('@casimir/platform-core').AssetTransferPayload} payload
    * @return {Promise<Object>}
    */
   transfer(payload) {
@@ -106,207 +290,6 @@ export class AssetsService {
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
             return this.assetsHttp.transfer(msg);
-          });
-      });
-  }
-
-  /**
-   * Create new asset
-   * TODO: change params to object payload
-   * @typedef {{amount: number, symbol: string, precision: number}} Asset
-   * @param {Object} initiator
-   * @param {string} initiator.privKey
-   * @param {Object} assetInfo
-   * @param {string} assetInfo.symbol
-   * @param {string} assetInfo.issuer
-   * @param {number} assetInfo.precision
-   * @param {number} assetInfo.maxSupply
-   * @param {number} assetInfo.minBalance
-   * @param {string} assetInfo.description
-   * @param {Object} assetInfo.projectTokenOption
-   * @param {Array.<{account: string, asset: Asset}>} assetInfo.holders
-   * @return {Promise<Object>}
-   */
-  createFungibleToken(payload) {
-    const {
-      initiator: { privKey },
-      data: {
-        symbol,
-        issuer,
-        precision,
-        maxSupply,
-        minBalance,
-        description,
-        projectTokenSettings,
-        holders
-      }
-    } = payload;
-    const env = this.proxydi.get('env');
-
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const entityId = genRipemd160Hash(symbol);
-            const createFungibleTokenCmd = new CreateFungibleTokenCmd({
-              entityId,
-              issuer,
-              symbol,
-              precision,
-              maxSupply,
-              minBalance,
-              description,
-              projectTokenSettings
-            });
-            txBuilder.addCmd(createFungibleTokenCmd);
-            const tokenId = createFungibleTokenCmd.getProtocolEntityId();
-
-            if (holders && holders.length) {
-              for (let i = 0; i < holders.length; i++) {
-                const { account, asset } = holders[i];
-                const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
-                  tokenId,
-                  symbol: asset.symbol,
-                  precision: asset.precision,
-                  amount: asset.amount,
-                  issuer,
-                  recipient: account
-                });
-                txBuilder.addCmd(issueFungibleTokenCmd);
-              }
-            }
-
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createFungibleToken(msg);
-          });
-      });
-  }
-
-  createNonFungibleToken(payload) {
-    const {
-      initiator: { privKey },
-      data: {
-        symbol,
-        issuer,
-        description,
-        projectTokenSettings
-      }
-    } = payload;
-    const env = this.proxydi.get('env');
-
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const entityId = genRipemd160Hash(symbol);
-            const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
-              entityId,
-              issuer,
-              symbol,
-              description,
-              projectTokenSettings
-            });
-
-            txBuilder.addCmd(createNonFungibleTokenCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createNonFungibleToken(msg);
-          });
-      });
-  }
-
-  issueFungibleToken(payload) {
-    const {
-      initiator: { privKey },
-      data: {
-        issuer,
-        asset,
-        recipient
-      }
-    } = payload;
-    const env = this.proxydi.get('env');
-
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
-              issuer,
-              tokenId: asset.id,
-              symbol: asset.symbol,
-              precision: asset.precision,
-              amount: asset.amount,
-              recipient
-            });
-            txBuilder.addCmd(issueFungibleTokenCmd);
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.issueFungibleToken(msg);
-          });
-      });
-  }
-
-  /**
-   * Issue new tokens for asset
-   * TODO: change params to object payload
-   * @param {Object} initiator
-   * @param {string} initiator.privKey
-   * @param {Object} assetInfo
-   * @param {string} assetInfo.issuer
-   * @param {string} assetInfo.classId
-   * @param {number} assetInfo.instanceId
-   * @param {string} assetInfo.recipient
-   * @return {Promise<Object>}
-   */
-  issueNonFungibleToken(payload) {
-    const {
-      initiator: { privKey },
-      data: {
-        issuer,
-        classId,
-        instanceId,
-        recipient
-      }
-    } = payload;
-    const env = this.proxydi.get('env');
-
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
-              issuer,
-              classId,
-              instanceId,
-              recipient
-            });
-            txBuilder.addCmd(issueNonFungibleTokenCmd);
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.issueNonFungibleToken(msg);
           });
       });
   }
@@ -397,19 +380,11 @@ export class AssetsService {
 
   /**
    * Create proposal for asset exchange
-   * TODO: change params to object payload
-   * @param {Object} initiator
-   * @param {string} initiator.privKey
-   * @param {string} initiator.username
-   * @param {Object} transferInfo
-   * @param {string} transferInfo.party1
-   * @param {string} transferInfo.party2
-   * @param {Object} transferInfo.asset1
-   * @param {Object} transferInfo.asset2
-   * @param {Object} proposalInfo
+   * @todo: add NFT support
+   * @param {import('@casimir/platform-core').AssetExchangeProposalPayload} payload
    * @return {Promise}
    */
-  createExchangeProposal(payload) { // TODO: support NFT
+  createExchangeProposal(payload) {
     const {
       initiator: { privKey, username },
       data: {
@@ -492,15 +467,7 @@ export class AssetsService {
 
   /**
    * Deposit asset tokens
-   * @param {Object} payload
-   * @param {Object} payload.initiator
-   * @param {string} payload.initiator.privKey
-   * @param {string} payload.initiator.username
-   * @param {string} payload.redirectUrl
-   * @param {string} payload.amount
-   * @param {string} payload.currency
-   * @param {string} payload.account
-   * @param {timestamp} payload.timestamp
+   * @param {import('@casimir/platform-core').AssetDepositPayload} payload
    * @return {Promise<Object>}
    */
   deposit(payload) {

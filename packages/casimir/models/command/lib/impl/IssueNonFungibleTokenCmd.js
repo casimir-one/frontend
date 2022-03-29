@@ -3,17 +3,17 @@ import { assert } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
+ * @typedef {import('@casimir/platform-core').NonFungibleTokenCreateData} NonFungibleTokenIssueCmdPayload
+ */
+
+/**
  * Issue non-fungible token instance command
  * @extends ProtocolCmd
  */
 class IssueNonFungibleTokenCmd extends ProtocolCmd {
   /**
    * Issue non-fungible token instance
-   * @param {Object} cmdPayload
-   * @param {string} cmdPayload.issuer
-   * @param {string} cmdPayload.classId
-   * @param {number} cmdPayload.instanceId
-   * @param {string} cmdPayload.recipient
+   * @param {NonFungibleTokenIssueCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {
