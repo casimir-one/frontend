@@ -1,53 +1,44 @@
 import { ServiceBasePayload } from './servicePayload';
 
-export type Asset = {
-  id: string,
-  symbol: string,
-  precision: number,
-  amount: number
-};
+// TODO: move transfer/exchange to tokens after service update
 
-export type AssetProjectTokenOption = {
-  projectId: string,
-  teamId: string,
-  licenseRevenue: Record<string, unknown>
-};
-
-export type AssetCreateHolder = {
-  account: string,
-  asset: Omit<Asset, 'id'>
-};
-
-// Payload data types
-
-export type AssetCreateData = Omit<Asset, 'id' | 'amount'> & {
-  issuer?: string,
-  maxSupply?: number,
-  description?: string,
-  projectTokenOption?: AssetProjectTokenOption,
-  holders?: Array<AssetCreateHolder>
-};
-
-export type AssetIssueData = {
-  issuer: string,
-  recipient: string
-  asset: Asset
-};
-
-export type AssetTransferPayloadData = {
+/**
+ * Transfer asset data
+ */
+type AssetTransferData = {
   from: string,
   to: string
-  asset: Asset
+  asset: Record<string, unknown>
 };
 
-export type AssetExchangePayloadData = {
+/**
+ * Transfer asset payload
+ */
+export type AssetTransferPayload = ServiceBasePayload<AssetTransferData>;
+
+// //////////////
+
+/**
+ * Exchange asset data
+ */
+type AssetExchangeData = {
   from: string,
   to: string
-  fromAsset: Asset
-  toAsset: Asset
+  fromAsset: Record<string, unknown>
+  toAsset: Record<string, unknown>
 };
 
-export type AssetDepositPayloadData = {
+/**
+ * Exchange asset payload
+ */
+export type AssetExchangeProposalPayload = ServiceBasePayload<AssetExchangeData>;
+
+// //////////////
+
+/**
+ * Deposit asset data
+ */
+type AssetDepositData = {
   redirectUrl: string,
   amount: number,
   currency: string,
@@ -55,10 +46,7 @@ export type AssetDepositPayloadData = {
   timestamp: number
 };
 
-// Payload types
-
-export type AssetCreatePayload = ServiceBasePayload<AssetCreateData>;
-export type AssetIssuePayload = ServiceBasePayload<AssetIssueData>;
-export type AssetTransferPayload = ServiceBasePayload<AssetTransferPayloadData>;
-export type AssetExchangePayload = ServiceBasePayload<AssetExchangePayloadData>;
-export type AssetDepositPayload = ServiceBasePayload<AssetDepositPayloadData>;
+/**
+ * Deposit asset payload
+ */
+export type AssetDepositPayload = ServiceBasePayload<AssetDepositData>;

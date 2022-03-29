@@ -4,19 +4,17 @@ import { assert, isNumber } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
+ * @typedef {{entityId: string} & import('@casimir/platform-core').FungibleTokenCreateData} FungibleTokenCreateCmdPayload
+ */
+
+/**
  * Create fungible token command
  * @extends ProtocolEntityCmd
  */
 class CreateFungibleTokenCmd extends ProtocolEntityCmd {
   /**
    * Create fungible token
-   * @param {Object} cmdPayload
-   * @param {string} cmdPayload.issuer
-   * @param {string} cmdPayload.symbol
-   * @param {number} cmdPayload.precision
-   * @param {number} cmdPayload.minBalance
-   * @param {string} cmdPayload.description
-   * @param {Object} cmdPayload.projectTokenSettings
+   * @param {FungibleTokenCreateCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {

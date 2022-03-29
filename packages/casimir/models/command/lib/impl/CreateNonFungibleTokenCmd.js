@@ -4,17 +4,17 @@ import { assert } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
+ * @typedef {{entityId: string} & import('@casimir/platform-core').NonFungibleTokenCreateData} NonFungibleTokenCreateCmdPayload
+ */
+
+/**
  * Create non-fungible token class command
  * @extends ProtocolEntityCmd
  */
 class CreateNonFungibleTokenCmd extends ProtocolEntityCmd {
   /**
    * Create non-fungible token class
-   * @param {Object} cmdPayload
-   * @param {string} cmdPayload.issuer
-   * @param {string} cmdPayload.symbol
-   * @param {string} cmdPayload.description
-   * @param {Object} cmdPayload.projectTokenSettings
+   * @param {NonFungibleTokenCreateCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {

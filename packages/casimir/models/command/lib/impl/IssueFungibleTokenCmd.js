@@ -3,19 +3,17 @@ import { assert } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
+ * @typedef {import('@casimir/platform-core').FungibleTokenIssueData} FungibleTokenIssueCmdPayload
+ */
+
+/**
  * Issue fungible token amount command
  * @extends ProtocolCmd
  */
 class IssueFungibleTokenCmd extends ProtocolCmd {
   /**
    * Issue fungible token amount
-   * @param {Object} cmdPayload
-   * @param {string} cmdPayload.issuer
-   * @param {string} cmdPayload.tokenId
-   * @param {string} cmdPayload.symbol
-   * @param {number} cmdPayload.precision
-   * @param {number} cmdPayload.amount
-   * @param {string} cmdPayload.recipient
+   * @param {FungibleTokenIssueCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {
