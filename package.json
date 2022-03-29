@@ -9,7 +9,7 @@
     "lint:fix": "eslint . --fix",
     "test": "cross-env NODE_ENV=test jest",
     "test:update": "cross-env NODE_ENV=test jest -u",
-    "publish": "node ./scripts/publish.js",
+    "publish": "npm run build:lib && node ./scripts/publish.js",
     "clean": "lerna clean --yes",
     "check:instances": "babel-node ./scripts/checkInstances.js",
     "bootstrap": "npm run clean && lerna bootstrap -- --legacy-peer-deps",
