@@ -35,7 +35,6 @@
     "@deip/vuetify-extended": "1.373.0"
   },
   "peerDependencies": {
-    "@deip/app-config-service": "^1.373.0",
     "@deip/auth-module": "^1.374.0",
     "vuetify": "^2.5.3",
     "vuex": "^3.6.2"

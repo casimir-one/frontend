@@ -26,7 +26,6 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/app-config-service": "1.373.0",
     "@deip/chain-service": "1.374.0",
     "@deip/constants": "1.373.0",
     "@deip/platform-util": "1.371.0",
