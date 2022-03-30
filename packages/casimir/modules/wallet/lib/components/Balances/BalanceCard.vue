@@ -2,13 +2,12 @@
   <v-hover v-slot="{ hover }">
     <ve-shadow-box :opacity="hover ? 1 : 0">
       <v-card
-        :elevation="hover ? 8 : 0"
+        :elevation="0"
         :style="styles"
         flat
-        height="184px"
         class="pa-6"
       >
-        <ve-stack class="white--text">
+        <ve-stack class="white--text" :gap="24">
           <div>
             <v-chip
               small
@@ -108,7 +107,9 @@
       styles() {
         return {
           backgroundBlendMode: 'overlay, normal',
-          background: `linear-gradient(280deg, rgba(255, 255, 255, 0.7) 0.08%, rgba(255, 255, 255, 0) 100%), ${this.backgroundColor}`
+          background: `linear-gradient(280deg, rgba(255, 255, 255, 0.7) 0.08%, rgba(255, 255, 255, 0) 100%), ${this.backgroundColor}`,
+          height: '100%',
+          minHeight: '184px'
         };
       },
 
