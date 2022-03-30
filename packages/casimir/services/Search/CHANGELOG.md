@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.375.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.374.0...v1.375.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* fix updateDeipDeps script and update packages deps ([d4cd991](https://github.com/DEIPworld/casimir-frontend/commit/d4cd991f2256888bcc3a5b896143885ea613000c))
+
+
+
+
+
 # [1.373.0](https://github.com/DEIPworld/deip-modules/compare/v1.372.1...v1.373.0) (2022-03-19)
 
 **Note:** Version bump only for package @deip/search-service

@@ -4,7 +4,7 @@
     "packages/casimir/*/*",
     "packages/generators/*"
   ],
-  "version": "1.374.0",
+  "version": "1.375.0",
   "npmClient": "npm",
   "command": {
     "version": {

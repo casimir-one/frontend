@@ -1,6 +1,6 @@
 {
   "name": "@deip/project-content-module",
-  "version": "1.374.0",
+  "version": "1.375.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,18 +20,18 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.373.0",
-    "@deip/constants": "1.373.0",
-    "@deip/platform-components": "1.373.0",
-    "@deip/platform-util": "1.371.0",
-    "@deip/project-content-service": "1.374.0",
-    "@deip/projects-module": "1.374.0",
-    "@deip/proxydi": "1.371.0",
-    "@deip/toolbox": "1.371.0",
-    "@deip/users-module": "1.374.0",
-    "@deip/vue-editorjs": "1.371.0",
-    "@deip/vue-elements": "1.372.1",
-    "@deip/vuetify-extended": "1.373.0"
+    "@deip/access-service": "1.375.0",
+    "@deip/constants": "1.375.0",
+    "@deip/platform-components": "1.375.0",
+    "@deip/platform-util": "1.375.0",
+    "@deip/project-content-service": "1.375.0",
+    "@deip/projects-module": "1.375.0",
+    "@deip/proxydi": "1.375.0",
+    "@deip/toolbox": "1.375.0",
+    "@deip/users-module": "1.375.0",
+    "@deip/vue-editorjs": "1.375.0",
+    "@deip/vue-elements": "1.375.0",
+    "@deip/vuetify-extended": "1.375.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

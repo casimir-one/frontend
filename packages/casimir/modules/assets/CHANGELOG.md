@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.375.0](https://github.com/DEIPworld/deip-modules/compare/v1.374.0...v1.375.0) (2022-03-30)
+
+
+### Bug Fixes
+
+* fix updateDeipDeps script and update packages deps ([d4cd991](https://github.com/DEIPworld/deip-modules/commit/d4cd991f2256888bcc3a5b896143885ea613000c))
+* **@deip/assets-module:** fix corrected a typo in the translation ([0fd7e64](https://github.com/DEIPworld/deip-modules/commit/0fd7e64b3eea4e836317bd296932147f2321aac2))
+
+
+### Features
+
+* transfer ft/nft ([00ce6af](https://github.com/DEIPworld/deip-modules/commit/00ce6af4bffc48beb61e843c0b8669ae1cc3daa2))
+
+
+
+
+
 # [1.374.0](https://github.com/DEIPworld/deip-modules/compare/v1.373.0...v1.374.0) (2022-03-20)
 
 **Note:** Version bump only for package @deip/assets-module
