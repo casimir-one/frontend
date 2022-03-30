@@ -6,7 +6,7 @@ class NonFungibleTokenDto {
   constructor({
     classId,
     symbol,
-    insancesCount,
+    instancesCount,
     instanceMetadatasCount,
     attributesCount,
     issuer,
@@ -16,13 +16,13 @@ class NonFungibleTokenDto {
 
     assert(!!classId, "NFT 'classId' is not specified");
     assert(!!issuer, "NFT 'issuer' is not specified");
-    assert(!!insancesCount || insancesCount == 0, "NFT 'insancesCount' field is not specified");
+    assert(!!instancesCount || instancesCount == 0, "NFT 'instancesCount' field is not specified");
     assert(!!instanceMetadatasCount || instanceMetadatasCount == 0, "NFT 'instanceMetadatasCount' field is not specified");
     assert(!!attributesCount || attributesCount == 0, "NFT 'attributesCount' field is not specified");
     assert(!!totalDeposit || totalDeposit == 0, "NFT 'totalDeposit' field is not specified");
 
     this.classId = classId;
-    this.insancesCount = insancesCount;
+    this.instancesCount = instancesCount;
     this.instanceMetadatasCount = instanceMetadatasCount;
     this.issuer = issuer;
     this.symbol = symbol;

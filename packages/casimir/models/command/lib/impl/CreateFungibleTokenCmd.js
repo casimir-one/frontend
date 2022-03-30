@@ -24,15 +24,15 @@ class CreateFungibleTokenCmd extends ProtocolEntityCmd {
       precision,
       minBalance,
       description,
-      projectTokenSettings
+      metadata
     } = cmdPayload;
 
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
     assert(isNumber(precision), "'precision' must be a number");
 
-    if (projectTokenSettings) { // keep this until we have working F-NFT
-      const { projectId, teamId, licenseRevenue } = projectTokenSettings;
+    if (metadata) { // keep this until we have working F-NFT
+      const { projectId, teamId, licenseRevenue } = metadata;
       assert(!!projectId, "'projectId' is required for project token");
       assert(!!teamId, "'teamId' is required for project token");
 

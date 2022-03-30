@@ -9,7 +9,7 @@ class SubstrateNonFungibleTokenDto extends NonFungibleTokenDto {
     const classId = fromHexFormat(asset.classId);
     const issuer = asset.admin;
     const totalDeposit = hexToBigInt(asset.totalDeposit).toString();
-    const insancesCount = asset.instances;
+    const instancesCount = asset.instances;
     const instanceMetadatasCount = asset.instanceMetadatas;
     const attributesCount = asset.attributes;
 
@@ -18,7 +18,7 @@ class SubstrateNonFungibleTokenDto extends NonFungibleTokenDto {
 
     super({ 
       classId, 
-      insancesCount, 
+      instancesCount, 
       instanceMetadatasCount,
       attributesCount,
       issuer, 

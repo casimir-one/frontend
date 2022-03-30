@@ -24,14 +24,14 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
-    return assetsService.lookupAssets(10000)
+    return assetsService.lookupFungibleTokens(10000)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getBySymbol({ commit }, symbol) {
-    return assetsService.getOneBySymbol(symbol)
+    return assetsService.getFungibleTokenBySymbol(symbol)
       .then((res) => {
         commit('setOne', res.data);
       });

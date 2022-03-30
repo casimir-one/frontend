@@ -17,7 +17,7 @@ import {
   CreateProjectCmd,
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
-  TransferAssetCmd
+  TransferFungibleTokenCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { TeamHttp } from './TeamHttp';
@@ -83,15 +83,13 @@ export class TeamService {
             entityId = createDaoCmd.getProtocolEntityId();
 
             if (ACCOUNT_DEFAULT_FUNDING_AMOUNT) {
-              const transferAssetCmd = new TransferAssetCmd({
+              const transferFungibleTokenCmd = new TransferFungibleTokenCmd({
                 from: creator,
                 to: entityId,
                 tokenId: CORE_ASSET.id,
-                symbol: CORE_ASSET.symbol,
-                precision: CORE_ASSET.precision,
                 amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
               });
-              txBuilder.addCmd(transferAssetCmd);
+              txBuilder.addCmd(transferFungibleTokenCmd);
             }
 
             if (isCreateDefaultProject) {
@@ -147,6 +145,7 @@ export class TeamService {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
+            // eslint-disable-next-line max-len
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
             return this.teamHttp.create(msg);
           });
@@ -235,6 +234,7 @@ export class TeamService {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
+            // eslint-disable-next-line max-len
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
             return this.teamHttp.update(msg);
           });

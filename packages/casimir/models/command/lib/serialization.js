@@ -15,7 +15,8 @@ import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import TransferAssetCmd from './impl/TransferAssetCmd';
+import TransferFungibleTokenCmd from './impl/TransferFungibleTokenCmd';
+import TransferNonFungibleTokenCmd from './impl/TransferNonFungibleTokenCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
@@ -48,7 +49,6 @@ import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
 import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 
-
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
   [APP_CMD.UPDATE_DAO]: { class: UpdateDaoCmd },
@@ -66,7 +66,8 @@ const APP_CMD_INFO = {
   [APP_CMD.REMOVE_DAO_MEMBER]: { class: RemoveDaoMemberCmd },
   [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: { class: CreateInvestmentOpportunityCmd },
   [APP_CMD.INVEST]: { class: InvestCmd },
-  [APP_CMD.TRANSFER_ASSET]: { class: TransferAssetCmd },
+  [APP_CMD.TRANSFER_FT]: { class: TransferFungibleTokenCmd },
+  [APP_CMD.TRANSFER_NFT]: { class: TransferNonFungibleTokenCmd },
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
@@ -98,8 +99,7 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_BOOKMARK]: { class: CreateBookmarkCmd },
   [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
   [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd }
-}
-
+};
 
 export {
   APP_CMD_INFO
