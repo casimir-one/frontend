@@ -11,8 +11,7 @@
         "archive-dist": "npx gzip ./dist/*.js --output=./dist",
         "build-browser": "npm run clear && cross-env NODE_ENV=production && node ./node_modules/webpack/bin/webpack.js && npm run archive-dist",
         "build-node": "shx mkdir -p ./lib && shx cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
-        "postinstall": "npm run build",
-        "prepublishOnly": "npm run build"
+        "prepare": "npm run build"
     },
     "browser": {
         "ws": false,
