@@ -1,6 +1,6 @@
 {
   "name": "@deip/toolbox",
-  "version": "1.375.0",
+  "version": "1.375.1",
   "description": "> TODO: description",
   "author": "",
   "license": "ISC",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@array-utils/chunk-it": "^3.0.1",
-    "@deip/lib-crypto": "1.375.0",
+    "@deip/lib-crypto": "1.375.1",
     "change-case": "^4.1.2",
     "chroma-js": "^2.1.2",
     "chunk": "^0.0.3",
