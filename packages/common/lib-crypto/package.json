@@ -4,8 +4,7 @@
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {
-        "postinstall": "npm run build",
-        "prepublishOnly": "npm run build",
+        "prepare": "npm run build",
         "clean": "shx rm -rf lib",
         "fmt": "prettier --write '{src,scripts}/**/*.js' && eslint '{src,scripts}/**/*.js'",
         "build": "node ./scripts/build.js",
