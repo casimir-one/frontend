@@ -19,16 +19,12 @@ class IssueFungibleTokenCmd extends ProtocolCmd {
     const {
       issuer,
       tokenId,
-      symbol,
-      precision,
       amount,
       recipient
     } = cmdPayload;
 
     assert(!!issuer, "FT 'issuer' is required");
     assert(!!tokenId, "FT 'tokenId' is required");
-    assert(!!symbol, "FT 'symbol' is required");
-    assert(!Number.isNaN(precision), "FT 'precision' is required");
     assert(!!amount, "FT 'amount' is required");
     assert(!!recipient, "'recipient' is required");
 

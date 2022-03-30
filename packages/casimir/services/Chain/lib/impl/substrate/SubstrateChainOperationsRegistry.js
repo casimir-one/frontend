@@ -337,7 +337,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       precision,
       maxSupply,
       minBalance,
-      projectTokenSettings
+      metadata
     }) => {
 
       const createFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
@@ -345,7 +345,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
           /* assetId: */ `0x${entityId}`,
           /* admin: */ { Dao: `0x${issuer}` },
           /* min_balance: */ minBalance || 1,
-          /* project_id */ projectTokenSettings ? `0x${projectTokenSettings.projectId}` : null
+          /* project_id */ metadata ? `0x${metadata.projectId}` : null
         )
       );
 
@@ -374,23 +374,22 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     [APP_CMD.CREATE_NFT]: ({
       entityId,
       issuer,
-      symbol,
       name,
-      projectTokenSettings
+      metadata,
+      metadataHash
     }) => {
-
       const createNonFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.uniques.deipCreate(
           /* classId: */ `0x${entityId}`,
           /* admin: */ { Dao: `0x${issuer}` },
-          /* project_id: */ projectTokenSettings ? `0x${projectTokenSettings.projectId}` : null
+          /* project_id: */ metadata && metadata.projectId ? `0x${metadata.projectId}` : null
         )
       );
 
       const setNonFungibleTokenMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.uniques.deipSetClassMetadata(
           /* classId: */ `0x${entityId}`,
-          /* data */ stringToHex(JSON.stringify({ symbol })),
+          /* data */ stringToHex(JSON.stringify({ symbol: name, metadataHash })),
           /* is_frozen */ false
         )
       );
@@ -411,8 +410,6 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     [APP_CMD.ISSUE_FT]: ({
       issuer,
       tokenId,
-      symbol,
-      precision,
       amount,
       recipient
     }) => {
@@ -433,7 +430,8 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       issuer,
       classId,
       instanceId,
-      recipient
+      recipient,
+      metadataHash
     }) => {
 
       const issueNonFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
@@ -444,7 +442,16 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         )
       );
 
-      return [issueNonFungibleTokenOp];
+      const setNonFungibleTokenInstanceMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.uniques.deipSetMetadata(
+          /* classId: */ `0x${classId}`,
+          /* instanceId: */ instanceId,
+          /* data */ stringToHex(JSON.stringify({ metadataHash })),
+          /* is_frozen */ false
+        )
+      );
+
+      return [issueNonFungibleTokenOp, setNonFungibleTokenInstanceMetaOp];
     },
 
 
@@ -564,54 +571,52 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       return [rejectContractAgreementOp];
     },
 
-    // TODO: Split this command to separate TransferFungibleToken and TransferNonFungibleToken
-    [APP_CMD.TRANSFER_ASSET]: ({
+
+    [APP_CMD.TRANSFER_FT]: ({
       from,
       to,
-      assetType,
-
-      // FT
       tokenId,
-      symbol,
-      precision,
       amount,
+    }) => {
+      const recipientAddress = toAddress(to, chainNodeClient.registry);
 
-      // NFT
+      if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
+        const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+          chainNodeClient.tx.balances.transfer(
+            /* to: */ recipientAddress,
+            /* amount: */ amount
+          )
+        );
+        return [transferCoreAssetOp];
+      } else {
+        const transferFtOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+          chainNodeClient.tx.assets.deipTransfer(
+            /* assetId: */ `0x${tokenId}`,
+            /* to: */ { Native: recipientAddress },
+            /* amount: */ amount
+          )
+        );
+        return [transferFtOp];
+      }
+    },
+
+
+    [APP_CMD.TRANSFER_NFT]: ({
+      from,
+      to,
       classId,
       instanceId,
     }) => {
-
       const recipientAddress = toAddress(to, chainNodeClient.registry);
 
-      if (assetType === ASSET_TYPE.NFT) {
-        const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-          chainNodeClient.tx.uniques.deipTransfer(
-            /* assetId: */ `0x${classId}`,
-            /* instance: */ instanceId,
-            /* to: */ { Native: recipientAddress }
-          )
-        );
-        return [transferNftOp];
-      } else { // ASSET_TYPE.FT
-        if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
-          const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-            chainNodeClient.tx.balances.transfer(
-              /* to: */ recipientAddress,
-              /* amount: */ amount
-            )
-          );
-          return [transferCoreAssetOp];
-        } else {
-          const transferFtOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-            chainNodeClient.tx.assets.deipTransfer(
-              /* assetId: */ `0x${tokenId}`,
-              /* to: */ { Native: recipientAddress },
-              /* amount: */ amount
-            )
-          );
-          return [transferFtOp];
-        }
-      }
+      const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
+        chainNodeClient.tx.uniques.deipTransfer(
+          /* assetId: */ `0x${classId}`,
+          /* instance: */ instanceId,
+          /* to: */ { Native: recipientAddress }
+        )
+      );
+      return [transferNftOp];
     },
 
 

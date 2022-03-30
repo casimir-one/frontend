@@ -1,16 +1,17 @@
-import { genRipemd160Hash, createInstanceGetter } from '@deip/toolbox';
+import { genRipemd160Hash, genSha256Hash, createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
 import {
   AcceptProposalCmd,
   CreateProposalCmd,
-  TransferAssetCmd,
+  TransferFungibleTokenCmd,
+  TransferNonFungibleTokenCmd,
   CreateFungibleTokenCmd,
   CreateNonFungibleTokenCmd,
   IssueFungibleTokenCmd,
   IssueNonFungibleTokenCmd
 } from '@deip/commands';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_PROPOSAL, ASSET_TYPE } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
 import { ChainService } from '@deip/chain-service';
 import { AssetsHttp } from './AssetsHttp';
@@ -42,7 +43,7 @@ export class AssetsService {
         maxSupply,
         minBalance,
         description,
-        projectTokenSettings,
+        metadata,
         holders
       }
     } = payload;
@@ -64,19 +65,17 @@ export class AssetsService {
               maxSupply,
               minBalance,
               description,
-              projectTokenSettings
+              metadata
             });
             txBuilder.addCmd(createFungibleTokenCmd);
             const tokenId = createFungibleTokenCmd.getProtocolEntityId();
 
             if (holders && holders.length) {
               for (let i = 0; i < holders.length; i++) {
-                const { account, asset } = holders[i];
+                const { account, token } = holders[i];
                 const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
                   tokenId,
-                  symbol: asset.symbol,
-                  precision: asset.precision,
-                  amount: asset.amount,
+                  amount: token.amount,
                   issuer,
                   recipient: account
                 });
@@ -103,10 +102,11 @@ export class AssetsService {
     const {
       initiator: { privKey },
       data: {
-        symbol,
         issuer,
+        name,
+        metadata = {},
         description,
-        projectTokenSettings
+        holders
       }
     } = payload;
     const env = this.proxydi.get('env');
@@ -118,16 +118,38 @@ export class AssetsService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const entityId = genRipemd160Hash(symbol);
+            const metadataHash = genSha256Hash(metadata);
             const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
-              entityId,
               issuer,
-              symbol,
+              name,
               description,
-              projectTokenSettings
+              metadata,
+              metadataHash
             });
 
             txBuilder.addCmd(createNonFungibleTokenCmd);
+            const tokenId = createNonFungibleTokenCmd.getProtocolEntityId();
+
+            if (holders && holders.length) {
+              for (let i = 0; i < holders.length; i++) {
+                const {
+                  account: recipient,
+                  metadata: instanceMetadata = {},
+                  instanceId
+                } = holders[i];
+                const instanceMetadataHash = genSha256Hash(instanceMetadata);
+                const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
+                  issuer,
+                  classId: tokenId,
+                  instanceId: instanceId || i + 1,
+                  recipient,
+                  metadata: instanceMetadata,
+                  metadataHash: instanceMetadataHash
+                });
+                txBuilder.addCmd(issueNonFungibleTokenCmd);
+              }
+            }
+
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -148,7 +170,8 @@ export class AssetsService {
       initiator: { privKey },
       data: {
         issuer,
-        asset,
+        tokenId,
+        amount,
         recipient
       }
     } = payload;
@@ -163,13 +186,12 @@ export class AssetsService {
           .then((txBuilder) => {
             const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
               issuer,
-              tokenId: asset.id,
-              symbol: asset.symbol,
-              precision: asset.precision,
-              amount: asset.amount,
+              tokenId,
+              amount,
               recipient
             });
             txBuilder.addCmd(issueFungibleTokenCmd);
+            return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
@@ -191,7 +213,8 @@ export class AssetsService {
         issuer,
         classId,
         instanceId,
-        recipient
+        recipient,
+        metadata
       }
     } = payload;
     const env = this.proxydi.get('env');
@@ -203,13 +226,17 @@ export class AssetsService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
+            const metadataHash = genSha256Hash(metadata);
             const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
               issuer,
               classId,
               instanceId,
-              recipient
+              recipient,
+              metadata,
+              metadataHash
             });
             txBuilder.addCmd(issueNonFungibleTokenCmd);
+            return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
@@ -220,14 +247,22 @@ export class AssetsService {
   }
 
   /**
-   * Transfer asset
-   * @param {import('@casimir/platform-core').AssetTransferPayload} payload
-   * @return {Promise<Object>}
-   */
-  transfer(payload) {
+    * Transfer fungible token
+    * TODO: change params to object payload
+    * @param {Object} initiator
+    * @param {string} initiator.privKey
+    * @param {string} initiator.username
+    * @param {Object} transferInfo
+    * @param {string} transferInfo.from
+    * @param {string} transferInfo.to
+    * @param {Object} transferInfo.token
+    * @param {Object} proposalInfo
+    * @return {Promise<Object>}
+    */
+  transferFungibleToken(payload) {
     const {
       initiator: { privKey, username },
-      data: { from, to, asset },
+      data: { from, to, token },
       proposalInfo
     } = payload;
 
@@ -246,24 +281,22 @@ export class AssetsService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const transferAssetCmd = new TransferAssetCmd({
+            const transferFungibleTokenCmd = new TransferFungibleTokenCmd({
               from,
               to,
-              tokenId: asset.id,
-              symbol: asset.symbol,
-              precision: asset.precision,
-              amount: asset.amount
+              tokenId: token.id,
+              amount: token.amount
             });
 
             if (isProposal) {
               const proposalBatch = [
-                transferAssetCmd
+                transferFungibleTokenCmd
               ];
 
               return chainTxBuilder.getBatchWeight(proposalBatch)
                 .then((proposalBatchWeight) => {
                   const createProposalCmd = new CreateProposalCmd({
-                    type: APP_PROPOSAL.ASSET_TRANSFER_PROPOSAL,
+                    type: APP_PROPOSAL.FT_TRANSFER_PROPOSAL,
                     creator: username,
                     expirationTime: proposalLifetime || proposalDefaultLifetime,
                     proposedCmds: proposalBatch
@@ -283,13 +316,94 @@ export class AssetsService {
                   return txBuilder.end();
                 });
             }
-            txBuilder.addCmd(transferAssetCmd);
+            txBuilder.addCmd(transferFungibleTokenCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.transfer(msg);
+            return this.assetsHttp.transferFungibleToken(msg);
+          });
+      });
+  }
+
+  /**
+    * Transfer non-fungible token
+    * TODO: change params to object payload
+    * @param {Object} initiator
+    * @param {string} initiator.privKey
+    * @param {string} initiator.username
+    * @param {Object} transferInfo
+    * @param {string} transferInfo.from
+    * @param {string} transferInfo.to
+    * @param {Object} transferInfo.token
+    * @param {Object} proposalInfo
+    * @return {Promise<Object>}
+    */
+  transferNonFungibleToken(payload) {
+    const {
+      initiator: { privKey, username },
+      data: { from, to, token },
+      proposalInfo
+    } = payload;
+
+    const { isProposal, isProposalApproved, proposalLifetime } = {
+      isProposal: false,
+      isProposalApproved: true,
+      proposalLifetime: proposalDefaultLifetime,
+      ...proposalInfo
+    };
+
+    const env = this.proxydi.get('env');
+
+    return ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const transferNonFungibleTokenCmd = new TransferNonFungibleTokenCmd({
+              from,
+              to,
+              classId: token.classId,
+              instanceId: token.instanceId
+            });
+
+            if (isProposal) {
+              const proposalBatch = [
+                transferNonFungibleTokenCmd
+              ];
+
+              return chainTxBuilder.getBatchWeight(proposalBatch)
+                .then((proposalBatchWeight) => {
+                  const createProposalCmd = new CreateProposalCmd({
+                    type: APP_PROPOSAL.NFT_TRANSFER_PROPOSAL,
+                    creator: username,
+                    expirationTime: proposalLifetime || proposalDefaultLifetime,
+                    proposedCmds: proposalBatch
+                  });
+                  txBuilder.addCmd(createProposalCmd);
+
+                  if (isProposalApproved) {
+                    const updateProposalId = createProposalCmd.getProtocolEntityId();
+                    const updateProposalCmd = new AcceptProposalCmd({
+                      entityId: updateProposalId,
+                      account: username,
+                      batchWeight: proposalBatchWeight
+                    });
+                    txBuilder.addCmd(updateProposalCmd);
+                  }
+
+                  return txBuilder.end();
+                });
+            }
+            txBuilder.addCmd(transferNonFungibleTokenCmd);
+            return txBuilder.end();
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+            return this.assetsHttp.transferNonFungibleToken(msg);
           });
       });
   }
@@ -309,8 +423,8 @@ export class AssetsService {
    * @param {string} assetId
    * @return {Promise<Object>}
    */
-  getOne(assetId) {
-    return this.assetsHttp.getOne(assetId);
+  getFungibleToken(tokenId) {
+    return this.assetsHttp.getFungibleToken(tokenId);
   }
 
   /**
@@ -318,8 +432,8 @@ export class AssetsService {
    * @param {string} symbol
    * @return {Promise<Object>}
    */
-  getOneBySymbol(symbol) {
-    return this.assetsHttp.getOneBySymbol(symbol);
+  getFungibleTokenBySymbol(symbol) {
+    return this.assetsHttp.getFungibleTokenBySymbol(symbol);
   }
 
   /**
@@ -327,8 +441,17 @@ export class AssetsService {
    * @param {number} type
    * @return {Promise<Object>}
    */
-  getListByType(type) {
-    return this.assetsHttp.getListByType(type);
+  getFungibleTokensListByType(type) {
+    return this.assetsHttp.getFungibleTokensListByType(type);
+  }
+
+  /**
+   * Get non-fungible token by account
+   * @param {string} account
+   * @return {Promise<Object>}
+   */
+  getNonFungibleTokenByAccount(account) {
+    return this.assetsHttp.getNonFungibleTokenByAccount(account);
   }
 
   /**
@@ -336,8 +459,8 @@ export class AssetsService {
    * @param {string} issuer
    * @return {Promise<Object>}
    */
-  getListByIssuer(issuer) {
-    return this.assetsHttp.getListByIssuer(issuer);
+  getFungibleTokensListByIssuer(issuer) {
+    return this.assetsHttp.getFungibleTokensListByIssuer(issuer);
   }
 
   /**
@@ -346,8 +469,8 @@ export class AssetsService {
    * @param {string} lowerBoundSymbol
    * @return {Promise<Object>}
    */
-  lookupAssets(limit, lowerBoundSymbol) {
-    return this.assetsHttp.lookupAssets(limit, lowerBoundSymbol);
+  lookupFungibleTokens(limit, lowerBoundSymbol) {
+    return this.assetsHttp.lookupFungibleTokens(limit, lowerBoundSymbol);
   }
 
   /**
@@ -356,8 +479,8 @@ export class AssetsService {
    * @param {string} symbol
    * @return {Promise<Object>}
    */
-  getAccountAssetBalance(owner, symbol) {
-    return this.assetsHttp.getAccountAssetBalance(owner, symbol);
+  getAccountFungibleTokenBalance(owner, symbol) {
+    return this.assetsHttp.getAccountFungibleTokenBalance(owner, symbol);
   }
 
   /**
@@ -365,8 +488,8 @@ export class AssetsService {
    * @param {string} owner
    * @return {Promise<Object>}
    */
-  getAccountAssetsBalancesByOwner(owner) {
-    return this.assetsHttp.getAccountAssetsBalancesByOwner(owner);
+  getAccountFungibleTokensBalancesByOwner(owner) {
+    return this.assetsHttp.getAccountFungibleTokensBalancesByOwner(owner);
   }
 
   /**
@@ -374,8 +497,71 @@ export class AssetsService {
    * @param {string} symbol
    * @return {Promise<Object>}
    */
-  getAccountsAssetBalancesByAsset(symbol) {
-    return this.assetsHttp.getAccountsAssetBalancesByAsset(symbol);
+  getAccountsFungibleTokenBalancesByFungibleToken(symbol) {
+    return this.assetsHttp.getAccountsFungibleTokenBalancesByFungibleToken(symbol);
+  }
+
+  /**
+   * Get non-fungible token
+   * @param {string} classId
+   * @return {Promise<Object>}
+   */
+  getNonFungibleTokenClass(classId) {
+    return this.assetsHttp.getNonFungibleTokenClass(classId);
+  }
+
+  /**
+   * Get non-fungible tokens
+   * @return {Promise<Object>}
+   */
+  getNonFungibleTokenClasses() {
+    return this.assetsHttp.getNonFungibleTokenClasses();
+  }
+
+  /**
+   * Get non-fungible token instances by owner and non-fungible token
+   * @param {string} account
+   * @param {string} classId
+   * @return {Promise<Object>}
+   */
+  getNonFungibleTokenClassInstancesByOwner(account, classId) {
+    return this.assetsHttp.getNonFungibleTokenClassInstancesByOwner(account, classId);
+  }
+
+  /**
+   * Get non-fungible token instances by owner
+   * @param {string} account
+   * @return {Promise<Object>}
+   */
+  getNonFungibleTokenClassesInstancesByOwner(account) {
+    return this.assetsHttp.getNonFungibleTokenClassesInstancesByOwner(account);
+  }
+
+  /**
+   * Get assets by type
+   * @param {number} type
+   * @return {Promise<Object>}
+   */
+  getAssetsByType(type) {
+    return this.assetsHttp.getAssetsByType(type);
+  }
+
+  /**
+   * Get assets by issuer
+   * @param {string} issuer
+   * @return {Promise<Object>}
+   */
+  getAssetsByIssuer(issuer) {
+    return this.assetsHttp.getAssetsByIssuer(issuer);
+  }
+
+  /**
+   * Get all assets
+   * @param {number} limit
+   * @return {Promise<Object>}
+   */
+  lookupAssets(limit) {
+    return this.assetsHttp.lookupAssets(limit);
   }
 
   /**
@@ -390,8 +576,8 @@ export class AssetsService {
       data: {
         party1,
         party2,
-        asset1,
-        asset2
+        token1,
+        token2
       },
       proposalInfo
     } = payload;
@@ -410,33 +596,50 @@ export class AssetsService {
         const chainTxBuilder = chainService.getChainTxBuilder();
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const transferAssetCmd1 = new TransferAssetCmd({
-              from: party1,
-              to: party2,
-              tokenId: asset1.id,
-              symbol: asset1.symbol,
-              precision: asset1.precision,
-              amount: asset1.amount
-            });
+            let transferTokenCmd1;
+            let transferTokenCmd2;
 
-            const transferAssetCmd2 = new TransferAssetCmd({
-              from: party2,
-              to: party1,
-              tokenId: asset2.id,
-              symbol: asset2.symbol,
-              precision: asset2.precision,
-              amount: asset2.amount
-            });
+            if (token1.type === ASSET_TYPE.NFT) {
+              transferTokenCmd1 = new TransferNonFungibleTokenCmd({
+                from: party1,
+                to: party2,
+                classId: token1.classId,
+                instanceId: token1.instanceId
+              });
+            } else {
+              transferTokenCmd1 = new TransferFungibleTokenCmd({
+                from: party1,
+                to: party2,
+                tokenId: token1.id,
+                amount: token1.amount
+              });
+            }
+
+            if (token2.type === ASSET_TYPE.NFT) {
+              transferTokenCmd2 = new TransferNonFungibleTokenCmd({
+                from: party2,
+                to: party1,
+                classId: token2.classId,
+                instanceId: token2.instanceId
+              });
+            } else {
+              transferTokenCmd2 = new TransferFungibleTokenCmd({
+                from: party2,
+                to: party1,
+                tokenId: token2.id,
+                amount: token2.amount
+              });
+            }
 
             const proposalBatch = [
-              transferAssetCmd1,
-              transferAssetCmd2
+              transferTokenCmd1,
+              transferTokenCmd2
             ];
 
             return chainTxBuilder.getBatchWeight(proposalBatch)
               .then((proposalBatchWeight) => {
                 const createProposalCmd = new CreateProposalCmd({
-                  type: APP_PROPOSAL.ASSET_EXCHANGE_PROPOSAL,
+                  type: APP_PROPOSAL.TOKENS_SWAP_PROPOSAL,
                   creator: username,
                   expirationTime: proposalLifetime || proposalDefaultLifetime,
                   proposedCmds: proposalBatch
@@ -460,7 +663,7 @@ export class AssetsService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
-            return this.assetsHttp.createExchangeProposal(msg);
+            return this.assetsHttp.createTokensSwapProposal(msg);
           });
       });
   }

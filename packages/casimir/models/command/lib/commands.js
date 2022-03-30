@@ -14,7 +14,8 @@ import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import TransferAssetCmd from './impl/TransferAssetCmd';
+import TransferFungibleTokenCmd from './impl/TransferFungibleTokenCmd';
+import TransferNonFungibleTokenCmd from './impl/TransferNonFungibleTokenCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
@@ -65,7 +66,8 @@ export {
   RemoveDaoMemberCmd,
   CreateInvestmentOpportunityCmd,
   InvestCmd,
-  TransferAssetCmd,
+  TransferFungibleTokenCmd,
+  TransferNonFungibleTokenCmd,
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,
@@ -98,4 +100,4 @@ export {
   DeleteBookmarkCmd,
   MarkNotificationsAsReadCmd,
   CreatePortalCmd
-}
+};

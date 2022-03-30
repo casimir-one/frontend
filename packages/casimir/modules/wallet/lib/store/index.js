@@ -27,7 +27,7 @@ const ACTIONS = {
       return Promise.resolve(false);
     }
 
-    return assetsService.getAccountAssetsBalancesByOwner(rootGetters['auth/username'])
+    return assetsService.getAccountFungibleTokensBalancesByOwner(rootGetters['auth/username'])
       .then((res) => {
         commit('setList',
           res.data.items.filter((balance) => balance.type !== ASSET_TYPE.NFT));

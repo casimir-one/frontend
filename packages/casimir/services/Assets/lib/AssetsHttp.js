@@ -1,7 +1,7 @@
 import { HttpService, serializeParams } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
- /**
+/**
  * Assets http transport
  */
 export class AssetsHttp {
@@ -13,7 +13,7 @@ export class AssetsHttp {
    * @return {Promise<Object>}
    */
   async createFungibleToken(req) {
-    return this.http.post('/api/v2/asset/ft/create', req.getHttpBody());
+    return this.http.post('/api/v2/tokens/ft/create', req.getHttpBody());
   }
 
   /**
@@ -22,7 +22,7 @@ export class AssetsHttp {
    * @return {Promise<Object>}
    */
   async createNonFungibleToken(req) {
-    return this.http.post('/api/v2/asset/nft/create', req.getHttpBody());
+    return this.http.post('/api/v2/tokens/nft/create', req.getHttpBody());
   }
 
   /**
@@ -31,7 +31,7 @@ export class AssetsHttp {
    * @return {Promise<Object>}
    */
   async issueFungibleToken(req) {
-    return this.http.post('/api/v2/asset/ft/issue', req.getHttpBody());
+    return this.http.post('/api/v2/tokens/ft/issue', req.getHttpBody());
   }
 
   /**
@@ -40,25 +40,34 @@ export class AssetsHttp {
    * @return {Promise<Object>}
    */
   async issueNonFungibleToken(req) {
-    return this.http.post('/api/v2/asset/nft/issue', req.getHttpBody());
+    return this.http.post('/api/v2/tokens/nft/issue', req.getHttpBody());
   }
 
   /**
-   * Transfer asset to other owner
+   * Transfer fungible token to other owner
    * @param {Object} req
    * @return {Promise<Object>}
    */
-  async transfer(req) {
-    return this.http.post('/api/v2/assets/transfer', req.getHttpBody());
+  async transferFungibleToken(req) {
+    return this.http.post('/api/v2/tokens/ft/transfer', req.getHttpBody());
   }
 
   /**
-   * Create proposal for asset exchange
+   * Transfer non-fungible token to other owner
    * @param {Object} req
    * @return {Promise<Object>}
    */
-  async createExchangeProposal(req) {
-    return this.http.post('/api/v2/assets/exchange', req.getHttpBody());
+  async transferNonFungibleToken(req) {
+    return this.http.post('/api/v2/tokens/nft/transfer', req.getHttpBody());
+  }
+
+  /**
+   * Create proposal for swap tokens
+   * @param {Object} req
+   * @return {Promise<Object>}
+   */
+  async createTokensSwapProposal(req) {
+    return this.http.post('/api/v2/tokens/swap', req.getHttpBody());
   }
 
   /**
@@ -73,77 +82,149 @@ export class AssetsHttp {
   }
 
   /**
-   * Get certain asset information
-   * @param {string} assetId
-   * @return {Promise<Object>}
-   */
-  async getOne(assetId) {
-    return this.http.get(`/api/v2/assets/id/${assetId}`);
-  }
-
-  /**
-   * Get asset information by asset symbol
-   * @param {string} symbol
-   * @return {Promise<Object>}
-   */
-  async getOneBySymbol(symbol) {
-    return this.http.get(`/api/v2/assets/symbol/${symbol}`);
-  }
-
-  /**
    * Get assets by asset type
-   * @param {number} type
+   * @param {Object} req
    * @return {Promise<Object>}
-   */
-  async getListByType(type) {
+  */
+  async getAssetsByType(type) {
     return this.http.get(`/api/v2/assets/type/${type}`);
   }
 
   /**
-   * Get assets by tokens issuer
-   * @param {string} issuer
+   * Get assets by Issuer
+   * @param {Object} req
    * @return {Promise<Object>}
-   */
-  async getListByIssuer(issuer) {
+  */
+  async getAssetsByIssuer(issuer) {
     return this.http.get(`/api/v2/assets/issuer/${issuer}`);
   }
 
   /**
-   * Get list of assets
+   * Get all assets
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async lookupAssets(limit) {
+    return this.http.get(`/api/v2/assets/limit/${limit}`);
+  }
+
+  /**
+   * Get certain fungible token information
+   * @param {string} tokenId
+   * @return {Promise<Object>}
+   */
+  async getFungibleToken(tokenId) {
+    return this.http.get(`/api/v2/tokens/ft/id/${tokenId}`);
+  }
+
+  /**
+   * Get fungible token information by fungible token symbol
+   * @param {string} symbol
+   * @return {Promise<Object>}
+   */
+  async getFungibleTokenBySymbol(symbol) {
+    return this.http.get(`/api/v2/tokens/ft/symbol/${symbol}`);
+  }
+
+  /**
+   * Get fungible tokens by fungible token type
+   * @param {number} type
+   * @return {Promise<Object>}
+   */
+  async getFungibleTokensListByType(type) {
+    return this.http.get(`/api/v2/tokens/ft/type/${type}`);
+  }
+
+  /**
+   * Get non-fungible token by account
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async getNonFungibleTokenByAccount(account) {
+    return this.http.get(`/api/v2/tokens/nfts/account/${account}`);
+  }
+
+  /**
+   * Get fungible tokens by tokens issuer
+   * @param {string} issuer
+   * @return {Promise<Object>}
+   */
+  async getFungibleTokensListByIssuer(issuer) {
+    return this.http.get(`/api/v2/tokens/ft/issuer/${issuer}`);
+  }
+
+  /**
+   * Get list of fungible tokens
    * @param {number} limit
    * @param {string} lowerBoundSymbol
    * @return {Promise<Object>}
    */
-  async lookupAssets(limit, lowerBoundSymbol = '') {
-    return this.http.get(`/api/v2/assets/limit/${limit}/${lowerBoundSymbol}`);
+  async lookupFungibleTokens(limit, lowerBoundSymbol = '') {
+    return this.http.get(`/api/v2/tokens/ft/limit/${limit}/${lowerBoundSymbol}`);
   }
 
   /**
-   * Get asset balances by symbol for certain account
+   * Get fungible token balances by symbol for certain account
    * @param {string} owner
    * @param {string} symbol
    * @return {Promise<Object>}
    */
-  async getAccountAssetBalance(owner, symbol) {
-    return this.http.get(`/api/v2/assets/owner/${owner}/symbol/${symbol}`);
+  async getAccountFungibleTokenBalance(owner, symbol) {
+    return this.http.get(`/api/v2/tokens/ft/owner/${owner}/symbol/${symbol}`);
   }
 
   /**
-   * Get asset balances by owner
+   * Get fungible token balances by owner
    * @param {string} owner
    * @return {Promise<Object>}
    */
-  async getAccountAssetsBalancesByOwner(owner) {
-    return this.http.get(`/api/v2/assets/owner/${owner}`);
+  async getAccountFungibleTokensBalancesByOwner(owner) {
+    return this.http.get(`/api/v2/tokens/ft/owner/${owner}`);
   }
 
   /**
-   * Get certain assets balances for all accounts
+   * Get certain fungible tokens balances for all accounts
    * @param {string} symbol
    * @return {Promise<Object>}
    */
-  async getAccountsAssetBalancesByAsset(symbol) {
-    return this.http.get(`/api/v2/assets/accounts/symbol/${symbol}`);
+  async getAccountsFungibleTokenBalancesByFungibleToken(symbol) {
+    return this.http.get(`/api/v2/tokens/ft/accounts/symbol/${symbol}`);
+  }
+
+  /**
+   * Get non-fungible token
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async getNonFungibleTokenClass(classId) {
+    return this.http.get(`/api/v2/tokens/nfts/class/${classId}`);
+  }
+
+  /**
+   * Get all non-fungible tokens
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async getNonFungibleTokenClasses() {
+    return this.http.get('/api/v2/tokens/nfts/classes');
+  }
+
+  /**
+   * Get non-fungible token instances by non-fungible token and owner
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async getNonFungibleTokenClassInstancesByOwner(account, classId) {
+    return this.http.get(`/api/v2/tokens/nfts/instances/owner/${account}/class/${classId}`);
+  }
+
+  /**
+   * Get non-fungible token instances by owner
+   * @param {Object} req
+   * @return {Promise<Object>}
+  */
+  async getNonFungibleTokenClassesInstancesByOwner(account) {
+    return this.http.get(`/api/v2/tokens/nfts/instances/owner/${account}`);
   }
 
   /**

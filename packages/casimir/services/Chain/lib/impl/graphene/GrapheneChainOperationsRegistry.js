@@ -337,13 +337,16 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.TRANSFER_ASSET]: ({
+    [APP_CMD.TRANSFER_FT]: ({
       from,
       to,
-      asset
+      tokenId,
+      symbol,
+      precision,
+      amount,
     }) => {
       
-      const amountUnits = toAssetUnits(asset);
+      const amountUnits = toAssetUnits({ symbol, precision, amount });
       const transferOp = ['transfer', {
         from: from,
         to: to,
@@ -356,12 +359,25 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
+    [APP_CMD.TRANSFER_NFT]: ({
+      from,
+      to,
+      asset
+    }) => {
+      throw Error(`Not implemented exception`);
+    },
+
+
     [APP_CMD.CREATE_FT]: ({
+      entityId,
       issuer,
       symbol,
+      name,
       precision,
+      maxSupply,
       description,
-      maxSupply
+      minBalance,
+      metadata
     }) => {
 
       const traits = [];
@@ -388,40 +404,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       maxSupply,
       projectTokenSettings
     }) => {
-
-      const traits = [];
-      if (projectTokenSettings) {
-        const { projectId, teamId, licenseRevenue } = projectTokenSettings;
-        traits.push(
-          ['research_security_token', {
-            research_external_id: projectId,
-            research_group: teamId,
-            extensions: []
-          }]
-        );
-
-        if (licenseRevenue) {
-          const { holdersShare } = licenseRevenue;
-          traits.push(
-            ['research_license_revenue', {
-              holders_share: holdersShare,
-              extensions: []
-            }]
-          );
-        }
-      }
-
-      const createNonFungibleTokenOp = ['create_asset', {
-        issuer: issuer,
-        symbol: symbol,
-        precision: precision,
-        description: description,
-        max_supply: maxSupply,
-        traits: traits,
-        extensions: []
-      }];
-
-      return [createNonFungibleTokenOp];
+      throw Error(`Not implemented exception`);
     },
 
 
@@ -454,17 +437,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
       recipient,
       memo
     }) => {
-      const amountUnits = toAssetUnits(asset);
-
-      const issueNonFungibleTokenOp = ['issue_asset', {
-        issuer: issuer,
-        amount: amountUnits,
-        recipient: recipient,
-        memo: memo || undefined,
-        extensions: []
-      }];
-
-      return [issueNonFungibleTokenOp];
+      throw Error(`Not implemented exception`);
     },
 
 
