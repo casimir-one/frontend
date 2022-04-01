@@ -1,0 +1,35 @@
+{
+  "name": "@casimir/token-service",
+  "version": "1.375.1",
+  "description": "> TODO: description",
+  "author": "Euheny Bondarovich <euheny@gmail.com>",
+  "homepage": "https://github.com/DEIPworld/deip-modules#readme",
+  "keywords": [
+    "casimir"
+  ],
+  "license": "ISC",
+  "main": "./lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DEIPworld/deip-modules.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/DEIPworld/deip-modules/issues"
+  },
+  "dependencies": {
+    "@deip/access-service": "^1.375.1",
+    "@deip/chain-service": "^1.375.1",
+    "@deip/commands": "^1.375.1",
+    "@deip/constants": "^1.375.1",
+    "@deip/http-service": "^1.375.1",
+    "@deip/messages": "^1.375.1",
+    "@deip/proxydi": "^1.375.1",
+    "@deip/toolbox": "1.375.1"
+  }
+}
