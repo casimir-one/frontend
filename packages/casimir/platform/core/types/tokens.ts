@@ -25,6 +25,12 @@ type CommonTokenData = TokenIssuer & {
   projectTokenSettings?: ProjectTokenSettings
 };
 
+export type TokenTransferData<T> = {
+  from: string,
+  to: string,
+  token: T
+};
+
 // //////////////////////////
 
 /**
@@ -65,6 +71,10 @@ export type FungibleTokenIssueData = TokenIssuer & Omit<FungibleTokenBase, 'id'>
 };
 
 /**
+ */
+type FungibleTokenTransferData = TokenTransferData<FungibleTokenBase>;
+
+/**
  * Fungible token creation payload
  */
 export type FungibleTokenCreatePayload = ServiceBasePayload<FungibleTokenCreateData>;
@@ -74,7 +84,17 @@ export type FungibleTokenCreatePayload = ServiceBasePayload<FungibleTokenCreateD
  */
 export type FungibleTokenIssuePayload = ServiceBasePayload<FungibleTokenIssueData>;
 
+/**
+ * Fungible token transfer payload
+ */
+export type FungibleTokenTransferPayload = ServiceBasePayload<FungibleTokenTransferData>;
+
 // //////////////////////////
+
+type NonFungibleTokenBase = {
+  classId: string, // entityId from NonFungibleTokenCmdPayload
+  instanceId: string
+};
 
 /**
  * Non-fungible token data for creation payload
@@ -87,11 +107,13 @@ export type NonFungibleTokenCreateData = {
 /**
  * Non-fungible token data for issue payload
  */
-export type NonFungibleTokenIssueData = TokenIssuer & {
-  classId: string, // entityId from NonFungibleTokenCmdPayload
-  instanceId: string,
+export type NonFungibleTokenIssueData = TokenIssuer & NonFungibleTokenBase & {
   recipient: string
 };
+
+/**
+ */
+type NonFungibleTokenTransferData = TokenTransferData<NonFungibleTokenBase>;
 
 /**
  * Non-fungible token creation payload
@@ -102,3 +124,29 @@ export type NonFungibleTokenCreatePayload = ServiceBasePayload<NonFungibleTokenC
  * Non-fungible token issue payload
  */
 export type NonFungibleTokenIssuePayload = ServiceBasePayload<NonFungibleTokenIssueData>;
+
+/**
+ * Non-fungible token transfer payload
+ */
+export type NonFungibleTokenTransferPayload = ServiceBasePayload<NonFungibleTokenTransferData>;
+
+// //////////////////////////
+
+/**
+ */
+type TokenSwapProposalParty = {
+  account: string,
+  token: FungibleTokenBase | NonFungibleTokenBase
+};
+
+/**
+ */
+type TokenSwapProposalData = {
+  party1: TokenSwapProposalParty
+  party2: TokenSwapProposalParty
+};
+
+/**
+ * Token swap payload
+ */
+export type TokenSwapProposalPayload = ServiceBasePayload<TokenSwapProposalData>;

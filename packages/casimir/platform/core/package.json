@@ -10,11 +10,6 @@
   "license": "ISC",
   "main": "./lib/index.js",
   "types": "./lib/types.d.ts",
-  "directories": {
-    "src": "src",
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
     "lib"
   ],
