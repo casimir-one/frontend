@@ -74,13 +74,19 @@ const cleanLib = async (pkgPath) => {
  * @return {Promise<void>}
  */
 const generateTsDefinitions = async (pkgPath) => {
-  const tscCommandStack = [
-    `-p ${pkgPath}/tsconfig.build.json`,
-    '--emitDeclarationOnly',
-    `--outFile ${pkgPath}/lib/types.d.ts`
-  ].join(' ');
+  const tsconfig = path.join(pkgPath, 'tsconfig.build.json');
 
-  await asyncExec(`tsc ${tscCommandStack}`, { silent: true });
+  if (fs.existsSync(tsconfig)) {
+    const tscCommandStack = [
+      `-p ${pkgPath}/tsconfig.build.json`,
+      '--emitDeclarationOnly',
+      `--outFile ${pkgPath}/lib/types.d.ts`
+    ].join(' ');
+
+    await asyncExec(`tsc ${tscCommandStack}`, { silent: true });
+  }
+
+  return Promise.resolve();
 };
 
 /**
@@ -106,7 +112,12 @@ const processScripts = async (pkgPath) => {
  */
 const processOtherFiles = async (pkgPath) => {
   const pattern = path.join(pkgPath, 'src', '**', '*.*');
-  const files = glob.sync(pattern, { ignore: [`**/*.{${['vue', ...scriptExtensions].join(',')}}`] });
+  const files = glob.sync(
+    pattern,
+    {
+      ignore: [`**/*.{${['vue', ...scriptExtensions].join(',')}}`]
+    }
+  );
 
   const operations = [];
 
