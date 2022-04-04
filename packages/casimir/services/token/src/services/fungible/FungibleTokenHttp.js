@@ -1,6 +1,9 @@
 import { HttpService } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
+/**
+ * Fungible token http transport
+ */
 export class FungibleTokenHttp {
   http = HttpService.getInstance();
 

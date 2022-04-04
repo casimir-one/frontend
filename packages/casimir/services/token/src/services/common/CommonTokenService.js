@@ -4,6 +4,9 @@ import { createInstanceGetter } from '@deip/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
+/**
+ * Common tokens service
+ */
 export class CommonTokenService {
   tokenHttp = CommonTokenHttp.getInstance();
 
