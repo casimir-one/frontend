@@ -1,4 +1,5 @@
 export * from './lib/access';
+export * from './lib/appEvent';
 export * from './lib/assets';
 export * from './lib/attributes';
 export * from './lib/auth';
