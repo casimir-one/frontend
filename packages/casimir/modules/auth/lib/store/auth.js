@@ -1,11 +1,14 @@
 import { AuthService } from '@deip/auth-service';
 import { UserService } from '@deip/user-service';
 import { AccessService } from '@deip/access-service';
+import { WebSocketService } from '@deip/web-socket-service';
+
 import { wrapInArray, genRipemd160Hash } from '@deip/toolbox';
 
 const accessService = AccessService.getInstance();
 const authService = AuthService.getInstance();
 const userService = UserService.getInstance();
+const webSocketService = WebSocketService.getInstance();
 
 const STATE = {
   username: null,
@@ -56,6 +59,7 @@ const ACTIONS = {
       privateKey: seedAccount.getPrivKey(),
       publicKey: seedAccount.getPubKey()
     });
+    webSocketService.connect();
   },
 
   async signUp(_, payload) {
