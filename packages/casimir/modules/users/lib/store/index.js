@@ -39,70 +39,40 @@ const ACTIONS = {
     return dispatch(methods.status, payload);
   },
 
-  getListByNames({ commit }, { users }) {
-    return userService.getListByIds(users)
-      .then((res) => {
-        commit('setList', res.data.items);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async getListByNames({ commit }, { users }) {
+    const res = await userService.getListByIds(users);
+    commit('setList', res.data.items);
   },
 
-  getListByTeam({ commit }, { teamId }) {
-    return userService.getListByTeam(teamId)
-      .then((res) => {
-        commit('setList', res.data.items);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async getListByTeam({ commit }, { teamId }) {
+    const res = await userService.getListByTeam(teamId);
+    commit('setList', res.data.items);
   },
 
-  getListByPortal({ commit }, { portalId }) {
-    return userService.getListByPortal(portalId)
-      .then((res) => {
-        commit('setList', res.data.items);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async getListByPortal({ commit }, { portalId }) {
+    const res = await userService.getListByPortal(portalId);
+    commit('setList', res.data.items);
   },
 
-  getListByStatus({ commit }, { status = USER_PROFILE_STATUS.APPROVED }) {
-    return userService.getList({ status })
-      .then((res) => {
-        commit('setList', res.data.items);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async getListByStatus({ commit }, { status = USER_PROFILE_STATUS.APPROVED }) {
+    const res = await userService.getList({ status });
+    commit('setList', res.data.items);
   },
 
   // one
 
-  getOne({ commit }, id) {
-    return userService.getOne(id)
-      .then((res) => {
-        commit('setOne', res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async getOne({ commit }, id) {
+    const res = await userService.getOne(id);
+    commit('setOne', res.data);
   },
 
-  update({ dispatch, rootGetters }, payload) {
+  async update({ dispatch, rootGetters }, payload) {
     const { _id } = payload;
-    return userService.update(payload)
-      .then(() => {
-        dispatch('getOne', _id);
-        if (rootGetters['auth/username'] === _id) {
-          dispatch('currentUser/get', _id, { root: true });
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    await userService.update(payload);
+    dispatch('getOne', _id);
+    if (rootGetters['auth/username'] === _id) {
+      dispatch('currentUser/get', _id, { root: true });
+    }
   }
 };
 
