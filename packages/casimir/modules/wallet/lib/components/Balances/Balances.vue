@@ -123,7 +123,7 @@
       },
       /** Open Payment popup */
       handlePaymentProcessed() {
-        this.$store.dispatch('wallet/get');
+        this.$store.dispatch('wallet/getBalances');
         /**
          * Fires when the user payment process button
          * @event payment-processed

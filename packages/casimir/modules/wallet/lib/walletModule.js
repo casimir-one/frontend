@@ -23,7 +23,7 @@ const install = (Vue, options = {}) => {
 
     callForCurrentUser(
       store,
-      'wallet/get',
+      'wallet/getBalances',
       'wallet/clear'
     );
   } else {

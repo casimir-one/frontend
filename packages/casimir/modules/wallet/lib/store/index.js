@@ -1,3 +1,4 @@
+import { FungibleTokenService } from '@casimir/token-service';
 import { AssetsService } from '@deip/assets-service';
 
 import {
@@ -6,9 +7,9 @@ import {
   oneGetterFactory,
   setListMutationFactory
 } from '@deip/platform-util';
-import { ASSET_TYPE } from '@deip/constants';
 
 const assetsService = AssetsService.getInstance();
+const fungibleTokenService = FungibleTokenService.getInstance();
 
 const STATE = {
   data: [],
@@ -22,16 +23,12 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  get({ commit, rootGetters }) {
-    if (!rootGetters['auth/isLoggedIn']) {
-      return Promise.resolve(false);
+  async getBalances({ commit, rootGetters }) {
+    if (rootGetters['auth/isLoggedIn']) {
+      const res = await fungibleTokenService
+        .getAccountBalancesByOwner(rootGetters['auth/username']);
+      commit('setList', res.data.items);
     }
-
-    return assetsService.getAccountFungibleTokensBalancesByOwner(rootGetters['auth/username'])
-      .then((res) => {
-        commit('setList',
-          res.data.items.filter((balance) => balance.type !== ASSET_TYPE.NFT));
-      });
   },
 
   clear({ commit }) {
