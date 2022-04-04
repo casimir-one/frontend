@@ -5,16 +5,19 @@ import {
   AlterDaoAuthorityCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
+import { WebSocketService } from '@deip/web-socket-service';
 import {
   replaceFileWithName,
   createFormData,
   genSha256Hash,
   createInstanceGetter
 } from '@deip/toolbox';
+import { APP_EVENT } from '@deip/constants';
 import { UserHttp } from './UserHttp';
 
 export class UserService {
   userHttp = UserHttp.getInstance();
+  webSocketService = WebSocketService.getInstance();
 
   proxydi = proxydi;
 
@@ -47,7 +50,7 @@ export class UserService {
     const formData = createFormData(data);
     const attributes = replaceFileWithName(data.attributes);
 
-    return ChainService.getInstanceAsync(env)
+    const response = await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainTxBuilder = chainService.getChainTxBuilder();
         const chainNodeClient = chainService.getChainNodeClient();
@@ -68,10 +71,22 @@ export class UserService {
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': updater });
+            const msg = new MultFormDataMsg(
+              formData,
+              packedTx.getPayload(),
+              { 'entity-id': updater }
+            );
             return this.userHttp.update(msg);
           });
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.DAO_UPDATED
+              && eventBody.event.eventPayload.daoId === updater;
+    });
+
+    return response;
   }
 
   /**
