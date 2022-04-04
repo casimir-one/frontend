@@ -1,4 +1,4 @@
-import { AssetsService } from '@deip/assets-service';
+import { FungibleTokenService } from '@casimir/token-service';
 
 import {
   listGetter,
@@ -7,7 +7,7 @@ import {
   setOneMutation
 } from '@deip/platform-util';
 
-const assetsService = AssetsService.getInstance();
+const fungibleTokenService = FungibleTokenService.getInstance();
 
 const STATE = {
   data: []
@@ -24,21 +24,21 @@ const GETTERS = {
 
 const ACTIONS = {
   getList({ commit }) {
-    return assetsService.lookupFungibleTokens(10000)
+    return fungibleTokenService.getList()
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getBySymbol({ commit }, symbol) {
-    return assetsService.getFungibleTokenBySymbol(symbol)
+    return fungibleTokenService.getOneBySymbol(symbol)
       .then((res) => {
         commit('setOne', res.data);
       });
   },
 
   async create({ dispatch }, payload) {
-    await assetsService.createFungibleToken(payload);
+    await fungibleTokenService.create(payload);
     await dispatch('balances/getList', { withAssetsFetch: true }, { root: true });
   }
 };
