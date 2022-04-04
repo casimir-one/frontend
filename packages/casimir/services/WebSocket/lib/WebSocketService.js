@@ -7,6 +7,8 @@ const WEB_SOCKET_STATE = {
   OPEN: 1
 };
 
+const MAX_CONNECT_ATTEMPT_COUNT = 5;
+
 /**
  * Service for web socket connection
  */
@@ -30,12 +32,16 @@ export class WebSocketService {
     const env = this.#proxydi.get('env');
 
     const { DEIP_WEB_SOCKET_URL } = env;
+    let connectAttemptNumber = 0;
 
     const connectInterval = setInterval(() => {
-      if (!DEIP_WEB_SOCKET_URL || this.isOpen()) {
+      if (!DEIP_WEB_SOCKET_URL
+          || this.isOpen()
+          || connectAttemptNumber === MAX_CONNECT_ATTEMPT_COUNT) {
         clearInterval(connectInterval);
         return;
       }
+      connectAttemptNumber += 1;
 
       const token = this.#accessService.getAccessToken();
       const url = `${DEIP_WEB_SOCKET_URL}?access_token=${token}`;
