@@ -1,6 +1,6 @@
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_PROPOSAL, APP_EVENT } from '@deip/constants';
 import {
   CreateProjectCmd,
   UpdateProjectCmd,
@@ -13,8 +13,13 @@ import {
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { TeamService } from '@deip/team-service';
+import { WebSocketService } from '@deip/web-socket-service';
+
 import {
-  createFormData, createInstanceGetter, genSha256Hash, replaceFileWithName
+  createFormData,
+  createInstanceGetter,
+  genSha256Hash,
+  replaceFileWithName
 } from '@deip/toolbox';
 import { ProjectHttp } from './ProjectHttp';
 
@@ -38,6 +43,7 @@ export class ProjectService {
   projectHttp = ProjectHttp.getInstance();
   proxydi = proxydi;
   teamService = TeamService.getInstance();
+  webSocketService = WebSocketService.getInstance();
 
   /**
    * Extract FormData from data
@@ -146,109 +152,119 @@ export class ProjectService {
 
     const needProjectTeam = teamId === null;
 
-    return Promise.all([
+    const [chainService, teamResponse] = await Promise.all([
       ChainService.getInstanceAsync(env),
       needProjectTeam ? Promise.resolve({ data: {} }) : this.teamService.getOne(teamId)
-    ])
-      .then(([chainService, teamResponse]) => {
-        const team = teamResponse?.data;
+    ]);
 
-        const teamMembers = [];
-        const list = team.members ? team.members.map((m) => m.username) : [];
-        teamMembers.push(...list);
+    const team = teamResponse?.data;
+    const teamMembers = [];
+    const list = team.members ? team.members.map((m) => m.username) : [];
+    teamMembers.push(...list);
 
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        let projectId;
+    let projectId;
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            let projectTeamId = teamId;
+    const response = await chainTxBuilder.begin()
+      .then((txBuilder) => {
+        let projectTeamId = teamId;
 
-            if (needProjectTeam) {
-              const authoritySetup = {
-                auths: [],
-                weight: 1
-              };
+        if (needProjectTeam) {
+          const authoritySetup = {
+            auths: [],
+            weight: 1
+          };
 
-              if (isAdmin) {
-                authoritySetup.auths.push({ name: TENANT, weight: 1 });
+          if (isAdmin) {
+            authoritySetup.auths.push({ name: TENANT, weight: 1 });
+          }
+
+          const projectTeamMembers = members
+            .filter((member) => !teamMembers.some((m) => m === member))
+            .reduce((acc, member) => (
+              acc.some((m) => m === member)
+                ? acc
+                : [...acc, member]),
+            [])
+            .map((member) => ({ name: member, weight: 1 }));
+
+          authoritySetup.auths.push(...projectTeamMembers);
+
+          const createDaoCmd = new CreateDaoCmd({
+            isTeamAccount: true,
+            fee: { ...CORE_ASSET, amount: 0 },
+            creator,
+            authority: { owner: authoritySetup },
+            description: genSha256Hash(JSON.stringify({})),
+            attributes: []
+          });
+
+          txBuilder.addCmd(createDaoCmd);
+          projectTeamId = createDaoCmd.getProtocolEntityId();
+        }
+
+        const createProjectCmd = new CreateProjectCmd({
+          teamId: projectTeamId,
+          description,
+          domains,
+          isPrivate,
+          isDefault: false,
+          members: undefined, // ???
+          attributes
+        });
+
+        projectId = createProjectCmd.getProtocolEntityId();
+
+        if (isProposal) {
+          const proposalBatch = [
+            createProjectCmd
+          ];
+
+          return chainTxBuilder.getBatchWeight(proposalBatch)
+            .then((proposalBatchWeight) => {
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.PROJECT_PROPOSAL,
+                creator,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: proposalBatch
+              });
+              txBuilder.addCmd(createProposalCmd);
+
+              if (isProposalApproved) {
+                const projectProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new AcceptProposalCmd({
+                  entityId: projectProposalId,
+                  account: teamId,
+                  batchWeight: proposalBatchWeight
+                });
+                txBuilder.addCmd(updateProposalCmd);
               }
 
-              const projectTeamMembers = members
-                .filter((member) => !teamMembers.some((m) => m === member))
-                .reduce((acc, member) => (
-                  acc.some((m) => m === member)
-                    ? acc
-                    : [...acc, member]),
-                [])
-                .map((member) => ({ name: member, weight: 1 }));
-
-              authoritySetup.auths.push(...projectTeamMembers);
-
-              const createDaoCmd = new CreateDaoCmd({
-                isTeamAccount: true,
-                fee: { ...CORE_ASSET, amount: 0 },
-                creator,
-                authority: { owner: authoritySetup },
-                description: genSha256Hash(JSON.stringify({})),
-                attributes: []
-              });
-
-              txBuilder.addCmd(createDaoCmd);
-              projectTeamId = createDaoCmd.getProtocolEntityId();
-            }
-
-            const createProjectCmd = new CreateProjectCmd({
-              teamId: projectTeamId,
-              description,
-              domains,
-              isPrivate,
-              isDefault: false,
-              members: undefined, // ???
-              attributes
+              return txBuilder.end();
             });
-
-            projectId = createProjectCmd.getProtocolEntityId();
-
-            if (isProposal) {
-              const proposalBatch = [
-                createProjectCmd
-              ];
-
-              return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((proposalBatchWeight) => {
-                  const createProposalCmd = new CreateProposalCmd({
-                    type: APP_PROPOSAL.PROJECT_PROPOSAL,
-                    creator,
-                    expirationTime: proposalLifetime || proposalDefaultLifetime,
-                    proposedCmds: proposalBatch
-                  });
-                  txBuilder.addCmd(createProposalCmd);
-
-                  if (isProposalApproved) {
-                    const projectProposalId = createProposalCmd.getProtocolEntityId();
-                    const updateProposalCmd = new AcceptProposalCmd({
-                      entityId: projectProposalId,
-                      account: teamId,
-                      batchWeight: proposalBatchWeight
-                    });
-                    txBuilder.addCmd(updateProposalCmd);
-                  }
-
-                  return txBuilder.end();
-                });
-            }
-            txBuilder.addCmd(createProjectCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': projectId });
-            return this.projectHttp.create(msg);
-          });
+        }
+        txBuilder.addCmd(createProjectCmd);
+        return txBuilder.end();
+      })
+      .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+      .then((packedTx) => {
+        const msg = new MultFormDataMsg(
+          formData,
+          packedTx.getPayload(),
+          { 'entity-id': projectId }
+        );
+        return this.projectHttp.create(msg);
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CREATED
+                && eventBody.event.eventPayload.projectId === response.data._id;
+    });
+
+    return response;
   }
 
   /**
@@ -293,99 +309,105 @@ export class ProjectService {
       description
     } = ProjectService.#convertFormData(data);
 
-    return Promise.all([
+    const [chainService, teamResponse] = await Promise.all([
       ChainService.getInstanceAsync(env),
       this.teamService.getOne(teamId)
-    ])
-      .then(([chainService, teamResponse]) => {
-        const team = teamResponse?.data;
+    ]);
 
-        const teamMembers = [];
-        const list = team.members ? team.members.map((m) => m.username) : [];
-        teamMembers.push(...list);
+    const team = teamResponse?.data;
+    const teamMembers = [];
+    const list = team.members ? team.members.map((m) => m.username) : [];
+    teamMembers.push(...list);
 
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const joinedMembers = members
-              ? members.filter((member) => !teamMembers.includes(member))
-              : [];
+    const response = await chainTxBuilder.begin()
+      .then((txBuilder) => {
+        const joinedMembers = members
+          ? members.filter((member) => !teamMembers.includes(member))
+          : [];
 
-            const leftMembers = members
-              ? teamMembers.filter((member) => !members.includes(member) && member !== TENANT)
-              : [];
+        const leftMembers = members
+          ? teamMembers.filter((member) => !members.includes(member) && member !== TENANT)
+          : [];
 
-            const invites = joinedMembers.map((invitee) => new AddDaoMemberCmd({
-              member: invitee,
-              teamId,
-              projectId: _id,
-              isThresholdPreserved: true
-            }));
+        const invites = joinedMembers.map((invitee) => new AddDaoMemberCmd({
+          member: invitee,
+          teamId,
+          projectId: _id,
+          isThresholdPreserved: true
+        }));
 
-            const leavings = leftMembers.map((leaving) => new RemoveDaoMemberCmd({
-              member: leaving,
-              teamId,
-              projectId: _id,
-              isThresholdPreserved: true
-            }));
+        const leavings = leftMembers.map((leaving) => new RemoveDaoMemberCmd({
+          member: leaving,
+          teamId,
+          projectId: _id,
+          isThresholdPreserved: true
+        }));
 
-            const updateProjectCmd = new UpdateProjectCmd({
-              entityId: _id,
-              teamId,
-              description,
-              isPrivate,
-              members: undefined, // ???
-              attributes
-            });
+        const updateProjectCmd = new UpdateProjectCmd({
+          entityId: _id,
+          teamId,
+          description,
+          isPrivate,
+          members: undefined, // ???
+          attributes
+        });
 
-            if (isProposal) {
-              const proposalBatch = [
-                updateProjectCmd,
-                ...invites,
-                ...leavings
-              ];
+        if (isProposal) {
+          const proposalBatch = [
+            updateProjectCmd,
+            ...invites,
+            ...leavings
+          ];
 
-              return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((proposalBatchWeight) => {
-                  const createProposalCmd = new CreateProposalCmd({
-                    type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
-                    creator: updater,
-                    expirationTime: proposalLifetime || proposalDefaultLifetime,
-                    proposedCmds: proposalBatch
-                  });
-                  txBuilder.addCmd(createProposalCmd);
+          return chainTxBuilder.getBatchWeight(proposalBatch)
+            .then((proposalBatchWeight) => {
+              const createProposalCmd = new CreateProposalCmd({
+                type: APP_PROPOSAL.PROJECT_UPDATE_PROPOSAL,
+                creator: updater,
+                expirationTime: proposalLifetime || proposalDefaultLifetime,
+                proposedCmds: proposalBatch
+              });
+              txBuilder.addCmd(createProposalCmd);
 
-                  if (isProposalApproved) {
-                    const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                    const updateProposalCmd = new AcceptProposalCmd({
-                      entityId: projectUpdateProposalId,
-                      account: updater,
-                      batchWeight: proposalBatchWeight
-                    });
-                    txBuilder.addCmd(updateProposalCmd);
-                  }
-
-                  return txBuilder.end();
+              if (isProposalApproved) {
+                const projectUpdateProposalId = createProposalCmd.getProtocolEntityId();
+                const updateProposalCmd = new AcceptProposalCmd({
+                  entityId: projectUpdateProposalId,
+                  account: updater,
+                  batchWeight: proposalBatchWeight
                 });
-            }
-            txBuilder.addCmd(updateProjectCmd);
-            for (let i = 0; i < invites.length; i++) {
-              txBuilder.addCmd(invites[i]);
-            }
-            for (let i = 0; i < leavings.length; i++) {
-              txBuilder.addCmd(leavings[i]);
-            }
+                txBuilder.addCmd(updateProposalCmd);
+              }
 
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': _id });
-            return this.projectHttp.update(msg);
-          });
+              return txBuilder.end();
+            });
+        }
+        txBuilder.addCmd(updateProjectCmd);
+        for (let i = 0; i < invites.length; i++) {
+          txBuilder.addCmd(invites[i]);
+        }
+        for (let i = 0; i < leavings.length; i++) {
+          txBuilder.addCmd(leavings[i]);
+        }
+
+        return txBuilder.end();
+      })
+      .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+      .then((packedTx) => {
+        const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': _id });
+        return this.projectHttp.update(msg);
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_UPDATED
+                  && eventBody.event.eventPayload.projectId === _id;
+    });
+
+    return response;
   }
 
   /**
