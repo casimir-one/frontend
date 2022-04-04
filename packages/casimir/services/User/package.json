@@ -28,6 +28,7 @@
     "@deip/http-service": "1.375.1",
     "@deip/messages": "1.375.1",
     "@deip/proxydi": "1.375.1",
-    "@deip/toolbox": "1.375.1"
+    "@deip/toolbox": "1.375.1",
+    "@deip/web-socket-service": "1.375.1"
   }
 }
