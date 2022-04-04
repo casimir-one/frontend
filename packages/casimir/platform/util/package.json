@@ -20,7 +20,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/toolbox": "1.375.1"
+    "@deip/toolbox": "1.375.1",
+    "@deip/web-socket-service": "1.375.1"
   },
   "peerDependencies": {
     "vue": "^2.6.14"

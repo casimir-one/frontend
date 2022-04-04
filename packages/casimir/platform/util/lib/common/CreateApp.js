@@ -1,3 +1,5 @@
+import { WebSocketService } from '@deip/web-socket-service';
+
 /**
  * Class for bootstrapping app with Casimir
  */
@@ -5,6 +7,7 @@ export class CreateApp {
   #registeredModules = {}
 
   #modulesStorage = {}
+  #webSocketService = WebSocketService.getInstance();
 
   /**
    * @param {*} vueInstance
@@ -95,6 +98,8 @@ export class CreateApp {
       Object.keys(this.#registeredModules)
         .map((module) => this.#installModule(module))
     );
+
+    this.#webSocketService.connect();
 
     const installed = Object.keys(this.#registeredModules).sort();
 
