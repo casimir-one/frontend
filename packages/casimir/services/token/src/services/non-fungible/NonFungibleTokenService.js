@@ -11,6 +11,9 @@ import { ChainService } from '@deip/chain-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
+/**
+ * Non-fungible token service
+ */
 export class NonFungibleTokenService {
   proxydi = proxydi;
 

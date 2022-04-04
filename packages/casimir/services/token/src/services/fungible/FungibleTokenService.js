@@ -11,6 +11,9 @@ import { ChainService } from '@deip/chain-service';
 import { FungibleTokenHttp } from './FungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
+/**
+ * Fungible token service
+ */
 export class FungibleTokenService {
   proxydi = proxydi;
 
@@ -182,7 +185,7 @@ export class FungibleTokenService {
    * @param {string} lowerBoundSymbol
    * @return {Promise<Object>}
    */
-  async getList(limit, lowerBoundSymbol) {
+  async getList(limit = 10000, lowerBoundSymbol = '') {
     return this.fungibleTokenHttp.getList(limit, lowerBoundSymbol);
   }
 

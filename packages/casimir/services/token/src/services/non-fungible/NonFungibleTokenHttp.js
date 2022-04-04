@@ -1,6 +1,9 @@
 import { HttpService } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
+/**
+ * Non-fungible token http transport
+ */
 export class NonFungibleTokenHttp {
   http = HttpService.getInstance();
 

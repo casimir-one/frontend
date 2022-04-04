@@ -4,6 +4,16 @@ import { AcceptProposalCmd, CreateProposalCmd } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { wrapInArray } from '@deip/toolbox';
 
+/**
+ * @typedef {import('@casimir/platform-core').FungibleTokenTransferPayload} FungibleTokenTransferPayload
+ * @typedef {import('@casimir/platform-core').NonFungibleTokenTransferPayload} NonFungibleTokenTransferPayload
+ *
+ * @param {FungibleTokenTransferPayload | NonFungibleTokenTransferPayload} payload
+ * @param {*} transferTokenCmd
+ * @param {string} proposalType
+ * @param {Function} transferFn
+ * @return {Promise<Object>}
+ */
 export function transferToken(
   payload,
   transferTokenCmd,
