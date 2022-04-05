@@ -1,6 +1,7 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form
+      ref="createDraftForm"
       :disabled="loading"
       @submit.prevent="handleSubmit(submit)"
     >
@@ -206,8 +207,10 @@
        */
       getContentUrl(fileHash) {
         const { DEIP_SERVER_URL } = this.$env;
+        const endPoint = 'api/v2/project-content/package';
+        const queryParams = `download=true&authorization=${accessService.getAccessToken()}`;
 
-        return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.draft._id}/${fileHash}?download=true&authorization=${accessService.getAccessToken()}`;
+        return `${DEIP_SERVER_URL}/${endPoint}/${this.draft._id}/${fileHash}?${queryParams}`;
       },
       /**
        * Set form data files
@@ -247,7 +250,9 @@
        */
       async updateDraft(data) {
         try {
-          await this.$store.dispatch('projectContentDrafts/update', { data: { ...this.draft, ...data } });
+          await this.$store.dispatch(
+            'projectContentDrafts/update', { data: { ...this.draft, ...data } }
+          );
           this.emitSuccess();
         } catch (error) {
           console.error(error);
@@ -302,6 +307,8 @@
        * @event click
        */
       handleCancelClick() {
+        this.$refs.createDraftForm.reset();
+        this.$refs.observer.reset();
         this.emitCancel();
       }
     }
