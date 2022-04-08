@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.376.0](https://github.com/DEIPworld/deip-modules/compare/v1.375.1...v1.376.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* **@deip/wallet-module:** fix balance card size ([4221976](https://github.com/DEIPworld/deip-modules/commit/422197617c77ba0d1bfdd19f7f8cbf2350749e40))
+
+
+
+
+
 ## [1.375.1](https://github.com/DEIPworld/deip-modules/compare/v1.375.0...v1.375.1) (2022-03-30)
 
 **Note:** Version bump only for package @deip/wallet-module

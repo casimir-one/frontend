@@ -1,6 +1,6 @@
 {
   "name": "@deip/project-nda-service",
-  "version": "1.375.1",
+  "version": "1.376.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,11 +22,11 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/chain-service": "1.375.1",
-    "@deip/commands": "1.375.1",
-    "@deip/constants": "1.375.1",
-    "@deip/http-service": "1.375.1",
-    "@deip/messages": "1.375.1",
+    "@deip/chain-service": "1.376.0",
+    "@deip/commands": "1.376.0",
+    "@deip/constants": "1.376.0",
+    "@deip/http-service": "1.376.0",
+    "@deip/messages": "1.376.0",
     "@deip/proxydi": "1.375.1",
     "@deip/toolbox": "1.375.1"
   }

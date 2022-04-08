@@ -1,6 +1,6 @@
 {
   "name": "@deip/document-templates-module",
-  "version": "1.375.1",
+  "version": "1.376.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -17,16 +17,16 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.375.1",
-    "@deip/document-template-service": "1.375.1",
-    "@deip/platform-components": "1.375.1",
-    "@deip/platform-util": "1.375.1",
+    "@deip/constants": "1.376.0",
+    "@deip/document-template-service": "1.376.0",
+    "@deip/platform-components": "1.376.0",
+    "@deip/platform-util": "1.376.0",
     "@deip/proxydi": "1.375.1",
     "@deip/toolbox": "1.375.1",
-    "@deip/validation-plugin": "1.375.1",
+    "@deip/validation-plugin": "1.376.0",
     "@deip/vue-editorjs": "1.375.1",
-    "@deip/vue-elements": "1.375.1",
-    "@deip/vuetify-extended": "1.375.1"
+    "@deip/vue-elements": "1.376.0",
+    "@deip/vuetify-extended": "1.376.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

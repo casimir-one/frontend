@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.376.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.375.1...v1.376.0) (2022-04-08)
+
+
+### Bug Fixes
+
+* **@deip/platform-components:** fix form factory mixin ([3459009](https://github.com/DEIPworld/casimir-frontend/commit/345900952e5d5d07601fcbaec426f823c07d7057))
+* **@deip/vue-elements:** fix size of shadow box ([cba4289](https://github.com/DEIPworld/casimir-frontend/commit/cba42899e11e4625ff1ee262f85e22dc8c944fcc))
+* **@deip/wallet-module:** fix balance card size ([4221976](https://github.com/DEIPworld/casimir-frontend/commit/422197617c77ba0d1bfdd19f7f8cbf2350749e40))
+
+
+### Features
+
+* **@casimir/platform-core:** add token types ([58215dd](https://github.com/DEIPworld/casimir-frontend/commit/58215dd12be64a1cdddacb6bfd3f85150f300037))
+* **@casimir/token-service:** new package ([0f34a9e](https://github.com/DEIPworld/casimir-frontend/commit/0f34a9e06a73996c82a007a2a6efd7954ef9e2c4))
+* **@deip/constants:** add APP_EVENT ([5e1612c](https://github.com/DEIPworld/casimir-frontend/commit/5e1612ce517bf4ed596bb97eddca11cd2d24fba3))
+* **@deip/web-socket-service:** add package ([2df5344](https://github.com/DEIPworld/casimir-frontend/commit/2df53442985f21f4f9f74c659bf8e9268ee51f7a))
+
+
+
+
+
 ## [1.375.1](https://github.com/DEIPworld/casimir-frontend/compare/v1.375.0...v1.375.1) (2022-03-30)
 
 
