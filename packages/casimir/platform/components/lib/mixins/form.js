@@ -38,7 +38,7 @@ const formFactory = (
 
   data() {
     return {
-      lazyFormData,
+      lazyFormData: cloneDeep(lazyFormData),
 
       disabled: false,
       loading: false,

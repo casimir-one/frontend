@@ -1,7 +1,6 @@
 <template>
   <validation-observer v-slot="{ invalid, handleSubmit }" ref="observer">
     <v-form
-      ref="createDraftForm"
       :disabled="loading"
       @submit.prevent="handleSubmit(submit)"
     >
@@ -307,8 +306,6 @@
        * @event click
        */
       handleCancelClick() {
-        this.$refs.createDraftForm.reset();
-        this.$refs.observer.reset();
         this.emitCancel();
       }
     }
