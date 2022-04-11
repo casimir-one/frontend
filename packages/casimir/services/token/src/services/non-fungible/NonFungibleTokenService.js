@@ -169,10 +169,11 @@ export class NonFungibleTokenService {
 
   /**
    * Get non-fungible tokens
+   * @param {Object} query
    * @return {Promise<Object>}
    */
-  async getClasses() {
-    return this.nonFungibleTokenHttp.getClasses();
+  async getClasses(query) {
+    return this.nonFungibleTokenHttp.getClasses(query);
   }
 
   /**
@@ -181,8 +182,8 @@ export class NonFungibleTokenService {
    * @param {string} classId
    * @return {Promise<Object>}
    */
-  async geClassInstancesByOwner(account, classId) {
-    return this.nonFungibleTokenHttp.geClassInstancesByOwner(account, classId);
+  async getClassInstancesByOwner(account, classId) {
+    return this.nonFungibleTokenHttp.getClassInstancesByOwner(account, classId);
   }
 
   /**
