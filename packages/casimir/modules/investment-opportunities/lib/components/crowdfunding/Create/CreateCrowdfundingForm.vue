@@ -5,7 +5,7 @@
         <crowdfunding-title-input v-model="formData.title" />
 
         <crowdfunding-tokens-input
-          v-if="!autoCreateNonFungibleToken"
+          v-if="!autoCreateFungibleToken"
           v-model="formData.tokens"
           :issued-tokens="issuedTokens"
           :available-tokens="availableTokens"
@@ -103,7 +103,7 @@
       /**
        * Should create non fungible token
        */
-      autoCreateNonFungibleToken: {
+      autoCreateFungibleToken: {
         type: Boolean,
         default: false
       },
@@ -170,7 +170,7 @@
        * Select asset for fundraising from team assets that weren't sold
       */
       issuedTokens() {
-        if (hasValue(this.project.nfts)) {
+        if (hasValue(this.project.nfts)) { // replace to Fungible Tokens - nfts
           return this.project.nfts[0];
         }
 
@@ -221,7 +221,7 @@
       /**
        * Create non fungible token
        */
-      createNonFungibleToken() {
+      createFungibleToken() {
         const DEFAULT_PRECISION = 0;
         const DEFAULT_AMOUNT = '10000';
         const symbol = this.generateAssetSymbol();
@@ -322,8 +322,8 @@
       submit() {
         this.loading = true;
 
-        if (this.autoCreateNonFungibleToken) {
-          this.createNonFungibleToken()
+        if (this.autoCreateFungibleToken) {
+          this.createFungibleToken()
             .then((symbol) => {
               const { _id, currentSupply, precision } = this.$store.getters['assets/one'](symbol);
               const shares = [{
