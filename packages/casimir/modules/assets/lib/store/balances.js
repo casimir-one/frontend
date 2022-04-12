@@ -1,13 +1,10 @@
-import { AssetsService } from '@deip/assets-service';
+import { FungibleTokenService } from '@casimir/token-service';
 
-import {
-  listGetter,
-  setListMutationFactory
-} from '@deip/platform-util';
+import { listGetter, setListMutationFactory } from '@deip/platform-util';
 
 import { ASSET_TYPE } from '@deip/constants';
 
-const assetsService = AssetsService.getInstance();
+const fungibleTokenService = FungibleTokenService.getInstance();
 
 const STATE = {
   data: []
@@ -23,9 +20,8 @@ const ACTIONS = {
 
     const loadBalances = (assets) => {
       const balancesPromises = assets
-        .filter((asset) => asset.type === ASSET_TYPE.NFT)
-        .map((asset) => assetsService
-          .getAccountsAssetBalancesByAsset(asset.symbol));
+        .filter((asset) => asset.type === ASSET_TYPE.FT)
+        .map((asset) => fungibleTokenService.getAccountsBalancesBySymbol(asset.symbol));
 
       return Promise.all(balancesPromises)
         .then((balancesResponses) => {

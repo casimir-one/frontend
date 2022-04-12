@@ -2,7 +2,6 @@
   <validation-observer
     v-slot="{ invalid, handleSubmit }"
     ref="observer"
-    class="create-nft-form"
   >
     <v-form
       :disabled="loading"
@@ -10,19 +9,19 @@
     >
       <ve-stack :gap="32">
         <vex-block
-          :title="$t('module.assets.createNFTForm.title', {entity: sentenceCase(projectAlias) })"
+          :title="$t('module.assets.createFTForm.title', {entity: sentenceCase(projectAlias) })"
           title-margin="16"
         >
           <v-row>
             <v-col cols="8">
               <validation-provider
                 v-slot="{ errors }"
-                :name="$t('module.assets.createNFTForm.numberOfTokens')"
+                :name="$t('module.assets.createFTForm.numberOfTokens')"
                 rules="required|integer"
               >
                 <v-text-field
                   v-model.number="formModel.maxSupply"
-                  :label="$t('module.assets.createNFTForm.totalNumberOfTokens')"
+                  :label="$t('module.assets.createFTForm.totalNumberOfTokens')"
                   hide-details="auto"
                   :error-messages="errors"
                 />
@@ -32,20 +31,20 @@
             <v-col cols="4">
               <validation-provider
                 v-slot="{ errors }"
-                :name="$t('module.assets.createNFTForm.ticker')"
+                :name="$t('module.assets.createFTForm.ticker')"
                 :rules="{
                   required: true,
                   minMax: { min: 5, max: 6 },
                   unique: { list: assetsKeys }
                 }"
                 :custom-messages="{
-                  unique: $t('module.assets.createNFTForm.errors.tickerUnique')
+                  unique: $t('module.assets.createFTForm.errors.tickerUnique')
                 }"
               >
                 <v-text-field
                   v-model="formModel.symbol"
                   v-maska="assetMask"
-                  :label="$t('module.assets.createNFTForm.ticker')"
+                  :label="$t('module.assets.createFTForm.ticker')"
                   hide-details="auto"
                   :error-messages="errors"
                 />
@@ -54,13 +53,13 @@
           </v-row>
 
           <div class="text-body-2">
-            {{ $t('module.assets.createNFTForm.tokensAmountNote', {entity: projectAlias}) }}
+            {{ $t('module.assets.createFTForm.tokensAmountNote', {entity: projectAlias}) }}
           </div>
         </vex-block>
 
-        <vex-block :title="$t('module.assets.createNFTForm.shareholders')" title-margin="16">
+        <vex-block :title="$t('module.assets.createFTForm.shareholders')" title-margin="16">
           <div class="text-body-2">
-            {{ $t('module.assets.createNFTForm.shareholdersNote') }}
+            {{ $t('module.assets.createFTForm.shareholdersNote') }}
           </div>
 
           <vex-timeline>
@@ -73,7 +72,7 @@
                     item-value="_id"
                     :value="team._id"
                     disabled
-                    :label="$t('module.assets.createNFTForm.shareholder')"
+                    :label="$t('module.assets.createFTForm.shareholder')"
                     :hide-details="true"
                   >
                     <template #selection="{ item }">
@@ -91,7 +90,7 @@
                 </v-col>
                 <v-col cols="3">
                   <v-text-field
-                    :label="$t('module.assets.createNFTForm.tokens')"
+                    :label="$t('module.assets.createFTForm.tokens')"
                     :value="teamTokens.amount"
                     :hide-details="true"
                     disabled
@@ -118,12 +117,12 @@
                 <v-col cols="6">
                   <validation-provider
                     v-slot="{ errors }"
-                    :name="$t('module.assets.createNFTForm.shareholder')"
+                    :name="$t('module.assets.createFTForm.shareholder')"
                     rules="required"
                   >
                     <users-selector
                       v-model="item.account"
-                      :label="$t('module.assets.createNFTForm.shareholder')"
+                      :label="$t('module.assets.createFTForm.shareholder')"
                       hide-details="auto"
                       :error-messages="errors"
                       :filter-items="shareholdersFilter(item.account)"
@@ -133,12 +132,12 @@
                 <v-col cols="3">
                   <validation-provider
                     v-slot="{ errors }"
-                    :name="$t('module.assets.createNFTForm.tokens')"
+                    :name="$t('module.assets.createFTForm.tokens')"
                     rules="integer|required"
                   >
                     <v-text-field
                       v-model="item.amount"
-                      :label="$t('module.assets.createNFTForm.tokens')"
+                      :label="$t('module.assets.createFTForm.tokens')"
                       hide-details="auto"
                       :error-messages="errors"
                     />
@@ -160,19 +159,19 @@
             </vex-timeline-item>
 
             <vex-timeline-add
-              :label="$t('module.assets.createNFTForm.addShareholder')"
+              :label="$t('module.assets.createFTForm.addShareholder')"
               :disabled="loading"
               @click="handleAddShareholderClick"
             />
           </vex-timeline>
         </vex-block>
 
-        <vex-block :title="$t('module.assets.createNFTForm.legal')">
+        <vex-block :title="$t('module.assets.createFTForm.legal')">
           <div>
             <v-row>
               <v-col>
                 <validation-provider
-                  :name="$t('module.assets.createNFTForm.confirmation')"
+                  :name="$t('module.assets.createFTForm.confirmation')"
                   :rules="{ required: { allowFalse: false } }"
                 >
                   <v-checkbox
@@ -181,9 +180,9 @@
                     class="ma-0 pa-0"
                   >
                     <template #label>
-                      <i18n path="module.assets.createNFTForm.agree" class="text-body-2">
+                      <i18n path="module.assets.createFTForm.agree" class="text-body-2">
                         <a :href="tosUrl" target="_blank" @click.stop>
-                          {{ $t('module.assets.createNFTForm.tos') }}
+                          {{ $t('module.assets.createFTForm.tos') }}
                         </a>
                       </i18n>
                     </template>
@@ -195,7 +194,7 @@
             <v-row>
               <v-col>
                 <validation-provider
-                  :name="$t('module.assets.createNFTForm.confirmation')"
+                  :name="$t('module.assets.createFTForm.confirmation')"
                   :rules="{required: {allowFalse: false}}"
                 >
                   <v-checkbox
@@ -205,7 +204,7 @@
                   >
                     <template #label>
                       <div class="text-body-2">
-                        {{ $t('module.assets.createNFTForm.understand', {entity: projectAlias}) }}
+                        {{ $t('module.assets.createFTForm.understand', {entity: projectAlias}) }}
                       </div>
                     </template>
                   </v-checkbox>
@@ -226,7 +225,7 @@
               :disabled="loading"
               @click="handleCancelClick"
             >
-              {{ $t('module.assets.createNFTForm.cancel') }}
+              {{ $t('module.assets.createFTForm.cancel') }}
             </v-btn>
 
             <v-btn
@@ -235,7 +234,7 @@
               :disabled="invalid"
               :loading="loading"
             >
-              {{ $t('module.assets.createNFTForm.submit') }}
+              {{ $t('module.assets.createFTForm.submit') }}
             </v-btn>
           </ve-stack>
         </div>
@@ -268,7 +267,7 @@
    * Component for creating non fungible token form
    */
   export default defineComponent({
-    name: 'CreateNonFungibleTokenForm',
+    name: 'CreateFungibleTokenForm',
 
     components: {
       UsersSelector,

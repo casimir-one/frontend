@@ -6,7 +6,7 @@ export default {
         start: 'Start',
         titleBlock: 'Enter title of crowdfunding',
         title: 'Title',
-        determineNumberOfTokens: 'Determine the number of non-fungible token units',
+        determineNumberOfTokens: 'Determine the number of fungible token units',
         units: 'Units',
         selectDates: 'Select start and end dates of crowdfunding',
         startDate: 'Start date',
@@ -39,7 +39,8 @@ export default {
         cancel: 'Cancel',
         invest: 'Invest',
         amount: 'Amount',
-        agree: 'I have read the terms of the {0} and understand that the investment is associated with the risk of non-return of the invested funds',
+        agree: `I have read the terms of the {0} and understand that the 
+        investment is associated with the risk of non-return of the invested funds`,
         tos: 'User Agreement',
         userBalanceIsNotEnough: 'You do not have enough funds in your account',
         confirmTitle: 'Investment confirmation',
