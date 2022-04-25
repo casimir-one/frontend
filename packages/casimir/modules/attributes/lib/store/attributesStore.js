@@ -48,7 +48,7 @@ const ACTIONS = {
   },
 
   async getOne({ commit }, attributeId) {
-    const res = await attributesService.getAttribute(attributeId);
+    const res = await attributesService.getOne(attributeId);
     commit('setOne', res.data);
   },
 
