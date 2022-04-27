@@ -81,6 +81,11 @@ export class ProjectNdaService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.projectNdaHttp.createProjectNda(msg);
           });
       });

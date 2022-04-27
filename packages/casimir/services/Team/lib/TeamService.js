@@ -45,7 +45,9 @@ export class TeamService {
    */
   async create(payload, isCreateDefaultProject = false) {
     const env = this.proxydi.get('env');
-    const { TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT } = env;
+    const {
+      TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT, RETURN_MSG
+    } = env;
     const {
       initiator: {
         privKey,
@@ -150,6 +152,9 @@ export class TeamService {
           .then((packedTx) => {
             // eslint-disable-next-line max-len
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
+            if (RETURN_MSG && RETURN_MSG === true) {
+              return msg;
+            }
             return this.teamHttp.create(msg);
           });
       });
@@ -247,6 +252,11 @@ export class TeamService {
           .then((packedTx) => {
             // eslint-disable-next-line max-len
             const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.teamHttp.update(msg);
           });
       });
@@ -324,6 +334,11 @@ export class TeamService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.teamHttp.addTeamMember(msg);
           });
       });
@@ -394,6 +409,11 @@ export class TeamService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.teamHttp.removeTeamMember(msg);
           });
       });

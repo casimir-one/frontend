@@ -53,6 +53,12 @@ export class PortalService {
   async updatePortalProfile(data) {
     const updatePortalProfileCmd = new UpdatePortalProfileCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updatePortalProfileCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.portalHttp.updatePortalProfile(msg);
   }
 
@@ -64,6 +70,12 @@ export class PortalService {
   async updateNetworkSettings(data) {
     const updateNetworkSettingsCmd = new UpdateNetworkSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateNetworkSettingsCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.portalHttp.updateNetworkSettings(msg);
   }
 
@@ -90,6 +102,12 @@ export class PortalService {
       logo
     });
     const msg = new MultFormDataMsg(formData, { appCmds: [updatePortalSettingsCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.portalHttp.updatePortalSettings(msg);
   }
 
@@ -115,7 +133,8 @@ export class PortalService {
     const env = this.proxydi.get('env');
     const {
       FAUCET_ACCOUNT_USERNAME,
-      CORE_ASSET
+      CORE_ASSET,
+      RETURN_MSG
     } = env;
 
     return ChainService.getInstanceAsync(env)
@@ -147,6 +166,9 @@ export class PortalService {
             // const chainNodeClient = chainService.getChainNodeClient();
             // return txEnvelop.signAsync(privKey, chainNodeClient);
             const msg = new JsonDataMsg(packedTx.getPayload());
+            if (RETURN_MSG && RETURN_MSG === true) {
+              return msg;
+            }
             return this.portalHttp.postSignUp(msg);
           });
       });
@@ -174,7 +196,8 @@ export class PortalService {
         const env = this.proxydi.get('env');
         const {
           FAUCET_ACCOUNT_USERNAME,
-          CORE_ASSET
+          CORE_ASSET,
+          RETURN_MSG
         } = env;
 
         return ChainService.getInstanceAsync(env)
@@ -205,6 +228,9 @@ export class PortalService {
                 // const chainNodeClient = chainService.getChainNodeClient();
                 // return txEnvelop.signAsync(privKey, chainNodeClient);
                 const msg = new JsonDataMsg(packedTx.getPayload());
+                if (RETURN_MSG && RETURN_MSG === true) {
+                  return msg;
+                }
                 return this.portalHttp.approveSignUpRequest(msg);
               });
           });
@@ -219,6 +245,12 @@ export class PortalService {
   async rejectSignUpRequest(username) {
     const deleteUserProfileCmd = new DeleteUserProfileCmd({ username });
     const msg = new JsonDataMsg({ appCmds: [deleteUserProfileCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.portalHttp.rejectSignUpRequest(msg);
   }
 

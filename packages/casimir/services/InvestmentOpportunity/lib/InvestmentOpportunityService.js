@@ -44,7 +44,13 @@ export class InvestmentOpportunityService {
    * @param {string} [targetAsset=USD]
    * @returns {Promise<Object>}
    */
-  async getAccountRevenueHistoryByAsset(account, symbol, step = 0, cursor = 0, targetAsset = 'USD') {
+  async getAccountRevenueHistoryByAsset(
+    account,
+    symbol,
+    step = 0,
+    cursor = 0,
+    targetAsset = 'USD'
+  ) {
     return this.investmentOpportunityHttp.getAccountRevenueHistoryByAsset(
       account,
       symbol,
@@ -179,14 +185,18 @@ export class InvestmentOpportunityService {
                   }
                   return txBuilder.end();
                 });
-            } else {
-              txBuilder.addCmd(createInvestmentOpportunityCmd);
-              return txBuilder.end();
             }
+            txBuilder.addCmd(createInvestmentOpportunityCmd);
+            return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.investmentOpportunityHttp.create(msg);
           });
       });
@@ -231,6 +241,11 @@ export class InvestmentOpportunityService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.investmentOpportunityHttp.invest(msg);
           });
       });

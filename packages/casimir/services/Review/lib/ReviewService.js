@@ -28,6 +28,12 @@ export class ReviewService {
   async createRequest(reviewRequest) {
     const createReviewRequestCmd = new CreateReviewRequestCmd(reviewRequest);
     const msg = new JsonDataMsg({ appCmds: [createReviewRequestCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.reviewHttp.createRequest(msg);
   }
 
@@ -39,6 +45,12 @@ export class ReviewService {
   async declineRequest(reviewRequestId) {
     const declineReviewRequestCmd = new DeclineReviewRequestCmd({ reviewRequestId });
     const msg = new JsonDataMsg({ appCmds: [declineReviewRequestCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.reviewHttp.declineRequest(msg);
   }
 
@@ -115,6 +127,11 @@ export class ReviewService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.reviewHttp.createReview(msg);
           });
       });
@@ -167,6 +184,11 @@ export class ReviewService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.reviewHttp.upvote(msg);
           });
       });
