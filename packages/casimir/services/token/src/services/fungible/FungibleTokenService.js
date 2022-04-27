@@ -79,6 +79,11 @@ export class FungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.fungibleTokenHttp.create(msg);
           });
       });
@@ -120,6 +125,11 @@ export class FungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.fungibleTokenHttp.issue(msg);
           });
       });

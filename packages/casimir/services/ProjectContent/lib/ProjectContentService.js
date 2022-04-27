@@ -154,6 +154,11 @@ export class ProjectContentService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'project-id': projectId });
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.projectContentHttp.publishContent(msg);
           });
       });
@@ -254,6 +259,13 @@ export class ProjectContentService {
       { appCmds: [createDraftCmd] },
       { 'project-id': draftData.projectId }
     );
+
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     const response = await this.projectContentHttp.createDraft(msg);
 
     await this.webSocketService.waitForMessage((message) => {
@@ -273,6 +285,12 @@ export class ProjectContentService {
   async deleteDraft(draftId) {
     const deleteDraftCmd = new DeleteDraftCmd({ draftId });
     const msg = new JsonDataMsg({ appCmds: [deleteDraftCmd] }, { 'entity-id': draftId });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.projectContentHttp.deleteDraft(msg);
   }
 
@@ -302,7 +320,13 @@ export class ProjectContentService {
       { 'project-id': data.projectId, 'entity-id': data._id }
     );
 
-    const response = this.projectContentHttp.updateDraft(msg);
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.projectContentHttp.updateDraft(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -332,6 +356,12 @@ export class ProjectContentService {
     const { data } = payload;
     const updateDraftCmd = new UpdateDraftCmd({ ...data });
     const msg = new JsonDataMsg({ appCmds: [updateDraftCmd] }, { 'entity-id': data._id });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.projectContentHttp.unlockDraft(msg);
   }
 

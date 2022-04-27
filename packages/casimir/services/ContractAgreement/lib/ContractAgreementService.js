@@ -82,6 +82,11 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.contractAgreementHttp.create(msg);
           });
       });
@@ -122,6 +127,11 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.contractAgreementHttp.accept(msg);
           });
       });
@@ -162,6 +172,11 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.contractAgreementHttp.reject(msg);
           });
       });
@@ -253,6 +268,11 @@ export class ContractAgreementService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new MultFormDataMsg(formData, packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.contractAgreementHttp.create(msg);
           });
       });

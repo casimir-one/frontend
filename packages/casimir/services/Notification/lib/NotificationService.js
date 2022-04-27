@@ -3,6 +3,7 @@ import { JsonDataMsg } from '@deip/messages';
 import {
   MarkNotificationsAsReadCmd
 } from '@deip/commands';
+import { proxydi } from '@deip/proxydi';
 import { NotificationHttp } from './NotificationHttp';
 
 /**
@@ -10,6 +11,7 @@ import { NotificationHttp } from './NotificationHttp';
  */
 export class NotificationService {
   notificationHttp = NotificationHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * Get notifications by username
@@ -33,6 +35,12 @@ export class NotificationService {
       notifications: [notificationId]
     });
     const msg = new JsonDataMsg({ appCmds: [markNotificationsAsReadCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.notificationHttp.markUserNotificationsAsRead(msg);
   }
 
@@ -48,6 +56,12 @@ export class NotificationService {
       notifications: []
     });
     const msg = new JsonDataMsg({ appCmds: [markNotificationsAsReadCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.notificationHttp.markUserNotificationsAsRead(msg);
   }
 

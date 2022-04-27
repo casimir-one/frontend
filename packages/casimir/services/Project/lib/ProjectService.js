@@ -122,7 +122,7 @@ export class ProjectService {
    */
   async create(payload) {
     const env = this.proxydi.get('env');
-    const { TENANT, CORE_ASSET } = env;
+    const { TENANT, CORE_ASSET, RETURN_MSG } = env;
 
     const {
       initiator: { privKey, username: creator },
@@ -255,8 +255,15 @@ export class ProjectService {
           packedTx.getPayload(),
           { 'entity-id': projectId }
         );
+        if (RETURN_MSG && RETURN_MSG === true) {
+          return msg;
+        }
         return this.projectHttp.create(msg);
       });
+
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return response;
+    }
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -282,7 +289,7 @@ export class ProjectService {
    */
   async update(payload) {
     const env = this.proxydi.get('env');
-    const { TENANT } = env;
+    const { TENANT, RETURN_MSG } = env;
 
     const {
       initiator: { privKey, username: updater },
@@ -398,8 +405,15 @@ export class ProjectService {
       .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
       .then((packedTx) => {
         const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': _id });
+        if (RETURN_MSG && RETURN_MSG === true) {
+          return msg;
+        }
         return this.projectHttp.update(msg);
       });
+
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return response;
+    }
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -418,6 +432,12 @@ export class ProjectService {
   async delete(projectId) {
     const deleteProjectCmd = new DeleteProjectCmd({ entityId: projectId });
     const msg = new JsonDataMsg({ appCmds: [deleteProjectCmd] }, { 'entity-id': projectId });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.projectHttp.delete(msg);
   }
 
