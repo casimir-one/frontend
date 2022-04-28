@@ -12,7 +12,11 @@ export class UserHttp {
  * @return {Promise<Object>}
  */
   async update(req) {
-    return this.http.put('/api/v2/user/update', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put(
+      '/api/v2/user/update',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
   /**
@@ -21,7 +25,11 @@ export class UserHttp {
  * @return {Promise<Object>}
  */
   changePassword(req) {
-    return this.http.put('/api/v2/user/update/password', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put(
+      '/api/v2/user/update/password',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
   /**
@@ -78,6 +86,15 @@ export class UserHttp {
  */
   async getOne(username) {
     return this.http.get(`/api/v2/user/name/${username}`);
+  }
+
+  /**
+ * Check if user exists by username or email
+ * @param {string} usernameOrEmail
+ * @return {Promise<Object>}
+ */
+  async checkIfUserExists(usernameOrEmail) {
+    return this.http.get(`/api/v2/user/exists/username-or-email/${usernameOrEmail}`);
   }
 
   /**

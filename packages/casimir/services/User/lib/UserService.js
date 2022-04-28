@@ -190,20 +190,13 @@ export class UserService {
   }
 
   /**
-   * Check if user exists by username
-   * @param {string} username
+   * Check if user exists by username or email
+   * @param {string} usernameOrEmail
    * @return {Promise<Object>}
    */
-  async checkIfUserExists(username) {
-    return new Promise((resolve) => this.getOne(username)
-      .then(() => resolve(true))
-      .catch((error) => {
-        if (error.statusCode === 404) {
-          resolve(false);
-        } else {
-          throw error;
-        }
-      }));
+  async checkIfUserExists(usernameOrEmail) {
+    return this.userHttp.checkIfUserExists(usernameOrEmail)
+      .then(({ data: { exists } }) => exists);
   }
 
   /** @type {() => UserService} */
