@@ -8,3 +8,5 @@ export { default as ProjectContentDraftForm } from './lib/components/drafts/Form
 export { default as ProjectContentDataProvider } from './lib/components/content/DataProvider';
 export { default as ProjectContentList } from './lib/components/content/List';
 export { default as ProjectContentDetails } from './lib/components/content/Details';
+
+export { default as ProjectContentSelector } from './lib/components/common/ProjectContentSelector';

@@ -48,7 +48,7 @@
           />
         </validation-provider>
 
-        <references-selector
+        <project-content-selector
           v-model="formData.references"
           :label="$t('module.projectContent.form.references')"
           multiple
@@ -136,7 +136,7 @@
 
   import { AccessService } from '@deip/access-service';
 
-  import ReferencesSelector from '../../common/ReferencesSelector';
+  import ProjectContentSelector from '../../common/ProjectContentSelector';
   import { projectContentTypes } from '../../../constants/contentTypes';
 
   const accessService = AccessService.getInstance();
@@ -145,7 +145,7 @@
    * Project content draft form component
    * @required VeStack
    * @required VexFileInput
-   * @required ReferencesSelector
+   * @required ProjectContentSelector
    * @required UsersSelector
    * @required VueEditorjs
    */
@@ -155,7 +155,7 @@
     components: {
       VeStack,
       VexFileInput,
-      ReferencesSelector,
+      ProjectContentSelector,
       UsersSelector,
       VueEditorjs
     },
@@ -207,7 +207,8 @@
       getContentUrl(fileHash) {
         const { DEIP_SERVER_URL } = this.$env;
 
-        return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.draft._id}/${fileHash}?download=true&authorization=${accessService.getAccessToken()}`;
+        return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.draft._id}/
+        ${fileHash}?download=true&authorization=${accessService.getAccessToken()}`;
       },
       /**
        * Set form data files
@@ -247,7 +248,8 @@
        */
       async updateDraft(data) {
         try {
-          await this.$store.dispatch('projectContentDrafts/update', { data: { ...this.draft, ...data } });
+          await this.$store.dispatch('projectContentDrafts/update',
+                                     { data: { ...this.draft, ...data } });
           this.emitSuccess();
         } catch (error) {
           console.error(error);
