@@ -19,6 +19,7 @@ class UpdateDraftCmd extends AppCmd {
    * @param {Array.<string>} cmdPayload.references
    * @param {number} cmdPayload.formatType
    * @param {Object} cmdPayload.jsonData
+   * @param {Object} cmdPayload.metadata
    */
   constructor(cmdPayload) {
     const {
