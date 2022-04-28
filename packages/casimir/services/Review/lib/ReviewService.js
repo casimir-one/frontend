@@ -80,7 +80,6 @@ export class ReviewService {
    */
   async createReview(payload) {
     const env = this.proxydi.get('env');
-
     const {
       initiator: {
         privKey,

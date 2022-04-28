@@ -16,3 +16,4 @@ export * from './lib/user';
 export * from './lib/view';
 export * from './lib/contract-agreement';
 export * from './lib/proposals';
+export * from './lib/review-request';

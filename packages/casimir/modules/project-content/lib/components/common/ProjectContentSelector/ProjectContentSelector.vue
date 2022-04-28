@@ -29,7 +29,7 @@
    * Component for references selector
    */
   export default defineComponent({
-    name: 'ReferencesSelector',
+    name: 'ProjectContentSelector',
 
     components: { VexAutocomplete },
 
@@ -39,7 +39,11 @@
     },
 
     props: {
-      ...VAutocomplete.options.props
+      ...VAutocomplete.options.props,
+      projectId: {
+        type: String,
+        default: null
+      }
     },
 
     data() {
@@ -94,7 +98,11 @@
        */
       async getReferences() {
         try {
-          await this.$store.dispatch('projectContent/getList');
+          if (this.projectId) {
+            await this.$store.dispatch('projectContent/getListByProjectId', this.projectId);
+          } else {
+            await this.$store.dispatch('projectContent/getList');
+          }
         } catch (error) {
           console.error(error);
         }
