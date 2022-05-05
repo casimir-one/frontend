@@ -46,6 +46,10 @@ export class WebSocketService {
       const token = this.#accessService.getAccessToken();
       const url = `${DEIP_WEB_SOCKET_URL}?access_token=${token}`;
 
+      if (!token) {
+        return;
+      }
+
       this.#webSocket = new WebSocket(url);
 
       this.#webSocket.addEventListener('open', () => {
