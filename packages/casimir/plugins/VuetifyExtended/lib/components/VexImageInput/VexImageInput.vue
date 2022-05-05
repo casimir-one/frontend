@@ -21,6 +21,7 @@
               scalable: false,
               aspectRatio: aspectRatio,
             }"
+            :resize-image="!noResize"
             image-restriction="stencil"
             default-boundaries="fill"
             @change="handleChange"
@@ -183,6 +184,11 @@
       },
       /** Hide rotate buttons */
       noRotate: {
+        type: Boolean,
+        default: false
+      },
+      /** Disable resize */
+      noResize: {
         type: Boolean,
         default: false
       },
