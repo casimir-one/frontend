@@ -163,6 +163,7 @@
        * @event click
        */
       handleCancelClick() {
+        this.$emit('cancel');
         this.restoreOldValue(true);
       }
     }
