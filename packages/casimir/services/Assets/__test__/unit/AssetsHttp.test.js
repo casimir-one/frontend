@@ -11,12 +11,14 @@ jest.mock('@deip/http-service', () => ({
   },
   serializeParams: ({ status }) => `testQuery${status}`
 }));
+
 const assetsHttp = AssetsHttp.getInstance();
 
 describe('AssetsHttp', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
+
   it('should create instance', () => {
     expect(assetsHttp).toBeInstanceOf(AssetsHttp);
   });
@@ -25,6 +27,7 @@ describe('AssetsHttp', () => {
     it('should call get request with right url', () => {
       const testUrl = '/api/v2/assets/deposit/history/account/testAccount?testQueryTestStatus';
       assetsHttp.getAccountDepositHistory('testAccount', 'TestStatus');
+
       expect(mockGet).toBeCalledWith(testUrl);
     });
   });
@@ -33,6 +36,7 @@ describe('AssetsHttp', () => {
     it('should call get request with right url', () => {
       const testUrl = '/api/v2/assets/type/testType';
       assetsHttp.getAssetsByType('testType');
+
       expect(mockGet).toBeCalledWith(testUrl);
     });
   });
@@ -41,6 +45,7 @@ describe('AssetsHttp', () => {
     it('should call get request with right url', () => {
       const testUrl = '/api/v2/assets/issuer/testIssuer';
       assetsHttp.getAssetsByIssuer('testIssuer');
+
       expect(mockGet).toBeCalledWith(testUrl);
     });
   });
@@ -49,6 +54,7 @@ describe('AssetsHttp', () => {
     it('should call get request with right url', () => {
       const testUrl = '/api/v2/assets/limit/testLimit';
       assetsHttp.lookupAssets('testLimit');
+
       expect(mockGet).toBeCalledWith(testUrl);
     });
   });
@@ -58,6 +64,7 @@ describe('AssetsHttp', () => {
       const testUrl = '/webhook/assets/deposit';
       const testDeposit = 'testDeposit';
       assetsHttp.deposit(testDeposit);
+
       expect(mockPost).toBeCalledWith(testUrl, testDeposit);
     });
   });
