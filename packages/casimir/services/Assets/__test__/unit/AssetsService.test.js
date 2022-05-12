@@ -4,13 +4,32 @@ const mockGetAccountDepositHistory = jest.fn();
 const mockGetAssetsByType = jest.fn();
 const mockGetAssetsByIssuer = jest.fn();
 const mockLookupAssets = jest.fn();
+const mockDeposit = jest.fn();
+
 jest.mock('../../lib/AssetsHttp', () => ({
   AssetsHttp: {
     getInstance: () => ({
       getAccountDepositHistory: mockGetAccountDepositHistory,
       getAssetsByType: mockGetAssetsByType,
       getAssetsByIssuer: mockGetAssetsByIssuer,
-      lookupAssets: mockLookupAssets
+      lookupAssets: mockLookupAssets,
+      deposit: mockDeposit
+    })
+  }
+}));
+
+jest.mock('@deip/proxydi', () => ({
+  proxydi: {
+    get: () => 'testEnv'
+  }
+}));
+
+jest.mock('@deip/chain-service', () => ({
+  ChainService: {
+    getInstanceAsync: () => new Promise((resolve) => {
+      resolve({
+        generateChainSeedAccount: () => ({ signString: () => 'testSigHex' })
+      });
     })
   }
 }));
@@ -55,6 +74,31 @@ describe('AssetsService', () => {
       assetsService.lookupAssets('testLimit');
 
       expect(mockLookupAssets).toBeCalledWith('testLimit');
+    });
+  });
+
+  describe('deposit', () => {
+    it('should prepare and call assetsHttp.deposit with right params ', async () => {
+      const testPayload = {
+        initiator: { privKey: 'testPrivKey', username: 'testUserName' },
+        redirectUrl: 'testRedirectUrl',
+        amount: 'testAmount',
+        currency: 'testCurrency',
+        account: 'testAccount',
+        timestamp: 'testTimestamp'
+      };
+      const expectedDepositData = {
+        account: 'testAccount',
+        amount: 'testAmount',
+        currency: 'testCurrency',
+        redirectUrl: 'testRedirectUrl',
+        sigHex: 'testSigHex',
+        sigSource: '{"account":"testAccount","amount":"testAmount","currency":"testCurrency",'
+          + '"timestamp":"testTimestamp"}',
+        timestamp: 'testTimestamp'
+      };
+      await assetsService.deposit(testPayload);
+      expect(mockDeposit).toBeCalledWith(expectedDepositData);
     });
   });
 });
