@@ -81,7 +81,7 @@
 
     props: {
       /**
-       * Сan the user make a deposit
+       * Is dialog opened
        * default: true
        */
       value: {
