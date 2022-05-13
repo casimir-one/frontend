@@ -30,6 +30,7 @@
     "@deip/messages": "1.376.0",
     "@deip/proxydi": "1.375.1",
     "@deip/toolbox": "1.375.1",
-    "@deip/user-service": "1.376.0"
+    "@deip/user-service": "1.376.0",
+    "@deip/web-socket-service": "1.376.0"
   }
 }
