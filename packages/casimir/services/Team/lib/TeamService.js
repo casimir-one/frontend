@@ -8,7 +8,7 @@ import {
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_EVENT, APP_PROPOSAL } from '@deip/constants';
 import {
   CreateProposalCmd,
   CreateDaoCmd,
@@ -20,6 +20,8 @@ import {
   TransferFungibleTokenCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
+import { WebSocketService } from '@deip/web-socket-service';
+
 import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
@@ -28,6 +30,7 @@ export class TeamService {
   proxydi = proxydi;
   teamHttp = TeamHttp.getInstance();
   userService = UserService.getInstance();
+  webSocketService = WebSocketService.getInstance();
 
   /**
    * Create new team
@@ -61,7 +64,7 @@ export class TeamService {
     const attributes = replaceFileWithName(data.attributes);
     const description = genSha256Hash(attributes);
 
-    return ChainService.getInstanceAsync(env)
+    const response = await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         let entityId;
         const chainNodeClient = chainService.getChainNodeClient();
@@ -150,6 +153,14 @@ export class TeamService {
             return this.teamHttp.create(msg);
           });
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.DAO_CREATED
+                  && eventBody.event.eventPayload.daoId === response.data._id;
+    });
+
+    return response;
   }
 
   /**
@@ -187,7 +198,7 @@ export class TeamService {
     const attributes = replaceFileWithName(data.attributes);
     const description = genSha256Hash(attributes);
 
-    return ChainService.getInstanceAsync(env)
+    const response = await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
@@ -239,6 +250,15 @@ export class TeamService {
             return this.teamHttp.update(msg);
           });
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+
+      return eventBody.event.eventNum === APP_EVENT.DAO_UPDATED
+                    && eventBody.event.eventPayload.daoId === response.data._id;
+    });
+
+    return response;
   }
 
   /**
