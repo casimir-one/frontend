@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix background color in VexAvatar ([c2d5946](https://github.com/DEIPworld/deip-modules/commit/c2d594626b0f2e4d03ed709a50b24cdd1cc3c870))
+
+
+
+
+
 # [1.376.0](https://github.com/DEIPworld/deip-modules/compare/v1.375.1...v1.376.0) (2022-04-08)
 
 **Note:** Version bump only for package @deip/vuetify-extended

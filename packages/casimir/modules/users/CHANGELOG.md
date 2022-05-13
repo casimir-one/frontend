@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** add emit cancel ([40e36c3](https://github.com/DEIPworld/deip-modules/commit/40e36c37943dbad5aeb19092b62400dd4bd243b7))
+
+
+
+
+
 # [1.376.0](https://github.com/DEIPworld/deip-modules/compare/v1.375.1...v1.376.0) (2022-04-08)
 
 **Note:** Version bump only for package @deip/users-module

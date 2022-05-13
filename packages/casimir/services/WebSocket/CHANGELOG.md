@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.377.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.376.0...v1.377.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **@deip/web-socket-service:** don't connect without access token ([a4b5820](https://github.com/DEIPworld/casimir-frontend/commit/a4b58203336e96c2133176e8837f58a812e2b083))
+
+
+
+
+
 # [1.376.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.375.1...v1.376.0) (2022-04-08)
 
 
