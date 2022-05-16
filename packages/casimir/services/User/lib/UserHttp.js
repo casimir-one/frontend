@@ -33,6 +33,15 @@ export class UserHttp {
   }
 
   /**
+ * Send registration code by email
+ * @param {Object} req
+ * @return {Promise<Object>}
+ */
+  sendRegistrationCodeByEmail(req) {
+    return this.http.post('/api/v2/user/registration-code/email/send', req.getHttpBody());
+  }
+
+  /**
  * Get invites by username
  * @param {string} username
  * @return {Promise<Object>}

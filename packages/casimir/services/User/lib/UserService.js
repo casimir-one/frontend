@@ -2,7 +2,8 @@ import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
 import {
   UpdateDaoCmd,
-  AlterDaoAuthorityCmd
+  AlterDaoAuthorityCmd,
+  SendRegistrationCodeByEmailCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
@@ -140,6 +141,17 @@ export class UserService {
             return this.userHttp.changePassword(msg);
           });
       });
+  }
+
+  /**
+   * Send registration code by email
+   * @param {string} token
+   * @return {Promise<Object>}
+   */
+  async sendRegistrationCodeByEmail(payload) {
+    const sendRegistrationCodeByEmailCmd = new SendRegistrationCodeByEmailCmd(payload);
+    const msg = new JsonDataMsg({ appCmds: [sendRegistrationCodeByEmailCmd] });
+    return this.userHttp.sendRegistrationCodeByEmail(msg);
   }
 
   /**

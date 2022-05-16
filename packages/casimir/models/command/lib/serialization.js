@@ -50,6 +50,7 @@ import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 import UpdateDraftStatusCmd from './impl/UpdateDraftStatusCmd';
 import UpdateDraftModerationMessageCmd from './impl/UpdateDraftModerationMessageCmd';
+import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
@@ -102,7 +103,8 @@ const APP_CMD_INFO = {
   [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
   [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd },
   [APP_CMD.UPDATE_DRAFT_STATUS]: { class: UpdateDraftStatusCmd },
-  [APP_CMD.UPDATE_DRAFT_MODERATION_MESSAGE]: { class: UpdateDraftModerationMessageCmd }
+  [APP_CMD.UPDATE_DRAFT_MODERATION_MESSAGE]: { class: UpdateDraftModerationMessageCmd },
+  [APP_CMD.SEND_REGISTRATION_CODE_BY_EMAIL]: { class: SendRegistrationCodeByEmailCmd }
 };
 
 export {
