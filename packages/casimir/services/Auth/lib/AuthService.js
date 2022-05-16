@@ -47,7 +47,8 @@ export class AuthService {
       attributes,
       username,
       pubKey,
-      roles
+      roles,
+      confirmationCode
     } = userData;
 
     return ChainService.getInstanceAsync(env)
@@ -72,7 +73,8 @@ export class AuthService {
               description: genSha256Hash(JSON.stringify(userAttributes)),
               attributes: userAttributes,
               email,
-              roles
+              roles,
+              confirmationCode
             });
 
             txBuilder.addCmd(createDaoCmd);

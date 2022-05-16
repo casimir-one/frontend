@@ -50,6 +50,7 @@ import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
 import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 import CreatePortalCmd from './impl/CreatePortalCmd';
+import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
 export {
   CreateDaoCmd,
@@ -103,5 +104,6 @@ export {
   CreateBookmarkCmd,
   DeleteBookmarkCmd,
   MarkNotificationsAsReadCmd,
-  CreatePortalCmd
+  CreatePortalCmd,
+  SendRegistrationCodeByEmailCmd
 };
