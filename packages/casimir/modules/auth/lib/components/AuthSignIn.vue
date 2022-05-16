@@ -37,7 +37,7 @@
                 :label="passwordLabel"
                 :error-messages="errors"
                 v-bind="fieldsProps"
-                counter
+                :counter="passwordRestoreLinkShown"
               >
                 <template #counter>
                   <div class="text-caption">
@@ -110,6 +110,13 @@
       passwordLabel: {
         type: String,
         default() { return this.$t('module.auth.password'); }
+      },
+      /**
+       * Show password restore link
+       */
+      passwordRestoreLinkShown: {
+        type: Boolean,
+        default: false
       },
       /**
        * Label for password restore button

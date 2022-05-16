@@ -18,13 +18,13 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
    * @param {string} cmdPayload.description
    * @param {Array.<string>} cmdPayload.authors
    * @param {Array.<string>} cmdPayload.references
+   * @param {Object} cmdPayload.metadata
    */
   constructor(cmdPayload) {
     const {
       // onchain
       projectId,
       teamId,
-      contentType,
       description,
       content,
       authors,
@@ -40,7 +40,6 @@ class CreateProjectContentCmd extends ProtocolEntityCmd {
     assert(!!teamId, "'teamId' is required");
     assert(!!description, "'description' is required");
     assert(!!content, "'content' is required");
-    assert(!!contentType, "'contentType' is required");
     assert(!!authors && authors.length, "'authors' is required");
 
     super(APP_CMD.CREATE_PROJECT_CONTENT, cmdPayload);

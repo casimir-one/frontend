@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.377.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.376.0...v1.377.0) (2022-05-13)
+
+
+### Features
+
+* **@deip/project-content-service, @deip/commands:** add metadata to draft and content ([edc21b8](https://github.com/DEIPworld/casimir-frontend/commit/edc21b891914edda2d6f0d750dfd1dbd3f3b1ba6))
+
+
+
+
+
 # [1.376.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.375.1...v1.376.0) (2022-04-08)
 
 **Note:** Version bump only for package @deip/project-content-service

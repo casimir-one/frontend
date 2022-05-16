@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.377.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.376.0...v1.377.0) (2022-05-13)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** fix route auth check ([88aa821](https://github.com/DEIPworld/casimir-frontend/commit/88aa8215d6dead8a53dea85fa8df5b2f34641f89))
+* **@deip/users-module:** add emit cancel ([40e36c3](https://github.com/DEIPworld/casimir-frontend/commit/40e36c37943dbad5aeb19092b62400dd4bd243b7))
+* **@deip/vuetify-extended:** fix background color in VexAvatar ([c2d5946](https://github.com/DEIPworld/casimir-frontend/commit/c2d594626b0f2e4d03ed709a50b24cdd1cc3c870))
+* **@deip/web-socket-service:** don't connect without access token ([a4b5820](https://github.com/DEIPworld/casimir-frontend/commit/a4b58203336e96c2133176e8837f58a812e2b083))
+
+
+### Features
+
+* **@deip/constants:** add chainDomain events ([d82878f](https://github.com/DEIPworld/casimir-frontend/commit/d82878fb9ad5af632ac25cd4efd01021a9a00605))
+* **@deip/project-content-service, @deip/commands:** add metadata to draft and content ([edc21b8](https://github.com/DEIPworld/casimir-frontend/commit/edc21b891914edda2d6f0d750dfd1dbd3f3b1ba6))
+* **@deip/reviews-module:** add reviews module ([7cb8c88](https://github.com/DEIPworld/casimir-frontend/commit/7cb8c889114f79faa2810bf02326fac88c7b37ec))
+* **@deip/user-service:** add route check if user exists ([476a99d](https://github.com/DEIPworld/casimir-frontend/commit/476a99db3b710a8fd45d1f6395a2757cb42e5990))
+
+
+
+
+
 # [1.376.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.375.1...v1.376.0) (2022-04-08)
 
 

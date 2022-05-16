@@ -1,4 +1,4 @@
-import { isEmpty } from '@deip/toolbox/lodash';
+import { isEmpty, isNil } from '@deip/toolbox/lodash';
 import { SYSTEM_ROLE } from '@deip/constants';
 import { AccessService } from '@deip/access-service';
 import { setLocalesMessages, hasValue } from '@deip/toolbox';
@@ -58,9 +58,11 @@ const install = (Vue, options = {}) => {
         }
 
         // check matched routes roles starting with parents
-        let allowed = to.matched[0].meta.auth.includes(SYSTEM_ROLE.ANY);
+        const parentAuth = to.matched[0].meta.auth;
+        let allowed = parentAuth === false || parentAuth.includes(SYSTEM_ROLE.ANY);
+
         for (const route of to.matched) {
-          if (!route.meta.auth) {
+          if (isNil(route.meta.auth)) {
             console.warn('Each route should have \'auth\' meta field');
           }
 

@@ -102,7 +102,8 @@
       /** Avatar styles */
       avatarStyle() {
         return {
-          backgroundColor: this.theme.isDark ? 'rgba(255,255,255,.1)' : 'rgba(0,0,0,.1)'
+          backgroundColor: this.theme.isDark
+            ? 'rgb(26,26,26)' : 'rgb(229,229,229)'
         };
       }
     }

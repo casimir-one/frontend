@@ -1,4 +1,4 @@
-import { HttpService } from '@deip/http-service';
+import { HttpService, serializeParams } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
 /**
@@ -45,10 +45,12 @@ export class NonFungibleTokenHttp {
 
   /**
    * Get all non-fungible tokens
+   * @param {Object} query
    * @return {Promise<Object>}
    */
-  async getClasses() {
-    return this.http.get('/api/v2/tokens/nfts/classes');
+  async getClasses(query) {
+    const serializedQuery = serializeParams(query);
+    return this.http.get(`/api/v2/tokens/nfts/classes?${serializedQuery}`);
   }
 
   /**
@@ -57,7 +59,7 @@ export class NonFungibleTokenHttp {
    * @param {string} classId
    * @return {Promise<Object>}
    */
-  async geClassInstancesByOwner(account, classId) {
+  async getClassInstancesByOwner(account, classId) {
     return this.http.get(`/api/v2/tokens/nfts/instances/owner/${account}/class/${classId}`);
   }
 

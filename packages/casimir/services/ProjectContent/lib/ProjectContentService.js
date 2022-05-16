@@ -68,6 +68,7 @@ export class ProjectContentService {
    * @param {number} payload.data.formatType
    * @param {Array.<File>} payload.data.files
    * @param {Object} payload.data.jsonData
+   * @param {Object} payload.data.metadata
    * @param {ProposalInfo} payload.proposalInfo
    * @returns {Promise<Object>}
    */
@@ -89,6 +90,7 @@ export class ProjectContentService {
       title,
       content,
       authors,
+      metadata,
       references
     } = data;
 
@@ -111,6 +113,7 @@ export class ProjectContentService {
               description: genSha256Hash({ projectContent: { title } }),
               content,
               authors,
+              metadata,
               references,
               title
             });
@@ -220,6 +223,7 @@ export class ProjectContentService {
    * @param {number} payload.data.formatType
    * @param {Array.<File>} payload.data.files
    * @param {Object} payload.data.jsonData
+   * @param {Object} payload.data.metadata
    * @returns {Promise<Object>}
    */
   async createDraft(payload) {
@@ -234,7 +238,11 @@ export class ProjectContentService {
     const formData = createFormData(draftData);
 
     const createDraftCmd = new CreateDraftCmd(draftData);
-    const msg = new MultFormDataMsg(formData, { appCmds: [createDraftCmd] }, { 'project-id': draftData.projectId });
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [createDraftCmd] },
+      { 'project-id': draftData.projectId }
+    );
     return this.projectContentHttp.createDraft(msg);
   }
 
@@ -261,6 +269,7 @@ export class ProjectContentService {
    * @param {number} payload.data.formatType
    * @param {Array.<File>} payload.data.files
    * @param {Object} payload.data.jsonData
+   * @param {Object} payload.data.metadata
    * @returns {Promise<Object>}
    */
   async updateDraft(payload) {
@@ -268,7 +277,11 @@ export class ProjectContentService {
     const formData = createFormData(data);
 
     const updateDraftCmd = new UpdateDraftCmd(data);
-    const msg = new MultFormDataMsg(formData, { appCmds: [updateDraftCmd] }, { 'project-id': data.projectId, 'entity-id': data._id });
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [updateDraftCmd] },
+      { 'project-id': data.projectId, 'entity-id': data._id }
+    );
     return this.projectContentHttp.updateDraft(msg);
   }
 
@@ -284,6 +297,7 @@ export class ProjectContentService {
    * @param {number} payload.data.formatType
    * @param {Array.<File>} payload.data.files
    * @param {Object} payload.data.jsonData
+   * @param {Object} payload.data.metadata
    * @returns {Promise<Object>}
    */
   async unlockDraft(payload) {
