@@ -7,16 +7,7 @@
     "casimir"
   ],
   "license": "ISC",
-  "main": "lib/index.js",
-  "directories": {
-    "src": "lib",
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib",
-    "lib"
-  ],
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DEIPworld/deip-modules.git"
