@@ -1,6 +1,6 @@
 import { assert, setLocalesMessages } from '@deip/toolbox';
 import { callForCurrentUser } from '@deip/platform-util';
-import { teamsStore, currentUserTeamsStore } from './store';
+import { teamsStore } from './store';
 import { teamScope } from './config';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
@@ -24,7 +24,6 @@ const install = (Vue, options = {}) => {
   setLocalesMessages(i18n, locales);
 
   store.registerModule('teams', teamsStore);
-  store.registerModule('currentUserTeams', currentUserTeamsStore);
 
   store.dispatch('scopesRegistry/addScope', teamScope);
 
@@ -46,8 +45,7 @@ const install = (Vue, options = {}) => {
 
   callForCurrentUser(
     store,
-    'currentUserTeams/getList',
-    'currentUserTeams/clear'
+    'teams/getCurrentUserTeams'
   );
 };
 
