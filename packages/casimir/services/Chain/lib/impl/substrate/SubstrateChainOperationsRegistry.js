@@ -339,19 +339,21 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       minBalance,
       metadata
     }) => {
-
+      const Address32= daoIdToAddress(`0x${issuer}`, chainNodeClient.registry);
+      console.log("ADDRESS", {issuer, Address32})
       const createFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipCreateAsset(
-          /* assetId: */ `0x${entityId}`,
-          /* admin: */ { Dao: `0x${issuer}` },
+        chainNodeClient.tx.assets.create(
+          // /* assetId: */ `0x${entityId}`,
+          /* assetId: */ entityId,
+          /* admin: */ { Address32 },
           /* min_balance: */ minBalance || 1,
-          /* project_id */ metadata ? `0x${metadata.projectId}` : null
         )
       );
 
       const setAssetMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipSetMetadata(
-          /* assetId: */ `0x${entityId}`,
+        chainNodeClient.tx.assets.setMetadata(
+          // /* assetId: */ `0x${entityId}`,
+          /* assetId: */ entityId,
           /* name */ name,
           /* symbol */ symbol,
           /* decimals */ precision
@@ -359,11 +361,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       );
 
       const setAssetTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipSetTeam(
-          /* assetId: */ `0x${entityId}`,
-          /* issuer */ { Dao: `0x${issuer}` },
-          /* admin */ { Dao: `0x${issuer}` },
-          /* freezer */ { Dao: `0x${issuer}` }
+        chainNodeClient.tx.assets.setTeam(
+          // /* assetId: */ `0x${entityId}`,
+          /* assetId: */ entityId,
+          /* issuer */ { Address32 },
+          /* admin */ { Address32 },
+          /* freezer */ { Address32 }
         )
       );
 
