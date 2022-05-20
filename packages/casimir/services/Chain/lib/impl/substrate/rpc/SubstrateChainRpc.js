@@ -59,7 +59,7 @@ class SubstrateChainRpc extends BaseChainRpc {
     const getNonFungibleTokenMetadataAsync = async (classIdInt) => {
       const api = chainService.getChainNodeClient();
       
-      const metadataOpt = await api.query.parityTechUniques.classMetadataOf(classIdInt);
+      const metadataOpt = await api.query.uniques.classMetadataOf(classIdInt);
       const metadata = metadataOpt.isSome ? metadataOpt.unwrap().toJSON() : null;
       
       if (!metadata) return null;
@@ -116,12 +116,12 @@ class SubstrateChainRpc extends BaseChainRpc {
 
     const getCoreAssetDtoAsync = async () => {
       const api = chainService.getChainNodeClient();
-      const totalIssuance = await api.query.parityTechBalances.totalIssuance();
+      const totalIssuance = await api.query.balances.totalIssuance();
       const metadata = await getFungibleTokenMetadataAsync(coreAsset.id);
       return new SubstrateFungibleTokenDto({ 
         assetId: coreAsset.id, 
         supply: totalIssuance.toString(), 
-        admin: "PROTOCOL" // TODO: make 'admin' optional for the core asset
+        admin: "PROTOCOL" // TODO: make 'admin' optional for t2he core asset
       }, metadata);
     }
 
@@ -380,8 +380,10 @@ class SubstrateChainRpc extends BaseChainRpc {
           const coreAssetDto = await getCoreAssetDtoAsync();
           return coreAssetDto;
         }
-        
-        const asset = await chainService.rpcToChainNode("assets_getAsset", [null, toHexFormat(assetId)]);
+        console.log("getFungibleTokenAsync", assetId);
+        // const asset = await chainService.rpcToChainNode("assets_getAsset", [null, toHexFormat(assetId)]);
+        const asset = await chainService.rpcToChainNode("assets_getAsset", [null, toHexFormat(`${assetId}`)]);
+        console.log("ASSET", asset)
         if (!asset) return null;
         const metadata = await getFungibleTokenMetadataAsync(assetId);
         return new SubstrateFungibleTokenDto({ assetId, ...asset }, metadata);
@@ -411,6 +413,18 @@ class SubstrateChainRpc extends BaseChainRpc {
         return assetsDtos;
       },
 
+      // TODO: grafene 
+      getLastKnownFtId: async () => {
+        const api = chainService.getChainNodeClient();
+        console.log("GET LAST IF ID");
+        // const entries = await api.query.parityTechUniques.class.entries();
+        const entries = await api.query.assets.metadata;
+        // console.log("pi.query.assets.metadata", entries)
+        const assets = await chainService.rpcToChainNode("assets_getAssetList", [null, 1000, null]);
+        console.log("ASSETS", assets);
+        return assets.length + 1;
+        // const contents = await chainService.rpcToChainNode("deip_getProjectContentList", [null, limit, toHexFormat(startIdx)]);
+      },
 
 
       /* FUNGIBLE TOKEN BALANCE */
@@ -499,7 +513,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         const classIdInt = classIdOpt.isSome ? classIdOpt.unwrap().toNumber() : null;
         if (!classIdInt) return null;
 
-        const classOpt = await api.query.parityTechUniques.class(classIdInt);
+        const classOpt = await api.query.uniques.class(classIdInt);
         const nftClass = classOpt.isSome ? classOpt.unwrap().toJSON() : null;
         if (!nftClass) return null;
 
@@ -510,7 +524,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       getNonFungibleTokenClassesAsync: async () => {
         const api = chainService.getChainNodeClient();
-        const entries = await api.query.parityTechUniques.class.entries();
+        const entries = await api.query.uniques.class.entries();
         const list = await Promise.all(entries.map(async ([ { args: [key] } , value]) => {
           const nftClass = value.toJSON();
           const classIdInt = key.toNumber();
@@ -533,7 +547,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         const classIdInt = classIdIntOpt.isSome ? classIdIntOpt.unwrap().toNumber() : null;
         if (!classIdInt) return [];
 
-        const classInstancesByAccount = await api.query.parityTechUniques.account.entries(accountId);
+        const classInstancesByAccount = await api.query.uniques.account.entries(accountId);
         const metadata = await getNonFungibleTokenMetadataAsync(classIdInt);
 
         const instancesIds = classInstancesByAccount.reduce((arr, [{ args: [accountId, u32, instanceId] }, value]) => {
@@ -550,7 +564,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       getNonFungibleTokenClassesInstancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
         const api = chainService.getChainNodeClient();
         const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const classInstancesByAccount = await api.query.parityTechUniques.account.entries(accountId);
+        const classInstancesByAccount = await api.query.uniques.account.entries(accountId);
 
         const classesMap = await classInstancesByAccount.reduce(async (mapP, [{ args: [accountId, u32, instanceId] }, value]) => {
           const map = await mapP;
