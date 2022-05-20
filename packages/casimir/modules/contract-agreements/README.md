@@ -1,11 +1,28 @@
-# `contract-agreements`
+# `@deip/contract-agreements`
 
-> TODO: description
+## Description
+The module provides infrastructure for creating different kinds of agreements between
+different participants of portals/projects (it could be users, teams etc). It creates
+store for managing such agreements, called `contractAgreements`.
 
 ## Usage
 
 ```
-const contractAgreements = require('contract-agreements');
-
-// TODO: DEMONSTRATE API
+import { ContractAgreementsModule } from '@deip/contract-agreements-module ';
 ```
+```
+const testApp = new CreateApp(Vue, {
+store,
+router,
+vuetify,
+i18n
+});
+testApp
+.addModule(ContractAgreementsModule)
+```
+
+## Dependencies
+
+* `@deip/env-module`
+* `@deip/teams-module`
+* `@deip/users-module`
