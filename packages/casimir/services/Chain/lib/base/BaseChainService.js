@@ -1,4 +1,4 @@
-import { Singleton } from '@deip/toolbox';
+import { isNumber, Singleton } from '@deip/toolbox';
 import { assert } from '@deip/toolbox';
 import fetch from 'cross-fetch';
 
@@ -15,7 +15,7 @@ class BaseChainService extends Singleton {
 
   constructor({ connectionString, coreAsset, portalId }) {
     assert(!!connectionString, `Node rpc connection string is not specified`);
-    assert(!!coreAsset && coreAsset.id && coreAsset.symbol && (coreAsset.precision || coreAsset.precision === 0), 
+    assert(!!coreAsset && isNumber(coreAsset.id) && coreAsset.symbol && isNumber(coreAsset.precision), 
       `Chain Core Asset should be specified in format { id, symbol, precision }`);
     super();
     this._rpcConnectionString = connectionString;
