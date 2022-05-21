@@ -1,5 +1,5 @@
 import { APP_CMD } from '@deip/constants';
-import { assert } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
@@ -24,8 +24,8 @@ class IssueFungibleTokenCmd extends ProtocolCmd {
     } = cmdPayload;
 
     assert(!!issuer, "FT 'issuer' is required");
-    assert(!!tokenId, "FT 'tokenId' is required");
-    assert(!!amount, "FT 'amount' is required");
+    assert(isNumber(tokenId) || isString(tokenId), "FT 'tokenId' is required");
+    assert(isNumber(amount) || isString(amount), "FT 'amount' is required");
     assert(!!recipient, "'recipient' is required");
 
     super(APP_CMD.ISSUE_FT, cmdPayload);

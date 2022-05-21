@@ -5,7 +5,7 @@ import { fromHexFormat } from './../../../utils';
 class SubstrateNonFungibleTokenInstancesDto extends NonFungibleTokenInstancesDto {
 
   constructor(balance, nftMetadata) {
-    const classId = fromHexFormat(balance.classId);    
+    const classId = balance.classId;
     const address = fromHexFormat(balance.account);
     const account = balance.daoId || address;
     const instancesIds = balance.instancesIds || [];

@@ -1,5 +1,5 @@
 import { APP_CMD } from '@deip/constants';
-import { assert } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
@@ -25,8 +25,8 @@ class TransferNonFungibleTokenCmd extends ProtocolCmd {
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(!!classId, "NFT 'classId' is required");
-    assert(!!instanceId && !Number.isNaN(instanceId), "NFT 'instanceId' is required");
+    assert(isNumber(classId) || isString(classId), "NFT 'classId' is required");
+    assert(isNumber(instanceId) || isString(instanceId), "NFT 'instanceId' is required");
 
     super(APP_CMD.TRANSFER_NFT, cmdPayload);
   }

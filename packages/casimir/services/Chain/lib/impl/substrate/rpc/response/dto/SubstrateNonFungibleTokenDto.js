@@ -1,13 +1,15 @@
 import NonFungibleTokenDto from './../../../../../base/rpc/response/dto/NonFungibleTokenDto';
-import { fromHexFormat } from './../../../utils';
 import { hexToBigInt } from '@polkadot/util';
 
 
 class SubstrateNonFungibleTokenDto extends NonFungibleTokenDto {
 
   constructor(asset, metadata) {
-    const classId = fromHexFormat(asset.classId);
-    const issuer = asset.admin;
+    const classId = asset.classId;
+    const owner = asset.owner;
+    const admin = asset.admin;
+    const issuer = asset.issuer;
+    const freezer = asset.freezer;
     const totalDeposit = hexToBigInt(asset.totalDeposit).toString();
     const instancesCount = asset.instances;
     const instanceMetadatasCount = asset.instanceMetadatas;
@@ -26,6 +28,10 @@ class SubstrateNonFungibleTokenDto extends NonFungibleTokenDto {
       name,
       totalDeposit
     });
+
+    this.owner = owner;
+    this.admin = admin;
+    this.freezer = freezer;
   }
 
 }
