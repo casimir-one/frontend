@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@deip/toolbox';
 
 
 class FungibleTokenDto {
@@ -12,10 +12,9 @@ class FungibleTokenDto {
     currentSupply
   }) {
 
-    assert(!!assetId, "Asset ID is not specified");
+    assert(isNumber(assetId) || isString(assetId), "Asset ID is not specified");
     assert(!!issuer, "Asset issuer is not specified");
-    assert(!!precision || precision == 0, "Asset precision is not specified");
-    assert(!!currentSupply || currentSupply == 0, "Asset current supply is not specified");
+    assert(isNumber(precision) || isString(precision), "Asset precision is not specified");
 
     this.assetId = assetId;
     this.issuer = issuer;

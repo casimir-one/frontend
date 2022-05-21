@@ -1,13 +1,17 @@
 import FungibleTokenDto from './../../../../../base/rpc/response/dto/FungibleTokenDto';
-import { fromHexFormat } from './../../../utils';
+import { hexToBigInt } from '@polkadot/util';
 
 
 class SubstrateFungibleTokenDto extends FungibleTokenDto {
 
   constructor(asset, metadata) {
-    const assetId = fromHexFormat(asset.assetId);
-    const issuer = asset.admin;
+    const assetId = asset.assetId;
+    const owner = asset.owner;
+    const admin = asset.admin;
+    const issuer = asset.issuer;
+    const freezer = asset.freezer;
     const currentSupply = asset.supply;
+    const deposit = hexToBigInt(asset.deposit);
     const name = metadata ? metadata.name : "";
     const symbol = metadata ? metadata.symbol : "";
     const precision = metadata ? metadata.decimals : 0;
@@ -20,6 +24,11 @@ class SubstrateFungibleTokenDto extends FungibleTokenDto {
       currentSupply, 
       name 
     });
+
+    this.owner = owner;
+    this.admin = admin;
+    this.freezer = freezer;
+    this.deposit = deposit.toString();
   }
 
 }
