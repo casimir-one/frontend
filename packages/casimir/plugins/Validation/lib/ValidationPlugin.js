@@ -1,17 +1,19 @@
 import {
   ValidationObserver,
   ValidationProvider,
-  extend
+  extend,
+  localize
 } from 'vee-validate';
 
 import {
   required,
   integer,
   regex,
-  excluded
+  excluded,
+  size
 
 } from 'vee-validate/dist/rules';
-
+import en from 'vee-validate/dist/locale/en.json';
 import { setLocalesMessages } from '@deip/toolbox';
 import {
   email,
@@ -45,16 +47,13 @@ const install = (Vue, options = {}) => {
   Vue.component('ValidationProvider', ValidationProvider);
   Vue.component('ValidationObserver', ValidationObserver);
 
-  extend('email', email);
-  extend('required', {
-    ...required,
-    message: (_, values) => i18n.t('plugin.validation.required', values)
-  });
+  localize({ en });
+  localize(i18n.locale);
 
-  extend('integer', {
-    ...integer,
-    message: (_, values) => i18n.t('plugin.validation.integer', values)
-  });
+  extend('email', email);
+  extend('required', required);
+
+  extend('integer', integer);
   extend('regex', regex);
   extend('excluded', excluded);
 
@@ -68,6 +67,7 @@ const install = (Vue, options = {}) => {
   extend('dateBefore', dateBefore);
   extend('dateAfter', dateAfter);
   extend('dateAfterNow', dateAfterNow);
+  extend('size', size);
 };
 
 export const ValidationPlugin = {
