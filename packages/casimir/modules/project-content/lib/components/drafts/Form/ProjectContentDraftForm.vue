@@ -65,23 +65,23 @@
         >
           <v-radio
             :label="$t('module.projectContent.form.text')"
-            :value="PROJECT_CONTENT_FORMAT.JSON"
+            :value="NFT_ITEM_METADATA_FORMAT.JSON"
           />
 
           <v-radio
             :label="$t('module.projectContent.form.package')"
-            :value="PROJECT_CONTENT_FORMAT.PACKAGE"
+            :value="NFT_ITEM_METADATA_FORMAT.PACKAGE"
           />
         </v-radio-group>
 
         <vue-editorjs
-          v-if="formData.formatType === PROJECT_CONTENT_FORMAT.JSON"
+          v-if="formData.formatType === NFT_ITEM_METADATA_FORMAT.JSON"
           v-model="formData.jsonData"
           :placeholder="$t('module.projectContent.form.contentPlaceholder')"
         />
 
         <validation-provider
-          v-if="formData.formatType === PROJECT_CONTENT_FORMAT.PACKAGE"
+          v-if="formData.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE"
           v-slot="{ errors }"
           :name="$t('module.projectContent.form.file')"
           rules="required"
@@ -132,7 +132,7 @@
   import { VexFileInput } from '@deip/vuetify-extended';
   import { VueEditorjs } from '@deip/vue-editorjs';
   import { UsersSelector } from '@deip/users-module';
-  import { PROJECT_CONTENT_FORMAT } from '@deip/constants';
+  import { NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
 
   import { AccessService } from '@deip/access-service';
 
@@ -179,7 +179,7 @@
       return {
         filesInputLoading: false,
         projectContentTypes: projectContentTypesExtended,
-        PROJECT_CONTENT_FORMAT
+        NFT_ITEM_METADATA_FORMAT
       };
     },
 
@@ -271,9 +271,9 @@
           formatType: this.formData.formatType
         };
 
-        if (this.formData.formatType === PROJECT_CONTENT_FORMAT.JSON) {
+        if (this.formData.formatType === NFT_ITEM_METADATA_FORMAT.JSON) {
           data.jsonData = this.formData.jsonData;
-        } else if (this.formData.formatType === PROJECT_CONTENT_FORMAT.PACKAGE) {
+        } else if (this.formData.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE) {
           data.files = this.formData.files;
         }
 

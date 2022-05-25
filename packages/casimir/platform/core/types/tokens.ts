@@ -92,23 +92,26 @@ export type FungibleTokenTransferPayload = ServiceBasePayload<FungibleTokenTrans
 // //////////////////////////
 
 type NonFungibleTokenBase = {
-  classId: string, // entityId from NonFungibleTokenCmdPayload
-  instanceId: string
+  nftCollectionId: string, // entityId from NonFungibleTokenCmdPayload
+  nftItemId: string
 };
 
 /**
  * Non-fungible token data for creation payload
  */
 export type NonFungibleTokenCreateData = {
-  name: string,
+  issuer: string,
+  issuedByTeam: boolean,
   metadata: Record<string, unknown>
-} & CommonTokenData;
+};
 
 /**
  * Non-fungible token data for issue payload
  */
 export type NonFungibleTokenIssueData = TokenIssuer & NonFungibleTokenBase & {
-  recipient: string
+  recipient: string,
+  ownedByTeam: boolean,
+  metadata: Record<string, unknown>
 };
 
 /**

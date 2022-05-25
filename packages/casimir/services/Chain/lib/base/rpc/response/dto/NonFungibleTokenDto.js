@@ -21,8 +21,8 @@ class NonFungibleTokenDto {
     assert(!!attributesCount || attributesCount == 0, "NFT 'attributesCount' field is not specified");
     assert(!!totalDeposit || totalDeposit == 0, "NFT 'totalDeposit' field is not specified");
 
-    this.classId = classId;
-    this.instancesCount = instancesCount;
+    this.nftCollectionId = classId;
+    this.nftItemsCount = instancesCount;
     this.instanceMetadatasCount = instanceMetadatasCount;
     this.issuer = issuer;
     this.symbol = symbol;

@@ -1,4 +1,4 @@
-// export const ATTR_SCOPES = ['project', 'team', 'user'] as const;
+// export const ATTR_SCOPES = ['nftCollection', 'team', 'user'] as const;
 // export type AttrScopes = typeof ATTR_SCOPES[number];
 //
 // export const ATTR_TYPES = ['text', 'textarea'] as const;
@@ -35,7 +35,7 @@ const ATTR_TYPES = [
 ];
 
 const ATTR_SCOPES = [
-  'project',
+  'nftCollection',
   'user',
   'team'
 ];

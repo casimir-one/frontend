@@ -3,12 +3,12 @@ import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**
- * Update project content draft command
+ * Update nft item metadata draft command
  * @extends AppCmd
  */
-class UpdateDraftModerationMessageCmd extends AppCmd {
+class UpdateNftItemMetadataDraftModerationMsgCmd extends AppCmd {
   /**
-   * Create command for project content draft moderation message update
+   * Create command for nft item metadata draft moderation message update
    * @param {Object} cmdPayload
    * @param {string} cmdPayload._id
    * @param {Object} cmdPayload.moderationMessage
@@ -22,8 +22,8 @@ class UpdateDraftModerationMessageCmd extends AppCmd {
     assert(!!_id, "'_id' is required");
     assert(!!moderationMessage, "'moderationMessage' is required");
 
-    super(APP_CMD.UPDATE_DRAFT_MODERATION_MESSAGE, cmdPayload);
+    super(APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_MODERATION_MSG, cmdPayload);
   }
 }
 
-export default UpdateDraftModerationMessageCmd;
+export default UpdateNftItemMetadataDraftModerationMsgCmd;

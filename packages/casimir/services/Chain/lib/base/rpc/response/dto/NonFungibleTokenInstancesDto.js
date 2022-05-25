@@ -15,8 +15,8 @@ class NonFungibleTokenInstancesDto {
     assert(!!instancesIds, "Asset precision is not specified");
 
     this.account = account;
-    this.classId = classId;
-    this.instancesIds = instancesIds;
+    this.nftCollectionId = classId;
+    this.nftItemsIds = instancesIds;
     this.symbol = symbol;
   }
 

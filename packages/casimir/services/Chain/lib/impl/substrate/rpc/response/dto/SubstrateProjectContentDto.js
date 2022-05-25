@@ -1,6 +1,6 @@
 import ProjectContentDto from './../../../../../base/rpc/response/dto/ProjectContentDto';
 import { fromHexFormat } from './../../../utils';
-import { PROJECT_CONTENT_TYPES } from '@deip/constants';
+import { NFT_ITEM_METADATA_TYPES } from '@deip/constants';
 import { snakeCase } from 'change-case';
 
 
@@ -10,7 +10,7 @@ class SubstrateProjectContentDto extends ProjectContentDto {
 
     const contentId = fromHexFormat(content.externalId);
     const projectId = fromHexFormat(content.projectExternalId);
-    const type = PROJECT_CONTENT_TYPES[snakeCase(content.contentType).toUpperCase()];
+    const type = NFT_ITEM_METADATA_TYPES[snakeCase(content.contentType).toUpperCase()];
     const authors = content.authors.map((author) => author.daoId ? fromHexFormat(author.daoId) : author.address);
     const hash = fromHexFormat(content.content);
     const metadata = fromHexFormat(content.description);
