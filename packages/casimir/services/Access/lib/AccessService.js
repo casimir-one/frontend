@@ -13,7 +13,9 @@ export class AccessService {
    */
   getTokenExpirationDate(jwt) {
     const token = decode(jwt);
-    if (!token.exp) { return null; }
+    if (!token.exp) {
+      return null;
+    }
 
     const date = new Date(0);
     date.setUTCSeconds(token.exp);
@@ -95,7 +97,9 @@ export class AccessService {
    */
   getDecodedToken() {
     const jwt = this.getAccessToken();
-    if (!jwt) return null;
+    if (!jwt) {
+      return null;
+    }
     return decode(jwt);
   }
 

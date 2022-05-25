@@ -26,10 +26,10 @@ export class HttpError extends Error {
   }
 
   /**
-   * @return {string | undefined}
+   * @return {any}
    */
   get error() {
-    return typeof this._error === 'string' ? this._error : undefined;
+    return this._error;
   }
 }
 
@@ -57,7 +57,7 @@ export const handleHttpError = (e) => {
 
   return new HttpError(statusText, {
     statusCode: status,
-    error: data,
+    error: data.error,
     ignore: [404, 401].includes(status)
   });
 };

@@ -6,7 +6,7 @@ import {
 } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_PROPOSAL, APP_EVENT } from '@deip/constants';
 import {
   CreateProposalCmd,
   AcceptProposalCmd,
@@ -16,6 +16,8 @@ import {
   UpdateDraftCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
+import { WebSocketService } from '@deip/web-socket-service';
+
 import { ProjectContentHttp } from './ProjectContentHttp';
 import { projectContentTypes } from './lists';
 
@@ -38,6 +40,7 @@ export class ProjectContentService {
   proxydi = proxydi;
 
   projectContentHttp = ProjectContentHttp.getInstance();
+  webSocketService = WebSocketService.getInstance();
 
   /**
    * Parse proposalInfo and set default values
@@ -100,7 +103,7 @@ export class ProjectContentService {
       proposalLifetime
     } = ProjectContentService.#convertProposalInfo(proposalInfo);
 
-    return ChainService.getInstanceAsync(env)
+    const response = await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
@@ -154,6 +157,14 @@ export class ProjectContentService {
             return this.projectContentHttp.publishContent(msg);
           });
       });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CONTENT_CREATED
+                  && eventBody.event.eventPayload.entityId === response.data._id;
+    }, 20000);
+
+    return response;
   }
 
   /**
@@ -243,7 +254,15 @@ export class ProjectContentService {
       { appCmds: [createDraftCmd] },
       { 'project-id': draftData.projectId }
     );
-    return this.projectContentHttp.createDraft(msg);
+    const response = await this.projectContentHttp.createDraft(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CONTENT_DRAFT_CREATED
+                && eventBody.event.eventPayload.draftId === response.data._id;
+    }, 20000);
+
+    return response;
   }
 
   /**
@@ -282,7 +301,16 @@ export class ProjectContentService {
       { appCmds: [updateDraftCmd] },
       { 'project-id': data.projectId, 'entity-id': data._id }
     );
-    return this.projectContentHttp.updateDraft(msg);
+
+    const response = this.projectContentHttp.updateDraft(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CONTENT_DRAFT_UPDATED
+                && eventBody.event.eventPayload.draftId === response.data._id;
+    }, 20000);
+
+    return response;
   }
 
   /**

@@ -1,6 +1,5 @@
 import { createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { AccessService } from '@deip/access-service';
 import { ChainService } from '@deip/chain-service';
 import { AssetsHttp } from './AssetsHttp';
 
@@ -9,8 +8,6 @@ import { AssetsHttp } from './AssetsHttp';
  */
 export class AssetsService {
   proxydi = proxydi;
-
-  accessService = AccessService.getInstance();
 
   assetsHttp = AssetsHttp.getInstance();
 
