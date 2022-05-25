@@ -37,25 +37,40 @@ export class AuthService {
    */
   async signUp(initiator, userData) {
     const env = this.proxydi.get('env');
-    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME } = env;
 
     const {
       privKey,
       isAuthorizedCreatorRequired
     } = initiator;
 
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
+
+    const finalizedTx = await this.createFinalizedTx(
+      chainTxBuilder,
+      userData,
+      isAuthorizedCreatorRequired
+    );
+
+    const checkedFinalizedTx = isAuthorizedCreatorRequired
+      ? await Promise.resolve(finalizedTx)
+      : await finalizedTx.signAsync(privKey, chainNodeClient);
+
+    const msg = new JsonDataMsg(checkedFinalizedTx.getPayload());
+    return this.http.signUp(msg);
+  }
+
+  async createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
     const {
       email,
-      attributes,
+      attributes = [],
       username,
       pubKey,
       roles
     } = userData;
-
-    const chainService = await ChainService.getInstanceAsync(env);
-    const chainTxBuilder = chainService.getChainTxBuilder();
-    const chainNodeClient = chainService.getChainNodeClient();
-    const userAttributes = attributes || [];
+    const env = this.proxydi.get('env');
+    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME } = env;
 
     const txBuilder = await chainTxBuilder.begin();
 
@@ -70,22 +85,15 @@ export class AuthService {
           weight: 1
         }
       },
-      description: genSha256Hash(JSON.stringify(userAttributes)),
-      attributes: userAttributes,
+      description: genSha256Hash(JSON.stringify(attributes)),
+      attributes,
       email,
       roles
     });
 
     txBuilder.addCmd(createDaoCmd);
 
-    const finalizedTx = await txBuilder.end();
-
-    const checkedFinalizedTx = isAuthorizedCreatorRequired
-      ? await Promise.resolve(finalizedTx)
-      : await finalizedTx.signAsync(privKey, chainNodeClient);
-
-    const msg = new JsonDataMsg(checkedFinalizedTx.getPayload());
-    return this.http.signUp(msg);
+    return txBuilder.end();
   }
 
   /**
