@@ -52,42 +52,40 @@ export class AuthService {
       roles
     } = userData;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainNodeClient = chainService.getChainNodeClient();
-        const userAttributes = attributes || [];
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainNodeClient = chainService.getChainNodeClient();
+    const userAttributes = attributes || [];
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createDaoCmd = new CreateDaoCmd({
-              entityId: username,
-              isTeamAccount: false,
-              fee: { ...CORE_ASSET, amount: 0 },
-              creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
-              authority: {
-                owner: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
-                }
-              },
-              description: genSha256Hash(JSON.stringify(userAttributes)),
-              attributes: userAttributes,
-              email,
-              roles
-            });
+    const txBuilder = await chainTxBuilder.begin();
 
-            txBuilder.addCmd(createDaoCmd);
-            return txBuilder.end();
-          })
-          .then((finalizedTx) => (isAuthorizedCreatorRequired
-            ? Promise.resolve(finalizedTx)
-            : finalizedTx.signAsync(privKey, chainNodeClient)))
-          .then((finalizedTx) => {
-            const msg = new JsonDataMsg(finalizedTx.getPayload());
-            return this.http.signUp(msg);
-          });
-      });
+    const createDaoCmd = new CreateDaoCmd({
+      entityId: username,
+      isTeamAccount: false,
+      fee: { ...CORE_ASSET, amount: 0 },
+      creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
+      authority: {
+        owner: {
+          auths: [{ key: pubKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      description: genSha256Hash(JSON.stringify(userAttributes)),
+      attributes: userAttributes,
+      email,
+      roles
+    });
+
+    txBuilder.addCmd(createDaoCmd);
+
+    const finalizedTx = await txBuilder.end();
+
+    const checkedFinalizedTx = isAuthorizedCreatorRequired
+      ? await Promise.resolve(finalizedTx)
+      : await finalizedTx.signAsync(privKey, chainNodeClient);
+
+    const msg = new JsonDataMsg(checkedFinalizedTx.getPayload());
+    return this.http.signUp(msg);
   }
 
   /**
