@@ -1,10 +1,10 @@
-<template lang="html">
+<template>
   <div v-if="ready">
     <div v-if="label" class="text-body-2 mb-1 text--secondary">
       {{ label }}
     </div>
 
-    <v-sheet rounded class="overflow-hidden ">
+    <v-sheet rounded class="overflow-hidden mb-2">
       <v-responsive :aspect-ratio="_aspectRatio">
         <div class="cropper-container" :style="cropperContainerStyle">
           <cropper
@@ -21,7 +21,7 @@
               scalable: false,
               aspectRatio: aspectRatio,
             }"
-            :resize-image="!noResize"
+            :resize-image="!disableCrop && !noResize"
             image-restriction="stencil"
             default-boundaries="fill"
             @change="handleChange"
@@ -29,7 +29,7 @@
             @error="handleError"
           />
           <div
-            v-if="!image"
+            v-if="!image.src"
             class="cropper-background grey lighten-4 d-flex justify-center align-center"
             @click="handleImageUploadClick"
           >
@@ -44,7 +44,7 @@
         color="grey lighten-4 px-2 py-1 d-flex align-center"
         :disabled="disabled"
       >
-        <template v-if="!noRotate">
+        <template v-if="!disableCrop && !noRotate">
           <v-btn icon :disabled="isActionsDisabled" @click="handleRotateRightClick">
             <v-icon>mdi-rotate-right</v-icon>
           </v-btn>
@@ -53,7 +53,7 @@
           </v-btn>
         </template>
 
-        <template v-if="!noFlip">
+        <template v-if="!disableCrop && !noFlip">
           <v-btn icon :disabled="isActionsDisabled" @click="hanldleFlipHorizontalClick">
             <v-icon>mdi-flip-horizontal</v-icon>
           </v-btn>
@@ -85,6 +85,8 @@
         </v-btn>
       </v-sheet>
     </v-sheet>
+
+    <v-messages v-if="errorMessages" :value="errorMessages" color="error" />
   </div>
 </template>
 
@@ -138,6 +140,19 @@
     const { pathname } = parsePath(url);
     return pathname.split('/').pop();
   };
+
+  /**
+   * Default image
+   * @return {Object} image
+   * @return {null} image.src
+   * @return {null} image.initialFile
+   * @return {null} image.type
+   */
+  const defaultImage = () => ({
+    src: null,
+    initialFile: null,
+    type: null
+  });
 
   /**
    * Image input
@@ -197,19 +212,31 @@
         type: Boolean,
         default: false
       },
+      /** Return full image. Disables image edit */
+      disableCrop: {
+        type: Boolean,
+        default: false
+      },
       /** Disable control */
       disabled: {
         type: Boolean,
         default: false
+      },
+      /** Max file size in bytes. Default: 10Mb */
+      maxSize: {
+        type: Number,
+        default: 1048576
+      },
+      /** Error messages */
+      errorMessages: {
+        type: Array,
+        default: null
       }
     },
 
     data() {
       return {
-        image: {
-          src: null,
-          type: null
-        },
+        image: defaultImage(),
         imageLoading: false,
         ready: false,
 
@@ -240,8 +267,11 @@
 
     async created() {
       if (this.initialImage) {
-        const ok = await this.checkInitialImage();
-        if (ok) this.image.src = this.initialImage;
+        const blob = await this.getInitialImage();
+        if (blob) {
+          this.image.src = this.initialImage;
+          this.image.initialFile = new File([blob], this.initialFileName);
+        }
         this.ready = true;
       } else {
         this.ready = true;
@@ -260,9 +290,9 @@
        * Fetch initial image
        * @returns {Promise}
        */
-      checkInitialImage() {
-        return fetch(this.initialImage)
-          .then((res) => res.ok);
+      async getInitialImage() {
+        const res = await fetch(this.initialImage);
+        return res.blob();
       },
 
       /** Set initial file name as chosen file name  */
@@ -329,7 +359,7 @@
         this.resetCropper();
         this.setChosenFileName(null);
         this.internalValue = null;
-        this.image.src = null;
+        this.image = defaultImage();
       },
 
       /**
@@ -338,7 +368,7 @@
        * @param {HTMLCanvasElement} payload.canvas
        */
       handleChange({ canvas }) {
-        if (canvas) {
+        if (!this.disableCrop && canvas) {
           canvas.toBlob((blob) => {
             if (!blob) {
               return;
@@ -346,6 +376,8 @@
 
             this.internalValue = new File([blob], this.chosenFileName);
           }, this.image.type);
+        } else {
+          this.internalValue = this.image.initialFile;
         }
       },
 
@@ -401,24 +433,27 @@
        */
       loadImage(files) {
         if (files && files[0]) {
+          const loadedFile = files[0];
+
           if (this.image.src) {
             URL.revokeObjectURL(this.image.src);
           }
-          const blob = URL.createObjectURL(files[0]);
+          const blobURL = URL.createObjectURL(loadedFile);
           const reader = new FileReader();
 
           reader.onload = (e) => {
             this.image = {
-              src: blob,
+              src: blobURL,
+              initialFile: loadedFile,
               // Determine the image type to preserve it
               // during the extracting the image from canvas:
-              type: getMimeType(e.target.result, files[0].type)
+              type: getMimeType(e.target.result, loadedFile.type)
             };
           };
 
-          reader.readAsArrayBuffer(files[0]);
+          reader.readAsArrayBuffer(loadedFile);
 
-          this.setChosenFileName(files[0].name);
+          this.setChosenFileName(loadedFile.name);
           this.resetCropper();
         }
       }

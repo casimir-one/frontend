@@ -1,11 +1,28 @@
-# `Tenants`
+# `@deip/portals-module`
 
-> TODO: description
+## Description
+The module creates store for two new entities called `portals` and `currentPortal`.
+`Portals` entity allows to unite several portals (if there are) in one store.
+`currentPortal` is the store for keeping state of certain (visited) portal. The object,
+which keeps data about certain portal contents information about portal owner, admins
+and also portal profile.
 
 ## Usage
 
 ```
-const tenants = require('Tenants');
-
-// TODO: DEMONSTRATE API
+import { PortalsModule } from '@deip/portals-module';
 ```
+```
+const testApp = new CreateApp(Vue, {
+store,
+router,
+vuetify,
+i18n
+});
+testApp
+.addModule(PortalsModule)
+```
+
+## Dependencies
+
+* `@deip/env-module`

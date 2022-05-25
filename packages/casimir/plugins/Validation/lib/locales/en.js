@@ -1,8 +1,6 @@
 export default {
   plugin: {
     validation: {
-      required: 'The {_field_} field is required',
-      integer: 'The {_field_} field must be an integer',
       minMax: '{_field_} length should be from {min} to {max} characters in length',
       minMaxValue: '{_field_} should be from {min} to {max}',
       minValue: '{_field_} should be greater than {target}',
