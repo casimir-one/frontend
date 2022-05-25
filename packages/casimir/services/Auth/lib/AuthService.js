@@ -54,7 +54,7 @@ export class AuthService {
     );
 
     const checkedFinalizedTx = isAuthorizedCreatorRequired
-      ? await finalizedTx
+      ? finalizedTx
       : await finalizedTx.signAsync(privKey, chainNodeClient);
 
     const msg = new JsonDataMsg(checkedFinalizedTx.getPayload());
