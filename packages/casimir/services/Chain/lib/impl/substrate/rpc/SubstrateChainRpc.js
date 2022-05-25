@@ -570,7 +570,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       },
 
 
-      getNextAvailableNftClassId: async () => {
+      getNextAvailableNftCollectionId: async () => {
         // TODO: must be replaced with read model index
         const list = await this.getNonFungibleTokenClassesAsync();
         return list.length + 1;

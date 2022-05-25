@@ -92,8 +92,8 @@ export type FungibleTokenTransferPayload = ServiceBasePayload<FungibleTokenTrans
 // //////////////////////////
 
 type NonFungibleTokenBase = {
-  classId: string, // entityId from NonFungibleTokenCmdPayload
-  instanceId: string
+  nftCollectionId: string, // entityId from NonFungibleTokenCmdPayload
+  nftItemId: string
 };
 
 /**

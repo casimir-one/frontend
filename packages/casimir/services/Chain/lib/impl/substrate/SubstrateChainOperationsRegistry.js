@@ -131,77 +131,6 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_PROJECT]: ({
-      entityId,
-      teamId,
-      description,
-      domains,
-      isPrivate
-    }) => {
-
-      const createProjectOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
-        chainNodeClient.tx.deip.createProject(
-          /* "is_private": */ isPrivate,
-          /* "external_id": */ `0x${entityId}`,
-          /* "team_id": */ { Dao: `0x${teamId}` },
-          /* "description": */ `0x${description}`,
-          /* "domains": */ domains.map((domain) => `0x${domain}`)
-        )
-      );
-
-      return [createProjectOp];
-    },
-
-
-    [APP_CMD.UPDATE_PROJECT]: ({
-      entityId,
-      teamId,
-      description,
-      isPrivate
-    }) => {
-
-      const updateProjectOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
-        chainNodeClient.tx.deip.updateProject(
-          /* "project_id": */ `0x${entityId}`,
-          /* "description": */ description ? `0x${description}` : null,
-          /* "is_private": */ isPrivate != undefined ? isPrivate : null
-        )
-      );
-
-      return [updateProjectOp];
-    },
-
-
-    [APP_CMD.CREATE_PROJECT_CONTENT]: ({
-      entityId,
-      projectId,
-      teamId,
-      type,
-      description,
-      content,
-      authors,
-      references
-    }) => {
-
-      const contentType = PROJECT_CONTENT_TYPES[type];
-      const projectContentType = contentType ? pascalCase(contentType) : "Announcement";
-
-      const createProjectContentOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
-        chainNodeClient.tx.deip.createProjectContent(
-          /* "project_content_id": */ `0x${entityId}`,
-          /* "project_id": */ `0x${projectId}`,
-          /* "team_id": */ { Dao: `0x${teamId}` },
-          /* "content_type": */ projectContentType,
-          /* "description": */ `0x${description}`,
-          /* "content": */ `0x${content}`,
-          /* "authors": */ authors.map((author) => ({ Dao: `0x${author}` })),
-          /* "references": */ references.map((contentId) => `0x${contentId}`),
-        )
-      );
-      return [createProjectContentOp];
-    },
-
-
     [APP_CMD.CREATE_REVIEW]: ({
       entityId,
       author,
@@ -372,7 +301,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_NFT]: ({
+    [APP_CMD.CREATE_NFT_COLLECTION]: ({
       entityId,
       issuer,
       name,
@@ -388,14 +317,6 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         )
       );
 
-      const setNonFungibleTokenMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.setClassMetadata(
-          /* classId: */ entityId,
-          /* data */ stringToHex(JSON.stringify({ symbol: name, metadataHash })),
-          /* is_frozen */ false
-        )
-      );
-
       const setNonFungibleTokenTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.uniques.setTeam(
           /* classId: */ entityId,
@@ -405,7 +326,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         )
       );
 
-      return [createNonFungibleTokenOp, setNonFungibleTokenMetaOp, setNonFungibleTokenTeamOp];
+      return [createNonFungibleTokenOp, setNonFungibleTokenTeamOp];
     },
 
 
@@ -429,33 +350,23 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.ISSUE_NFT]: ({
+    [APP_CMD.CREATE_NFT_ITEM]: ({
       issuer,
-      classId,
-      instanceId,
-      recipient,
-      metadataHash
+      nftCollectionId,
+      nftItemId,
+      recipient
     }) => {
 
       const recipientAddress = toAddress(recipient, chainNodeClient.registry);
       const issueNonFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
         chainNodeClient.tx.uniques.mint(
-          /* classId: */ classId,
-          /* instanceId: */ instanceId,
+          /* classId: */ nftCollectionId,
+          /* instanceId: */ nftItemId,
           /* owner */ recipientAddress
         )
       );
 
-      const setNonFungibleTokenInstanceMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.setMetadata(
-          /* classId: */ classId,
-          /* instanceId: */ instanceId,
-          /* data */ stringToHex(JSON.stringify({ metadataHash })),
-          /* is_frozen */ false
-        )
-      );
-
-      return [issueNonFungibleTokenOp, setNonFungibleTokenInstanceMetaOp];
+      return [issueNonFungibleTokenOp];
     },
 
 
@@ -608,15 +519,15 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     [APP_CMD.TRANSFER_NFT]: ({
       from,
       to,
-      classId,
-      instanceId,
+      nftCollectionId,
+      nftItemId,
     }) => {
       const recipientAddress = toAddress(to, chainNodeClient.registry);
 
       const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
         chainNodeClient.tx.uniques.transfer(
-          /* assetId: */ classId,
-          /* instance: */ instanceId,
+          /* assetId: */ nftCollectionId,
+          /* instance: */ nftItemId,
           /* to: */ recipientAddress
         )
       );

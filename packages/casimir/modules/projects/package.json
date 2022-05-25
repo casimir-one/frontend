@@ -27,12 +27,12 @@
     "@deip/constants": "1.382.2",
     "@deip/layouts-module": "1.382.2",
     "@deip/platform-util": "1.382.2",
-    "@deip/project-service": "1.382.2",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
     "@deip/vue-elements": "1.382.2",
     "@deip/vuetify-extended": "1.382.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "@casimir/token-service": "1.382.2"
   },
   "peerDependencies": {
     "vuex": "^3.6.2"
