@@ -61,6 +61,14 @@ export class AuthService {
     return this.http.signUp(msg);
   }
 
+  /**
+   * create transaction
+   * @param {Object} chainTxBuilder
+   * @param {Object} userData
+   * @param {boolean} isAuthorizedCreatorRequired
+   * @return {Promise<Object>}
+   */
+
   async createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
     const {
       email,
