@@ -1,7 +1,7 @@
 <template>
   <vex-block v-if="!loading && content" :title="content.title">
     <span v-if="content.contentType">
-      {{ $t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[content.contentType]}`) }}
+      {{ $t(`module.projectContent.types.${NFT_ITEM_METADATA_TYPES[content.contentType]}`) }}
     </span>
 
     <div>
@@ -13,12 +13,12 @@
     </div>
 
     <package-content-details
-      v-if="content.formatType === PROJECT_CONTENT_FORMAT.PACKAGE"
+      v-if="content.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE"
       :content="content"
     />
 
     <json-content-details
-      v-if="content.formatType === PROJECT_CONTENT_FORMAT.JSON"
+      v-if="content.formatType === NFT_ITEM_METADATA_FORMAT.JSON"
       :content="content"
     />
   </vex-block>
@@ -27,7 +27,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock } from '@deip/vuetify-extended';
-  import { PROJECT_CONTENT_FORMAT, PROJECT_CONTENT_TYPES } from '@deip/constants';
+  import { NFT_ITEM_METADATA_FORMAT, NFT_ITEM_METADATA_TYPES } from '@deip/constants';
   import { UsersList } from '@deip/users-module';
 
   import PackageContentDetails from '../../common/PackageContentDetails';
@@ -59,8 +59,8 @@
     data() {
       return {
         loading: false,
-        PROJECT_CONTENT_FORMAT,
-        PROJECT_CONTENT_TYPES
+        NFT_ITEM_METADATA_FORMAT,
+        NFT_ITEM_METADATA_TYPES
       };
     },
 

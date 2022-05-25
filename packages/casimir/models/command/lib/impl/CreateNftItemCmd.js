@@ -7,31 +7,31 @@ import ProtocolCmd from '../base/ProtocolCmd';
  */
 
 /**
- * Issue non-fungible token instance command
+ * Create nft item command
  * @extends ProtocolCmd
  */
-class IssueNonFungibleTokenCmd extends ProtocolCmd {
+class CreateNftItemCmd extends ProtocolCmd {
   /**
-   * Issue non-fungible token instance
+   * Create nft item
    * @param {NonFungibleTokenIssueCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {
       issuer,
-      classId,
-      instanceId,
+      nftCollectionId,
+      nftItemId,
       recipient
     } = cmdPayload;
 
     assert(!!issuer, "'issuer' is required");
-    assert(isNumber(classId) || (isString(classId) && classId),
-      "'classId' is required and must be a number or non emplty string");
-    assert(isNumber(instanceId) || (isString(instanceId) && instanceId),
-      "'instanceId' is required and must be a number or non emplty string");
+    assert(isNumber(nftCollectionId) || (isString(nftCollectionId) && nftCollectionId),
+      "'nftCollectionId' is required and must be a number or non emplty string");
+    assert(isNumber(nftItemId) || (isString(nftItemId) && nftItemId),
+      "'nftItemId' is required and must be a number or non emplty string");
     assert(!!recipient, "'recipient' is required");
 
-    super(APP_CMD.ISSUE_NFT, cmdPayload);
+    super(APP_CMD.CREATE_NFT_ITEM, cmdPayload);
   }
 }
 
-export default IssueNonFungibleTokenCmd;
+export default CreateNftItemCmd;

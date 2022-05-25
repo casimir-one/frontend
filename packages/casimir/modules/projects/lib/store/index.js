@@ -1,6 +1,5 @@
 import { get } from 'lodash';
-
-import { ProjectService } from '@deip/project-service';
+import { NonFungibleTokenService } from '@casimir/token-service';
 import {
   listGetter,
   oneGetter,
@@ -8,7 +7,7 @@ import {
   setOneMutation
 } from '@deip/platform-util';
 
-const projectService = ProjectService.getInstance();
+const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 
 const actionsMap = {
   projects: {
@@ -56,7 +55,7 @@ const ACTIONS = {
   // public
 
   getPublicProjects({ commit }, { filter = {} }) {
-    return projectService.getPublicProjectList(filter)
+    return nonFungibleTokenService.getNftCollectionsList(filter)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -65,21 +64,21 @@ const ACTIONS = {
   // user
 
   getUserProjects({ commit }, { username }) {
-    return projectService.getUserProjectList(username)
+    return nonFungibleTokenService.getNftCollectionsListByIssuer(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getUserPublicProjects({ commit }, { username }) {
-    return projectService.getUserPublicProjectList(username)
+    return nonFungibleTokenService.getNftCollectionsListByIssuer(username)
       .then((res) => {
         commit('setList', res.data.items);
       });
   },
 
   getProjectsByIds({ commit }, projectIds) {
-    return projectService.getListByIds(projectIds)
+    return nonFungibleTokenService.getNftCollectionsListByIds(projectIds)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -88,7 +87,7 @@ const ACTIONS = {
   // team
 
   getTeamProjects({ commit }, { teamId }) {
-    return projectService.getTeamProjectList(teamId)
+    return nonFungibleTokenService.getNftCollectionsListByIssuer(teamId)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -97,7 +96,7 @@ const ACTIONS = {
   // portal
 
   getPortalProjects({ commit }, { portalId }) {
-    return projectService.getPortalProjectList(portalId)
+    return nonFungibleTokenService.getPortalNftCollectionList(portalId)
       .then((res) => {
         commit('setList', res.data.items);
       });
@@ -106,32 +105,26 @@ const ACTIONS = {
   // one
 
   getOne({ commit }, projectId) {
-    return projectService.getOne(projectId)
+    return nonFungibleTokenService.getNftCollection(projectId)
       .then((res) => {
         commit('setOne', res.data);
       });
   },
 
   async getTeamDefaultProject(_, teamId) {
-    const res = await projectService.getTeamDefaultProject(teamId);
+    const res = await nonFungibleTokenService.getDefaultNftCollectionByIssuer(teamId);
     return res.data;
   },
 
   async create({ dispatch }, payload) {
-    const res = await projectService.create({
-      ...payload,
-      proposalInfo: { isProposal: false }
-    });
+    const res = await nonFungibleTokenService.createNftCollection(payload);
 
     dispatch('getOne', res.data._id);
     return res.data;
   },
 
   async update({ dispatch }, payload) {
-    const res = await projectService.update({
-      ...payload,
-      proposalInfo: { isProposal: false }
-    });
+    const res = await nonFungibleTokenService.updateNftCollectionMetadata(payload);
     dispatch('getOne', res.data._id);
     return res.data;
   }

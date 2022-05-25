@@ -1,14 +1,14 @@
-import { APP_CMD, PROJECT_CONTENT_FORMAT } from '@deip/constants';
+import { APP_CMD, NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**
- * Update project content draft command
+ * Update nft item metadata draft command
  * @extends AppCmd
  */
-class UpdateDraftCmd extends AppCmd {
+class UpdateNftItemMetadataDraftCmd extends AppCmd {
   /**
-   * Create command for project content draft update
+   * Create command for nft item metadata draft update
    * @param {Object} cmdPayload
    * @param {string} cmdPayload._id
    * @param {Object} cmdPayload.formatType
@@ -17,6 +17,7 @@ class UpdateDraftCmd extends AppCmd {
    * @param {number} cmdPayload.contentType
    * @param {Array.<string>} cmdPayload.authors
    * @param {Array.<string>} cmdPayload.references
+   * @param {Array.<Object>} cmdPayload.attributes
    * @param {number} cmdPayload.formatType
    * @param {Object} cmdPayload.jsonData
    * @param {Object} cmdPayload.metadata
@@ -29,12 +30,12 @@ class UpdateDraftCmd extends AppCmd {
     } = cmdPayload;
 
     assert(!!_id, "'_id' is required");
-    if (formatType && formatType === PROJECT_CONTENT_FORMAT.JSON) {
+    if (formatType && formatType === NFT_ITEM_METADATA_FORMAT.JSON) {
       assert(!!jsonData, `'jsonData' is required for ${formatType} formatType`);
     }
 
-    super(APP_CMD.UPDATE_DRAFT, cmdPayload);
+    super(APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT, cmdPayload);
   }
 }
 
-export default UpdateDraftCmd;
+export default UpdateNftItemMetadataDraftCmd;

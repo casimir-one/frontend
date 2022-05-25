@@ -112,52 +112,6 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_PROJECT]: ({
-      entityId,
-      teamId,
-      description,
-      domains,
-      isPrivate
-    }) => {
-
-      const createProjectOp = ['create_research', {
-        external_id: entityId,
-        account: teamId,
-        description: description,
-        disciplines: domains,
-        is_private: isPrivate || false,
-        members: undefined, // @deprecated
-        review_share: undefined, // @deprecated
-        compensation_share: undefined, // @deprecated
-        extensions: []
-      }];
-
-      return [createProjectOp];
-    },
-
-
-    [APP_CMD.UPDATE_PROJECT]: ({
-      entityId,
-      teamId,
-      description,
-      isPrivate
-    }) => {
-
-      const updateProjectOp = ['update_research', {
-        external_id: entityId,
-        account: teamId,
-        description: description,
-        is_private: isPrivate || false,
-        review_share: undefined, // @deprecated
-        compensation_share: undefined, // @deprecated
-        members: undefined, // @deprecated
-        update_extensions: []
-      }];
-
-      return [updateProjectOp];
-    },
-
-
     [APP_CMD.ADD_DAO_MEMBER]: ({
       member,
       teamId
@@ -397,7 +351,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_NFT]: ({
+    [APP_CMD.CREATE_NFT_COLLECTION]: ({
       issuer,
       symbol,
       precision,
@@ -432,40 +386,13 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.ISSUE_NFT]: ({
+    [APP_CMD.CREATE_NFT_ITEM]: ({
       issuer,
       asset,
       recipient,
       memo
     }) => {
       throw Error(`Not implemented exception`);
-    },
-
-
-    [APP_CMD.CREATE_PROJECT_CONTENT]: ({
-      entityId,
-      projectId,
-      teamId,
-      contentType,
-      description,
-      content,
-      authors,
-      references
-    }) => {
-    
-      const createProjectContentOp = ['create_research_content', {
-        external_id: entityId,
-        research_external_id: projectId,
-        research_group: teamId,
-        type: contentType,
-        description: JSON.stringify({ description }),
-        content: content,
-        authors: authors,
-        references: references,
-        extensions: []
-      }];
-    
-      return [createProjectContentOp];
     },
 
 

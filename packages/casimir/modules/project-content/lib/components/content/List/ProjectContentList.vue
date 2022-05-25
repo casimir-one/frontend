@@ -29,7 +29,7 @@
   import { defineComponent } from '@deip/platform-util';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
 
-  import { PROJECT_CONTENT_TYPES } from '@deip/constants';
+  import { NFT_ITEM_METADATA_TYPES } from '@deip/constants';
 
   import ProjectContentDataProvider from '../DataProvider';
 
@@ -87,7 +87,7 @@
        * @param {string} type
        */
       getContentType(type) {
-        return this.$t(`module.projectContent.types.${PROJECT_CONTENT_TYPES[type]}`);
+        return this.$t(`module.projectContent.types.${NFT_ITEM_METADATA_TYPES[type]}`);
       },
       /**
        * Row click handler

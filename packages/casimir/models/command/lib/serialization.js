@@ -1,8 +1,7 @@
 import { APP_CMD } from '@deip/constants';
 import CreateDaoCmd from './impl/CreateDaoCmd';
-import CreateProjectCmd from './impl/CreateProjectCmd';
-import UpdateProjectCmd from './impl/UpdateProjectCmd';
-import DeleteProjectCmd from './impl/DeleteProjectCmd';
+import CreateNftCollectionMetadataCmd from './impl/CreateNftCollectionMetadataCmd';
+import UpdateNftCollectionMetadataCmd from './impl/UpdateNftCollectionMetadataCmd';
 import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
 import AcceptProposalCmd from './impl/AcceptProposalCmd';
@@ -21,13 +20,13 @@ import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
-import CreateNonFungibleTokenCmd from './impl/CreateNonFungibleTokenCmd';
+import CreateNftCollectionCmd from './impl/CreateNftCollectionCmd';
 import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
-import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
-import CreateDraftCmd from './impl/CreateDraftCmd';
-import UpdateDraftCmd from './impl/UpdateDraftCmd';
-import DeleteDraftCmd from './impl/DeleteDraftCmd';
-import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
+import CreateNftItemCmd from './impl/CreateNftItemCmd';
+import CreateNftItemMetadataDraftCmd from './impl/CreateNftItemMetadataDraftCmd';
+import UpdateNftItemMetadataDraftCmd from './impl/UpdateNftItemMetadataDraftCmd';
+import DeleteNftItemMetadataDraftCmd from './impl/DeleteNftItemMetadataDraftCmd';
+import CreateNftItemMetadataCmd from './impl/CreateNftItemMetadataCmd';
 import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
 import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
 import CreateReviewCmd from './impl/CreateReviewCmd';
@@ -48,17 +47,17 @@ import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
 import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
-import UpdateDraftStatusCmd from './impl/UpdateDraftStatusCmd';
-import UpdateDraftModerationMessageCmd from './impl/UpdateDraftModerationMessageCmd';
+import UpdateNftItemMetadataDraftStatusCmd from './impl/UpdateNftItemMetadataDraftStatusCmd';
+import UpdateNftItemMetadataDraftModerationMsgCmd
+  from './impl/UpdateNftItemMetadataDraftModerationMsgCmd';
 import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
   [APP_CMD.UPDATE_DAO]: { class: UpdateDaoCmd },
   [APP_CMD.ALTER_DAO_AUTHORITY]: { class: AlterDaoAuthorityCmd },
-  [APP_CMD.CREATE_PROJECT]: { class: CreateProjectCmd },
-  [APP_CMD.UPDATE_PROJECT]: { class: UpdateProjectCmd },
-  [APP_CMD.DELETE_PROJECT]: { class: DeleteProjectCmd },
+  [APP_CMD.CREATE_NFT_COLLECTION_METADATA]: { class: CreateNftCollectionMetadataCmd },
+  [APP_CMD.UPDATE_NFT_COLLECTION_METADATA]: { class: UpdateNftCollectionMetadataCmd },
   [APP_CMD.ADD_DAO_MEMBER]: { class: AddDaoMemberCmd },
   [APP_CMD.CREATE_PROPOSAL]: { class: CreateProposalCmd },
   [APP_CMD.ACCEPT_PROPOSAL]: { class: AcceptProposalCmd },
@@ -75,13 +74,13 @@ const APP_CMD_INFO = {
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
   [APP_CMD.CREATE_FT]: { class: CreateFungibleTokenCmd },
-  [APP_CMD.CREATE_NFT]: { class: CreateNonFungibleTokenCmd },
+  [APP_CMD.CREATE_NFT_COLLECTION]: { class: CreateNftCollectionCmd },
   [APP_CMD.ISSUE_FT]: { class: IssueFungibleTokenCmd },
-  [APP_CMD.ISSUE_NFT]: { class: IssueNonFungibleTokenCmd },
-  [APP_CMD.CREATE_DRAFT]: { class: CreateDraftCmd },
-  [APP_CMD.DELETE_DRAFT]: { class: DeleteDraftCmd },
-  [APP_CMD.UPDATE_DRAFT]: { class: UpdateDraftCmd },
-  [APP_CMD.CREATE_PROJECT_CONTENT]: { class: CreateProjectContentCmd },
+  [APP_CMD.CREATE_NFT_ITEM]: { class: CreateNftItemCmd },
+  [APP_CMD.CREATE_NFT_ITEM_METADATA_DRAFT]: { class: CreateNftItemMetadataDraftCmd },
+  [APP_CMD.DELETE_NFT_ITEM_METADATA_DRAFT]: { class: DeleteNftItemMetadataDraftCmd },
+  [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT]: { class: UpdateNftItemMetadataDraftCmd },
+  [APP_CMD.CREATE_NFT_ITEM_METADATA]: { class: CreateNftItemMetadataCmd },
   [APP_CMD.CREATE_REVIEW_REQUEST]: { class: CreateReviewRequestCmd },
   [APP_CMD.DECLINE_REVIEW_REQUEST]: { class: DeclineReviewRequestCmd },
   [APP_CMD.CREATE_REVIEW]: { class: CreateReviewCmd },
@@ -102,8 +101,10 @@ const APP_CMD_INFO = {
   [APP_CMD.CREATE_BOOKMARK]: { class: CreateBookmarkCmd },
   [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
   [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd },
-  [APP_CMD.UPDATE_DRAFT_STATUS]: { class: UpdateDraftStatusCmd },
-  [APP_CMD.UPDATE_DRAFT_MODERATION_MESSAGE]: { class: UpdateDraftModerationMessageCmd },
+  [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_STATUS]: { class: UpdateNftItemMetadataDraftStatusCmd },
+  [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_MODERATION_MSG]: {
+    class: UpdateNftItemMetadataDraftModerationMsgCmd
+  },
   [APP_CMD.SEND_REGISTRATION_CODE_BY_EMAIL]: { class: SendRegistrationCodeByEmailCmd }
 };
 
