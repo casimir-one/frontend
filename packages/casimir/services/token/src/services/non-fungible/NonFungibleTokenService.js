@@ -61,16 +61,15 @@ export class NonFungibleTokenService {
    */
   async create(payload) {
     const {
-      initiator: { privKey },
+      initiator: {
+        privKey
+      },
       data: {
         issuer,
-        name,
-        metadata: {
-          attributes = []
-        } = {},
-        description
+        metadata // Todo add field named:  <files> - if there are files  },
       }
     } = payload;
+
     const env = this.proxydi.get('env');
     let nftCollectionId;
     await ChainService.getInstanceAsync(env)
@@ -86,8 +85,7 @@ export class NonFungibleTokenService {
             const createNftCollectionCmd = new CreateNftCollectionCmd({
               entityId,
               issuer,
-              name,
-              description
+              metadata
             });
 
             txBuilder.addCmd(createNftCollectionCmd);
@@ -107,7 +105,7 @@ export class NonFungibleTokenService {
     const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
       entityId: nftCollectionId,
       issuer,
-      attributes
+      attributes: metadata.attributes
     });
     const msg = new JsonDataMsg({ appCmds: [createNftCollectionMetadataCmd] });
     const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(msg);
