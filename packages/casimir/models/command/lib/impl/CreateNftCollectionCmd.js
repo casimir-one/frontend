@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { APP_CMD } from '@deip/constants';
 import { assert, isNumber, isString } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
@@ -8,34 +7,26 @@ import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
  */
 
 /**
- * Create non-fungible token class command
+ * Create nft collection command
  * @extends ProtocolEntityCmd
  */
-class CreateNonFungibleTokenCmd extends ProtocolEntityCmd {
+class CreateNftCollectionCmd extends ProtocolEntityCmd {
   /**
-   * Create non-fungible token class
+   * Create nft collection
    * @param {NonFungibleTokenCreateCmdPayload} cmdPayload
    */
   constructor(cmdPayload) {
     const {
       entityId,
-      issuer,
-      name,
-      description,
-      metadata
+      issuer
     } = cmdPayload;
 
     assert(isNumber(entityId) || (isString(entityId) && entityId),
       "'entityId' must be a number or non emplty string");
     assert(!!issuer, "'issuer' is required");
 
-    if (metadata) { // keep this until we have working F-NFT
-      const { projectId } = metadata;
-      assert(!!projectId, "'projectId' is required for project token");
-    }
-
-    super(APP_CMD.CREATE_NFT, cmdPayload);
+    super(APP_CMD.CREATE_NFT_COLLECTION, cmdPayload);
   }
 }
 
-export default CreateNonFungibleTokenCmd;
+export default CreateNftCollectionCmd;

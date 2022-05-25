@@ -9,7 +9,7 @@ import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
  */
 class CreatePortalCmd extends ProtocolEntityCmd {
   /**
-   * Create non-fungible token class
+   * Create command for portal creation
    * @param {Object} cmdPayload
    * @param {string} cmdPayload.owner
    * @param {string} cmdPayload.verificationPubKey

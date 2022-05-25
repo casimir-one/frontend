@@ -3,24 +3,24 @@ import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**
- * Delete project command
+ * Delete nft collection metadata command
  * @extends AppCmd
  */
-class DeleteProjectCmd extends AppCmd {
+class DeleteNftCollectionMetadataCmd extends AppCmd {
   /**
    * Create command for project deletion
    * @param {Object} cmdPayload
-   * @param {string} cmdPayload.entityId
+   * @param {string} cmdPayload._id
    */
   constructor(cmdPayload) {
     const {
-      entityId
+      _id
     } = cmdPayload;
 
-    assert(!!entityId, "'entityId' is required");
+    assert(!!_id, "'_id' is required");
 
-    super(APP_CMD.DELETE_PROJECT, cmdPayload);
+    super(APP_CMD.DELETE_NFT_COLLECTION_METADATA, cmdPayload);
   }
 }
 
-export default DeleteProjectCmd;
+export default DeleteNftCollectionMetadataCmd;

@@ -14,7 +14,7 @@ import {
   CreateDaoCmd,
   AcceptProposalCmd,
   UpdateDaoCmd,
-  CreateProjectCmd,
+  CreateNftCollectionMetadataCmd,
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
   TransferFungibleTokenCmd
@@ -98,14 +98,12 @@ export class TeamService {
             }
 
             if (isCreateDefaultProject) {
-              const createProjectCmd = new CreateProjectCmd({
-                teamId: entityId,
-                description: genSha256Hash([]),
-                domains: [],
+              const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
+                issuer: entityId,
                 isDefault: true,
                 attributes: []
               });
-              txBuilder.addCmd(createProjectCmd);
+              txBuilder.addCmd(createNftCollectionMetadataCmd);
             }
 
             const members = data.members.filter((m) => m !== creator);

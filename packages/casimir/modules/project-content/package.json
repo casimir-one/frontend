@@ -31,7 +31,8 @@
     "@deip/users-module": "1.382.2",
     "@deip/vue-editorjs": "1.382.2",
     "@deip/vue-elements": "1.382.2",
-    "@deip/vuetify-extended": "1.382.2"
+    "@deip/vuetify-extended": "1.382.2",
+    "@casimir/token-service": "1.382.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

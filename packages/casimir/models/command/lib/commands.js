@@ -1,7 +1,7 @@
 import CreateDaoCmd from './impl/CreateDaoCmd';
-import CreateProjectCmd from './impl/CreateProjectCmd';
-import UpdateProjectCmd from './impl/UpdateProjectCmd';
-import DeleteProjectCmd from './impl/DeleteProjectCmd';
+import CreateNftCollectionMetadataCmd from './impl/CreateNftCollectionMetadataCmd';
+import UpdateNftCollectionMetadataCmd from './impl/UpdateNftCollectionMetadataCmd';
+import DeleteNftCollectionMetadataCmd from './impl/DeleteNftCollectionMetadataCmd';
 import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
 import CreateProposalCmd from './impl/CreateProposalCmd';
 import AcceptProposalCmd from './impl/AcceptProposalCmd';
@@ -20,15 +20,16 @@ import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
-import CreateNonFungibleTokenCmd from './impl/CreateNonFungibleTokenCmd';
+import CreateNftCollectionCmd from './impl/CreateNftCollectionCmd';
 import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
-import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
-import CreateDraftCmd from './impl/CreateDraftCmd';
-import DeleteDraftCmd from './impl/DeleteDraftCmd';
-import UpdateDraftCmd from './impl/UpdateDraftCmd';
-import UpdateDraftStatusCmd from './impl/UpdateDraftStatusCmd';
-import UpdateDraftModerationMessageCmd from './impl/UpdateDraftModerationMessageCmd';
-import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
+import CreateNftItemCmd from './impl/CreateNftItemCmd';
+import CreateNftItemMetadataDraftCmd from './impl/CreateNftItemMetadataDraftCmd';
+import DeleteNftItemMetadataDraftCmd from './impl/DeleteNftItemMetadataDraftCmd';
+import UpdateNftItemMetadataDraftCmd from './impl/UpdateNftItemMetadataDraftCmd';
+import CreateNftItemMetadataCmd from './impl/CreateNftItemMetadataCmd';
+import UpdateNftItemMetadataDraftStatusCmd from './impl/UpdateNftItemMetadataDraftStatusCmd';
+// eslint-disable-next-line max-len
+import UpdateNftItemMetadataDraftModerationMsgCmd from './impl/UpdateNftItemMetadataDraftModerationMsgCmd';
 import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
 import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
 import CreateReviewCmd from './impl/CreateReviewCmd';
@@ -53,9 +54,9 @@ import CreatePortalCmd from './impl/CreatePortalCmd';
 
 export {
   CreateDaoCmd,
-  CreateProjectCmd,
-  UpdateProjectCmd,
-  DeleteProjectCmd,
+  CreateNftCollectionMetadataCmd,
+  UpdateNftCollectionMetadataCmd,
+  DeleteNftCollectionMetadataCmd,
   AddDaoMemberCmd,
   CreateProposalCmd,
   AcceptProposalCmd,
@@ -74,15 +75,15 @@ export {
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,
   CreateFungibleTokenCmd,
-  CreateNonFungibleTokenCmd,
+  CreateNftCollectionCmd,
   IssueFungibleTokenCmd,
-  IssueNonFungibleTokenCmd,
-  CreateDraftCmd,
-  DeleteDraftCmd,
-  UpdateDraftCmd,
-  UpdateDraftStatusCmd,
-  UpdateDraftModerationMessageCmd,
-  CreateProjectContentCmd,
+  CreateNftItemCmd,
+  CreateNftItemMetadataDraftCmd,
+  DeleteNftItemMetadataDraftCmd,
+  UpdateNftItemMetadataDraftCmd,
+  CreateNftItemMetadataCmd,
+  UpdateNftItemMetadataDraftStatusCmd,
+  UpdateNftItemMetadataDraftModerationMsgCmd,
   CreateReviewRequestCmd,
   DeclineReviewRequestCmd,
   CreateReviewCmd,
