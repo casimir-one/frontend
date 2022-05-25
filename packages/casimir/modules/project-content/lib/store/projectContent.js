@@ -1,4 +1,4 @@
-import { ProjectContentService } from '@deip/project-content-service';
+import { NonFungibleTokenService } from '@casimir/token-service';
 
 import {
   listGetter,
@@ -7,7 +7,7 @@ import {
   setOneMutation
 } from '@deip/platform-util';
 
-const projectContentService = ProjectContentService.getInstance();
+const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 
 const STATE = {
   data: []
@@ -20,22 +20,22 @@ const GETTERS = {
 
 const ACTIONS = {
   async getList({ commit }) {
-    const res = await projectContentService.getPublicContentList();
+    const res = await nonFungibleTokenService.getNftItemsList();
     commit('setList', res.data.items);
   },
 
   async getListByProjectId({ commit }, projectId) {
-    const res = await projectContentService.getContentListByProject(projectId);
+    const res = await nonFungibleTokenService.getNftItemsListByNftCollection(projectId);
     commit('setList', res.data.items);
   },
 
   async getOne({ commit }, contentId) {
-    const res = await projectContentService.getContent(contentId);
+    const res = await nonFungibleTokenService.getNftItem(contentId);
     commit('setOne', res.data);
   },
 
   async getListPaginated({ commit }, query) {
-    const res = await projectContentService.getContentListPaginated(query);
+    const res = await nonFungibleTokenService.getNftItemsListPaginated(query);
     commit('setList', res.data.items);
     return res.data;
   }

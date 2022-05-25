@@ -14,7 +14,7 @@ class ProtocolEntityCmd extends ProtocolCmd {
     super(cmdNum, cmdPayload);
     this._cmdPayload.entityId = cmdPayload.entityId
       ? cmdPayload.entityId // Set
-      : ProtocolEntityCmd.GeneraterateProtocolEntityId(cmdPayload); // Auto-Generated
+      : ProtocolEntityCmd.GenerateProtocolEntityId(cmdPayload); // Auto-Generated
   }
 
   /**
@@ -28,7 +28,7 @@ class ProtocolEntityCmd extends ProtocolCmd {
    * @param {Object} payload
    * @returns {string} entity id
    */
-  static GeneraterateProtocolEntityId(payload) {
+  static GenerateProtocolEntityId(payload) {
     const entityId = genRipemd160Hash({ ...payload, __timestamp: new Date().getTime() });
     return entityId;
   }

@@ -28,8 +28,8 @@ export class CommonTokenService {
       transferCommands.push(new TransferNonFungibleTokenCmd({
         from: party1.account,
         to: party2.account,
-        classId: party1.token.classId,
-        instanceId: party1.token.instanceId
+        nftCollectionId: party1.token.nftCollectionId,
+        nftItemId: party1.token.nftItemId
       }));
     } else {
       transferCommands.push(new TransferFungibleTokenCmd({
@@ -44,8 +44,8 @@ export class CommonTokenService {
       transferCommands.push(new TransferNonFungibleTokenCmd({
         from: party2.account,
         to: party1.account,
-        classId: party2.token.classId,
-        instanceId: party2.token.instanceId
+        nftCollectionId: party2.token.nftCollectionId,
+        nftItemId: party2.token.nftItemId
       }));
     } else {
       transferCommands.push(new TransferFungibleTokenCmd({

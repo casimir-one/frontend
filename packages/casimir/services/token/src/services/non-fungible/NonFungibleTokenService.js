@@ -1,13 +1,26 @@
-import { makeSingletonInstance, genSha256Hash } from '@deip/toolbox';
+import {
+  makeSingletonInstance,
+  createFormData,
+  replaceFileWithName
+} from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg } from '@deip/messages';
+import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
 import {
   TransferNonFungibleTokenCmd,
-  CreateNonFungibleTokenCmd,
-  IssueNonFungibleTokenCmd
+  CreateNftCollectionCmd,
+  CreateNftItemCmd,
+  CreateNftCollectionMetadataCmd,
+  UpdateNftItemMetadataDraftCmd,
+  CreateNftItemMetadataDraftCmd,
+  DeleteNftItemMetadataDraftCmd,
+  CreateNftItemMetadataCmd,
+  UpdateNftCollectionMetadataCmd,
+  UpdateNftItemMetadataDraftStatusCmd,
+  UpdateNftItemMetadataDraftModerationMsgCmd
 } from '@deip/commands';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_PROPOSAL, APP_EVENT } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
+import { WebSocketService } from '@deip/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
@@ -16,28 +29,45 @@ import { transferToken, updateProposalInfo } from '../../util';
  */
 export class NonFungibleTokenService {
   proxydi = proxydi;
+  webSocketService = WebSocketService.getInstance();
 
   nonFungibleTokenHttp = NonFungibleTokenHttp.getInstance();
 
   /**
-   * Create new non-fungible token
+   * Extract FormData from data
+   * @param {Object} data
+   * @returns {Object} convertedData
+   * @returns {FormData} convertedData.formData
+   * @returns {Array} convertedData.attributes
+   * @returns {string} convertedData.description
+   */
+  static #convertFormData(data) {
+    const formData = createFormData(data);
+    const attributes = replaceFileWithName(data.attributes);
+
+    return {
+      formData,
+      attributes
+    };
+  }
+
+  /**
+   * Create new nft collection and nft collection metadata
    * @param {import('@casimir/platform-core').NonFungibleTokenCreatePayload} payload
    * @return {Promise<Object>}
    */
-  async create(payload) {
+  async createNftCollection(payload) {
     const {
       initiator: { privKey },
       data: {
         issuer,
-        name,
-        metadata = {},
-        description,
-        holders
+        issuedByTeam = false,
+        metadata
       }
     } = payload;
     const env = this.proxydi.get('env');
-
-    return ChainService.getInstanceAsync(env)
+    let nftCollectionId;
+    await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
@@ -45,41 +75,15 @@ export class NonFungibleTokenService {
 
         return chainTxBuilder.begin()
           .then(async (txBuilder) => {
-            const metadataHash = genSha256Hash(metadata);
-            const entityId = await chainRpc.getNextAvailableNftClassId();
-
-            const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
+            const entityId = await chainRpc.getNextAvailableNftCollectionId();
+            nftCollectionId = entityId;
+            const createNftCollectionCmd = new CreateNftCollectionCmd({
               entityId,
               issuer,
-              name,
-              description,
-              metadata,
-              metadataHash
+              issuedByTeam
             });
 
-            txBuilder.addCmd(createNonFungibleTokenCmd);
-            const tokenId = createNonFungibleTokenCmd.getProtocolEntityId();
-
-            if (holders && holders.length) {
-              for (let i = 0; i < holders.length; i++) {
-                const {
-                  account: recipient,
-                  metadata: instanceMetadata = {},
-                  instanceId
-                } = holders[i];
-                const instanceMetadataHash = genSha256Hash(instanceMetadata);
-                const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
-                  issuer,
-                  classId: tokenId,
-                  instanceId: instanceId || i + 1,
-                  recipient,
-                  metadata: instanceMetadata,
-                  metadataHash: instanceMetadataHash
-                });
-                txBuilder.addCmd(issueNonFungibleTokenCmd);
-              }
-            }
-
+            txBuilder.addCmd(createNftCollectionCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -93,43 +97,71 @@ export class NonFungibleTokenService {
             return this.nonFungibleTokenHttp.create(msg);
           });
       });
+
+    const {
+      formData,
+      attributes
+    } = NonFungibleTokenService.#convertFormData(metadata);
+
+    const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
+      entityId: nftCollectionId,
+      issuer,
+      issuedByTeam,
+      attributes
+    });
+    const msg = new MultFormDataMsg(formData, { appCmds: [createNftCollectionMetadataCmd] });
+    const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.NFT_COLLECTION_METADATA_CREATED
+                  && eventBody.event.eventPayload.entityId === response.data._id;
+    }, 10000);
+
+    return response;
   }
 
   /**
-   * Issue non-fungible token
+   * Create nft item and nft item metadata
    * @param {import('@casimir/platform-core').NonFungibleTokenIssuePayload} payload
    * @return {Promise<Object>}
    */
-  async issue(payload) {
+  async createNftItem(payload) {
     const {
       initiator: { privKey },
       data: {
         issuer,
-        classId,
-        instanceId,
+        nftCollectionId,
+        nftItemId,
         recipient,
-        metadata
+        ownedByTeam = false,
+        metadata: {
+          contentType,
+          title,
+          nftItemMetadataDraftId,
+          authors = [],
+          metadata = {},
+          references = []
+        }
       }
     } = payload;
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
+    await ChainService.getInstanceAsync(env)
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const metadataHash = genSha256Hash(metadata);
-            const issueNonFungibleTokenCmd = new IssueNonFungibleTokenCmd({
+            const createNftItemCmd = new CreateNftItemCmd({
               issuer,
-              classId,
-              instanceId,
+              nftCollectionId,
+              nftItemId,
               recipient,
-              metadata,
-              metadataHash
+              ownedByTeam
             });
-            txBuilder.addCmd(issueNonFungibleTokenCmd);
+            txBuilder.addCmd(createNftItemCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -140,9 +172,221 @@ export class NonFungibleTokenService {
               return msg;
             }
 
-            return this.nonFungibleTokenHttp.issue(msg);
+            return this.nonFungibleTokenHttp.createNftItem(msg);
           });
       });
+
+    const createNftItemMetadataCmd = new CreateNftItemMetadataCmd({
+      entityId: nftItemId,
+      nftCollectionId,
+      owner: recipient,
+      ownedByTeam,
+      contentType,
+      nftItemMetadataDraftId,
+      authors,
+      metadata,
+      references,
+      title
+    });
+
+    const msg = new JsonDataMsg(
+      { appCmds: [createNftItemMetadataCmd] },
+      { 'nft-collection-id': nftCollectionId }
+    );
+
+    const response = await this.nonFungibleTokenHttp.createNftItemMetadata(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_CREATED
+                  && eventBody.event.eventPayload.entityId === response.data._id;
+    }, 10000);
+
+    return response;
+  }
+
+  /**
+   * Update nft collection metadata
+   * @param {Object} payload.data
+   * @param {string} payload.data._id
+   * @param {Array.<Object>} payload.data.attributes
+   * @returns {Promise<Object>}
+   */
+  async updateNftCollectionMetadata(payload) {
+    const {
+      data
+    } = payload;
+
+    const {
+      _id
+    } = data;
+
+    const {
+      formData,
+      attributes
+    } = NonFungibleTokenService.#convertFormData(data);
+
+    const updateNftCollectionMetadataCmd = new UpdateNftCollectionMetadataCmd({
+      _id,
+      attributes
+    });
+
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [updateNftCollectionMetadataCmd] },
+      { 'entity-id': _id }
+    );
+    const response = await this.nonFungibleTokenHttp.updateNftCollectionMetadata(msg);
+
+    const { RETURN_MSG } = this.proxydi.get('env');
+
+    if (RETURN_MSG === true) {
+      return msg;
+    }
+
+    return response;
+  }
+
+  /**
+   * Create nft item metadata draft
+   * @param {Object} payload.data
+   * @param {string} payload.data.nftCollectionId
+   * @param {number} payload.data.formatType
+   * @param {Object} payload.data.jsonData
+   * @param {number} payload.data.status
+   * @param {string} payload.data.owner,
+   * @param {boolean} payload.data.ownedByTeam,
+   * @param {Array.<Object>} payload.data.attributes
+   * @returns {Promise<Object>}
+   */
+  async createNftItemMetadataDraft(payload) {
+    const {
+      data
+    } = payload;
+
+    const formData = createFormData(data);
+
+    const createNftItemMetadataDraftCmd = new CreateNftItemMetadataDraftCmd(data);
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [createNftItemMetadataDraftCmd] },
+      { 'nft-collection-id': data.nftCollectionId }
+    );
+
+    const { RETURN_MSG } = this.proxydi.get('env');
+
+    if (RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.nonFungibleTokenHttp.createNftItemMetadataDraft(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_CREATED
+                  && eventBody.event.eventPayload.entityId === response.data._id;
+    }, 10000);
+
+    return response;
+  }
+
+  /**
+   * Update nft item metadata draft
+   * @param {Object} payload.data
+   * @param {string} payload.data._id,
+   * @param {number} payload.data.formatType
+   * @param {Object} payload.data.jsonData
+   * @param {string} payload.data.nftCollectionId,
+   * @param {Array.<Object>} payload.data.attributes
+   * @returns {Promise<Object>}
+   */
+  async updateNftItemMetadataDraft(payload) {
+    const { data } = payload;
+    const formData = createFormData(data);
+
+    const updateNftItemMetadataDraftCmd = new UpdateNftItemMetadataDraftCmd(data);
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [updateNftItemMetadataDraftCmd] },
+      { 'entity-id': data._id }
+    );
+
+    const { RETURN_MSG } = this.proxydi.get('env');
+
+    if (RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.nonFungibleTokenHttp.updateNftItemMetadataDraft(msg);
+
+    return response;
+  }
+
+  /**
+   * Delete nft item metadata draft
+   * @param {string} nftItemMetadataDraftId
+   * @returns {Promise<Object>}
+   */
+  async deleteNftItemMetadataDraft(nftItemMetadataDraftId) {
+    const deleteNftItemMetadataDraftCmd = new DeleteNftItemMetadataDraftCmd({
+      _id: nftItemMetadataDraftId
+    });
+    const msg = new JsonDataMsg(
+      { appCmds: [deleteNftItemMetadataDraftCmd] },
+      { 'entity-id': nftItemMetadataDraftId }
+    );
+    const { RETURN_MSG } = this.proxydi.get('env');
+
+    if (RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.nonFungibleTokenHttp.deleteNftItemMetadataDraft(msg);
+  }
+
+  /**
+   * Moderate nft item metadata draft
+   * @param {Object} payload
+   * @param {Object} payload.data
+   * @param {string} payload.data._id
+   * @param {string} payload.data.status PROJECT_CONTENT_DRAFT_STATUS
+   * @param {string} payload.data.moderationMessage
+   * @returns
+   */
+  async moderateNftItemMetadataDraft(payload) {
+    const { data } = payload;
+    const { _id, status, moderationMessage } = data;
+
+    const appCmds = [];
+
+    const updateStatusCmd = new UpdateNftItemMetadataDraftStatusCmd({ _id, status });
+    appCmds.push(updateStatusCmd);
+
+    if (moderationMessage) {
+      const updateMetadataCmd = new UpdateNftItemMetadataDraftModerationMsgCmd({
+        _id,
+        moderationMessage
+      });
+      appCmds.push(updateMetadataCmd);
+    }
+
+    const msg = new JsonDataMsg({ appCmds }, { 'entity-id': _id });
+
+    const { RETURN_MSG } = this.proxydi.get('env');
+
+    if (RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.nonFungibleTokenHttp.moderateNftItemMetadataDraft(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CONTENT_DRAFT_STATUS_UPDATED
+                  && eventBody.event.eventPayload._id === response.data._id;
+    }, 10000);
+
+    return response;
   }
 
   /**
@@ -160,8 +404,8 @@ export class NonFungibleTokenService {
     const transferTokenCmd = new TransferNonFungibleTokenCmd({
       from,
       to,
-      classId: token.classId,
-      instanceId: token.instanceId
+      nftCollectionId: token.nftCollectionId,
+      nftItemId: token.nftItemId
     });
 
     return transferToken(
@@ -173,40 +417,133 @@ export class NonFungibleTokenService {
   }
 
   /**
-   * Get non-fungible token
-   * @param {string} classId
-   * @return {Promise<Object>}
+   * Get nft collection by id
+   * @param {string} nftCollectionId
+   * @returns {Promise<Object>}
    */
-  async getClass(classId) {
-    return this.nonFungibleTokenHttp.getClass(classId);
+  async getNftCollection(nftCollectionId) {
+    return this.nonFungibleTokenHttp.getNftCollection(nftCollectionId);
   }
 
   /**
-   * Get non-fungible tokens
+   * Get nft collections list by ids
+   * @param {Array.<string>} ids
+   * @returns {Promise<Object>}
+   */
+  async getNftCollectionsListByIds(ids) {
+    return this.nonFungibleTokenHttp.getNftCollectionsListByIds(ids);
+  }
+
+  /**
+   * Get default nft collection by issuer
+   * @param {string} issuer
+   * @returns {Promise<Object>}
+   */
+  async getDefaultNftCollectionByIssuer(issuer) {
+    return this.nonFungibleTokenHttp.getDefaultNftCollectionByIssuer(issuer);
+  }
+
+  /**
+   * Get public nft collections list
+   * @param {Object} filter
+   * @param {Array} filter.attributes
+   * @param {Array.<string>} filter.attributes
+   * @returns {Promise<Object>}
+   */
+  async getNftCollectionsList(filter = {}) {
+    const {
+      attributes = [],
+      portalIds = []
+    } = filter;
+
+    return this.nonFungibleTokenHttp.getNftCollectionsList({
+      attributes,
+      portalIds
+    });
+  }
+
+  /**
+   * Get nft item
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
+  async getNftItem(id) {
+    return this.nonFungibleTokenHttp.getNftItem(id);
+  }
+
+  /**
+   * Get nft collections list by issuer
+   * @param {string} issuer
+   * @returns {Promise<Object>}
+   */
+  async getNftCollectionsListByIssuer(issuer) {
+    return this.nonFungibleTokenHttp.getNftCollectionsListByIssuer(issuer);
+  }
+
+  /**
+   * Get public nft items list
+   * @returns {Promise<Object>}
+   */
+  async getNftItemsList() {
+    return this.nonFungibleTokenHttp.getNftItemsList();
+  }
+
+  /**
+   * Get nft items list by nft collection
+   * @param {string} id
+   */
+  async getNftItemsListByNftCollection(id) {
+    return this.nonFungibleTokenHttp.getNftItemsListByNftCollection(id);
+  }
+
+  /**
+   * Get nft items list paginated
    * @param {Object} query
-   * @return {Promise<Object>}
+   * @param {Object} query.sort 'asc', 'desc'
+   * @param {Number} query.page 0 or above
+   * @param {Number} query.pageSize from 1 to 100
+   * @param {Object} query.filter
    */
-  async getClasses(query) {
-    return this.nonFungibleTokenHttp.getClasses(query);
+  async getNftItemsListPaginated(query) {
+    return this.nonFungibleTokenHttp.getNftItemsListPaginated(query);
   }
 
   /**
-   * Get non-fungible token instances by owner and non-fungible token
-   * @param {string} account
-   * @param {string} classId
-   * @return {Promise<Object>}
+   * Get nft item metadata drafts list paginated
+   * @param {Object} query
+   * @param {Object} query.sort 'asc', 'desc'
+   * @param {Number} query.page 0 or above
+   * @param {Number} query.pageSize from 1 to 100
+   * @param {Object} query.filter
    */
-  async getClassInstancesByOwner(account, classId) {
-    return this.nonFungibleTokenHttp.getClassInstancesByOwner(account, classId);
+  async getNftItemMetadataDraftsListPaginated(query) {
+    return this.nonFungibleTokenHttp.getNftItemMetadataDraftsListPaginated(query);
   }
 
   /**
-   * Get non-fungible token instances by owner
-   * @param {string} account
-   * @return {Promise<Object>}
+   * Get nft item metadata drafts list by nft collection
+   * @param {string} nftCollectionId
+   * @returns {Promise<Object>}
    */
-  async getClassesInstancesByOwner(account) {
-    return this.nonFungibleTokenHttp.getClassesInstancesByOwner(account);
+  async getNftItemMetadataDraftsByNftCollection(nftCollectionId) {
+    return this.nonFungibleTokenHttp.getNftItemMetadataDraftsByNftCollection(nftCollectionId);
+  }
+
+  /**
+   * Get nft item metadata draft by id
+   * @param {string} id
+   * @returns {Promise<Object>}
+   */
+  async getNftItemMetadataDraft(id) {
+    return this.nonFungibleTokenHttp.getNftItemMetadataDraft(id);
+  }
+
+  /**
+   * Get nft collection list for portal
+   * @returns {Promise<Object>}
+   */
+  async getPortalNftCollectionList() {
+    return this.nonFungibleTokenHttp.getPortalNftCollectionList();
   }
 
   /** @type {() => NonFungibleTokenService} */

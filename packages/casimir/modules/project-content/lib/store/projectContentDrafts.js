@@ -1,4 +1,4 @@
-import { ProjectContentService } from '@deip/project-content-service';
+import { NonFungibleTokenService } from '@casimir/token-service';
 
 import {
   listGetter,
@@ -8,7 +8,7 @@ import {
   removeFromListMutation
 } from '@deip/platform-util';
 
-const projectContentService = ProjectContentService.getInstance();
+const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 
 const STATE = {
   data: []
@@ -21,31 +21,31 @@ const GETTERS = {
 
 const ACTIONS = {
   async getListByProjectId({ commit }, projectId) {
-    const res = await projectContentService.getDraftsByProject(projectId);
+    const res = await nonFungibleTokenService.getNftItemMetadataDraftsByNftCollection(projectId);
     commit('setList', res.data.items);
   },
 
   async getListPaginated({ commit }, query) {
-    const res = await projectContentService.getDraftsListPaginated(query);
+    const res = await nonFungibleTokenService.getNftItemMetadataDraftsListPaginated(query);
     commit('setList', res.data.items);
     return res.data;
   },
 
   async getOne({ commit }, id) {
-    const res = await projectContentService.getDraft(id);
+    const res = await nonFungibleTokenService.getNftItemMetadataDraft(id);
     commit('setOne', res.data);
   },
 
   async create(_, payload) {
-    return projectContentService.createDraft(payload);
+    return nonFungibleTokenService.createNftItemMetadataDraft(payload);
   },
 
   async update(_, payload) {
-    return projectContentService.updateDraft(payload);
+    return nonFungibleTokenService.updateNftItemMetadataDraft(payload);
   },
 
   async remove({ commit }, id) {
-    await projectContentService.deleteDraft(id);
+    await nonFungibleTokenService.deleteNftItemMetadataDraft(id);
     commit('remove', id);
   },
 
@@ -64,7 +64,7 @@ const ACTIONS = {
       }
     } = payload;
 
-    await projectContentService.createContent(
+    await nonFungibleTokenService.createNftItem(
       {
         initiator,
         data: {
@@ -85,7 +85,7 @@ const ACTIONS = {
   },
 
   moderate(_, payload) {
-    return projectContentService.moderateProjectContentDraft(payload);
+    return nonFungibleTokenService.moderateNftItemMetadataDraft(payload);
   }
 };
 

@@ -3,12 +3,12 @@ import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**
- * Update project content draft command
+ * Update nft item metadata draft command
  * @extends AppCmd
  */
-class UpdateDraftStatusCmd extends AppCmd {
+class UpdateNftItemMetadataDraftStatusCmd extends AppCmd {
   /**
-   * Create command for project content draft status update
+   * Create command for nft item metadata draft status update
    * @param {Object} cmdPayload
    * @param {string} cmdPayload._id
    * @param {number} cmdPayload.status
@@ -23,8 +23,8 @@ class UpdateDraftStatusCmd extends AppCmd {
     assert(!!status, "'status' is required");
     assert(!!PROJECT_CONTENT_DRAFT_STATUS[status], "'status' is invalid");
 
-    super(APP_CMD.UPDATE_DRAFT_STATUS, cmdPayload);
+    super(APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_STATUS, cmdPayload);
   }
 }
 
-export default UpdateDraftStatusCmd;
+export default UpdateNftItemMetadataDraftStatusCmd;
