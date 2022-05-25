@@ -1,3 +1,4 @@
+import { proxydi } from '@deip/proxydi';
 import { AttributesService } from '../../lib/AttributesService';
 
 const mockGetList = jest.fn();
@@ -99,28 +100,57 @@ describe('attributesService', () => {
 
   describe('create', () => {
     it('should call attributesHttp.create with right params', () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({});
       attributesService.create();
+
       expect(mockCreate).toBeCalledWith(
         { message: 'testMessage' }
       );
+    });
+
+    it('should not call attributesHttp.create and return message', async () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({
+        RETURN_MSG: true
+      });
+
+      expect(await attributesService.create()).toEqual({ message: 'testMessage' });
+      expect(mockCreate).not.toBeCalled();
     });
   });
 
   describe('update', () => {
     it('should call attributesHttp.update with right params', () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({});
       attributesService.update();
+
       expect(mockUpdate).toBeCalledWith(
         { message: 'testMessage' }
       );
+    });
+
+    it('should not call attributesHttp.update and return message', async () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({ RETURN_MSG: true });
+
+      expect(await attributesService.update()).toEqual({ message: 'testMessage' });
+      expect(mockUpdate).not.toBeCalled();
     });
   });
 
   describe('delete', () => {
     it('should call attributesHttp.delete with right params', () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({});
       attributesService.delete();
+
       expect(mockDelete).toBeCalledWith(
         { message: 'testMessage' }
       );
+    });
+
+    it('should not call attributesHttp.delete and return message', async () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({ RETURN_MSG: true });
+
+      expect(await attributesService.delete()).toEqual({ message: 'testMessage' });
+      expect(mockDelete).not.toBeCalled();
     });
   });
 
@@ -133,10 +163,19 @@ describe('attributesService', () => {
 
   describe('updateSettings', () => {
     it('should call attributesHttp.updateSettings with right params', () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({});
       attributesService.updateSettings();
+
       expect(mockUpdateSettings).toBeCalledWith(
         { message: 'testMessage' }
       );
+    });
+
+    it('should not call attributesHttp.updateSettings and return message', async () => {
+      jest.spyOn(proxydi, 'get').mockReturnValue({ RETURN_MSG: true });
+
+      expect(await attributesService.updateSettings()).toEqual({ message: 'testMessage' });
+      expect(mockUpdateSettings).not.toBeCalled();
     });
   });
 });

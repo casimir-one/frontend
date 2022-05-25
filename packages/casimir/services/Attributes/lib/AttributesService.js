@@ -6,6 +6,7 @@ import {
 } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
+import { proxydi } from '@deip/proxydi';
 import { AttributesHttp } from './AttributesHttp';
 
 /**
@@ -13,6 +14,7 @@ import { AttributesHttp } from './AttributesHttp';
  */
 export class AttributesService {
   attributesHttp = AttributesHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * Get all attributes list
@@ -73,6 +75,12 @@ export class AttributesService {
   async create(attribute) {
     const createAttributeCmd = new CreateAttributeCmd(attribute);
     const msg = new JsonDataMsg({ appCmds: [createAttributeCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.attributesHttp.create(msg);
   }
 
@@ -84,6 +92,12 @@ export class AttributesService {
   async update(payload) {
     const updateAttributeCmd = new UpdateAttributeCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [updateAttributeCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.attributesHttp.update(msg);
   }
 
@@ -95,6 +109,12 @@ export class AttributesService {
   async delete(attributeId) {
     const deleteAttributeCmd = new DeleteAttributeCmd({ attributeId });
     const msg = new JsonDataMsg({ appCmds: [deleteAttributeCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.attributesHttp.delete(msg);
   }
 
@@ -114,6 +134,12 @@ export class AttributesService {
   async updateSettings(data) {
     const updateAttributeSettingsCmd = new UpdateAttributeSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateAttributeSettingsCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.attributesHttp.updateSettings(msg);
   }
 

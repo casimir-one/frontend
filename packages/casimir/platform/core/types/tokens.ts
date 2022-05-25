@@ -4,7 +4,7 @@ import { ServiceBasePayload } from './servicePayload';
  * Project reference
  * @todo: discard in future
  */
-type ProjectTokenSettings = {
+type TokenMetadata = {
   projectId: string,
   teamId?: string,
   licenseRevenue?: { holdersShare: string }
@@ -22,7 +22,7 @@ type TokenIssuer = {
  */
 type CommonTokenData = TokenIssuer & {
   description?: string,
-  projectTokenSettings?: ProjectTokenSettings
+  metadata?: TokenMetadata
 };
 
 export type TokenTransferData<T> = {

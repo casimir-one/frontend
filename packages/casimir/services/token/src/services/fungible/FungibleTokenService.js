@@ -63,10 +63,10 @@ export class FungibleTokenService {
 
             if (holders && holders.length) {
               for (let i = 0; i < holders.length; i++) {
-                const { account, token } = holders[i];
+                const { account, asset } = holders[i];
                 const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
                   tokenId,
-                  amount: token.amount,
+                  amount: asset.amount,
                   issuer,
                   recipient: account
                 });
@@ -79,6 +79,11 @@ export class FungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.fungibleTokenHttp.create(msg);
           });
       });
@@ -120,6 +125,11 @@ export class FungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.fungibleTokenHttp.issue(msg);
           });
       });

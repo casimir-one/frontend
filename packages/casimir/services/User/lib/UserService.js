@@ -76,6 +76,11 @@ export class UserService {
               packedTx.getPayload(),
               { 'entity-id': updater }
             );
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.userHttp.update(msg);
           });
       });
@@ -127,6 +132,11 @@ export class UserService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': username });
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.userHttp.changePassword(msg);
           });
       });

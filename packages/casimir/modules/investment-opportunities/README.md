@@ -2,7 +2,9 @@
 
 ## Description
 
-The module allows
+The module creates a special section in store, named investmentOpportunitiesStore (meaning
+opportunities to get or fundraise investments for certain project and certain team), which keeps
+data about all investors, investments, dates of fundraising events etc
 
 ## Usage
 
