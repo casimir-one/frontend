@@ -25,6 +25,7 @@ class CreateNonFungibleTokenCmd extends ProtocolEntityCmd {
       metadata
     } = cmdPayload;
 
+    assert(entityId !== undefined, "'entityId' is required");
     assert(!!issuer, "'issuer' is required");
 
     if (metadata) { // keep this until we have working F-NFT
