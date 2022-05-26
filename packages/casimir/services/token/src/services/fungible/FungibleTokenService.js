@@ -63,10 +63,10 @@ export class FungibleTokenService {
 
             if (holders && holders.length) {
               for (let i = 0; i < holders.length; i++) {
-                const { account, token } = holders[i];
+                const { account, asset } = holders[i];
                 const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
                   tokenId,
-                  amount: token.amount,
+                  amount: asset.amount,
                   issuer,
                   recipient: account
                 });
