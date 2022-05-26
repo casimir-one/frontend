@@ -421,7 +421,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         return assetsDtos;
       },
 
-      getLastKnownFtId: async () => {
+      getNextAvailableFtId: async () => {
         // TODO: must be replaced with read model index
         const list = await this.getFungibleTokenListAsync();
         return list.length + 1;
@@ -570,7 +570,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       },
 
 
-      getLastKnownNftClassId: async () => {
+      getNextAvailableNftClassId: async () => {
         // TODO: must be replaced with read model index
         const list = await this.getNonFungibleTokenClassesAsync();
         return list.length + 1;

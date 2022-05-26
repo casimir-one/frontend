@@ -48,7 +48,7 @@ export class FungibleTokenService {
 
         return chainTxBuilder.begin()
           .then(async (txBuilder) => {
-            const entityId = await chainRpc.getLastKnownFtId();
+            const entityId = await chainRpc.getNextAvailableFtId();
 
             const createFungibleTokenCmd = new CreateFungibleTokenCmd({
               entityId,

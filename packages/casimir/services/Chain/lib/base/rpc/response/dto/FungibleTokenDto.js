@@ -14,7 +14,7 @@ class FungibleTokenDto {
 
     assert(isNumber(assetId) || isString(assetId), "Asset ID is not specified");
     assert(!!issuer, "Asset issuer is not specified");
-    assert(isNumber(precision) || isString(precision), "Asset precision is not specified");
+    assert(isNumber(precision), "Asset precision is not specified");
 
     this.assetId = assetId;
     this.issuer = issuer;

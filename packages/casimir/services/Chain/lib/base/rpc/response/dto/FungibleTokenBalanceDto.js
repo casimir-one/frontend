@@ -14,7 +14,7 @@ class FungibleTokenBalanceDto {
     assert(!!account, "Asset balance account is not specified");
     assert(isNumber(assetId) || isString(assetId), "Asset ID is not specified");
     assert(isNumber(amount) || isString(amount), "Asset balance amount is not specified");
-    assert(isNumber(precision) || isString(precision), "Asset precision is not specified");
+    assert(isNumber(precision), "Asset precision is not specified");
 
     this.account = account;
     this.assetId = assetId;
