@@ -27,6 +27,7 @@ class CreateFungibleTokenCmd extends ProtocolEntityCmd {
       metadata
     } = cmdPayload;
 
+    assert(entityId !== undefined, "'entityId' is required");
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
     assert(isNumber(precision) || isString(precision), "'precision' must be a number");

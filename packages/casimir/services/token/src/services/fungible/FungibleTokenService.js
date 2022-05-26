@@ -1,4 +1,4 @@
-import { genRipemd160Hash, createInstanceGetter } from '@deip/toolbox';
+import { createInstanceGetter } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
 import {
@@ -44,10 +44,12 @@ export class FungibleTokenService {
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
+        const chainRpc = chainService.getChainRpc();
 
         return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const entityId = genRipemd160Hash(symbol);
+          .then(async (txBuilder) => {
+            const entityId = await chainRpc.getLastKnownFtId();
+
             const createFungibleTokenCmd = new CreateFungibleTokenCmd({
               entityId,
               issuer,

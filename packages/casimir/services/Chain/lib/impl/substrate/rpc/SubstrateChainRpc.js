@@ -469,7 +469,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       getFungibleTokenBalancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
         const balancesDtos = await this.getFungibleTokenBalancesListAsync(false);
-        const coreBalanceDto = await this.getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
+        const coreBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
         return [coreBalanceDto, ...balancesDtos.filter((balanceDto) => balanceDto.account == daoIdOrPubKeyOrAddress)];
       },
 
