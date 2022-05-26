@@ -25,8 +25,10 @@ class TransferNonFungibleTokenCmd extends ProtocolCmd {
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(isNumber(classId) || isString(classId), "NFT 'classId' is required");
-    assert(isNumber(instanceId) || isString(instanceId), "NFT 'instanceId' is required");
+    assert(isNumber(classId) || (isString(classId) && classId),
+      "'classId' is required and must be a number or non emplty string");
+    assert(isNumber(instanceId) || (isString(instanceId) && instanceId),
+      "'instanceId' is required and must be a number or non emplty string");
 
     super(APP_CMD.TRANSFER_NFT, cmdPayload);
   }

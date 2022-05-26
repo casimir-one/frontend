@@ -46,7 +46,7 @@ export class NonFungibleTokenService {
         return chainTxBuilder.begin()
           .then(async (txBuilder) => {
             const metadataHash = genSha256Hash(metadata);
-            const entityId = await chainRpc.getLastKnownNftClassId();
+            const entityId = await chainRpc.getNextAvailableNftClassId();
 
             const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
               entityId,

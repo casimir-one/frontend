@@ -27,10 +27,11 @@ class CreateFungibleTokenCmd extends ProtocolEntityCmd {
       metadata
     } = cmdPayload;
 
-    assert(entityId !== undefined, "'entityId' is required");
+    assert(isNumber(entityId) || (isString(entityId) && entityId),
+      "'entityId' is required and must be a number or non emplty string");
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
-    assert(isNumber(precision) || isString(precision), "'precision' must be a number");
+    assert(isNumber(precision), "'precision' is required and must be a number");
 
     if (metadata) { // keep this until we have working F-NFT
       const { projectId, teamId, licenseRevenue } = metadata;
