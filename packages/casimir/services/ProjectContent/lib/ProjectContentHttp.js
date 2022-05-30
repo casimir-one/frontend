@@ -1,4 +1,4 @@
-import { HttpService } from '@deip/http-service';
+import { HttpService, serializeParams } from '@deip/http-service';
 import { createInstanceGetter } from '@deip/toolbox';
 
 /**
@@ -50,7 +50,8 @@ export class ProjectContentHttp {
    * @returns {Promise<Object>}
    */
   async publishContent(req) {
-    return this.http.post('/api/v2/project-content/ref/publish', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.post('/api/v2/project-content/ref/publish',
+      req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   /**
@@ -68,7 +69,8 @@ export class ProjectContentHttp {
    * @returns {Promise<Object>}
    */
   async createDraft(req) {
-    return this.http.post('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.post('/api/v2/project-content/texture',
+      req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   /**
@@ -77,7 +79,8 @@ export class ProjectContentHttp {
    * @returns {Promise<Object>}
    */
   async updateDraft(req) {
-    return this.http.put('/api/v2/project-content/texture', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put('/api/v2/project-content/texture',
+      req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   /**
@@ -86,7 +89,8 @@ export class ProjectContentHttp {
    * @returns {Promise<Object>}
    */
   async deleteDraft(req) {
-    return this.http.put('/api/v2/project-content/draft/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put('/api/v2/project-content/draft/delete',
+      req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   /**
@@ -95,7 +99,8 @@ export class ProjectContentHttp {
    * @returns {Promise<Object>}
    */
   async unlockDraft(req) {
-    return this.http.put('/api/v2/project-content/draft/unlock', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put('/api/v2/project-content/draft/unlock',
+      req.getHttpBody(), { headers: req.getHttpHeaders() });
   }
 
   /**
@@ -113,6 +118,18 @@ export class ProjectContentHttp {
    */
   async getPublicContentList() {
     return this.http.get('/api/v2/project-content/listing');
+  }
+
+  /**
+   * @param {Object} q
+   * @param {Object} q.sort 'asc', 'desc' by fields
+   * @param {Number} q.page 0 or above
+   * @param {Number} q.pageSize from 1 to 100
+   * @param {Object} q.filter
+   */
+  async getContentListPaginated(q) {
+    const query = serializeParams(q);
+    return this.http.get(`/api/v2/project-content/listing-paginated?${query}`);
   }
 
   /**
