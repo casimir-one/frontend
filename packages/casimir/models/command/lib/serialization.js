@@ -50,6 +50,8 @@ import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
 import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
 import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
+import UpdateDraftStatusCmd from './impl/UpdateDraftStatusCmd';
+import UpdateDraftModerationMessageCmd from './impl/UpdateDraftModerationMessageCmd';
 
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
@@ -102,7 +104,9 @@ const APP_CMD_INFO = {
   [APP_CMD.DELETE_USER_PROFILE]: { class: DeleteUserProfileCmd },
   [APP_CMD.CREATE_BOOKMARK]: { class: CreateBookmarkCmd },
   [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
-  [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd }
+  [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd },
+  [APP_CMD.UPDATE_DRAFT_STATUS]: { class: UpdateDraftStatusCmd },
+  [APP_CMD.UPDATE_DRAFT_MODERATION_MESSAGE]: { class: UpdateDraftModerationMessageCmd }
 };
 
 export {

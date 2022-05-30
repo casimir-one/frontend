@@ -1,4 +1,4 @@
-import { APP_CMD, PROJECT_CONTENT_FORMAT } from '@deip/constants';
+import { APP_CMD, PROJECT_CONTENT_FORMAT, PROJECT_CONTENT_DRAFT_STATUS } from '@deip/constants';
 import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
@@ -21,13 +21,15 @@ class CreateDraftCmd extends AppCmd {
    * @param {number} cmdPayload.formatType
    * @param {Object} cmdPayload.jsonData
    * @param {Object} cmdPayload.metadata
+   * @param {Object} cmdPayload.status
    */
   constructor(cmdPayload) {
     const {
       projectId,
       formatType,
       draftId,
-      jsonData
+      jsonData,
+      status
     } = cmdPayload;
 
     assert(!!projectId, "'projectId' is required");
@@ -36,6 +38,9 @@ class CreateDraftCmd extends AppCmd {
       assert(!!jsonData, `'jsonData' is required for ${formatType} formatType`);
     }
     assert(!!draftId, "'draftId' is required");
+    if (status) {
+      assert(!!PROJECT_CONTENT_DRAFT_STATUS[status], "'status' is invalid");
+    }
 
     super(APP_CMD.CREATE_DRAFT, cmdPayload);
   }

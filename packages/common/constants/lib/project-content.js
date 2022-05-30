@@ -3,7 +3,8 @@ import { createEnum } from '@deip/toolbox';
 const PROJECT_CONTENT_DRAFT_STATUS = createEnum({
   IN_PROGRESS: 1,
   PROPOSED: 2,
-  PUBLISHED: 3
+  REJECTED: 3,
+  APPROVED: 4
 });
 
 const PROJECT_CONTENT_FORMAT = createEnum({
@@ -37,9 +38,8 @@ const PROJECT_CONTENT_TYPES = createEnum({
 });
 
 const PROJECT_CONTENT_STATUS = createEnum({
-  MODERATION_REQUIRED: 1,
-  MODERATION_REJECTED: 2,
-  MODERATION_PASSED: 3
+  MODERATION_PASSED: 1,
+  MODERATION_REJECTED: 2
 });
 
 export {
