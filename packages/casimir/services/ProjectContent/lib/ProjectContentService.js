@@ -387,6 +387,17 @@ export class ProjectContentService {
     return projectContentTypes.find((t) => t.type === type || t.id === type);
   }
 
+  /**
+   * @param {Object} query
+   * @param {Object} query.sort 'asc', 'desc'
+   * @param {Number} query.page 0 or above
+   * @param {Number} query.pageSize from 1 to 100
+   * @param {Object} query.filter
+   */
+  getContentListPaginated(query) {
+    return this.projectContentHttp.getContentListPaginated(query);
+  }
+
   /** @type {() => ProjectContentService} */
   static getInstance = createInstanceGetter(ProjectContentService);
 }
