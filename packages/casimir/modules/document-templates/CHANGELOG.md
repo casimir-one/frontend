@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Features
+
+* document-templates-module README.md is created ([f5a686c](https://github.com/DEIPworld/deip-modules/commit/f5a686cd08bcb076621cf488090a9b254330952e))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/document-templates-module

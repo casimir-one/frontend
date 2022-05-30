@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.378.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Bug Fixes
+
+* **@deip/http-service:** fix error getter ([4643b9f](https://github.com/DEIPworld/casimir-frontend/commit/4643b9fcae986da8cd377a3945996035d7c1129e))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/http-service

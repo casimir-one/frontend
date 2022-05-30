@@ -1,6 +1,6 @@
 {
   "name": "@deip/commands",
-  "version": "1.377.0",
+  "version": "1.378.0",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,8 +23,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.377.0",
-    "@deip/constants": "1.377.0",
+    "@casimir/platform-core": "1.378.0",
+    "@deip/constants": "1.378.0",
     "@deip/toolbox": "1.375.1"
   },
   "devDependencies": {

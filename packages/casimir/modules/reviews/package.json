@@ -1,6 +1,6 @@
 {
   "name": "@casimir/reviews-module",
-  "version": "1.377.0",
+  "version": "1.378.0",
   "description": "> TODO: description",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "keywords": [
@@ -19,16 +19,16 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/constants": "1.377.0",
-    "@deip/platform-util": "1.377.0",
-    "@deip/project-content-module": "1.377.0",
-    "@deip/project-content-service": "1.377.0",
-    "@deip/review-service": "1.377.0",
+    "@deip/constants": "1.378.0",
+    "@deip/platform-util": "1.378.0",
+    "@deip/project-content-module": "1.378.0",
+    "@deip/project-content-service": "1.378.0",
+    "@deip/review-service": "1.378.0",
     "@deip/toolbox": "1.375.1",
-    "@deip/users-module": "1.377.0",
-    "@deip/vue-elements": "1.377.0",
-    "@deip/vue-layout-schema": "1.377.0",
-    "@deip/vuetify-extended": "1.377.0",
+    "@deip/users-module": "1.378.0",
+    "@deip/vue-elements": "1.378.0",
+    "@deip/vue-layout-schema": "1.378.0",
+    "@deip/vuetify-extended": "1.378.0",
     "change-case": "^4.1.2",
     "chunk": "^0.0.3",
     "vee-validate": "^3.4.9",
