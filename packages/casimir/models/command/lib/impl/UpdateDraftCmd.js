@@ -23,12 +23,12 @@ class UpdateDraftCmd extends AppCmd {
    */
   constructor(cmdPayload) {
     const {
-      _id: draftId,
+      _id,
       formatType,
       jsonData
     } = cmdPayload;
 
-    assert(!!draftId, "'draftId' is required");
+    assert(!!_id, "'_id' is required");
     if (formatType && formatType === PROJECT_CONTENT_FORMAT.JSON) {
       assert(!!jsonData, `'jsonData' is required for ${formatType} formatType`);
     }
