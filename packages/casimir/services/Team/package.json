@@ -1,6 +1,6 @@
 {
   "name": "@deip/team-service",
-  "version": "1.380.0",
+  "version": "1.381.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,15 +22,15 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/chain-service": "1.380.0",
+    "@deip/chain-service": "1.381.0",
     "@deip/commands": "1.380.0",
     "@deip/constants": "1.380.0",
     "@deip/http-service": "1.380.0",
     "@deip/lib-crypto": "1.375.1",
-    "@deip/messages": "1.380.0",
+    "@deip/messages": "1.381.0",
     "@deip/proxydi": "1.380.0",
     "@deip/toolbox": "1.380.0",
-    "@deip/user-service": "1.380.0",
+    "@deip/user-service": "1.381.0",
     "@deip/web-socket-service": "1.380.0"
   }
 }

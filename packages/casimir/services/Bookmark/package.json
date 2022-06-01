@@ -1,6 +1,6 @@
 {
   "name": "@deip/bookmark-service",
-  "version": "1.380.0",
+  "version": "1.381.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,7 +25,7 @@
     "@deip/commands": "1.380.0",
     "@deip/constants": "1.380.0",
     "@deip/http-service": "1.380.0",
-    "@deip/messages": "1.380.0",
+    "@deip/messages": "1.381.0",
     "@deip/proxydi": "1.380.0",
     "@deip/toolbox": "1.380.0"
   }

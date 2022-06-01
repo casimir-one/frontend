@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.381.0](https://github.com/DEIPworld/deip-modules/compare/v1.380.0...v1.381.0) (2022-06-01)
+
+
+### Features
+
+* **@deip/chain-service:** metadata registry is fixed for new api version ([b5327b3](https://github.com/DEIPworld/deip-modules/commit/b5327b34ce6bb64d439cbc296cb2010d4d870466))
+
+
+
+
+
 # [1.380.0](https://github.com/DEIPworld/deip-modules/compare/v1.379.0...v1.380.0) (2022-06-01)
 
 
