@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+
+### Features
+
+* teams-module README.md is ready ([e2ce10c](https://github.com/DEIPworld/deip-modules/commit/e2ce10cea18dc036bcba9ea876593eb6d360dd1d))
+
+
+
+
+
 # [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
 
 **Note:** Version bump only for package @deip/teams-module

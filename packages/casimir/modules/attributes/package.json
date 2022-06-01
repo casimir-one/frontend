@@ -1,6 +1,6 @@
 {
   "name": "@deip/attributes-module",
-  "version": "1.378.0",
+  "version": "1.379.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/attributes-service": "1.378.0",
+    "@deip/attributes-service": "1.379.0",
     "@deip/constants": "1.378.0",
     "@deip/platform-components": "1.378.0",
     "@deip/platform-util": "1.378.0",

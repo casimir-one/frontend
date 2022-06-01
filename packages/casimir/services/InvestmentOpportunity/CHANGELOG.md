@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+**Note:** Version bump only for package @deip/investment-opportunity-service
+
+
+
+
+
 # [1.378.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.377.0...v1.378.0) (2022-05-30)
 
 **Note:** Version bump only for package @deip/investment-opportunity-service
