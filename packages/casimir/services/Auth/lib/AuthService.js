@@ -126,6 +126,7 @@ export class AuthService {
     // TODO: There is no way to define programmatically what user provides exactly -
     // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
     const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
+
     return chainService.generateChainSeedAccount({
       username,
       password: isValidPrivKey ? null : passwordOrPrivKey,

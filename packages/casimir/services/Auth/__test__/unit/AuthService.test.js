@@ -6,6 +6,8 @@ const mockSignIn = jest.fn();
 const mockAdminSignIn = jest.fn();
 const mockSignUp = jest.fn();
 const mockEnd = jest.fn();
+const mockGenerateChainSeedAccount = jest.fn();
+const mockIsValidPrivKey = jest.fn();
 
 jest.mock('@deip/toolbox', () => ({
   ...jest.requireActual('@deip/toolbox'),
@@ -33,7 +35,9 @@ jest.mock('@deip/chain-service', () => ({
           addCmd: jest.fn(),
           end: mockEnd
         })
-      })
+      }),
+      generateChainSeedAccount: mockGenerateChainSeedAccount,
+      isValidPrivKey: mockIsValidPrivKey
     }))
   }
 }));
@@ -245,6 +249,34 @@ describe('AuthService', () => {
 
         await authService.signUp(testInitiator, testUserData);
         expect(mockSignUp).toHaveBeenCalledWith({ message: 'testMessage' });
+      });
+    });
+  });
+
+  describe('generateSeedAccount', () => {
+    const username = 'testUserName';
+
+    it('should call generateChainSeedAccount '
+      + 'with password if privateKey is not valid', async () => {
+      mockIsValidPrivKey.mockReturnValue(false);
+      await authService.generateSeedAccount(username, 'testPassword');
+
+      expect(mockGenerateChainSeedAccount).toHaveBeenCalledWith({
+        password: 'testPassword',
+        privateKey: null,
+        username
+      });
+    });
+
+    it('should call generateChainSeedAccount '
+      + 'with privateKey if privateKey is valid', async () => {
+      mockIsValidPrivKey.mockReturnValue(true);
+      await authService.generateSeedAccount(username, 'testPrivKey');
+
+      expect(mockGenerateChainSeedAccount).toHaveBeenCalledWith({
+        password: null,
+        privateKey: 'testPrivKey',
+        username
       });
     });
   });
