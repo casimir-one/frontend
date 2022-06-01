@@ -22,10 +22,8 @@ class SubstrateChainService extends BaseChainService {
 
   init() {
     if (!this.isInited()) {
-      const typesRegistry = new TypeRegistry();
-      typesRegistry.register(ChainTypes);
       const provider = this._rpcConnectionString.indexOf('ws') !== 0 ? new HttpProvider(this._rpcConnectionString) : new WsProvider(this._rpcConnectionString);
-      return ApiPromise.create({ provider, registry: typesRegistry })
+      return ApiPromise.create({ provider, types: ChainTypes })
         .then((chainNodeClient) => {
           this._chainNodeClient = chainNodeClient;
           this._chainOpsRegistry = new SubstrateChainOperationsRegistry(this._chainNodeClient, { coreAsset: this._coreAsset });
@@ -38,8 +36,10 @@ class SubstrateChainService extends BaseChainService {
           ]);
         })
         .then(([chain, nodeName, nodeVersion, chainMetadata]) => {
+          const typesRegistry = new TypeRegistry();
+          typesRegistry.register(ChainTypes);
           this._chainMetadata = chainMetadata.toHex();
-          this._chainNodeClient.registry.setMetadata(new Metadata(typesRegistry, chainMetadata));
+          this._chainNodeClient.registry.setMetadata(new Metadata(typesRegistry, this._chainMetadata));
           console.log(`Connected to Substrate chain ${chain.toString()} using ${nodeName.toString()} v${nodeVersion.toString()}`);
           this._isInited = true;
           return this;
