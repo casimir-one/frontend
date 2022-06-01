@@ -1,12 +1,12 @@
 import BaseChainSeedAccount from './../../base/BaseChainSeedAccount';
-import GrapheneClient from '@deip/rpc-client';
 import { assert, genMd5Hash } from '@deip/toolbox';
 import { TextEncoder } from "web-encoding"
-import crypto from '@deip/lib-crypto';
 
 
 class GrapheneChainSeedAccount extends BaseChainSeedAccount {
   constructor({ username, password, privateKey }) {
+    const GrapheneClient = require('@deip/rpc-client');
+
     assert((!!password && !privateKey) || (!!privateKey && !password),
       "Either 'password' or 'privateKey' should be specified for account generation");
 
@@ -28,6 +28,7 @@ class GrapheneChainSeedAccount extends BaseChainSeedAccount {
   }
 
   signString(msg) {
+    const crypto = require('@deip/lib-crypto');
     const PrivKey = crypto.PrivateKey.from(this.getPrivKey());
     const sig = PrivKey.sign(new TextEncoder('utf-8').encode(genMd5Hash(msg)).buffer);
     return crypto.hexify(sig);
