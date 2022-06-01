@@ -121,17 +121,16 @@ export class AuthService {
    */
   async generateSeedAccount(username, passwordOrPrivKey) {
     const env = this.proxydi.get('env');
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        // TODO: There is no way to define programmatically what user provides exactly -
-        // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
-        const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
-        return chainService.generateChainSeedAccount({
-          username,
-          password: isValidPrivKey ? null : passwordOrPrivKey,
-          privateKey: isValidPrivKey ? passwordOrPrivKey : null
-        });
-      });
+    const chainService = await ChainService.getInstanceAsync(env);
+
+    // TODO: There is no way to define programmatically what user provides exactly -
+    // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
+    const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
+    return chainService.generateChainSeedAccount({
+      username,
+      password: isValidPrivKey ? null : passwordOrPrivKey,
+      privateKey: isValidPrivKey ? passwordOrPrivKey : null
+    });
   }
 
   /** @type {() => AuthService} */
