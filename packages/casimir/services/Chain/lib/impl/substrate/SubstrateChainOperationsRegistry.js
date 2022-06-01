@@ -1,8 +1,8 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a, stringToHex } from '@polkadot/util';
-import { APP_CMD, ASSET_TYPE, CONTRACT_AGREEMENT_TYPE, PROJECT_CONTENT_TYPES } from '@deip/constants';
-import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress } from './utils';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE, PROJECT_CONTENT_TYPES } from '@deip/constants';
+import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress, isAddress } from './utils';
 import { pascalCase } from 'change-case';
 
 
@@ -340,18 +340,19 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       metadata
     }) => {
 
+      const issuerAddress = toAddress(issuer, chainNodeClient.registry);
+
       const createFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipCreateAsset(
-          /* assetId: */ `0x${entityId}`,
-          /* admin: */ { Dao: `0x${issuer}` },
+        chainNodeClient.tx.assets.create(
+          /* assetId: */ entityId,
+          /* admin: */ issuerAddress,
           /* min_balance: */ minBalance || 1,
-          /* project_id */ metadata ? `0x${metadata.projectId}` : null
         )
       );
 
       const setAssetMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipSetMetadata(
-          /* assetId: */ `0x${entityId}`,
+        chainNodeClient.tx.assets.setMetadata(
+          /* assetId: */ entityId,
           /* name */ name,
           /* symbol */ symbol,
           /* decimals */ precision
@@ -359,11 +360,11 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       );
 
       const setAssetTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipSetTeam(
-          /* assetId: */ `0x${entityId}`,
-          /* issuer */ { Dao: `0x${issuer}` },
-          /* admin */ { Dao: `0x${issuer}` },
-          /* freezer */ { Dao: `0x${issuer}` }
+        chainNodeClient.tx.assets.setTeam(
+          /* assetId: */ entityId,
+          /* issuer */ issuerAddress,
+          /* admin */ issuerAddress,
+          /* freezer */ issuerAddress
         )
       );
 
@@ -375,31 +376,32 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       entityId,
       issuer,
       name,
-      metadata,
       metadataHash
     }) => {
+
+      const issuerAddress = toAddress(issuer, chainNodeClient.registry);
+
       const createNonFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.deipCreate(
-          /* classId: */ `0x${entityId}`,
-          /* admin: */ { Dao: `0x${issuer}` },
-          /* project_id: */ metadata && metadata.projectId ? `0x${metadata.projectId}` : null
+        chainNodeClient.tx.uniques.create(
+          /* classId: */ entityId,
+          /* admin: */ issuerAddress
         )
       );
 
       const setNonFungibleTokenMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.deipSetClassMetadata(
-          /* classId: */ `0x${entityId}`,
+        chainNodeClient.tx.uniques.setClassMetadata(
+          /* classId: */ entityId,
           /* data */ stringToHex(JSON.stringify({ symbol: name, metadataHash })),
           /* is_frozen */ false
         )
       );
 
       const setNonFungibleTokenTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.deipSetTeam(
-          /* classId: */ `0x${entityId}`,
-          /* issuer */ { Dao: `0x${issuer}` },
-          /* admin */ { Dao: `0x${issuer}` },
-          /* freezer */ { Dao: `0x${issuer}` }
+        chainNodeClient.tx.uniques.setTeam(
+          /* classId: */ entityId,
+          /* issuer */ issuerAddress,
+          /* admin */ issuerAddress,
+          /* freezer */ issuerAddress
         )
       );
 
@@ -414,10 +416,11 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       recipient
     }) => {
 
+      const recipientAddress = toAddress(recipient, chainNodeClient.registry);
       const issueFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.assets.deipIssueAsset(
-          /* assetId: */ `0x${tokenId}`,
-          /* beneficiary */ { Dao: `0x${recipient}` },
+        chainNodeClient.tx.assets.mint(
+          /* assetId: */ tokenId,
+          /* beneficiary */ recipientAddress,
           /* amount */ amount
         )
       );
@@ -434,17 +437,18 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       metadataHash
     }) => {
 
+      const recipientAddress = toAddress(recipient, chainNodeClient.registry);
       const issueNonFungibleTokenOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.deipMint(
-          /* classId: */ `0x${classId}`,
+        chainNodeClient.tx.uniques.mint(
+          /* classId: */ classId,
           /* instanceId: */ instanceId,
-          /* owner */ { Dao: `0x${recipient}` }
+          /* owner */ recipientAddress
         )
       );
 
       const setNonFungibleTokenInstanceMetaOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
-        chainNodeClient.tx.uniques.deipSetMetadata(
-          /* classId: */ `0x${classId}`,
+        chainNodeClient.tx.uniques.setMetadata(
+          /* classId: */ classId,
           /* instanceId: */ instanceId,
           /* data */ stringToHex(JSON.stringify({ metadataHash })),
           /* is_frozen */ false
@@ -590,9 +594,9 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
         return [transferCoreAssetOp];
       } else {
         const transferFtOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-          chainNodeClient.tx.assets.deipTransfer(
-            /* assetId: */ `0x${tokenId}`,
-            /* to: */ { Native: recipientAddress },
+          chainNodeClient.tx.assets.transfer(
+            /* assetId: */ tokenId,
+            /* to: */ recipientAddress,
             /* amount: */ amount
           )
         );
@@ -610,10 +614,10 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       const recipientAddress = toAddress(to, chainNodeClient.registry);
 
       const transferNftOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
-        chainNodeClient.tx.uniques.deipTransfer(
-          /* assetId: */ `0x${classId}`,
+        chainNodeClient.tx.uniques.transfer(
+          /* assetId: */ classId,
           /* instance: */ instanceId,
-          /* to: */ { Native: recipientAddress }
+          /* to: */ recipientAddress
         )
       );
       return [transferNftOp];

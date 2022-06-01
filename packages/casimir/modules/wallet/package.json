@@ -1,6 +1,6 @@
 {
   "name": "@deip/wallet-module",
-  "version": "1.377.0",
+  "version": "1.379.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,16 +20,16 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/token-service": "1.377.0",
-    "@deip/assets-module": "1.377.0",
-    "@deip/assets-service": "1.377.0",
-    "@deip/constants": "1.377.0",
-    "@deip/platform-util": "1.377.0",
+    "@casimir/token-service": "1.379.0",
+    "@deip/assets-module": "1.379.0",
+    "@deip/assets-service": "1.379.0",
+    "@deip/constants": "1.378.0",
+    "@deip/platform-util": "1.378.0",
     "@deip/proxydi": "1.375.1",
     "@deip/toolbox": "1.375.1",
-    "@deip/validation-plugin": "1.377.0",
-    "@deip/vue-elements": "1.377.0",
-    "@deip/vuetify-extended": "1.377.0"
+    "@deip/validation-plugin": "1.378.0",
+    "@deip/vue-elements": "1.378.0",
+    "@deip/vuetify-extended": "1.378.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

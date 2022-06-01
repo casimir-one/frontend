@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+
+### Features
+
+* investment-opportunities-module README.md is created ([ed92a55](https://github.com/DEIPworld/casimir-frontend/commit/ed92a55ae07a67a991f911bcada5794558bada3f))
+* project-content-modules README.md is ready ([9eabc13](https://github.com/DEIPworld/casimir-frontend/commit/9eabc135bd3f63d0d4ca0d07e4785e541cdd8522))
+* teams-module README.md is ready ([e2ce10c](https://github.com/DEIPworld/casimir-frontend/commit/e2ce10cea18dc036bcba9ea876593eb6d360dd1d))
+* **@deip/chain-service:** polkadot-js version bump ([7e6ad6a](https://github.com/DEIPworld/casimir-frontend/commit/7e6ad6abbcc482f6bc1c900d54c305470c6021f3))
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Bug Fixes
+
+* **@casimir/reviews-module:** fix package.json ([b80407a](https://github.com/DEIPworld/casimir-frontend/commit/b80407a09d3861fb9944d3ccec1ef7f9c01a86c5))
+* **@deip/chain-service:** validation and error messages ([bb5970b](https://github.com/DEIPworld/casimir-frontend/commit/bb5970b910b647e0e459ed037203dfa538e5e96c))
+* **@deip/http-service:** fix error getter ([4643b9f](https://github.com/DEIPworld/casimir-frontend/commit/4643b9fcae986da8cd377a3945996035d7c1129e))
+
+
+### Features
+
+* **@deip/chain-service:** updated commands for ft/nft ([5867c95](https://github.com/DEIPworld/casimir-frontend/commit/5867c954e4ac9b978ef98f1417c4ac15ff773470))
+* **@deip/constants:** nft events ([448f630](https://github.com/DEIPworld/casimir-frontend/commit/448f6305e50a1bcfce5b6180fed53ff803414916))
+* assets-module README.md is ready ([79b673a](https://github.com/DEIPworld/casimir-frontend/commit/79b673ac8c7c2ee923cde631342d8915d994b238))
+* attributes-module README.md has done ([3b2aaac](https://github.com/DEIPworld/casimir-frontend/commit/3b2aaac457da23a60e3cf4b581fe283198b4f229))
+* bookmarks-moudle README.md is ready ([fb8ceb7](https://github.com/DEIPworld/casimir-frontend/commit/fb8ceb7101b182a09ab16834c797d128d45332fa))
+* contract-agreements-module README.md is ready ([704c289](https://github.com/DEIPworld/casimir-frontend/commit/704c289a0780847ceac228c3442471acf6184b62))
+* document-templates-module README.md is created ([f5a686c](https://github.com/DEIPworld/casimir-frontend/commit/f5a686cd08bcb076621cf488090a9b254330952e))
+* expamle portal part 1 ([eedfc9a](https://github.com/DEIPworld/casimir-frontend/commit/eedfc9a40b0e41d2b3cdad657fa77ceeb4744a5a))
+* portals-module README.md is ready ([5387c3a](https://github.com/DEIPworld/casimir-frontend/commit/5387c3a099d76d82f5fead4a0bdd1ca9fa8d007d))
+* ProjectContentStatusUpdate & ProjectContentMetadataUpdate cmds ([0298ae3](https://github.com/DEIPworld/casimir-frontend/commit/0298ae384239106fdf5604d823ab49fe1c96770e))
+* projects-module README.md is ready ([f077a2f](https://github.com/DEIPworld/casimir-frontend/commit/f077a2f194d520bcfab2cfc8aa48a65d3c71b699))
+* README file for scopesModule ([d2e88da](https://github.com/DEIPworld/casimir-frontend/commit/d2e88da13d4e00b9e427c3d0a6208170828cbbc9))
+* README.md fullfilled ([54e3911](https://github.com/DEIPworld/casimir-frontend/commit/54e3911d1f0445305a74da7297ee9cb4fe02633d))
+* README.md is ready ([69e5d24](https://github.com/DEIPworld/casimir-frontend/commit/69e5d245cb6e6eb68909e46c4d282903107fd8e7))
+* users-module README.md is ready ([1d26e35](https://github.com/DEIPworld/casimir-frontend/commit/1d26e355ab8344a212e01307a6424501f0256945))
+* **@deip/vuetify-extended:** add ability to return unedited image from VexImageInput ([94b03f1](https://github.com/DEIPworld/casimir-frontend/commit/94b03f17a976a244651da775aa4a49f2b35808ed))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 

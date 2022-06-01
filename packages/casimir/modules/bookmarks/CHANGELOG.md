@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+**Note:** Version bump only for package @deip/bookmarks-module
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Features
+
+* bookmarks-moudle README.md is ready ([fb8ceb7](https://github.com/DEIPworld/deip-modules/commit/fb8ceb7101b182a09ab16834c797d128d45332fa))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/bookmarks-module

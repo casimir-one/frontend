@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+
+### Features
+
+* investment-opportunities-module README.md is created ([ed92a55](https://github.com/DEIPworld/deip-modules/commit/ed92a55ae07a67a991f911bcada5794558bada3f))
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+**Note:** Version bump only for package @deip/investment-opportunities-module
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/investment-opportunities-module

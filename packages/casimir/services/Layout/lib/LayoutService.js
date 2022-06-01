@@ -3,6 +3,7 @@ import { JsonDataMsg } from '@deip/messages';
 import {
   CreateLayoutCmd, UpdateLayoutCmd, DeleteLayoutCmd, UpdateLayoutSettingsCmd
 } from '@deip/commands';
+import { proxydi } from '@deip/proxydi';
 import { LayoutHttp } from './LayoutHttp';
 
 /**
@@ -10,6 +11,7 @@ import { LayoutHttp } from './LayoutHttp';
  */
 export class LayoutService {
   layoutHttp = LayoutHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * Get layout
@@ -49,6 +51,12 @@ export class LayoutService {
   async create(payload) {
     const createLayoutCmd = new CreateLayoutCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [createLayoutCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.layoutHttp.createLayout(msg);
   }
 
@@ -65,6 +73,12 @@ export class LayoutService {
   async update(payload) {
     const updateLayoutCmd = new UpdateLayoutCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [updateLayoutCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.layoutHttp.updateLayout(msg);
   }
 
@@ -76,6 +90,12 @@ export class LayoutService {
   async remove(layoutId) {
     const deleteLayoutCmd = new DeleteLayoutCmd({ layoutId });
     const msg = new JsonDataMsg({ appCmds: [deleteLayoutCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.layoutHttp.deleteLayout(msg);
   }
 
@@ -96,6 +116,12 @@ export class LayoutService {
   async updateSettings(data) {
     const updateLayoutSettingsCmd = new UpdateLayoutSettingsCmd(data);
     const msg = new JsonDataMsg({ appCmds: [updateLayoutSettingsCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.layoutHttp.updateSettings(msg);
   }
 

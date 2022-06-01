@@ -44,22 +44,22 @@ class SubstrateChainRpc extends BaseChainRpc {
           decimals: coreAsset.precision
         }
 
-      const metadataOpt = await api.query.assets.assetMetadataMap(toHexFormat(assetId));
-      const metadata = metadataOpt.isSome ? metadataOpt.unwrap().toJSON() : null;
+      const metadataRes = await api.query.assets.metadata(assetId);
+      if (!metadataRes) return null;
 
-      if (!metadata) return null;
+      const metadata = metadataRes.toJSON();
       return {
-        id: fromHexFormat(assetId),
+        id: assetId,
         name: hexToString(metadata.name),
         symbol: hexToString(metadata.symbol),
         decimals: metadata.decimals
       };
     }
 
-    const getNonFungibleTokenMetadataAsync = async (classIdInt) => {
+    const getNonFungibleTokenMetadataAsync = async (classId) => {
       const api = chainService.getChainNodeClient();
       
-      const metadataOpt = await api.query.parityTechUniques.classMetadataOf(classIdInt);
+      const metadataOpt = await api.query.uniques.classMetadataOf(classId);
       const metadata = metadataOpt.isSome ? metadataOpt.unwrap().toJSON() : null;
       
       if (!metadata) return null;
@@ -116,12 +116,12 @@ class SubstrateChainRpc extends BaseChainRpc {
 
     const getCoreAssetDtoAsync = async () => {
       const api = chainService.getChainNodeClient();
-      const totalIssuance = await api.query.parityTechBalances.totalIssuance();
+      const totalIssuance = await api.query.balances.totalIssuance();
       const metadata = await getFungibleTokenMetadataAsync(coreAsset.id);
       return new SubstrateFungibleTokenDto({ 
         assetId: coreAsset.id, 
         supply: totalIssuance.toString(), 
-        admin: "PROTOCOL" // TODO: make 'admin' optional for the core asset
+        issuer: "DEIP_PROTOCOL"
       }, metadata);
     }
 
@@ -242,7 +242,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       },
 
 
-      /* PROJECT */
+      /* [DEPRECATED] PROJECT */
 
       getProjectAsync: async (projectId) => {
         const project = await chainService.rpcToChainNode("deip_getProject", [null, toHexFormat(projectId)]);
@@ -269,7 +269,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
 
 
-      /*  PROJECT CONTENT */
+      /* [DEPRECATED] PROJECT CONTENT */
 
       getProjectContentAsync: async (projectContentId) => {
         const content = await chainService.rpcToChainNode("deip_getProjectContent", [null, toHexFormat(projectContentId)]);
@@ -376,12 +376,13 @@ class SubstrateChainRpc extends BaseChainRpc {
       /* FUNGIBLE TOKEN  */
 
       getFungibleTokenAsync: async (assetId) => {
+        const api = chainService.getChainNodeClient();
         if (assetId == coreAsset.id) {
           const coreAssetDto = await getCoreAssetDtoAsync();
           return coreAssetDto;
         }
-        
-        const asset = await chainService.rpcToChainNode("assets_getAsset", [null, toHexFormat(assetId)]);
+        const assetOpt = await api.query.assets.asset(assetId);
+        const asset = assetOpt.isSome ? assetOpt.unwrap().toJSON() : null;
         if (!asset) return null;
         const metadata = await getFungibleTokenMetadataAsync(assetId);
         return new SubstrateFungibleTokenDto({ assetId, ...asset }, metadata);
@@ -393,12 +394,21 @@ class SubstrateChainRpc extends BaseChainRpc {
         return assetDto || null;
       },
 
-      getFungibleTokenListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const idx = startIdx ? [toHexFormat(startIdx)[0], toHexFormat(startIdx)[1]] : null;
-        const assets = await chainService.rpcToChainNode("assets_getAssetList", [null, limit, idx]);
-        const metadataList = await Promise.all(assets.map(({ key }) => getFungibleTokenMetadataAsync(fromHexFormat(key[0]))));
-        const coreAssetDto = await getCoreAssetDtoAsync();
-        return [...assets.map(({ key, value }, i) => (new SubstrateFungibleTokenDto({ assetId: key[0], ...value }, metadataList[i]))), coreAssetDto];
+      getFungibleTokenListAsync: async () => {
+        const api = chainService.getChainNodeClient();
+        const entries = await api.query.assets.asset.entries();
+        const assets = await Promise.all(entries.map(async ([{ args: [key] }, value]) => {
+          const assetId = key.toString();
+          const asset = value.toJSON();
+          if (assetId == coreAsset.id) {
+            const coreAssetDto = await getCoreAssetDtoAsync();
+            return coreAssetDto;
+          }
+          const metadata = await getFungibleTokenMetadataAsync(assetId);
+          return new SubstrateFungibleTokenDto({ assetId, ...asset }, metadata);
+        }));
+
+        return assets;
       },
 
       getProjectAssetsAsync: async (projectId) => {
@@ -411,6 +421,11 @@ class SubstrateChainRpc extends BaseChainRpc {
         return assetsDtos;
       },
 
+      getNextAvailableFtId: async () => {
+        // TODO: must be replaced with read model index
+        const list = await this.getFungibleTokenListAsync();
+        return list.length + 1;
+      },
 
 
       /* FUNGIBLE TOKEN BALANCE */
@@ -423,8 +438,9 @@ class SubstrateChainRpc extends BaseChainRpc {
 
         const api = chainService.getChainNodeClient();
         const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const balance = await chainService.rpcToChainNode("assets_getAssetBalanceByOwner", [null, accountId, toHexFormat(assetId)]);
-        if (!balance) return null;
+        const balanceRes = await api.query.assets.account(assetId, accountId);
+        if (!balanceRes) return null;
+        const balance = balanceRes.toJSON();
         let daoId;
         if (isAddress(daoIdOrPubKeyOrAddress)) {
           daoId = await getDaoIdByAddressAsync(daoIdOrPubKeyOrAddress);
@@ -438,6 +454,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         return new SubstrateFungibleTokenBalanceDto({ assetId, daoId, account: daoIdOrPubKeyOrAddress, ...balance }, assetMetadata);
       },
 
+      // [DEPRECATED]
       getFungibleTokenBalanceByOwnerAndSymbolAsync: async (daoIdOrPubKeyOrAddress, symbol) => {
         if (symbol == coreAsset.symbol) {
           const coreAssetBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
@@ -451,43 +468,78 @@ class SubstrateChainRpc extends BaseChainRpc {
       },
 
       getFungibleTokenBalancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
-        const balancesDtos = await this.getFungibleTokenBalancesListAsync();
-        return balancesDtos.filter((balanceDto) => balanceDto.account == daoIdOrPubKeyOrAddress);
+        const balancesDtos = await this.getFungibleTokenBalancesListAsync(false);
+        const coreBalanceDto = await getCoreAssetBalanceDtoAsync(daoIdOrPubKeyOrAddress);
+        return [coreBalanceDto, ...balancesDtos.filter((balanceDto) => balanceDto.account == daoIdOrPubKeyOrAddress)];
       },
 
-      getFungibleTokenBalancesAsync: async (assetId, startIdx = null, limit = LIST_LIMIT) => {
+      getFungibleTokenBalancesAsync: async (assetId) => {
+        const api = chainService.getChainNodeClient();
+
         if (assetId == coreAsset.id) {
           const coreAssetBalancesDtos = await getCoreAssetBalancesDtosAsync();
           return coreAssetBalancesDtos;
         }
 
-        const balances = await chainService.rpcToChainNode("assets_getAssetBalanceListByAsset", [null, toHexFormat(assetId), limit, toHexFormat(startIdx)]);
-        const daoIds = await Promise.all(balances.map((balance) => getDaoIdByAddressAsync(balance.account)));
+        const balancesList = await api.query.assets.account.entries(assetId);
+        const daoMap = {};
         const assetMetadata = await getFungibleTokenMetadataAsync(assetId);
-        return balances.map((balance, i) => (new SubstrateFungibleTokenBalanceDto({ assetId, daoId: daoIds[i], ...balance }, assetMetadata)));
-      },
+        const balancesDtos = await balancesList.reduce(async (arrP, [{ args: [u32, accountId32] }, value]) => {
+          const arr = await arrP;
+          const assetId = u32.toString();
+          const accountId = accountId32.toString();
+          const balance = value.toJSON();
+          if (daoMap[accountId] === undefined) {
+            const daoId = await getDaoIdByAddressAsync(accountId);
+            daoMap[accountId] = daoId;
+          }
+          arr.push(new SubstrateFungibleTokenBalanceDto({ assetId, daoId: daoMap[accountId], account: accountId, ...balance }, assetMetadata));
+          return arr;
+        }, Promise.resolve([]));
 
-      getFungibleTokenBalancesBySymbolAsync: async (symbol, startIdx = null, limit = LIST_LIMIT) => {
-        const assetDto = await this.getFungibleTokenBySymbolAsync(symbol);
-        if (!assetDto) return [];
-        const balancesDtos = await this.getFungibleTokenBalancesAsync(assetDto.assetId, startIdx, limit);
         return balancesDtos;
       },
 
-      getFungibleTokenBalancesListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const idx = startIdx ? [toHexFormat(startIdx)[0], toHexFormat(startIdx)[1]] : null;
-        const balances = await chainService.rpcToChainNode("assets_getAssetBalanceList", [null, limit, idx]);
-        const daoIds = await Promise.all(balances.map((balance) => getDaoIdByAddressAsync(balance.account)));
-        const assetIds = balances
-          .reduce((acc, balance) => {
-            return acc.some((assetId) => assetId === fromHexFormat(balance.asset)) ? acc : [...acc, fromHexFormat(balance.asset)];
-          }, []);
-        const assetMetadataList = await Promise.all(assetIds.map((assetId) => getFungibleTokenMetadataAsync(assetId)));
-        const coreAssetBalancesDtos = await getCoreAssetBalancesDtosAsync();
-        return [...balances.map((balance, i) => (new SubstrateFungibleTokenBalanceDto(
-          { assetId: balance.asset, daoId: daoIds[i], ...balance }, 
-          assetMetadataList.find(metadata => metadata && metadata.id === fromHexFormat(balance.asset))
-        ))), ...coreAssetBalancesDtos];
+      // [DEPRECATED]
+      getFungibleTokenBalancesBySymbolAsync: async (symbol) => {
+        const assetDto = await this.getFungibleTokenBySymbolAsync(symbol);
+        if (!assetDto) return [];
+        const balancesDtos = await this.getFungibleTokenBalancesAsync(assetDto.assetId);
+        return balancesDtos;
+      },
+
+      getFungibleTokenBalancesListAsync: async (withCore = false) => {
+        const api = chainService.getChainNodeClient();
+
+        const balancesList = await api.query.assets.account.entries();
+        const map = {};
+        const balancesDtos = await balancesList.reduce(async (arrP, [{ args: [u32, accountId32] }, value]) => {
+          const arr = await arrP;
+          const assetId = u32.toString();
+          const accountId = accountId32.toString();
+          const balance = value.toJSON();
+
+          if (map[assetId] === undefined) {
+            const metadata = await getFungibleTokenMetadataAsync(assetId);
+            map[assetId] = { metadata };
+          }
+          
+          if (map[assetId][accountId] === undefined) {
+            const daoId = await getDaoIdByAddressAsync(accountId);
+            map[assetId][accountId] = daoId;
+          }
+
+          arr.push(new SubstrateFungibleTokenBalanceDto({ assetId, daoId: map[assetId][accountId], account: accountId, ...balance }, map[assetId].metadata));
+          return arr;
+        }, Promise.resolve([]));
+
+        if (withCore) {
+          const coreAssetBalancesDtos = await getCoreAssetBalancesDtosAsync();
+          return [...coreAssetBalancesDtos, ...balancesDtos];
+        } else {
+          return balancesDtos;
+        }
+
       },
 
 
@@ -495,31 +547,33 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       getNonFungibleTokenClassAsync: async (classId) => {
         const api = chainService.getChainNodeClient();
-        const classIdOpt = await api.query.uniques.nftClassIdByDeipNftClassId(toHexFormat(classId));
-        const classIdInt = classIdOpt.isSome ? classIdOpt.unwrap().toNumber() : null;
-        if (!classIdInt) return null;
 
-        const classOpt = await api.query.parityTechUniques.class(classIdInt);
+        const classOpt = await api.query.uniques.class(classId);
         const nftClass = classOpt.isSome ? classOpt.unwrap().toJSON() : null;
         if (!nftClass) return null;
 
-        const metadata = await getNonFungibleTokenMetadataAsync(classIdInt);
+        const metadata = await getNonFungibleTokenMetadataAsync(classId);
         return new SubstrateNonFungibleTokenDto({ classId, ...nftClass }, metadata);
       },
 
 
       getNonFungibleTokenClassesAsync: async () => {
         const api = chainService.getChainNodeClient();
-        const entries = await api.query.parityTechUniques.class.entries();
-        const list = await Promise.all(entries.map(async ([ { args: [key] } , value]) => {
+        const entries = await api.query.uniques.class.entries();
+        const list = await Promise.all(entries.map(async ([ { args: [u32] } , value]) => {
           const nftClass = value.toJSON();
-          const classIdInt = key.toNumber();
-          const classIdOpt = await api.query.uniques.deipNftClassIdByNftClassId(classIdInt);
-          const classId = classIdOpt.isSome ? classIdOpt.unwrap().toString() : null;
-          const metadata = await getNonFungibleTokenMetadataAsync(classIdInt);
+          const classId = u32.toString();
+          const metadata = await getNonFungibleTokenMetadataAsync(classId);
           return new SubstrateNonFungibleTokenDto({ classId, ...nftClass }, metadata);
         }));
         return list;
+      },
+
+
+      getNextAvailableNftClassId: async () => {
+        // TODO: must be replaced with read model index
+        const list = await this.getNonFungibleTokenClassesAsync();
+        return list.length + 1;
       },
 
 
@@ -529,16 +583,16 @@ class SubstrateChainRpc extends BaseChainRpc {
         const api = chainService.getChainNodeClient();
         const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
 
-        const classIdIntOpt = await api.query.uniques.nftClassIdByDeipNftClassId(toHexFormat(classId));
-        const classIdInt = classIdIntOpt.isSome ? classIdIntOpt.unwrap().toNumber() : null;
-        if (!classIdInt) return [];
+        const classOpt = await api.query.uniques.class(classId);
+        const nftClass = classOpt.isSome ? classOpt.unwrap().toJSON() : null;
+        if (!nftClass) return [];
 
-        const classInstancesByAccount = await api.query.parityTechUniques.account.entries(accountId);
-        const metadata = await getNonFungibleTokenMetadataAsync(classIdInt);
+        const classInstancesByAccount = await api.query.uniques.account.entries(accountId);
+        const metadata = await getNonFungibleTokenMetadataAsync(classId);
 
         const instancesIds = classInstancesByAccount.reduce((arr, [{ args: [accountId, u32, instanceId] }, value]) => {
-          const classU32 = u32.toNumber();
-          if (classIdInt == classU32)
+          const classU32 = u32.toString();
+          if (classId == classU32)
             arr.push(instanceId.toNumber());
           return arr;
         }, []);
@@ -550,37 +604,35 @@ class SubstrateChainRpc extends BaseChainRpc {
       getNonFungibleTokenClassesInstancesByOwnerAsync: async (daoIdOrPubKeyOrAddress) => {
         const api = chainService.getChainNodeClient();
         const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const classInstancesByAccount = await api.query.parityTechUniques.account.entries(accountId);
+        const classInstancesByAccount = await api.query.uniques.account.entries(accountId);
 
         const classesMap = await classInstancesByAccount.reduce(async (mapP, [{ args: [accountId, u32, instanceId] }, value]) => {
           const map = await mapP;
-          const classU32 = u32.toNumber();
+          const classId = u32.toString();
 
-          if (!map[classU32]) {
-            const metadata = await getNonFungibleTokenMetadataAsync(classU32);
-            const classIdOpt = await api.query.uniques.deipNftClassIdByNftClassId(classU32);
-            const classId = classIdOpt.isSome ? classIdOpt.unwrap().toString() : null;
-            map[classU32] = {
+          if (!map[classId]) {
+            const metadata = await getNonFungibleTokenMetadataAsync(classId);
+            map[classId] = {
               classId: classId,
               instancesIds: [instanceId.toNumber()],
               metadata: metadata
             }
           } else {
-            map[classU32].instancesIds.push(instanceId.toNumber());
+            map[classId].instancesIds.push(instanceId.toNumber());
           }
 
           return map;
         }, Promise.resolve({}));
 
-        return Object.keys(classesMap).map((classIdInt) => {
-          const { classId, instancesIds, metadata } = classesMap[classIdInt];
+        return Object.keys(classesMap).map((classU32) => {
+          const { classId, instancesIds, metadata } = classesMap[classU32];
           return new SubstrateNonFungibleTokenInstancesDto({ classId, account: daoIdOrPubKeyOrAddress, instancesIds: instancesIds.sort() }, metadata);
         });
 
       },
 
 
-      /* REVIEW */
+      /* [DEPRECATED] REVIEW */
 
       getReviewAsync: async (reviewId) => {
         const review = await chainService.rpcToChainNode("deip_getReview", [null, toHexFormat(reviewId)]);
@@ -629,7 +681,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
 
 
-      /* REVIEW UPVOTE */
+      /* [DEPRECATED] REVIEW UPVOTE */
 
       getReviewUpvotesByReviewAsync: async (reviewId, startIdx = null, limit = LIST_LIMIT) => {
         const reviewUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByReview", [null, toHexFormat(reviewId), limit, toHexFormat(startIdx)]);
@@ -653,7 +705,7 @@ class SubstrateChainRpc extends BaseChainRpc {
 
 
 
-      /* DOMAIN */
+      /* [DEPRECATED] DOMAIN */
 
       getDomainAsync: async (domainId) => {
         const domain = await chainService.rpcToChainNode("deip_getDomain", [null, toHexFormat(domainId)]);

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { APP_CMD } from '@deip/constants';
-import { assert, isNumber } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
@@ -27,9 +27,11 @@ class CreateFungibleTokenCmd extends ProtocolEntityCmd {
       metadata
     } = cmdPayload;
 
+    assert(isNumber(entityId) || (isString(entityId) && entityId),
+      "'entityId' is required and must be a number or non emplty string");
     assert(!!issuer, "'issuer' is required");
     assert(!!symbol, "'symbol' is required");
-    assert(isNumber(precision), "'precision' must be a number");
+    assert(isNumber(precision), "'precision' is required and must be a number");
 
     if (metadata) { // keep this until we have working F-NFT
       const { projectId, teamId, licenseRevenue } = metadata;

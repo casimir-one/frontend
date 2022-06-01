@@ -9,9 +9,8 @@ import { AuthHttp } from './AuthHttp';
  * Auth transport
  */
 export class AuthService {
-  proxydi = proxydi;
-
   http = AuthHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * @param {Object} data
@@ -37,7 +36,7 @@ export class AuthService {
    */
   async signUp(initiator, userData) {
     const env = this.proxydi.get('env');
-
+    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME, RETURN_MSG } = env;
     const {
       privKey,
       isAuthorizedCreatorRequired
@@ -58,6 +57,11 @@ export class AuthService {
       : await finalizedTx.signAsync(privKey, chainNodeClient);
 
     const msg = new JsonDataMsg(signedFinalizedTx.getPayload());
+
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.http.signUp(msg);
   }
 

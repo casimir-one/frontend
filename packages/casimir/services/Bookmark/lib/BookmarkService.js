@@ -5,10 +5,12 @@ import {
   DeleteBookmarkCmd
 } from '@deip/commands';
 import { USER_BOOKMARK_TYPE } from '@deip/constants';
+import { proxydi } from '@deip/proxydi';
 import { BookmarkHttp } from './BookmarkHttp';
 
 export class BookmarkService {
   bookmarkHttp = BookmarkHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * Get bookmarks by username
@@ -40,6 +42,12 @@ export class BookmarkService {
       type
     });
     const msg = new JsonDataMsg({ appCmds: [createBookmarkCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.bookmarkHttp.create(msg);
   }
 
@@ -55,6 +63,12 @@ export class BookmarkService {
       bookmarkId
     });
     const msg = new JsonDataMsg({ appCmds: [deleteBookmarkCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.bookmarkHttp.delete(msg);
   }
 

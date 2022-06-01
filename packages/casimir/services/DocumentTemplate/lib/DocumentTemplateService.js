@@ -5,10 +5,12 @@ import {
 } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { createInstanceGetter } from '@deip/toolbox';
+import { proxydi } from '@deip/proxydi';
 import { DocumentTemplateHttp } from './DocumentTemplateHttp';
 
 export class DocumentTemplateService {
   documentTemplateHttp = DocumentTemplateHttp.getInstance();
+  proxydi = proxydi;
 
   /**
    * Get document template by id
@@ -39,6 +41,12 @@ export class DocumentTemplateService {
   async create(payload) {
     const createDocumentTemplateCmd = new CreateDocumentTemplateCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [createDocumentTemplateCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.documentTemplateHttp.create(msg);
   }
 
@@ -53,6 +61,12 @@ export class DocumentTemplateService {
   async update(payload) {
     const updateDocumentTemplateCmd = new UpdateDocumentTemplateCmd(payload);
     const msg = new JsonDataMsg({ appCmds: [updateDocumentTemplateCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.documentTemplateHttp.update(msg);
   }
 
@@ -64,6 +78,12 @@ export class DocumentTemplateService {
   async delete(id) {
     const deleteDocumentTemplateCmd = new DeleteDocumentTemplateCmd({ documentTemplateId: id });
     const msg = new JsonDataMsg({ appCmds: [deleteDocumentTemplateCmd] });
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
     return this.documentTemplateHttp.delete(msg);
   }
 

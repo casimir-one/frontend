@@ -1,5 +1,10 @@
 import { APP_CMD } from '@deip/constants';
-import { assert } from '@deip/toolbox';
+import {
+  assert,
+  isNumber,
+  isString,
+  isNumeric
+} from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
@@ -25,8 +30,10 @@ class TransferFungibleTokenCmd extends ProtocolCmd {
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(!!tokenId, "FT 'tokenId' is required");
-    assert(!!amount, "FT 'amount' is required");
+    assert(isNumber(tokenId) || (isString(tokenId) && tokenId),
+      "'classId' is required and must be a number or non emplty string");
+    assert((isNumber(amount) || isNumeric(amount)) && +amount > 0,
+      "'amount' is required and must be a number greater than zero");
 
     super(APP_CMD.TRANSFER_FT, cmdPayload);
   }

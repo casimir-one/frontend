@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+
+### Features
+
+* project-content-modules README.md is ready ([9eabc13](https://github.com/DEIPworld/deip-modules/commit/9eabc135bd3f63d0d4ca0d07e4785e541cdd8522))
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Features
+
+* ProjectContentStatusUpdate & ProjectContentMetadataUpdate cmds ([0298ae3](https://github.com/DEIPworld/deip-modules/commit/0298ae384239106fdf5604d823ab49fe1c96770e))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 

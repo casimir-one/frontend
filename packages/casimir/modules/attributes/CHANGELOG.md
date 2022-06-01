@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+**Note:** Version bump only for package @deip/attributes-module
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Features
+
+* attributes-module README.md has done ([3b2aaac](https://github.com/DEIPworld/deip-modules/commit/3b2aaac457da23a60e3cf4b581fe283198b4f229))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/attributes-module

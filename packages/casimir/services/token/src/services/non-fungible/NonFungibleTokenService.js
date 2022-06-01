@@ -41,11 +41,15 @@ export class NonFungibleTokenService {
       .then((chainService) => {
         const chainNodeClient = chainService.getChainNodeClient();
         const chainTxBuilder = chainService.getChainTxBuilder();
+        const chainRpc = chainService.getChainRpc();
 
         return chainTxBuilder.begin()
-          .then((txBuilder) => {
+          .then(async (txBuilder) => {
             const metadataHash = genSha256Hash(metadata);
+            const entityId = await chainRpc.getNextAvailableNftClassId();
+
             const createNonFungibleTokenCmd = new CreateNonFungibleTokenCmd({
+              entityId,
               issuer,
               name,
               description,
@@ -81,6 +85,11 @@ export class NonFungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.nonFungibleTokenHttp.create(msg);
           });
       });
@@ -126,6 +135,11 @@ export class NonFungibleTokenService {
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
           .then((packedTx) => {
             const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
             return this.nonFungibleTokenHttp.issue(msg);
           });
       });

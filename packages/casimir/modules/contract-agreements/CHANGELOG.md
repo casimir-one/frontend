@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.379.0](https://github.com/DEIPworld/deip-modules/compare/v1.378.0...v1.379.0) (2022-06-01)
+
+**Note:** Version bump only for package @deip/contract-agreements-module
+
+
+
+
+
+# [1.378.0](https://github.com/DEIPworld/deip-modules/compare/v1.377.0...v1.378.0) (2022-05-30)
+
+
+### Features
+
+* contract-agreements-module README.md is ready ([704c289](https://github.com/DEIPworld/deip-modules/commit/704c289a0780847ceac228c3442471acf6184b62))
+
+
+
+
+
 # [1.377.0](https://github.com/DEIPworld/deip-modules/compare/v1.376.0...v1.377.0) (2022-05-13)
 
 **Note:** Version bump only for package @deip/contract-agreements-module
