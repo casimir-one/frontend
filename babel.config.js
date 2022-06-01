@@ -8,9 +8,6 @@ module.exports = {
     ['@babel/plugin-transform-runtime'],
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['./plugins/babelJsdocFix.js']
-    // ['@babel/plugin-proposal-class-properties', { loose: true }],
-    // ['@babel/plugin-proposal-private-methods', { loose: true }],
-    // ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
   ],
   env: {
     test: {
@@ -30,6 +27,11 @@ module.exports = {
         }],
         '@babel/preset-typescript',
         '@vue/babel-preset-jsx'
+      ],
+      ignore: [
+        '**/__snapshots__',
+        '**/__tests__',
+        '**/__stories__'
       ]
     }
   }

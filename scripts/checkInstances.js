@@ -3,7 +3,8 @@ import glob from 'glob';
 import path from 'path';
 import fs from 'fs-extra';
 /* eslint-enable */
-import { getPackages } from './composables/getPackages';
+
+import { getPackages } from './utils';
 
 const pkg = getPackages(false);
 
