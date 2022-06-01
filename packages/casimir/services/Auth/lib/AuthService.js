@@ -53,14 +53,21 @@ export class AuthService {
       isAuthorizedCreatorRequired
     );
 
-    const checkedFinalizedTx = isAuthorizedCreatorRequired
+    const signedFinalizedTx = isAuthorizedCreatorRequired
       ? finalizedTx
       : await finalizedTx.signAsync(privKey, chainNodeClient);
 
-    const msg = new JsonDataMsg(checkedFinalizedTx.getPayload());
+    const msg = new JsonDataMsg(signedFinalizedTx.getPayload());
     return this.http.signUp(msg);
   }
 
+  /**
+   * create transaction
+   * @param {Object} chainTxBuilder
+   * @param {Object} userData
+   * @param {boolean} isAuthorizedCreatorRequired
+   * @return {Promise<Object>}
+   */
   async createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
     const {
       email,
