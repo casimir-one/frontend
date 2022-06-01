@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.380.0](https://github.com/DEIPworld/deip-modules/compare/v1.379.0...v1.380.0) (2022-06-01)
+
+
+### Features
+
+* **@deip/chain-service:** 'rpc-client' and 'lib-crypto' are hidden from imports ([ae8aa79](https://github.com/DEIPworld/deip-modules/commit/ae8aa7993f4b394a04d5fe2995a122c944359e7d))
+
+
+
+
+
 ## [1.375.1](https://github.com/DEIPworld/deip-modules/compare/v1.375.0...v1.375.1) (2022-03-30)
 
 **Note:** Version bump only for package @deip/toolbox
