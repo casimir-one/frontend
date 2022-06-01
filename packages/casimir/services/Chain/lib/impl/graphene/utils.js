@@ -1,5 +1,3 @@
-import GrapheneClient from '@deip/rpc-client';
-import crypto from '@deip/lib-crypto';
 import { TextEncoder } from "web-encoding"
 
 const toAssetUnits = ({ symbol, precision, amount }) => {
@@ -12,10 +10,13 @@ const millisecToIso = (millisecond) => {
 }
 
 const isValidPrivKey = (privKey) => {
+  const GrapheneClient = require('@deip/rpc-client');
   return GrapheneClient.auth.isWif(privKey);
 }
 
 const verifySignature = (pubKey, msg, sig) => {
+  const crypto = require('@deip/lib-crypto');
+
   const publicKey = crypto.PublicKey.from(pubKey);
   let isValid;
   try {

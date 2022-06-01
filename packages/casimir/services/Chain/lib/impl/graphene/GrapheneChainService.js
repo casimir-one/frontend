@@ -1,5 +1,4 @@
 import { assert, genMd5Hash } from '@deip/toolbox';
-import GrapheneClient from '@deip/rpc-client';
 import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';
@@ -21,6 +20,8 @@ class GrapheneChainService extends BaseChainService {
   }
 
   init() {
+    const GrapheneClient = require('@deip/rpc-client');
+
     if (!this.isInited()) {
       GrapheneClient.config.set('chain_id', this._chainId);
       GrapheneClient.api.setOptions({

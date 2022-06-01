@@ -1,12 +1,13 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { APP_CMD } from '@deip/constants';
 import { toAssetUnits, millisecToIso } from './utils';
-import crypto from '@deip/lib-crypto';
 
 
 const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
   coreAsset
 }) => {
+
+  const crypto = require('@deip/lib-crypto');
 
   return {
 
