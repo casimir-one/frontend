@@ -1,12 +1,19 @@
 {
   "compilerOptions": {
+    "rootDir": "./",
+    "baseUrl": "./",
+
     "target": "esnext",
-    "module": "none",
+    "module": "esnext",
+
     "declaration": true,
     "removeComments": true,
     "downlevelIteration": true,
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
+
   "exclude": [
     "node_modules",
     "**/*.spec.ts",

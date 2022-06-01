@@ -1,39 +1,32 @@
 /* eslint-disable */
 import chokidar from 'chokidar';
 import path from 'path';
-import fs from 'fs-extra';
 import ora from 'ora';
 /* eslint-enable */
 
-import { getPackages } from './composables/getPackages';
-import { buildPackageLib } from './composables/buildPackageLib';
+import { getPackages, buildPackageLib, findPackageRoot } from './utils';
 
 const spinner = ora();
 
-/**
- * @param {string} file
- * @return {string} package root path
- */
-const findPackageRoot = (file) => {
-  const { dir } = path.parse(file);
+const packages = getPackages();
 
-  if (fs.existsSync(path.join(dir, 'package.json'))) {
-    return dir;
-  }
-
-  return findPackageRoot(dir);
-};
-
-const packagesSrcFiles = getPackages()
-  .map((pkg) => path.join(pkg, 'src', '**', '*'));
+const packagesSrcFiles = packages
+  .map((pkg) => path.join(pkg.path, 'src', '**', '*'));
 
 const watcher = chokidar.watch(packagesSrcFiles, {
   persistent: true,
   ignoreInitial: true
 });
 
+console.info('\n');
+spinner.info('Watching enabled');
+
 watcher.on('all', (event, file) => {
-  buildPackageLib(findPackageRoot(file)).then((result) => {
-    spinner.succeed(`Success: ${result}`);
+  const targetPackage = packages.find((pkg) => pkg.path === findPackageRoot(file));
+
+  spinner.start(`Building: ${targetPackage.name}`);
+
+  buildPackageLib(targetPackage).then(() => {
+    spinner.succeed();
   });
 });
