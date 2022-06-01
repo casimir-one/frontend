@@ -10,6 +10,7 @@ import { AuthHttp } from './AuthHttp';
  */
 export class AuthService {
   http = AuthHttp.getInstance();
+
   proxydi = proxydi;
 
   /**
@@ -32,11 +33,16 @@ export class AuthService {
    * Create new user
    * @param {Object} initiator
    * @param {Object} userData
+   * @param {string} userData.email
+   * @param {array} userData.attributes
+   * @param {string} userData.username
+   * @param {string} userData.pubKey
+   * @param {array} userData.roles
    * @return {Promise<Object>}
    */
   async signUp(initiator, userData) {
     const env = this.proxydi.get('env');
-    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME, RETURN_MSG } = env;
+    const { RETURN_MSG } = env;
     const {
       privKey,
       isAuthorizedCreatorRequired
@@ -46,7 +52,7 @@ export class AuthService {
     const chainNodeClient = chainService.getChainNodeClient();
     const chainTxBuilder = chainService.getChainTxBuilder();
 
-    const finalizedTx = await this.createFinalizedTx(
+    const finalizedTx = await this.#createFinalizedTx(
       chainTxBuilder,
       userData,
       isAuthorizedCreatorRequired
@@ -58,21 +64,22 @@ export class AuthService {
 
     const msg = new JsonDataMsg(signedFinalizedTx.getPayload());
 
-    if (RETURN_MSG && RETURN_MSG === true) {
-      return msg;
-    }
-
-    return this.http.signUp(msg);
+    return RETURN_MSG === true ? msg : this.http.signUp(msg);
   }
 
   /**
    * create transaction
    * @param {Object} chainTxBuilder
    * @param {Object} userData
+   * @param {string} userData.email
+   * @param {array} userData.attributes
+   * @param {string} userData.username
+   * @param {string} userData.pubKey
+   * @param {array} userData.roles
    * @param {boolean} isAuthorizedCreatorRequired
    * @return {Promise<Object>}
    */
-  async createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
+  async #createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
     const {
       email,
       attributes = [],
