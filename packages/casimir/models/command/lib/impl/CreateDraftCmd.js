@@ -34,10 +34,12 @@ class CreateDraftCmd extends AppCmd {
 
     assert(!!projectId, "'projectId' is required");
     assert(!!formatType, "'formatType' is required");
+    assert(!!draftId, "'draftId' is required");
+
     if (formatType === PROJECT_CONTENT_FORMAT.JSON) {
       assert(!!jsonData, `'jsonData' is required for ${formatType} formatType`);
     }
-    assert(!!draftId, "'draftId' is required");
+
     if (status) {
       assert(!!PROJECT_CONTENT_DRAFT_STATUS[status], "'status' is invalid");
     }

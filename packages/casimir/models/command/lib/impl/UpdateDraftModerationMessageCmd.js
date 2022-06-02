@@ -8,7 +8,7 @@ import AppCmd from '../base/AppCmd';
  */
 class UpdateDraftModerationMessageCmd extends AppCmd {
   /**
-   * Create command for project content draft update
+   * Create command for project content draft moderation message update
    * @param {Object} cmdPayload
    * @param {string} cmdPayload._id
    * @param {Object} cmdPayload.moderationMessage

@@ -8,7 +8,7 @@ import AppCmd from '../base/AppCmd';
  */
 class UpdateDraftStatusCmd extends AppCmd {
   /**
-   * Create command for project content draft update
+   * Create command for project content draft status update
    * @param {Object} cmdPayload
    * @param {string} cmdPayload._id
    * @param {number} cmdPayload.status
