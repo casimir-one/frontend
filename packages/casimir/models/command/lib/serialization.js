@@ -28,8 +28,6 @@ import CreateDraftCmd from './impl/CreateDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
-import UpdateProjectContentStatusCmd from './impl/UpdateProjectContentStatusCmd';
-import UpdateProjectContentMetadataCmd from './impl/UpdateProjectContentMetadataCmd';
 import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
 import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
 import CreateReviewCmd from './impl/CreateReviewCmd';
@@ -83,8 +81,6 @@ const APP_CMD_INFO = {
   [APP_CMD.DELETE_DRAFT]: { class: DeleteDraftCmd },
   [APP_CMD.UPDATE_DRAFT]: { class: UpdateDraftCmd },
   [APP_CMD.CREATE_PROJECT_CONTENT]: { class: CreateProjectContentCmd },
-  [APP_CMD.UPDATE_PROJECT_CONTENT_STATUS]: { class: UpdateProjectContentStatusCmd },
-  [APP_CMD.UPDATE_PROJECT_CONTENT_METADATA]: { class: UpdateProjectContentMetadataCmd },
   [APP_CMD.CREATE_REVIEW_REQUEST]: { class: CreateReviewRequestCmd },
   [APP_CMD.DECLINE_REVIEW_REQUEST]: { class: DeclineReviewRequestCmd },
   [APP_CMD.CREATE_REVIEW]: { class: CreateReviewCmd },

@@ -27,8 +27,6 @@ import CreateDraftCmd from './impl/CreateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
 import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
-import UpdateProjectContentStatusCmd from './impl/UpdateProjectContentStatusCmd';
-import UpdateProjectContentMetadataCmd from './impl/UpdateProjectContentMetadataCmd';
 import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
 import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
 import CreateReviewCmd from './impl/CreateReviewCmd';
@@ -81,8 +79,6 @@ export {
   DeleteDraftCmd,
   UpdateDraftCmd,
   CreateProjectContentCmd,
-  UpdateProjectContentStatusCmd,
-  UpdateProjectContentMetadataCmd,
   CreateReviewRequestCmd,
   DeclineReviewRequestCmd,
   CreateReviewCmd,
