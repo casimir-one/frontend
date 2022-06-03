@@ -1,8 +1,6 @@
-/* eslint-disable */
 import glob from 'glob';
 import path from 'path';
 import fs from 'fs-extra';
-/* eslint-enable */
 
 import { getPackages } from './utils';
 

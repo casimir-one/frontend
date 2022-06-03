@@ -4,6 +4,14 @@ module.exports = {
     './packages/common/eslint-config',
     './packages/common/eslint-config/vue'
   ],
+  rules: {
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: ['./scripts/**/*']
+      }
+    ]
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],

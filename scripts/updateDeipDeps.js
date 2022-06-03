@@ -1,7 +1,5 @@
-/* eslint-disable */
 const inquirer = require('inquirer');
 const execa = require('execa');
-/* eslint-enable */
 
 const prompt = inquirer.createPromptModule();
 
@@ -26,6 +24,12 @@ prompt([{
       process.exit();
     }
 
-    await execa.command('npx lerna exec -- "npx ncu \'/^@(deip|casimir)\\/.*$/\' -u"', { stdio: 'inherit', shell: true });
+    const commandStack = [
+      'npx lerna exec',
+      '--',
+      '"npx ncu \'/^@(deip|casimir)\\/.*$/\' -u"'
+    ];
+
+    await execa.command(commandStack.join(' '), { stdio: 'inherit', shell: true });
     process.exit();
   });
