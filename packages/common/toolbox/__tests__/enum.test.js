@@ -1,4 +1,4 @@
-import { createEnum } from '../lib/enum';
+import { createEnum } from '../src';
 
 describe('createEnum', () => {
   describe('from object', () => {

@@ -2,7 +2,7 @@ import {
   TemplateStringParser,
   isSingleMatch,
   isFunctionMatch
-} from '../lib/template-string-parser';
+} from '../src';
 
 describe('TemplateStringParser', () => {
   describe('with no context and default options ', () => {
@@ -12,8 +12,16 @@ describe('TemplateStringParser', () => {
       expect(parser.isTemplateShown).toBe(false);
     });
 
-    it.each([null, undefined, true, 1, Date.now(), {}])('should throw error when not string (%s) passed to parse', (value) => {
-      expect(() => { parser.parse(value); }).toThrow(new Error('The argument must be a string type'));
+    it.each([
+      null,
+      undefined,
+      true,
+      1,
+      Date.now(),
+      {}
+    ])('should throw error when not string (%s) passed to parse', (value) => {
+      expect(() => { parser.parse(value); })
+        .toThrow(new Error('The argument must be a string type'));
     });
 
     it('should return initial text', () => {
@@ -21,7 +29,10 @@ describe('TemplateStringParser', () => {
       expect(parser.parse(initial)).toBe(initial);
     });
 
-    it.each(['{{test}}', '{{(param)::testFunc}}'])('should return undefined for %s without value in context', (value) => {
+    it.each([
+      '{{test}}',
+      '{{(param)::testFunc}}'
+    ])('should return undefined for %s without value in context', (value) => {
       expect(parser.parse(value)).toBeUndefined();
     });
 
@@ -44,7 +55,10 @@ describe('TemplateStringParser', () => {
       expect(parser.parse(initial)).toBe(initial);
     });
 
-    it.each(['{{test}}', '{{(param)::testFunc}}'])('should return %s for %s without value in context', (value) => {
+    it.each([
+      '{{test}}',
+      '{{(param)::testFunc}}'
+    ])('should return %s for %s without value in context', (value) => {
       expect(parser.parse(value)).toBe(value);
     });
 
@@ -101,7 +115,11 @@ describe('isSingleMatch', () => {
     expect(isSingleMatch(str, matches)).toBe(true);
   });
 
-  it.each(['hello test world', 'hello test test', ''])('should return false for %s', (str) => {
+  it.each([
+    'hello test world',
+    'hello test test',
+    ''
+  ])('should return false for %s', (str) => {
     const matches = [...str.matchAll(pattern)];
     expect(isSingleMatch(str, matches)).toBe(false);
   });
@@ -116,7 +134,12 @@ describe('isFunctionMatch', () => {
     expect(isFunctionMatch(str)).toBe(true);
   });
 
-  it.each(['test', '{{test}}, ():testFunc', '{testFunc}', '::testFunc'])('should return false for %s', (str) => {
+  it.each([
+    'test',
+    '{{test}}, ():testFunc',
+    '{testFunc}',
+    '::testFunc'
+  ])('should return false for %s', (str) => {
     expect(isFunctionMatch(str)).toBe(false);
   });
 });

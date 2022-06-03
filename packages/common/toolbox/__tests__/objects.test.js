@@ -3,7 +3,7 @@ import {
   camelizeObjectKeys,
   filterObjectKeys,
   deepFindParentByValue
-} from '../lib/objects';
+} from '../src';
 
 describe('deepFreeze', () => {
   it('should freeze object at all levels', () => {

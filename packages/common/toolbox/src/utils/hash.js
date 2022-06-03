@@ -1,10 +1,10 @@
 /* eslint-disable global-require */
-import { isNil } from 'lodash';
 import md5 from 'md5';
 import {
   isArray,
-  isObject
-} from './validation';
+  isObject,
+  isNil
+} from '../verification';
 
 /**
   * Generate sha256 hash

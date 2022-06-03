@@ -13,7 +13,7 @@ import {
   hasValue,
   hasOwnProperty,
   assert
-} from '../lib/validation';
+} from '../src';
 
 const checkFunction = (checkedFn, parametersForFalse, parametersForTrue) => {
   it.each(parametersForFalse)('should return false for %s', (initial) => {
@@ -122,7 +122,15 @@ describe('hasValue', () => {
 });
 
 describe('hasOwnProperty', () => {
-  it.each([null, undefined, 1, '', {}, { b: '1', c: { a: '2' } }, []])('should return false for %s', (initial) => {
+  it.each([
+    null,
+    undefined,
+    1,
+    '',
+    {},
+    { b: '1', c: { a: '2' } },
+    []
+  ])('should return false for %s', (initial) => {
     expect(hasOwnProperty('a', initial)).toEqual(false);
   });
 

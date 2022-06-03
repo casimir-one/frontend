@@ -5,13 +5,11 @@
   "author": "",
   "license": "ISC",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
@@ -22,18 +20,13 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
-  "devDependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-proposal-decorators": "^7.14.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.14.4",
-    "@babel/plugin-proposal-optional-chaining": "^7.14.2",
-    "@babel/plugin-proposal-private-methods": "^7.13.0",
-    "@babel/preset-env": "^7.14.4"
-  },
   "dependencies": {
     "@array-utils/chunk-it": "^3.0.1",
     "@deip/lib-crypto": "1.375.1",
+    "@types/kind-of": "^6.0.0",
+    "@types/lodash": "^4.14.182",
+    "@types/object-path": "^0.11.1",
+    "@types/uuid": "^8.3.4",
     "change-case": "^4.1.2",
     "chroma-js": "^2.1.2",
     "chunk": "^0.0.3",

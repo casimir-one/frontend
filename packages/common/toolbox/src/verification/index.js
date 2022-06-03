@@ -50,6 +50,13 @@ export const isString = (val) => kindOf(val) === 'string';
 export const isNumber = (val) => kindOf(val) === 'number';
 
 /**
+ * Checks if value is null or undefined
+ * @param {*} val
+ * @returns {boolean}
+ */
+export const isNil = (val) => val === undefined || val === null;
+
+/**
  * Checks if value is numeric string
  * @param {*} val
  * @returns {boolean}
@@ -58,13 +65,6 @@ export const isNumeric = (val) => {
   if (isNumber(val)) return false;
   return !Number.isNaN(val) && !Number.isNaN(Number.parseFloat(val));
 };
-
-/**
- * Checks if value is null or undefined
- * @param {*} val
- * @returns {boolean}
- */
-export const isNil = (val) => val == null;
 
 /**
  * Checks if value is boolean, string or number
@@ -137,36 +137,4 @@ export const hasOwnProperty = (prop, obj) => {
   if (kindOf(obj) !== 'object') return false;
 
   return Object.prototype.hasOwnProperty.call(obj, prop);
-};
-
-// TODO: rename to validateAssert or something more abstarct
-/**
- export const validateConditionFabric = (failureMessage) => {
-   return {
-     validate(condition, failureMessage) {
-       if (condition) return;
-       throw new Error(failureMessage);
-     }
-   }
- }
- export validateCondition = validateConditionFabric().validate
-
- import { validateCondition, validateConditionFabric } from '...';
-
- const assertValidation = validateConditionFabric('Assertion failed')
- assertValidation(cond);
-
- validateCondition(cond, 'alarma!!!')
-*/
-
-/**
- * @param {boolean} condition
- * @param {string} [failureMessage = Assertion failed]
- */
-export const assert = (
-  condition,
-  failureMessage = 'Assertion failed',
-) => {
-  if (condition) return;
-  throw new Error(failureMessage);
 };

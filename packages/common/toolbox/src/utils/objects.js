@@ -3,12 +3,9 @@ import crc32 from 'crc/crc32';
 import { cloneDeep, sortBy } from 'lodash';
 import { find as deepFind } from 'find-keypath';
 import objectPath from 'object-path';
-import {
-  isArray,
-  isObject,
-  isSimpleVal,
-  assert
-} from './validation';
+
+import { isArray, isObject, isSimpleVal } from '../verification';
+import { assert } from './assert';
 
 /**
  * @param {Object} obj
