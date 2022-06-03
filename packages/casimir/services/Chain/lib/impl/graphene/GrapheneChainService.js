@@ -20,7 +20,7 @@ class GrapheneChainService extends BaseChainService {
   }
 
   init() {
-    const GrapheneClient = require('@deip/rpc-client');
+    const GrapheneClient = require('./rpc-client');
 
     if (!this.isInited()) {
       GrapheneClient.config.set('chain_id', this._chainId);
@@ -40,7 +40,7 @@ class GrapheneChainService extends BaseChainService {
   }
 
   getChainInfo() {
-    return { 
+    return {
       TxClass: GrapheneTx,
       metadata: {
         chainId: this._chainId
@@ -50,12 +50,12 @@ class GrapheneChainService extends BaseChainService {
 
   getChainTxBuilder() {
     return new GrapheneTxBuilder(
-      this.getChainNodeClient(), 
+      this.getChainNodeClient(),
       this.getChainOperationsRegistry(),
       this.getPortalId()
     );
   }
- 
+
   generateChainSeedAccount({ username, password, privateKey }) {
     return new GrapheneChainSeedAccount({ username, password, privateKey });
   }
