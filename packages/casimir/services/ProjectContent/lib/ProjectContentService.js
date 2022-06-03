@@ -191,6 +191,19 @@ export class ProjectContentService {
   }
 
   /**
+   * Get project content draft list paginated
+   * @param {Object} q
+   * @param {Object} q.sort 'asc', 'desc' by fields
+   * @param {Number} q.page 0 or above
+   * @param {Number} q.pageSize from 1 to 100
+   * @param {Object} q.filter filter
+   * @returns {Promise<Object>}
+   */
+  async getDraftsListPaginated(query) {
+    return this.projectContentHttp.getDraftsListPaginated(query);
+  }
+
+  /**
    * Get project content draft by id
    * @param {string} id
    * @returns {Promise<Object>}

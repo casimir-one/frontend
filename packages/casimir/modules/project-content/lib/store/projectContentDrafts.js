@@ -25,6 +25,12 @@ const ACTIONS = {
     commit('setList', res.data.items);
   },
 
+  async getListPaginated({ commit }, query) {
+    const res = await projectContentService.getDraftsListPaginated(query);
+    commit('setList', res.data.items);
+    return res.data;
+  },
+
   async getOne({ commit }, id) {
     const res = await projectContentService.getDraft(id);
     commit('setOne', res.data);
