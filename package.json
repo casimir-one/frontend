@@ -4,22 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precommit": "lint-staged",
+    "bootstrap": "npm run lerna:clean && npm run lerna:bootstrap && npm run build:lib",
+    "bootstrap:ci": "npm run lerna:clean && npm run lerna:bootstrap:ci && npm run build:lib",
+
+    "build:lib": "babel-node scripts/buildProjectLib.js",
+
+    "check:instances": "babel-node ./scripts/checkInstances.js",
+
+    "create:dts": "babel-node scripts/generateDts.js",
+    "create:package": "npx yo ./packages/generators/generator-package",
+
+    "lerna:bootstrap": "lerna bootstrap -- --legacy-peer-deps",
+    "lerna:bootstrap:ci": "lerna bootstrap --no-ci -- --legacy-peer-deps",
+    "lerna:clean": "lerna clean --yes",
+
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+
+    "precommit": "lint-staged",
+    "prepare": "husky install",
+    "publish": "npm run build:lib && node ./scripts/publish.js",
+
     "test": "cross-env NODE_ENV=test jest",
     "test:update": "cross-env NODE_ENV=test jest -u",
-    "publish": "npm run build:lib && node ./scripts/publish.js",
-    "clean": "lerna clean --yes",
-    "check:instances": "babel-node ./scripts/checkInstances.js",
-    "bootstrap": "npm run clean && lerna bootstrap -- --legacy-peer-deps",
-    "bootstrap:ci": "npm run clean && lerna bootstrap --no-ci -- --legacy-peer-deps",
-    "prepare": "husky install",
+
+    "types:check": "tsc --noEmit",
     "updateDeipDeps": "node ./scripts/updateDeipDeps.js",
-    "create:package": "npx yo ./packages/generators/generator-package",
-    "build:lib": "babel-node scripts/buildProjectLib.js",
-    "watch:dev": "npm run build:lib && babel-node ./scripts/watchDev.js",
-    "types:check": "tsc --noEmit"
+    "watch:dev": "npm run build:lib && babel-node ./scripts/watchDev.js"
   },
   "keywords": [],
   "author": "",
@@ -72,6 +83,7 @@
     "ora": "^5.4.1",
     "sass": "^1.34.1",
     "sass-loader": "^10.2.1",
+    "shelljs": "^0.8.5",
     "shx": "^0.3.4",
     "style-loader": "^2.0.0",
     "typescript": "^4.7.2",

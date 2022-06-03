@@ -1,8 +1,6 @@
-/* eslint-disable */
 import chokidar from 'chokidar';
 import path from 'path';
 import ora from 'ora';
-/* eslint-enable */
 
 import { getPackages, buildPackageLib, findPackageRoot } from './utils';
 

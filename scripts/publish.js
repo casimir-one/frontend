@@ -1,12 +1,12 @@
-/* eslint-disable */
 const inquirer = require('inquirer');
 const ora = require('ora');
 const execa = require('execa');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
-const argv = require('yargs/yargs')(process.argv.slice(2)).argv
-/* eslint-enable */
+
+// eslint-disable-next-line import/extensions
+const { argv } = require('yargs/yargs')(process.argv.slice(2));
 
 const {
   bootstrap = true,
@@ -23,7 +23,10 @@ const { command: { version: { allowBranch } } } = fs.readJsonSync(path.join(root
 /**
  * @return {string} Current branch name
  */
-const getCurrentBranch = async () => (await execa.command('git rev-parse --abbrev-ref HEAD')).stdout;
+const getCurrentBranch = async () => {
+  const { stdout } = await execa.command('git rev-parse --abbrev-ref HEAD');
+  return stdout;
+};
 
 /**
  * @param error
@@ -47,18 +50,33 @@ const checkBranchUpToDate = async (currentBranch) => {
 
   const { stdout } = await execa.command('git status -uno');
 
-  const isAhead = stdout.includes('Your branch is ahead');
-  const isBehind = stdout.includes('Your branch is behind');
-  const isDirty = stdout.includes('Changes not staged');
+  const aheadMsg = {
+    phrase: 'Your branch is ahead',
+    recommend: 'Use "git push" to publish your local commits'
+  };
+  const behindMsg = {
+    phrase: 'Your branch is behind',
+    recommend: 'Use "git pull" to update your local branch'
+  };
+  const dirtyMsg = {
+    phrase: 'Changes not staged',
+    recommend: 'Use "git add [file]..." to update what will be committed'
+  };
+
+  const remoteBranch = `origin/${currentBranch}`;
+
+  const isAhead = stdout.includes(aheadMsg.phrase);
+  const isBehind = stdout.includes(behindMsg.phrase);
+  const isDirty = stdout.includes(dirtyMsg.phrase);
 
   if (isAhead) {
-    throw new Error(`Your branch is ahead of 'origin/${currentBranch}'. Use "git push" to publish your local commits`);
+    throw new Error(`${aheadMsg.phrase} of '${remoteBranch}'. ${aheadMsg.recommend}`);
   }
   if (isBehind) {
-    throw new Error(`Your branch is behind of 'origin/${currentBranch}'. Use "git pull" to update your local branch`);
+    throw new Error(`${behindMsg.phrase} of '${remoteBranch}'. ${behindMsg.recommend}`);
   }
   if (isDirty) {
-    throw new Error('Changes not staged for commit. Use "git add [file]..." to update what will be committed');
+    throw new Error(`${dirtyMsg.phrase} for commit. ${dirtyMsg.recommend}`);
   }
 
   return true;
@@ -146,6 +164,7 @@ Make sure everything is done correctly.
     const publishBranch = await getCurrentBranch();
 
     if (!allowBranch.includes(publishBranch)) {
+      // eslint-disable-next-line max-len
       errorHandler(`Wrong Branch ${publishBranch}. Publish can be started only from ${allowBranch.join(' ,')}.`);
     }
 
