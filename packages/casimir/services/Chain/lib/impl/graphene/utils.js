@@ -10,7 +10,7 @@ const millisecToIso = (millisecond) => {
 }
 
 const isValidPrivKey = (privKey) => {
-  const GrapheneClient = require('@deip/rpc-client');
+  const GrapheneClient = require('./rpc-client');
   return GrapheneClient.auth.isWif(privKey);
 }
 

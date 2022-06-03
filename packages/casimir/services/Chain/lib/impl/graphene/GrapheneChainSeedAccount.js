@@ -5,15 +5,15 @@ import { TextEncoder } from "web-encoding"
 
 class GrapheneChainSeedAccount extends BaseChainSeedAccount {
   constructor({ username, password, privateKey }) {
-    const GrapheneClient = require('@deip/rpc-client');
+    const GrapheneClient = require('./rpc-client');
 
     assert((!!password && !privateKey) || (!!privateKey && !password),
       "Either 'password' or 'privateKey' should be specified for account generation");
 
     if (password) {
-      const { 
-        ownerPubkey: pubKey, 
-        owner: privKey 
+      const {
+        ownerPubkey: pubKey,
+        owner: privKey
       } = GrapheneClient.auth.getPrivateKeys(username, password, ['owner']);
 
       super({ username, address: pubKey, pubKey, privKey });
