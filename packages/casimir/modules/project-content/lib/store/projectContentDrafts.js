@@ -82,6 +82,10 @@ const ACTIONS = {
       }
     );
     commit('remove', _id);
+  },
+
+  moderate(_, payload) {
+    return projectContentService.moderateProjectContentDraft(payload);
   }
 };
 
