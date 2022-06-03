@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Domains HTTP transport
@@ -25,5 +25,5 @@ export class DomainsHttp {
   }
 
   /** @type {() => DomainsHttp} */
-  static getInstance = createInstanceGetter(DomainsHttp)
+  static getInstance = makeSingletonInstance(() => new DomainsHttp());
 }

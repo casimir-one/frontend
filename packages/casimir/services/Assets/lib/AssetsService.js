@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 import { AssetsHttp } from './AssetsHttp';
@@ -91,5 +91,5 @@ export class AssetsService {
   }
 
   /** @type {() => AssetsService} */
-  static getInstance = createInstanceGetter(AssetsService);
+  static getInstance = makeSingletonInstance(() => new AssetsService());
 }

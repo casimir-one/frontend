@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Layouts HTTP transport
@@ -77,5 +77,5 @@ export class LayoutHttp {
   }
 
   /** @type {() => LayoutHttp} */
-  static getInstance = createInstanceGetter(LayoutHttp);
+  static getInstance = makeSingletonInstance(() => new LayoutHttp());
 }

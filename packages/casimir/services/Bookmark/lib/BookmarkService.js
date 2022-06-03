@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/messages';
 import {
   CreateBookmarkCmd,
@@ -73,5 +73,5 @@ export class BookmarkService {
   }
 
   /** @type {() => BookmarkService} */
-  static getInstance = createInstanceGetter(BookmarkService);
+  static getInstance = makeSingletonInstance(() => new BookmarkService());
 }

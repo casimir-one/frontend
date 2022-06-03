@@ -2,7 +2,7 @@ import { proxydi } from '@deip/proxydi';
 import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { ChainService } from '@deip/chain-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { PROTOCOL_CHAIN } from '@deip/constants';
 import { ProposalsHttp } from './ProposalsHttp';
 
@@ -166,5 +166,5 @@ export class ProposalsService {
   }
 
   /** @type {() => ProposalsService} */
-  static getInstance = createInstanceGetter(ProposalsService);
+  static getInstance = makeSingletonInstance(() => new ProposalsService());
 }

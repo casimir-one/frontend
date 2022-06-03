@@ -1,4 +1,4 @@
-import { createInstanceGetter, genSha256Hash } from '@deip/toolbox';
+import { makeSingletonInstance, genSha256Hash } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
 import {
@@ -210,5 +210,5 @@ export class NonFungibleTokenService {
   }
 
   /** @type {() => NonFungibleTokenService} */
-  static getInstance = createInstanceGetter(NonFungibleTokenService);
+  static getInstance = makeSingletonInstance(() => new NonFungibleTokenService());
 }

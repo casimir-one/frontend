@@ -2,7 +2,7 @@ import {
   createFormData,
   genRipemd160Hash,
   genSha256Hash,
-  createInstanceGetter
+  makeSingletonInstance
 } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
@@ -399,5 +399,5 @@ export class ProjectContentService {
   }
 
   /** @type {() => ProjectContentService} */
-  static getInstance = createInstanceGetter(ProjectContentService);
+  static getInstance = makeSingletonInstance(() => new ProjectContentService());
 }

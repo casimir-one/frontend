@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Project content HTTP transport
@@ -142,5 +142,5 @@ export class ProjectContentHttp {
   }
 
   /** @type {() => ProjectContentHttp} */
-  static getInstance = createInstanceGetter(ProjectContentHttp);
+  static getInstance = makeSingletonInstance(() => new ProjectContentHttp());
 }

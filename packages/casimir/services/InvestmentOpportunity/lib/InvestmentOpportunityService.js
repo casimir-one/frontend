@@ -8,7 +8,7 @@ import {
   InvestCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { InvestmentOpportunityHttp } from './InvestmentOpportunityHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
@@ -298,5 +298,5 @@ export class InvestmentOpportunityService {
   }
 
   /** @type {() => InvestmentOpportunityService} */
-  static getInstance = createInstanceGetter(InvestmentOpportunityService);
+  static getInstance = makeSingletonInstance(() => new InvestmentOpportunityService());
 }

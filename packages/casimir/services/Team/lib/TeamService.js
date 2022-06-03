@@ -2,7 +2,7 @@ import {
   createFormData,
   replaceFileWithName,
   genSha256Hash,
-  createInstanceGetter,
+  makeSingletonInstance,
   isBoolean
 } from '@deip/toolbox';
 import { UserService } from '@deip/user-service';
@@ -478,5 +478,5 @@ export class TeamService {
   }
 
   /** @type {() => TeamService} */
-  static getInstance = createInstanceGetter(TeamService);
+  static getInstance = makeSingletonInstance(() => new TeamService());
 }

@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class GrantsHttp {
   http = HttpService.getInstance();
@@ -18,5 +18,5 @@ export class GrantsHttp {
   }
 
   /** @type {() => GrantsHttp} */
-  static getInstance = createInstanceGetter(GrantsHttp);
+  static getInstance = makeSingletonInstance(() => new GrantsHttp());
 }

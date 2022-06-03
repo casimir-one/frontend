@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Auth HTTP transport
@@ -34,5 +34,5 @@ export class AuthHttp {
   }
 
   /** @type {() => AuthHttp} */
-  static getInstance = createInstanceGetter(AuthHttp)
+  static getInstance = makeSingletonInstance(() => new AuthHttp());
 }

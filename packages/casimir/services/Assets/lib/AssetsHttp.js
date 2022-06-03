@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Assets http transport
@@ -55,5 +55,5 @@ export class AssetsHttp {
   }
 
   /** @type {() => AssetsHttp} */
-  static getInstance = createInstanceGetter(AssetsHttp);
+  static getInstance = makeSingletonInstance(() => new AssetsHttp());
 }

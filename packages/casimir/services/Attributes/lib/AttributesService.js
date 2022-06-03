@@ -5,7 +5,7 @@ import {
   UpdateAttributeSettingsCmd
 } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { AttributesHttp } from './AttributesHttp';
 
@@ -144,5 +144,5 @@ export class AttributesService {
   }
 
   /** @type {() => AttributesService} */
-  static getInstance = createInstanceGetter(AttributesService);
+  static getInstance = makeSingletonInstance(() => new AttributesService());
 }

@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class ProjectNdaHttp {
   http = HttpService.getInstance();
@@ -21,5 +21,5 @@ export class ProjectNdaHttp {
   }
 
   /** @type {() => ProjectNdaHttp} */
-  static getInstance = createInstanceGetter(ProjectNdaHttp);
+  static getInstance = makeSingletonInstance(() => new ProjectNdaHttp());
 }

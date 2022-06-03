@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Portal HTTP transport
@@ -95,5 +95,5 @@ export class PortalHttp {
   }
 
   /** @type {() => PortalHttp} */
-  static getInstance = createInstanceGetter(PortalHttp);
+  static getInstance = makeSingletonInstance(() => new PortalHttp());
 }

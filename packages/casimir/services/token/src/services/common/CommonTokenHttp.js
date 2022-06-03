@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Token http transport
@@ -17,5 +17,5 @@ export class CommonTokenHttp {
   }
 
   /** @type {() => CommonTokenHttp} */
-  static getInstance = createInstanceGetter(CommonTokenHttp);
+  static getInstance = makeSingletonInstance(() => new CommonTokenHttp());
 }

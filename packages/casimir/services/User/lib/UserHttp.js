@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class UserHttp {
   http = HttpService.getInstance();
@@ -107,5 +107,5 @@ export class UserHttp {
   }
 
   /** @type {() => UserHttp} */
-  static getInstance = createInstanceGetter(UserHttp);
+  static getInstance = makeSingletonInstance(() => new UserHttp());
 }

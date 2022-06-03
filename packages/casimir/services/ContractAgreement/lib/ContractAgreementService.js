@@ -1,6 +1,6 @@
 import {
   createFormData,
-  createInstanceGetter
+  makeSingletonInstance
 } from '@deip/toolbox';
 import {
   CreateContractAgreementCmd,
@@ -312,5 +312,5 @@ export class ContractAgreementService {
   }
 
   /** @type {() => ContractAgreementService} */
-  static getInstance = createInstanceGetter(ContractAgreementService);
+  static getInstance = makeSingletonInstance(() => new ContractAgreementService());
 }

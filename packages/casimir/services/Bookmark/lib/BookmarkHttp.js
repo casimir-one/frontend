@@ -1,6 +1,6 @@
 import { HttpService } from '@deip/http-service';
 import { USER_BOOKMARK_TYPE } from '@deip/constants';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class BookmarkHttp {
   http = HttpService.getInstance();
@@ -33,5 +33,5 @@ export class BookmarkHttp {
   }
 
   /** @type {() => BookmarkHttp} */
-  static getInstance = createInstanceGetter(BookmarkHttp)
+  static getInstance = makeSingletonInstance(() => new BookmarkHttp());
 }

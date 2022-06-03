@@ -10,7 +10,7 @@ import {
   replaceFileWithName,
   createFormData,
   genSha256Hash,
-  createInstanceGetter
+  makeSingletonInstance
 } from '@deip/toolbox';
 import { APP_EVENT } from '@deip/constants';
 import { UserHttp } from './UserHttp';
@@ -210,5 +210,5 @@ export class UserService {
   }
 
   /** @type {() => UserService} */
-  static getInstance = createInstanceGetter(UserService);
+  static getInstance = makeSingletonInstance(() => new UserService());
 }
