@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Attributes HTTP transport
@@ -103,5 +103,5 @@ export class AttributesHttp {
   }
 
   /** @type {() => AttributesHttp} */
-  static getInstance = createInstanceGetter(AttributesHttp);
+  static getInstance = makeSingletonInstance(() => new AttributesHttp());
 }

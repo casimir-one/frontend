@@ -4,7 +4,7 @@ import {
   DeleteDocumentTemplateCmd
 } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { DocumentTemplateHttp } from './DocumentTemplateHttp';
 
@@ -88,5 +88,5 @@ export class DocumentTemplateService {
   }
 
   /** @type {() => DocumentTemplateService} */
-  static getInstance = createInstanceGetter(DocumentTemplateService);
+  static getInstance = makeSingletonInstance(() => new DocumentTemplateService());
 }

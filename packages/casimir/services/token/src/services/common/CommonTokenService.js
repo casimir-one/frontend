@@ -1,6 +1,6 @@
 import { APP_PROPOSAL, ASSET_TYPE } from '@deip/constants';
 import { TransferFungibleTokenCmd, TransferNonFungibleTokenCmd } from '@deip/commands';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
@@ -65,5 +65,5 @@ export class CommonTokenService {
   }
 
   /** @type {() => CommonTokenService} */
-  static getInstance = createInstanceGetter(CommonTokenService);
+  static getInstance = makeSingletonInstance(() => new CommonTokenService());
 }

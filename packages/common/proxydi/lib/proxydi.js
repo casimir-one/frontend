@@ -1,4 +1,4 @@
-import { classSingleton } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class Proxydi {
   _registry = {};
@@ -57,7 +57,9 @@ export class Proxydi {
   has(name) {
     return !!this._registry[name];
   }
+
+  static getInstance = makeSingletonInstance(() => new Proxydi());
 }
 
 /** @type {Proxydi} */
-export const proxydi = classSingleton(Proxydi);
+export const proxydi = Proxydi.getInstance();

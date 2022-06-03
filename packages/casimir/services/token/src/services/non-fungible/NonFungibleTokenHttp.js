@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Non-fungible token http transport
@@ -73,5 +73,5 @@ export class NonFungibleTokenHttp {
   }
 
   /** @type {() => NonFungibleTokenHttp} */
-  static getInstance = createInstanceGetter(NonFungibleTokenHttp);
+  static getInstance = makeSingletonInstance(() => new NonFungibleTokenHttp());
 }

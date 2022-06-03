@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class DocumentTemplateHttp {
   http = HttpService.getInstance();
@@ -50,5 +50,5 @@ export class DocumentTemplateHttp {
   }
 
   /** @type {() => DocumentTemplateHttp} */
-  static getInstance = createInstanceGetter(DocumentTemplateHttp)
+  static getInstance = makeSingletonInstance(() => new DocumentTemplateHttp());
 }

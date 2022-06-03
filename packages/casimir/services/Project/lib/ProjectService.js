@@ -17,7 +17,7 @@ import { WebSocketService } from '@deip/web-socket-service';
 
 import {
   createFormData,
-  createInstanceGetter,
+  makeSingletonInstance,
   genSha256Hash,
   replaceFileWithName
 } from '@deip/toolbox';
@@ -518,5 +518,5 @@ export class ProjectService {
   }
 
   /** @type {() => ProjectService} */
-  static getInstance = createInstanceGetter(ProjectService);
+  static getInstance = makeSingletonInstance(() => new ProjectService());
 }

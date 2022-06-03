@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { handleHttpError } from './HttpError';
 
 /**
@@ -118,7 +118,7 @@ export class HttpService {
   }
 
   /** @type {() => HttpService} */
-  static getInstance = createInstanceGetter(HttpService);
+  static getInstance = makeSingletonInstance(() => new HttpService());
 }
 
 /**

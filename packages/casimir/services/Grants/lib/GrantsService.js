@@ -1,7 +1,7 @@
 import { GrantsHttp } from './GrantsHttp';
 import { ChainService } from '@deip/chain-service';
 import { proxydi } from '@deip/proxydi';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 
 // WARNING: GrantsService is obsolete and will be refactored according to 'CallsModel'
@@ -665,5 +665,5 @@ export class GrantsService {
   }
 
   /** @type {() => GrantsService} */
-  static getInstance = createInstanceGetter(GrantsService);
+  static getInstance = makeSingletonInstance(() => new GrantsService());
 }

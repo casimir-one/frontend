@@ -1,4 +1,4 @@
-import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
+import { genSha256Hash, makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { CreateDaoCmd } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
@@ -112,5 +112,5 @@ export class AuthService {
   }
 
   /** @type {() => AuthService} */
-  static getInstance = createInstanceGetter(AuthService)
+  static getInstance = makeSingletonInstance(() => new AuthService());
 }

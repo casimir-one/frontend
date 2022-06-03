@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { ExpertiseContributionsHttp } from './ExpertiseContributionsHttp';
 
 export class ExpertiseContributionsService {
@@ -238,5 +238,5 @@ export class ExpertiseContributionsService {
   }
 
   /** @type {() => ExpertiseContributionsService} */
-  static getInstance = createInstanceGetter(ExpertiseContributionsService);
+  static getInstance = makeSingletonInstance(() => new ExpertiseContributionsService());
 }

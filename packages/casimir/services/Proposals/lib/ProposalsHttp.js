@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  *  Proposals HTTP transport
@@ -45,5 +45,5 @@ export class ProposalsHttp {
   }
 
   /** @type {() => ProposalsHttp} */
-  static getInstance = createInstanceGetter(ProposalsHttp);
+  static getInstance = makeSingletonInstance(() => new ProposalsHttp());
 }

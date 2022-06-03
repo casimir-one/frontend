@@ -1,4 +1,4 @@
-import { genSha256Hash, createInstanceGetter } from '@deip/toolbox';
+import { genSha256Hash, makeSingletonInstance } from '@deip/toolbox';
 import {
   CreateReviewRequestCmd,
   DeclineReviewRequestCmd,
@@ -240,5 +240,5 @@ export class ReviewService {
   }
 
   /** @type {() => ReviewService} */
-  static getInstance = createInstanceGetter(ReviewService);
+  static getInstance = makeSingletonInstance(() => new ReviewService());
 }

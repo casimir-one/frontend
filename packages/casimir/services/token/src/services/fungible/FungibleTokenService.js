@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
 import {
@@ -230,5 +230,5 @@ export class FungibleTokenService {
   }
 
   /** @type {() => FungibleTokenService} */
-  static getInstance = createInstanceGetter(FungibleTokenService);
+  static getInstance = makeSingletonInstance(() => new FungibleTokenService());
 }

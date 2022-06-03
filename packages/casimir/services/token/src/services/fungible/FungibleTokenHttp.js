@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Fungible token http transport
@@ -100,5 +100,5 @@ export class FungibleTokenHttp {
   }
 
   /** @type {() => FungibleTokenHttp} */
-  static getInstance = createInstanceGetter(FungibleTokenHttp);
+  static getInstance = makeSingletonInstance(() => new FungibleTokenHttp());
 }

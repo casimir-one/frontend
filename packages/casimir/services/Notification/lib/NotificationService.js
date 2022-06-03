@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/messages';
 import {
   MarkNotificationsAsReadCmd
@@ -66,5 +66,5 @@ export class NotificationService {
   }
 
   /** @type {() => NotificationService} */
-  static getInstance = createInstanceGetter(NotificationService);
+  static getInstance = makeSingletonInstance(() => new NotificationService());
 }

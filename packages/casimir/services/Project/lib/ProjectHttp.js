@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Project HTTP transport
@@ -55,11 +55,15 @@ export class ProjectHttp {
 
   /**
    * Delete project
-   * @param {Obhect} req
+   * @param {Object} req
    * @returns {Promise<Object>}
    */
   async delete(req) {
-    return this.http.put('/api/v2/project/delete', req.getHttpBody(), { headers: req.getHttpHeaders() });
+    return this.http.put(
+      '/api/v2/project/delete',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
   /**
@@ -104,5 +108,5 @@ export class ProjectHttp {
   }
 
   /** @type {() => ProjectHttp} */
-  static getInstance = createInstanceGetter(ProjectHttp);
+  static getInstance = makeSingletonInstance(() => new ProjectHttp());
 }

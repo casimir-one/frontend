@@ -1,5 +1,5 @@
 import { AccessService } from '@deip/access-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { DomainsHttp } from './DomainsHttp';
 
 /**
@@ -28,5 +28,5 @@ export class DomainsService {
   }
 
   /** @type {() => DomainsService} */
-  static getInstance = createInstanceGetter(DomainsService);
+  static getInstance = makeSingletonInstance(() => new DomainsService());
 }

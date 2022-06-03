@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Attributes HTTP transport
@@ -62,7 +62,20 @@ export class InvestmentOpportunityHttp {
    * @returns {Promise<Object>}
    */
   async getAccountRevenueHistoryByAsset(account, symbol, cursor, step, targetAsset) {
-    return this.http.get(`/api/v2/investments/history/account/${account}/${symbol}/${step}/${cursor}/asset/${targetAsset}`);
+    const url = [
+      'api',
+      'v2',
+      'investments',
+      'history',
+      'account',
+      account,
+      symbol,
+      step,
+      cursor,
+      'asset',
+      targetAsset
+    ].join('/');
+    return this.http.get(`/${url}`);
   }
 
   /**
@@ -104,5 +117,5 @@ export class InvestmentOpportunityHttp {
   }
 
   /** @type {() => InvestmentOpportunityHttp} */
-  static getInstance = createInstanceGetter(InvestmentOpportunityHttp);
+  static getInstance = makeSingletonInstance(() => new InvestmentOpportunityHttp());
 }

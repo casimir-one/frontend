@@ -1,4 +1,4 @@
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { JsonDataMsg } from '@deip/messages';
 import {
   CreateLayoutCmd, UpdateLayoutCmd, DeleteLayoutCmd, UpdateLayoutSettingsCmd
@@ -126,5 +126,5 @@ export class LayoutService {
   }
 
   /** @type {() => LayoutService} */
-  static getInstance = createInstanceGetter(LayoutService);
+  static getInstance = makeSingletonInstance(() => new LayoutService());
 }

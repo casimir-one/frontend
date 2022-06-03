@@ -1,4 +1,4 @@
-import { createFormData, createInstanceGetter, genSha256Hash } from '@deip/toolbox';
+import { createFormData, makeSingletonInstance, genSha256Hash } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import {
   CreateDaoCmd,
@@ -255,5 +255,5 @@ export class PortalService {
   }
 
   /** @type {() => PortalService} */
-  static getInstance = createInstanceGetter(PortalService);
+  static getInstance = makeSingletonInstance(() => new PortalService());
 }

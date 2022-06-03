@@ -1,5 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 export class ContractAgreementHttp {
   http = HttpService.getInstance();
@@ -60,5 +60,5 @@ export class ContractAgreementHttp {
   }
 
   /** @type {() => ContractAgreementHttp} */
-  static getInstance = createInstanceGetter(ContractAgreementHttp);
+  static getInstance = makeSingletonInstance(() => new ContractAgreementHttp());
 }

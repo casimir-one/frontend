@@ -7,7 +7,7 @@ import { APP_PROPOSAL } from '@deip/constants';
 import { proxydi } from '@deip/proxydi';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/messages';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 import { ProjectNdaHttp } from './ProjectNdaHttp';
 
 const ndaDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 50).getTime();
@@ -104,5 +104,5 @@ export class ProjectNdaService {
   }
 
   /** @type {() => ProjectNdaService} */
-  static getInstance = createInstanceGetter(ProjectNdaService);
+  static getInstance = makeSingletonInstance(() => new ProjectNdaService());
 }

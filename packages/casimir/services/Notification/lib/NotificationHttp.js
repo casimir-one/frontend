@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Notification HTTP transport
@@ -26,5 +26,5 @@ export class NotificationHttp {
   }
 
   /** @type {() => NotificationHttp} */
-  static getInstance = createInstanceGetter(NotificationHttp);
+  static getInstance = makeSingletonInstance(() => new NotificationHttp());
 }

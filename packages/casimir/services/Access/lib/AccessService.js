@@ -1,6 +1,6 @@
 import decode from 'jwt-decode';
 import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@deip/constants';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Manage JWT tokens
@@ -110,5 +110,5 @@ export class AccessService {
   decodedToken = (jwt) => decode(jwt)
 
   /** @type {() => AccessService} */
-  static getInstance = createInstanceGetter(AccessService)
+  static getInstance = makeSingletonInstance(() => new AccessService());
 }

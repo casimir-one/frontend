@@ -1,5 +1,5 @@
 import { HttpService } from '@deip/http-service';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
  * Review HTTP transport
@@ -111,5 +111,5 @@ export class ReviewHttp {
   }
 
   /** @type {() => ReviewHttp} */
-  static getInstance = createInstanceGetter(ReviewHttp);
+  static getInstance = makeSingletonInstance(() => new ReviewHttp());
 }

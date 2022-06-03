@@ -1,6 +1,6 @@
 import { AccessService } from '@deip/access-service';
 import { proxydi } from '@deip/proxydi';
-import { createInstanceGetter } from '@deip/toolbox';
+import { makeSingletonInstance } from '@deip/toolbox';
 
 const WEB_SOCKET_STATE = {
   CONNECTING: 0,
@@ -115,5 +115,5 @@ export class WebSocketService {
   }
 
   /** @type {() => WebSocketService} */
-  static getInstance = createInstanceGetter(WebSocketService);
+  static getInstance = makeSingletonInstance(() => new WebSocketService());
 }
