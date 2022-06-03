@@ -1,5 +1,5 @@
 import { uuidv4 } from '@deip/toolbox';
-import { isEqual } from '@deip/toolbox/lodash';
+import { isEqual } from 'lodash';
 
 import { mutations, getters } from '../../store';
 import { normalizeBlocksObject } from '../../utils/helpers';

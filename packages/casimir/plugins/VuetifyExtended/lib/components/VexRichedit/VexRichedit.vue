@@ -8,7 +8,7 @@
 
   import { defineComponent } from '@deip/platform-util';
   import { VueEditorjs } from '@deip/vue-editorjs';
-  import { isEqual } from '@deip/toolbox/lodash';
+  import { isEqual } from 'lodash';
 
   import { getBindableProps } from '../../composables';
 

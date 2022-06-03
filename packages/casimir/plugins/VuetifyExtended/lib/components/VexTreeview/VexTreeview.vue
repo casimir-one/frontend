@@ -18,9 +18,9 @@
   /* eslint-disable */
   import { VTreeview } from 'vuetify/lib';
   /* eslint-enable */
-  import { isNil, get, difference } from '@deip/toolbox/lodash';
+  import { isNil, get, difference } from 'lodash';
 
-  import { getBindableProps } from '../../composables/props';
+  import { getBindableProps } from '../../composables';
   /**
    * Component for displaying large amounts of nested data
    */

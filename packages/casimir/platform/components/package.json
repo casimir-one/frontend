@@ -26,6 +26,7 @@
     "@deip/vuetify-extended": "1.380.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.22.1",
+    "lodash": "^4.17.21",
     "qs": "^6.10.1"
   },
   "peerDependencies": {

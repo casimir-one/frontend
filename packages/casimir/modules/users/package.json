@@ -32,7 +32,8 @@
     "@deip/validation-plugin": "1.380.0",
     "@deip/vue-elements": "1.380.0",
     "@deip/vue-layout-schema": "1.380.0",
-    "@deip/vuetify-extended": "1.380.0"
+    "@deip/vuetify-extended": "1.380.0",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@deip/auth-module": "^1.374.0",

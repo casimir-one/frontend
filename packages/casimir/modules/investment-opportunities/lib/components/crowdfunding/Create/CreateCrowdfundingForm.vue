@@ -68,8 +68,7 @@
 
   import { defineComponent } from '@deip/platform-util';
   import { VeStack } from '@deip/vue-elements';
-  import { hasValue } from '@deip/toolbox';
-  import { isNil } from '@deip/toolbox/lodash';
+  import { hasValue, isNil } from '@deip/toolbox';
   import { MIN_TOKEN_UNITS_TO_SELL } from '@deip/constants';
 
   import CrowdfundingTitleInput from './CrowdfundingTitleInput';

@@ -22,7 +22,7 @@ import {
 import { VeRawDisplay, VeStack } from '@deip/vue-elements';
 import { VlsBuilder } from '@deip/vue-layout-schema';
 import { isObject, RecursiveIterator, camelCase } from '@deip/toolbox';
-import { isEqual, cloneDeep } from '@deip/toolbox/lodash';
+import { isEqual, cloneDeep } from 'lodash';
 import draggable from 'vuedraggable';
 
 import {

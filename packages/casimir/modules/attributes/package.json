@@ -36,6 +36,7 @@
     "@deip/vuetify-extended": "1.380.0",
     "@vue/babel-preset-jsx": "^1.2.4",
     "dot-prop": "^6.0.1",
+    "lodash": "^4.17.21",
     "qs": "^6.10.3",
     "vue-clamp": "^0.3.2",
     "vuedraggable": "^2.24.3"

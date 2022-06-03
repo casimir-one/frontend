@@ -1,4 +1,4 @@
-import { cloneDeep, isEqual } from '@deip/toolbox/lodash';
+import { cloneDeep, isEqual } from 'lodash';
 import { VIEW_MODE } from '@deip/constants';
 
 /**

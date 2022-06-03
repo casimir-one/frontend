@@ -11,7 +11,7 @@ import { ClickOutside } from 'vuetify/lib/directives';
 import { VeRawDisplay } from '@deip/vue-elements';
 
 import { deepFindParentByValue, paramCase } from '@deip/toolbox';
-import { merge } from '@deip/toolbox/lodash';
+import { merge } from 'lodash';
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';
 

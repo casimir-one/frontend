@@ -15,7 +15,7 @@ import Marker from '@editorjs/marker';
 
 // import { mdiAccount } from '@mdi/js';
 
-import { isEqual, debounce } from '@deip/toolbox/lodash';
+import { isEqual, debounce } from 'lodash';
 
 // const genIcon = (path) => `
 //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="v-icon__svg">

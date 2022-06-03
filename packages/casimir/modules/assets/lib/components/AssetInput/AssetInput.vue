@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import { isEqual } from '@deip/toolbox/lodash';
+  import { isEqual } from 'lodash';
 
   const defaultValue = {
     id: null,
@@ -124,8 +124,12 @@
        * Get selected asset
        */
       selectedAsset() {
-        if (this.internalValue.symbol) return this.$store.getters['assets/one'](this.internalValue.symbol);
-        if (this.assetsListKeys.length) return this.$store.getters['assets/one'](this.assetsListKeys[0]);
+        if (this.internalValue.symbol) {
+          return this.$store.getters['assets/one'](this.internalValue.symbol);
+        }
+        if (this.assetsListKeys.length) {
+          return this.$store.getters['assets/one'](this.assetsListKeys[0]);
+        }
         return null;
       },
 

@@ -11,7 +11,7 @@ import {
   RecursiveIterator, objectPath, isFunction, assert
 } from '@deip/toolbox';
 
-import { cloneDeep } from '@deip/toolbox/lodash';
+import { cloneDeep } from 'lodash';
 
 import {
   RENDERER_SCHEMA_BLOCK_KEYS,
@@ -116,11 +116,13 @@ export const convertBlockPropsForCanvas = (node) => {
   }
 
   if (proxyProps) {
-    objectPath.set(res, ['data', 'proxyProps'], convertBlockPropsValueForCanvas(Object.keys(proxyProps)
+    const setData = convertBlockPropsValueForCanvas(Object.keys(proxyProps)
       .reduce((acc, component) => ({
         ...acc,
         ...{ [component]: convertBlockPropsValueForCanvas(proxyProps[component]) }
-      }), {})));
+      }), {}));
+
+    objectPath.set(res, ['data', 'proxyProps'], setData);
   }
 
   return res;

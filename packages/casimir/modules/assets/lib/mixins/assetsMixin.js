@@ -1,7 +1,11 @@
 import currency from 'currency.js';
 
-import { isNil } from '@deip/toolbox/lodash';
-import { isNumber, isObject, isString } from '@deip/toolbox';
+import {
+  isNumber,
+  isObject,
+  isString,
+  isNil
+} from '@deip/toolbox';
 
 export const assetsMixin = {
   methods: {

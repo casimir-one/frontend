@@ -49,7 +49,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { dateMixin } from '@deip/platform-components';
-  import { orderBy } from '@deip/toolbox/lodash';
+  import { orderBy } from 'lodash';
   import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { assetsMixin } from '@deip/assets-module';
   import { VeStack } from '@deip/vue-elements';
@@ -211,10 +211,16 @@
        * Get project investment opportunity data
        */
       getProjectInvestmentOpportunityData() {
-        return this.$store.dispatch('investmentOpportunities/getListByProjectId', this.projectId)
+        return this.$store.dispatch(
+          'investmentOpportunities/getListByProjectId',
+          this.projectId
+        )
           .then(() => {
             if (this.investmentOpportunity) {
-              this.$store.dispatch('investmentOpportunities/getInvestmentOpportunityInvestments', this.investmentOpportunity._id);
+              this.$store.dispatch(
+                'investmentOpportunities/getInvestmentOpportunityInvestments',
+                this.investmentOpportunity._id
+              );
             }
           })
           .catch((error) => {
