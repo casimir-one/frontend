@@ -3,7 +3,7 @@ import {
   collectionMerge,
   collectionOne,
   collectionList
-} from '../lib/collections';
+} from '../src';
 
 describe('wrapInArray', () => {
   it('should return empty array', () => {

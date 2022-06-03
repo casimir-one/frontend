@@ -1,7 +1,7 @@
 import where from 'filter-where';
 import { merge } from 'lodash';
 
-import { isArray } from './validation';
+import { isArray } from '../verification';
 
 const defaultOpts = { // as object for future extensions
   key: 'id',

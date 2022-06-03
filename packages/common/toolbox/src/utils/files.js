@@ -1,6 +1,6 @@
 import RecursiveIterator from 'recursive-iterator';
 import { cloneDeep } from 'lodash';
-import { isFile } from './validation';
+import { isFile } from '../verification';
 
 /**
   * Convert URL to Base64

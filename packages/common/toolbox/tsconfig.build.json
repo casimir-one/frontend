@@ -1,0 +1,14 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "./src",
+
+    "emitDeclarationOnly": true,
+    "allowJs": true
+  },
+  "include": [
+    "./src",
+    "./shims"
+  ]
+}

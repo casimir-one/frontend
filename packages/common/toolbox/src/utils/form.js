@@ -1,4 +1,4 @@
-import { isJsonString } from './validation';
+import { isJsonString } from '../verification';
 import { extractFilesFromModel, replaceFileWithName } from './files';
 
 /**

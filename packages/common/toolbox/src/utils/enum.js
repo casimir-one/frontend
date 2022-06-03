@@ -1,6 +1,6 @@
 import {
   isObject, isString, isNumeric, isArray
-} from './validation';
+} from '../verification';
 
 /**
   * Add value to enum

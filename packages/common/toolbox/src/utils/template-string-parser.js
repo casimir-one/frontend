@@ -1,5 +1,5 @@
 import objectPath from 'object-path';
-import { isNil } from 'lodash';
+import { isNil } from '../verification';
 
 const mainPattern = /{{\s*([\w\d.:,()'"\s]*?)\s*}}/g;
 const fnSubPattern = /^\(([\w\d.,_\s'"]*)\)(::[\w\d]+)+/g;
