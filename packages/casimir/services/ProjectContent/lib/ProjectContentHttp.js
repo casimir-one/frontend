@@ -118,6 +118,17 @@ export class ProjectContentHttp {
   }
 
   /**
+   * Moderate project content draft
+   * @param {Object} req
+   * @returns {Promise<Object>}
+   */
+  async moderateDraft(req) {
+    return this.http.put('/api/v2/project-content/draft/moderate',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() });
+  }
+
+  /**
    * Get project content list by portal
    * @param {string} portalId
    * @returns {Promise<Object>}

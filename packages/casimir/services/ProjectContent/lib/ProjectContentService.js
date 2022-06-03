@@ -13,7 +13,9 @@ import {
   CreateProjectContentCmd,
   CreateDraftCmd,
   DeleteDraftCmd,
-  UpdateDraftCmd
+  UpdateDraftCmd,
+  UpdateDraftStatusCmd,
+  UpdateDraftModerationMessageCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
@@ -376,6 +378,48 @@ export class ProjectContentService {
     }
 
     return this.projectContentHttp.unlockDraft(msg);
+  }
+
+  /**
+   * Moderate project content draft
+   * @param {Object} payload
+   * @param {Object} payload.data
+   * @param {string} payload.data._id
+   * @param {string} payload.data.status PROJECT_CONTENT_DRAFT_STATUS
+   * @param {string} payload.data.moderationMessage
+   * @returns
+   */
+  async moderateProjectContentDraft(payload) {
+    const { data } = payload;
+    const { _id, status, moderationMessage } = data;
+
+    const appCmds = [];
+
+    const updateStatusCmd = new UpdateDraftStatusCmd({ _id, status });
+    appCmds.push(updateStatusCmd);
+
+    if (moderationMessage) {
+      const updateMetadataCmd = new UpdateDraftModerationMessageCmd({ _id, moderationMessage });
+      appCmds.push(updateMetadataCmd);
+    }
+
+    const msg = new JsonDataMsg({ appCmds }, { 'entity-id': _id });
+
+    const env = this.proxydi.get('env');
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.projectContentHttp.moderateDraft(msg);
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.PROJECT_CONTENT_DRAFT_STATUS_UPDATED
+                  && eventBody.event.eventPayload._id === response.data._id;
+    }, 10000);
+
+    return response;
   }
 
   /**
