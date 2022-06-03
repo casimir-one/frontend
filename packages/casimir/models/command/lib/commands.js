@@ -26,6 +26,8 @@ import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
 import CreateDraftCmd from './impl/CreateDraftCmd';
 import DeleteDraftCmd from './impl/DeleteDraftCmd';
 import UpdateDraftCmd from './impl/UpdateDraftCmd';
+import UpdateDraftStatusCmd from './impl/UpdateDraftStatusCmd';
+import UpdateDraftModerationMessageCmd from './impl/UpdateDraftModerationMessageCmd';
 import CreateProjectContentCmd from './impl/CreateProjectContentCmd';
 import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
 import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
@@ -78,6 +80,8 @@ export {
   CreateDraftCmd,
   DeleteDraftCmd,
   UpdateDraftCmd,
+  UpdateDraftStatusCmd,
+  UpdateDraftModerationMessageCmd,
   CreateProjectContentCmd,
   CreateReviewRequestCmd,
   DeclineReviewRequestCmd,
