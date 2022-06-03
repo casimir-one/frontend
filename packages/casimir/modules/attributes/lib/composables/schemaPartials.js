@@ -13,7 +13,7 @@ import {
 
 import { VexDateInput } from '@deip/vuetify-extended';
 
-import { cloneDeep } from '@deip/toolbox/lodash';
+import { cloneDeep } from 'lodash';
 import {
   pascalCase, isObject, RecursiveIterator, camelCase
 } from '@deip/toolbox';

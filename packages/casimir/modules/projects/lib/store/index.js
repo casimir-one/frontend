@@ -1,4 +1,4 @@
-import { get } from '@deip/toolbox/lodash';
+import { get } from 'lodash';
 
 import { ProjectService } from '@deip/project-service';
 import {

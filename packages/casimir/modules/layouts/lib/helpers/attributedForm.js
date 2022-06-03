@@ -1,4 +1,4 @@
-import { isEqual } from '@deip/toolbox/lodash';
+import { isEqual } from 'lodash';
 
 import {
   attributeMethodsFactory,

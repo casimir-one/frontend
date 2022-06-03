@@ -61,7 +61,7 @@
   import { dateMixin } from '@deip/platform-components';
   import { INVESTMENT_OPPORTUNITY_STATUS } from '@deip/constants';
   import { isString } from '@deip/toolbox';
-  import { uniqBy } from '@deip/toolbox/lodash';
+  import { uniqBy } from 'lodash';
   /**
    * Component for crowdfunding progress
    * @displayName  CrowdfundingProgress
@@ -140,7 +140,9 @@
        * Get bar color depending on investment opportunity status
        */
       barColor() {
-        return this.investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.EXPIRED ? 'error' : 'success';
+        return this.investmentOpportunity.status === INVESTMENT_OPPORTUNITY_STATUS.EXPIRED
+          ? 'error'
+          : 'success';
       },
       /**
        * Get bar height

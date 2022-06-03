@@ -1,4 +1,4 @@
-import { isNil } from '@deip/toolbox/lodash';
+import { isNil } from '@deip/toolbox';
 
 /**
  * Wait until some value appears in getter

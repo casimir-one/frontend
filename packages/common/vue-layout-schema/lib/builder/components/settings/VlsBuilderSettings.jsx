@@ -5,7 +5,7 @@ import {
   capitalCase, deepFindParentByValue, hasOwnProperty, sentenceCase
 } from '@deip/toolbox';
 
-import { cloneDeep } from '@deip/toolbox/lodash';
+import { cloneDeep } from 'lodash';
 
 import { VeStack } from '@deip/vue-elements';
 

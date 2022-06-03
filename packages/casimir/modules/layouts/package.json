@@ -27,7 +27,8 @@
     "@deip/toolbox": "1.380.0",
     "@deip/vue-editorjs": "1.380.0",
     "@deip/vue-elements": "1.380.0",
-    "@deip/vue-layout-schema": "1.380.0"
+    "@deip/vue-layout-schema": "1.380.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",

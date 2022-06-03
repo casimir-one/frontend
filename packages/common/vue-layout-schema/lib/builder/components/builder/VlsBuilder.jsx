@@ -8,7 +8,7 @@ import {
 // eslint-disable-next-line import/no-unresolved,import/extensions
 } from 'vuetify/lib/components';
 
-import { isEqual } from '@deip/toolbox/lodash';
+import { isEqual } from 'lodash';
 
 import { VlsBuilderContainer } from '../container';
 import { VlsBuilderBlocks } from '../blocks';

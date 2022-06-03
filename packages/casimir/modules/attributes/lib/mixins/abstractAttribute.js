@@ -3,7 +3,7 @@ import {
   isFile,
   wrapInArray
 } from '@deip/toolbox';
-import { isEqual, cloneDeep } from '@deip/toolbox/lodash';
+import { isEqual, cloneDeep } from 'lodash';
 import { ValidationProvider } from '@deip/validation-plugin';
 import { VeStack } from '@deip/vue-elements';
 

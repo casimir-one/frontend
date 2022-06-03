@@ -1,7 +1,7 @@
 import {
   cloneDeep,
   isEqual
-} from '@deip/toolbox/lodash';
+} from 'lodash';
 import { getters, mutations } from '../store';
 
 /**

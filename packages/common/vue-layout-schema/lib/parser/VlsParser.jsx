@@ -13,7 +13,7 @@ import {
   TemplateStringParser
 } from '@deip/toolbox';
 
-import { cloneDeep, merge } from '@deip/toolbox/lodash';
+import { cloneDeep, merge } from 'lodash';
 
 /**
  * @typedef {Object} SchemaNode
