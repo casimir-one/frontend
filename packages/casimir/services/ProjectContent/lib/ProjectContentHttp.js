@@ -64,6 +64,20 @@ export class ProjectContentHttp {
   }
 
   /**
+   * Get project content draft list paginated
+   * @param {Object} query
+   * @param {Object} query.sort 'asc', 'desc' by fields
+   * @param {Number} query.page 0 or above
+   * @param {Number} query.pageSize from 1 to 100
+   * @param {Object} query.filter filter
+   * @returns {Promise<Object>}
+   */
+  async getDraftsListPaginated(query) {
+    const querySerialized = serializeParams(query);
+    return this.http.get(`/api/v2/project-content/drafts-paginated?${querySerialized}`);
+  }
+
+  /**
    * Create project content draft
    * @param {Object} req
    * @returns {Promise<Object>}
@@ -121,15 +135,15 @@ export class ProjectContentHttp {
   }
 
   /**
-   * @param {Object} q
-   * @param {Object} q.sort 'asc', 'desc' by fields
-   * @param {Number} q.page 0 or above
-   * @param {Number} q.pageSize from 1 to 100
-   * @param {Object} q.filter
+   * @param {Object} query
+   * @param {Object} query.sort 'asc', 'desc' by fields
+   * @param {Number} query.page 0 or above
+   * @param {Number} query.pageSize from 1 to 100
+   * @param {Object} query.filter
    */
-  async getContentListPaginated(q) {
-    const query = serializeParams(q);
-    return this.http.get(`/api/v2/project-content/listing-paginated?${query}`);
+  async getContentListPaginated(query) {
+    const querySerialized = serializeParams(query);
+    return this.http.get(`/api/v2/project-content/listing-paginated?${querySerialized}`);
   }
 
   /**
