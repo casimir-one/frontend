@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.382.1](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.0...v1.382.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** fix rpc-client ([0c910b5](https://github.com/DEIPworld/casimir-frontend/commit/0c910b5c76bfe4a1c894fdd632e8d4cbad0ef9c0))
+
+
+
+
+
 # [1.382.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.381.0...v1.382.0) (2022-06-06)
 
 
