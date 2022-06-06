@@ -20,6 +20,8 @@ import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
 import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
+import UpdateNonFungibleTokenTeamCmd from './impl/UpdateNonFungibleTokenTeamCmd';
+import UpdateNonFungibleTokenOwnerCmd from './impl/UpdateNonFungibleTokenOwnerCmd';
 import CreateNonFungibleTokenCmd from './impl/CreateNonFungibleTokenCmd';
 import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
 import IssueNonFungibleTokenCmd from './impl/IssueNonFungibleTokenCmd';
@@ -75,6 +77,8 @@ export {
   DeleteDocumentTemplateCmd,
   CreateFungibleTokenCmd,
   CreateNonFungibleTokenCmd,
+  UpdateNonFungibleTokenTeamCmd,
+  UpdateNonFungibleTokenOwnerCmd,
   IssueFungibleTokenCmd,
   IssueNonFungibleTokenCmd,
   CreateDraftCmd,

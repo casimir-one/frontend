@@ -407,6 +407,25 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
     }) => {
       throw Error(`Not implemented exception`);
     },
+    
+    [APP_CMD.UPDATE_NFT_TEAM]: ({
+      issuer,
+      symbol,
+      precision,
+      description,
+      maxSupply,
+      projectTokenSettings
+    }) => {
+      throw Error(`Not implemented exception`);
+    },
+    
+    [APP_CMD.UPDATE_NFT_OWNER]: ({
+      issuer,
+      entityId,
+      owner
+    }) => {
+      throw Error(`Not implemented exception`);
+    },
 
 
     [APP_CMD.ISSUE_FT]: ({

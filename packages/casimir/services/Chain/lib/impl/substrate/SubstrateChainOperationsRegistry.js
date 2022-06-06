@@ -74,15 +74,15 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
 
       const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${entityId}`,
         chainNodeClient.tx.deipDao.alterAuthority(
-          /* "alteration_type": */ { 
-          "ReplaceAuthority" : {
-            "authority_key": authorityKey,
-            "authority": {
-              "signatories": signatories,
-              "threshold": threshold
+          /* "alteration_type": */ {
+            "ReplaceAuthority": {
+              "authority_key": authorityKey,
+              "authority": {
+                "signatories": signatories,
+                "threshold": threshold
+              }
             }
-          } 
-        })
+          })
       );
 
       return [alterAuthOp];
@@ -98,12 +98,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       const address = toAddress(member, chainNodeClient.registry);
       const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deipDao.alterAuthority(
-          /* "alteration_type": */ { 
-          "AddMember" : {
-            "member": address,
-            "preserve_threshold": isThresholdPreserved
-          } 
-        })
+          /* "alteration_type": */ {
+            "AddMember": {
+              "member": address,
+              "preserve_threshold": isThresholdPreserved
+            }
+          })
       );
 
       return [alterAuthOp];
@@ -119,12 +119,12 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       const address = toAddress(member, chainNodeClient.registry);
       const alterAuthOp = chainNodeClient.tx.deipDao.onBehalf(`0x${teamId}`,
         chainNodeClient.tx.deipDao.alterAuthority(
-          /* "alteration_type": */ { 
-          "RemoveMember" : {
-            "member": address,
-            "preserve_threshold": isThresholdPreserved
-          } 
-        })
+          /* "alteration_type": */ {
+            "RemoveMember": {
+              "member": address,
+              "preserve_threshold": isThresholdPreserved
+            }
+          })
       );
 
       return [alterAuthOp];
@@ -217,7 +217,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       } : {
         isPositive
       };
-    
+
       const createReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${author}`,
         chainNodeClient.tx.deip.createReview(
           /* "review_id": */ `0x${entityId}`,
@@ -239,7 +239,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       reviewId,
       domainId
     }) => {
-    
+
       const upvoteReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${voter}`,
         chainNodeClient.tx.deip.upvoteReview(
           /* "review_id": */ `0x${reviewId}`,
@@ -323,7 +323,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
           /* batch_weight */ batchWeight
         )
       );
-      
+
       return [declineProposalOp];
     },
 
@@ -406,6 +406,48 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       );
 
       return [createNonFungibleTokenOp, setNonFungibleTokenMetaOp, setNonFungibleTokenTeamOp];
+    },
+
+    [APP_CMD.UPDATE_NFT_TEAM]: ({
+      entityId,
+      issuer,
+      newAdmin,
+      newFreezer,
+      newIssuer,
+    }) => {
+
+      const newIssuerAddress = toAddress(newIssuer, chainNodeClient.registry);
+      const newAdminAddress = toAddress(newAdmin, chainNodeClient.registry);
+      const newFreezerAddress = toAddress(newFreezer, chainNodeClient.registry);
+
+      const setNonFungibleTokenTeamOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.uniques.setTeam(
+          /* classId: */ entityId,
+          /* issuer */ newIssuerAddress,
+          /* admin */ newAdminAddress,
+          /* freezer */ newFreezerAddress
+        )
+      );
+
+      return [setNonFungibleTokenTeamOp];
+    },
+
+    [APP_CMD.UPDATE_NFT_OWNER]: ({
+      entityId,
+      issuer,
+      owner,
+    }) => {
+
+      const ownerAddress = toAddress(owner, chainNodeClient.registry);
+
+      const transferNonFungibleTokenOwnershipOp = chainNodeClient.tx.deipDao.onBehalf(`0x${issuer}`,
+        chainNodeClient.tx.uniques.transferOwnership(
+        /* classId: */ entityId,
+        /* owner */ ownerAddress,
+        )
+      );
+
+      return [transferNonFungibleTokenOwnershipOp];
     },
 
 
@@ -640,7 +682,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
 
       return [createPortalOp];
     }
-    
+
   }
 
 }
