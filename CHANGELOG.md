@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.382.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.381.0...v1.382.0) (2022-06-06)
+
+
+### Bug Fixes
+
+* **@deip/commands:** add moderate draft commands ([631c5b9](https://github.com/DEIPworld/casimir-frontend/commit/631c5b9724c45c724b37ba9f82aabf0dcf832e0e))
+
+
+### Features
+
+* **@deip/project-content-service, @deip/project-content-module:** add method for draft moderation ([f30eb63](https://github.com/DEIPworld/casimir-frontend/commit/f30eb63999c92271ca3365cc2d8d4076631757a2))
+* **@deip/project-content-service, @deip/project-content-module:** add method for getting paginated ([7982f9d](https://github.com/DEIPworld/casimir-frontend/commit/7982f9d679305a1f8aab4faeaf90d389f6926729))
+* **@packages/casmir:** project content draft moderation ([59cdc86](https://github.com/DEIPworld/casimir-frontend/commit/59cdc861cb2bca2d4ff98bb3fce3a4c17df75154))
+
+
+
+
+
 # [1.381.0](https://github.com/DEIPworld/deip-modules/compare/v1.380.0...v1.381.0) (2022-06-01)
 
 

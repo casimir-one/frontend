@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.382.0](https://github.com/DEIPworld/deip-modules/compare/v1.381.0...v1.382.0) (2022-06-06)
+
+
+### Features
+
+* **@deip/project-content-service, @deip/project-content-module:** add method for draft moderation ([f30eb63](https://github.com/DEIPworld/deip-modules/commit/f30eb63999c92271ca3365cc2d8d4076631757a2))
+* **@deip/project-content-service, @deip/project-content-module:** add method for getting paginated ([7982f9d](https://github.com/DEIPworld/deip-modules/commit/7982f9d679305a1f8aab4faeaf90d389f6926729))
+
+
+
+
+
 # [1.381.0](https://github.com/DEIPworld/deip-modules/compare/v1.380.0...v1.381.0) (2022-06-01)
 
 **Note:** Version bump only for package @deip/project-content-module

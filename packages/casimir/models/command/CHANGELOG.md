@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.382.0](https://github.com/DEIPworld/deip-modules/compare/v1.381.0...v1.382.0) (2022-06-06)
+
+
+### Bug Fixes
+
+* **@deip/commands:** add moderate draft commands ([631c5b9](https://github.com/DEIPworld/deip-modules/commit/631c5b9724c45c724b37ba9f82aabf0dcf832e0e))
+
+
+### Features
+
+* **@packages/casmir:** project content draft moderation ([59cdc86](https://github.com/DEIPworld/deip-modules/commit/59cdc861cb2bca2d4ff98bb3fce3a4c17df75154))
+
+
+
+
+
 # [1.380.0](https://github.com/DEIPworld/deip-modules/compare/v1.379.0...v1.380.0) (2022-06-01)
 
 **Note:** Version bump only for package @deip/commands
