@@ -6,7 +6,7 @@ export type ServicePayloadInitiator = {
 export type ServicePayloadProposalInfo = {
   isProposal: boolean,
   isProposalApproved: boolean,
-  proposalLifetime:number
+  proposalLifetime: number
 };
 
 export type ServiceBasePayload<D = Record<string, unknown>> = {

@@ -115,6 +115,21 @@ export type NonFungibleTokenIssueData = TokenIssuer & NonFungibleTokenBase & {
 };
 
 /**
+ * Non-fungible token data for lazy sell payload
+ */
+export type NonFungibleTokenLazySellData = TokenIssuer & NonFungibleTokenBase & {
+  asset: FungibleTokenBase
+};
+
+/**
+ * Non-fungible token data for lazy buy payload
+ */
+export type NonFungibleTokenLazyBuyData = TokenIssuer & NonFungibleTokenBase & {
+  asset: FungibleTokenBase,
+  lazySellProposalId: string,
+};
+
+/**
  */
 type NonFungibleTokenTransferData = TokenTransferData<NonFungibleTokenBase>;
 
@@ -132,6 +147,16 @@ export type NonFungibleTokenIssuePayload = ServiceBasePayload<NonFungibleTokenIs
  * Non-fungible token transfer payload
  */
 export type NonFungibleTokenTransferPayload = ServiceBasePayload<NonFungibleTokenTransferData>;
+
+/**
+ * Non-fungible token lazy sell payload
+ */
+export type NonFungibleTokenLazySellPayload = ServiceBasePayload<NonFungibleTokenLazySellData>;
+
+/**
+ * Non-fungible token lazy buy payload
+ */
+export type NonFungibleTokenLazyBuyPayload = ServiceBasePayload<NonFungibleTokenLazyBuyData>;
 
 // //////////////////////////
 
