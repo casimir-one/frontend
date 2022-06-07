@@ -30,7 +30,7 @@ class TransferFTCmd extends ProtocolCmd {
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(isNumber(tokenId) || (isString(tokenId) && tokenId),
+    assert(isNumber(tokenId) || (isString(tokenId) && tokenId.length),
       "'tokenId' is required and must be a number or non emplty string");
     assert((isNumber(amount) || isNumeric(amount)) && +amount > 0,
       "'amount' is required and must be a number greater than zero");
