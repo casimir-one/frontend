@@ -1,6 +1,6 @@
 {
   "name": "@deip/auth-module",
-  "version": "1.382.1",
+  "version": "1.382.2",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,18 +20,18 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.380.0",
-    "@deip/auth-service": "1.382.1",
-    "@deip/constants": "1.380.0",
+    "@deip/access-service": "1.382.2",
+    "@deip/auth-service": "1.382.2",
+    "@deip/constants": "1.382.2",
     "@deip/lib-crypto": "1.375.1",
-    "@deip/platform-util": "1.380.0",
-    "@deip/proxydi": "1.380.0",
-    "@deip/toolbox": "1.380.0",
-    "@deip/user-service": "1.382.1",
-    "@deip/validation-plugin": "1.380.0",
-    "@deip/vue-elements": "1.380.0",
-    "@deip/vuetify-extended": "1.380.0",
-    "@deip/web-socket-service": "1.380.0",
+    "@deip/platform-util": "1.382.2",
+    "@deip/proxydi": "1.382.2",
+    "@deip/toolbox": "1.382.2",
+    "@deip/user-service": "1.382.2",
+    "@deip/validation-plugin": "1.382.2",
+    "@deip/vue-elements": "1.382.2",
+    "@deip/vuetify-extended": "1.382.2",
+    "@deip/web-socket-service": "1.382.2",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

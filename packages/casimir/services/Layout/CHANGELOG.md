@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.382.2](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.1...v1.382.2) (2022-06-07)
+
+**Note:** Version bump only for package @deip/layout-service
+
+
+
+
+
 ## [1.382.1](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.0...v1.382.1) (2022-06-06)
 
 **Note:** Version bump only for package @deip/layout-service
