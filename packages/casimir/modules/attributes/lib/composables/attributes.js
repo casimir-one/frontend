@@ -158,15 +158,13 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
       const filename = file || data?.attributes?.[attributeId];
 
       const hasFileName = !!filename && filename !== 'null' && filename !== 'undefined';
-      if (!hasFileName || !attributeId) {
-        return '';
-      }
 
       const { scopeName: scope, scopeId } = scopeData;
 
-      if (!(scope && scopeId)) {
-        throw new Error('No scope data provided');
+      if (!(hasFileName && attributeId && scope && scopeId)) {
+        return '';
       }
+
       return getAttributeFileSrc({
         serverUrl: DEIP_SERVER_URL,
         scope,
