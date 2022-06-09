@@ -1,0 +1,142 @@
+<template>
+  <vex-dialog
+    v-model="isDialogOpen"
+    width="600"
+    :disabled="loading"
+    :title="dialogTitle"
+    @click:confirm="handleConfirmClick"
+    @click:cancel="handleCancelClick"
+  >
+    <ve-stack>
+      <span>
+        {{ $t('module.projectContent.moderation.declineDialog.message',
+              { title: nftItemDraft.title })
+        }}
+      </span>
+
+      <v-text-field
+        v-model="reason"
+        :label="$t('module.projectContent.moderation.declineDialog.reason')"
+      />
+    </ve-stack>
+  </vex-dialog>
+</template>
+
+<script>
+  import { NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
+  import { VexDialog } from '@deip/vuetify-extended';
+  import { VeStack } from '@deip/vue-elements';
+
+  /** Decline nft item draft on moderation dialog */
+  export default {
+    name: 'NftItemDraftDeclineDialog',
+
+    components: {
+      VexDialog,
+      VeStack
+    },
+
+    props: {
+      /**
+       * Is dialog opened value
+       * @model
+       */
+      value: {
+        type: Boolean,
+        default: false
+      },
+      /** Nft item draft */
+      nftItemDraft: {
+        type: Object,
+        default: null
+      },
+      /** Successful decline message */
+      successMessage: {
+        type: String,
+        default() {
+          return this.$t('module.projectContent.moderation.declineDialog.declineSuccess');
+        }
+      }
+    },
+
+    data() {
+      return {
+        reason: null,
+        loading: false
+      };
+    },
+
+    computed: {
+      /** Is dialog opened */
+      isDialogOpen: {
+        get() {
+          return this.value;
+        },
+        set(value) {
+          this.reason = null;
+          /** Value change  */
+          this.$emit('input', value);
+        }
+      },
+
+      /** Dialog title */
+      dialogTitle() {
+        return this.$t('module.projectContent.moderation.declineDialog.title');
+      }
+    },
+
+    methods: {
+      /** Close dialog */
+      closeDialog() {
+        this.isDialogOpen = false;
+      },
+
+      /** Handle cancel button click */
+      handleCancelClick() {
+        this.closeDialog();
+      },
+
+      /** Handle confirm button click */
+      handleConfirmClick() {
+        this.declineNftItemDraft();
+      },
+
+      /**
+       * Set loading
+       * @param {boolean} value
+       */
+      setLoading(value) {
+        this.loading = value;
+      },
+
+      /** Decline nft item draft */
+      async declineNftItemDraft() {
+        this.setLoading(true);
+
+        try {
+          const payload = {
+            data: {
+              _id: this.nftItemDraft._id,
+              status: NFT_ITEM_METADATA_DRAFT_STATUS.REJECTED,
+              moderationMessage: this.reason
+            }
+          };
+
+          await this.$store.dispatch('projectContentDrafts/moderate', payload);
+
+          /**
+           * Nft item draft declined successfully
+           * @event success
+           */
+          this.$emit('success', this.nftItemDraft);
+          this.closeDialog();
+        } catch (error) {
+          console.error(error?.error || error);
+          this.$notifier.showError(error?.error?.message || error);
+        }
+
+        this.setLoading(false);
+      }
+    }
+  };
+</script>
