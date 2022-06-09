@@ -5,6 +5,7 @@ export * from './VexDialog';
 export * from './VexDotList';
 export * from './VexExpand';
 export * from './VexHeader';
+export * from './VexImage';
 export * from './VexImageInput';
 export * from './VexInput';
 export * from './VexMarkdown';
