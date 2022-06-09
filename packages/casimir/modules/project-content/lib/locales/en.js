@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   module: {
     projectContent: {
@@ -64,6 +65,30 @@ export default {
       details: {
         authors: 'Authors',
         download: 'Download'
+      },
+      nftItemsInfiniteScroll: {
+        noMore: 'No more data',
+        noResults: 'No results found'
+      },
+      moderation: {
+        declineDialog: {
+          title: 'Decline',
+          message: 'Are you sure you would like to decline "{title}"?',
+          reason: 'Reason',
+          cancel: 'No, cancel',
+          confirm: 'Yes, confirm',
+          declineSuccess: 'The item declined successfully!'
+        },
+        card: {
+          decline: 'Decline',
+          approve: 'Approve',
+          approveConfirm: {
+            message: 'Are you sure you want to approve "{title}"?',
+            title: 'Approve'
+          },
+          approveSuccess: 'The item approved successfully!',
+          declineSuccess: 'The item declined successfully!'
+        }
       }
     }
   }
