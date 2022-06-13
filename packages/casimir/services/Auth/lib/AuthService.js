@@ -10,6 +10,7 @@ import { AuthHttp } from './AuthHttp';
  */
 export class AuthService {
   http = AuthHttp.getInstance();
+
   proxydi = proxydi;
 
   /**
@@ -32,63 +33,85 @@ export class AuthService {
    * Create new user
    * @param {Object} initiator
    * @param {Object} userData
+   * @param {string} userData.email
+   * @param {array} userData.attributes
+   * @param {string} userData.username
+   * @param {string} userData.pubKey
+   * @param {array} userData.roles
    * @return {Promise<Object>}
    */
   async signUp(initiator, userData) {
     const env = this.proxydi.get('env');
-    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME, RETURN_MSG } = env;
+    const { RETURN_MSG } = env;
     const {
       privKey,
       isAuthorizedCreatorRequired
     } = initiator;
 
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
+
+    const finalizedTx = await this.#createFinalizedTx(
+      chainTxBuilder,
+      userData,
+      isAuthorizedCreatorRequired
+    );
+
+    const signedFinalizedTx = isAuthorizedCreatorRequired
+      ? finalizedTx
+      : await finalizedTx.signAsync(privKey, chainNodeClient);
+
+    const msg = new JsonDataMsg(signedFinalizedTx.getPayload());
+
+    return RETURN_MSG === true ? msg : this.http.signUp(msg);
+  }
+
+  /**
+   * create transaction
+   * @param {Object} chainTxBuilder
+   * @param {Object} userData
+   * @param {string} userData.email
+   * @param {array} userData.attributes
+   * @param {string} userData.username
+   * @param {string} userData.pubKey
+   * @param {array} userData.roles
+   * @param {boolean} isAuthorizedCreatorRequired
+   * @return {Promise<Object>}
+   */
+  async #createFinalizedTx(chainTxBuilder, userData, isAuthorizedCreatorRequired) {
     const {
       email,
-      attributes,
+      attributes = [],
       username,
       pubKey,
       roles
     } = userData;
+    const env = this.proxydi.get('env');
+    const { CORE_ASSET, FAUCET_ACCOUNT_USERNAME } = env;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainNodeClient = chainService.getChainNodeClient();
-        const userAttributes = attributes || [];
+    const txBuilder = await chainTxBuilder.begin();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createDaoCmd = new CreateDaoCmd({
-              entityId: username,
-              isTeamAccount: false,
-              fee: { ...CORE_ASSET, amount: 0 },
-              creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
-              authority: {
-                owner: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
-                }
-              },
-              description: genSha256Hash(JSON.stringify(userAttributes)),
-              attributes: userAttributes,
-              email,
-              roles
-            });
+    const createDaoCmd = new CreateDaoCmd({
+      entityId: username,
+      isTeamAccount: false,
+      fee: { ...CORE_ASSET, amount: 0 },
+      creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
+      authority: {
+        owner: {
+          auths: [{ key: pubKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      description: genSha256Hash(JSON.stringify(attributes)),
+      attributes,
+      email,
+      roles
+    });
 
-            txBuilder.addCmd(createDaoCmd);
-            return txBuilder.end();
-          })
-          .then((finalizedTx) => (isAuthorizedCreatorRequired
-            ? Promise.resolve(finalizedTx)
-            : finalizedTx.signAsync(privKey, chainNodeClient)))
-          .then((finalizedTx) => {
-            const msg = new JsonDataMsg(finalizedTx.getPayload());
-            if (RETURN_MSG && RETURN_MSG === true) {
-              return msg;
-            }
-            return this.http.signUp(msg);
-          });
-      });
+    txBuilder.addCmd(createDaoCmd);
+
+    return txBuilder.end();
   }
 
   /**
@@ -98,17 +121,17 @@ export class AuthService {
    */
   async generateSeedAccount(username, passwordOrPrivKey) {
     const env = this.proxydi.get('env');
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        // TODO: There is no way to define programmatically what user provides exactly -
-        // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
-        const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
-        return chainService.generateChainSeedAccount({
-          username,
-          password: isValidPrivKey ? null : passwordOrPrivKey,
-          privateKey: isValidPrivKey ? passwordOrPrivKey : null
-        });
-      });
+    const chainService = await ChainService.getInstanceAsync(env);
+
+    // TODO: There is no way to define programmatically what user provides exactly -
+    // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
+    const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
+
+    return chainService.generateChainSeedAccount({
+      username,
+      password: isValidPrivKey ? null : passwordOrPrivKey,
+      privateKey: isValidPrivKey ? passwordOrPrivKey : null
+    });
   }
 
   /** @type {() => AuthService} */
