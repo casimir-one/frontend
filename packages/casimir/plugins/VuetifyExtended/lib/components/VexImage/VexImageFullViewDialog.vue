@@ -4,7 +4,7 @@
     width="auto"
     persistent
   >
-    <v-card :height="imageHeight" class="image-card">
+    <v-card class="image-card">
       <div class="d-flex justify-end close-button">
         <v-btn
           icon
@@ -19,12 +19,12 @@
         </v-btn>
       </div>
 
-      <img
-        :width="imageWidth"
-        :height="imageHeight"
+      <v-img
+        width="100%"
+        height="100%"
         :src="src"
-        @load="handleImageLoaded"
-      >
+        contain
+      />
     </v-card>
   </v-dialog>
 </template>
@@ -50,13 +50,6 @@
       }
     },
 
-    data() {
-      return {
-        naturalWidth: 0,
-        naturalHeight: 0
-      };
-    },
-
     computed: {
       isFullViewDialogOpen: {
         get() {
@@ -65,30 +58,10 @@
         set(value) {
           this.$emit('input', value);
         }
-      },
-      /** Image width */
-      imageWidth() {
-        return this.naturalWidth > 1100 ? '1100' : this.naturalWidth;
-      },
-      /** Image height */
-      imageHeight() {
-        return this.naturalHeight > 600 ? '600' : this.naturalHeight;
       }
     },
 
     methods: {
-      /**
-       * Handle image load
-       * @param {Object}
-       */
-      handleImageLoaded(e) {
-        const img = e.target;
-        if (img) {
-          this.naturalWidth = img.naturalWidth;
-          this.naturalHeight = img.naturalHeight;
-        }
-      },
-
       /** Close dialog */
       closeDialog() {
         this.isFullViewDialogOpen = false;
@@ -105,6 +78,7 @@
 <style scoped lang="scss">
   .close-button {
     position: absolute;
+    z-index: 1;
     top: 32px;
     right: 32px;
   }
