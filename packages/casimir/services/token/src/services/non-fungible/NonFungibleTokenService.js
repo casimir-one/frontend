@@ -61,7 +61,7 @@ export class NonFungibleTokenService {
       initiator: { privKey },
       data: {
         issuer,
-        issuedByTeam = false,
+        issuedByTeam,
         metadata
       }
     } = payload;
