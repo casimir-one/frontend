@@ -10,8 +10,13 @@
   >
     <v-card tile>
       <v-toolbar>
-        <v-toolbar-title v-if="Boolean(title)" class="text-h5">
-          {{ title }}
+        <v-toolbar-title v-if="Boolean(title) || hasSlot('title')" class="text-h5">
+          <template v-if="hasSlot('title')">
+            <slot name="title" />
+          </template>
+          <template v-else>
+            {{ title }}
+          </template>
         </v-toolbar-title>
 
         <v-spacer />
@@ -76,6 +81,7 @@
     VDivider
   } from 'vuetify/lib/components';
   /* eslint-enable import/extensions, import/no-unresolved */
+  import { contextMixin } from '../../composables';
 
   /**
    * Dialogs inform users about a task and can contain critical information,
@@ -95,7 +101,7 @@
       VIcon,
       VDivider
     },
-    mixins: [Toggleable],
+    mixins: [Toggleable, contextMixin],
     props: {
       /** Title */
       title: {
