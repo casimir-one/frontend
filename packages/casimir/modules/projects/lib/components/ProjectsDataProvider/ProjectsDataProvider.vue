@@ -120,7 +120,7 @@
        * Get computed project list
        */
       projectsList() {
-        return this.$store.getters['projects/list'](this.getterFilter);
+        return this.$store.getters['projects/list']();
       },
 
       /**
