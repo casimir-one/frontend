@@ -14,14 +14,14 @@ import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import TransferFungibleTokenCmd from './impl/TransferFungibleTokenCmd';
-import TransferNonFungibleTokenCmd from './impl/TransferNonFungibleTokenCmd';
+import TransferFTCmd from './impl/TransferFTCmd';
+import TransferNFTCmd from './impl/TransferNFTCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
-import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
+import CreateFTClassCmd from './impl/CreateFTClassCmd';
 import CreateNftCollectionCmd from './impl/CreateNftCollectionCmd';
-import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
+import IssueFTCmd from './impl/IssueFTCmd';
 import CreateNftItemCmd from './impl/CreateNftItemCmd';
 import CreateNftItemMetadataDraftCmd from './impl/CreateNftItemMetadataDraftCmd';
 import UpdateNftItemMetadataDraftCmd from './impl/UpdateNftItemMetadataDraftCmd';
@@ -68,14 +68,14 @@ const APP_CMD_INFO = {
   [APP_CMD.REMOVE_DAO_MEMBER]: { class: RemoveDaoMemberCmd },
   [APP_CMD.CREATE_INVESTMENT_OPPORTUNITY]: { class: CreateInvestmentOpportunityCmd },
   [APP_CMD.INVEST]: { class: InvestCmd },
-  [APP_CMD.TRANSFER_FT]: { class: TransferFungibleTokenCmd },
-  [APP_CMD.TRANSFER_NFT]: { class: TransferNonFungibleTokenCmd },
+  [APP_CMD.TRANSFER_FT]: { class: TransferFTCmd },
+  [APP_CMD.TRANSFER_NFT]: { class: TransferNFTCmd },
   [APP_CMD.CREATE_DOCUMENT_TEMPLATE]: { class: CreateDocumentTemplateCmd },
   [APP_CMD.UPDATE_DOCUMENT_TEMPLATE]: { class: UpdateDocumentTemplateCmd },
   [APP_CMD.DELETE_DOCUMENT_TEMPLATE]: { class: DeleteDocumentTemplateCmd },
-  [APP_CMD.CREATE_FT]: { class: CreateFungibleTokenCmd },
+  [APP_CMD.CREATE_FT]: { class: CreateFTClassCmd },
   [APP_CMD.CREATE_NFT_COLLECTION]: { class: CreateNftCollectionCmd },
-  [APP_CMD.ISSUE_FT]: { class: IssueFungibleTokenCmd },
+  [APP_CMD.ISSUE_FT]: { class: IssueFTCmd },
   [APP_CMD.CREATE_NFT_ITEM]: { class: CreateNftItemCmd },
   [APP_CMD.CREATE_NFT_ITEM_METADATA_DRAFT]: { class: CreateNftItemMetadataDraftCmd },
   [APP_CMD.DELETE_NFT_ITEM_METADATA_DRAFT]: { class: DeleteNftItemMetadataDraftCmd },

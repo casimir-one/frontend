@@ -1,5 +1,5 @@
 import { APP_PROPOSAL, ASSET_TYPE } from '@deip/constants';
-import { TransferFungibleTokenCmd, TransferNonFungibleTokenCmd } from '@deip/commands';
+import { TransferFTCmd, TransferNFTCmd } from '@deip/commands';
 import { makeSingletonInstance } from '@deip/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
@@ -25,14 +25,14 @@ export class CommonTokenService {
     const transferCommands = [];
 
     if (party1.token.type === ASSET_TYPE.NFT) {
-      transferCommands.push(new TransferNonFungibleTokenCmd({
+      transferCommands.push(new TransferNFTCmd({
         from: party1.account,
         to: party2.account,
         nftCollectionId: party1.token.nftCollectionId,
         nftItemId: party1.token.nftItemId
       }));
     } else {
-      transferCommands.push(new TransferFungibleTokenCmd({
+      transferCommands.push(new TransferFTCmd({
         from: party1.account,
         to: party2.account,
         tokenId: party1.token.id,
@@ -41,14 +41,14 @@ export class CommonTokenService {
     }
 
     if (party2.token.type === ASSET_TYPE.NFT) {
-      transferCommands.push(new TransferNonFungibleTokenCmd({
+      transferCommands.push(new TransferNFTCmd({
         from: party2.account,
         to: party1.account,
         nftCollectionId: party2.token.nftCollectionId,
         nftItemId: party2.token.nftItemId
       }));
     } else {
-      transferCommands.push(new TransferFungibleTokenCmd({
+      transferCommands.push(new TransferFTCmd({
         from: party2.account,
         to: party1.account,
         tokenId: party2.token.id,

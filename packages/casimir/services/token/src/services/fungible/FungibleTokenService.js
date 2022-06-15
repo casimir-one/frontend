@@ -2,9 +2,9 @@ import { makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg } from '@deip/messages';
 import {
-  TransferFungibleTokenCmd,
-  CreateFungibleTokenCmd,
-  IssueFungibleTokenCmd
+  TransferFTCmd,
+  CreateFTClassCmd,
+  IssueFTCmd
 } from '@deip/commands';
 import { APP_PROPOSAL } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
@@ -50,7 +50,7 @@ export class FungibleTokenService {
           .then(async (txBuilder) => {
             const entityId = await chainRpc.getNextAvailableFtId();
 
-            const createFungibleTokenCmd = new CreateFungibleTokenCmd({
+            const createFTClassCmd = new CreateFTClassCmd({
               entityId,
               issuer,
               symbol,
@@ -60,19 +60,19 @@ export class FungibleTokenService {
               description,
               metadata
             });
-            txBuilder.addCmd(createFungibleTokenCmd);
-            const tokenId = createFungibleTokenCmd.getProtocolEntityId();
+            txBuilder.addCmd(createFTClassCmd);
+            const tokenId = createFTClassCmd.getProtocolEntityId();
 
             if (holders && holders.length) {
               for (let i = 0; i < holders.length; i++) {
                 const { account, asset } = holders[i];
-                const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
+                const issueFTCmd = new IssueFTCmd({
                   tokenId,
                   amount: asset.amount,
                   issuer,
                   recipient: account
                 });
-                txBuilder.addCmd(issueFungibleTokenCmd);
+                txBuilder.addCmd(issueFTCmd);
               }
             }
 
@@ -115,13 +115,13 @@ export class FungibleTokenService {
 
         return chainTxBuilder.begin()
           .then((txBuilder) => {
-            const issueFungibleTokenCmd = new IssueFungibleTokenCmd({
+            const issueFTCmd = new IssueFTCmd({
               issuer,
               tokenId,
               amount,
               recipient
             });
-            txBuilder.addCmd(issueFungibleTokenCmd);
+            txBuilder.addCmd(issueFTCmd);
             return txBuilder.end();
           })
           .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
@@ -149,7 +149,7 @@ export class FungibleTokenService {
       data: { from, to, token }
     } = transferPayload;
 
-    const transferTokenCmd = new TransferFungibleTokenCmd({
+    const transferTokenCmd = new TransferFTCmd({
       from,
       to,
       tokenId: token.id,

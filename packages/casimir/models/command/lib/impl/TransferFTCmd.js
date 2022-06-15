@@ -11,7 +11,7 @@ import ProtocolCmd from '../base/ProtocolCmd';
  * Transfer fungible token command
  * @extends ProtocolCmd
  */
-class TransferFungibleTokenCmd extends ProtocolCmd {
+class TransferFTCmd extends ProtocolCmd {
   /**
    * Transfer fungible token
    * @param {Object} cmdPayload
@@ -39,4 +39,4 @@ class TransferFungibleTokenCmd extends ProtocolCmd {
   }
 }
 
-export default TransferFungibleTokenCmd;
+export default TransferFTCmd;
