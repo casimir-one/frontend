@@ -11,7 +11,7 @@ import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
  * Create fungible token command
  * @extends ProtocolEntityCmd
  */
-class CreateFungibleTokenCmd extends ProtocolEntityCmd {
+class CreateFTClassCmd extends ProtocolEntityCmd {
   /**
    * Create fungible token
    * @param {FungibleTokenCreateCmdPayload} cmdPayload
@@ -48,4 +48,4 @@ class CreateFungibleTokenCmd extends ProtocolEntityCmd {
   }
 }
 
-export default CreateFungibleTokenCmd;
+export default CreateFTClassCmd;

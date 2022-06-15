@@ -17,7 +17,7 @@ import {
   CreateNftCollectionMetadataCmd,
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
-  TransferFungibleTokenCmd
+  TransferFTCmd
 } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
@@ -88,13 +88,13 @@ export class TeamService {
             entityId = createDaoCmd.getProtocolEntityId();
 
             if (ACCOUNT_DEFAULT_FUNDING_AMOUNT) {
-              const transferFungibleTokenCmd = new TransferFungibleTokenCmd({
+              const transferFTCmd = new TransferFTCmd({
                 from: creator,
                 to: entityId,
                 tokenId: CORE_ASSET.id,
                 amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
               });
-              txBuilder.addCmd(transferFungibleTokenCmd);
+              txBuilder.addCmd(transferFTCmd);
             }
 
             if (isCreateDefaultProject) {

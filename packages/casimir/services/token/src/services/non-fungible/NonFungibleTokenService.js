@@ -6,7 +6,7 @@ import {
 import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
 import {
-  TransferNonFungibleTokenCmd,
+  TransferNFTCmd,
   CreateNftCollectionCmd,
   CreateNftItemCmd,
   CreateNftCollectionMetadataCmd,
@@ -401,7 +401,7 @@ export class NonFungibleTokenService {
       data: { from, to, token }
     } = transferPayload;
 
-    const transferTokenCmd = new TransferNonFungibleTokenCmd({
+    const transferTokenCmd = new TransferNFTCmd({
       from,
       to,
       nftCollectionId: token.nftCollectionId,

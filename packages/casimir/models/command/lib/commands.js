@@ -13,14 +13,14 @@ import DeleteAttributeCmd from './impl/DeleteAttributeCmd';
 import RemoveDaoMemberCmd from './impl/RemoveDaoMemberCmd';
 import CreateInvestmentOpportunityCmd from './impl/CreateInvestmentOpportunityCmd';
 import InvestCmd from './impl/InvestCmd';
-import TransferFungibleTokenCmd from './impl/TransferFungibleTokenCmd';
-import TransferNonFungibleTokenCmd from './impl/TransferNonFungibleTokenCmd';
+import TransferFTCmd from './impl/TransferFTCmd';
+import TransferNFTCmd from './impl/TransferNFTCmd';
 import CreateDocumentTemplateCmd from './impl/CreateDocumentTemplateCmd';
 import UpdateDocumentTemplateCmd from './impl/UpdateDocumentTemplateCmd';
 import DeleteDocumentTemplateCmd from './impl/DeleteDocumentTemplateCmd';
-import CreateFungibleTokenCmd from './impl/CreateFungibleTokenCmd';
+import CreateFTClassCmd from './impl/CreateFTClassCmd';
 import CreateNftCollectionCmd from './impl/CreateNftCollectionCmd';
-import IssueFungibleTokenCmd from './impl/IssueFungibleTokenCmd';
+import IssueFTCmd from './impl/IssueFTCmd';
 import CreateNftItemCmd from './impl/CreateNftItemCmd';
 import CreateNftItemMetadataDraftCmd from './impl/CreateNftItemMetadataDraftCmd';
 import DeleteNftItemMetadataDraftCmd from './impl/DeleteNftItemMetadataDraftCmd';
@@ -68,14 +68,14 @@ export {
   RemoveDaoMemberCmd,
   CreateInvestmentOpportunityCmd,
   InvestCmd,
-  TransferFungibleTokenCmd,
-  TransferNonFungibleTokenCmd,
+  TransferFTCmd,
+  TransferNFTCmd,
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd,
-  CreateFungibleTokenCmd,
+  CreateFTClassCmd,
   CreateNftCollectionCmd,
-  IssueFungibleTokenCmd,
+  IssueFTCmd,
   CreateNftItemCmd,
   CreateNftItemMetadataDraftCmd,
   DeleteNftItemMetadataDraftCmd,

@@ -6,7 +6,7 @@ import ProtocolCmd from '../base/ProtocolCmd';
  * Transfer non-fungible token command
  * @extends ProtocolCmd
  */
-class TransferNonFungibleTokenCmd extends ProtocolCmd {
+class TransferNFTCmd extends ProtocolCmd {
   /**
    * Transfer non-fungible token
    * @param {Object} cmdPayload
@@ -34,4 +34,4 @@ class TransferNonFungibleTokenCmd extends ProtocolCmd {
   }
 }
 
-export default TransferNonFungibleTokenCmd;
+export default TransferNFTCmd;
