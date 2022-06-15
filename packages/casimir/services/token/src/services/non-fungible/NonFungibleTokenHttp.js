@@ -72,8 +72,8 @@ export class NonFungibleTokenHttp {
    * @param {string} id
    * @returns {Promise<Object>}
    */
-  async getNftItem(id) {
-    return this.http.get(`/api/v2/tokens/nft/item/${id}`);
+  async getNftItem(nftCollectionId, nftItemId) {
+    return this.http.get(`/api/v2/tokens/nft/item/${nftCollectionId}/${nftItemId}`);
   }
 
   /**
