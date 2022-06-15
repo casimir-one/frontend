@@ -467,8 +467,8 @@ export class NonFungibleTokenService {
    * @param {string} id
    * @returns {Promise<Object>}
    */
-  async getNftItem(id) {
-    return this.nonFungibleTokenHttp.getNftItem(id);
+  async getNftItem(nftCollectionId, nftItemId) {
+    return this.nonFungibleTokenHttp.getNftItem(nftCollectionId, nftItemId);
   }
 
   /**
