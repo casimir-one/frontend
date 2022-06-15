@@ -73,6 +73,10 @@
       filterItems: {
         type: Object,
         default: null
+      },
+      issuedByTeam: {
+        type: Boolean,
+        default: false
       }
     },
 
@@ -91,7 +95,7 @@
         const filter = {
           ...this.filterItems
         };
-
+        // Todo: filter should be refactored
         if (this.username) {
           filter['+members'] = this.username;
 
@@ -106,7 +110,7 @@
               break;
           }
         } else if (this.teamId) {
-          filter.teamId = this.teamId;
+          filter.issuer = this.teamId;
         } else if (this.portalId) {
           filter.portalId = this.portalId;
         } else {
@@ -120,6 +124,7 @@
        * Get computed project list
        */
       projectsList() {
+        // todo should be filtered with getterFilter
         return this.$store.getters['projects/list']();
       },
 
