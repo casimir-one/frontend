@@ -61,6 +61,13 @@ const ACTIONS = {
       });
   },
 
+  getListByIssuer({ commit }, issuer) {
+    return nonFungibleTokenService.getNftCollectionsListByIssuer(issuer)
+      .then((res) => {
+        commit('setList', res.data.items);
+      });
+  },
+
   // user
 
   getUserProjects({ commit }, { username }) {

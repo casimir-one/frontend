@@ -31,7 +31,8 @@
     "@deip/vue-editorjs": "1.382.2",
     "@deip/vue-elements": "1.382.2",
     "@deip/vuetify-extended": "1.382.2",
-    "@casimir/token-service": "1.382.2"
+    "@casimir/token-service": "1.382.2",
+    "vue-infinite-loading": "^2.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
