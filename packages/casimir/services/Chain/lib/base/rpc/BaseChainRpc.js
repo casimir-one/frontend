@@ -42,9 +42,7 @@ const ChainRpc = Interface('ChainRpc', {
   getPotentialSignaturesAsync: async function (trx) { },
   verifyAuthorityAsync: async function (trx) { },
   getWitnessesAsync: async function (witnessIds) { },
-  getWitnessByAccountAsync: async function (accountName) { },
   getWitnessesByVoteAsync: async function (from, limit) { },
-  lookupWitnessAccountsAsync: async function (lowerBoundName, limit) { },
   getWitnessCountAsync: async function () { },
   getActiveWitnessesAsync: async function () { },
   getRewardFundAsync: async function (name) { },
@@ -222,7 +220,7 @@ const ChainRpc = Interface('ChainRpc', {
 });
 
 
-class BaseChainRpc {  
+class BaseChainRpc {
   constructor(impl) {
     Interface.implement(impl, ChainRpc);
     return impl;
