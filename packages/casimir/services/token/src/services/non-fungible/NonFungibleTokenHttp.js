@@ -35,7 +35,11 @@ export class NonFungibleTokenHttp {
    * @return {Promise<Object>}
    */
   async createNftCollectionMetadata(req) {
-    return this.http.post('/api/v2/tokens/nft/metadata/create', req.getHttpBody());
+    return this.http.post(
+      '/api/v2/tokens/nft/metadata/create',
+      req.getHttpBody(),
+      { headers: req.getHttpHeaders() }
+    );
   }
 
   /**
