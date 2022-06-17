@@ -28,7 +28,7 @@ const install = (Vue, options = {}) => {
 
   if (attributesMappedKeys.length) {
     store.dispatch('scopesRegistry/addMappedKeys', {
-      scope: 'project',
+      scope: 'nftCollection',
       target: 'attributes',
       keys: attributesMappedKeys
     });
@@ -36,7 +36,7 @@ const install = (Vue, options = {}) => {
 
   if (layoutsMappedKeys.length) {
     store.dispatch('scopesRegistry/addMappedKeys', {
-      scope: 'project',
+      scope: 'nftCollection',
       target: 'layouts',
       keys: layoutsMappedKeys
     });

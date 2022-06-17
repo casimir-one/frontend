@@ -38,7 +38,7 @@ import {
 
 const defaultAttributeModel = () => ({
   type: 'text',
-  scope: 'project',
+  scope: 'nftCollection',
 
   title: '',
   shortTitle: '',

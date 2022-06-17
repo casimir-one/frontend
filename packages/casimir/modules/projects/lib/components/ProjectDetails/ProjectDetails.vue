@@ -1,6 +1,6 @@
 <template>
   <layout-renderer
-    :value="project"
+    :value="project.metadata"
     :schema="internalSchema"
     :schema-data="internalSchemaData"
   />
@@ -29,9 +29,9 @@
       internalSchemaData() {
         return {
           ...attributeMethodsFactory(
-            expandAttributes(this.project),
+            expandAttributes(this.project.metadata),
             {
-              scopeName: 'project',
+              scopeName: 'nftCollection',
               scopeId: this.project._id
             }
           ),
