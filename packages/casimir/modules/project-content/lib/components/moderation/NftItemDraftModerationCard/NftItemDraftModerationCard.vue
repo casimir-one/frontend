@@ -70,12 +70,13 @@
 
 <script>
   import { NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
-  import { AccessService } from '@deip/access-service';
+  import { NonFungibleTokenService } from '@casimir/token-service';
+
   import { dateMixin } from '@deip/platform-components';
   import { VeStack, VeLineClamp } from '@deip/vue-elements';
   import { NftItemDraftDeclineDialog } from '../NftItemDraftDeclineDialog';
 
-  const accessService = AccessService.getInstance();
+  const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 
   /**
    * Nft item moderation card
@@ -124,12 +125,9 @@
     computed: {
       /** Image src */
       src() {
-        const { DEIP_SERVER_URL } = this.$env;
-        const authorization = accessService.getAccessToken();
-        const { hash } = this.nftItemDraft.packageFiles[0];
+        const { nftCollectionId, _id, packageFiles: [{ hash }] } = this.nftItemDraft;
 
-        // eslint-disable-next-line max-len
-        return `${DEIP_SERVER_URL}/api/v2/project-content/package/${this.nftItemDraft._id}/${hash}?authorization=${authorization}`;
+        return nonFungibleTokenService.getNftItemFileSrc(nftCollectionId, _id, hash);
       },
 
       /** Creator name */
