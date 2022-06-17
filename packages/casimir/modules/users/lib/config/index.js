@@ -41,6 +41,6 @@ export const userAttributes = [
     label: 'User selector',
     icon: 'mdi-account-circle-outline',
     canBeMultiple: true,
-    scopes: ['team', 'project']
+    scopes: ['team', 'nftCollection']
   }
 ];
