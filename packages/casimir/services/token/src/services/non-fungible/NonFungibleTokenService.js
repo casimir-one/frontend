@@ -109,7 +109,11 @@ export class NonFungibleTokenService {
       issuedByTeam,
       attributes
     });
-    const msg = new MultFormDataMsg(formData, { appCmds: [createNftCollectionMetadataCmd] });
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [createNftCollectionMetadataCmd] },
+      { 'entity-id': nftCollectionId }
+    );
     const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(msg);
 
     await this.webSocketService.waitForMessage((message) => {
