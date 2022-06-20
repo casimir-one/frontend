@@ -132,9 +132,9 @@
         const payload = {
           initiator: this.$currentUser,
           data: {
-            creator: this.$currentUser._id,
-            teamId: this.teamId,
-            ...this.lazyFormData
+            issuer: this.teamId ? this.teamId : this.$currentUser._id,
+            issuedByTeam: !!this.teamId,
+            metadata: this.lazyFormData
           }
         };
 
