@@ -1,5 +1,5 @@
 export const projectScope = {
-  type: 'project',
+  type: 'nftCollection',
   label: 'Project',
   mappedKeys: {
     attributes: [

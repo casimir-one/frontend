@@ -58,7 +58,7 @@
       LayoutRenderer
     },
 
-    mixins: [attributedFormFactory('project', 'project')],
+    mixins: [attributedFormFactory('nftCollection', 'project')],
 
     props: {
       /**

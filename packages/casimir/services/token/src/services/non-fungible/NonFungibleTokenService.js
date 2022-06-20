@@ -109,7 +109,11 @@ export class NonFungibleTokenService {
       issuedByTeam,
       attributes
     });
-    const msg = new MultFormDataMsg(formData, { appCmds: [createNftCollectionMetadataCmd] });
+    const msg = new MultFormDataMsg(
+      formData,
+      { appCmds: [createNftCollectionMetadataCmd] },
+      { 'entity-id': nftCollectionId }
+    );
     const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(msg);
 
     await this.webSocketService.waitForMessage((message) => {
@@ -544,6 +548,17 @@ export class NonFungibleTokenService {
    */
   async getPortalNftCollectionList() {
     return this.nonFungibleTokenHttp.getPortalNftCollectionList();
+  }
+
+  /**
+   * Get nft item file source
+   * @param {string|number} nftCollectionId
+   * @param {string|number} nftItemId
+   * @param {string} hash
+   * @returns {string}
+   */
+  getNftItemFileSrc(nftCollectionId, nftItemId, hash) {
+    return this.nonFungibleTokenHttp.getNftItemFileSrc(nftCollectionId, nftItemId, hash);
   }
 
   /** @type {() => NonFungibleTokenService} */

@@ -90,7 +90,7 @@
         'input',
         () => ({
           name: '',
-          scope: 'project',
+          scope: 'nftCollection',
           value: [],
           type: 'details'
         })
