@@ -263,10 +263,11 @@
       async submit() {
         this.loading = true;
         const data = {
-          projectId: this.project._id,
+          nftCollectionId: this.project._id,
           title: this.formData.title,
           contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,
+          owner: this.project.issuer,
           references: this.formData.references,
           formatType: this.formData.formatType
         };
