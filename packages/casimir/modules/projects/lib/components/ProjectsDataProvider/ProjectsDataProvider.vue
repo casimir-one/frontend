@@ -22,34 +22,9 @@
         default: 'div'
       },
       /**
-       * Scope name
-       *
-       * @example 'projects'
+       * Issuer
        */
-      scope: {
-        type: String,
-        default: 'projects'
-      },
-      /**
-       * Type
-       *
-       * @example 'all'
-       */
-      type: {
-        type: String,
-        default: 'all'
-      },
-      /**
-       * Username
-       */
-      username: {
-        type: String,
-        default: null
-      },
-      /**
-       * Team id
-       */
-      teamId: {
+      issuer: {
         type: String,
         default: null
       },
@@ -61,11 +36,11 @@
         default: null
       },
       /**
-       * Project list
+       * Project ids list
        */
-      projects: {
+      ids: {
         type: Array,
-        default: () => []
+        default: null
       },
       /**
        * Filter for items
@@ -95,27 +70,10 @@
         const filter = {
           ...this.filterItems
         };
-        // Todo: filter should be refactored
-        if (this.username) {
-          filter['+members'] = this.username;
 
-          switch (this.type) {
-            case 'following':
-              filter['+_id'] = this.projects;
-              break;
-            case 'public':
-              filter.isPrivate = false;
-              break;
-            default:
-              break;
-          }
-        } else if (this.teamId) {
-          filter.issuer = this.teamId;
-        } else if (this.portalId) {
-          filter.portalId = this.portalId;
-        } else {
-          filter.isPrivate = false;
-        }
+        if (this.issuer) filter.issuer = this.issuer;
+        if (this.ids && this.ids.length) filter['+_id'] = this.ids;
+        if (this.portalId) filter.portalId = this.portalId;
 
         return filter;
       },
@@ -124,8 +82,7 @@
        * Get computed project list
        */
       projectsList() {
-        // todo should be filtered with getterFilter
-        return this.$store.getters['projects/list']();
+        return this.$store.getters['projects/list'](this.getterFilter);
       },
 
       /**
@@ -153,20 +110,18 @@
         this.loading = true;
 
         const {
-          scope, type, username, teamId, portalId, filterItems
+          issuer,
+          portalId,
+          filterItems,
+          ids
         } = this;
 
         const payload = {
-          scope,
-          type,
-          username,
-          teamId,
-          portalId
+          issuer,
+          portalId,
+          ids,
+          filter: filterItems
         };
-
-        if (filterItems) {
-          payload.filter = filterItems;
-        }
 
         this.$store.dispatch('projects/getList', payload)
           .then(() => {
