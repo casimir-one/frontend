@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import { NonFungibleTokenService } from '@casimir/token-service';
 import {
   listGetter,
@@ -8,25 +7,6 @@ import {
 } from '@deip/platform-util';
 
 const nonFungibleTokenService = NonFungibleTokenService.getInstance();
-
-const actionsMap = {
-  projects: {
-    public: {
-      all: 'getPublicProjects'
-    },
-    user: {
-      all: 'getUserProjects',
-      following: 'getProjectsByIds',
-      public: 'getUserPublicProjects'
-    },
-    team: {
-      all: 'getTeamProjects'
-    },
-    portal: {
-      all: 'getPortalProjects'
-    }
-  }
-};
 
 const STATE = {
   data: []
@@ -38,84 +18,44 @@ const GETTERS = {
 };
 
 const ACTIONS = {
-  // list
   getList({ dispatch }, payload = {}) {
-    const target = [payload.scope];
+    const {
+      issuer,
+      portalId,
+      ids,
+      filter
+    } = payload;
 
-    if (payload.username) target.push('user');
-    else if (payload.teamId) target.push('team');
-    else if (payload.portalId) target.push('portal');
-    else target.push('public');
+    if (issuer) return dispatch('getListByIssuer', issuer);
+    if (ids && ids.length) return dispatch('getListByIds', ids);
+    if (portalId) return dispatch('getListByPortalId', portalId);
 
-    target.push(payload.type || 'all');
-
-    return dispatch(get(actionsMap, target), payload);
+    return dispatch('getFilteredList', filter);
   },
 
-  // public
-
-  getPublicProjects({ commit }, { filter = {} }) {
-    return nonFungibleTokenService.getNftCollectionsList(filter)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
+  async getFilteredList({ commit }, filter = {}) {
+    const res = await nonFungibleTokenService.getNftCollectionsList(filter);
+    commit('setList', res.data.items);
   },
 
-  getListByIssuer({ commit }, issuer) {
-    return nonFungibleTokenService.getNftCollectionsListByIssuer(issuer)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
+  async getListByIssuer({ commit }, issuer) {
+    const res = await nonFungibleTokenService.getNftCollectionsListByIssuer(issuer);
+    commit('setList', res.data.items);
   },
 
-  // user
-
-  getUserProjects({ commit }, { username }) {
-    return nonFungibleTokenService.getNftCollectionsListByIssuer(username)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
+  async getListByIds({ commit }, ids) {
+    const res = await nonFungibleTokenService.getNftCollectionsListByIds(ids);
+    commit('setList', res.data.items);
   },
 
-  getUserPublicProjects({ commit }, { username }) {
-    return nonFungibleTokenService.getNftCollectionsListByIssuer(username)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
+  async getListByPortalId({ commit }, portalId) {
+    const res = await nonFungibleTokenService.getPortalNftCollectionList(portalId);
+    commit('setList', res.data.items);
   },
 
-  getProjectsByIds({ commit }, projectIds) {
-    return nonFungibleTokenService.getNftCollectionsListByIds(projectIds)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
-  },
-
-  // team
-
-  getTeamProjects({ commit }, { teamId }) {
-    return nonFungibleTokenService.getNftCollectionsListByIssuer(teamId)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
-  },
-
-  // portal
-
-  getPortalProjects({ commit }, { portalId }) {
-    return nonFungibleTokenService.getPortalNftCollectionList(portalId)
-      .then((res) => {
-        commit('setList', res.data.items);
-      });
-  },
-
-  // one
-
-  getOne({ commit }, projectId) {
-    return nonFungibleTokenService.getNftCollection(projectId)
-      .then((res) => {
-        commit('setOne', res.data);
-      });
+  async getOne({ commit }, projectId) {
+    const res = await nonFungibleTokenService.getNftCollection(projectId);
+    commit('setOne', res.data);
   },
 
   async getTeamDefaultProject(_, teamId) {
