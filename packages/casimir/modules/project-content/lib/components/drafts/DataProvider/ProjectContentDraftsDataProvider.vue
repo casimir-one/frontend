@@ -53,7 +53,7 @@
         const filter = { ...this.filterItems };
 
         if (this.projectId) {
-          filter.projectId = this.projectId;
+          filter.nftCollectionId = this.projectId;
         }
 
         return filter;
