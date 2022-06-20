@@ -268,6 +268,7 @@
           contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,
           owner: this.project.issuer,
+          ownedByTeam: this.project.issuedByTeam,
           references: this.formData.references,
           formatType: this.formData.formatType
         };
