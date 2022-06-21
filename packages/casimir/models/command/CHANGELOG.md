@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Features
+
+* **@packages/casimir:** create lazy sell/buy proposals ([a3557aa](https://github.com/DEIPworld/deip-modules/commit/a3557aaca1e0bffb5f9e5b18cf725a873e4648bd))
+* confirm registration mail ([87f1d18](https://github.com/DEIPworld/deip-modules/commit/87f1d1838907311199a1ef64c478071416f29334))
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/deip-modules/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/commands

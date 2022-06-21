@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Bug Fixes
+
+* **@@casimir/token-service:** getNftItem route ([a7db9c9](https://github.com/DEIPworld/casimir-frontend/commit/a7db9c9e29fa9dc9d3220d057679ed4403c0319d))
+* **@casimir/token-service:** fix files saving for nft collection ([ff52d04](https://github.com/DEIPworld/casimir-frontend/commit/ff52d04a94528a43476f672be9d39a58fca781cc))
+* **@deip/attirbutes-module:** bug while rendering component AttributeAvatarSet fixed ([70a7519](https://github.com/DEIPworld/casimir-frontend/commit/70a75193f56395058a7beff5bd965f34e29fbec6))
+* **@deip/project-content-module:** fix image src in moderation card ([952635f](https://github.com/DEIPworld/casimir-frontend/commit/952635fb9f3a20817cb5dd860d8081a51251ce71))
+* **@deip/projects-module:** fix project creation ([fdd1843](https://github.com/DEIPworld/casimir-frontend/commit/fdd1843c9b23816c9ceea3aaef6baaf1fb675e38))
+* **@deip/projects-module:** fix projects data provider ([563d71e](https://github.com/DEIPworld/casimir-frontend/commit/563d71ed3eb746a44f99d5ae141e60abbfc9fb04))
+* **@deip/vuetify-extended:** fix VexImageFullViewDialog for vertical images ([de71c7b](https://github.com/DEIPworld/casimir-frontend/commit/de71c7b37f2fb8966edca90fce74e408ba3c5bbf))
+
+
+### Features
+
+* **@deip/project-content-module:** add components ([4e19369](https://github.com/DEIPworld/casimir-frontend/commit/4e193698916b75ba0d8614518a4635c543ced925))
+* **@deip/project-content-module:** add lazy mint methods to project content store ([46c044b](https://github.com/DEIPworld/casimir-frontend/commit/46c044be6f068e539326a2693f34d9cd40e15a1c))
+* **@packages/casimir:** create lazy sell/buy proposals ([a3557aa](https://github.com/DEIPworld/casimir-frontend/commit/a3557aaca1e0bffb5f9e5b18cf725a873e4648bd))
+* confirm registration mail ([87f1d18](https://github.com/DEIPworld/casimir-frontend/commit/87f1d1838907311199a1ef64c478071416f29334))
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/casimir-frontend/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package library

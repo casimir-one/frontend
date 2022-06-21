@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Features
+
+* confirm registration mail ([87f1d18](https://github.com/DEIPworld/casimir-frontend/commit/87f1d1838907311199a1ef64c478071416f29334))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/user-service

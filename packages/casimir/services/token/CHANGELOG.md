@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Bug Fixes
+
+* **@@casimir/token-service:** getNftItem route ([a7db9c9](https://github.com/DEIPworld/deip-modules/commit/a7db9c9e29fa9dc9d3220d057679ed4403c0319d))
+* **@casimir/token-service:** fix files saving for nft collection ([ff52d04](https://github.com/DEIPworld/deip-modules/commit/ff52d04a94528a43476f672be9d39a58fca781cc))
+
+
+### Features
+
+* **@packages/casimir:** create lazy sell/buy proposals ([a3557aa](https://github.com/DEIPworld/deip-modules/commit/a3557aaca1e0bffb5f9e5b18cf725a873e4648bd))
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/deip-modules/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @casimir/token-service

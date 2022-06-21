@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix VexImageFullViewDialog for vertical images ([de71c7b](https://github.com/DEIPworld/deip-modules/commit/de71c7b37f2fb8966edca90fce74e408ba3c5bbf))
+
+
+### Features
+
+* **@deip/project-content-module:** add lazy mint methods to project content store ([46c044b](https://github.com/DEIPworld/deip-modules/commit/46c044be6f068e539326a2693f34d9cd40e15a1c))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/vuetify-extended

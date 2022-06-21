@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Bug Fixes
+
+* **@deip/project-content-module:** fix image src in moderation card ([952635f](https://github.com/DEIPworld/deip-modules/commit/952635fb9f3a20817cb5dd860d8081a51251ce71))
+
+
+### Features
+
+* **@deip/project-content-module:** add components ([4e19369](https://github.com/DEIPworld/deip-modules/commit/4e193698916b75ba0d8614518a4635c543ced925))
+* **@deip/project-content-module:** add lazy mint methods to project content store ([46c044b](https://github.com/DEIPworld/deip-modules/commit/46c044be6f068e539326a2693f34d9cd40e15a1c))
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/deip-modules/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/project-content-module

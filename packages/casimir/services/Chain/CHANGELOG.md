@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Features
+
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/casimir-frontend/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/chain-service

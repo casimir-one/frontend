@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
+
+
+### Bug Fixes
+
+* **@deip/projects-module:** fix project creation ([fdd1843](https://github.com/DEIPworld/deip-modules/commit/fdd1843c9b23816c9ceea3aaef6baaf1fb675e38))
+* **@deip/projects-module:** fix projects data provider ([563d71e](https://github.com/DEIPworld/deip-modules/commit/563d71ed3eb746a44f99d5ae141e60abbfc9fb04))
+
+
+### Features
+
+* project/projectContent to nftCollection/nftItem ([e1d1920](https://github.com/DEIPworld/deip-modules/commit/e1d19204494494a87bd46227de5da3ad704dfb91))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/projects-module
