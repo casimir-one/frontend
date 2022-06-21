@@ -102,7 +102,9 @@
             this.list = this.list.concat(items);
             this.page++;
 
-            const authorIds = items.map((nftItem) => nftItem.authors[0]);
+            const authorIds = (this.isDraft)
+              ? items.map((nftItem) => nftItem.authors[0])
+              : items.map((nftItem) => nftItem.metadata.authors[0]);
             const uniqueAuthorIds = Array.from(new Set(authorIds));
 
             await this.$store.dispatch('users/getList', uniqueAuthorIds);

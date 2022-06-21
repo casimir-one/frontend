@@ -44,6 +44,14 @@ const ACTIONS = {
     return nonFungibleTokenService.updateNftItemMetadataDraft(payload);
   },
 
+  async sellLazy(_, payload) {
+    await nonFungibleTokenService.sellLazy(payload);
+  },
+
+  async buyLazy(_, payload) {
+    await nonFungibleTokenService.buyLazy(payload);
+  },
+
   async remove({ commit }, id) {
     await nonFungibleTokenService.deleteNftItemMetadataDraft(id);
     commit('remove', id);
