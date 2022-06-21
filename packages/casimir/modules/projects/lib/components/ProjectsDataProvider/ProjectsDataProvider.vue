@@ -48,10 +48,6 @@
       filterItems: {
         type: Object,
         default: undefined
-      },
-      issuedByTeam: {
-        type: Boolean,
-        default: false
       }
     },
 
