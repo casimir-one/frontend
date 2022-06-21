@@ -1,6 +1,6 @@
 {
   "name": "@deip/platform-util",
-  "version": "1.382.2",
+  "version": "1.383.0",
   "description": "Utils for deip platform applications",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@deip/toolbox": "1.382.2",
-    "@deip/web-socket-service": "1.382.2"
+    "@deip/web-socket-service": "1.383.0"
   },
   "peerDependencies": {
     "vue": "^2.6.14"

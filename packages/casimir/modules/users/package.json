@@ -1,6 +1,6 @@
 {
   "name": "@deip/users-module",
-  "version": "1.382.2",
+  "version": "1.383.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,19 +20,19 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.382.2",
-    "@deip/attributes-module": "1.382.2",
-    "@deip/constants": "1.382.2",
-    "@deip/layouts-module": "1.382.2",
-    "@deip/platform-components": "1.382.2",
-    "@deip/platform-util": "1.382.2",
+    "@deip/access-service": "1.383.0",
+    "@deip/attributes-module": "1.383.0",
+    "@deip/constants": "1.383.0",
+    "@deip/layouts-module": "1.383.0",
+    "@deip/platform-components": "1.383.0",
+    "@deip/platform-util": "1.383.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
-    "@deip/user-service": "1.382.2",
-    "@deip/validation-plugin": "1.382.2",
-    "@deip/vue-elements": "1.382.2",
-    "@deip/vue-layout-schema": "1.382.2",
-    "@deip/vuetify-extended": "1.382.2",
+    "@deip/user-service": "1.383.0",
+    "@deip/validation-plugin": "1.383.0",
+    "@deip/vue-elements": "1.383.0",
+    "@deip/vue-layout-schema": "1.383.0",
+    "@deip/vuetify-extended": "1.383.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

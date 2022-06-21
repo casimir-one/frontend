@@ -28,6 +28,7 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
   constructor(cmdPayload) {
     const {
       nftCollectionId,
+      nftItemId,
       formatType,
       jsonData,
       status,
@@ -37,6 +38,7 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
     } = cmdPayload;
 
     assert(!!nftCollectionId, "'nftCollectionId' is required");
+    assert(!!nftItemId, "'nftItemId' is required");
     assert(!!formatType, "'formatType' is required");
     assert(!!owner, "'owner' is required");
 

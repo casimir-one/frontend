@@ -265,6 +265,14 @@
       }
     },
 
+    watch: {
+      internalValue(val) {
+        if (val === null) {
+          this.image = defaultImage();
+        }
+      }
+    },
+
     async created() {
       if (this.initialImage) {
         const blob = await this.getInitialImage();

@@ -7,6 +7,7 @@ import { proxydi } from '@deip/proxydi';
 import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
 import {
   TransferNFTCmd,
+  TransferFTCmd,
   CreateNftCollectionCmd,
   CreateNftItemCmd,
   CreateNftCollectionMetadataCmd,
@@ -16,12 +17,15 @@ import {
   CreateNftItemMetadataCmd,
   UpdateNftCollectionMetadataCmd,
   UpdateNftItemMetadataDraftStatusCmd,
-  UpdateNftItemMetadataDraftModerationMsgCmd
+  UpdateNftItemMetadataDraftModerationMsgCmd,
+  AcceptProposalCmd,
+  CreateProposalCmd
 } from '@deip/commands';
 import { APP_PROPOSAL, APP_EVENT } from '@deip/constants';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
+
 import { transferToken, updateProposalInfo } from '../../util';
 
 /**
@@ -119,7 +123,7 @@ export class NonFungibleTokenService {
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_COLLECTION_METADATA_CREATED
-                  && eventBody.event.eventPayload.entityId === response.data._id;
+        && eventBody.event.eventPayload.entityId === response.data._id;
     }, 10000);
 
     return response;
@@ -245,7 +249,7 @@ export class NonFungibleTokenService {
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_CREATED
-                  && eventBody.event.eventPayload.entityId === response.data._id;
+        && eventBody.event.eventPayload.entityId === response.data._id;
     }, 10000);
 
     return response;
@@ -255,6 +259,7 @@ export class NonFungibleTokenService {
    * Create nft item metadata draft
    * @param {Object} payload.data
    * @param {string} payload.data.nftCollectionId
+   * @param {string} payload.data.nftItemId
    * @param {number} payload.data.formatType
    * @param {Object} payload.data.jsonData
    * @param {number} payload.data.status
@@ -288,7 +293,7 @@ export class NonFungibleTokenService {
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_CREATED
-                  && eventBody.event.eventPayload.entityId === response.data._id;
+        && eventBody.event.eventPayload.entityId === response.data._id;
     }, 10000);
 
     return response;
@@ -387,7 +392,7 @@ export class NonFungibleTokenService {
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_STATUS_UPDATED
-                  && eventBody.event.eventPayload._id === response.data._id;
+        && eventBody.event.eventPayload._id === response.data._id;
     }, 10000);
 
     return response;
@@ -421,9 +426,209 @@ export class NonFungibleTokenService {
   }
 
   /**
+  * Create lazy mint proposal for selling nft instance on behalf creator
+  * @param {import('@casimir/platform-core').NonFungibleTokenLazySellPayload} payload
+  * @return {Promise<Object>}
+  */
+  async sellLazy(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        nftCollectionId,
+        nftItemId,
+        asset
+      }
+    } = payload;
+
+    const {
+      // eslint-disable-next-line camelcase
+      TENANT_HOT_WALLET_DAO_ID,
+      LAZY_BUY_PROPOSAL_EXPIRATION = 30 * 24 * 3600e3 // month in milliseconds
+    } = env;
+    const lazySellProposalExpirationTime = Date.now() + LAZY_BUY_PROPOSAL_EXPIRATION;
+
+    const response = await ChainService.getInstanceAsync(env)
+      .then((chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const transferFtCmd = new TransferFTCmd({
+              from: TENANT_HOT_WALLET_DAO_ID,
+              to: issuer,
+              amount: asset.amount,
+              tokenId: asset.id,
+              symbol: asset.symbol,
+              precision: asset.precision
+            });
+
+            const createNftCmd = new CreateNftItemCmd({
+              issuer,
+              recipient: TENANT_HOT_WALLET_DAO_ID,
+              nftCollectionId,
+              nftItemId
+            });
+
+            const proposalBatch = [
+              transferFtCmd,
+              createNftCmd
+            ];
+
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((batchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  type: APP_PROPOSAL.NFT_LAZY_SELL_PROPOSAL,
+                  creator: issuer,
+                  expirationTime: lazySellProposalExpirationTime,
+                  proposedCmds: proposalBatch
+                });
+
+                txBuilder.addCmd(createProposalCmd);
+                const lazySellProposalId = createProposalCmd.getProtocolEntityId();
+
+                const acceptProposalCmd = new AcceptProposalCmd({
+                  entityId: lazySellProposalId,
+                  account: issuer,
+                  batchWeight
+                });
+                txBuilder.addCmd(acceptProposalCmd);
+
+                return txBuilder.end();
+              });
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
+            return this.nonFungibleTokenHttp.lazySell(msg);
+          });
+      });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_CREATED
+        && eventBody.event.eventPayload.proposalId === response.data.entityId;
+    }, 20000);
+
+    return response;
+  }
+
+  /**
+* Create lazy mint proposal for buying nft instance on behalf buyer
+* @param {import('@casimir/platform-core').NonFungibleTokenLazyBuyPayload} payload
+* @return {Promise<Object>}
+*/
+  async buyLazy(payload) {
+    const env = this.proxydi.get('env');
+    const {
+      initiator: { privKey },
+      data: {
+        issuer,
+        nftCollectionId,
+        nftItemId,
+        lazySellProposalId,
+        asset
+      }
+    } = payload;
+
+    const {
+      // eslint-disable-next-line camelcase
+      TENANT_HOT_WALLET_DAO_ID, LAZY_BUY_PROPOSAL_EXPIRATION = 60e3 // minute in milliseconds
+    } = env;
+
+    const lazyBuyProposalExpirationTime = Date.now() + LAZY_BUY_PROPOSAL_EXPIRATION;
+
+    const response = await ChainService.getInstanceAsync(env)
+      .then(async (chainService) => {
+        const chainNodeClient = chainService.getChainNodeClient();
+        const chainTxBuilder = chainService.getChainTxBuilder();
+        const chainRpc = chainService.getChainRpc();
+
+        const lazySellProposal = await chainRpc.getProposalAsync(lazySellProposalId);
+
+        return chainTxBuilder.begin()
+          .then((txBuilder) => {
+            const transferFt = new TransferFTCmd({
+              from: issuer,
+              to: TENANT_HOT_WALLET_DAO_ID,
+              amount: asset.amount,
+              tokenId: asset.id,
+              symbol: asset.symbol,
+              precision: asset.precision
+            });
+
+            const acceptSellProposalCmd = new AcceptProposalCmd({
+              entityId: lazySellProposalId,
+              account: TENANT_HOT_WALLET_DAO_ID,
+              batchWeight: lazySellProposal.batchWeight
+            });
+
+            const transferNft = new TransferNFTCmd({
+              from: TENANT_HOT_WALLET_DAO_ID,
+              to: issuer,
+              nftCollectionId,
+              nftItemId
+            });
+
+            const proposalBatch = [
+              transferFt,
+              acceptSellProposalCmd,
+              transferNft
+            ];
+
+            return chainTxBuilder.getBatchWeight(proposalBatch)
+              .then((batchWeight) => {
+                const createProposalCmd = new CreateProposalCmd({
+                  type: APP_PROPOSAL.NFT_LAZY_BUY_PROPOSAL,
+                  creator: issuer,
+                  expirationTime: lazyBuyProposalExpirationTime,
+                  proposedCmds: proposalBatch
+                });
+
+                txBuilder.addCmd(createProposalCmd);
+                const lazyBuyProposalId = createProposalCmd.getProtocolEntityId();
+
+                const acceptProposalCmd = new AcceptProposalCmd({
+                  entityId: lazyBuyProposalId,
+                  account: issuer,
+                  batchWeight
+                });
+                txBuilder.addCmd(acceptProposalCmd);
+
+                return txBuilder.end();
+              });
+          })
+          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
+          .then((packedTx) => {
+            const msg = new JsonDataMsg(packedTx.getPayload());
+
+            if (env.RETURN_MSG === true) {
+              return msg;
+            }
+
+            return this.nonFungibleTokenHttp.lazyBuy(msg);
+          });
+      });
+
+    await this.webSocketService.waitForMessage((message) => {
+      const [, eventBody] = message;
+      return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_ACCEPTED
+        && eventBody.event.eventPayload.proposalId === lazySellProposalId;
+    }, 20000);
+
+    return response;
+  }
+
+  /**
    * Get nft collection by id
    * @param {string} nftCollectionId
-   * @returns {Promise<Object>}
+   * @return {Promise<Object>}
    */
   async getNftCollection(nftCollectionId) {
     return this.nonFungibleTokenHttp.getNftCollection(nftCollectionId);

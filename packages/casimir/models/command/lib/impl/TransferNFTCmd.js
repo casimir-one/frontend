@@ -27,7 +27,7 @@ class TransferNFTCmd extends ProtocolCmd {
     assert(!!to, "'to' is required");
     assert(isNumber(nftCollectionId) || (isString(nftCollectionId) && nftCollectionId),
       "'nftCollectionId' is required and must be a number or non emplty string");
-    assert(isNumber(nftItemId) || (isString(nftItemId) && nftItemId),
+    assert(isNumber(nftItemId) || (isString(nftItemId) && nftItemId.length),
       "'nftItemId' is required and must be a number or non emplty string");
 
     super(APP_CMD.TRANSFER_NFT, cmdPayload);

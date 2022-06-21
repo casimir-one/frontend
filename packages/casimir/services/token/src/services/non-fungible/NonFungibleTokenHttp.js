@@ -272,6 +272,24 @@ export class NonFungibleTokenHttp {
     return `${DEIP_SERVER_URL}/api/v2/tokens/nft/item/package/${nftCollectionId}/${nftItemId}/${hash}`;
   }
 
+  /**
+ * Create proposal for lazy sell
+ * @param {Object} req
+ * @return {Promise<Object>}
+ */
+  async lazySell(req) {
+    return this.http.post('/api/v2/tokens/nft/lazy-sell', req.getHttpBody());
+  }
+
+  /**
+ * Create proposal for lazy buy
+ * @param {Object} req
+ * @return {Promise<Object>}
+ */
+  async lazyBuy(req) {
+    return this.http.post('/api/v2/tokens/nft/lazy-buy', req.getHttpBody());
+  }
+
   /** @type {() => NonFungibleTokenHttp} */
   static getInstance = makeSingletonInstance(() => new NonFungibleTokenHttp());
 }
