@@ -203,7 +203,8 @@
       async handlePublishClick() {
         this.actionLoading = true;
         const isConfirmed = await this.$confirm(
-          this.$t('module.projectContent.draft.confirmPublish.message', { title: this.draft.title }),
+          this.$t('module.projectContent.draft.confirmPublish.message',
+                  { title: this.draft.title }),
           { title: this.$t('module.projectContent.draft.confirmPublish.title') }
         );
 
