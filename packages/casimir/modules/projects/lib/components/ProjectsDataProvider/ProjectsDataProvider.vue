@@ -47,7 +47,7 @@
        */
       filterItems: {
         type: Object,
-        default: null
+        default: undefined
       },
       issuedByTeam: {
         type: Boolean,
