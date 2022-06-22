@@ -270,7 +270,8 @@
           owner: this.project.issuer,
           ownedByTeam: this.project.issuedByTeam,
           references: this.formData.references,
-          formatType: this.formData.formatType
+          formatType: this.formData.formatType,
+          nftItemId: this.project.nextNftItemId.toString()
         };
 
         if (this.formData.formatType === NFT_ITEM_METADATA_FORMAT.JSON) {
