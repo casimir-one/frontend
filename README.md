@@ -243,7 +243,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
        .addModule(TestAppAuthModule)
       ```
 * #### add admin module
-  * install npm packages: `@deip/attributes-module`, `@deip/projects-module`,
+  * install npm packages: `@deip/attributes-module`, `@casimir/nft-collections-module`,
   `@deip/users-module`, `@deip/teams-module` `@deip/toolbox`
   и `@deip/layouts-module` (all these are required)
   * copy `/casimir-sandbox-portal/src/modules/adimn` with the all content into `/src/modules`

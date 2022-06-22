@@ -35,4 +35,4 @@ portal in general:
 * `@deip/attributes-module`
 * `@casimir/scopes-module`
 * `@deip/auth-module`
-* `@deip/users-module` or/and` @deip/teams-module` or/and `@deip/projects-module`
+* `@deip/users-module` or/and` @deip/teams-module` or/and `@casimir/nft-collections-module`

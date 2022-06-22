@@ -8,7 +8,7 @@ based on such a model. The entities, on which attributes could be applied are: `
 of the list:
   * `@deip/users-module`
   * `@deip/teams-module`
-  * `@deip/projects-module`
+  * `@casimir/nft-collections-module`
 * using standard defineProperty method adds attributes object to prototype of vue instance
   and creates store getters, which gets data about certain collection
   or certain item (`one`, `list`, `listByScopes`, `settings`)
