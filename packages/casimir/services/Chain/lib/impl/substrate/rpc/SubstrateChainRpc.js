@@ -48,10 +48,13 @@ class SubstrateChainRpc extends BaseChainRpc {
       if (!metadataRes) return null;
 
       const metadata = metadataRes.toJSON();
+      const symbol = hexToString(metadata.symbol);
+      const name = metadata.name === "0x" ? symbol : hexToString(metadata.name)
+
       return {
         id: assetId,
-        name: hexToString(metadata.name),
-        symbol: hexToString(metadata.symbol),
+        name,
+        symbol,
         decimals: metadata.decimals
       };
     }
@@ -118,9 +121,9 @@ class SubstrateChainRpc extends BaseChainRpc {
       const api = chainService.getChainNodeClient();
       const totalIssuance = await api.query.balances.totalIssuance();
       const metadata = await getFungibleTokenMetadataAsync(coreAsset.id);
-      return new SubstrateFungibleTokenDto({ 
-        assetId: coreAsset.id, 
-        supply: totalIssuance.toString(), 
+      return new SubstrateFungibleTokenDto({
+        assetId: coreAsset.id,
+        supply: totalIssuance.toString(),
         issuer: "DEIP_PROTOCOL"
       }, metadata);
     }
@@ -191,7 +194,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       sendTxAsync: (rawTx) => {
         return chainService.rpcToChainNode('author_submitExtrinsic', [rawTx]);
       },
-      
+
 
       /* DAO */
 
@@ -262,7 +265,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         return projects.map(({ value: project }) => new SubstrateProjectDto(project));
       },
 
-      getProjectsAsync: async (projectIds) => { 
+      getProjectsAsync: async (projectIds) => {
         const projectsDtos = await this.getProjectsListAsync();
         return projectsDtos.filter((projectsDto) => projectIds.includes(projectsDto.projectId));
       },
@@ -292,7 +295,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         return list;
       },
 
-      getProjectContentsByProjectAsync: async (projectId, startIdx = null, limit = LIST_LIMIT) => { 
+      getProjectContentsByProjectAsync: async (projectId, startIdx = null, limit = LIST_LIMIT) => {
         const contents = await chainService.rpcToChainNode("deip_getProjectContentListByProject", [null, toHexFormat(projectId), limit, toHexFormat(startIdx)]);
         const list = await Promise.all(contents.map(async ({ value: content }) => {
           const item = await getPreProcessedProjectContentAsync(content);
@@ -523,7 +526,7 @@ class SubstrateChainRpc extends BaseChainRpc {
             const metadata = await getFungibleTokenMetadataAsync(assetId);
             map[assetId] = { metadata };
           }
-          
+
           if (map[assetId][accountId] === undefined) {
             const daoId = await getDaoIdByAddressAsync(accountId);
             map[assetId][accountId] = daoId;
@@ -560,7 +563,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       getNonFungibleTokenClassesAsync: async () => {
         const api = chainService.getChainNodeClient();
         const entries = await api.query.uniques.class.entries();
-        const list = await Promise.all(entries.map(async ([ { args: [u32] } , value]) => {
+        const list = await Promise.all(entries.map(async ([{ args: [u32] }, value]) => {
           const nftClass = value.toJSON();
           const classId = u32.toString();
           const metadata = await getNonFungibleTokenMetadataAsync(classId);
@@ -658,7 +661,7 @@ class SubstrateChainRpc extends BaseChainRpc {
         }));
         return list;
       },
-      
+
       getReviewsByProjectContentAsync: async (contentId, startIdx = null, limit = LIST_LIMIT) => {
         const reviews = await chainService.rpcToChainNode("deip_getReviewListByProjectContent", [null, toHexFormat(contentId), limit, toHexFormat(startIdx)]);
         const list = await Promise.all(reviews.map(async ({ value: review }) => {
@@ -727,7 +730,7 @@ class SubstrateChainRpc extends BaseChainRpc {
       getProjectNdaByProjectAsync: async function (id) { return [] },
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },
       getStateAsync: async function (path) { throw Error(`Not implemented exception`); },
-      getConfigAsync: async function () { throw Error(`Not implemented exception`);},
+      getConfigAsync: async function () { throw Error(`Not implemented exception`); },
       getDynamicGlobalPropertiesAsync: async function () { throw Error(`Not implemented exception`); },
       getChainPropertiesAsync: async function () { throw Error(`Not implemented exception`); },
       getWitnessScheduleAsync: async function () { throw Error(`Not implemented exception`); },

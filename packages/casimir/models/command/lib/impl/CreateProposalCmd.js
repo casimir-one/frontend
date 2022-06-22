@@ -26,6 +26,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
       creator,
       proposedCmds,
       expirationTime,
+      batchWeight,
       // eslint-disable-next-line no-unused-vars
       reviewPeriodSeconds
     } = cmdPayload;
@@ -34,6 +35,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
     assert(!!type, "'type' is required"); // temp limitation
     assert(APP_PROPOSAL[type] !== undefined, "'type' is unknown"); // temp limitation
     assert(!!creator, "'creator' is required");
+    assert(!!batchWeight, "'batchWeight' is required");
 
     assert(!!proposedCmds && proposedCmds.length, 'Protocol proposal must contain at least 1 ProtocolCmd');
     for (let i = 0; i < proposedCmds.length; i++) {
