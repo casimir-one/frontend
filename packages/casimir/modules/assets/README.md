@@ -40,4 +40,4 @@ Despite layouts-module are able to work without below list of modules, they are 
 portal in general:
 
 * `@casimir/scopes-module`
-* `@deip/users-module` or/and` @deip/teams-module` or/and `@deip/projects-module`
+* `@deip/users-module` or/and` @deip/teams-module` or/and `@casimir/nft-collections-module`
