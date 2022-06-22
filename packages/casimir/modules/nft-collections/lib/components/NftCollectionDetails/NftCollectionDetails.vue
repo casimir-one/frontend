@@ -1,6 +1,6 @@
 <template>
   <layout-renderer
-    :value="project.metadata"
+    :value="nftCollection.metadata"
     :schema="internalSchema"
     :schema-data="internalSchemaData"
   />
@@ -12,14 +12,14 @@
   import { defineComponent } from '@deip/platform-util';
 
   export default defineComponent({
-    name: 'ProjectDetails',
+    name: 'NftCollectionDetails',
 
     components: {
       LayoutRenderer
     },
 
     mixins: [
-      attributedDetailsFactory('project')
+      attributedDetailsFactory('nftCollection')
     ],
 
     computed: {
@@ -29,10 +29,10 @@
       internalSchemaData() {
         return {
           ...attributeMethodsFactory(
-            expandAttributes(this.project.metadata),
+            expandAttributes(this.nftCollection.metadata),
             {
               scopeName: 'nftCollection',
-              scopeId: this.project._id
+              scopeId: this.nftCollection._id
             }
           ),
           ...this.schemaData

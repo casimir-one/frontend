@@ -12,7 +12,7 @@
   import { defineComponent } from '@deip/platform-util';
 
   export default defineComponent({
-    name: 'ProjectsDataProvider',
+    name: 'NftCollectionsDataProvider',
     props: {
       /**
        * Tag name
@@ -36,7 +36,7 @@
         default: null
       },
       /**
-       * Project ids list
+       * NFT collections ids list
        */
       ids: {
         type: Array,
@@ -75,10 +75,10 @@
       },
 
       /**
-       * Get computed project list
+       * Get computed NFT collection list
        */
-      projectsList() {
-        return this.$store.getters['projects/list'](this.getterFilter);
+      nftCollectionsList() {
+        return this.$store.getters['nftCollections/list'](this.getterFilter);
       },
 
       /**
@@ -86,7 +86,7 @@
        */
       slotProps() {
         return {
-          projects: this.projectsList,
+          nftCollections: this.nftCollectionsList,
 
           loading: this.loading,
           ready: this.ready
@@ -95,14 +95,14 @@
     },
 
     created() {
-      this.loadProjects();
+      this.loadNftCollections();
     },
 
     methods: {
       /**
-       * Load project list
+       * Load NFT collections list
        */
-      loadProjects() {
+      loadNftCollections() {
         this.loading = true;
 
         const {
@@ -119,17 +119,17 @@
           filter: filterItems
         };
 
-        this.$store.dispatch('projects/getList', payload)
+        this.$store.dispatch('nftCollections/getList', payload)
           .then(() => {
             this.loading = false;
             this.ready = true;
 
             /**
-             * Triggers when project list is ready
+             * Triggers when NFT collections list is ready
              *
-             * @type {Array.<Object>}
+             * @property {Array.<Object>}
              */
-            this.$emit('ready', this.projectsList);
+            this.$emit('ready', this.nftCollectionsList);
           });
       }
     }

@@ -53,12 +53,12 @@ const ACTIONS = {
     commit('setList', res.data.items);
   },
 
-  async getOne({ commit }, projectId) {
-    const res = await nonFungibleTokenService.getNftCollection(projectId);
+  async getOne({ commit }, nftCollectionId) {
+    const res = await nonFungibleTokenService.getNftCollection(nftCollectionId);
     commit('setOne', res.data);
   },
 
-  async getTeamDefaultProject(_, teamId) {
+  async getTeamDefaultNftCollection(_, teamId) {
     const res = await nonFungibleTokenService.getDefaultNftCollectionByIssuer(teamId);
     return res.data;
   },
@@ -82,7 +82,7 @@ const MUTATIONS = {
   setOne: setOneMutation
 };
 
-export const projectsStore = {
+export const nftCollectionsStore = {
   namespaced: true,
   state: STATE,
   getters: GETTERS,
