@@ -51,14 +51,14 @@
   import { VIEW_MODE } from '@deip/constants';
 
   export default defineComponent({
-    name: 'ProjectForm',
+    name: 'NftCollectionForm',
 
     components: {
       VeStack,
       LayoutRenderer
     },
 
-    mixins: [attributedFormFactory('nftCollection', 'project')],
+    mixins: [attributedFormFactory('nftCollection', 'nftCollection')],
 
     props: {
       /**
@@ -76,7 +76,7 @@
       cancelLabel: {
         type: String,
         default() {
-          return this.$t('module.projects.form.cancel');
+          return this.$t('module.nftCollections.form.cancel');
         }
       },
       /**
@@ -102,8 +102,8 @@
         }
 
         return this.mode === VIEW_MODE.CREATE
-          ? this.$t('module.projects.form.create')
-          : this.$t('module.projects.form.update');
+          ? this.$t('module.nftCollections.form.create')
+          : this.$t('module.nftCollections.form.update');
       }
     },
 
@@ -117,18 +117,18 @@
         this.loading = true;
 
         if (this.mode === VIEW_MODE.CREATE) {
-          await this.createProject();
+          await this.createNftCollection();
         } else if (this.mode === VIEW_MODE.EDIT) {
-          await this.updateProject();
+          await this.updateNftCollection();
         }
 
         this.loading = false;
       },
 
       /**
-       * Create project
+       * Create NFT collection
        */
-      async createProject() {
+      async createNftCollection() {
         const payload = {
           initiator: this.$currentUser,
           data: {
@@ -139,25 +139,25 @@
         };
 
         try {
-          const project = await this.$store.dispatch('projects/create', payload);
-          this.emitSuccess(project._id);
+          const nftCollection = await this.$store.dispatch('nftCollections/create', payload);
+          this.emitSuccess(nftCollection._id);
         } catch (err) {
           this.emitError(err);
         }
       },
 
       /**
-       * Update project
+       * Update NFT collection
        */
-      async updateProject() {
+      async updateNftCollection() {
         const payload = {
           initiator: this.$currentUser,
           data: this.lazyFormData
         };
 
         try {
-          const project = await this.$store.dispatch('projects/update', payload);
-          this.emitSuccess(project._id);
+          const nftCollection = await this.$store.dispatch('nftCollections/update', payload);
+          this.emitSuccess(nftCollection._id);
         } catch (err) {
           this.emitError(err);
         }

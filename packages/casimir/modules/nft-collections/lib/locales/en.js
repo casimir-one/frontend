@@ -1,8 +1,7 @@
 export default {
   module: {
-    projects: {
+    nftCollections: {
       form: {
-        isPrivate: 'Private project',
         cancel: 'Cancel',
         create: 'Create',
         update: 'Update'

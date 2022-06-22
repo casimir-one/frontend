@@ -1,10 +1,10 @@
 import { assert, setLocalesMessages } from '@deip/toolbox';
 
-import { projectsStore } from './store';
-import { projectScope } from './config';
+import { nftCollectionsStore } from './store';
+import { nftCollectionsScope } from './config';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
-const moduleName = 'ProjectsModule';
+const moduleName = 'NftCollectionsModule';
 
 // eslint-disable-next-line no-unused-vars
 const install = (Vue, options = {}) => {
@@ -22,9 +22,9 @@ const install = (Vue, options = {}) => {
   assert(!!i18n, `[${moduleName}]: i18n instance is not provided`);
 
   setLocalesMessages(i18n, locales);
-  store.registerModule('projects', projectsStore);
+  store.registerModule('nftCollections', nftCollectionsStore);
 
-  store.dispatch('scopesRegistry/addScope', projectScope);
+  store.dispatch('scopesRegistry/addScope', nftCollectionsScope);
 
   if (attributesMappedKeys.length) {
     store.dispatch('scopesRegistry/addMappedKeys', {
@@ -43,7 +43,7 @@ const install = (Vue, options = {}) => {
   }
 };
 
-export const ProjectsModule = {
+export const NftCollectionsModule = {
   name: moduleName,
   deps: [
     'ValidationPlugin',

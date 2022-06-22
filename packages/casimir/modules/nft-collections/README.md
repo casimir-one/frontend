@@ -1,15 +1,15 @@
-# `@deip/projects-module`
+# `@casimir/nft-collections-module`
 
 
 ## Description
 
-The module creates store for a new entity called `projects` and also adds new scope
-called `projectsScope` by action `scopesRegistry/addScope` related with `@deip/scopes-module`
+The module creates store for a new entity called `NFT collection` and also adds new scope
+called `nftCollection` by action `scopesRegistry/addScope` related with `@deip/scopes-module`
 
 ## Usage
 
 ```
-import { ProjectsModule } from '@diep/projects-module';
+import { NftCollectionsModule } from '@casimir/nft-collections-module';
 ```
 then add module to app using `addModule(moduleName)`:
 ```
@@ -19,8 +19,7 @@ const testApp = new CreateApp(Vue, {
   vuetify,
   i18n
 });
-testApp
-.addModule(ProjectsModule)
+testApp.addModule(NftCollectionsModule)
 ```
 
 ## Dependencies
