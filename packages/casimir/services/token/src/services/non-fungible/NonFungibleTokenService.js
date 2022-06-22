@@ -482,7 +482,8 @@ export class NonFungibleTokenService {
                   type: APP_PROPOSAL.NFT_LAZY_SELL_PROPOSAL,
                   creator: issuer,
                   expirationTime: lazySellProposalExpirationTime,
-                  proposedCmds: proposalBatch
+                  proposedCmds: proposalBatch,
+                  batchWeight
                 });
 
                 txBuilder.addCmd(createProposalCmd);
@@ -588,7 +589,8 @@ export class NonFungibleTokenService {
                   type: APP_PROPOSAL.NFT_LAZY_BUY_PROPOSAL,
                   creator: issuer,
                   expirationTime: lazyBuyProposalExpirationTime,
-                  proposedCmds: proposalBatch
+                  proposedCmds: proposalBatch,
+                  batchWeight
                 });
 
                 txBuilder.addCmd(createProposalCmd);

@@ -43,12 +43,13 @@ export function transferToken(
           const commandsBatch = wrapInArray(transferTokenCmd);
 
           const buildProposal = () => chainTxBuilder.getBatchWeight(commandsBatch)
-            .then((proposalBatchWeight) => {
+            .then((batchWeight) => {
               const createProposalCmd = new CreateProposalCmd({
                 type: proposalType,
                 creator: username,
                 expirationTime: proposalLifetime,
-                proposedCmds: commandsBatch
+                proposedCmds: commandsBatch,
+                batchWeight
               });
               txBuilder.addCmd(createProposalCmd);
 
@@ -57,7 +58,7 @@ export function transferToken(
                 const updateProposalCmd = new AcceptProposalCmd({
                   entityId: updateProposalId,
                   account: username,
-                  batchWeight: proposalBatchWeight
+                  batchWeight
                 });
                 txBuilder.addCmd(updateProposalCmd);
               }

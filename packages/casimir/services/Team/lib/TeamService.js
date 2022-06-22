@@ -123,12 +123,13 @@ export class TeamService {
               ];
 
               return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((proposalBatchWeight) => {
+                .then((batchWeight) => {
                   const createProposalCmd = new CreateProposalCmd({
                     creator,
                     type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
                     expirationTime: proposalDefaultLifetime,
-                    proposedCmds: proposalBatch
+                    proposedCmds: proposalBatch,
+                    batchWeight
                   });
 
                   txBuilder.addCmd(createProposalCmd);
@@ -137,7 +138,7 @@ export class TeamService {
                   const updateProposalCmd = new AcceptProposalCmd({
                     entityId: joinTeamProposalId,
                     account: creator,
-                    batchWeight: proposalBatchWeight
+                    batchWeight
                   });
 
                   txBuilder.addCmd(updateProposalCmd);
@@ -220,12 +221,13 @@ export class TeamService {
               ];
 
               return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((proposalBatchWeight) => {
+                .then((batchWeight) => {
                   const createProposalCmd = new CreateProposalCmd({
                     creator,
                     type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
                     expirationTime: proposalLifetime,
-                    proposedCmds: proposalBatch
+                    proposedCmds: proposalBatch,
+                    batchWeight
                   });
 
                   txBuilder.addCmd(createProposalCmd);
@@ -235,7 +237,7 @@ export class TeamService {
                     const updateProposalCmd = new AcceptProposalCmd({
                       entityId: teamUpdateProposalId,
                       account: creator,
-                      batchWeight: proposalBatchWeight
+                      batchWeight
                     });
 
                     txBuilder.addCmd(updateProposalCmd);
@@ -309,12 +311,13 @@ export class TeamService {
             ];
 
             return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((proposalBatchWeight) => {
+              .then((batchWeight) => {
                 const createProposalCmd = new CreateProposalCmd({
                   creator,
                   type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
                   expirationTime: proposalDefaultLifetime,
-                  proposedCmds: proposalBatch
+                  proposedCmds: proposalBatch,
+                  batchWeight
                 });
                 txBuilder.addCmd(createProposalCmd);
 
@@ -322,7 +325,7 @@ export class TeamService {
                 const updateProposalCmd = new AcceptProposalCmd({
                   entityId: joinTeamProposalId,
                   account: creator,
-                  batchWeight: proposalBatchWeight
+                  batchWeight
                 });
                 txBuilder.addCmd(updateProposalCmd);
 
@@ -382,12 +385,13 @@ export class TeamService {
             ];
 
             return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((proposalBatchWeight) => {
+              .then((batchWeight) => {
                 const createProposalCmd = new CreateProposalCmd({
                   creator,
                   type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
                   expirationTime: proposalDefaultLifetime,
-                  proposedCmds: proposalBatch
+                  proposedCmds: proposalBatch,
+                  batchWeight
                 });
 
                 txBuilder.addCmd(createProposalCmd);
@@ -396,7 +400,7 @@ export class TeamService {
                 const updateProposalCmd = new AcceptProposalCmd({
                   entityId: leaveTeamProposalId,
                   account: creator,
-                  batchWeight: proposalBatchWeight
+                  batchWeight
                 });
 
                 txBuilder.addCmd(updateProposalCmd);
