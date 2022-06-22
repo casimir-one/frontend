@@ -29,7 +29,7 @@ export const ProjectContentModule = {
     'EnvModule',
     'AuthModule',
     'UsersModule',
-    'ProjectsModule'
+    'NftCollectionsModule'
   ],
   install
 };
