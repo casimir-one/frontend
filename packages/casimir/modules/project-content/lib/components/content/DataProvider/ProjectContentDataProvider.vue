@@ -22,9 +22,9 @@
         default: 'div'
       },
       /**
-       * Project id
+       * NFT collection id
        */
-      projectId: {
+      nftCollectionId: {
         type: String,
         default: null
       },
@@ -52,8 +52,8 @@
       getterFilter() {
         const filter = { ...this.filterItems };
 
-        if (this.projectId) {
-          filter.projectId = this.projectId;
+        if (this.nftCollectionId) {
+          filter._id.nftCollectionId = this.nftCollectionId;
         }
 
         return filter;
@@ -99,8 +99,9 @@
         this.loading = true;
 
         try {
-          if (this.projectId) {
-            await this.$store.dispatch('projectContent/getListByProjectId', this.projectId);
+          if (this.nftCollectionId) {
+            await this.$store.dispatch('projectContent/getListByNftCollectionId',
+                                       this.nftCollectionId);
           } else {
             await this.$store.dispatch('projectContent/getList');
           }
