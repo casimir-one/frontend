@@ -38,9 +38,10 @@
           :name="$t('module.projectContent.form.authors')"
           rules="required"
         >
+          <!-- TODO get members from team -->
           <users-selector
             v-model="formData.authors"
-            :users="project.members"
+            :users="nftCollection.members"
             :label="$t('module.projectContent.form.authors')"
             :error-messages="errors"
             multiple
@@ -143,11 +144,6 @@
 
   /**
    * Project content draft form component
-   * @required VeStack
-   * @required VexFileInput
-   * @required ProjectContentSelector
-   * @required UsersSelector
-   * @required VueEditorjs
    */
   export default defineComponent({
     name: 'ProjectContentDraftForm',
@@ -164,9 +160,9 @@
 
     props: {
       /**
-       * Project info
+       * NFT collection info
        */
-      project: {
+      nftCollection: {
         type: Object,
         default: () => {}
       }
@@ -263,12 +259,12 @@
       async submit() {
         this.loading = true;
         const data = {
-          nftCollectionId: this.project._id,
+          nftCollectionId: this.nftCollection._id,
           title: this.formData.title,
           contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,
-          owner: this.project.issuer,
-          ownedByTeam: this.project.issuedByTeam,
+          owner: this.nftCollection.issuer,
+          ownedByTeam: this.nftCollection.issuedByTeam,
           references: this.formData.references,
           formatType: this.formData.formatType
         };

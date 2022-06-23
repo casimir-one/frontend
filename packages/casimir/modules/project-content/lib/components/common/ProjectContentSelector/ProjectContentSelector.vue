@@ -26,6 +26,7 @@
   import { VexAutocomplete } from '@deip/vuetify-extended';
 
   /**
+   * @deprecated
    * Component for references selector
    */
   export default defineComponent({
@@ -40,7 +41,7 @@
 
     props: {
       ...VAutocomplete.options.props,
-      projectId: {
+      nftCollectionId: {
         type: String,
         default: null
       }
@@ -98,8 +99,9 @@
        */
       async getReferences() {
         try {
-          if (this.projectId) {
-            await this.$store.dispatch('projectContent/getListByProjectId', this.projectId);
+          if (this.nftCollectionId) {
+            await this.$store.dispatch('projectContent/getListByNftCollectionId',
+                                       this.nftCollectionId);
           } else {
             await this.$store.dispatch('projectContent/getList');
           }

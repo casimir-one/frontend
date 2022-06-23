@@ -24,8 +24,8 @@ const ACTIONS = {
     commit('setList', res.data.items);
   },
 
-  async getListByProjectId({ commit }, projectId) {
-    const res = await nonFungibleTokenService.getNftItemsListByNftCollection(projectId);
+  async getListByNftCollectionId({ commit }, nftCollectionId) {
+    const res = await nonFungibleTokenService.getNftItemsListByNftCollection(nftCollectionId);
     commit('setList', res.data.items);
   },
 
