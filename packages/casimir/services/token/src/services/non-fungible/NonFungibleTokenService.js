@@ -673,7 +673,8 @@ export class NonFungibleTokenService {
 
   /**
    * Get nft item
-   * @param {string} id
+   * @param {string|number} nftCollectionId
+   * @param {string|number} nftItemId
    * @returns {Promise<Object>}
    */
   async getNftItem(nftCollectionId, nftItemId) {

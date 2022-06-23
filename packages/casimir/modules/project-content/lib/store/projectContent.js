@@ -29,8 +29,9 @@ const ACTIONS = {
     commit('setList', res.data.items);
   },
 
-  async getOne({ commit }, contentId) {
-    const res = await nonFungibleTokenService.getNftItem(contentId);
+  async getOne({ commit }, payload) {
+    const { nftCollectionId, nftItemId } = payload;
+    const res = await nonFungibleTokenService.getNftItem(nftCollectionId, nftItemId);
     commit('setOne', res.data);
   },
 

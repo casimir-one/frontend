@@ -74,6 +74,36 @@ describe('oneGetter', () => {
     const result = oneGetter(state)('c');
     expect(result).toBeUndefined();
   });
+
+  it('should return object', () => {
+    const result = oneGetter({
+      data: [
+        {
+          _id: { a: 'a', b: 'b' }
+        }, {
+          _id: { a: 'c', b: 'c' }
+        }
+      ]
+    })({ a: 'a', b: 'b' });
+    expect(result).toEqual({
+      _id: { a: 'a', b: 'b' }
+    });
+  });
+
+  it('should return object', () => {
+    const result = oneGetter({
+      data: [
+        {
+          _id: { _id: 'a' }
+        }, {
+          _id: { _id: 'c' }
+        }
+      ]
+    })({ _id: 'c' });
+    expect(result).toEqual({
+      _id: { _id: 'c' }
+    });
+  });
 });
 
 describe('oneGetterFactory', () => {
@@ -89,6 +119,21 @@ describe('oneGetterFactory', () => {
   it('should return object', () => {
     const result = oneGetterFactory({ storeKey: 'data', selectorKey: 'id' })(state)(1);
     expect(result).toEqual(expectedObject);
+  });
+
+  it('should return object', () => {
+    const result = oneGetterFactory({ storeKey: 'data', selectorKey: 'team' })({
+      data: [
+        {
+          team: { _id: 'a' }
+        }, {
+          team: { _id: 'b' }
+        }
+      ]
+    })({ _id: 'b' });
+    expect(result).toEqual({
+      team: { _id: 'b' }
+    });
   });
 
   it('should return undefined', () => {
