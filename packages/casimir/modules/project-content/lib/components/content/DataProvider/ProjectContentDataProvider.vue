@@ -53,7 +53,10 @@
         const filter = { ...this.filterItems };
 
         if (this.nftCollectionId) {
-          filter._id.nftCollectionId = this.nftCollectionId;
+          filter._id = {
+            ...filter._id,
+            nftCollectionId: this.nftCollectionId
+          };
         }
 
         return filter;
