@@ -20,6 +20,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+
+    - name: Restore lerna
+      uses: actions/cache@v3
+      with:
+        path: |
+          - node_modules/
+          - "**/node_modules/"
+        key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+    
     - run: npm config set '//npm-registry.deip.world/:_authToken' "${CASIMIR_NPM_TOKEN}"
     - run: npm i && npm run bootstrap:ci
       env:
