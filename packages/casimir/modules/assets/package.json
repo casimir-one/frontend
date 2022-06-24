@@ -1,6 +1,6 @@
 {
 	"name": "@deip/assets-module",
-	"version": "1.383.0",
+	"version": "1.384.0",
 	"description": "> TODO: description",
 	"author": "Elena Vlasova <e.vlasova@paralect.com>",
 	"homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -17,7 +17,7 @@
 		"url": "https://github.com/DEIPworld/deip-modules/issues"
 	},
 	"dependencies": {
-		"@casimir/token-service": "1.383.0",
+		"@casimir/token-service": "1.384.0",
 		"@deip/assets-service": "1.383.0",
 		"@deip/constants": "1.383.0",
 		"@deip/platform-util": "1.383.0",

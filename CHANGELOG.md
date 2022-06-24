@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.384.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.383.0...v1.384.0) (2022-06-24)
+
+
+### Bug Fixes
+
+* **@deip/project-content-module:** fix filter in ProjectContentDataProvider ([3f02556](https://github.com/DEIPworld/casimir-frontend/commit/3f0255696e26c07cbd76073aa397eff0ecdf64d7))
+* **@deip/project-content-module:** fix for draft publish ([0827d0e](https://github.com/DEIPworld/casimir-frontend/commit/0827d0e192299a7cffb2e2d80c5ea97d48616af9))
+* **@deip/project-content-module:** fix get method ([1e4e56c](https://github.com/DEIPworld/casimir-frontend/commit/1e4e56cc35c2d4a91f2185915cbec32e02c16573))
+* **@deip/project-content-module:** fix nft-collections-module name ([1fd7408](https://github.com/DEIPworld/casimir-frontend/commit/1fd7408c279d8d7931ab3e2fd69fae9446911a5b))
+
+
+### Features
+
+* **@casimir/nft-collections-module:** rename project to nft collection ([531b127](https://github.com/DEIPworld/casimir-frontend/commit/531b127974bec9278ab316591ecdd3b28609c0aa))
+* **@deip/project-content-module:** rename project to nft collection ([425e8d6](https://github.com/DEIPworld/casimir-frontend/commit/425e8d65c29ea1e6bbb92e83665c55034d772dcb))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 

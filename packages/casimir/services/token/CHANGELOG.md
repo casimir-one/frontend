@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.384.0](https://github.com/DEIPworld/deip-modules/compare/v1.383.0...v1.384.0) (2022-06-24)
+
+
+### Bug Fixes
+
+* **@deip/project-content-module:** fix get method ([1e4e56c](https://github.com/DEIPworld/deip-modules/commit/1e4e56cc35c2d4a91f2185915cbec32e02c16573))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.384.0](https://github.com/DEIPworld/deip-modules/compare/v1.383.0...v1.384.0) (2022-06-24)
+
+
+### Features
+
+* **@casimir/nft-collections-module:** rename project to nft collection ([531b127](https://github.com/DEIPworld/deip-modules/commit/531b127974bec9278ab316591ecdd3b28609c0aa))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 
