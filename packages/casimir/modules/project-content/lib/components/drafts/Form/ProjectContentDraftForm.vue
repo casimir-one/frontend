@@ -38,10 +38,9 @@
           :name="$t('module.projectContent.form.authors')"
           rules="required"
         >
-          <!-- TODO get members from team -->
           <users-selector
             v-model="formData.authors"
-            :users="nftCollection.members"
+            :users="team.members"
             :label="$t('module.projectContent.form.authors')"
             :error-messages="errors"
             multiple
@@ -187,6 +186,13 @@
         return this.isEditMode
           ? this.$t('module.projectContent.form.update')
           : this.$t('module.projectContent.form.create');
+      },
+
+      /**
+       * Get team
+       */
+      team() {
+        return this.$store.getters['teams/one'](this.nftCollection.issuer);
       }
     },
 
@@ -266,7 +272,8 @@
           owner: this.nftCollection.issuer,
           ownedByTeam: this.nftCollection.issuedByTeam,
           references: this.formData.references,
-          formatType: this.formData.formatType
+          formatType: this.formData.formatType,
+          nftItemId: this.nftCollection.nextNftItemId
         };
 
         if (this.formData.formatType === NFT_ITEM_METADATA_FORMAT.JSON) {

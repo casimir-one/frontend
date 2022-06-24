@@ -169,7 +169,18 @@
         try {
           const payload = {
             initiator: this.$currentUser,
-            data: draft
+            data: {
+              _id: draft._id,
+              issuer: draft.owner,
+              nftItemId: draft.nftItemId,
+              recipient: draft.owner, // TODO: should be fixed to owner on backend
+              ownedByTeam: draft.ownedByTeam,
+              nftCollectionId: draft.nftCollectionId,
+              metadata: {
+                nftItemMetadataDraftId: draft._id,
+                ...draft
+              }
+            }
           };
           await this.$store.dispatch('projectContentDrafts/publish', payload);
           this.emitSuccessPublish();

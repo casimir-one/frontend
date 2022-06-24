@@ -14,11 +14,11 @@
         @click:row="handleRowClick"
       >
         <template #item.type="{item}">
-          {{ getContentType(item.contentType) }}
+          {{ getContentType(item.metadata.formatType) }}
         </template>
 
         <template #item.title="{item}">
-          {{ item.title }}
+          {{ item.metadata.title }}
         </template>
       </v-data-table>
     </template>

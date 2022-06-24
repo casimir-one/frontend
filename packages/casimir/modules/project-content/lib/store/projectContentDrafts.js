@@ -60,36 +60,12 @@ const ACTIONS = {
 
   async publish({ commit }, payload) {
     const {
-      initiator,
       data: {
-        _id,
-        projectId,
-        teamId,
-        contentType,
-        title,
-        authors,
-        references,
-        hash
+        _id
       }
     } = payload;
 
-    await nonFungibleTokenService.createNftItem(
-      {
-        initiator,
-        data: {
-          _id,
-          projectId,
-          teamId,
-          contentType,
-          title,
-          authors,
-          references,
-          hash,
-          content: hash
-        },
-        proposalInfo: { isProposal: false }
-      }
-    );
+    await nonFungibleTokenService.createNftItem(payload);
     commit('remove', _id);
   },
 
