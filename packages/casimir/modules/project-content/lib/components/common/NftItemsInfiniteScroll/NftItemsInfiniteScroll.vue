@@ -75,6 +75,10 @@
       }
     },
 
+    created() {
+      this.$root.$refs.infiniteScroll = this;
+    },
+
     methods: {
       /**
        * Get nft items list
