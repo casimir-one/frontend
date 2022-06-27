@@ -268,6 +268,8 @@
     watch: {
       internalValue(val) {
         if (val === null) {
+          this.clearImageInput();
+          this.setChosenFileName(null);
           this.image = defaultImage();
         }
       }
@@ -289,7 +291,7 @@
     destroyed() {
       // Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
       if (this.image.src) {
-        URL.revokeObjectURL(this.image.src);
+        this.clearImageInput();
       }
     },
 
@@ -464,6 +466,10 @@
           this.setChosenFileName(loadedFile.name);
           this.resetCropper();
         }
+      },
+
+      clearImageInput() {
+        URL.revokeObjectURL(this.image.src);
       }
     }
   });
