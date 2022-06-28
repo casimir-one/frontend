@@ -1,5 +1,6 @@
 import { APP_CMD } from '@deip/constants';
 import CreateDaoCmd from './impl/CreateDaoCmd';
+import ImportDAOCmd from './impl/ImportDAOCmd';
 import CreateNftCollectionMetadataCmd from './impl/CreateNftCollectionMetadataCmd';
 import UpdateNftCollectionMetadataCmd from './impl/UpdateNftCollectionMetadataCmd';
 import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
@@ -55,6 +56,7 @@ import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCm
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
   [APP_CMD.UPDATE_DAO]: { class: UpdateDaoCmd },
+  [APP_CMD.IMPORT_DAO]: { class: ImportDAOCmd },
   [APP_CMD.ALTER_DAO_AUTHORITY]: { class: AlterDaoAuthorityCmd },
   [APP_CMD.CREATE_NFT_COLLECTION_METADATA]: { class: CreateNftCollectionMetadataCmd },
   [APP_CMD.UPDATE_NFT_COLLECTION_METADATA]: { class: UpdateNftCollectionMetadataCmd },
