@@ -16,3 +16,9 @@ export const ATTRIBUTE_TYPES = [
   'location',
   'custom'
 ] as const;
+
+export const enum AttributeScopes {
+  NFT_COLLECTION = 'nftCollection',
+  USER = 'user',
+  TEAM = 'team'
+}
