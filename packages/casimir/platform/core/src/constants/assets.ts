@@ -4,12 +4,12 @@
 
 export const enum AssetType {
   COIN = 1,
-  NFT,
-  CORE
+  NFT = 2,
+  CORE = 3
 }
 
 export const enum DepositRequestStatus {
   PENDING = 1,
-  APPROVED,
-  REJECTED
+  APPROVED = 2,
+  REJECTED = 3
 }
