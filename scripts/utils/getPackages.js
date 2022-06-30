@@ -28,8 +28,12 @@ const getPackages = (forBuild = true) => lernaConf.packages
   .map((pkgPath) => {
     const { name, dependencies } = fs.readJsonSync(`${pkgPath}/package.json`);
 
-    const platformDependencies = Object.keys(dependencies)
-      .filter((key) => key.includes('@deip') || key.includes('@casimir'));
+    let platformDependencies = [];
+
+    if (dependencies) {
+      platformDependencies = Object.keys(dependencies)
+        .filter((key) => key.includes('@deip') || key.includes('@casimir'));
+    }
 
     return {
       name,
