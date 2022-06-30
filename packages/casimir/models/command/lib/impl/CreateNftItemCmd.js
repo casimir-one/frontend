@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import { assert, isNumber, isString } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
@@ -24,10 +24,14 @@ class CreateNftItemCmd extends ProtocolCmd {
     } = cmdPayload;
 
     assert(!!issuer, "'issuer' is required");
-    assert(isNumber(nftCollectionId) || (isString(nftCollectionId) && nftCollectionId.length),
-      "'nftCollectionId' is required and must be a number or non emplty string");
-    assert(isNumber(nftItemId) || (isString(nftItemId) && nftItemId.length),
-      "'nftItemId' is required and must be a number or non emplty string");
+    assert(
+      isNumber(nftCollectionId) || (isString(nftCollectionId) && nftCollectionId.length),
+      "'nftCollectionId' is required and must be a number or non emplty string"
+    );
+    assert(
+      isNumber(nftItemId) || (isString(nftItemId) && nftItemId.length),
+      "'nftItemId' is required and must be a number or non emplty string"
+    );
     assert(!!recipient, "'recipient' is required");
 
     super(APP_CMD.CREATE_NFT_ITEM, cmdPayload);

@@ -61,7 +61,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock, contextMixin } from '@deip/vuetify-extended';
-  import { NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
+  import { NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
   import { UsersList } from '@deip/users-module';
 
   import NftItemDetails from '../../common/NftItemDetails';

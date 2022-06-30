@@ -69,7 +69,7 @@
 </template>
 
 <script>
-  import { NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
+  import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
   import { NonFungibleTokenService } from '@casimir/token-service';
 
   import { dateMixin } from '@deip/platform-components';
@@ -177,7 +177,7 @@
           const payload = {
             data: {
               _id: this.nftItemDraft._id,
-              status: NFT_ITEM_METADATA_DRAFT_STATUS.APPROVED
+              status: NftItemMetadataDraftStatus.APPROVED
             }
           };
 

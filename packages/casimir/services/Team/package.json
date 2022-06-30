@@ -22,9 +22,9 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
+    "@casimir/platform-core": "1.385.0",
     "@deip/chain-service": "1.385.0",
     "@deip/commands": "1.385.1",
-    "@deip/constants": "1.385.0",
     "@deip/http-service": "1.385.0",
     "@deip/lib-crypto": "1.375.1",
     "@deip/messages": "1.385.1",

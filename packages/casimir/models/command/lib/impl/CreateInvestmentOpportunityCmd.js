@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
@@ -49,7 +49,10 @@ class CreateInvestmentOpportunityCmd extends ProtocolEntityCmd {
     );
 
     assert(!!teamId, "'teamId' is required");
-    assert(!!startTime && !Number.isNaN(startTime), "'startTime' required and should be in milliseconds");
+    assert(
+      !!startTime && !Number.isNaN(startTime),
+      "'startTime' required and should be in milliseconds"
+    );
     assert(!!endTime && !Number.isNaN(endTime), "'endTime' required and should be in milliseconds");
     assert(new Date(endTime) > new Date(startTime), "'endTime' must be greater than 'startTime'");
     assert(!!shares && Array.isArray(shares), "'shares' is required and must be an array");

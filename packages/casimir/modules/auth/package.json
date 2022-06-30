@@ -20,9 +20,9 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
+    "@casimir/platform-core": "1.385.0",
     "@deip/access-service": "1.385.0",
     "@deip/auth-service": "1.385.1",
-    "@deip/constants": "1.385.0",
     "@deip/lib-crypto": "1.375.1",
     "@deip/platform-util": "1.385.0",
     "@deip/proxydi": "1.382.2",

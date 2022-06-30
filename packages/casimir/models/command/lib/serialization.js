@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import CreateDaoCmd from './impl/CreateDaoCmd';
 import ImportDAOCmd from './impl/ImportDAOCmd';
 import CreateNftCollectionMetadataCmd from './impl/CreateNftCollectionMetadataCmd';

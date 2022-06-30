@@ -69,7 +69,7 @@
   import { defineComponent } from '@deip/platform-util';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
   import { VexTooltip } from '@deip/vuetify-extended';
-  import { NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
+  import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
   import NftItemDraftsDataProvider from '../DataProvider';
 
   /**
@@ -125,7 +125,7 @@
        * @param {Object} draft
        */
       isDraftProposed(draft) {
-        return draft.status === NFT_ITEM_METADATA_DRAFT_STATUS.PROPOSED;
+        return draft.status === NftItemMetadataDraftStatus.PROPOSED;
       },
       /**
        * Check if draft status is in progress
@@ -133,7 +133,7 @@
        * @param {Object} draft
        */
       isDraftInProgress(draft) {
-        return draft.status === NFT_ITEM_METADATA_DRAFT_STATUS.IN_PROGRESS;
+        return draft.status === NftItemMetadataDraftStatus.IN_PROGRESS;
       },
 
       handleRowClick(draft) {

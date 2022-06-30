@@ -1,5 +1,5 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import { toAssetUnits, millisecToIso } from './utils';
 
 

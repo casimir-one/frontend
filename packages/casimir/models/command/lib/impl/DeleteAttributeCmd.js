@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 

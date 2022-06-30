@@ -1,5 +1,5 @@
 import decode from 'jwt-decode';
-import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@deip/constants';
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@casimir/platform-core';
 import { makeSingletonInstance } from '@deip/toolbox';
 
 /**

@@ -1,4 +1,4 @@
-import { APP_CMD, NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
+import { APP_CMD, NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 

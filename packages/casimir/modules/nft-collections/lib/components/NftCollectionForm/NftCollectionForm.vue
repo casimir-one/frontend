@@ -48,7 +48,7 @@
   import { VeStack } from '@deip/vue-elements';
   import { defineComponent } from '@deip/platform-util';
 
-  import { VIEW_MODE } from '@deip/constants';
+  import { ViewMode } from '@casimir/platform-core';
 
   export default defineComponent({
     name: 'NftCollectionForm',
@@ -101,7 +101,7 @@
           return this.submitLabel;
         }
 
-        return this.mode === VIEW_MODE.CREATE
+        return this.mode === ViewMode.CREATE
           ? this.$t('module.nftCollections.form.create')
           : this.$t('module.nftCollections.form.update');
       }
@@ -116,9 +116,9 @@
       async onSubmit() {
         this.loading = true;
 
-        if (this.mode === VIEW_MODE.CREATE) {
+        if (this.mode === ViewMode.CREATE) {
           await this.createNftCollection();
-        } else if (this.mode === VIEW_MODE.EDIT) {
+        } else if (this.mode === ViewMode.EDIT) {
           await this.updateNftCollection();
         }
 

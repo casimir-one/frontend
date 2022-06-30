@@ -8,7 +8,7 @@ import {
 import { UserService } from '@deip/user-service';
 import { proxydi } from '@deip/proxydi';
 import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
-import { APP_EVENT, APP_PROPOSAL } from '@deip/constants';
+import { APP_EVENT, APP_PROPOSAL } from '@casimir/platform-core';
 import {
   CreateProposalCmd,
   CreateDaoCmd,

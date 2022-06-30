@@ -65,11 +65,9 @@
   import { defineComponent } from '@deip/platform-util';
   import { formFactory } from '@deip/platform-components';
 
-  import {
-    VlsBuilder
-  } from '@deip/vue-layout-schema';
+  import { VlsBuilder } from '@deip/vue-layout-schema';
 
-  import { VIEW_MODE } from '@deip/constants';
+  import { ViewMode } from '@casimir/platform-core';
 
   import { wrapInArray } from '@deip/toolbox';
   import { attributesBlocksFactory } from '../../blocks';
@@ -234,9 +232,9 @@
       handleBuilderSubmit(schema) {
         this.formData.value = schema;
 
-        if (this.mode === VIEW_MODE.CREATE) {
+        if (this.mode === ViewMode.CREATE) {
           this.createLayout();
-        } else if (this.mode === VIEW_MODE.EDIT) {
+        } else if (this.mode === ViewMode.EDIT) {
           this.updateLayout();
         }
       }

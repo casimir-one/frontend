@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@deip/constants';
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@casimir/platform-core';
 import { AccessService } from '../../lib/AccessService';
 
 const accessService = AccessService.getInstance();

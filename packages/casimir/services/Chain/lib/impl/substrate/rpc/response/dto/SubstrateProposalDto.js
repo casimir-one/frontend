@@ -1,6 +1,6 @@
 import ProposalDto from './../../../../../base/rpc/response/dto/ProposalDto';
 import { fromHexFormat } from './../../../utils';
-import { PROPOSAL_STATUS } from '@deip/constants';
+import { ProposalStatus } from '@casimir/platform-core';
 
 
 class SubstrateProposalDto extends ProposalDto {
@@ -14,24 +14,24 @@ class SubstrateProposalDto extends ProposalDto {
     let failureMsg;
     switch (Object.keys(proposal.state)[0]) {
       case 'pending': {
-        status = PROPOSAL_STATUS.PENDING;
+        status = ProposalStatus.PENDING;
         break;
       }
       case 'done': {
-        status = PROPOSAL_STATUS.APPROVED;
+        status = ProposalStatus.APPROVED;
         break;
       }
       case 'rejected': {
-        status = PROPOSAL_STATUS.REJECTED;
+        status = ProposalStatus.REJECTED;
         break;
       }
       case 'failed': {
-        status = PROPOSAL_STATUS.REJECTED;
+        status = ProposalStatus.REJECTED;
         failureMsg = proposal.state['failed'] || "Proposal failed";
         break;
       }
       default: {
-        status = PROPOSAL_STATUS.PENDING;
+        status = ProposalStatus.PENDING;
         break;
       }
     }

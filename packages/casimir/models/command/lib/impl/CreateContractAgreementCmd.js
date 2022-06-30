@@ -1,4 +1,4 @@
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
@@ -36,11 +36,20 @@ class CreateContractAgreementCmd extends ProtocolEntityCmd {
     assert(!!parties && Array.isArray(parties) && parties.length > 1, "'parties' is required");
 
     if (expirationTime && activationTime) {
-      assert(new Date(expirationTime) > new Date(activationTime), "'expirationTime' must be greater than 'activationTime'");
+      assert(
+        new Date(expirationTime) > new Date(activationTime),
+        "'expirationTime' must be greater than 'activationTime'"
+      );
     } else if (expirationTime) {
-      assert(new Date(expirationTime) > new Date(), "'expirationTime' must be greater than current time");
+      assert(
+        new Date(expirationTime) > new Date(),
+        "'expirationTime' must be greater than current time"
+      );
     } else if (activationTime) {
-      assert(new Date(activationTime) > new Date(), "'activationTime' must be greater than current time");
+      assert(
+        new Date(activationTime) > new Date(),
+        "'activationTime' must be greater than current time"
+      );
     }
 
     if (type === CONTRACT_AGREEMENT_TYPE.PROJECT_LICENSE) {

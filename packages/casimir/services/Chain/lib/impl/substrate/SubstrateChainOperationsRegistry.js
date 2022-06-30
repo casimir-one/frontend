@@ -1,7 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
 import { assert } from '@deip/toolbox';
 import { hexToU8a, stringToHex } from '@polkadot/util';
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@deip/constants';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir/platform-core';
 import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress, isAddress } from './utils';
 import { pascalCase } from 'change-case';
 

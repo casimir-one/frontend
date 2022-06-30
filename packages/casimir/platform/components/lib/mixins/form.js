@@ -1,5 +1,5 @@
 import { cloneDeep, isEqual } from 'lodash';
-import { VIEW_MODE } from '@deip/constants';
+import { ViewMode } from '@casimir/platform-core';
 
 /**
  * Create form mixin
@@ -29,9 +29,9 @@ const formFactory = (
 
     mode: {
       type: [String, Number],
-      default: VIEW_MODE.CREATE,
+      default: ViewMode.CREATE,
       validator(value) {
-        return VIEW_MODE.values().indexOf(value) !== -1;
+        return Object.values(ViewMode).includes(value);
       }
     }
   },
@@ -65,7 +65,7 @@ const formFactory = (
     },
 
     isEditMode() {
-      return this.mode === VIEW_MODE.EDIT;
+      return this.mode === ViewMode.EDIT;
     }
   },
 

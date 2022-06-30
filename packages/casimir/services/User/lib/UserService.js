@@ -13,7 +13,7 @@ import {
   genSha256Hash,
   makeSingletonInstance
 } from '@deip/toolbox';
-import { APP_EVENT } from '@deip/constants';
+import { APP_EVENT } from '@casimir/platform-core';
 import { UserHttp } from './UserHttp';
 
 export class UserService {

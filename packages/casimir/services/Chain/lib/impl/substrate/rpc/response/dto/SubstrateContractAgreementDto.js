@@ -1,6 +1,6 @@
 import ContractAgreementDto from './../../../../../base/rpc/response/dto/ContractAgreementDto';
 import { fromHexFormat } from './../../../utils';
-import { CONTRACT_AGREEMENT_STATUS } from '@deip/constants';
+import { CONTRACT_AGREEMENT_STATUS } from '@casimir/platform-core';
 
 
 class SubstrateContractAgreementDto extends ContractAgreementDto {

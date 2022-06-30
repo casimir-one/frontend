@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import { assert, isBoolean } from '@deip/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
@@ -29,7 +29,10 @@ class AddDaoMemberCmd extends ProtocolCmd {
 
     assert(!!member, "'member' is required");
     assert(!!teamId, "'teamId' is required");
-    assert(isBoolean(isThresholdPreserved), "'isThresholdPreserved' flag should be specified as boolean");
+    assert(
+      isBoolean(isThresholdPreserved),
+      "'isThresholdPreserved' flag should be specified as boolean"
+    );
 
     super(APP_CMD.ADD_DAO_MEMBER, cmdPayload);
   }

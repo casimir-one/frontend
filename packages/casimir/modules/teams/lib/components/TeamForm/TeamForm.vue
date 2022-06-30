@@ -54,7 +54,7 @@
 
 <script>
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { VIEW_MODE } from '@deip/constants';
+  import { ViewMode } from '@casimir/platform-core';
   import { VeRawDisplay, VeStack } from '@deip/vue-elements';
   import { defineComponent } from '@deip/platform-util';
 
@@ -112,7 +112,7 @@
           return this.submitLabel;
         }
 
-        return this.mode === VIEW_MODE.CREATE
+        return this.mode === ViewMode.CREATE
           ? this.$t('module.teams.form.create')
           : this.$t('module.teams.form.update');
       }
@@ -127,9 +127,9 @@
       async onSubmit() {
         this.loading = true;
 
-        if (this.mode === VIEW_MODE.CREATE) {
+        if (this.mode === ViewMode.CREATE) {
           await this.createTeam();
-        } else if (this.mode === VIEW_MODE.EDIT) {
+        } else if (this.mode === ViewMode.EDIT) {
           await this.updateTeam();
         }
 

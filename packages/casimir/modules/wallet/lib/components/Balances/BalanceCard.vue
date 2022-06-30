@@ -28,7 +28,7 @@
 
           <div>
             <v-btn
-              v-if="withDeposit && balance.type !== ASSET_TYPE.CORE"
+              v-if="withDeposit && balance.type !== AssetType.CORE"
               x-small
               text
               depressed
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-  import { ASSET_TYPE } from '@deip/constants';
+  import { AssetType } from '@casimir/platform-core';
   import { VeShadowBox, VeStack } from '@deip/vue-elements';
   import { currency } from '@deip/assets-module';
   /**
@@ -99,7 +99,7 @@
 
     data() {
       return {
-        ASSET_TYPE
+        AssetType
       };
     },
 
@@ -107,7 +107,9 @@
       styles() {
         return {
           backgroundBlendMode: 'overlay, normal',
-          background: `linear-gradient(280deg, rgba(255, 255, 255, 0.7) 0.08%, rgba(255, 255, 255, 0) 100%), ${this.backgroundColor}`,
+          background: 'linear-gradient(280deg, rgba(255, 255, 255, 0.7) 0.08%, '
+            + ' rgba(255, 255, 255, 0) 100%), '
+            + `${this.backgroundColor}`,
           height: '100%',
           minHeight: '184px'
         };

@@ -1,7 +1,6 @@
 import BaseTx from './../../base/BaseTx';
 import { assert } from '@deip/toolbox';
-import { PROTOCOL_CHAIN } from '@deip/constants';
-
+import { ProtocolChain } from '@casimir/platform-core';
 
 class GrapheneTx extends BaseTx {
 
@@ -14,7 +13,7 @@ class GrapheneTx extends BaseTx {
   }
 
   getProtocolChain() {
-    return PROTOCOL_CHAIN.GRAPHENE;
+    return ProtocolChain.GRAPHENE;
   }
 
   signAsync(privKey, chainNodeClient, options = {}) {

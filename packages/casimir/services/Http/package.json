@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "@deip/access-service": "1.385.0",
-    "@deip/constants": "1.385.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
     "axios": "^0.21.1",

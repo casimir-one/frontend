@@ -117,7 +117,7 @@
   import { VexFileInput } from '@deip/vuetify-extended';
   import { VueEditorjs } from '@deip/vue-editorjs';
   import { UsersSelector } from '@deip/users-module';
-  import { NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
+  import { NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
 
   import { AccessService } from '@deip/access-service';
 

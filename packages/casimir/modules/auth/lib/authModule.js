@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { SYSTEM_ROLE } from '@deip/constants';
+import { SYSTEM_ROLE } from '@casimir/platform-core';
 import { AccessService } from '@deip/access-service';
 import { setLocalesMessages, hasValue, isNil } from '@deip/toolbox';
 import { awaitForStore, callForCurrentUser } from '@deip/platform-util';
