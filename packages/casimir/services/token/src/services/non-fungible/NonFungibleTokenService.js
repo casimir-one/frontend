@@ -646,15 +646,6 @@ export class NonFungibleTokenService {
   }
 
   /**
-   * Get default nft collection by issuer
-   * @param {string} issuer
-   * @returns {Promise<Object>}
-   */
-  async getDefaultNftCollectionByIssuer(issuer) {
-    return this.nonFungibleTokenHttp.getDefaultNftCollectionByIssuer(issuer);
-  }
-
-  /**
    * Get public nft collections list
    * @param {Object} filter
    * @param {Array} filter.attributes
