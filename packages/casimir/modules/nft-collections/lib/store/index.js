@@ -58,11 +58,6 @@ const ACTIONS = {
     commit('setOne', res.data);
   },
 
-  async getTeamDefaultNftCollection(_, teamId) {
-    const res = await nonFungibleTokenService.getDefaultNftCollectionByIssuer(teamId);
-    return res.data;
-  },
-
   async create({ dispatch }, payload) {
     const res = await nonFungibleTokenService.createNftCollection(payload);
 

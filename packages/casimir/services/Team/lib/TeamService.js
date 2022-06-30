@@ -14,7 +14,6 @@ import {
   CreateDaoCmd,
   AcceptProposalCmd,
   UpdateDaoCmd,
-  CreateNftCollectionMetadataCmd,
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
   TransferFTCmd
@@ -43,7 +42,7 @@ export class TeamService {
    * @param {boolean} isCreateDefaultProject
    * @return {Promise<Object>}
    */
-  async create(payload, isCreateDefaultProject = false) {
+  async create(payload) {
     const env = this.proxydi.get('env');
     const {
       TENANT, CORE_ASSET, ACCOUNT_DEFAULT_FUNDING_AMOUNT, RETURN_MSG
@@ -95,15 +94,6 @@ export class TeamService {
                 amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
               });
               txBuilder.addCmd(transferFTCmd);
-            }
-
-            if (isCreateDefaultProject) {
-              const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
-                issuer: entityId,
-                isDefault: true,
-                attributes: []
-              });
-              txBuilder.addCmd(createNftCollectionMetadataCmd);
             }
 
             const members = data.members.filter((m) => m !== creator);
