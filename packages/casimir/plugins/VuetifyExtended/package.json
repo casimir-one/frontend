@@ -23,7 +23,6 @@
     "vuetify": "^2.5.3"
   },
   "dependencies": {
-    "@deip/constants": "1.385.0",
     "@deip/platform-util": "1.385.0",
     "@deip/toolbox": "1.382.2",
     "@deip/vue-editorjs": "1.382.2",

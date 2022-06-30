@@ -25,9 +25,7 @@ import { isObject, RecursiveIterator, camelCase } from '@deip/toolbox';
 import { isEqual, cloneDeep } from 'lodash';
 import draggable from 'vuedraggable';
 
-import {
-  VIEW_MODE
-} from '@deip/constants';
+import { ViewMode } from '@casimir/platform-core';
 
 import {
   contentBlocks,
@@ -70,9 +68,9 @@ const AttributeEdit = {
   props: {
     mode: {
       type: Number,
-      default: VIEW_MODE.CREATE,
+      default: ViewMode.CREATE,
       validator(value) {
-        return [VIEW_MODE.CREATE, VIEW_MODE.EDIT].includes(value);
+        return [ViewMode.CREATE, ViewMode.EDIT].includes(value);
       }
     },
     value: {
@@ -110,8 +108,8 @@ const AttributeEdit = {
       return this.$store.getters['attributesRegistry/one'](this.attributeData.type);
     },
 
-    isEditMode() { return this.mode === VIEW_MODE.EDIT; },
-    isCreateMode() { return this.mode === VIEW_MODE.CREATE; },
+    isEditMode() { return this.mode === ViewMode.EDIT; },
+    isCreateMode() { return this.mode === ViewMode.CREATE; },
 
     canHaveOptions() {
       return this.attrTypeInfo.canHaveOptions

@@ -16,7 +16,7 @@ import { cloneDeep } from 'lodash';
 import {
   RENDERER_SCHEMA_BLOCK_KEYS,
   RENDERER_BLOCK_KEYS
-} from '@deip/constants';
+} from '@casimir/platform-core';
 
 /**
  * @typedef {Object} InitialBlock

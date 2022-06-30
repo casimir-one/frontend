@@ -261,8 +261,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
       ```
   * for minimal working routing, insert the below code into `/src/modules/admin/router`:
   * ```
-    import { SYSTEM_ROLE } from '@deip/auth-module';
-    import { VIEW_MODE } from '@deip/constants';
+    import { ViewMode, SYSTEM_ROLE } from '@casimir/platform-core';
 
     import { AdminAttributes } from '@/modules/admin/components/attributes/AdminAttributes';
     import { AdminAttributesForm } from '@/modules/admin/components/attributes/AdminAttributesForm';
@@ -327,7 +326,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
                 meta: formViewMeta(),
                 props: (route) => ({
                   attributeId: route.params.attributeId,
-                  mode: VIEW_MODE.EDIT,
+                  mode: ViewMode.EDIT,
                   title: 'Edit attribute'
                 })
               }
@@ -362,7 +361,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
                 meta: editorMeta(),
                 props: (route) => ({
                   layoutId: route.params.layoutId,
-                  mode: VIEW_MODE.EDIT,
+                  mode: ViewMode.EDIT,
                   title: 'Edit layout'
                 })
               }

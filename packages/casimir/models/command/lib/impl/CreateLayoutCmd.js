@@ -1,4 +1,4 @@
-import { APP_CMD, ATTR_SCOPES } from '@deip/constants';
+import { APP_CMD, AttributeScope } from '@casimir/platform-core';
 import { assert, isArray } from '@deip/toolbox';
 import AppCmd from '../base/AppCmd';
 
@@ -25,7 +25,10 @@ class CreateLayoutCmd extends AppCmd {
 
     assert(!!name, "'name' is required");
     assert(!!value && isArray(value), "'value' is required and should be an aray");
-    assert(!!scope && ATTR_SCOPES.includes(scope), "'scope' is required and should be from 'ATTR_SCOPES'");
+    assert(
+      !!scope && Object.values(AttributeScope).includes(scope),
+      "'scope' is required and should be from 'AttributeScope'"
+    );
     assert(!!type, "'type' is required");
 
     super(APP_CMD.CREATE_LAYOUT, cmdPayload);

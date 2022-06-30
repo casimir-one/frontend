@@ -1,5 +1,5 @@
 import { assert } from '@deip/toolbox';
-import { PROPOSAL_STATUS } from '@deip/constants';
+import { ProposalStatus } from '@casimir/platform-core';
 import { isValidTimestampFormat } from './../utils';
 
 
@@ -21,7 +21,7 @@ class ProposalDto {
     
     assert(!!proposalId, "Proposal ID is not specified");
     assert(!!creator, "Proposal 'creator' is not specified");
-    assert(!!status && !!PROPOSAL_STATUS[status], "Proposal 'status' is not specified");
+    assert(!!status && Object.values(ProposalStatus).includes(status), "Proposal 'status' is not specified");
     assert(!!decisionMakers && decisionMakers.length, "Proposal 'decisionMakers' are not specified");
     assert(!!timestamp && isValidTimestampFormat(timestamp), "Proposal 'timestamp' is not specified");
     assert(!!serializedProposedTx, "Proposal 'serializedProposedTx' is not specified");

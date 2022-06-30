@@ -6,7 +6,7 @@ import {
   CreateFTClassCmd,
   IssueFTCmd
 } from '@deip/commands';
-import { APP_PROPOSAL } from '@deip/constants';
+import { APP_PROPOSAL } from '@casimir/platform-core';
 import { ChainService } from '@deip/chain-service';
 import { FungibleTokenHttp } from './FungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';

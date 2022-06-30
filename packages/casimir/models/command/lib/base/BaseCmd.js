@@ -1,5 +1,5 @@
 import { assert } from '@deip/toolbox';
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 
 /**
  * Class for base command

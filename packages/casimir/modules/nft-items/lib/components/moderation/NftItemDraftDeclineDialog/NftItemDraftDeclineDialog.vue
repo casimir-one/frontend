@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import { NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
+  import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
   import { VexDialog } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
 
@@ -117,7 +117,7 @@
           const payload = {
             data: {
               _id: this.nftItemDraft._id,
-              status: NFT_ITEM_METADATA_DRAFT_STATUS.REJECTED,
+              status: NftItemMetadataDraftStatus.REJECTED,
               moderationMessage: this.reason
             }
           };

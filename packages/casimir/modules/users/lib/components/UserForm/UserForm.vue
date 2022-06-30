@@ -46,7 +46,7 @@
 <script>
   import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
   import { VeStack, VeRawDisplay } from '@deip/vue-elements';
-  import { VIEW_MODE } from '@deip/constants';
+  import { ViewMode } from '@casimir/platform-core';
   import { defineComponent } from '@deip/platform-util';
 
   export default defineComponent({
@@ -91,9 +91,9 @@
        */
       mode: {
         type: [String, Number],
-        default: VIEW_MODE.EDIT,
+        default: ViewMode.EDIT,
         validator(value) {
-          return value === VIEW_MODE.EDIT;
+          return value === ViewMode.EDIT;
         }
       }
     },

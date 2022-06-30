@@ -1,5 +1,5 @@
 import { Singleton } from '@deip/toolbox';
-import { PROTOCOL_CHAIN } from '@deip/constants';
+import { ProtocolChain } from '@casimir/platform-core';
 import SubstrateChainService from './impl/substrate/SubstrateChainService';
 import GrapheneChainService from './impl/graphene/GrapheneChainService';
 
@@ -9,7 +9,7 @@ class ChainService extends Singleton {
   constructor({ CHAIN_PROTOCOL, DEIP_FULL_NODE_URL, CHAIN_ID, CORE_ASSET, PORTAL_ID }) {
     let impl;
     switch (CHAIN_PROTOCOL) {
-      case PROTOCOL_CHAIN.SUBSTRATE: {
+      case ProtocolChain.SUBSTRATE: {
         impl = SubstrateChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
           coreAsset: CORE_ASSET,
@@ -17,7 +17,7 @@ class ChainService extends Singleton {
         });
         break;
       }
-      case PROTOCOL_CHAIN.GRAPHENE: {
+      case ProtocolChain.GRAPHENE: {
         impl = GrapheneChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
           coreAsset: CORE_ASSET,

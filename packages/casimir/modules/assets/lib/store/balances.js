@@ -2,7 +2,7 @@ import { FungibleTokenService } from '@casimir/token-service';
 
 import { listGetter, setListMutationFactory } from '@deip/platform-util';
 
-import { ASSET_TYPE } from '@deip/constants';
+import { AssetType } from '@casimir/platform-core';
 
 const fungibleTokenService = FungibleTokenService.getInstance();
 
@@ -20,7 +20,7 @@ const ACTIONS = {
 
     const loadBalances = (assets) => {
       const balancesPromises = assets
-        .filter((asset) => asset.type === ASSET_TYPE.FT)
+        .filter((asset) => asset.type === AssetType.FT)
         .map((asset) => fungibleTokenService.getAccountsBalancesBySymbol(asset.symbol));
 
       return Promise.all(balancesPromises)

@@ -3,7 +3,7 @@ import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/commands';
 import { JsonDataMsg } from '@deip/messages';
 import { ChainService } from '@deip/chain-service';
 import { makeSingletonInstance } from '@deip/toolbox';
-import { PROTOCOL_CHAIN } from '@deip/constants';
+import { ProtocolChain } from '@casimir/platform-core';
 import { ProposalsHttp } from './ProposalsHttp';
 
 /**
@@ -132,7 +132,7 @@ export class ProposalsService {
         return chainRpc.getProposalsByCreatorAsync(account)
           .then((result) => {
             // TODO: move all mappings outside service
-            if (env.PROTOCOL === PROTOCOL_CHAIN.GRAPHENE) {
+            if (env.PROTOCOL === ProtocolChain.GRAPHENE) {
               const deipRpc = chainService.getChainNodeClient();
               const proposals = result.map((proposal) => {
                 const { operations: [[opName, opPayload]] } = proposal.serializedProposedTx;

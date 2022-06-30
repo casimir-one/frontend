@@ -1,5 +1,5 @@
 import BaseTx from './../../base/BaseTx';
-import { PROTOCOL_CHAIN } from '@deip/constants';
+import { ProtocolChain } from '@casimir/platform-core';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/types';
 import { TypeRegistry } from '@polkadot/types';
@@ -48,7 +48,7 @@ class SubstrateTx extends BaseTx {
   }
 
   getProtocolChain() {
-    return PROTOCOL_CHAIN.SUBSTRATE;
+    return ProtocolChain.SUBSTRATE;
   };
 
   getSignedInvariant() {

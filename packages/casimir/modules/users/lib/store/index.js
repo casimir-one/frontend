@@ -1,5 +1,5 @@
 import { UserService } from '@deip/user-service';
-import { USER_PROFILE_STATUS } from '@deip/constants';
+import { USER_PROFILE_STATUS } from '@casimir/platform-core';
 
 import {
   listGetter,

@@ -29,7 +29,8 @@
 </template>
 
 <script>
-  import { ASSET_TYPE } from '@deip/constants';
+  import { AssetType } from '@casimir/platform-core';
+
   import { VexDialog } from '@deip/vuetify-extended';
   import { VeStack } from '@deip/vue-elements';
   import { componentViewType } from '@deip/platform-util';
@@ -80,7 +81,7 @@
     computed: {
       balances() {
         const assets = this.$store.getters['assets/list'](
-          { type: [ASSET_TYPE.FT, ASSET_TYPE.CORE] }
+          { type: [AssetType.FT, AssetType.CORE] }
         );
 
         if (!assets.length) return this.$store.getters['wallet/list']();

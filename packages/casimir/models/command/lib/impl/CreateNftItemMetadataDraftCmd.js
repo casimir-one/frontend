@@ -1,4 +1,5 @@
-import { APP_CMD, NFT_ITEM_METADATA_FORMAT, NFT_ITEM_METADATA_DRAFT_STATUS } from '@deip/constants';
+import { APP_CMD, NFT_ITEM_METADATA_FORMAT, NftItemMetadataDraftStatus }
+  from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import AppEntityCmd from '../base/AppEntityCmd';
 
@@ -46,7 +47,7 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
     }
 
     if (status) {
-      assert(!!NFT_ITEM_METADATA_DRAFT_STATUS[status], "'status' is invalid");
+      assert(Object.values(NftItemMetadataDraftStatus).includes(status), "'status' is invalid");
     }
 
     super(APP_CMD.CREATE_NFT_ITEM_METADATA_DRAFT, cmdPayload);

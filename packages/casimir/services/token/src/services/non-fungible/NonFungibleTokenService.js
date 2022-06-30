@@ -21,7 +21,7 @@ import {
   AcceptProposalCmd,
   CreateProposalCmd
 } from '@deip/commands';
-import { APP_PROPOSAL, APP_EVENT } from '@deip/constants';
+import { APP_PROPOSAL, APP_EVENT } from '@casimir/platform-core';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
@@ -353,7 +353,7 @@ export class NonFungibleTokenService {
    * @param {Object} payload
    * @param {Object} payload.data
    * @param {string} payload.data._id
-   * @param {string} payload.data.status NFT_ITEM_METADATA_DRAFT_STATUS
+   * @param {string} payload.data.status NftItemMetadataDraftStatus
    * @param {string} payload.data.moderationMessage
    * @returns
    */

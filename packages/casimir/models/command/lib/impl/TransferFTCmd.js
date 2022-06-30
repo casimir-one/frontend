@@ -1,4 +1,4 @@
-import { APP_CMD } from '@deip/constants';
+import { APP_CMD } from '@casimir/platform-core';
 import {
   assert,
   isNumber,
@@ -30,10 +30,14 @@ class TransferFTCmd extends ProtocolCmd {
 
     assert(!!from, "'from' is required");
     assert(!!to, "'to' is required");
-    assert(isNumber(tokenId) || (isString(tokenId) && tokenId.length),
-      "'tokenId' is required and must be a number or non emplty string");
-    assert((isNumber(amount) || isNumeric(amount)) && +amount > 0,
-      "'amount' is required and must be a number greater than zero");
+    assert(
+      isNumber(tokenId) || (isString(tokenId) && tokenId.length),
+      "'tokenId' is required and must be a number or non emplty string"
+    );
+    assert(
+      (isNumber(amount) || isNumeric(amount)) && +amount > 0,
+      "'amount' is required and must be a number greater than zero"
+    );
 
     super(APP_CMD.TRANSFER_FT, cmdPayload);
   }

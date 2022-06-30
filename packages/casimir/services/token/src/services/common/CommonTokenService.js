@@ -1,4 +1,4 @@
-import { APP_PROPOSAL, ASSET_TYPE } from '@deip/constants';
+import { AssetType, APP_PROPOSAL } from '@casimir/platform-core';
 import { TransferFTCmd, TransferNFTCmd } from '@deip/commands';
 import { makeSingletonInstance } from '@deip/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
@@ -24,7 +24,7 @@ export class CommonTokenService {
 
     const transferCommands = [];
 
-    if (party1.token.type === ASSET_TYPE.NFT) {
+    if (party1.token.type === AssetType.NFT) {
       transferCommands.push(new TransferNFTCmd({
         from: party1.account,
         to: party2.account,
@@ -40,7 +40,7 @@ export class CommonTokenService {
       }));
     }
 
-    if (party2.token.type === ASSET_TYPE.NFT) {
+    if (party2.token.type === AssetType.NFT) {
       transferCommands.push(new TransferNFTCmd({
         from: party2.account,
         to: party1.account,

@@ -49,7 +49,7 @@
   import { VexDialog } from '@deip/vuetify-extended';
   import { extend } from '@deip/validation-plugin';
   import { AssetInput } from '@deip/assets-module';
-  import { ASSET_TYPE } from '@deip/constants';
+  import { AssetType } from '@casimir/platform-core';
   import { createEnum } from '@deip/toolbox';
   import { proxydi } from '@deip/proxydi';
 
@@ -142,7 +142,7 @@
       assetsFilter() {
         return this.assetBalance
           ? { symbol: this.assetBalance.symbol }
-          : { type: ASSET_TYPE.FT };
+          : { type: AssetType.FT };
       }
     },
 

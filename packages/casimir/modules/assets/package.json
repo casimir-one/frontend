@@ -17,9 +17,9 @@
 		"url": "https://github.com/DEIPworld/deip-modules/issues"
 	},
 	"dependencies": {
+    "@casimir/platform-core": "1.385.0",
 		"@casimir/token-service": "1.385.1",
 		"@deip/assets-service": "1.385.1",
-		"@deip/constants": "1.385.0",
 		"@deip/platform-util": "1.385.0",
 		"@deip/proxydi": "1.382.2",
 		"@deip/teams-module": "1.385.1",
