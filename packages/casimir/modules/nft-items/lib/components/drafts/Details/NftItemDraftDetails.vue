@@ -179,10 +179,8 @@
               recipient: this.draft.owner, // TODO: should be fixed to owner on backend
               ownedByTeam: this.draft.ownedByTeam,
               nftCollectionId: this.draft.nftCollectionId,
-              metadata: {
-                nftItemMetadataDraftId: this.draft._id,
-                ...this.draft
-              }
+              nftItemMetadataDraftId: this.draft._id,
+              ...this.draft
             }
           };
           await this.$store.dispatch('nftItemDrafts/publish', payload);

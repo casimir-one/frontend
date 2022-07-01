@@ -14,11 +14,11 @@
         @click:row="handleRowClick"
       >
         <template #item.type="{item}">
-          {{ getNftItemType(item.metadata.formatType) }}
+          {{ getNftItemType(item.formatType) }}
         </template>
 
         <template #item.title="{item}">
-          {{ item.metadata.title }}
+          {{ item.title }}
         </template>
       </v-data-table>
     </template>
