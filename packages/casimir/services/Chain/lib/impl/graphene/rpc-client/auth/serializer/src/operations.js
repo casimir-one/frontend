@@ -298,33 +298,6 @@ var leave_research_contract = new Serializer("leave_research_contract", {
   extensions: set(future_extensions)
 });
 
-var create_research = new Serializer("create_research", {
-  external_id: string,
-  account: string,
-  description: string,
-  disciplines: set(string),
-  is_private: bool,
-  review_share: optional(percent),
-  compensation_share: optional(percent),
-  members: optional(set(string)),
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-var authority_transfer = new Serializer("authority_transfer", {
-  account: string
-});
-
-var update_research = new Serializer("update_research", {
-  account: string,
-  external_id: string,
-  description: optional(string),
-  is_private: optional(bool),
-  review_share: optional(percent),
-  compensation_share: optional(percent),
-  members: optional(set(string)),
-  update_extensions: set(static_variant([authority_transfer]))
-});
-
 var create_research_content = new Serializer("create_research_content", {
   external_id: string,
   research_external_id: string,
@@ -334,36 +307,6 @@ var create_research_content = new Serializer("create_research_content", {
   content: string,
   authors: set(string),
   references: set(string),
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-var binary_scoring_assessment_model = new Serializer("binary_scoring_assessment_model", {
-  is_positive: bool,
-  extensions: set(future_extensions)
-});
-
-var multicriteria_scoring_assessment_model = new Serializer("multicriteria_scoring_assessment_model", {
-  scores: map(uint16, uint16),
-  extensions: set(future_extensions)
-});
-
-var create_review = new Serializer("create_review", {
-  external_id: string,
-  author: string,
-  research_content_external_id: string,
-  content: string,
-  weight: percent,
-  assessment_model: static_variant([binary_scoring_assessment_model, multicriteria_scoring_assessment_model]),
-  disciplines: set(string),
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-var vote_for_review = new Serializer("vote_for_review", {
-  external_id: string,
-  voter: string,
-  review_external_id: string,
-  discipline_external_id: string,
-  weight: percent,
   extensions: set(future_extensions)
 }, { entity_external_id: "external_id" });
 
@@ -400,18 +343,13 @@ var research_security_token = new Serializer("research_security_token", {
   extensions: set(future_extensions)
 });
 
-var research_license_revenue = new Serializer("research_license_revenue", {
-  holders_share: percent,
-  extensions: set(future_extensions)
-});
-
 var create_asset = new Serializer("create_asset", {
   "issuer": string,
   "symbol": string,
   "precision": uint8,
   "description": string,
   "max_supply": int64,
-  "traits": set(static_variant([research_security_token, research_license_revenue])),
+  "traits": set(static_variant([research_security_token])),
   "extensions": set(future_extensions)
 });
 
@@ -474,316 +412,6 @@ var delete_proposal = new Serializer("delete_proposal", {
   authority: uint16,
   extensions: set(future_extensions)
 });
-
-var create_expertise_allocation_proposal = new Serializer("create_expertise_allocation_proposal", {
-  claimer: string,
-  discipline_id: int64,
-  description: string,
-  extensions: set(future_extensions)
-});
-
-var vote_for_expertise_allocation_proposal = new Serializer("vote_for_expertise_allocation_proposal", {
-  proposal_id: int64,
-  voter: string,
-  voting_power: int64,
-  extensions: set(future_extensions)
-});
-
-var discipline_supply_announcement_contract = new Serializer("discipline_supply_announcement_contract", {
-  start_time: time_point_sec,
-  end_time: time_point_sec,
-  is_extendable: bool,
-  content_hash: string,
-  additional_info: map(string, string),
-  extensions: set(future_extensions)
-});
-
-var announced_application_window_contract = new Serializer("announced_application_window_contract", {
-  review_committee_id: string,
-  min_number_of_positive_reviews: uint16,
-  min_number_of_applications: uint16,
-  max_number_of_research_to_grant: uint16,
-  start_date: time_point_sec,
-  end_date: time_point_sec,
-  additional_info: map(string, string),
-  extensions: set(future_extensions)
-});
-
-var funding_opportunity_announcement_contract = new Serializer("funding_opportunity_announcement_contract", {
-  organization_id: string,
-  review_committee_id: string,
-  treasury_id: string,
-  award_ceiling: asset,
-  award_floor: asset,
-  expected_number_of_awards: uint16,
-  open_date: time_point_sec,
-  close_date: time_point_sec,
-  officers: set(string),
-  additional_info: map(string, string),
-  extensions: set(future_extensions)
-});
-
-var create_grant = new Serializer("create_grant", {
-  "external_id": string,
-  "grantor": string,
-  "amount": asset,
-  "target_disciplines": set(string),
-  "distribution_model": static_variant([announced_application_window_contract, funding_opportunity_announcement_contract, discipline_supply_announcement_contract]),
-  "extensions": set(future_extensions)
-});
-
-var create_grant_application = new Serializer("create_grant_application", {
-  "grant_id": int64,
-  "research_id": int64,
-  "creator": string,
-  "application_hash": string,
-  "extensions": set(future_extensions)
-});
-
-var create_review_for_application = new Serializer("create_review_for_application", {
-  "author": string,
-  "grant_application_id": int64,
-  "is_positive": bool,
-  "content": string,
-  "weight": uint16,
-  "extensions": set(future_extensions)
-});
-
-var approve_grant_application = new Serializer("approve_grant_application", {
-  "grant_application_id": int64,
-  "approver": string,
-  "extensions": set(future_extensions)
-});
-
-var reject_grant_application = new Serializer("reject_grant_application", {
-  "grant_application_id": int64,
-  "rejector": string,
-  "extensions": set(future_extensions)
-});
-
-var subawardee = new Serializer("subawardee", {
-  subaward_number: string,
-  subaward: asset,
-  subawardee: string,
-  source: string,
-  research_external_id: string
-});
-
-var create_award = new Serializer("create_award", {
-  "award_number": string,
-  "funding_opportunity_number": string,
-  "award": asset,
-  "awardee": string,
-  "research_external_id": string,
-  "university_external_id": string,
-  "university_overhead": percent,
-  "subawardees": array(subawardee),
-  "creator": string,
-  "extensions": set(future_extensions)
-});
-
-var approve_award = new Serializer("approve_award", {
-  "award_number": string,
-  "approver": string,
-  "extensions": set(future_extensions)
-});
-
-var reject_award = new Serializer("reject_award", {
-  "award_number": string,
-  "rejector": string,
-  "extensions": set(future_extensions)
-});
-
-var create_award_withdrawal_request = new Serializer("create_award_withdrawal_request", {
-  "payment_number": string,
-  "award_number": string,
-  "subaward_number": optional(string),
-  "requester": string,
-  "amount": asset,
-  "description": string,
-  "attachment": string,
-  "extensions": set(future_extensions)
-});
-
-var certify_award_withdrawal_request = new Serializer("certify_award_withdrawal_request", {
-  "payment_number": string,
-  "award_number": string,
-  "subaward_number": optional(string),
-  "certifier": string,
-  "extensions": set(future_extensions)
-});
-
-var approve_award_withdrawal_request = new Serializer("approve_award_withdrawal_request", {
-  "payment_number": string,
-  "award_number": string,
-  "subaward_number": optional(string),
-  "approver": string,
-  "extensions": set(future_extensions)
-});
-
-var reject_award_withdrawal_request = new Serializer("reject_award_withdrawal_request", {
-  "payment_number": string,
-  "award_number": string,
-  "subaward_number": optional(string),
-  "rejector": string,
-  "extensions": set(future_extensions)
-});
-
-var pay_award_withdrawal_request = new Serializer("pay_award_withdrawal_request", {
-  "payment_number": string,
-  "award_number": string,
-  "subaward_number": optional(string),
-  "payer": string,
-  "extensions": set(future_extensions)
-});
-
-var create_research_nda = new Serializer("create_research_nda", {
-  external_id: string,
-  creator: string,
-  parties: set(string),
-  description: string,
-  researches: set(string),
-  start_time: optional(time_point_sec),
-  end_time: time_point_sec,
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-var sign_nda_contract = new Serializer("sign_nda_contract", { // DEPRECATED
-  contract_id: int64,
-  contract_signer: string,
-  signature: string,
-  extensions: set(future_extensions)
-});
-
-var decline_nda_contract = new Serializer("decline_nda_contract", { // DEPRECATED
-  contract_id: int64,
-  decliner: string,
-  extensions: set(future_extensions)
-});
-
-var close_nda_contract = new Serializer("close_nda_contract", { // DEPRECATED
-  contract_id: int64,
-  closer: string,
-  extensions: set(future_extensions)
-});
-
-var create_nda_content_access_request = new Serializer("create_nda_content_access_request", {
-  external_id: string,
-  nda_external_id: string,
-  requester: string,
-  encrypted_payload_hash: string,
-  encrypted_payload_iv: string,
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
-
-var fulfill_nda_content_access_request = new Serializer("fulfill_nda_content_access_request", {
-  external_id: string,
-  grantor: string,
-  encrypted_payload_encryption_key: string,
-  proof_of_encrypted_payload_encryption_key: string,
-  extensions: set(future_extensions)
-});
-
-var contribution_request = new Serializer("contribution_request", {
-  tag: string,
-  is_mandatory: bool,
-  type: uint16,
-  extensions: set(future_extensions)
-});
-
-var guard_fn = new Serializer("guard_fn", {
-  fn_type: uint16,
-  fn: optional(string),
-  fn_args: optional(string),
-  extensions: set(future_extensions)
-});
-
-var create_application_rule = new Serializer("create_application", {
-  guard: guard_fn
-});
-
-var update_application_rule = new Serializer("update_application", {
-  guard: guard_fn
-});
-
-var delete_application_rule = new Serializer("delete_application", {
-  guard: guard_fn
-});
-
-var apply_phase_type = new Serializer("apply_phase", {
-  start_time: time_point_sec,
-  end_time: time_point_sec,
-  options: set(static_variant([create_application_rule, update_application_rule, delete_application_rule])),
-  extensions: set(future_extensions)
-});
-
-var await_review_rule = new Serializer("await_review", {
-  extensions: set(future_extensions)
-});
-
-var await_review_phase_type = new Serializer("await_review_phase", {
-  start_time: time_point_sec,
-  end_time: time_point_sec,
-  options: set(static_variant([await_review_rule])),
-  extensions: set(future_extensions)
-});
-
-var create_review_rule = new Serializer("create_review_rule", {
-  guard: guard_fn
-});
-
-var update_review_rule = new Serializer("update_review", {
-  guard: guard_fn
-});
-
-var delete_review_rule = new Serializer("delete_review", {
-  guard: guard_fn
-});
-
-var create_curation_rule = new Serializer("create_curation", {
-  guard: guard_fn
-});
-
-var delete_curation_rule = new Serializer("delete_curation", {
-  guard: guard_fn
-});
-
-var review_phase_type = new Serializer("review_phase", {
-  start_time: time_point_sec,
-  end_time: time_point_sec,
-  options: set(static_variant([create_review_rule, update_review_rule, delete_review_rule, create_curation_rule, delete_curation_rule])),
-  extensions: set(future_extensions)
-});
-
-var auto_decision_making_rule = new Serializer("auto_decision_making", {
-  guard: guard_fn
-});
-
-var manual_decision_making_rule = new Serializer("manual_decision_making", {
-  decision_makers: set(string),
-  extensions: set(future_extensions)
-});
-
-var decision_phase_type = new Serializer("decision_phase", {
-  start_time: time_point_sec,
-  end_time: time_point_sec,
-  options: set(static_variant([auto_decision_making_rule, manual_decision_making_rule])),
-  extensions: set(future_extensions)
-});
-
-var assessment_stage = new Serializer("assessment_stage", {
-  external_id: string,
-  contributions_requests: array(contribution_request),
-  phases: set(static_variant([apply_phase_type, await_review_phase_type, review_phase_type, decision_phase_type])),
-  extensions: set(future_extensions)
-});
-
-var create_assessment = new Serializer("create_assessment", {
-  external_id: string,
-  creator: string,
-  stages: array(assessment_stage),
-  extensions: set(future_extensions)
-}, { entity_external_id: "external_id" });
 
 var licensing_fee = new Serializer("licensing_fee", {
   terms: string,
@@ -867,9 +495,6 @@ create_research, // 14
 update_research, // 15
 create_research_content, // 16
 
-create_review, // 17
-vote_for_review, // 18
-
 create_research_token_sale, // 19
 contribute_to_token_sale, // 20
 transfer_research_share, // 21
@@ -885,30 +510,6 @@ create_proposal, // 27
 update_proposal, // 28
 delete_proposal, // 29
 
-create_expertise_allocation_proposal, // 30
-vote_for_expertise_allocation_proposal, // 31
-
-create_grant, // 32
-create_grant_application, // 33
-create_review_for_application, // 34
-approve_grant_application, // 35
-reject_grant_application, // 36
-create_award, // 37
-approve_award, // 38
-reject_award, // 39
-create_award_withdrawal_request, // 40
-certify_award_withdrawal_request, // 41
-approve_award_withdrawal_request, // 42
-reject_award_withdrawal_request, // 43
-pay_award_withdrawal_request, // 44
-
-create_research_nda, // 45
-sign_nda_contract, // 46 DEPRECATED
-decline_nda_contract, // 47 DEPRECATED
-close_nda_contract, // 48 DEPRECATED
-create_nda_content_access_request, // 49
-fulfill_nda_content_access_request, // 50
-create_assessment, // 51
 create_research_license, // 52
 create_contract_agreement, // 53
 accept_contract_agreement, // 54

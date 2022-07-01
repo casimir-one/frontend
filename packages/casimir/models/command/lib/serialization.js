@@ -28,11 +28,6 @@ import CreateNftItemMetadataDraftCmd from './impl/CreateNftItemMetadataDraftCmd'
 import UpdateNftItemMetadataDraftCmd from './impl/UpdateNftItemMetadataDraftCmd';
 import DeleteNftItemMetadataDraftCmd from './impl/DeleteNftItemMetadataDraftCmd';
 import CreateNftItemMetadataCmd from './impl/CreateNftItemMetadataCmd';
-import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
-import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
-import CreateReviewCmd from './impl/CreateReviewCmd';
-import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
-import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
 import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd';
 import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
 import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
@@ -45,9 +40,6 @@ import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
-import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
-import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
-import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 import UpdateNftItemMetadataDraftStatusCmd from './impl/UpdateNftItemMetadataDraftStatusCmd';
 import UpdateNftItemMetadataDraftModerationMsgCmd
   from './impl/UpdateNftItemMetadataDraftModerationMsgCmd';
@@ -83,11 +75,6 @@ const APP_CMD_INFO = {
   [APP_CMD.DELETE_NFT_ITEM_METADATA_DRAFT]: { class: DeleteNftItemMetadataDraftCmd },
   [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT]: { class: UpdateNftItemMetadataDraftCmd },
   [APP_CMD.CREATE_NFT_ITEM_METADATA]: { class: CreateNftItemMetadataCmd },
-  [APP_CMD.CREATE_REVIEW_REQUEST]: { class: CreateReviewRequestCmd },
-  [APP_CMD.DECLINE_REVIEW_REQUEST]: { class: DeclineReviewRequestCmd },
-  [APP_CMD.CREATE_REVIEW]: { class: CreateReviewCmd },
-  [APP_CMD.UPVOTE_REVIEW]: { class: UpvoteReviewCmd },
-  [APP_CMD.CREATE_PROJECT_NDA]: { class: CreateProjectNdaCmd },
   [APP_CMD.CREATE_CONTRACT_AGREEMENT]: { class: CreateContractAgreementCmd },
   [APP_CMD.ACCEPT_CONTRACT_AGREEMENT]: { class: AcceptContractAgreementCmd },
   [APP_CMD.REJECT_CONTRACT_AGREEMENT]: { class: RejectContractAgreementCmd },
@@ -100,9 +87,6 @@ const APP_CMD_INFO = {
   [APP_CMD.UPDATE_ATTRIBUTE_SETTINGS]: { class: UpdateAttributeSettingsCmd },
   [APP_CMD.UPDATE_NETWORK_SETTINGS]: { class: UpdateNetworkSettingsCmd },
   [APP_CMD.DELETE_USER_PROFILE]: { class: DeleteUserProfileCmd },
-  [APP_CMD.CREATE_BOOKMARK]: { class: CreateBookmarkCmd },
-  [APP_CMD.DELETE_BOOKMARK]: { class: DeleteBookmarkCmd },
-  [APP_CMD.MARK_NOTIFICATIONS_AS_READ]: { class: MarkNotificationsAsReadCmd },
   [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_STATUS]: { class: UpdateNftItemMetadataDraftStatusCmd },
   [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_MODERATION_MSG]: {
     class: UpdateNftItemMetadataDraftModerationMsgCmd

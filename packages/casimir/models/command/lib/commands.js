@@ -30,11 +30,6 @@ import CreateNftItemMetadataCmd from './impl/CreateNftItemMetadataCmd';
 import UpdateNftItemMetadataDraftStatusCmd from './impl/UpdateNftItemMetadataDraftStatusCmd';
 import UpdateNftItemMetadataDraftModerationMsgCmd
   from './impl/UpdateNftItemMetadataDraftModerationMsgCmd';
-import CreateReviewRequestCmd from './impl/CreateReviewRequestCmd';
-import DeclineReviewRequestCmd from './impl/DeclineReviewRequestCmd';
-import CreateReviewCmd from './impl/CreateReviewCmd';
-import UpvoteReviewCmd from './impl/UpvoteReviewCmd';
-import CreateProjectNdaCmd from './impl/CreateProjectNdaCmd';
 import CreateContractAgreementCmd from './impl/CreateContractAgreementCmd';
 import AcceptContractAgreementCmd from './impl/AcceptContractAgreementCmd';
 import RejectContractAgreementCmd from './impl/RejectContractAgreementCmd';
@@ -47,9 +42,6 @@ import UpdateLayoutSettingsCmd from './impl/UpdateLayoutSettingsCmd';
 import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
-import CreateBookmarkCmd from './impl/CreateBookmarkCmd';
-import DeleteBookmarkCmd from './impl/DeleteBookmarkCmd';
-import MarkNotificationsAsReadCmd from './impl/MarkNotificationsAsReadCmd';
 import CreatePortalCmd from './impl/CreatePortalCmd';
 import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
@@ -85,11 +77,6 @@ export {
   CreateNftItemMetadataCmd,
   UpdateNftItemMetadataDraftStatusCmd,
   UpdateNftItemMetadataDraftModerationMsgCmd,
-  CreateReviewRequestCmd,
-  DeclineReviewRequestCmd,
-  CreateReviewCmd,
-  UpvoteReviewCmd,
-  CreateProjectNdaCmd,
   CreateContractAgreementCmd,
   AcceptContractAgreementCmd,
   RejectContractAgreementCmd,
@@ -102,9 +89,6 @@ export {
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,
   UpdatePortalSettingsCmd,
-  CreateBookmarkCmd,
-  DeleteBookmarkCmd,
-  MarkNotificationsAsReadCmd,
   CreatePortalCmd,
   SendRegistrationCodeByEmailCmd
 };

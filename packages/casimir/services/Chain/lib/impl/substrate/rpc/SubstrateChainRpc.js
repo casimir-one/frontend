@@ -6,14 +6,9 @@ import SubstrateNonFungibleTokenDto from './response/dto/SubstrateNonFungibleTok
 import SubstrateDaoDto from './response/dto/SubstrateDaoDto';
 import SubstrateFungibleTokenBalanceDto from './response/dto/SubstrateFungibleTokenBalanceDto';
 import SubstrateNonFungibleTokenInstancesDto from './response/dto/SubstrateNonFungibleTokenInstancesDto';
-import SubstrateProjectDto from './response/dto/SubstrateProjectDto';
-import SubstrateProjectContentDto from './response/dto/SubstrateProjectContentDto';
 import SubstrateInvestmentOpportunityDto from './response/dto/SubstrateInvestmentOpportunityDto';
 import SubstrateContractAgreementDto from './response/dto/SubstrateContractAgreementDto';
 import SubstrateProposalDto from './response/dto/SubstrateProposalDto';
-import SubstrateReviewDto from './response/dto/SubstrateReviewDto';
-import SubstrateReviewUpvoteDto from './response/dto/SubstrateReviewUpvoteDto';
-import SubstrateDomainDto from './response/dto/SubstrateDomainDto';
 import SubstratePortalDto from './response/dto/SubstratePortalDto';
 
 
@@ -155,40 +150,6 @@ class SubstrateChainRpc extends BaseChainRpc {
     };
 
 
-    const getPreProcessedProjectContentAsync = async (content) => {
-      const authors = await Promise.all(content.authors
-        .map((address) => getDaoIdByAddressAsync(address).then((daoId) => {
-          return {
-            address: address,
-            daoId: daoId ? daoId : null
-          }
-        }))
-      );
-
-      return { ...content, authors };
-    };
-
-
-    const getPreProcessedReviewAsync = async (review) => {
-      const daoId = await getDaoIdByAddressAsync(review.author);
-      const author = {
-        address: review.author,
-        daoId: daoId ? daoId : null
-      };
-      return { ...review, author };
-    };
-
-
-    const getPreProcessedReviewUpvoteAsync = async (upvote) => {
-      const daoId = await getDaoIdByAddressAsync(upvote.dao);
-      const upvoter = {
-        address: upvote.dao,
-        daoId: daoId ? daoId : null
-      };
-      return { ...upvote, upvoter };
-    };
-
-
     const rpc = {
 
       sendTxAsync: (rawTx) => {
@@ -243,67 +204,6 @@ class SubstrateChainRpc extends BaseChainRpc {
         }));
         return list;
       },
-
-
-      /* [DEPRECATED] PROJECT */
-
-      getProjectAsync: async (projectId) => {
-        const project = await chainService.rpcToChainNode("deip_getProject", [null, toHexFormat(projectId)]);
-        if (!project) return null;
-        return new SubstrateProjectDto(project);
-      },
-
-      getProjectsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const projects = await chainService.rpcToChainNode("deip_getProjectList", [null, limit, toHexFormat(startIdx)]);
-        return projects.map(({ value: project }) => new SubstrateProjectDto(project));
-      },
-
-      getProjectsByTeamAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
-        const api = chainService.getChainNodeClient();
-        const teamId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const projects = await chainService.rpcToChainNode("deip_getProjectListByTeam", [null, teamId, limit, toHexFormat(startIdx)]);
-        return projects.map(({ value: project }) => new SubstrateProjectDto(project));
-      },
-
-      getProjectsAsync: async (projectIds) => {
-        const projectsDtos = await this.getProjectsListAsync();
-        return projectsDtos.filter((projectsDto) => projectIds.includes(projectsDto.projectId));
-      },
-
-
-
-      /* [DEPRECATED] PROJECT CONTENT */
-
-      getProjectContentAsync: async (projectContentId) => {
-        const content = await chainService.rpcToChainNode("deip_getProjectContent", [null, toHexFormat(projectContentId)]);
-        if (!content) return null;
-        const item = await getPreProcessedProjectContentAsync(content);
-        return new SubstrateProjectContentDto(item);
-      },
-
-      getProjectContentsAsync: async (ids) => {
-        const list = await Promise.all(ids.map((id) => this.getProjectContentAsync(id)));
-        return list;
-      },
-
-      getProjectContentsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const contents = await chainService.rpcToChainNode("deip_getProjectContentList", [null, limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(contents.map(async ({ value: content }) => {
-          const item = await getPreProcessedProjectContentAsync(content);
-          return new SubstrateProjectContentDto(item);
-        }));
-        return list;
-      },
-
-      getProjectContentsByProjectAsync: async (projectId, startIdx = null, limit = LIST_LIMIT) => {
-        const contents = await chainService.rpcToChainNode("deip_getProjectContentListByProject", [null, toHexFormat(projectId), limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(contents.map(async ({ value: content }) => {
-          const item = await getPreProcessedProjectContentAsync(content);
-          return new SubstrateProjectContentDto(item);
-        }));
-        return list;
-      },
-
 
 
       /* INVESTMENT OPPORTUNITY */
@@ -634,100 +534,8 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       },
 
-
-      /* [DEPRECATED] REVIEW */
-
-      getReviewAsync: async (reviewId) => {
-        const review = await chainService.rpcToChainNode("deip_getReview", [null, toHexFormat(reviewId)]);
-        if (!review) return null;
-        const item = await getPreProcessedReviewAsync(review);
-        return new SubstrateReviewDto(item);
-      },
-
-      getReviewsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const reviews = await chainService.rpcToChainNode("deip_getReviewList", [null, limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviews.map(async ({ value: review }) => {
-          const item = await getPreProcessedReviewAsync(review);
-          return new SubstrateReviewDto(item);
-        }));
-        return list;
-      },
-
-      getReviewsByProjectAsync: async (projectId, startIdx = null, limit = LIST_LIMIT) => {
-        const reviews = await chainService.rpcToChainNode("deip_getReviewListByProject", [null, toHexFormat(projectId), limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviews.map(async ({ value: review }) => {
-          const item = await getPreProcessedReviewAsync(review);
-          return new SubstrateReviewDto(item);
-        }));
-        return list;
-      },
-
-      getReviewsByProjectContentAsync: async (contentId, startIdx = null, limit = LIST_LIMIT) => {
-        const reviews = await chainService.rpcToChainNode("deip_getReviewListByProjectContent", [null, toHexFormat(contentId), limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviews.map(async ({ value: review }) => {
-          const item = await getPreProcessedReviewAsync(review);
-          return new SubstrateReviewDto(item);
-        }));
-        return list;
-      },
-
-      getReviewsByAuthorAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
-        const api = chainService.getChainNodeClient();
-        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const reviews = await chainService.rpcToChainNode("deip_getReviewListByReviewer", [null, accountId, limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviews.map(async ({ value: review }) => {
-          const item = await getPreProcessedReviewAsync(review);
-          return new SubstrateReviewDto(item);
-        }));
-        return list;
-      },
-
-
-
-      /* [DEPRECATED] REVIEW UPVOTE */
-
-      getReviewUpvotesByReviewAsync: async (reviewId, startIdx = null, limit = LIST_LIMIT) => {
-        const reviewUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByReview", [null, toHexFormat(reviewId), limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviewUpvotes.map(async ({ value: reviewUpvote }) => {
-          const item = await getPreProcessedReviewUpvoteAsync(reviewUpvote);
-          return new SubstrateReviewUpvoteDto(item);
-        }));
-        return list;
-      },
-
-      getReviewUpvotesByUpvoterAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
-        const api = chainService.getChainNodeClient();
-        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
-        const reviewsUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByUpvoter", [null, accountId, limit, toHexFormat(startIdx)]);
-        const list = await Promise.all(reviewsUpvotes.map(async ({ value: reviewUpvote }) => {
-          const item = await getPreProcessedReviewUpvoteAsync(reviewUpvote);
-          return new SubstrateReviewUpvoteDto(item);
-        }));
-        return list;
-      },
-
-
-
-      /* [DEPRECATED] DOMAIN */
-
-      getDomainAsync: async (domainId) => {
-        const domain = await chainService.rpcToChainNode("deip_getDomain", [null, toHexFormat(domainId)]);
-        if (!domain) return null;
-        return new SubstrateDomainDto(domain);
-      },
-
-      getDomainsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
-        const domains = await chainService.rpcToChainNode("deip_getDomainList", [null, limit, toHexFormat(startIdx)]);
-        return domains.map(({ value: domain }) => {
-          return new SubstrateDomainDto(domain);
-        });
-      },
-
-
-
       // TODO:
 
-      getProjectNdaByProjectAsync: async function (id) { return [] },
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },
       getStateAsync: async function (path) { throw Error(`Not implemented exception`); },
       getConfigAsync: async function () { throw Error(`Not implemented exception`); },
@@ -764,7 +572,6 @@ class SubstrateChainRpc extends BaseChainRpc {
       lookupWitnessAccountsAsync: async function (lowerBoundName, limit) { throw Error(`Not implemented exception`); },
       getWitnessCountAsync: async function () { throw Error(`Not implemented exception`); },
       getActiveWitnessesAsync: async function () { throw Error(`Not implemented exception`); },
-      getRewardFundAsync: async function (name) { throw Error(`Not implemented exception`); },
       loginAsync: async function (username, password) { throw Error(`Not implemented exception`); },
       getApiByNameAsync: async function (databaseApi) { throw Error(`Not implemented exception`); },
       getVersionAsync: async function () { throw Error(`Not implemented exception`); },
@@ -776,12 +583,8 @@ class SubstrateChainRpc extends BaseChainRpc {
       lookupTeamsAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
       getTeamsAsync: async function (ids) { throw Error(`Not implemented exception`); },
       getTeamByPermlinkAsync: async function (permlink) { throw Error(`Not implemented exception`); },
-      getReviewVotesByReviewAsync: async function (reviewId) { throw Error(`Not implemented exception`); },
       getSchemaAsync: async function () { throw Error(`Not implemented exception`); },
       getExpiringVestingDelegationsAsync: async function (account, from, limit) { throw Error(`Not implemented exception`); },
-      lookupDomainsAsync: async function (lowerBound, limit) { throw Error(`Not implemented exception`); },
-      getDomainByNameAsync: async function (name) { throw Error(`Not implemented exception`); },
-      getDomainsByParentAsync: async function (parentId) { throw Error(`Not implemented exception`); },
       getProjectByPermlinkAsync: async function (teamId, permlink) { throw Error(`Not implemented exception`); },
       getProjectByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink) { throw Error(`Not implemented exception`); },
       getProjectLicenseAsync: async function (id) { throw Error(`Not implemented exception`); },
@@ -791,83 +594,26 @@ class SubstrateChainRpc extends BaseChainRpc {
       getProjectLicensesByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
       getProjectLicensesByLicenseeAndProjectAsync: async function (licensee, projectId) { throw Error(`Not implemented exception`); },
       getProjectLicensesByLicenseeAndLicenserAsync: async function (licensee, licenser) { throw Error(`Not implemented exception`); },
-      getProjectContentByTypeAsync: async function (projectId, type) { throw Error(`Not implemented exception`); },
-      getProjectContentByPermlinkAsync: async function (projectId, permlink) { throw Error(`Not implemented exception`); },
-      getProjectContentByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink, projectContentPermlink) { throw Error(`Not implemented exception`); },
       getExpertTokenAsync: async function (id) { throw Error(`Not implemented exception`); },
       getExpertTokensByAccountNameAsync: async function (accountName) { throw Error(`Not implemented exception`); },
-      getExpertTokensByDomainAsync: async function (domainId) { throw Error(`Not implemented exception`); },
       getTeamTokenByAccountAndProjectGroupIdAsync: async function (account, teamId) { throw Error(`Not implemented exception`); },
-      getProjectTokenSalesByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
-      getProjectTokenSaleContributionsByProjectTokenSaleAsync: async function (tokenSaleId) { throw Error(`Not implemented exception`); },
-      getProjectTokenSaleContributionsByContributorAsync: async function (owner) { throw Error(`Not implemented exception`); },
-      getDomainsByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
       checkTeamExistenceByPermlinkAsync: async function (name) { throw Error(`Not implemented exception`); },
       checkProjectExistenceByPermlinkAsync: async function (teamId, title) { throw Error(`Not implemented exception`); },
-      checkProjectContentExistenceByPermlinkAsync: async function (projectId, title) { throw Error(`Not implemented exception`); },
-      getExpertiseContributionByProjectContentAndDomainAsync: async function (projectContentId, domainId) { throw Error(`Not implemented exception`); },
-      getExpertiseContributionsByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
-      getExpertiseContributionsByProjectAndDomainAsync: async function (projectId, domainId) { throw Error(`Not implemented exception`); },
-      getExpertiseContributionsByProjectContentAsync: async function (projectContentId) { throw Error(`Not implemented exception`); },
       lookupWitnessAccountsAsync: async function (lowerBoundName, limit) { throw Error(`Not implemented exception`); },
       getWitnessByAccountAsync: async function (accountName) { throw Error(`Not implemented exception`); },
-      getReviewsAsync: async function (ids) { throw Error(`Not implemented exception`); },
       getProjectTokensByAccountNameAsync: async function (accountName) { throw Error(`Not implemented exception`); },
       getProjectTokensByProjectIdAsync: async function (projectId) { throw Error(`Not implemented exception`); },
       getProjectTokenByAccountNameAndProjectIdAsync: async function (accountName, projectId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalByIdAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalsByInitiatorAsync: async function (initiator) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalsByClaimerAndDomainAsync: async function (claimer, domainId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalByDomainInitiatorAndClaimerAsync: async function (domainId, initiator, claimer) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalsByDomainAsync: async function (domainId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalVoteByIdAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalVotesByExpertiseAllocationProposalIdAsync: async function (expertiseAllocationProposalId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalVoteByVoterAndExpertiseAllocationProposalIdAsync: async function (voter, expertiseAllocationProposalId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalVotesByVoterAndDomainIdAsync: async function (voter, domainId) { throw Error(`Not implemented exception`); },
-      getExpertiseAllocationProposalVotesByVoterAsync: async function (voter) { throw Error(`Not implemented exception`); },
-      getAccountsByExpertDomainAsync: async function (domainId, from, limit) { throw Error(`Not implemented exception`); },
       getFundingOpportunityAnnouncementAsync: async function (id) { throw Error(`Not implemented exception`); },
       getFundingOpportunityAnnouncementByNumberAsync: async function (number) { throw Error(`Not implemented exception`); },
       getFundingOpportunityAnnouncementsByOrganizationAsync: async function (teamId) { throw Error(`Not implemented exception`); },
       getFundingOpportunityAnnouncementsListingAsync: async function (page, limit) { throw Error(`Not implemented exception`); },
-      getGrantWithAnnouncedApplicationWindowAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getGrantsWithAnnouncedApplicationWindowByGrantorAsync: async function (grantor) { throw Error(`Not implemented exception`); },
-      getGrantApplicationAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getGrantApplicationsByGrantAsync: async function (grantId) { throw Error(`Not implemented exception`); },
-      getGrantApplicationsByProjectIdAsync: async function (projectId) { throw Error(`Not implemented exception`); },
-      getGrantApplicationReviewAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getGrantApplicationReviewsByAuthorAsync: async function (author) { throw Error(`Not implemented exception`); },
-      getGrantApplicationReviewByAuthorAndApplicationAsync: async function (author, grantApplicaitonId) { throw Error(`Not implemented exception`); },
-      getGrantApplicationReviewsByGrantApplicationAsync: async function (grantApplicationId) { throw Error(`Not implemented exception`); },
-      getAwardAsync: async function (awardNumber) { throw Error(`Not implemented exception`); },
-      getAwardsByFundingOpportunityAsync: async function (fundingOpportunityNumber) { throw Error(`Not implemented exception`); },
-      getAwardRecipientAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getAwardRecipientsByAwardAsync: async function (awardNumber) { throw Error(`Not implemented exception`); },
-      getAwardRecipientsByAccountAsync: async function (awardee) { throw Error(`Not implemented exception`); },
-      getAwardRecipientsByFundingOpportunityAsync: async function (number) { throw Error(`Not implemented exception`); },
-      getAwardWithdrawalRequestAsync: async function (awardNumber, paymentNumber) { throw Error(`Not implemented exception`); },
-      getAwardWithdrawalRequestsByAwardAsync: async function (awardNumber) { throw Error(`Not implemented exception`); },
-      getAwardWithdrawalRequestsByAwardAndSubawardAsync: async function (awardNumber, subawardNumber) { throw Error(`Not implemented exception`); },
-      getAwardWithdrawalRequestsByAwardAndStatusAsync: async function (awardNumber, status) { throw Error(`Not implemented exception`); },
-      getWithdrawalRequestsHistoryByAwardNumberAsync: async function (awardNumber) { throw Error(`Not implemented exception`); },
-      getWithdrawalRequestHistoryByAwardAndPaymentNumberAsync: async function (awardNumber, paymentNumber) { throw Error(`Not implemented exception`); },
-      getWithdrawalRequestsHistoryByAwardAndSubawardNumberAsync: async function (awardNumber, subawardNumber) { throw Error(`Not implemented exception`); },
       getFungibleTokenByIssuerAsync: async function (issuer) { throw Error(`Not implemented exception`); },
       getFungibleTokenByTypeAsync: async function (type) { throw Error(`Not implemented exception`); },
       getFundingTransactionAsync: async function (id) { throw Error(`Not implemented exception`); },
       getFundingTransactionsBySenderOrganisationAsync: async function (senderOrganisationId) { throw Error(`Not implemented exception`); },
       getFundingTransactionsByReceiverOrganisationAsync: async function (receiverOrganisationId) { throw Error(`Not implemented exception`); },
       getAssetStatisticsAsync: async function (symbol) { throw Error(`Not implemented exception`); },
-      getProjectNdaAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getProjectNdaByCreatorAsync: async function (creator) { throw Error(`Not implemented exception`); },
-      getProjectNdaByHashAsync: async function (hash) { throw Error(`Not implemented exception`); },
-      getNdaContractContentAccessRequestAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getNdaContractContentAccessRequestsByNdaAsync: async function (ndaId) { throw Error(`Not implemented exception`); },
-      getNdaContractContentAccessRequestsByRequesterAsync: async function (requester) { throw Error(`Not implemented exception`); },
-      getNdaContractRequestAsync: async function (id) { throw Error(`Not implemented exception`); },
-      getNdaContractRequestsByContractIdAsync: async function (contractId) { throw Error(`Not implemented exception`); },
-      getNdaContractRequestsByRequesterAsync: async function (requester) { throw Error(`Not implemented exception`); },
-      getNdaContractRequestByContractIdAndHashAsync: async function (contractId, encryptedPayloadHash) { throw Error(`Not implemented exception`); },
       getSubscriptionAsync: async function (id) { throw Error(`Not implemented exception`); },
       getSubscriptionByTeamIdAsync: async function (teamId) { throw Error(`Not implemented exception`); },
       getSubscriptionsByOwnerAsync: async function (owner) { throw Error(`Not implemented exception`); },
@@ -877,26 +623,6 @@ class SubstrateChainRpc extends BaseChainRpc {
       getContributionsHistoryByContributorAsync: async function (investor) { throw Error(`Not implemented exception`); },
       getContributionsHistoryByContributorAndProjectAsync: async function (investor, projectId) { throw Error(`Not implemented exception`); },
       getContributionsHistoryByProjectAsync: async function (projectId) { throw Error(`Not implemented exception`); },
-      getContributionsHistoryByTokenSaleAsync: async function (projectTokenSaleId) { throw Error(`Not implemented exception`); },
-      getContentReferencesAsync: async function (projectContentId) { throw Error(`Not implemented exception`); },
-      getContentReferences2Async: async function (projectContentId) { throw Error(`Not implemented exception`); },
-      getContentsReferToContentAsync: async function (projectContentId) { throw Error(`Not implemented exception`); },
-      getContentsReferToContent2Async: async function (projectContentId) { throw Error(`Not implemented exception`); },
-      getProjectContentEciHistoryAsync: async function (projectContentId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getProjectContentEciStatsAsync: async function (projectContentId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getProjectContentsEciStatsAsync: async function (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getProjectEciHistoryAsync: async function (projectId, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getProjectEciStatsAsync: async function (projectId, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getProjectsEciStatsAsync: async function (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getAccountEciHistoryAsync: async function (account, cursor, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getAccountEciStatsAsync: async function (account, domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getAccountsEciStatsAsync: async function (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getDomainsEciStatsHistoryAsync: async function (fromFilter, toFilter, stepFilter) { throw Error(`Not implemented exception`); },
-      getDomainEciHistoryAsync: async function (domainFilter, fromFilter, toFilter, contributionTypeFilter, assessmentCriteriaTypeFilter) { throw Error(`Not implemented exception`); },
-      getDomainsEciLastStatsAsync: async function () { throw Error(`Not implemented exception`); },
-      getAccountRevenueHistoryBySecurityTokenAsync: async function (account, securityTokenId, cursor, step, targetAssetSymbol) { throw Error(`Not implemented exception`); },
-      getAccountRevenueHistoryAsync: async function (account, cursor) { throw Error(`Not implemented exception`); },
-      getSecurityTokenRevenueHistoryAsync: async function (securityTokenId, cursor) { throw Error(`Not implemented exception`); },
       getProposalsBySignerAsync: async function (account) { throw Error(`Not implemented exception`); },
       getProposalsBySignersAsync: async function (accounts) { throw Error(`Not implemented exception`); },
       getProposalStateAsync: async function (id) { throw Error(`Not implemented exception`); },

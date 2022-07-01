@@ -1,9 +1,5 @@
 <template>
   <vex-block v-if="!loading && content" :title="content.title">
-    <span v-if="content.contentType">
-      {{ $t(`module.nftItems.types.${NFT_ITEM_METADATA_TYPES[content.contentType]}`) }}
-    </span>
-
     <div>
       <span>{{ $t('module.nftItems.details.authors') }}</span>
       <users-list
@@ -27,7 +23,7 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { VexBlock } from '@deip/vuetify-extended';
-  import { NFT_ITEM_METADATA_FORMAT, NFT_ITEM_METADATA_TYPES } from '@deip/constants';
+  import { NFT_ITEM_METADATA_FORMAT } from '@deip/constants';
   import { UsersList } from '@deip/users-module';
 
   import NftItemDetails from '../../common/NftItemDetails';
@@ -59,8 +55,7 @@
     data() {
       return {
         loading: false,
-        NFT_ITEM_METADATA_FORMAT,
-        NFT_ITEM_METADATA_TYPES
+        NFT_ITEM_METADATA_FORMAT
       };
     },
 

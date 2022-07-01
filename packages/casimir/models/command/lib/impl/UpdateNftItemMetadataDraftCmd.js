@@ -15,7 +15,6 @@ class UpdateNftItemMetadataDraftCmd extends AppCmd {
    * @param {Object} cmdPayload.jsonData
    * @param {string} cmdPayload.title
    * @param {string} cmdPayload.lazySellProposalId //TODO: remove when we have onchain market
-   * @param {number} cmdPayload.contentType
    * @param {Array.<string>} cmdPayload.authors
    * @param {Array.<string>} cmdPayload.references
    * @param {Array.<Object>} cmdPayload.attributes

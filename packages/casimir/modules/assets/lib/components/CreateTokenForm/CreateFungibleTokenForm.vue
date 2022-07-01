@@ -458,13 +458,6 @@
             precision: DEFAULT_PRECISION,
             maxSupply: parseInt(this.formModel.maxSupply),
             description: '',
-            metadata: {
-              projectId: this.project._id,
-              teamId: this.team._id,
-              licenseRevenue: {
-                holdersShare: '100.00 %'
-              }
-            },
             holders: [
               this.teamTokens,
               ...this.formModel.holders

@@ -131,55 +131,6 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
     },
 
 
-    [APP_CMD.CREATE_REVIEW]: ({
-      entityId,
-      author,
-      projectContentId,
-      contentHash,
-      assessment,
-      domains
-    }) => {
-
-      const { scores, type, isPositive } = assessment;
-      const model = type == 1 ? {
-        scores
-      } : {
-        isPositive
-      };
-    
-      const createReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${author}`,
-        chainNodeClient.tx.deip.createReview(
-          /* "review_id": */ `0x${entityId}`,
-          /* "author": */ { Dao: `0x${author}` },
-          /* "content": */ `0x${contentHash}`,
-          /* "domains": */ domains.map((domainId) => `0x${domainId}`),
-          /* "assessmentModel": */ type,
-          /* "weight": */ stringToHex(JSON.stringify(model)),
-          /* "project_content_id": */ `0x${projectContentId}`,
-        )
-      );
-
-      return [createReviewOp];
-    },
-
-
-    [APP_CMD.UPVOTE_REVIEW]: ({
-      voter,
-      reviewId,
-      domainId
-    }) => {
-    
-      const upvoteReviewOp = chainNodeClient.tx.deipDao.onBehalf(`0x${voter}`,
-        chainNodeClient.tx.deip.upvoteReview(
-          /* "review_id": */ `0x${reviewId}`,
-          /* "domain_id": */ `0x${domainId}`
-        )
-      );
-
-      return [upvoteReviewOp];
-    },
-
-
     [APP_CMD.CREATE_PROPOSAL]: ({
       entityId,
       creator,

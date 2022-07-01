@@ -166,10 +166,6 @@ exports.default = [{
   "api": "database_api",
   "method": "get_active_witnesses"
 }, {
-  "api": "database_api",
-  "method": "get_reward_fund",
-  "params": ["name"]
-}, {
   "api": "login_api",
   "method": "login",
   "params": ["username", "password"]
@@ -220,18 +216,6 @@ exports.default = [{
   "api": "database_api",
   "method": "get_research_group_by_id",
   "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_review_votes_by_review_id",
-  "params": ["review_id"]
-}, {
-  "api": "database_api",
-  "method": "get_review_votes_by_review",
-  "params": ["review_external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_review_votes_by_voter",
-  "params": ["account"]
 }, {
   "api": "database_api",
   "method": "get_researches_by_research_group",
@@ -413,48 +397,12 @@ exports.default = [{
   "params": ["research_external_id", "title"]
 }, {
   "api": "database_api",
-  "method": "get_expertise_contribution_by_research_content_and_discipline",
-  "params": ["research_content_id", "discipline_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_contributions_by_research",
-  "params": ["research_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_contributions_by_research_and_discipline",
-  "params": ["research_id", "discipline_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_contributions_by_research_content",
-  "params": ["research_content_id"]
-}, {
-  "api": "database_api",
   "method": "lookup_witness_accounts",
   "params": ["lower_bound_name", "limit"]
 }, {
   "api": "database_api",
   "method": "get_witness_by_account",
   "params": ["account_name"]
-}, {
-  "api": "database_api",
-  "method": "get_review",
-  "params": ["external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_reviews",
-  "params": ["ids"]
-}, {
-  "api": "database_api",
-  "method": "get_review_by_id",
-  "params": ["review_id"]
-}, {
-  "api": "database_api",
-  "method": "get_reviews_by_research_content",
-  "params": ["research_content_external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_reviews_by_research",
-  "params": ["research_external_id"]
 }, {
   "api": "database_api",
   "method": "get_research_token_by_id",
@@ -473,54 +421,9 @@ exports.default = [{
   "params": ["account_name", "research_id"]
 }, {
   "api": "database_api",
-  "method": "get_expertise_allocation_proposal_by_id",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposals_by_initiator",
-  "params": ["initiator"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposals_by_claimer_and_discipline",
-  "params": ["claimer", "discipline_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_by_discipline_initiator_and_claimer",
-  "params": ["discipline_id", "initiator", "claimer"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposals_by_discipline",
-  "params": ["discipline_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_vote_by_id",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_votes_by_expertise_allocation_proposal_id",
-  "params": ["expertise_allocation_proposal_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_vote_by_voter_and_expertise_allocation_proposal_id",
-  "params": ["voter", "expertise_allocation_proposal_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_votes_by_voter_and_discipline_id",
-  "params": ["voter", "discipline_id"]
-}, {
-  "api": "database_api",
-  "method": "get_expertise_allocation_proposal_votes_by_voter",
-  "params": ["voter"]
-}, {
-  "api": "database_api",
   "method": "get_accounts_by_expert_discipline",
   "params": ["discipline_id", "from", "limit"]
-}, {
-  "api": "database_api",
-  "method": "get_reviews_by_author",
-  "params": ["author"]
 },
-// Grants
 
 /* FOA */
 {
@@ -535,106 +438,6 @@ exports.default = [{
   "api": "database_api",
   "method": "get_funding_opportunity_announcements_by_organization",
   "params": ["research_group_id"]
-},
-
-/* Grants with announced application window */
-{
-  "api": "database_api",
-  "method": "get_funding_opportunity_announcements_listing",
-  "params": ["page", "limit"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_with_announced_application_window",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_grants_with_announced_application_window_by_grantor",
-  "params": ["grantor"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_application",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_applications_by_grant",
-  "params": ["grant_id"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_applications_by_research_id",
-  "params": ["research_id"]
-},
-// Grant applications reviews
-{
-  "api": "database_api",
-  "method": "get_grant_application_review",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_application_reviews_by_author",
-  "params": ["author"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_application_review_by_author_and_application",
-  "params": ["author", "grant_applicaiton_id"]
-}, {
-  "api": "database_api",
-  "method": "get_grant_application_reviews_by_grant_application",
-  "params": ["grant_application_id"]
-},
-
-// FOA awards
-{
-  "api": "database_api",
-  "method": "get_award",
-  "params": ["award_number"]
-}, {
-  "api": "database_api",
-  "method": "get_awards_by_funding_opportunity",
-  "params": ["funding_opportunity_number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_recipient",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_award_recipients_by_award",
-  "params": ["award_number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_recipients_by_account",
-  "params": ["awardee"]
-}, {
-  "api": "database_api",
-  "method": "get_award_recipients_by_funding_opportunity",
-  "params": ["number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_withdrawal_request",
-  "params": ["award_number", "payment_number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_withdrawal_requests_by_award",
-  "params": ["award_number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_withdrawal_requests_by_award_and_subaward",
-  "params": ["award_number", "subaward_number"]
-}, {
-  "api": "database_api",
-  "method": "get_award_withdrawal_requests_by_award_and_status",
-  "params": ["award_number", "status"]
-}, {
-  "api": "fo_history_api",
-  "method": "get_withdrawal_requests_history_by_award_number",
-  "params": ["award_number"]
-}, {
-  "api": "fo_history_api",
-  "method": "get_withdrawal_request_history_by_award_and_payment_number",
-  "params": ["award_number", "payment_number"]
-}, {
-  "api": "fo_history_api",
-  "method": "get_withdrawal_requests_history_by_award_and_subaward_number",
-  "params": ["award_number", "subaward_number"]
 },
 
 // Assets
@@ -691,56 +494,6 @@ exports.default = [{
   "api": "database_api",
   "method": "get_accounts_asset_balances_by_asset",
   "params": ["symbol"]
-},
-
-// NDA Contracts
-{
-  "api": "database_api",
-  "method": "get_research_nda",
-  "params": ["external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_research_nda_by_creator",
-  "params": ["creator"]
-}, {
-  "api": "database_api",
-  "method": "get_research_nda_by_hash",
-  "params": ["hash"]
-}, {
-  "api": "database_api",
-  "method": "get_research_nda_by_research",
-  "params": ["external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_content_access_request",
-  "params": ["external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_content_access_requests_by_nda",
-  "params": ["nda_external_id"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_content_access_requests_by_requester",
-  "params": ["requester"]
-},
-
-// NDA Contracts requests
-{
-  "api": "database_api",
-  "method": "get_nda_contract_request",
-  "params": ["id"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_requests_by_contract_id",
-  "params": ["contract_id"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_requests_by_requester",
-  "params": ["requester"]
-}, {
-  "api": "database_api",
-  "method": "get_nda_contract_request_by_contract_id_and_hash",
-  "params": ["contract_id", "encrypted_payload_hash"]
 },
 
 // Subscription quota
@@ -812,71 +565,9 @@ exports.default = [{
   "method": "get_contents_refer_to_content2",
   "params": ["research_content_external_id"]
 },
-// ECI History Plugin
-{
-  "api": "eci_history_api",
-  "method": "get_research_content_eci_history",
-  "params": ["research_content_external_id", "cursor", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_research_content_eci_stats",
-  "params": ["research_content_external_id", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_research_contents_eci_stats",
-  "params": ["discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_research_eci_history",
-  "params": ["research_external_id", "cursor", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_research_eci_stats",
-  "params": ["research_external_id", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_researches_eci_stats",
-  "params": ["discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_account_eci_history",
-  "params": ["account", "cursor", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_account_eci_stats",
-  "params": ["account", "discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_accounts_eci_stats",
-  "params": ["discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_disciplines_eci_stats_history",
-  "params": ["from_filter", "to_filter", "step_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_discipline_eci_history",
-  "params": ["discipline_filter", "from_filter", "to_filter", "contribution_type_filter", "assessment_criteria_type_filter"]
-}, {
-  "api": "eci_history_api",
-  "method": "get_disciplines_eci_last_stats",
-  "params": []
-},
 
 // Investments History Plugin
 {
-  "api": "investments_history_api",
-  "method": "get_account_revenue_history_by_security_token",
-  "params": ["account", "security_token_external_id", "cursor", "step", "target_asset_symbol"]
-}, {
-  "api": "investments_history_api",
-  "method": "get_account_revenue_history",
-  "params": ["account", "cursor"]
-}, {
-  "api": "investments_history_api",
-  "method": "get_security_token_revenue_history",
-  "params": ["security_token_external_id", "cursor"]
-}, {
   "api": "proposal_history_api",
   "method": "get_proposals_by_signer",
   "params": ["account"]

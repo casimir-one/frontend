@@ -42,15 +42,6 @@ export class UserHttp {
   }
 
   /**
- * Get invites by username
- * @param {string} username
- * @return {Promise<Object>}
- */
-  async getInvitesByUser(username) {
-    return this.http.get(`/api/v2/invites/${username}`);
-  }
-
-  /**
  * Get users by several ids
  * @param {string[]} usernames
  * @return {Promise<Object>}

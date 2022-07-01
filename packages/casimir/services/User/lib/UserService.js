@@ -155,15 +155,6 @@ export class UserService {
   }
 
   /**
-   * Get user invites by username
-   * @param {string} username
-   * @return {Promise<Object>}
-   */
-  async getUserInvites(username) {
-    return this.userHttp.getInvitesByUser(username);
-  }
-
-  /**
    * Get users by ids
    * @param {string[]} ids
    * @return {Promise<Object>}

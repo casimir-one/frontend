@@ -6,8 +6,7 @@ import { ServiceBasePayload } from './servicePayload';
  */
 type TokenMetadata = {
   projectId: string,
-  teamId?: string,
-  licenseRevenue?: { holdersShare: string }
+  teamId?: string
 };
 
 /**
