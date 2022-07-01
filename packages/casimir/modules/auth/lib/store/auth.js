@@ -34,19 +34,17 @@ const ACTIONS = {
     }
   },
 
-  async signIn({ commit, dispatch }, { username: usernameOrEmail, password: passwordOrPrivKey }) {
-    const exists = await userService.checkIfUserExists(usernameOrEmail);
-
-    if (!exists) {
-      throw new Error('Wrong email or password. Please try again.');
-    }
-
-    const { data: seedUser } = await userService.getOne(usernameOrEmail);
-    const seedAccount = await authService.generateSeedAccount(seedUser.username, passwordOrPrivKey);
+  async makeSignIn({ commit, dispatch }, payload) {
+    const {
+      username,
+      secretSigHex,
+      privateKey = null,
+      publicKey = null
+    } = payload;
 
     const { data: signIn } = await authService.signIn({
-      username: seedAccount.getUsername(),
-      secretSigHex: seedAccount.signString(this._vm.$env.SIG_SEED)
+      username,
+      secretSigHex
     });
 
     if (!signIn.success) {
@@ -56,21 +54,61 @@ const ACTIONS = {
 
     commit('setData', {
       jwtToken: signIn.jwtToken,
+      privateKey,
+      publicKey
+    });
+
+    webSocketService.connect();
+  },
+
+  async signIn({ dispatch }, { username: usernameOrEmail, password: passwordOrPrivKey }) {
+    const exists = await authService.isExist(usernameOrEmail);
+
+    if (!exists) {
+      throw new Error('Wrong email or password. Please try again.');
+    }
+
+    const { data: seedUser } = await userService.getOne(usernameOrEmail);
+    const seedAccount = await authService.generateSeedAccount(seedUser.username, passwordOrPrivKey);
+
+    dispatch('makeSignIn', {
+      username: seedAccount.getUsername(),
+      secretSigHex: seedAccount.signString(this._vm.$env.SIG_SEED),
       privateKey: seedAccount.getPrivKey(),
       publicKey: seedAccount.getPubKey()
     });
-    webSocketService.connect();
+  },
+
+  async walletSignIn({ dispatch }, payload) {
+    const { daoId, secretSigHex } = payload;
+
+    const exists = await authService.isExist(daoId);
+
+    if (exists) {
+      dispatch('makeSignIn', {
+        username: daoId,
+        secretSigHex
+      });
+    } else {
+      await authService.importDao(payload);
+
+      dispatch('makeSignIn', {
+        username: daoId,
+        secretSigHex
+      });
+    }
   },
 
   async signUp(_, payload) {
     const { email, password: passwordOrPrivKey } = payload;
 
-    const exists = await userService.checkIfUserExists(email);
+    const exists = await authService.isExist(email);
 
     if (exists) {
       throw new Error('User with such email exists');
     }
 
+    // TODO: Move to service
     const username = genRipemd160Hash(email);
     const seedAccount = await authService.generateSeedAccount(username, passwordOrPrivKey);
 

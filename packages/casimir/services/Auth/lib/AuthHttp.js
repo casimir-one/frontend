@@ -33,6 +33,24 @@ export class AuthHttp {
     return this.http.post('/auth/v2/sign-up/', req.getHttpBody());
   }
 
+  /**
+   * Check if user exists by username or email
+   * @param {string} usernameOrEmail
+   * @return {Promise<Object>}
+   */
+  async isExist(usernameOrEmail) {
+    return this.http.get(`/auth/v2/exist/${usernameOrEmail}`);
+  }
+
+  /**
+   * Create new user
+   * @param {Object} req
+   * @return {Promise<Object>}
+   */
+  async importDao(req) {
+    return this.http.post('/auth/v2/import-dao/', req.getHttpBody());
+  }
+
   /** @type {() => AuthHttp} */
   static getInstance = makeSingletonInstance(() => new AuthHttp());
 }

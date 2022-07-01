@@ -1,6 +1,6 @@
 import { genSha256Hash, makeSingletonInstance } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
-import { CreateDaoCmd } from '@deip/commands';
+import { CreateDaoCmd, ImportDAOCmd } from '@deip/commands';
 import { ChainService } from '@deip/chain-service';
 import { JsonDataMsg } from '@deip/messages';
 import { AuthHttp } from './AuthHttp';
@@ -11,6 +11,25 @@ import { AuthHttp } from './AuthHttp';
 export class AuthService {
   http = AuthHttp.getInstance();
   proxydi = proxydi;
+
+  static #getChainActions(chainService) {
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainNodeClient = chainService.getChainNodeClient();
+
+    return {
+      chainTxBuilder,
+      chainNodeClient
+    };
+  }
+
+  /**
+   * Check if user exists by username or email
+   * @param {string} usernameOrEmail
+   * @return {Promise<Object>}
+   */
+  async isExist(usernameOrEmail) {
+    return this.http.isExist(usernameOrEmail).then(({ data: { exists } }) => exists);
+  }
 
   /**
    * @param {Object} data
@@ -26,6 +45,40 @@ export class AuthService {
    */
   async adminSignIn(data) {
     return this.http.adminSignIn(data);
+  }
+
+  /**
+   * Create new user
+   * @param {Object} data
+   * @return {Promise<Object>}
+   */
+  async importDao(data) {
+    const { daoId, publicKey } = data;
+
+    const env = this.proxydi.get('env');
+    const { RETURN_MSG } = env;
+
+    const importDaoCmd = new ImportDAOCmd({
+      entityId: daoId,
+      authority: {
+        owner: {
+          auths: [{ key: publicKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      attributes: [],
+      roles: [],
+      isTeamAccount: false,
+      status: 2
+    });
+
+    const msg = new JsonDataMsg({ appCmds: [importDaoCmd] });
+
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.http.importDao(msg);
   }
 
   /**
@@ -53,8 +106,7 @@ export class AuthService {
 
     return ChainService.getInstanceAsync(env)
       .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainNodeClient = chainService.getChainNodeClient();
+        const { chainTxBuilder, chainNodeClient } = AuthService.#getChainActions(chainService);
         const userAttributes = attributes || [];
 
         return chainTxBuilder.begin()
