@@ -1,6 +1,6 @@
 {
   "name": "@deip/document-templates-module",
-  "version": "1.385.0",
+  "version": "1.385.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@deip/constants": "1.385.0",
-    "@deip/document-template-service": "1.385.0",
+    "@deip/document-template-service": "1.385.1",
     "@deip/platform-components": "1.385.0",
     "@deip/platform-util": "1.385.0",
     "@deip/proxydi": "1.382.2",

@@ -1,6 +1,6 @@
 {
   "name": "@deip/user-service",
-  "version": "1.385.0",
+  "version": "1.385.1",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "@deip/chain-service": "1.385.0",
-    "@deip/commands": "1.385.0",
+    "@deip/commands": "1.385.1",
     "@deip/constants": "1.385.0",
     "@deip/http-service": "1.385.0",
-    "@deip/messages": "1.385.0",
+    "@deip/messages": "1.385.1",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
     "@deip/web-socket-service": "1.385.0"

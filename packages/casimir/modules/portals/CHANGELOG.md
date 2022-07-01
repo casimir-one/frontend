@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.385.1](https://github.com/DEIPworld/deip-modules/compare/v1.385.0...v1.385.1) (2022-07-01)
+
+**Note:** Version bump only for package @deip/portals-module
+
+
+
+
+
 # [1.385.0](https://github.com/DEIPworld/deip-modules/compare/v1.384.0...v1.385.0) (2022-07-01)
 
 **Note:** Version bump only for package @deip/portals-module
