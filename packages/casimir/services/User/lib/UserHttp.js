@@ -98,15 +98,6 @@ export class UserHttp {
   }
 
   /**
- * Check if user exists by username or email
- * @param {string} usernameOrEmail
- * @return {Promise<Object>}
- */
-  async checkIfUserExists(usernameOrEmail) {
-    return this.http.get(`/api/v2/user/exists/username-or-email/${usernameOrEmail}`);
-  }
-
-  /**
  * Get user by given email
  * @param {string} email
  * @return {Promise<Object>}

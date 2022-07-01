@@ -211,16 +211,6 @@ export class UserService {
     return this.userHttp.getOne(username);
   }
 
-  /**
-   * Check if user exists by username or email
-   * @param {string} usernameOrEmail
-   * @return {Promise<Object>}
-   */
-  async checkIfUserExists(usernameOrEmail) {
-    return this.userHttp.checkIfUserExists(usernameOrEmail)
-      .then(({ data: { exists } }) => exists);
-  }
-
   /** @type {() => UserService} */
   static getInstance = makeSingletonInstance(() => new UserService());
 }

@@ -1,4 +1,5 @@
 import CreateDaoCmd from './impl/CreateDaoCmd';
+import ImportDAOCmd from './impl/ImportDAOCmd';
 import CreateNftCollectionMetadataCmd from './impl/CreateNftCollectionMetadataCmd';
 import UpdateNftCollectionMetadataCmd from './impl/UpdateNftCollectionMetadataCmd';
 import AddDaoMemberCmd from './impl/AddDaoMemberCmd';
@@ -54,6 +55,7 @@ import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCm
 
 export {
   CreateDaoCmd,
+  ImportDAOCmd,
   CreateNftCollectionMetadataCmd,
   UpdateNftCollectionMetadataCmd,
   AddDaoMemberCmd,
