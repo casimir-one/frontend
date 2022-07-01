@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.385.0](https://github.com/DEIPworld/deip-modules/compare/v1.384.0...v1.385.0) (2022-07-01)
+
+
+### Features
+
+* **@casimir/platform-core:** add new constants ([ef35b7e](https://github.com/DEIPworld/deip-modules/commit/ef35b7e6425f89592aef806e632e146d934fbb1f))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.385.0](https://github.com/DEIPworld/deip-modules/compare/v1.384.0...v1.385.0) (2022-07-01)
+
+
+### Features
+
+* **@packages/casimir:** draft moderation reject ([b9be9f8](https://github.com/DEIPworld/deip-modules/commit/b9be9f8582707b4ec9a322a457f52e210bd3810b))
+
+
+
+
+
 # [1.384.0](https://github.com/DEIPworld/deip-modules/compare/v1.383.0...v1.384.0) (2022-06-24)
 
 

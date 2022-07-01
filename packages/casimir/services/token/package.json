@@ -1,6 +1,6 @@
 {
   "name": "@casimir/token-service",
-  "version": "1.384.0",
+  "version": "1.385.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,14 +23,14 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.383.0",
-    "@deip/chain-service": "1.383.0",
-    "@deip/commands": "1.383.0",
-    "@deip/constants": "1.383.0",
-    "@deip/http-service": "1.383.0",
-    "@deip/messages": "1.383.0",
+    "@deip/access-service": "1.385.0",
+    "@deip/chain-service": "1.385.0",
+    "@deip/commands": "1.385.0",
+    "@deip/constants": "1.385.0",
+    "@deip/http-service": "1.385.0",
+    "@deip/messages": "1.385.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
-    "@deip/web-socket-service": "1.383.0"
+    "@deip/web-socket-service": "1.385.0"
   }
 }

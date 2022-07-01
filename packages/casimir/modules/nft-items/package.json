@@ -1,6 +1,6 @@
 {
   "name": "@casimir/nft-items-module",
-  "version": "1.384.0",
+  "version": "1.385.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,18 +20,18 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/nft-collections-module": "1.384.0",
-    "@casimir/token-service": "1.384.0",
-    "@deip/access-service": "1.383.0",
-    "@deip/constants": "1.383.0",
-    "@deip/platform-components": "1.383.0",
-    "@deip/platform-util": "1.383.0",
+    "@casimir/nft-collections-module": "1.385.0",
+    "@casimir/token-service": "1.385.0",
+    "@deip/access-service": "1.385.0",
+    "@deip/constants": "1.385.0",
+    "@deip/platform-components": "1.385.0",
+    "@deip/platform-util": "1.385.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
-    "@deip/users-module": "1.383.0",
+    "@deip/users-module": "1.385.0",
     "@deip/vue-editorjs": "1.382.2",
-    "@deip/vue-elements": "1.383.0",
-    "@deip/vuetify-extended": "1.383.0",
+    "@deip/vue-elements": "1.385.0",
+    "@deip/vuetify-extended": "1.385.0",
     "vue-infinite-loading": "^2.4.5"
   },
   "devDependencies": {

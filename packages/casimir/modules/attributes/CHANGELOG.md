@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.385.0](https://github.com/DEIPworld/deip-modules/compare/v1.384.0...v1.385.0) (2022-07-01)
+
+
+### Features
+
+* CAS-29 renaming project content to nft item ([b814b26](https://github.com/DEIPworld/deip-modules/commit/b814b26a20fd63e7cca9a4c28e8874babef550b0))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 

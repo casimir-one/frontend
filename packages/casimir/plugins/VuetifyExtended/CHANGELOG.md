@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.385.0](https://github.com/DEIPworld/deip-modules/compare/v1.384.0...v1.385.0) (2022-07-01)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** fix vex image input ([e819180](https://github.com/DEIPworld/deip-modules/commit/e819180311f70f03bed5d7195e9c2c3a937f6bd6))
+
+
+
+
+
 # [1.383.0](https://github.com/DEIPworld/deip-modules/compare/v1.382.2...v1.383.0) (2022-06-21)
 
 

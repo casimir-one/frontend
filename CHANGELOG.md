@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.385.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.384.0...v1.385.0) (2022-07-01)
+
+
+### Bug Fixes
+
+* fix filter dependencies in build script ([d1d42f1](https://github.com/DEIPworld/casimir-frontend/commit/d1d42f107160639f8dfb021a0b53b70d486987ae))
+* **@deip/vuetify-extended:** fix vex image input ([e819180](https://github.com/DEIPworld/casimir-frontend/commit/e819180311f70f03bed5d7195e9c2c3a937f6bd6))
+
+
+### Features
+
+* CAS-29 renaming project content to nft item ([b814b26](https://github.com/DEIPworld/casimir-frontend/commit/b814b26a20fd63e7cca9a4c28e8874babef550b0))
+* **@casimir/platform-core:** add new constants ([ef35b7e](https://github.com/DEIPworld/casimir-frontend/commit/ef35b7e6425f89592aef806e632e146d934fbb1f))
+* **@packages/casimir:** draft moderation reject ([b9be9f8](https://github.com/DEIPworld/casimir-frontend/commit/b9be9f8582707b4ec9a322a457f52e210bd3810b))
+* **@packages/casimir:** importDAO cmd ([59a10aa](https://github.com/DEIPworld/casimir-frontend/commit/59a10aa52f97f818fdcc5a31e2cdbdd80cbca220))
+
+
+
+
+
 # [1.384.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.383.0...v1.384.0) (2022-06-24)
 
 
