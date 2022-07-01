@@ -131,7 +131,9 @@ const AdminListPage = defineComponent({
 
       return (
         <VBtn {...btnData}>
-          {icon ? <VIcon {...{ props: { ...(label ? { left: true } : {}) } }} small>{icon}</VIcon> : ''}
+          {icon
+            ? <VIcon {...{ props: { ...(label ? { left: true } : {}) } }} small>{icon}</VIcon>
+            : ''}
           {label || ''}
         </VBtn>
       );
@@ -158,7 +160,7 @@ const AdminListPage = defineComponent({
 
           hideDefaultFooter={items.length < this.tableProps.itemsPerPage}
           footerProps={this.tableProps.footerProps}
-          itemsPerPage={this.itemsPerPage}
+          itemsPerPage={this.tableProps.itemsPerPage}
           { ...listeners }
         />
       );
