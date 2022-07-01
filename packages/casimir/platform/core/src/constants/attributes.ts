@@ -19,6 +19,7 @@ export const ATTRIBUTE_TYPES = [
 
 export const enum AttributeScope {
   NFT_COLLECTION = 'nftCollection',
+  NFT_ITEM = 'nftItem',
   USER = 'user',
   TEAM = 'team'
 }

@@ -36,6 +36,7 @@ const ATTR_TYPES = [
 
 const ATTR_SCOPES = [
   'nftCollection',
+  'nftItem',
   'user',
   'team'
 ];
