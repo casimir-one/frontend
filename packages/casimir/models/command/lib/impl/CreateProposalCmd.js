@@ -4,7 +4,7 @@ import ProtocolCmd from '../base/ProtocolCmd';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
- * Create project NDA command
+ * Create proposal command
  * @extends ProtocolEntityCmd
  */
 class CreateProposalCmd extends ProtocolEntityCmd {

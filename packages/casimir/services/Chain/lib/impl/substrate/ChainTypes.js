@@ -56,8 +56,6 @@ const CHAIN_TYPES = {
     "metadata": "Option<H256>"
   },
   "DaoId": "H160",
-  "DomainId": "H160",
-  "ReviewId": "H160",
   "AccountInfo": {
     "nonce": "Index",
     "consumers": "RefCount",
@@ -94,88 +92,17 @@ const CHAIN_TYPES = {
       "Reject"
     ]
   },
-  "Domain": {
-    "external_id": "DomainId"
-  },
   "ProjectId": "H160",
-  "ProjectContentId": "H160",
-  "NdaAccessRequestId": "H160",
-  "NdaId": "H160",
   "InvestmentId": "H160",
   "DeipInvestmentIdOf": "InvestmentId",
-  "NdaOf": "Nda",
-  "NdaAccessRequestOf": "NdaAccessRequest",
   "ProjectOf": "Project",
-  "ProjectContentOf": "ProjectContent",
   "SimpleCrowdfundingOf": "SimpleCrowdfunding",
   "InvestmentOf": "Investment",
-  "Nda": {
-    "contract_creator": "AccountId",
-    "external_id": "NdaId",
-    "end_date": "Moment",
-    "start_date": "Option<Moment>",
-    "contract_hash": "Hash",
-    "parties": "Vec<AccountId>",
-    "projects": "Vec<ProjectId>"
-  },
-  "NdaAccessRequestStatus": {
-    "_enum": [
-      "Pending",
-      "Fulfilled",
-      "Rejected"
-    ]
-  },
-  "NdaAccessRequest": {
-    "external_id": "NdaAccessRequestId",
-    "nda_external_id": "NdaId",
-    "requester": "AccountId",
-    "encrypted_payload_hash": "Hash",
-    "encrypted_payload_iv": "Text",
-    "status": "NdaAccessRequestStatus",
-    "grantor": "Option<AccountId>",
-    "encrypted_payload_encryption_key": "Option<Text>",
-    "proof_of_encrypted_payload_encryption_key": "Option<Text>"
-  },
   "Project": {
     "is_private": "bool",
     "external_id": "ProjectId",
     "team": "AccountId",
-    "description": "Hash",
-    "domains": "Vec<Domain>"
-  },
-  "ProjectContentType": {
-    "_enum": [
-      "Announcement",
-      "FinalResult",
-      "MilestoneArticle",
-      "MilestoneBook",
-      "MilestoneChapter",
-      "MilestoneCode",
-      "MilestoneConferencePaper",
-      "MilestoneCoverPage",
-      "MilestoneData",
-      "MilestoneExperimentFindings",
-      "MilestoneMethod",
-      "MilestoneNegativeResults",
-      "MilestonePatent",
-      "MilestonePoster",
-      "MilestonePreprint",
-      "MilestonePresentation",
-      "MilestoneRawData",
-      "MilestoneResearchProposal",
-      "MilestoneTechnicalReport",
-      "MilestoneThesis"
-    ]
-  },
-  "ProjectContent": {
-    "external_id": "ProjectContentId",
-    "project_external_id": "ProjectId",
-    "team_id": "AccountId",
-    "content_type": "ProjectContentType",
-    "description": "Hash",
-    "content": "Hash",
-    "authors": "Vec<AccountId>",
-    "references": "Option<Vec<ProjectContentId>>"
+    "description": "Hash"
   },
   "Weight": "u64",
   "DispatchClass": {
@@ -281,24 +208,6 @@ const CHAIN_TYPES = {
   "AssetIdOf": "AssetId",
   "AssetsAssetIdOf": "AssetId",
   "DeipAssetIdOf": "H160",
-  "DeipReviewVoteId": "H160",
-  "DeipReviewVote": {
-    "dao": "AccountId",
-    "review_id": "ReviewId",
-    "domain_id": "DomainId",
-    "voting_time": "Moment"
-  },
-  "DeipReviewVoteOf": "DeipReviewVote",
-  "Review": {
-    "external_id": "ReviewId",
-    "author": "AccountId",
-    "content": "Hash",
-    "domains": "Vec<DomainId>",
-    "assessment_model": "u32",
-    "weight": "Vec<u8>",
-    "project_content_external_id": "ProjectContentId"
-  },
-  "ReviewOf": "Review",
   "HashOf": "Hash",
   "ContractAgreementId": "H160",
   "ContractAgreementTerms": {

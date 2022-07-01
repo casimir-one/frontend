@@ -33,17 +33,6 @@ class CreateFTClassCmd extends ProtocolEntityCmd {
     assert(!!symbol, "'symbol' is required");
     assert(isNumber(precision), "'precision' is required and must be a number");
 
-    if (metadata) { // keep this until we have working F-NFT
-      const { projectId, teamId, licenseRevenue } = metadata;
-      assert(!!projectId, "'projectId' is required for project token");
-      assert(!!teamId, "'teamId' is required for project token");
-
-      if (licenseRevenue) {
-        const { holdersShare } = licenseRevenue;
-        assert(!!holdersShare, "'holdersShare' is required for project 'licenseRevenue' option");
-      }
-    }
-
     super(APP_CMD.CREATE_FT, cmdPayload);
   }
 }

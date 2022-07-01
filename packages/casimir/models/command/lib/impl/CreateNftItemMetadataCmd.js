@@ -13,7 +13,6 @@ class CreateNftItemMetadataCmd extends AppCmd {
    * @param {string} cmdPayload.entityId
    * @param {string} cmdPayload.nftCollectionId
    * @param {string} cmdPayload.title
-   * @param {number} cmdPayload.contentType
    * @param {string} cmdPayload.nftItemMetadataDraftId
    * @param {string} cmdPayload.owner
    * @param {Array.<string>} cmdPayload.authors

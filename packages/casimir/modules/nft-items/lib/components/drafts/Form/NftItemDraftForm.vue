@@ -20,21 +20,6 @@
 
         <validation-provider
           v-slot="{ errors }"
-          :name="$t('module.nftItems.form.type')"
-          rules="required"
-        >
-          <v-select
-            v-model="formData.contentType"
-            :items="nftItemTypes"
-            :label="$t('module.nftItems.form.type')"
-            :error-messages="errors"
-            item-value="value"
-            hide-details="auto"
-          />
-        </validation-provider>
-
-        <validation-provider
-          v-slot="{ errors }"
           :name="$t('module.nftItems.form.authors')"
           rules="required"
         >
@@ -137,7 +122,6 @@
   import { AccessService } from '@deip/access-service';
 
   import NftItemSelector from '../../common/NftItemSelector';
-  import { nftItemTypes } from '../../../constants/contentTypes';
 
   const accessService = AccessService.getInstance();
 
@@ -168,12 +152,8 @@
     },
 
     data() {
-      const nftItemTypesExtended = nftItemTypes
-        .map((type) => ({ ...type, text: this.$t(`module.nftItems.types.${type.key}`) }));
-
       return {
         filesInputLoading: false,
-        nftItemTypes: nftItemTypesExtended,
         NFT_ITEM_METADATA_FORMAT
       };
     },
@@ -267,7 +247,6 @@
         const data = {
           nftCollectionId: this.nftCollection._id,
           title: this.formData.title,
-          contentType: parseInt(this.formData.contentType),
           authors: this.formData.authors,
           owner: this.nftCollection.issuer,
           ownedByTeam: this.nftCollection.issuedByTeam,

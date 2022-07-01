@@ -13,10 +13,6 @@
         hide-default-footer
         @click:row="handleRowClick"
       >
-        <template #item.type="{item}">
-          {{ getNftItemType(item.formatType) }}
-        </template>
-
         <template #item.title="{item}">
           {{ item.title }}
         </template>
@@ -28,8 +24,6 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-
-  import { NFT_ITEM_METADATA_TYPES } from '@deip/constants';
 
   import NftItemsDataProvider from '../DataProvider';
 
@@ -59,10 +53,6 @@
       return {
         tableHeaders: [
           {
-            text: this.$t('module.nftItems.contentList.type'),
-            value: 'type'
-          },
-          {
             text: this.$t('module.nftItems.contentList.title'),
             value: 'title',
             width: '60%'
@@ -81,14 +71,6 @@
     },
 
     methods: {
-      /**
-       * Get NFT item type
-       *
-       * @param {string} type
-       */
-      getNftItemType(type) {
-        return this.$t(`module.nftItems.types.${NFT_ITEM_METADATA_TYPES[type]}`);
-      },
       /**
        * Row click handler
        * @param {Object} content

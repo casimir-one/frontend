@@ -2,28 +2,6 @@
 export default {
   module: {
     nftItems: {
-      types: {
-        ANNOUNCEMENT: 'Announcement',
-        FINAL_RESULT: 'Final Result',
-        MILESTONE_ARTICLE: 'Article',
-        MILESTONE_BOOK: 'Book',
-        MILESTONE_CHAPTER: 'Chapter',
-        MILESTONE_CODE: 'Code',
-        MILESTONE_CONFERENCE_PAPER: 'Conference paper',
-        MILESTONE_COVER_PAGE: 'Cover page',
-        MILESTONE_DATA: 'Data',
-        MILESTONE_EXPERIMENT_FINDINGS: 'Experiment findings',
-        MILESTONE_METHOD: 'Method',
-        MILESTONE_NEGATIVE_RESULTS: 'Negative results',
-        MILESTONE_PATENT: 'Patent',
-        MILESTONE_POSTER: 'Poster',
-        MILESTONE_PREPRINT: 'Preprint',
-        MILESTONE_PRESENTATION: 'Presentation',
-        MILESTONE_RAW_DATA: 'Raw data',
-        MILESTONE_NFT_COLLECTION_PROPOSAL: 'Nft collection proposal',
-        MILESTONE_TECHNICAL_REPORT: 'Technical report',
-        MILESTONE_THESIS: 'Thesis'
-      },
       form: {
         title: 'Title',
         type: 'Material type',

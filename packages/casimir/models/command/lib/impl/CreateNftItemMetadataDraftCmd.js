@@ -15,7 +15,6 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
    * @param {string} cmdPayload.entityId
    * @param {Object} cmdPayload.jsonData
    * @param {string} cmdPayload.title
-   * @param {number} cmdPayload.contentType
    * @param {Array.<string>} cmdPayload.authors
    * @param {string} cmdPayload.owner
    * @param {Array.<string>} cmdPayload.references

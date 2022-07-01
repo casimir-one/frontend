@@ -70,10 +70,6 @@ module.exports = [{
   "params": ["member", "research_group", "is_exclusion", "extensions"]
 }, {
   "roles": ["active", "owner"],
-  "operation": "create_research",
-  "params": ["external_id", "research_group", "description", "disciplines", "is_private", "review_share", "compensation_share", "members", "extensions"]
-}, {
-  "roles": ["active", "owner"],
   "operation": "create_research_content",
   "params": ["external_id", "research_external_id", "research_group", "type", "description", "content", "authors", "references", "extensions"]
 }, {
@@ -82,28 +78,8 @@ module.exports = [{
   "params": ["external_id", "research_group", "research_external_id", "start_time", "end_time", "security_tokens_on_sale", "soft_cap", "hard_cap", "extensions"]
 }, {
   "roles": ["active", "owner"],
-  "operation": "update_research",
-  "params": ["account", "external_id", "description", "is_private", "review_share", "compensation_share", "members", "update_extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "delegate_expertise",
-  "params": ["sender", "receiver", "discipline_id", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "revoke_expertise_delegation",
-  "params": ["sender", "receiver", "discipline_id", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_review",
-  "params": ["external_id", "author", "research_content_external_id", "content", "weight", "assessment_model", "disciplines", "extensions"]
-}, {
-  "roles": ["active", "owner"],
   "operation": "contribute_to_token_sale",
   "params": ["token_sale_external_id", "contributor", "amount", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "vote_for_review",
-  "params": ["external_id", "voter", "review_external_id", "discipline_external_id", "weight", "extensions"]
 }, {
   "roles": ["active", "owner"],
   "operation": "create_vesting_balance",
@@ -126,66 +102,6 @@ module.exports = [{
   "params": ["account", "total_common_tokens_amount", "extensions"]
 }, {
   "roles": ["active", "owner"],
-  "operation": "create_expertise_allocation_proposal",
-  "params": ["claimer", "discipline_id", "description", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "vote_for_expertise_allocation_proposal",
-  "params": ["proposal_id", "voter", "voting_power", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_grant",
-  "params": ["external_id", "grantor", "amount", "target_disciplines", "distribution_model", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_grant_application",
-  "params": ["grant_id", "research_id", "creator", "application_hash", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_review_for_application",
-  "params": ["author", "grant_application_id", "is_positive", "content", "weight", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "approve_grant_application",
-  "params": ["grant_application_id", "approver", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "reject_grant_application",
-  "params": ["grant_application_id", "rejector", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_award",
-  "params": ["award_number", "funding_opportunity_number", "award", "awardee", "research_external_id", "university_external_id", "university_overhead", "subawardees", "creator", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "approve_award",
-  "params": ["award_number", "approver", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "reject_award",
-  "params": ["award_number", "rejector", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_award_withdrawal_request",
-  "params": ["payment_number", "award_number", "subaward_number", "requester", "amount", "description", "attachment", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "certify_award_withdrawal_request",
-  "params": ["payment_number", "award_number", "subaward_number", "certifier", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "approve_award_withdrawal_request",
-  "params": ["payment_number", "award_number", "subaward_number", "approver", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "reject_award_withdrawal_request",
-  "params": ["payment_number", "award_number", "subaward_number", "rejector", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "pay_award_withdrawal_request",
-  "params": ["payment_number", "award_number", "subaward_number", "payer", "extensions"]
-}, {
-  "roles": ["active", "owner"],
   "operation": "create_asset",
   "params": ["issuer", "symbol", "precision", "description", "max_supply", "traits", "extensions"]
 }, {
@@ -196,34 +112,6 @@ module.exports = [{
   "roles": ["active", "owner"],
   "operation": "reserve_asset",
   "params": ["owner", "amount", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_research_nda",
-  "params": ["external_id", "creator", "parties", "description", "researches", "start_time", "end_time", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "sign_nda_contract",
-  "params": ["contract_id", "contract_signer", "signature", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "decline_nda_contract",
-  "params": ["contract_id", "decliner", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "close_nda_contract",
-  "params": ["contract_id", "closer", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_nda_content_access_request",
-  "params": ["external_id", "nda_external_id", "requester", "encrypted_payload_hash", "encrypted_payload_iv", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "fulfill_nda_content_access_request",
-  "params": ["external_id", "grantor", "encrypted_payload_encryption_key", "proof_of_encrypted_payload_encryption_key", "extensions"]
-}, {
-  "roles": ["active", "owner"],
-  "operation": "create_assessment",
-  "params": ["external_id", "creator", "stages", "extensions"]
 }, {
   "roles": ["active", "owner"],
   "operation": "create_research_license",

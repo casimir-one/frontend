@@ -33,9 +33,6 @@ ChainTypes.operations = {
   update_research: 15,
   create_research_content: 16,
 
-  create_review: 17,
-  vote_for_review: 18,
-
   create_research_token_sale: 19,
   contribute_to_token_sale: 20,
   transfer_research_share: 21,
@@ -51,31 +48,6 @@ ChainTypes.operations = {
   update_proposal: 28,
   delete_proposal: 29,
 
-  create_expertise_allocation_proposal: 30,
-  vote_for_expertise_allocation_proposal: 31,
-
-  create_grant: 32,
-  create_grant_application: 33,
-  create_review_for_application: 34,
-  approve_grant_application: 35,
-  reject_grant_application: 36,
-  create_award: 37,
-  approve_award: 38,
-  reject_award: 39,
-  create_award_withdrawal_request: 40,
-  certify_award_withdrawal_request: 41,
-  approve_award_withdrawal_request: 42,
-  reject_award_withdrawal_request: 43,
-  pay_award_withdrawal_request: 44,
-
-  create_research_nda: 45,
-  sign_nda_contract: 46,
-  decline_nda_contract: 47,
-  close_nda_contract: 48,
-  create_nda_content_access_request: 49,
-  fulfill_nda_content_access_request: 50,
-
-  create_assessment: 51,
   create_research_license: 52,
   create_contract_agreement: 53,
   accept_contract_agreement: 54,
