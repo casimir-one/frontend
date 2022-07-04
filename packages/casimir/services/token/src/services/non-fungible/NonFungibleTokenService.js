@@ -65,8 +65,7 @@ export class NonFungibleTokenService {
       initiator: { privKey },
       data: {
         issuer,
-        issuedByTeam,
-        metadata
+        issuedByTeam
       }
     } = payload;
     const env = this.proxydi.get('env');
@@ -105,7 +104,7 @@ export class NonFungibleTokenService {
     const {
       formData,
       attributes
-    } = NonFungibleTokenService.#convertFormData(metadata);
+    } = NonFungibleTokenService.#convertFormData(payload.data);
 
     const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
       entityId: nftCollectionId,
@@ -185,14 +184,12 @@ export class NonFungibleTokenService {
         nftItemId,
         recipient,
         ownedByTeam = false,
-        metadata: {
-          contentType,
-          title,
-          nftItemMetadataDraftId,
-          authors = [],
-          metadata = {},
-          references = []
-        }
+        contentType,
+        title,
+        nftItemMetadataDraftId,
+        authors = [],
+        metadata = {},
+        references = []
       }
     } = payload;
     const env = this.proxydi.get('env');
