@@ -174,10 +174,8 @@
               recipient: draft.owner, // TODO: should be fixed to owner on backend
               ownedByTeam: draft.ownedByTeam,
               nftCollectionId: draft.nftCollectionId,
-              metadata: {
-                nftItemMetadataDraftId: draft._id,
-                ...draft
-              }
+              nftItemMetadataDraftId: draft._id,
+              ...draft
             }
           };
 
