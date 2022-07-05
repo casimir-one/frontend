@@ -7,8 +7,6 @@ const defaultIdx = 0;
 
 const ChainRpc = Interface('ChainRpc', {
   sendTxAsync: async function (tx) { },
-  getProjectAsync: async function (projectId) { },
-  getProjectsListAsync: async function (startIdx = defaultIdx, limit = defaultLimit) { },
   setBlockAppliedCallbackAsync: async function (cb) { },
   getStateAsync: async function (path) { },
   getConfigAsync: async function () { },
@@ -58,12 +56,10 @@ const ChainRpc = Interface('ChainRpc', {
   lookupTeamsAsync: async function (lowerBound, limit) { },
   getTeamsAsync: async function (ids) { },
   getTeamByPermlinkAsync: async function (permlink) { },
-  getProjectsByTeamAsync: async function (teamId, startIdx = defaultIdx, limit = defaultLimit) { },
   getSchemaAsync: async function () { },
   getExpiringVestingDelegationsAsync: async function (account, from, limit) { },
   getProjectByPermlinkAsync: async function (teamId, permlink) { },
   getProjectByAbsolutePermlinkAsync: async function (teamPermlink, projectPermlink) { },
-  getProjectsAsync: async function (ids) { },
   getProjectLicenseAsync: async function (id) { },
   getProjectLicensesAsync: async function (ids) { },
   getProjectLicensesByLicenseeAsync: async function (licensee) { },
