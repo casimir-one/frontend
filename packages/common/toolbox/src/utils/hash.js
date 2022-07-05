@@ -1,5 +1,5 @@
-/* eslint-disable global-require */
 import md5 from 'md5';
+import crypto from '@deip/lib-crypto';
 import {
   isArray,
   isObject,
@@ -12,7 +12,6 @@ import {
   * @returns {string}
 */
 export const genSha256Hash = (val) => {
-  const crypto = require('@deip/lib-crypto');
   if (isNil(val)) return undefined;
 
   let string = val;
@@ -30,7 +29,6 @@ export const genSha256Hash = (val) => {
   * @returns {string}
 */
 export const genRipemd160Hash = (val) => {
-  const crypto = require('@deip/lib-crypto');
   if (isNil(val)) return undefined;
 
   let string = val;

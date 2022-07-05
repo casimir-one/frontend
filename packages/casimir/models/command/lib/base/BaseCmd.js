@@ -85,11 +85,8 @@ class BaseCmd {
    * @returns {BaseCmd}
    */
   static Deserialize(serialized) {
-    // eslint-disable-next-line global-require
-    const { APP_CMD_INFO } = require('../serialization');
-    const { CMD_NUM, CMD_PAYLOAD } = serialized;
-    const CmdClass = APP_CMD_INFO[CMD_NUM].class;
-    return new CmdClass(JSON.parse(CMD_PAYLOAD));
+    const { CMD_PAYLOAD } = serialized;
+    return new this(JSON.parse(CMD_PAYLOAD));
   }
 }
 
