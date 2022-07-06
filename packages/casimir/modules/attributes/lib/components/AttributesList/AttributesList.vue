@@ -5,7 +5,7 @@
         <v-col cols="2">
           <v-select
             v-model.number="filter.scope"
-            label="Attributes scope"
+            label="Scope"
             :items="scopesSelectorList"
             hide-details
           />
@@ -31,13 +31,18 @@
       :search="filter.search"
     >
       <template #item.scope="{ item }">
-        <v-chip
-          small
-          readonly
-          :color="scopesPalette[item.scope].background"
-        >
-          {{ scopeTypeInfo(item.scope).label }}
-        </v-chip>
+        <template v-if="scopeTypeInfo(item.scope)">
+          <v-chip
+            small
+            readonly
+            :color="scopesPalette[item.scope].background"
+          >
+            {{ scopeTypeInfo(item.scope).label }}
+          </v-chip>
+        </template>
+        <template v-else>
+          <span class="error--text">Scope '{{ item.scope }}' not found</span>
+        </template>
       </template>
 
       <template #item.type="{ item }">
@@ -263,7 +268,8 @@
        * @param {string} attrType
        */
       attrTypeInfo(attrType) {
-        return this.$store.getters['attributesRegistry/one'](attrType) || { type: attrType, label: attrType };
+        return this.$store.getters['attributesRegistry/one'](attrType)
+          || { type: attrType, label: attrType };
       },
       /**
        * Get scope info by scope type
@@ -271,7 +277,7 @@
        * @param {string} scopeType
        */
       scopeTypeInfo(scopeType) {
-        return this.$store.getters['scopesRegistry/one'](scopeType) || { type: scopeType, label: scopeType };
+        return this.$store.getters['scopesRegistry/one'](scopeType);
       }
     }
 
