@@ -1,6 +1,6 @@
 {
   "name": "@deip/proposals-service",
-  "version": "1.385.1",
+  "version": "1.386.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,12 +22,12 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.385.0",
-    "@deip/access-service": "1.385.0",
-    "@deip/chain-service": "1.385.0",
-    "@deip/commands": "1.385.1",
-    "@deip/http-service": "1.385.0",
-    "@deip/messages": "1.385.1",
+    "@casimir/platform-core": "1.386.0",
+    "@deip/access-service": "1.386.0",
+    "@deip/chain-service": "1.386.0",
+    "@deip/commands": "1.386.0",
+    "@deip/http-service": "1.386.0",
+    "@deip/messages": "1.386.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2"
   }

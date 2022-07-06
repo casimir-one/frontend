@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.386.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.385.1...v1.386.0) (2022-07-06)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** CAS-105 remove not implemented methods ([12e5f0d](https://github.com/DEIPworld/casimir-frontend/commit/12e5f0d44a097fe2289d8afb169a3fdda8e5e2d3))
+
+
+### Features
+
+* CAS-97 update imports of constants ([0a4c37f](https://github.com/DEIPworld/casimir-frontend/commit/0a4c37f107e78a032940e9d172bb349f5376353e))
+
+
+
+
+
 # [1.385.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.384.0...v1.385.0) (2022-07-01)
 
 

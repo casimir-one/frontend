@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.386.0](https://github.com/DEIPworld/deip-modules/compare/v1.385.1...v1.386.0) (2022-07-06)
+
+
+### Features
+
+* CAS-97 update imports of constants ([0a4c37f](https://github.com/DEIPworld/deip-modules/commit/0a4c37f107e78a032940e9d172bb349f5376353e))
+
+
+
+
+
 ## [1.385.1](https://github.com/DEIPworld/deip-modules/compare/v1.385.0...v1.385.1) (2022-07-01)
 
 **Note:** Version bump only for package @deip/portals-module

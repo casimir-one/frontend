@@ -1,6 +1,6 @@
 {
   "name": "@deip/web-socket-service",
-  "version": "1.385.0",
+  "version": "1.386.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/casimir-frontend#readme",
@@ -17,7 +17,7 @@
     "url": "https://github.com/DEIPworld/casimir-frontend/issues"
   },
   "dependencies": {
-    "@deip/access-service": "1.385.0",
+    "@deip/access-service": "1.386.0",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2"
   }

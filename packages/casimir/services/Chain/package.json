@@ -1,6 +1,6 @@
 {
   "name": "@deip/chain-service",
-  "version": "1.385.0",
+  "version": "1.386.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.385.0",
+    "@casimir/platform-core": "1.386.0",
     "@deip/lib-crypto": "1.375.1",
     "@deip/proxydi": "1.382.2",
     "@deip/toolbox": "1.382.2",
