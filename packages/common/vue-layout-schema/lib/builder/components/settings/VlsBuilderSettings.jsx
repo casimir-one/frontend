@@ -73,11 +73,11 @@ export default {
     /**
      * Check block property type
      * @param {string} key
+     * @param {string} path path to prop in node
      * @returns {string}
      */
-    checkPropType(key) {
-      const type = this.nodeInfo?.data?.props?.[key]?.type;
-
+    checkPropType(key, path) {
+      const type = objectPath.get(this.nodeInfo, [...path, key, 'type']);
       if (!type) return kindOf(String());
 
       if (isArray(type)) {
@@ -269,14 +269,15 @@ export default {
 
     /**
      * Generate property input based on property type
-     * @param {string[]} path
+     * @param {string[]} fullPath path to prop in schema
+     * @param {string[]} nodePath path to prop in node
      * @param {string} key
      * @param {*} defaultValue
      * @returns {JSX.Element|null}
      */
-    genField(path, key, defaultValue) {
-      const propType = this.checkPropType(key, path);
-      const propPath = [...path, key];
+    genField(fullPath, nodePath, key, defaultValue) {
+      const propType = this.checkPropType(key, nodePath);
+      const propPath = [...fullPath, key];
 
       const params = [propPath, key, defaultValue];
 
@@ -311,13 +312,14 @@ export default {
     /**
      * Map properties from block to schema object
      * @param {Object} obj
-     * @param {string[]} path
+     * @param {string[]} fullPath path to prop in schema
+     * @param {string[]} nodePath path to prop in node
      * @returns {(JSX.Element|null)[]}
      */
-    mapPropsFields(obj, path) {
+    mapPropsFields(obj, fullPath, nodePath) {
       return Object.keys(obj)
         .filter((prop) => prop !== 'tag')
-        .map((prop) => this.genField(path, prop, obj[prop]))
+        .map((prop) => this.genField(fullPath, nodePath, prop, obj[prop]))
         .filter((f) => f);
     },
 
@@ -333,14 +335,16 @@ export default {
       const mainPropsFields = () => this
         .mapPropsFields(
           mainProps,
-          [...this.nodePath, 'data', 'props']
+          [...this.nodePath, 'data', 'props'],
+          ['data', 'props']
         );
 
       const proxyPropsFields = () => Object.keys(proxyProps)
         .map((component) => this
           .mapPropsFields(
             proxyProps[component],
-            [...this.nodePath, 'data', 'proxyProps', component]
+            [...this.nodePath, 'data', 'proxyProps', component],
+            ['data', 'proxyProps', component]
           ));
 
       const additionalFields = () => [
