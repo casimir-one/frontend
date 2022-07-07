@@ -123,7 +123,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_COLLECTION_METADATA_CREATED
         && eventBody.event.eventPayload.entityId === response.data._id;
-    }, 10000);
+    }, 20000);
 
     return response;
   }
@@ -289,7 +289,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_CREATED
         && eventBody.event.eventPayload.entityId === response.data._id;
-    }, 10000);
+    }, 20000);
 
     return response;
   }
@@ -388,7 +388,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_STATUS_UPDATED
         && eventBody.event.eventPayload._id === response.data._id;
-    }, 10000);
+    }, 20000);
 
     return response;
   }

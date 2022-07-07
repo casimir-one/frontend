@@ -36,7 +36,7 @@ class CreateProposalCmd extends ProtocolEntityCmd {
       "'expirationTime' required and should be in milliseconds"
     );
     assert(!!type, "'type' is required"); // temp limitation
-    assert(APP_PROPOSAL[type] !== undefined, "'type' is unknown"); // temp limitation
+    assert(Object.values(APP_PROPOSAL).includes(type), "'type' is unknown"); // temp limitation
     assert(!!creator, "'creator' is required");
     assert(!!batchWeight, "'batchWeight' is required");
 
