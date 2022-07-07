@@ -1,4 +1,6 @@
-export const DOMAIN_EVENT = {
+import { createEnum } from '@deip/toolbox';
+
+export const DOMAIN_EVENT = createEnum({
   BLOCK_CREATED: 1000,
   OCTOPUS: 1001,
 
@@ -67,4 +69,4 @@ export const DOMAIN_EVENT = {
   NFT_THAWED: 1520,
   NFT_TRANSFERRED: 1521
 
-};
+});

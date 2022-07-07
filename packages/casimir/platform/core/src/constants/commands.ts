@@ -1,4 +1,6 @@
-export const APP_CMD = {
+import { createEnum } from '@deip/toolbox';
+
+export const APP_CMD = createEnum({
   CREATE_DAO: 1,
   UPDATE_DAO: 2,
   CREATE_NFT_COLLECTION_METADATA: 3,
@@ -44,9 +46,9 @@ export const APP_CMD = {
   UPDATE_NFT_ITEM_METADATA_DRAFT_STATUS: 53,
   UPDATE_NFT_ITEM_METADATA_DRAFT_MODERATION_MSG: 54,
   SEND_REGISTRATION_CODE_BY_EMAIL: 55
-};
+});
 
-export const APP_PROPOSAL = {
+export const APP_PROPOSAL = createEnum({
   PROJECT_FUNDRASE_PROPOSAL: 4,
   TEAM_UPDATE_PROPOSAL: 5,
   ADD_DAO_MEMBER_PROPOSAL: 6,
@@ -59,4 +61,4 @@ export const APP_PROPOSAL = {
   CONTRACT_AGREEMENT_PROPOSAL: 14,
   NFT_LAZY_SELL_PROPOSAL: 15,
   NFT_LAZY_BUY_PROPOSAL: 16
-};
+});

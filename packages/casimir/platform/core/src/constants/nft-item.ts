@@ -1,3 +1,5 @@
+import { createEnum } from '@deip/toolbox';
+
 export const enum NftItemMetadataDraftStatus {
   IN_PROGRESS = 1,
   PROPOSED = 2,
@@ -6,8 +8,8 @@ export const enum NftItemMetadataDraftStatus {
 }
 
 /** @deprecated */
-export const NFT_ITEM_METADATA_FORMAT = {
+export const NFT_ITEM_METADATA_FORMAT = createEnum({
   DAR: 1,
   PACKAGE: 2,
   JSON: 3
-};
+});

@@ -25,5 +25,8 @@
   },
   "peerDependencies": {
     "vue": "^2.6.14"
+  },
+  "dependencies": {
+    "@deip/toolbox": "^1.382.2"
   }
 }
