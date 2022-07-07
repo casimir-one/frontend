@@ -38,6 +38,7 @@
 
 <script>
   import { isEqual } from 'lodash';
+  import { defineComponent } from '@deip/platform-util';
 
   const defaultValue = {
     id: null,
@@ -46,7 +47,7 @@
     amount: null
   };
 
-  export default {
+  export default defineComponent({
     name: 'AssetInput',
 
     model: {
@@ -212,5 +213,5 @@
         };
       }
     }
-  };
+  });
 </script>
