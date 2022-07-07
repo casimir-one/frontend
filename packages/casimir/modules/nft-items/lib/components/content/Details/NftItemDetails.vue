@@ -1,33 +1,19 @@
 <template>
-  <vex-block v-if="!loading && content" :title="content.title">
-    <div>
-      <span>{{ $t('module.nftItems.details.authors') }}</span>
-      <users-list
-        view-type="stack"
-        :users="content.authors"
-      />
-    </div>
-
-    <nft-item-details
-      v-if="content.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE"
-      :content="content"
-    />
-
-    <json-content-details
-      v-if="content.formatType === NFT_ITEM_METADATA_FORMAT.JSON"
-      :content="content"
+  <vex-block v-if="nftItem">
+    <layout-renderer
+      :value="nftItem"
+      :schema="internalSchema"
+      :schema-data="internalSchemaData"
     />
   </vex-block>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
+  import { AttributeScope } from '@casimir/platform-core';
   import { VexBlock } from '@deip/vuetify-extended';
-  import { NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
-  import { UsersList } from '@deip/users-module';
-
-  import NftItemDetails from '../../common/NftItemDetails';
-  import JsonContentDetails from '../../common/JsonContentDetails';
+  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
 
   /**
    * Component for NFT item details
@@ -37,53 +23,25 @@
 
     components: {
       VexBlock,
-      UsersList,
-      NftItemDetails,
-      JsonContentDetails
+      LayoutRenderer
     },
-
-    props: {
-      /**
-       * Nft Item id
-       */
-      nftItemId: {
-        type: String,
-        required: true
-      }
-    },
-
-    data() {
-      return {
-        loading: false,
-        NFT_ITEM_METADATA_FORMAT
-      };
-    },
+    mixins: [
+      attributedDetailsFactory('nftItem')
+    ],
 
     computed: {
-      /**
-       * Get computed NFT item by id
-       */
-      nftItem() {
-        return this.$store.getters['nftItems/one'](this.nftItemId);
-      }
-    },
 
-    created() {
-      this.getNftItem();
-    },
-
-    methods: {
-      /**
-       * Get NFT item by id
-       */
-      async getNftItem() {
-        this.loading = true;
-        try {
-          await this.$store.dispatch('nftItems/getOne', this.nftItemId);
-        } catch (error) {
-          console.error(error);
-        }
-        this.loading = false;
+      internalSchemaData() {
+        return {
+          ...attributeMethodsFactory(
+            expandAttributes(this.nftItem),
+            {
+              scopeName: AttributeScope.NFT_ITEM,
+              scopeId: this.nftItem._id
+            }
+          ),
+          ...this.schemaData
+        };
       }
     }
   });

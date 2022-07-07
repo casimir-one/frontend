@@ -5,81 +5,11 @@
       @submit.prevent="handleSubmit(submit)"
     >
       <ve-stack :gap="24">
-        <validation-provider
-          v-slot="{ errors }"
-          :name="$t('module.nftItems.form.title')"
-          rules="required"
-        >
-          <v-text-field
-            v-model="formData.title"
-            :label="$t('module.nftItems.form.title')"
-            :error-messages="errors"
-            hide-details="auto"
-          />
-        </validation-provider>
-
-        <validation-provider
-          v-slot="{ errors }"
-          :name="$t('module.nftItems.form.authors')"
-          rules="required"
-        >
-          <users-selector
-            v-model="formData.authors"
-            :users="team.members"
-            :label="$t('module.nftItems.form.authors')"
-            :error-messages="errors"
-            multiple
-            hide-details="auto"
-          />
-        </validation-provider>
-
-        <nft-item-selector
-          v-model="formData.references"
-          :label="$t('module.nftItems.form.references')"
-          multiple
-          hide-details="auto"
+        <layout-renderer
+          :value="draft"
+          :schema="internalSchema"
+          :schema-data="internalSchemaData"
         />
-
-        <v-radio-group
-          v-if="!isEditMode"
-          v-model="formData.formatType"
-          :label="$t('module.nftItems.form.formatType')"
-          mandatory
-          class="mt-0"
-          hide-details="auto"
-        >
-          <v-radio
-            :label="$t('module.nftItems.form.text')"
-            :value="NFT_ITEM_METADATA_FORMAT.JSON"
-          />
-
-          <v-radio
-            :label="$t('module.nftItems.form.package')"
-            :value="NFT_ITEM_METADATA_FORMAT.PACKAGE"
-          />
-        </v-radio-group>
-
-        <vue-editorjs
-          v-if="formData.formatType === NFT_ITEM_METADATA_FORMAT.JSON"
-          v-model="formData.jsonData"
-          :placeholder="$t('module.nftItems.form.contentPlaceholder')"
-        />
-
-        <validation-provider
-          v-if="formData.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE"
-          v-slot="{ errors }"
-          :name="$t('module.nftItems.form.file')"
-          rules="required"
-        >
-          <vex-file-input
-            v-model="formData.files"
-            :label="$t('module.nftItems.form.file')"
-            :error-messages="errors"
-            multiple
-            hide-details="auto"
-            :loading="filesInputLoading"
-          />
-        </validation-provider>
 
         <v-divider />
 
@@ -113,15 +43,13 @@
 <script>
   import { defineComponent } from '@deip/platform-util';
   import { formFactory } from '@deip/platform-components';
+
   import { VeStack } from '@deip/vue-elements';
-  import { VexFileInput } from '@deip/vuetify-extended';
-  import { VueEditorjs } from '@deip/vue-editorjs';
-  import { UsersSelector } from '@deip/users-module';
-  import { NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
+  import { AttributeScope, NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
+  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
 
   import { AccessService } from '@deip/access-service';
-
-  import NftItemSelector from '../../common/NftItemSelector';
 
   const accessService = AccessService.getInstance();
 
@@ -133,15 +61,16 @@
 
     components: {
       VeStack,
-      VexFileInput,
-      NftItemSelector,
-      UsersSelector,
-      VueEditorjs
+      LayoutRenderer
     },
 
-    mixins: [formFactory('draft')],
+    mixins: [formFactory('draft'), attributedDetailsFactory('draft')],
 
     props: {
+      draft: {
+        type: Object,
+        default: () => {}
+      },
       /**
        * NFT collection info
        */
@@ -159,6 +88,21 @@
     },
 
     computed: {
+      internalSchemaData() {
+        return {
+          ...attributeMethodsFactory(
+            expandAttributes(this.draft),
+            {
+              scopeName: AttributeScope.NFT_ITEM,
+              scopeId: {
+                nftItemId: this.draft.nftItemId,
+                nftCollectionId: this.draft.nftCollectionId
+              }
+            }
+          ),
+          ...this.schemaData
+        };
+      },
       /**
        * Get computed submit label
        */
@@ -250,7 +194,6 @@
           authors: this.formData.authors,
           owner: this.nftCollection.issuer,
           ownedByTeam: this.nftCollection.issuedByTeam,
-          references: this.formData.references,
           formatType: this.formData.formatType,
           nftItemId: this.nftCollection.nextNftItemId
         };

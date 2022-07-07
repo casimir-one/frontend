@@ -9,9 +9,6 @@ export { default as NftItemsDataProvider } from './lib/components/content/DataPr
 export { default as NftItemsList } from './lib/components/content/List';
 export { default as NftItemDetails } from './lib/components/content/Details';
 
-export { default as NftItemsSelector }
-  from './lib/components/common/NftItemSelector';
-
 export { default as NftItemsInfiniteScroll } from './lib/components/common/NftItemsInfiniteScroll';
 export { default as NftItemDraftDeclineDialog }
   from './lib/components/moderation/NftItemDraftDeclineDialog';

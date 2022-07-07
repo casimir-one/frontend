@@ -1,7 +1,6 @@
 <template>
   <vex-block
-    v-if="!loading && draft"
-    :title="draft.title"
+    v-if="draft"
   >
     <template #title-append>
       <template v-if="withActions && canManage">
@@ -39,33 +38,21 @@
     </template>
 
     <div>
-      <span>{{ $t('module.nftItems.details.authors') }}</span>
-      <users-list
-        view-type="stack"
-        :users="draft.authors"
+      <layout-renderer
+        :value="draft"
+        :schema="internalSchema"
+        :schema-data="internalSchemaData"
       />
     </div>
-
-    <nft-item-details
-      v-if="draft.formatType === NFT_ITEM_METADATA_FORMAT.PACKAGE"
-      :content="draft"
-    />
-
-    <json-content-details
-      v-if="draft.formatType === NFT_ITEM_METADATA_FORMAT.JSON"
-      :content="draft"
-    />
   </vex-block>
 </template>
 
 <script>
   import { defineComponent } from '@deip/platform-util';
+  import { AttributeScope } from '@casimir/platform-core';
   import { VexBlock, contextMixin } from '@deip/vuetify-extended';
-  import { NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
-  import { UsersList } from '@deip/users-module';
-
-  import NftItemDetails from '../../common/NftItemDetails';
-  import JsonContentDetails from '../../common/JsonContentDetails';
+  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
 
   /**
    * NFT item drafts details component
@@ -75,20 +62,18 @@
 
     components: {
       VexBlock,
-      UsersList,
-      NftItemDetails,
-      JsonContentDetails
+      LayoutRenderer
     },
 
-    mixins: [contextMixin],
+    mixins: [contextMixin, attributedDetailsFactory('draft')],
 
     props: {
       /**
        * NFT item draft id
        */
-      nftItemDraftId: {
-        type: String,
-        required: true
+      draft: {
+        type: Object,
+        default: () => {}
       },
       /**
        * Should contain delete, edit and publish drafts buttons
@@ -108,9 +93,7 @@
 
     data() {
       return {
-        loading: false,
-        actionLoading: false,
-        NFT_ITEM_METADATA_FORMAT
+        actionLoading: false
       };
     },
 
@@ -118,13 +101,22 @@
       /**
        * Get computed NFT item draft by id
        */
-      draft() {
-        return this.$store.getters['nftItemDrafts/one'](this.nftItemDraftId);
-      }
-    },
 
-    created() {
-      this.getDraft();
+      internalSchemaData() {
+        return {
+          ...attributeMethodsFactory(
+            expandAttributes(this.draft),
+            {
+              scopeName: AttributeScope.NFT_ITEM,
+              scopeId: {
+                nftItemId: this.draft.nftItemId,
+                nftCollectionId: this.draft.nftCollectionId
+              }
+            }
+          ),
+          ...this.schemaData
+        };
+      }
     },
 
     methods: {
@@ -148,18 +140,7 @@
          */
         this.$emit('edit-click');
       },
-      /**
-       * Get draft by id
-       */
-      async getDraft() {
-        this.loading = true;
-        try {
-          await this.$store.dispatch('nftItemDrafts/getOne', this.nftItemDraftId);
-        } catch (error) {
-          console.error(error);
-        }
-        this.loading = false;
-      },
+
       /**
        * Publish draft
        */
