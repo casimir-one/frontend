@@ -1,4 +1,6 @@
-export const APP_EVENT = {
+import { createEnum } from '@deip/toolbox';
+
+export const APP_EVENT = createEnum({
   NFT_COLLECTION_METADATA_CREATED: 1,
   NFT_COLLECTION_METADATA_UPDATED: 2,
 
@@ -81,4 +83,4 @@ export const APP_EVENT = {
   NFT_LAZY_BUY_PROPOSAL_CREATED: 203,
   NFT_LAZY_BUY_PROPOSAL_ACCEPTED: 204,
   NFT_LAZY_BUY_PROPOSAL_DECLINED: 205
-};
+});
