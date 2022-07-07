@@ -160,6 +160,29 @@ export const baseAttributes = [
             aspectRatio: {
               type: Number,
               default: 16 / 9
+            },
+            noFlip: {
+              type: Boolean,
+              default: false
+            },
+            noRotate: {
+              type: Boolean,
+              default: false
+            },
+            noResize: {
+              type: Boolean,
+              default: false
+            },
+            round: {
+              type: Boolean,
+              default: false
+            },
+            disableCrop: {
+              type: Boolean,
+              default: false
+            },
+            maxSize: {
+              type: Number
             }
           }
         }
