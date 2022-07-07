@@ -1,6 +1,8 @@
 import Maska from 'maska';
 import { setLocalesMessages } from '@deip/toolbox';
 
+import { assetAttributes } from './config';
+
 import { assetsStore, balancesStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);
@@ -31,6 +33,10 @@ const install = (Vue, options = {}) => {
       });
   } else {
     throw Error('[AssetsModule]: storeInstance is not provided');
+  }
+
+  for (const attribute of assetAttributes) {
+    store.dispatch('attributesRegistry/addAttribute', attribute);
   }
 
   Vue.use(Maska);
