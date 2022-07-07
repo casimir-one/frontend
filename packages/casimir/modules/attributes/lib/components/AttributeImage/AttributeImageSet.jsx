@@ -22,7 +22,7 @@ export default defineComponent({
         <VexImageInput
           vModel={this.internalValue}
           label={this.attributeInfo.title}
-          aspectRatio={this?.proxyProps?.VexImageInput?.aspectRatio}
+          { ...{ props: this?.proxyProps?.VexImageInput || {} }}
           initialImage={this.schemaData.getAttributeFileSrc(this.attributeId)}
           errorMessages={errors}
         />
