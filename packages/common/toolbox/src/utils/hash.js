@@ -1,10 +1,28 @@
 import md5 from 'md5';
-import crypto from '@deip/lib-crypto';
+import { sha256 } from '@noble/hashes/sha256';
+import { ripemd160 } from '@noble/hashes/ripemd160';
+
 import {
   isArray,
   isObject,
   isNil
 } from '../verification';
+
+/**
+ * @param data
+ * @return {string}
+ */
+function hexify(data) {
+  let result = '';
+  const view = new Uint8Array(data);
+  for (let i = 0; i < view.byteLength; i++) {
+    if (view[i] < 16) {
+      result += '0';
+    }
+    result += view[i].toString(16);
+  }
+  return result;
+}
 
 /**
   * Generate sha256 hash
@@ -20,7 +38,7 @@ export const genSha256Hash = (val) => {
     string = JSON.stringify(val);
   }
 
-  return crypto.hexify(crypto.sha256(new TextEncoder('utf-8').encode(string).buffer));
+  return hexify(sha256(string));
 };
 
 /**
@@ -37,7 +55,7 @@ export const genRipemd160Hash = (val) => {
     string = JSON.stringify(val);
   }
 
-  return crypto.hexify(crypto.ripemd160(new TextEncoder('utf-8').encode(string).buffer));
+  return hexify(ripemd160(string));
 };
 
 /**
