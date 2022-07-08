@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { hasValue, wrapInArray } from '@deip/toolbox';
+import { hasValue, wrapInArray, isObject } from '@deip/toolbox';
 import { proxydi } from '@deip/proxydi';
 
 /**
@@ -108,13 +108,15 @@ export const getAttributeFileSrc = (opts = {}) => {
 
   if (!filename) return null;
 
+  const scopeFormatted = isObject(scopeId) ? JSON.stringify(scopeId) : scopeId;
+
   const url = [
     serverUrl,
     'api',
     'attribute',
     'file',
     scope,
-    scopeId,
+    scopeFormatted,
     attributeId,
     filename
   ].join('/');
