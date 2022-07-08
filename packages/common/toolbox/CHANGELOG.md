@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/DEIPworld/deip-modules/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/toolbox,@deip/commands:** CAS-114 removed require from toolbox and baseCmd ([0239591](https://github.com/DEIPworld/deip-modules/commit/023959176eb9055c359bf99ec17be945f10fc9b9))
+
+
+
+
+
 ## [1.382.2](https://github.com/DEIPworld/deip-modules/compare/v1.382.1...v1.382.2) (2022-06-07)
 
 **Note:** Version bump only for package @deip/toolbox

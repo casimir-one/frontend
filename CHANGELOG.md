@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/casimir-ai/frontend/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@casimir/platform-core:** CAS-118 add creteEnum to object enums ([8149ac1](https://github.com/casimir-ai/frontend/commit/8149ac17bdc1d42cfe3630890b3e7b6751d68a48))
+* **@deip/attributes-module:** add proxy props to image attribute ([c0f0790](https://github.com/casimir-ai/frontend/commit/c0f0790bbbe171054f0d34871c8c5e712da9677a))
+* **@deip/attributes-module:** CAS-117 fix table display ([8df5722](https://github.com/casimir-ai/frontend/commit/8df572214dffe18268f5add9f7b15277997b4e2a))
+* **@deip/commands:** CAS-115 fix create proposal cmd ([a3c9cc3](https://github.com/casimir-ai/frontend/commit/a3c9cc38d6569c46c83928a8aa4f1e62de108962))
+* **@deip/toolbox,@deip/commands:** CAS-114 removed require from toolbox and baseCmd ([0239591](https://github.com/casimir-ai/frontend/commit/023959176eb9055c359bf99ec17be945f10fc9b9))
+* **@deip/vue-layout-schema:** fix proxy props settings display ([78d8a69](https://github.com/casimir-ai/frontend/commit/78d8a6982cf51847dc8b62f8cab3c60055d8e662))
+
+
+### Features
+
+* **@deip/assets-module:** create attribute for asset input ([9ca6dae](https://github.com/casimir-ai/frontend/commit/9ca6daec3b99044150268fb9acf3a41df405d182))
+
+
+
+
+
 # [1.386.0](https://github.com/DEIPworld/casimir-frontend/compare/v1.385.1...v1.386.0) (2022-07-06)
 
 

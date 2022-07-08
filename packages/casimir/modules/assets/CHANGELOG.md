@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/DEIPworld/deip-modules/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Features
+
+* **@deip/assets-module:** create attribute for asset input ([9ca6dae](https://github.com/DEIPworld/deip-modules/commit/9ca6daec3b99044150268fb9acf3a41df405d182))
+
+
+
+
+
 # [1.386.0](https://github.com/DEIPworld/deip-modules/compare/v1.385.1...v1.386.0) (2022-07-06)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/DEIPworld/deip-modules/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/commands:** CAS-115 fix create proposal cmd ([a3c9cc3](https://github.com/DEIPworld/deip-modules/commit/a3c9cc38d6569c46c83928a8aa4f1e62de108962))
+
+
+
+
+
 # [1.386.0](https://github.com/DEIPworld/deip-modules/compare/v1.385.1...v1.386.0) (2022-07-06)
 
 

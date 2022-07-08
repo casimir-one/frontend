@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/DEIPworld/deip-modules/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@casimir/platform-core:** CAS-118 add creteEnum to object enums ([8149ac1](https://github.com/DEIPworld/deip-modules/commit/8149ac17bdc1d42cfe3630890b3e7b6751d68a48))
+
+
+
+
+
 # [1.386.0](https://github.com/DEIPworld/deip-modules/compare/v1.385.1...v1.386.0) (2022-07-06)
 
 

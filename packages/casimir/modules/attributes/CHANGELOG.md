@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.387.0](https://github.com/DEIPworld/deip-modules/compare/v1.386.0...v1.387.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** add proxy props to image attribute ([c0f0790](https://github.com/DEIPworld/deip-modules/commit/c0f0790bbbe171054f0d34871c8c5e712da9677a))
+* **@deip/attributes-module:** CAS-117 fix table display ([8df5722](https://github.com/DEIPworld/deip-modules/commit/8df572214dffe18268f5add9f7b15277997b4e2a))
+
+
+
+
+
 # [1.386.0](https://github.com/DEIPworld/deip-modules/compare/v1.385.1...v1.386.0) (2022-07-06)
 
 
