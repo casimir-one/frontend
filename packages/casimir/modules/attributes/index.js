@@ -8,3 +8,4 @@ export { default as AttributesSetup } from './lib/components/AttributesSetup';
 
 export { AttributesList } from './lib/components/AttributesList';
 export * from './lib/composables/attributes';
+export * from './lib/mixins';
