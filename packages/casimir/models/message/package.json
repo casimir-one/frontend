@@ -1,6 +1,6 @@
 {
   "name": "@deip/messages",
-  "version": "1.387.0",
+  "version": "1.387.1",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,7 +23,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/chain-service": "1.387.0",
+    "@deip/chain-service": "1.387.1",
     "@deip/commands": "1.387.0",
     "@deip/toolbox": "1.387.0"
   },

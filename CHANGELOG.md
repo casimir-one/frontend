@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.387.1](https://github.com/casimir-ai/frontend/compare/v1.387.0...v1.387.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** disable GrapheneChainService ([f428b13](https://github.com/casimir-ai/frontend/commit/f428b1339cb6a500253f08ebd0b60583b3b650fc))
+
+
+
+
+
 # [1.387.0](https://github.com/casimir-ai/frontend/compare/v1.386.0...v1.387.0) (2022-07-08)
 
 
