@@ -188,7 +188,8 @@ export class NonFungibleTokenService {
         nftItemMetadataDraftId,
         authors = [],
         metadata = {},
-        references = []
+        references = [],
+        attributes = []
       }
     } = payload;
     const env = this.proxydi.get('env');
@@ -231,12 +232,14 @@ export class NonFungibleTokenService {
       authors,
       metadata,
       references,
-      title
+      title,
+      attributes
     });
 
     const msg = new JsonDataMsg(
       { appCmds: [createNftItemMetadataCmd] },
-      { 'nft-collection-id': nftCollectionId }
+      { 'nft-collection-id': nftCollectionId },
+      { 'nft-item-id': nftItemId }
     );
 
     const response = await this.nonFungibleTokenHttp.createNftItemMetadata(msg);
@@ -264,17 +267,20 @@ export class NonFungibleTokenService {
    * @returns {Promise<Object>}
    */
   async createNftItemMetadataDraft(payload) {
+    const { data } = payload;
+
     const {
-      data
-    } = payload;
+      formData,
+      attributes
+    } = NonFungibleTokenService.#convertFormData(payload.data);
+    const commandData = { ...data, attributes };
 
-    const formData = createFormData(data);
-
-    const createNftItemMetadataDraftCmd = new CreateNftItemMetadataDraftCmd(data);
+    const createNftItemMetadataDraftCmd = new CreateNftItemMetadataDraftCmd(commandData);
     const msg = new MultFormDataMsg(
       formData,
       { appCmds: [createNftItemMetadataDraftCmd] },
-      { 'nft-collection-id': data.nftCollectionId }
+      { 'nft-collection-id': data.nftCollectionId },
+      { 'nft-item-id': data.nftItemId }
     );
 
     const { RETURN_MSG } = this.proxydi.get('env');
@@ -306,13 +312,19 @@ export class NonFungibleTokenService {
    */
   async updateNftItemMetadataDraft(payload) {
     const { data } = payload;
-    const formData = createFormData(data);
 
-    const updateNftItemMetadataDraftCmd = new UpdateNftItemMetadataDraftCmd(data);
+    const {
+      formData,
+      attributes
+    } = NonFungibleTokenService.#convertFormData(payload.data);
+    const commandData = { ...data, attributes };
+
+    const updateNftItemMetadataDraftCmd = new UpdateNftItemMetadataDraftCmd(commandData);
     const msg = new MultFormDataMsg(
       formData,
       { appCmds: [updateNftItemMetadataDraftCmd] },
-      { 'entity-id': data._id }
+      { 'nft-collection-id': data.nftCollectionId },
+      { 'nft-item-id': data.nftItemId }
     );
 
     const { RETURN_MSG } = this.proxydi.get('env');
@@ -751,6 +763,7 @@ export class NonFungibleTokenService {
    * @param {string} hash
    * @returns {string}
    */
+  /** @deprecated */ // TODO remove
   getNftItemFileSrc(nftCollectionId, nftItemId, hash) {
     return this.nonFungibleTokenHttp.getNftItemFileSrc(nftCollectionId, nftItemId, hash);
   }
