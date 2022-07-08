@@ -1,7 +1,7 @@
 import Maska from 'maska';
 import { setLocalesMessages } from '@deip/toolbox';
 
-import { assetAttributes } from './config';
+import { assetAttributes, components } from './config';
 
 import { assetsStore, balancesStore } from './store';
 
@@ -38,6 +38,8 @@ const install = (Vue, options = {}) => {
   for (const attribute of assetAttributes) {
     store.dispatch('attributesRegistry/addAttribute', attribute);
   }
+
+  store.commit('layoutsRegistry/addComponents', components);
 
   Vue.use(Maska);
 };

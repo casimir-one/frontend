@@ -20,6 +20,8 @@
 		"@casimir/platform-core": "1.387.0",
 		"@casimir/token-service": "1.387.1",
 		"@deip/assets-service": "1.387.1",
+    "@deip/attributes-module": "1.387.1",
+    "@deip/layouts-module": "1.387.1",
 		"@deip/platform-util": "1.387.0",
 		"@deip/proxydi": "1.387.0",
 		"@deip/teams-module": "1.387.1",

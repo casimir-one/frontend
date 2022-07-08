@@ -1,13 +1,19 @@
 import { AttributeScope } from '@casimir/platform-core';
-import { AssetInput } from '../components/AssetInput';
+import { AttributeAssetSet, AttributeAssetRead } from '../components/AttributeAsset';
 
 export const assetAttributes = [
   {
-    type: 'assetInput',
+    type: 'asset',
     valueType: ['object'],
-    label: 'Asset input',
+    label: 'Asset',
     icon: 'mdi-cash',
-    components: { set: { component: AssetInput } },
+    validateRule: 'required',
+    components: {
+      read: { component: AttributeAssetRead },
+      set: { component: AttributeAssetSet }
+    },
     scopes: [AttributeScope.NFT_ITEM]
   }
 ];
+
+export const components = { AttributeAssetRead, AttributeAssetSet };
