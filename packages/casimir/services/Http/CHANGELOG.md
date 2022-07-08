@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.388.0](https://github.com/casimir-ai/frontend/compare/v1.387.1...v1.388.0) (2022-07-08)
+
+**Note:** Version bump only for package @deip/http-service
+
+
+
+
+
 # [1.387.0](https://github.com/casimir-ai/frontend/compare/v1.386.0...v1.387.0) (2022-07-08)
 
 **Note:** Version bump only for package @deip/http-service

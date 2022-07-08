@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.388.0](https://github.com/casimir-ai/frontend/compare/v1.387.1...v1.388.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** export mixins ([5d267a8](https://github.com/casimir-ai/frontend/commit/5d267a8b7f3718e549b3283f211c5e8f6fedb11f))
+* **@deip/commands:** remove required fields in CreateNftItemMetadataDraftCmd ([01c7a5d](https://github.com/casimir-ai/frontend/commit/01c7a5d0c9f727bce278837b7e6ba244df90df6b))
+* **@deip/toolbox:** hashes ([3d5f72e](https://github.com/casimir-ai/frontend/commit/3d5f72e81bd4c4274b3cfdb80f8ccc27fc9b8e8d))
+
+
+### Features
+
+* **@deip/assets-module:** add attribute for asset ([78f04f5](https://github.com/casimir-ai/frontend/commit/78f04f58e7bb1050776eae7ad9f7f1b84770eb30))
+
+
+
+
+
 ## [1.387.1](https://github.com/casimir-ai/frontend/compare/v1.387.0...v1.387.1) (2022-07-08)
 
 

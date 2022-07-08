@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.388.0](https://github.com/DEIPworld/deip-modules/compare/v1.387.1...v1.388.0) (2022-07-08)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** export mixins ([5d267a8](https://github.com/DEIPworld/deip-modules/commit/5d267a8b7f3718e549b3283f211c5e8f6fedb11f))
+
+
+
+
+
 ## [1.387.1](https://github.com/DEIPworld/deip-modules/compare/v1.387.0...v1.387.1) (2022-07-08)
 
 **Note:** Version bump only for package @deip/attributes-module
