@@ -1,4 +1,4 @@
-import { APP_CMD, NFT_ITEM_METADATA_FORMAT, NftItemMetadataDraftStatus }
+import { APP_CMD, NftItemMetadataDraftStatus }
   from '@casimir/platform-core';
 import { assert } from '@deip/toolbox';
 import AppEntityCmd from '../base/AppEntityCmd';
@@ -29,8 +29,6 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
     const {
       nftCollectionId,
       nftItemId,
-      formatType,
-      jsonData,
       status,
       owner,
       // eslint-disable-next-line no-unused-vars
@@ -39,12 +37,8 @@ class CreateNftItemMetadataDraftCmd extends AppEntityCmd {
 
     assert(!!nftCollectionId, "'nftCollectionId' is required");
     assert(!!nftItemId, "'nftItemId' is required");
-    assert(!!formatType, "'formatType' is required");
-    assert(!!owner, "'owner' is required");
 
-    if (formatType === NFT_ITEM_METADATA_FORMAT.JSON) {
-      assert(!!jsonData, `'jsonData' is required for ${formatType} formatType`);
-    }
+    assert(!!owner, "'owner' is required");
 
     if (status) {
       assert(Object.values(NftItemMetadataDraftStatus).includes(status), "'status' is invalid");
