@@ -1,7 +1,7 @@
 import { Singleton } from '@deip/toolbox';
 import { ProtocolChain } from '@casimir/platform-core';
 import SubstrateChainService from './impl/substrate/SubstrateChainService';
-import GrapheneChainService from './impl/graphene/GrapheneChainService';
+// import GrapheneChainService from './impl/graphene/GrapheneChainService';
 
 
 class ChainService extends Singleton {
@@ -18,10 +18,16 @@ class ChainService extends Singleton {
         break;
       }
       case ProtocolChain.GRAPHENE: {
-        impl = GrapheneChainService.getInstance({
+        // impl = GrapheneChainService.getInstance({
+        //   connectionString: DEIP_FULL_NODE_URL,
+        //   coreAsset: CORE_ASSET,
+        //   chainId: CHAIN_ID,
+        //   portalId: PORTAL_ID
+        // });
+        console.warn("GRAPHENE WILL BE IMPLEMENTED LATER, USING SUBSTRATE FOR NOW");
+        impl = SubstrateChainService.getInstance({
           connectionString: DEIP_FULL_NODE_URL,
           coreAsset: CORE_ASSET,
-          chainId: CHAIN_ID,
           portalId: PORTAL_ID
         });
         break;
