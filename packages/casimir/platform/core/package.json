@@ -9,7 +9,7 @@
   ],
   "license": "ISC",
   "main": "./lib/index.js",
-  "types": "./lib/types.d.ts",
+  "types": "./lib/index.d.ts",
   "files": [
     "lib"
   ],
