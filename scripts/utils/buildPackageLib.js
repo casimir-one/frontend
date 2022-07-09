@@ -5,6 +5,7 @@ import {
   processVueFiles,
   processOtherFiles
 } from '../processing';
+import { postProcessingClean } from '../processing/postProcessingClean';
 
 /**
  *
@@ -22,6 +23,8 @@ export const buildPackageLib = async (pkg) => {
     processTsConfig(pkgPath),
     processOtherFiles(pkgPath)
   ]);
+
+  await postProcessingClean(pkgPath);
 
   return pkgName;
 };
