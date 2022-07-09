@@ -3,7 +3,7 @@ import {
   DefaultProps as VueComponentProps
 } from 'vue/types/options';
 
-import { ATTRIBUTE_TYPES } from '../src';
+import { ATTRIBUTE_TYPES } from '../constants';
 import { ServiceBasePayload } from './servicePayload';
 
 export type AttributeTypes = typeof ATTRIBUTE_TYPES[number];
