@@ -398,8 +398,12 @@ export class NonFungibleTokenService {
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
-      return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_STATUS_UPDATED
-        && eventBody.event.eventPayload._id === response.data._id;
+      const { event: { eventNum, eventPayload } } = eventBody;
+      const statusUpdated = eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_STATUS_UPDATED
+        && eventPayload._id === response.data._id;
+
+      const lazyProposalDeclined = eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_DECLINED;
+      return statusUpdated || lazyProposalDeclined;
     }, 20000);
 
     return response;
