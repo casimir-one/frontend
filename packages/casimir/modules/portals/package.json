@@ -1,6 +1,6 @@
 {
   "name": "@deip/portals-module",
-  "version": "1.389.0",
+  "version": "1.389.1",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,9 +20,9 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.389.0",
-    "@deip/platform-util": "1.389.0",
-    "@deip/portal-service": "1.389.0",
+    "@casimir/platform-core": "1.389.1",
+    "@deip/platform-util": "1.389.1",
+    "@deip/portal-service": "1.389.1",
     "@deip/proxydi": "1.388.0"
   },
   "devDependencies": {

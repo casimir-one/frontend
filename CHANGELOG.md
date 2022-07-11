@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.389.1](https://github.com/casimir-ai/frontend/compare/v1.389.0...v1.389.1) (2022-07-11)
+
+
+### Bug Fixes
+
+* **@casimir/platform-core:** add IMPORT_DAO key ([8f5d8e8](https://github.com/casimir-ai/frontend/commit/8f5d8e8496fb1dde6681c5d9ca3cd7e1569fa4ee))
+
+
+
+
+
 # [1.389.0](https://github.com/casimir-ai/frontend/compare/v1.388.0...v1.389.0) (2022-07-11)
 
 
