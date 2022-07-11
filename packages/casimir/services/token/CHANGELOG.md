@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.389.0](https://github.com/DEIPworld/deip-modules/compare/v1.388.0...v1.389.0) (2022-07-11)
+
+
+### Bug Fixes
+
+* **@casimir/nft-collections-module:** CAS-40 fix files save for nft items ([5346a1d](https://github.com/DEIPworld/deip-modules/commit/5346a1d45dadac46be0beae615adb152c3b3dd5c))
+
+
+
+
+
 # [1.388.0](https://github.com/DEIPworld/deip-modules/compare/v1.387.1...v1.388.0) (2022-07-08)
 
 **Note:** Version bump only for package @casimir/token-service

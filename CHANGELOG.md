@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.389.0](https://github.com/casimir-ai/frontend/compare/v1.388.0...v1.389.0) (2022-07-11)
+
+
+### Bug Fixes
+
+* **@casimir/nft-collections-module:** CAS-40 fix files save for nft items ([5346a1d](https://github.com/casimir-ai/frontend/commit/5346a1d45dadac46be0beae615adb152c3b3dd5c))
+* **@deip/attributes-module:** fix url for files from attributes ([4dddd15](https://github.com/casimir-ai/frontend/commit/4dddd15e8008ab31d69fac441d06aa78c64ab444))
+* builder ([ec19c3c](https://github.com/casimir-ai/frontend/commit/ec19c3c21eab14ad2b8a958a00ac059be07598cb))
+* **@casimir-platform-core:** declaration build ([20240c2](https://github.com/casimir-ai/frontend/commit/20240c291dbe156df96db8ee76d8e556a4a9e8a6))
+* **@deip/platform-core:** ts building ([2712670](https://github.com/casimir-ai/frontend/commit/2712670adfc65fa520481be7106d15060b3e2ec1))
+
+
+### Features
+
+* **@deip/attributes-module:** add attributes to module options ([6fac2a7](https://github.com/casimir-ai/frontend/commit/6fac2a7ff9324b4005f9af669b5624ecd69c0a53))
+
+
+
+
+
 # [1.388.0](https://github.com/casimir-ai/frontend/compare/v1.387.1...v1.388.0) (2022-07-08)
 
 

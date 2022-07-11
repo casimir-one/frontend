@@ -1,6 +1,6 @@
 {
   "name": "@casimir/scopes-module",
-  "version": "1.388.0",
+  "version": "1.389.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -29,7 +29,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/platform-util": "1.388.0",
+    "@deip/platform-util": "1.389.0",
     "@deip/toolbox": "1.388.0"
   }
 }

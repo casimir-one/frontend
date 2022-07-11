@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.389.0](https://github.com/DEIPworld/deip-modules/compare/v1.388.0...v1.389.0) (2022-07-11)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** fix url for files from attributes ([4dddd15](https://github.com/DEIPworld/deip-modules/commit/4dddd15e8008ab31d69fac441d06aa78c64ab444))
+
+
+### Features
+
+* **@deip/attributes-module:** add attributes to module options ([6fac2a7](https://github.com/DEIPworld/deip-modules/commit/6fac2a7ff9324b4005f9af669b5624ecd69c0a53))
+
+
+
+
+
 # [1.388.0](https://github.com/DEIPworld/deip-modules/compare/v1.387.1...v1.388.0) (2022-07-08)
 
 

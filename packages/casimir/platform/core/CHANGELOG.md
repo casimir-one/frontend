@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.389.0](https://github.com/DEIPworld/deip-modules/compare/v1.388.0...v1.389.0) (2022-07-11)
+
+
+### Bug Fixes
+
+* **@casimir-platform-core:** declaration build ([20240c2](https://github.com/DEIPworld/deip-modules/commit/20240c291dbe156df96db8ee76d8e556a4a9e8a6))
+* **@deip/platform-core:** ts building ([2712670](https://github.com/DEIPworld/deip-modules/commit/2712670adfc65fa520481be7106d15060b3e2ec1))
+
+
+
+
+
 # [1.388.0](https://github.com/DEIPworld/deip-modules/compare/v1.387.1...v1.388.0) (2022-07-08)
 
 **Note:** Version bump only for package @casimir/platform-core
