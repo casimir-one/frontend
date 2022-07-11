@@ -9,9 +9,14 @@ export const postProcessingClean = async (pkgPath) => {
   const operations = [];
 
   for (const file of files) {
-    const fileContent = fs.readFileSync(file, 'utf8').trim();
-    if (/export {}(;?)/.test(fileContent)) {
-      operations.push(() => asyncExec(`shx rm ${file}`));
+    const fileContent = fs.readFileSync(file, 'utf8')
+      .replace(/export {}(;?)/gm, '')
+      .trim();
+
+    if (!fileContent) {
+      operations.push(() => asyncExec(`npx shx rm ${file}`));
+    } else {
+      fs.writeFileSync(file, fileContent);
     }
   }
 
