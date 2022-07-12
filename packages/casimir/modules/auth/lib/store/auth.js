@@ -186,8 +186,14 @@ const ACTIONS = {
 };
 
 const MUTATIONS = {
-  setData(state, { jwtToken, privateKey, publicKey } = {}) {
-    if (jwtToken && privateKey && publicKey) {
+  setData(state, data = {}) {
+    const {
+      jwtToken,
+      privateKey = null,
+      publicKey = null
+    } = data;
+
+    if (jwtToken) {
       accessService.setAccessToken(jwtToken, privateKey, publicKey);
     }
 
