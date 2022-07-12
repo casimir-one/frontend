@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.389.3](https://github.com/casimir-ai/frontend/compare/v1.389.2...v1.389.3) (2022-07-12)
+
+
+### Bug Fixes
+
+* **@deip/auth-module:** store set data ([17b7f61](https://github.com/casimir-ai/frontend/commit/17b7f61175cf556550d0fa064f0d26e205af7c1d))
+
+
+
+
+
 ## [1.389.2](https://github.com/casimir-ai/frontend/compare/v1.389.1...v1.389.2) (2022-07-12)
 
 **Note:** Version bump only for package library
