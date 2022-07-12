@@ -1,6 +1,6 @@
 {
   "name": "@deip/layout-service",
-  "version": "1.389.1",
+  "version": "1.389.2",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,9 +22,9 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/commands": "1.389.1",
-    "@deip/http-service": "1.389.1",
-    "@deip/messages": "1.389.1",
+    "@deip/commands": "1.389.2",
+    "@deip/http-service": "1.389.2",
+    "@deip/messages": "1.389.2",
     "@deip/proxydi": "1.388.0",
     "@deip/toolbox": "1.388.0"
   }
