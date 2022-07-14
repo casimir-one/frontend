@@ -10,6 +10,7 @@ import SubstrateInvestmentOpportunityDto from './response/dto/SubstrateInvestmen
 import SubstrateContractAgreementDto from './response/dto/SubstrateContractAgreementDto';
 import SubstrateProposalDto from './response/dto/SubstrateProposalDto';
 import SubstratePortalDto from './response/dto/SubstratePortalDto';
+import SubstrateBlockDto from './response/dto/SubstrateBlockDto';
 
 
 
@@ -56,10 +57,10 @@ class SubstrateChainRpc extends BaseChainRpc {
 
     const getNonFungibleTokenMetadataAsync = async (classId) => {
       const api = chainService.getChainNodeClient();
-      
+
       const metadataOpt = await api.query.uniques.classMetadataOf(classId);
       const metadata = metadataOpt.isSome ? metadataOpt.unwrap().toJSON() : null;
-      
+
       if (!metadata) return null;
       const dataStr = hexToString(metadata.data);
       const data = JSON.parse(dataStr);
@@ -534,6 +535,175 @@ class SubstrateChainRpc extends BaseChainRpc {
 
       },
 
+
+      /* [DEPRECATED] REVIEW */
+
+      getReviewAsync: async (reviewId) => {
+        const review = await chainService.rpcToChainNode("deip_getReview", [null, toHexFormat(reviewId)]);
+        if (!review) return null;
+        const item = await getPreProcessedReviewAsync(review);
+        return new SubstrateReviewDto(item);
+      },
+
+      getReviewsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("deip_getReviewList", [null, limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviews.map(async ({ value: review }) => {
+          const item = await getPreProcessedReviewAsync(review);
+          return new SubstrateReviewDto(item);
+        }));
+        return list;
+      },
+
+      getReviewsByProjectAsync: async (projectId, startIdx = null, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("deip_getReviewListByProject", [null, toHexFormat(projectId), limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviews.map(async ({ value: review }) => {
+          const item = await getPreProcessedReviewAsync(review);
+          return new SubstrateReviewDto(item);
+        }));
+        return list;
+      },
+
+      getReviewsByProjectContentAsync: async (contentId, startIdx = null, limit = LIST_LIMIT) => {
+        const reviews = await chainService.rpcToChainNode("deip_getReviewListByProjectContent", [null, toHexFormat(contentId), limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviews.map(async ({ value: review }) => {
+          const item = await getPreProcessedReviewAsync(review);
+          return new SubstrateReviewDto(item);
+        }));
+        return list;
+      },
+
+      getReviewsByAuthorAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
+        const api = chainService.getChainNodeClient();
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
+        const reviews = await chainService.rpcToChainNode("deip_getReviewListByReviewer", [null, accountId, limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviews.map(async ({ value: review }) => {
+          const item = await getPreProcessedReviewAsync(review);
+          return new SubstrateReviewDto(item);
+        }));
+        return list;
+      },
+
+
+
+      /* [DEPRECATED] REVIEW UPVOTE */
+
+      getReviewUpvotesByReviewAsync: async (reviewId, startIdx = null, limit = LIST_LIMIT) => {
+        const reviewUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByReview", [null, toHexFormat(reviewId), limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviewUpvotes.map(async ({ value: reviewUpvote }) => {
+          const item = await getPreProcessedReviewUpvoteAsync(reviewUpvote);
+          return new SubstrateReviewUpvoteDto(item);
+        }));
+        return list;
+      },
+
+      getReviewUpvotesByUpvoterAsync: async (daoIdOrPubKeyOrAddress, startIdx = null, limit = LIST_LIMIT) => {
+        const api = chainService.getChainNodeClient();
+        const accountId = toAddress(daoIdOrPubKeyOrAddress, api.registry);
+        const reviewsUpvotes = await chainService.rpcToChainNode("deip_getReviewUpvoteListByUpvoter", [null, accountId, limit, toHexFormat(startIdx)]);
+        const list = await Promise.all(reviewsUpvotes.map(async ({ value: reviewUpvote }) => {
+          const item = await getPreProcessedReviewUpvoteAsync(reviewUpvote);
+          return new SubstrateReviewUpvoteDto(item);
+        }));
+        return list;
+      },
+
+
+
+      /* [DEPRECATED] DOMAIN */
+
+      getDomainAsync: async (domainId) => {
+        const domain = await chainService.rpcToChainNode("deip_getDomain", [null, toHexFormat(domainId)]);
+        if (!domain) return null;
+        return new SubstrateDomainDto(domain);
+      },
+
+      getDomainsListAsync: async (startIdx = null, limit = LIST_LIMIT) => {
+        const domains = await chainService.rpcToChainNode("deip_getDomainList", [null, limit, toHexFormat(startIdx)]);
+        return domains.map(({ value: domain }) => {
+          return new SubstrateDomainDto(domain);
+        });
+      },
+
+
+
+
+      /* BLOCK */
+
+      getChainHeadersAsync: async () => {
+        const api = chainService.getChainNodeClient();
+        const { hash, parentHash } = await api.rpc.chain.getHeader();
+        return {
+          hash,
+          parentHash
+        }
+      },
+
+      getBlockHashAsync: async (blockNumber) => {
+        const api = chainService.getChainNodeClient();
+
+
+        const blockHashPromise = blockNumber ?
+          api.rpc.chain.getBlockHash(blockNumber) :
+          this.getChainHeadersAsync().then(x => x.hash)
+
+        return blockHashPromise.then(_ => _.toString());
+      },
+
+
+      //TODO: rename to getBlockByHashAsync??
+
+      getBlockByHashAsync: async (hash) => {
+        const api = chainService.getChainNodeClient();
+
+        const block = await api.rpc.chain.getBlock(hash);
+        if (!block) return null;
+        
+        return new SubstrateBlockDto(block);
+      },
+
+      getBlockAsync: async function (blockNumber) {
+        const api = chainService.getChainNodeClient();
+
+        const blockHash = await this.getBlockHashAsync(blockNumber);
+        const block = await api.rpc.chain.getBlock(blockHash);
+        if (!block) return null;
+
+
+        const apiAt = await api.at(block.block.header.hash);
+        const allRecords = await apiAt.query.system.events();
+
+        // block.block.extrinsics?.forEach(({ method: { method, section }, hash }, index) => {
+        //   // filter the specific events based on the phase and then the
+        //   // index of our extrinsic in the block
+
+        //   const events = allRecords
+        //     .filter(({ phase }) =>
+        //       phase.isApplyExtrinsic &&
+        //       phase.asApplyExtrinsic.eq(index)
+        //     )
+        //     .map(({ event }) => {
+        //       const [dispatchInfo] = event.data;
+
+        //       return `${event.section}.${event.method} ::ExtrinsicSuccess:: ${JSON.stringify(dispatchInfo?.toHuman())}`;
+        //     });
+
+        //   console.log(`${hash}.${section}.${method}:: ${events.join(', ') || 'no events'}`);
+        // });
+
+        return new SubstrateBlockDto(block);
+      },
+
+
+      //TODO:
+      // getBlockEventsAsync: async function (blockHash) {
+      //   const api = chainService.getChainNodeClient();
+      //   const apiAt = api.at(hash);
+      //   const allRecords = await apiAt.query.system.events();
+      //   return allRecords.map(e => new SubstrateBlockDto)
+      //   return new SubstrateBlockDto(block);
+      // },
+
+
       // TODO:
 
       setBlockAppliedCallbackAsync: async function (cb) { throw Error(`Not implemented exception`); },
@@ -556,7 +726,6 @@ class SubstrateChainRpc extends BaseChainRpc {
       getAccountKeyReferencesAsync: async function (accounts, fullHistory) { throw Error(`Not implemented exception`); },
       getTeamReferencesAsync: async function (teams, fullHistory) { throw Error(`Not implemented exception`); },
       getTeamMemberReferencesAsync: async function (members, fullHistory) { throw Error(`Not implemented exception`); },
-      getBlockAsync: async function (blockNum) { throw Error(`Not implemented exception`); },
       getOpsHistoryAsync: async function (from, limit, opt) { throw Error(`Not implemented exception`); },
       getTransactionAsync: async function (trxId) { throw Error(`Not implemented exception`); },
       getBlockHeaderAsync: async function (blockNum) { throw Error(`Not implemented exception`); },

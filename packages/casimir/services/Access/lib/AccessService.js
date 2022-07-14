@@ -5,6 +5,17 @@ import { makeSingletonInstance } from '@deip/toolbox';
 /**
  * Manage JWT tokens
  */
+
+const storage = {};
+const localStorage = {
+  getItem: (key) => storage[key],
+  setItem: (key, value) => {
+    storage[key] = value;
+  },
+  removeItem: (key) => {
+    delete storage[key];
+  }
+}
 export class AccessService {
   /**
    * Get expiration date for JWT token
