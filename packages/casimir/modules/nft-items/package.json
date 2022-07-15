@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@casimir/nft-collections-module": "1.389.2",
+    "@deip/layouts-module": "1.389.2",
+    "@deip/attributes-module": "1.389.2",
     "@casimir/platform-core": "1.389.2",
     "@casimir/token-service": "1.389.2",
     "@deip/access-service": "1.389.2",

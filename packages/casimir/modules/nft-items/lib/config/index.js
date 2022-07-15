@@ -17,7 +17,12 @@ export const nftItemScope = {
       {
         key: 'card',
         label: 'NFT item card',
-        allowedTypes: ['card']
+        allowedTypes: ['card', 'details']
+      },
+      {
+        key: 'moderation',
+        label: 'NFT item moderation card',
+        allowedTypes: ['card', 'details']
       }
     ]
   }

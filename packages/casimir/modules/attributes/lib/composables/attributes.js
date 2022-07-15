@@ -156,15 +156,18 @@ export const attributeMethodsFactory = (data, scopeData = {}) => {
     },
 
     // attrFileSrc
-    getAttributeFileSrc(attributeId, file) {
+    getAttributeFileSrc(attributeId, nftCollectionId, nftItemId, file) {
       const filename = file || data?.attributes?.[attributeId];
 
       const hasFileName = !!filename && filename !== 'null' && filename !== 'undefined';
 
-      const { scopeName: scope, scopeId } = scopeData;
+      const { scopeName: scope } = scopeData;
+      let { scopeId } = scopeData;
       if (!(scope && scopeId && hasFileName && attributeId)) {
         return '';
       }
+
+      if (nftCollectionId && nftItemId) scopeId = JSON.stringify({ nftCollectionId, nftItemId });
 
       return getAttributeFileSrc({
         serverUrl: DEIP_SERVER_URL,
