@@ -18,11 +18,13 @@ export default defineComponent({
      * Generate image attribute for read only
      */
     genAttribute() {
-      const src = this.schemaData.getAttributeFileSrc(this.attributeId);
+      const src = this.schemaData.getAttributeFileSrc(this.attributeId,
+        this.schemaData.data.nftCollectionId, this.schemaData.data.nftItemId);
 
       return (
-        <VImg max-width="100%" src={src} />
+        <VImg aspect-ratio="1.3" max-width="100%" max-height="100%" src={src} />
       );
     }
   }
+
 });

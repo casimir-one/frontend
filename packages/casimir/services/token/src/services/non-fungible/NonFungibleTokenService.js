@@ -238,8 +238,10 @@ export class NonFungibleTokenService {
 
     const msg = new JsonDataMsg(
       { appCmds: [createNftItemMetadataCmd] },
-      { 'nft-collection-id': nftCollectionId },
-      { 'nft-item-id': nftItemId }
+      {
+        'nft-collection-id': nftCollectionId,
+        'nft-item-id': nftItemId
+      }
     );
 
     const response = await this.nonFungibleTokenHttp.createNftItemMetadata(msg);
@@ -279,8 +281,10 @@ export class NonFungibleTokenService {
     const msg = new MultFormDataMsg(
       formData,
       { appCmds: [createNftItemMetadataDraftCmd] },
-      { 'nft-collection-id': data.nftCollectionId },
-      { 'nft-item-id': data.nftItemId }
+      {
+        'nft-collection-id': data.nftCollectionId,
+        'nft-item-id': data.nftItemId
+      },
     );
 
     const { RETURN_MSG } = this.proxydi.get('env');
@@ -323,8 +327,10 @@ export class NonFungibleTokenService {
     const msg = new MultFormDataMsg(
       formData,
       { appCmds: [updateNftItemMetadataDraftCmd] },
-      { 'nft-collection-id': data.nftCollectionId },
-      { 'nft-item-id': data.nftItemId }
+      {
+        'nft-collection-id': data.nftCollectionId,
+        'nft-item-id': data.nftItemId
+      }
     );
 
     const { RETURN_MSG } = this.proxydi.get('env');
