@@ -23,8 +23,7 @@ export default defineComponent({
           vModel={this.internalValue}
           label={this.attributeInfo.title}
           { ...{ props: this?.proxyProps?.VexImageInput || {} }}
-          initialImage={this.schemaData.getAttributeFileSrc(this.attributeId,
-            this.schemaData.data.nftCollectionId, this.schemaData.data.nftItemId)}
+          initialImage={this.schemaData.getAttributeFileSrc(this.attributeId)}
           errorMessages={errors}
         />
       );

@@ -1,7 +1,5 @@
-import {
-  VImg
-// eslint-disable-next-line import/extensions,import/no-unresolved
-} from 'vuetify/lib/components';
+import { VexImage } from '@deip/vuetify-extended';
+
 import { defineComponent } from '@deip/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
@@ -18,11 +16,13 @@ export default defineComponent({
      * Generate image attribute for read only
      */
     genAttribute() {
-      const src = this.schemaData.getAttributeFileSrc(this.attributeId,
-        this.schemaData.data.nftCollectionId, this.schemaData.data.nftItemId);
+      const src = this.schemaData.getAttributeFileSrc(this.attributeId);
+      const props = this?.proxyProps?.VexImage;
 
       return (
-        <VImg aspect-ratio="1.3" max-width="100%" max-height="100%" src={src} />
+        <VexImage max-width="100%" max-height="100%" src={src}
+          {...{ props }}
+        />
       );
     }
   }

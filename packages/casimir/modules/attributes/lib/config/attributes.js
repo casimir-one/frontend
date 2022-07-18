@@ -152,7 +152,51 @@ export const baseAttributes = [
     icon: 'mdi-file-image-outline',
 
     components: {
-      read: { component: AttributeImageRead },
+      read: {
+        component: AttributeImageRead,
+        proxyProps: {
+          VexImage: {
+            height: {
+              type: [String, Number]
+            },
+            maxHeight: {
+              type: [String, Number]
+            },
+            maxWidth: {
+              type: [String, Number]
+            },
+            minHeight: {
+              type: [String, Number]
+            },
+            minWidth: {
+              type: [String, Number]
+            },
+            width: {
+              type: [String, Number]
+            },
+            aspectRatio: {
+              type: Number
+            },
+            contentClass: {
+              type: String
+            },
+            alt: {
+              type: String
+            },
+            contain: {
+              type: Boolean
+            },
+            position: {
+              type: String,
+              default: 'center center'
+            },
+            fullView: {
+              type: Boolean,
+              default: false
+            }
+          }
+        }
+      },
       set: {
         component: AttributeImageSet,
         proxyProps: {
