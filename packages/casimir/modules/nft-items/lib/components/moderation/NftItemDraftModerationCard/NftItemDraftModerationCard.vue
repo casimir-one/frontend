@@ -101,7 +101,10 @@
             expandAttributes(this.nftItemDraft),
             {
               scopeName: 'nftItem',
-              scopeId: this.nftItemDraft._id
+              scopeId: {
+                nftItemId: this.nftItemDraft.nftItemId,
+                nftCollectionId: this.nftItemDraft.nftCollectionId
+              }
             }
           ),
           ...this.schemaData
