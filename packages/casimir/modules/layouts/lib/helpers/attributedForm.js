@@ -34,7 +34,13 @@ export const attributedFormFactory = (
      */
     attributesMap() {
       return this.$store.getters['attributes/settings'].mappedKeys
-        .filter((i) => i.key.split('.')[0] === scope && i.mapToModel)
+        .filter((i) => {
+          const [scopeName, attributeName] = i.key.split('.');
+          const attributeMapInfo = this.attributesMapInfo
+            .find((a) => a.key === attributeName);
+
+          return scopeName === scope && attributeMapInfo?.mapToModel;
+        })
         .map((i) => ({ key: i.key.split('.')[1], value: i.value }));
     },
     /**
