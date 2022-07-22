@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
+
+
+### Features
+
+* **@casimir/token-service:** CAS-129 clear payload for nftItem ([3b2d27c](https://github.com/DEIPworld/deip-modules/commit/3b2d27c8f1a44b166c352a657c64b2c30f4b8a19))
+* CAS-155 delete send email route ([8da0208](https://github.com/DEIPworld/deip-modules/commit/8da02087eb01eb1980111d063fd806db92c72ffc))
+
+
+
+
+
 ## [1.389.2](https://github.com/DEIPworld/deip-modules/compare/v1.389.1...v1.389.2) (2022-07-12)
 
 **Note:** Version bump only for package @deip/commands

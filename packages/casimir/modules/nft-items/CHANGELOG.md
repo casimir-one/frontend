@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* **@casimir/nft-items-module:** attributes added in NftItemDetails and NftItemDraftDetails ([c1358ac](https://github.com/DEIPworld/deip-modules/commit/c1358ac5ca788f62024043e85d3f47b1ef08a280))
+* **@casimir/nft-items-module:** fix image in nft item moderation card ([a4f2a39](https://github.com/DEIPworld/deip-modules/commit/a4f2a39daf4958d98ae48c30ed6f04e35d00730d))
+
+
+### Features
+
+* **@casimir/nft-items-module:** add layout to moderation card ([4f4de0c](https://github.com/DEIPworld/deip-modules/commit/4f4de0c6131d9634af8b67f235a1f9e7b661be27))
+
+
+
+
+
 ## [1.389.2](https://github.com/DEIPworld/deip-modules/compare/v1.389.1...v1.389.2) (2022-07-12)
 
 **Note:** Version bump only for package @casimir/nft-items-module

@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.390.0](https://github.com/casimir-ai/frontend/compare/v1.389.3...v1.390.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* add legacy-peer-deps to publish script ([0f782f3](https://github.com/casimir-ai/frontend/commit/0f782f3d3324809c47c38c74698309cb43d606b6))
+* **@casimir/nft-items-module:** attributes added in NftItemDetails and NftItemDraftDetails ([c1358ac](https://github.com/casimir-ai/frontend/commit/c1358ac5ca788f62024043e85d3f47b1ef08a280))
+* **@casimir/nft-items-module:** fix image in nft item moderation card ([a4f2a39](https://github.com/casimir-ai/frontend/commit/a4f2a39daf4958d98ae48c30ed6f04e35d00730d))
+* **@deip/attributes-module:** fix image attribute ([63c0dfb](https://github.com/casimir-ai/frontend/commit/63c0dfb17fe09197142626f75a918b9ce32cd3e7))
+* **@deip/layouts-module:** CAS-40 fix map to model in attributed form ([8759372](https://github.com/casimir-ai/frontend/commit/87593723766a6ba5e00ae3d5b16e32173cf759da))
+
+
+### Features
+
+* **@casimir/token-service:** CAS-129 clear payload for nftItem ([3b2d27c](https://github.com/casimir-ai/frontend/commit/3b2d27c8f1a44b166c352a657c64b2c30f4b8a19))
+* CAS-155 delete send email route ([8da0208](https://github.com/casimir-ai/frontend/commit/8da02087eb01eb1980111d063fd806db92c72ffc))
+* **@casimir/nft-items-module:** add layout to moderation card ([4f4de0c](https://github.com/casimir-ai/frontend/commit/4f4de0c6131d9634af8b67f235a1f9e7b661be27))
+
+
+
+
+
 ## [1.389.3](https://github.com/casimir-ai/frontend/compare/v1.389.2...v1.389.3) (2022-07-12)
 
 

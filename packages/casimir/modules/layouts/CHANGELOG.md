@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* **@deip/layouts-module:** CAS-40 fix map to model in attributed form ([8759372](https://github.com/DEIPworld/deip-modules/commit/87593723766a6ba5e00ae3d5b16e32173cf759da))
+
+
+
+
+
 ## [1.389.2](https://github.com/DEIPworld/deip-modules/compare/v1.389.1...v1.389.2) (2022-07-12)
 
 **Note:** Version bump only for package @deip/layouts-module
