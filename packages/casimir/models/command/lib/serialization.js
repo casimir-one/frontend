@@ -43,7 +43,6 @@ import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 import UpdateNftItemMetadataDraftStatusCmd from './impl/UpdateNftItemMetadataDraftStatusCmd';
 import UpdateNftItemMetadataDraftModerationMsgCmd
   from './impl/UpdateNftItemMetadataDraftModerationMsgCmd';
-import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
 const APP_CMD_INFO = {
   [APP_CMD.CREATE_DAO]: { class: CreateDaoCmd },
@@ -91,7 +90,6 @@ const APP_CMD_INFO = {
   [APP_CMD.UPDATE_NFT_ITEM_METADATA_DRAFT_MODERATION_MSG]: {
     class: UpdateNftItemMetadataDraftModerationMsgCmd
   },
-  [APP_CMD.SEND_REGISTRATION_CODE_BY_EMAIL]: { class: SendRegistrationCodeByEmailCmd }
 };
 
 export {
