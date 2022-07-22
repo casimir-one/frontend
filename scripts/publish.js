@@ -91,7 +91,8 @@ const prepareForPublish = async () => {
     await execa.command('npx lerna clean --yes', { stdio: 'inherit', shell: true });
   }
   if (bootstrap) {
-    await execa.command('npx lerna bootstrap', { stdio: 'inherit', shell: true });
+    await execa.command('npx lerna bootstrap --no-ci -- --legacy-peer-deps',
+      { stdio: 'inherit', shell: true });
   }
 };
 
