@@ -184,11 +184,8 @@ export class NonFungibleTokenService {
         nftItemId,
         recipient,
         ownedByTeam = false,
-        title,
         nftItemMetadataDraftId,
         authors = [],
-        metadata = {},
-        references = [],
         attributes = []
       }
     } = payload;
@@ -230,9 +227,6 @@ export class NonFungibleTokenService {
       ownedByTeam,
       nftItemMetadataDraftId,
       authors,
-      metadata,
-      references,
-      title,
       attributes
     });
 
