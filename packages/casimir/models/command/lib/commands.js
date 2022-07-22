@@ -43,7 +43,6 @@ import UpdateNetworkSettingsCmd from './impl/UpdateNetworkSettingsCmd';
 import UpdatePortalProfileCmd from './impl/UpdatePortalProfileCmd';
 import UpdatePortalSettingsCmd from './impl/UpdatePortalSettingsCmd';
 import CreatePortalCmd from './impl/CreatePortalCmd';
-import SendRegistrationCodeByEmailCmd from './impl/SendRegistrationCodeByEmailCmd';
 
 export {
   CreateDaoCmd,
@@ -90,5 +89,4 @@ export {
   UpdatePortalProfileCmd,
   UpdatePortalSettingsCmd,
   CreatePortalCmd,
-  SendRegistrationCodeByEmailCmd
 };
