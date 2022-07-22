@@ -23,15 +23,6 @@ describe('AssetsHttp', () => {
     expect(assetsHttp).toBeInstanceOf(AssetsHttp);
   });
 
-  describe('getAccountDepositHistory', () => {
-    it('should call get request with right url', () => {
-      const testUrl = '/api/v2/assets/deposit/history/account/testAccount?testQueryTestStatus';
-      assetsHttp.getAccountDepositHistory('testAccount', 'TestStatus');
-
-      expect(mockGet).toBeCalledWith(testUrl);
-    });
-  });
-
   describe('getAssetsByType', () => {
     it('should call get request with right url', () => {
       const testUrl = '/api/v2/assets/type/testType';
@@ -56,16 +47,6 @@ describe('AssetsHttp', () => {
       assetsHttp.lookupAssets('testLimit');
 
       expect(mockGet).toBeCalledWith(testUrl);
-    });
-  });
-
-  describe('deposit', () => {
-    it('should call post request with right url', () => {
-      const testUrl = '/webhook/assets/deposit';
-      const testDeposit = 'testDeposit';
-      assetsHttp.deposit(testDeposit);
-
-      expect(mockPost).toBeCalledWith(testUrl, testDeposit);
     });
   });
 });
