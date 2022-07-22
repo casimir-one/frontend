@@ -1,4 +1,4 @@
-import { HttpService, serializeParams } from '@deip/http-service';
+import { HttpService } from '@deip/http-service';
 import { makeSingletonInstance } from '@deip/toolbox';
 
 /**
@@ -6,17 +6,6 @@ import { makeSingletonInstance } from '@deip/toolbox';
  */
 export class AssetsHttp {
   http = HttpService.getInstance();
-
-  /**
-   * Deposit history for certain account
-   * @param {string} account
-   * @param {string} status
-   * @return {Promise<Object>}
-   */
-  async getAccountDepositHistory(account, status) {
-    const query = serializeParams({ status });
-    return this.http.get(`/api/v2/assets/deposit/history/account/${account}?${query}`);
-  }
 
   /**
    * Get assets by asset type
@@ -43,15 +32,6 @@ export class AssetsHttp {
   */
   async lookupAssets(limit) {
     return this.http.get(`/api/v2/assets/limit/${limit}`);
-  }
-
-  /**
-   * Deposit asset
-   * @param {Object} payload
-   * @return {Promise<Object>}
-   */
-  async deposit(payload) {
-    return this.http.post('/webhook/assets/deposit', payload);
   }
 
   /** @type {() => AssetsHttp} */
