@@ -4,6 +4,7 @@ import ChainService from './lib/ChainService';
 import SubstrateTx from './lib/impl/substrate/SubstrateTx';
 import SubstrateTxBuilder from './lib/impl/substrate/SubstrateTxBuilder';
 import * as SubstrateChainUtils from './lib/impl/substrate/utils';
+import FinalizedTx from './lib/base/FinalizedTx';
 // import * as GrapheneChainUtils from './lib/impl/graphene/utils';
 
 
@@ -16,5 +17,6 @@ export {
   SubstrateTx,
   SubstrateTxBuilder,
   SubstrateChainUtils,
+  FinalizedTx
   // GrapheneChainUtils
 }
