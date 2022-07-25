@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.391.0](https://github.com/DEIPworld/deip-modules/compare/v1.390.0...v1.391.0) (2022-07-25)
+
+**Note:** Version bump only for package @deip/assets-module
+
+
+
+
+
 # [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
 
 **Note:** Version bump only for package @deip/assets-module
