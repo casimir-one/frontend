@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.391.1](https://github.com/DEIPworld/deip-modules/compare/v1.391.0...v1.391.1) (2022-07-26)
+
+**Note:** Version bump only for package @deip/users-module
+
+
+
+
+
 # [1.391.0](https://github.com/DEIPworld/deip-modules/compare/v1.390.0...v1.391.0) (2022-07-25)
 
 **Note:** Version bump only for package @deip/users-module

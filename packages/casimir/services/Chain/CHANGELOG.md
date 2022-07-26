@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.391.1](https://github.com/casimir-ai/frontend/compare/v1.391.0...v1.391.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** fix SubstrateTx to work with string tx ([55970c7](https://github.com/casimir-ai/frontend/commit/55970c715c733b5c98bb5d6a82ebfa532a351ec2))
+
+
+
+
+
 # [1.391.0](https://github.com/casimir-ai/frontend/compare/v1.390.0...v1.391.0) (2022-07-25)
 
 
