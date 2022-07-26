@@ -4,7 +4,7 @@ import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/types';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
-import { assert, genSha256Hash } from '@deip/toolbox';
+import { assert, genSha256Hash, isString } from '@deip/toolbox';
 import { 
   pubKeyToAddress, 
   daoIdToAddress, 
@@ -279,7 +279,8 @@ class SubstrateTx extends BaseTx {
           return result;
         }
 
-        const batchAll = api.registry.createType('Extrinsic', this.getTx().toU8a());
+        const u8a = isHex(this.getTx()) ? hexToU8a(this.getTx()) : this.getTx().toU8a();
+        const batchAll = api.registry.createType('Extrinsic', u8a);
         const signingOpsPromises = [];
         const createDaoIds = []
 
@@ -413,7 +414,8 @@ class SubstrateTx extends BaseTx {
 
   getRawTx() {
     assert(super.isFinalized(), 'Transaction is not finalized');
-    return this.getTx().toHex();
+    const tx = this.getTx();
+    return isString(tx) ? tx : tx.toHex();
   }
 
   getSignedRawTx() {
