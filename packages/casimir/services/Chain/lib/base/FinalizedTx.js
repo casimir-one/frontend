@@ -19,6 +19,14 @@ class FinalizedTx {
     return this._tx.sendAsync(chainRpc);
   }
 
+  getTx() {
+    return this._tx;
+  }
+
+  setTx(tx) {
+    this._tx = tx;
+  }
+
   getPayload() {
     return { 
       tx: this._tx, 
