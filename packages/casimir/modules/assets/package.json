@@ -30,6 +30,7 @@
 		"@deip/validation-plugin": "1.388.0",
 		"@deip/vue-elements": "1.390.0",
 		"@deip/vuetify-extended": "1.390.0",
+    "bignumber.js": "^9.0.2",
 		"change-case": "^4.1.2",
 		"currency.js": "^2.0.4",
 		"lodash": "^4.17.21",
