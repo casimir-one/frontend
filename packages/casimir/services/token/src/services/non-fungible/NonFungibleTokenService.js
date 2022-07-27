@@ -22,6 +22,7 @@ import {
   CreateProposalCmd
 } from '@deip/commands';
 import { APP_PROPOSAL, APP_EVENT } from '@casimir/platform-core';
+import { walletSignTx } from '@deip/platform-util';
 import { ChainService } from '@deip/chain-service';
 import { WebSocketService } from '@deip/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
@@ -58,6 +59,7 @@ export class NonFungibleTokenService {
   /**
    * Create new nft collection and nft collection metadata
    * @param {import('@casimir/platform-core').NonFungibleTokenCreatePayload} payload
+   * @param signTxCallback
    * @return {Promise<Object>}
    */
   async createNftCollection(payload) {
@@ -69,37 +71,36 @@ export class NonFungibleTokenService {
       }
     } = payload;
     const env = this.proxydi.get('env');
-    let nftCollectionId;
-    await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainRpc = chainService.getChainRpc();
 
-        return chainTxBuilder.begin()
-          .then(async (txBuilder) => {
-            const entityId = await chainRpc.getNextAvailableNftCollectionId();
-            nftCollectionId = entityId;
-            const createNftCollectionCmd = new CreateNftCollectionCmd({
-              entityId,
-              issuer,
-              issuedByTeam
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainRpc = chainService.getChainRpc();
 
-            txBuilder.addCmd(createNftCollectionCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    const txBuilder = await chainTxBuilder.begin();
+    const entityId = await chainRpc.getNextAvailableNftCollectionId();
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const createNftCollectionCmd = new CreateNftCollectionCmd({
+      entityId,
+      issuer,
+      issuedByTeam
+    });
+    txBuilder.addCmd(createNftCollectionCmd);
 
-            return this.nonFungibleTokenHttp.create(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const collectionMsg = new JsonDataMsg(signedTx.getPayload());
+
+    await this.nonFungibleTokenHttp.create(collectionMsg);
 
     const {
       formData,
@@ -107,17 +108,18 @@ export class NonFungibleTokenService {
     } = NonFungibleTokenService.#convertFormData(payload.data);
 
     const createNftCollectionMetadataCmd = new CreateNftCollectionMetadataCmd({
-      entityId: nftCollectionId,
+      entityId,
       issuer,
       issuedByTeam,
       attributes
     });
-    const msg = new MultFormDataMsg(
+    const metadataMsg = new MultFormDataMsg(
       formData,
       { appCmds: [createNftCollectionMetadataCmd] },
-      { 'entity-id': nftCollectionId }
+      { 'entity-id': entityId }
     );
-    const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(msg);
+
+    const response = await this.nonFungibleTokenHttp.createNftCollectionMetadata(metadataMsg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -191,34 +193,39 @@ export class NonFungibleTokenService {
     } = payload;
     const env = this.proxydi.get('env');
 
-    await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createNftItemCmd = new CreateNftItemCmd({
-              issuer,
-              nftCollectionId,
-              nftItemId,
-              recipient,
-              ownedByTeam
-            });
-            txBuilder.addCmd(createNftItemCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    const txBuilder = await chainTxBuilder.begin();
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const createNftItemCmd = new CreateNftItemCmd({
+      issuer,
+      nftCollectionId,
+      nftItemId,
+      recipient,
+      ownedByTeam
+    });
+    txBuilder.addCmd(createNftItemCmd);
 
-            return this.nonFungibleTokenHttp.createNftItem(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const itemMsg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return itemMsg;
+    }
+
+    await this.nonFungibleTokenHttp.createNftItem(itemMsg);
 
     const createNftItemMetadataCmd = new CreateNftItemMetadataCmd({
       entityId: nftItemId,
@@ -230,7 +237,7 @@ export class NonFungibleTokenService {
       attributes
     });
 
-    const msg = new JsonDataMsg(
+    const metadataMsg = new JsonDataMsg(
       { appCmds: [createNftItemMetadataCmd] },
       {
         'nft-collection-id': nftCollectionId,
@@ -238,7 +245,7 @@ export class NonFungibleTokenService {
       }
     );
 
-    const response = await this.nonFungibleTokenHttp.createNftItemMetadata(msg);
+    const response = await this.nonFungibleTokenHttp.createNftItemMetadata(metadataMsg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -460,67 +467,72 @@ export class NonFungibleTokenService {
     } = env;
     const lazySellProposalExpirationTime = Date.now() + LAZY_BUY_PROPOSAL_EXPIRATION;
 
-    const response = await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const transferFtCmd = new TransferFTCmd({
-              from: TENANT_HOT_WALLET_DAO_ID,
-              to: issuer,
-              amount: asset.amount,
-              tokenId: asset.id,
-              symbol: asset.symbol,
-              precision: asset.precision
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-            const createNftCmd = new CreateNftItemCmd({
-              issuer,
-              recipient: TENANT_HOT_WALLET_DAO_ID,
-              nftCollectionId,
-              nftItemId
-            });
+    const txBuilder = await chainTxBuilder.begin();
 
-            const proposalBatch = [
-              transferFtCmd,
-              createNftCmd
-            ];
+    const transferFtCmd = new TransferFTCmd({
+      from: TENANT_HOT_WALLET_DAO_ID,
+      to: issuer,
+      amount: asset.amount,
+      tokenId: asset.id,
+      symbol: asset.symbol,
+      precision: asset.precision
+    });
 
-            return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((batchWeight) => {
-                const createProposalCmd = new CreateProposalCmd({
-                  type: APP_PROPOSAL.NFT_LAZY_SELL_PROPOSAL,
-                  creator: issuer,
-                  expirationTime: lazySellProposalExpirationTime,
-                  proposedCmds: proposalBatch,
-                  batchWeight
-                });
+    const createNftCmd = new CreateNftItemCmd({
+      issuer,
+      recipient: TENANT_HOT_WALLET_DAO_ID,
+      nftCollectionId,
+      nftItemId
+    });
 
-                txBuilder.addCmd(createProposalCmd);
-                const lazySellProposalId = createProposalCmd.getProtocolEntityId();
+    const proposalBatch = [
+      transferFtCmd,
+      createNftCmd
+    ];
 
-                const acceptProposalCmd = new AcceptProposalCmd({
-                  entityId: lazySellProposalId,
-                  account: issuer,
-                  batchWeight
-                });
-                txBuilder.addCmd(acceptProposalCmd);
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
 
-                return txBuilder.end();
-              });
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    const createProposalCmd = new CreateProposalCmd({
+      type: APP_PROPOSAL.NFT_LAZY_SELL_PROPOSAL,
+      creator: issuer,
+      expirationTime: lazySellProposalExpirationTime,
+      proposedCmds: proposalBatch,
+      batchWeight
+    });
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    txBuilder.addCmd(createProposalCmd);
 
-            return this.nonFungibleTokenHttp.lazySell(msg);
-          });
-      });
+    const lazySellProposalId = createProposalCmd.getProtocolEntityId();
+    const acceptProposalCmd = new AcceptProposalCmd({
+      entityId: lazySellProposalId,
+      account: issuer,
+      batchWeight
+    });
+
+    txBuilder.addCmd(acceptProposalCmd);
+
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.nonFungibleTokenHttp.lazySell(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -532,10 +544,10 @@ export class NonFungibleTokenService {
   }
 
   /**
-* Create lazy mint proposal for buying nft instance on behalf buyer
-* @param {import('@casimir/platform-core').NonFungibleTokenLazyBuyPayload} payload
-* @return {Promise<Object>}
-*/
+   * Create lazy mint proposal for buying nft instance on behalf buyer
+   * @param {import('@casimir/platform-core').NonFungibleTokenLazyBuyPayload} payload
+   * @return {Promise<Object>}
+   */
   async buyLazy(payload) {
     const env = this.proxydi.get('env');
     const {
@@ -556,78 +568,82 @@ export class NonFungibleTokenService {
 
     const lazyBuyProposalExpirationTime = Date.now() + LAZY_BUY_PROPOSAL_EXPIRATION;
 
-    const response = await ChainService.getInstanceAsync(env)
-      .then(async (chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainRpc = chainService.getChainRpc();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainRpc = chainService.getChainRpc();
 
-        const lazySellProposal = await chainRpc.getProposalAsync(lazySellProposalId);
+    const lazySellProposal = await chainRpc.getProposalAsync(lazySellProposalId);
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const transferFt = new TransferFTCmd({
-              from: issuer,
-              to: TENANT_HOT_WALLET_DAO_ID,
-              amount: asset.amount,
-              tokenId: asset.id,
-              symbol: asset.symbol,
-              precision: asset.precision
-            });
+    const txBuilder = await chainTxBuilder.begin();
 
-            const acceptSellProposalCmd = new AcceptProposalCmd({
-              entityId: lazySellProposalId,
-              account: TENANT_HOT_WALLET_DAO_ID,
-              batchWeight: lazySellProposal.batchWeight
-            });
+    const transferFtCmd = new TransferFTCmd({
+      from: issuer,
+      to: TENANT_HOT_WALLET_DAO_ID,
+      amount: asset.amount,
+      tokenId: asset.id,
+      symbol: asset.symbol,
+      precision: asset.precision
+    });
 
-            const transferNft = new TransferNFTCmd({
-              from: TENANT_HOT_WALLET_DAO_ID,
-              to: issuer,
-              nftCollectionId,
-              nftItemId
-            });
+    const acceptSellProposalCmd = new AcceptProposalCmd({
+      entityId: lazySellProposalId,
+      account: TENANT_HOT_WALLET_DAO_ID,
+      batchWeight: lazySellProposal.batchWeight
+    });
 
-            const proposalBatch = [
-              transferFt,
-              acceptSellProposalCmd,
-              transferNft
-            ];
+    const transferNftCmd = new TransferNFTCmd({
+      from: TENANT_HOT_WALLET_DAO_ID,
+      to: issuer,
+      nftCollectionId,
+      nftItemId
+    });
 
-            return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((batchWeight) => {
-                const createProposalCmd = new CreateProposalCmd({
-                  type: APP_PROPOSAL.NFT_LAZY_BUY_PROPOSAL,
-                  creator: issuer,
-                  expirationTime: lazyBuyProposalExpirationTime,
-                  proposedCmds: proposalBatch,
-                  batchWeight
-                });
+    const proposalBatch = [
+      transferFtCmd,
+      acceptSellProposalCmd,
+      transferNftCmd
+    ];
 
-                txBuilder.addCmd(createProposalCmd);
-                const lazyBuyProposalId = createProposalCmd.getProtocolEntityId();
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
 
-                const acceptProposalCmd = new AcceptProposalCmd({
-                  entityId: lazyBuyProposalId,
-                  account: issuer,
-                  batchWeight
-                });
-                txBuilder.addCmd(acceptProposalCmd);
+    const createProposalCmd = new CreateProposalCmd({
+      type: APP_PROPOSAL.NFT_LAZY_BUY_PROPOSAL,
+      creator: issuer,
+      expirationTime: lazyBuyProposalExpirationTime,
+      proposedCmds: proposalBatch,
+      batchWeight
+    });
 
-                return txBuilder.end();
-              });
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    txBuilder.addCmd(createProposalCmd);
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const lazyBuyProposalId = createProposalCmd.getProtocolEntityId();
+    const acceptProposalCmd = new AcceptProposalCmd({
+      entityId: lazyBuyProposalId,
+      account: issuer,
+      batchWeight
+    });
 
-            return this.nonFungibleTokenHttp.lazyBuy(msg);
-          });
-      });
+    txBuilder.addCmd(acceptProposalCmd);
+
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.nonFungibleTokenHttp.lazyBuy(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
