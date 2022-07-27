@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+**Note:** Version bump only for package @deip/platform-components
+
+
+
+
+
 # [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
 
 **Note:** Version bump only for package @deip/platform-components

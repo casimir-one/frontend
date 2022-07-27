@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/casimir-ai/frontend/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+
+### Features
+
+* **@casimir/token-service:** CAS-36 sign transtactions with wallet ([6f20b0c](https://github.com/casimir-ai/frontend/commit/6f20b0cc82fa7ada5685b137564771680eb4a1e7))
+* **@deip/chain-service:** CAS-36 add tx getter and setter to FinalizedTx ([9ea8143](https://github.com/casimir-ai/frontend/commit/9ea814326edfecb058b85c35140e08fb555f611b))
+* **@deip/messages:** CAS-36 remove FinalizedTxMsg ([d4a76de](https://github.com/casimir-ai/frontend/commit/d4a76de689cece75b082fa10fb17f8ff1ab88e4d))
+* **@deip/platform-util:** CAS-36 add helper for sign transaction with wallet ([47ace71](https://github.com/casimir-ai/frontend/commit/47ace71a50a23850cfa33169ff5f4b5f36597ab9))
+
+
+
+
+
 ## [1.391.1](https://github.com/casimir-ai/frontend/compare/v1.391.0...v1.391.1) (2022-07-26)
 
 

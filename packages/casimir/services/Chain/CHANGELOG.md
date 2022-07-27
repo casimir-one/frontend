@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/casimir-ai/frontend/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+
+### Features
+
+* **@deip/chain-service:** CAS-36 add tx getter and setter to FinalizedTx ([9ea8143](https://github.com/casimir-ai/frontend/commit/9ea814326edfecb058b85c35140e08fb555f611b))
+
+
+
+
+
 ## [1.391.1](https://github.com/casimir-ai/frontend/compare/v1.391.0...v1.391.1) (2022-07-26)
 
 

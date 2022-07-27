@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+
+### Features
+
+* **@deip/platform-util:** CAS-36 add helper for sign transaction with wallet ([47ace71](https://github.com/DEIPworld/deip-modules/commit/47ace71a50a23850cfa33169ff5f4b5f36597ab9))
+
+
+
+
+
 # [1.390.0](https://github.com/DEIPworld/deip-modules/compare/v1.389.3...v1.390.0) (2022-07-22)
 
 **Note:** Version bump only for package @deip/platform-util

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+
+### Features
+
+* **@deip/messages:** CAS-36 remove FinalizedTxMsg ([d4a76de](https://github.com/DEIPworld/deip-modules/commit/d4a76de689cece75b082fa10fb17f8ff1ab88e4d))
+
+
+
+
+
 ## [1.391.1](https://github.com/DEIPworld/deip-modules/compare/v1.391.0...v1.391.1) (2022-07-26)
 
 **Note:** Version bump only for package @deip/messages

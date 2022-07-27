@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
+
+
+### Features
+
+* **@casimir/token-service:** CAS-36 sign transtactions with wallet ([6f20b0c](https://github.com/DEIPworld/deip-modules/commit/6f20b0cc82fa7ada5685b137564771680eb4a1e7))
+
+
+
+
+
 ## [1.391.1](https://github.com/DEIPworld/deip-modules/compare/v1.391.0...v1.391.1) (2022-07-26)
 
 **Note:** Version bump only for package @casimir/token-service
