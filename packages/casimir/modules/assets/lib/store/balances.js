@@ -1,17 +1,21 @@
+import BigNumber from 'bignumber.js';
+
 import { FungibleTokenService } from '@casimir/token-service';
 
 import { listGetter, setListMutationFactory } from '@deip/platform-util';
-
 import { AssetType } from '@casimir/platform-core';
 
 const fungibleTokenService = FungibleTokenService.getInstance();
 
 const STATE = {
-  data: []
+  data: [],
+  balance: {}
 };
 
 const GETTERS = {
-  list: listGetter
+  list: listGetter,
+
+  balance: (state) => state.balance
 };
 
 const ACTIONS = {
@@ -34,11 +38,25 @@ const ACTIONS = {
         .then(() => loadBalances(rootGetters['assets/list']()));
     }
     return loadBalances(rootGetters['assets/list']());
+  },
+
+  async getBalance({ commit }, username) {
+    const balance = await fungibleTokenService.getAccountDaoBalance(username);
+
+    if (balance) {
+      commit('setBalance', {
+        symbol: balance.symbol,
+        value: new BigNumber(balance.amount).shiftedBy(-18).toFormat(BigNumber.ROUND_FLOOR)
+      });
+    }
   }
 };
 
 const MUTATIONS = {
-  setList: setListMutationFactory({ mergeKey: 'assetId' })
+  setList: setListMutationFactory({ mergeKey: 'assetId' }),
+  setBalance(state, data) {
+    state.balance = data;
+  }
 };
 
 export const balancesStore = {
