@@ -95,6 +95,7 @@ const formFactory = (
     restoreOldValue(forceUpdate = false) {
       this.lazyFormData = this.oldValue;
       if (forceUpdate) {
+        // Add :key="forceUpdateKey" to the form to rerender it
         this.forceUpdateKey = Date.now();
       }
     }
