@@ -1,6 +1,5 @@
 import { HttpService, serializeParams } from '@deip/http-service';
 import { makeSingletonInstance } from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
 
 /**
  * Non-fungible token http transport
@@ -247,20 +246,6 @@ export class NonFungibleTokenHttp {
      */
   async getPortalNftCollectionList() {
     return this.http.get('/api/v2/tokens/nfts/portal/listing');
-  }
-
-  /**
-   * Get nft item file source
-   * @param {string|number} nftCollectionId
-   * @param {string|number} nftItemId
-   * @param {string} hash
-   * @returns {string}
-   */
-  getNftItemFileSrc(nftCollectionId, nftItemId, hash) {
-    const { DEIP_SERVER_URL } = proxydi.get('env');
-
-    // eslint-disable-next-line max-len
-    return `${DEIP_SERVER_URL}/api/v2/tokens/nft/item/package/${nftCollectionId}/${nftItemId}/${hash}`;
   }
 
   /**
