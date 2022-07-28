@@ -40,8 +40,8 @@ const ACTIONS = {
     return loadBalances(rootGetters['assets/list']());
   },
 
-  async getBalance({ commit }, username) {
-    const balance = await fungibleTokenService.getAccountDaoBalance(username);
+  async getBalance({ commit }, address) {
+    const balance = await fungibleTokenService.getAccountDaoBalance(address);
 
     if (balance) {
       commit('setBalance', {
