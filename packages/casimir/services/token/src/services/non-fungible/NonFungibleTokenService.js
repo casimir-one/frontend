@@ -776,18 +776,6 @@ export class NonFungibleTokenService {
     return this.nonFungibleTokenHttp.getPortalNftCollectionList();
   }
 
-  /**
-   * Get nft item file source
-   * @param {string|number} nftCollectionId
-   * @param {string|number} nftItemId
-   * @param {string} hash
-   * @returns {string}
-   */
-  /** @deprecated */ // TODO remove
-  getNftItemFileSrc(nftCollectionId, nftItemId, hash) {
-    return this.nonFungibleTokenHttp.getNftItemFileSrc(nftCollectionId, nftItemId, hash);
-  }
-
   /** @type {() => NonFungibleTokenService} */
   static getInstance = makeSingletonInstance(() => new NonFungibleTokenService());
 }
