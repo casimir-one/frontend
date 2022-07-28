@@ -13,6 +13,7 @@ import {
   makeSingletonInstance
 } from '@deip/toolbox';
 import { APP_EVENT } from '@casimir/platform-core';
+import { walletSignTx } from '@deip/platform-util';
 import { UserHttp } from './UserHttp';
 
 export class UserService {
@@ -50,40 +51,44 @@ export class UserService {
     const formData = createFormData(data);
     const attributes = replaceFileWithName(data.attributes);
 
-    const response = await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainNodeClient = chainService.getChainNodeClient();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const updateDaoCmd = new UpdateDaoCmd({
-              isTeamAccount: false,
-              entityId: updater,
-              description: genSha256Hash(attributes),
-              attributes,
-              email,
-              status
-            });
+    const txBuilder = await chainTxBuilder.begin();
+    const updateDaoCmd = new UpdateDaoCmd({
+      isTeamAccount: false,
+      entityId: updater,
+      description: genSha256Hash(attributes),
+      attributes,
+      email,
+      status
+    });
 
-            txBuilder.addCmd(updateDaoCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new MultFormDataMsg(
-              formData,
-              packedTx.getPayload(),
-              { 'entity-id': updater }
-            );
+    txBuilder.addCmd(updateDaoCmd);
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const packedTx = await txBuilder.end();
 
-            return this.userHttp.update(msg);
-          });
-      });
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new MultFormDataMsg(
+      formData,
+      signedTx.getPayload(),
+      { 'entity-id': updater }
+    );
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.userHttp.update(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
