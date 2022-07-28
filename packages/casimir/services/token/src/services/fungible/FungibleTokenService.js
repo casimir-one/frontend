@@ -203,27 +203,17 @@ export class FungibleTokenService {
 
   /**
    * Get dao balance for certain account
-   * @param {string} owner
+   * @param {string} address
    * @return {Promise<object>}
    */
-  async getAccountDaoBalance(owner) {
+  async getAccountDaoBalance(address) {
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env).then((chainService) => {
-      const chainRpc = chainService.getChainRpc();
-      const api = chainService.getChainNodeClient();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainRpc = chainService.getChainRpc();
 
-      return api.query.deipDao.daoRepository(`0x${owner}`).then((daoOpt) => {
-        if (daoOpt.isSome) {
-          const walletAddress = daoOpt.value.toJSON().authority.signatories[0];
-          return chainRpc
-            .getFungibleTokenBalanceByOwnerAsync(walletAddress, 0)
-            .then((balance) => balance);
-        }
-
-        return null;
-      });
-    });
+    return chainRpc
+      .getFungibleTokenBalanceByOwnerAsync(address, 0);
   }
 
   /**
