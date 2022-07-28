@@ -9,6 +9,7 @@
       <ve-stack>
         <layout-renderer
           v-if="schema.length"
+          :key="forceUpdateKey"
           v-model="formData"
           :schema="schema"
           :schema-data="schemaData"
@@ -191,6 +192,7 @@
       },
 
       clearForm() {
+        this.restoreOldValue(true);
         this.$refs.observer.reset();
       }
     }
