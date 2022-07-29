@@ -1,4 +1,4 @@
-import { isEqual } from 'lodash';
+import { isEqual, isEmpty } from 'lodash';
 
 import {
   attributeMethodsFactory,
@@ -33,6 +33,10 @@ export const attributedFormFactory = (
      * Get computed attributes by scope
      */
     attributesMap() {
+      if (isEmpty(this.$store.getters['attributes/settings'])) {
+        return [];
+      }
+
       return this.$store.getters['attributes/settings'].mappedKeys
         .filter((i) => {
           const [scopeName, attributeName] = i.key.split('.');
