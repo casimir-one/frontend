@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.393.0](https://github.com/casimir-ai/frontend/compare/v1.392.0...v1.393.0) (2022-07-29)
+
+
+### Features
+
+* **@deip/user-service:** CAS-158 sign user update with wallet ([025c9a6](https://github.com/casimir-ai/frontend/commit/025c9a62ad939b1699a9d6e82090cf90389bb1dc))
+
+
+
+
+
 # [1.392.0](https://github.com/casimir-ai/frontend/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 **Note:** Version bump only for package @deip/user-service

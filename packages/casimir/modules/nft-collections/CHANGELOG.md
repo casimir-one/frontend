@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
+
+
+### Bug Fixes
+
+* **@casimir/nft-collections-module:** fix clear form ([38622e5](https://github.com/DEIPworld/deip-modules/commit/38622e5cac75b11404908fcbce51ed32be7bd81c))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 **Note:** Version bump only for package @casimir/nft-collections-module

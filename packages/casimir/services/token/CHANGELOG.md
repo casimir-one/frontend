@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
+
+
+### Features
+
+* **@casimir/token-service:** remove deprecated methods ([ea4f1b2](https://github.com/DEIPworld/deip-modules/commit/ea4f1b29a61fa071c225290dcfc99fc46287d51f))
+* **@deip/assets-module, @casimir/token-service:** CAS-156 Get balance by address ([8a0b031](https://github.com/DEIPworld/deip-modules/commit/8a0b0311561218f5f7a17a6e60c52a1bbd4a5b28))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 

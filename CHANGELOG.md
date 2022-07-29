@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.393.0](https://github.com/casimir-ai/frontend/compare/v1.392.0...v1.393.0) (2022-07-29)
+
+
+### Bug Fixes
+
+* **@casimir/nft-collections-module:** fix clear form ([38622e5](https://github.com/casimir-ai/frontend/commit/38622e5cac75b11404908fcbce51ed32be7bd81c))
+* **@deip/layouts-module:** CAS-172 fix attributesMap in attributedForm ([fc70289](https://github.com/casimir-ai/frontend/commit/fc702895455581013f730bff6aee769eb68f5762))
+
+
+### Features
+
+* **@casimir/token-service:** remove deprecated methods ([ea4f1b2](https://github.com/casimir-ai/frontend/commit/ea4f1b29a61fa071c225290dcfc99fc46287d51f))
+* **@deip/assets-module, @casimir/token-service:** CAS-156 Get balance by address ([8a0b031](https://github.com/casimir-ai/frontend/commit/8a0b0311561218f5f7a17a6e60c52a1bbd4a5b28))
+* **@deip/user-service:** CAS-158 sign user update with wallet ([025c9a6](https://github.com/casimir-ai/frontend/commit/025c9a62ad939b1699a9d6e82090cf90389bb1dc))
+
+
+
+
+
 # [1.392.0](https://github.com/casimir-ai/frontend/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
+
+
+### Bug Fixes
+
+* **@deip/layouts-module:** CAS-172 fix attributesMap in attributedForm ([fc70289](https://github.com/DEIPworld/deip-modules/commit/fc702895455581013f730bff6aee769eb68f5762))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 **Note:** Version bump only for package @deip/layouts-module
