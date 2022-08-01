@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.1](https://github.com/DEIPworld/deip-modules/compare/v1.393.0...v1.393.1) (2022-08-01)
+
+
+### Bug Fixes
+
+* **@casimir/nft-items-module:** CAS-162 item title fixed ([5e8495b](https://github.com/DEIPworld/deip-modules/commit/5e8495b2f60181e8895bad7bbe8e332b20774090))
+
+
+
+
+
 # [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
 
 **Note:** Version bump only for package @casimir/nft-items-module
