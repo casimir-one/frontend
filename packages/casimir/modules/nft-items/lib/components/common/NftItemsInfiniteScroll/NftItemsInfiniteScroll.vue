@@ -105,7 +105,7 @@
             const authorIds = items.map((nftItem) => nftItem.authors[0]);
             const uniqueAuthorIds = Array.from(new Set(authorIds));
 
-            await this.$store.dispatch('users/getList', uniqueAuthorIds);
+            await this.$store.dispatch('users/getList', { users: uniqueAuthorIds });
 
             scrollState.loaded();
           } else {
