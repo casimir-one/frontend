@@ -24,7 +24,7 @@ const GETTERS = {
 const ACTIONS = {
   getList({ dispatch }, payload = {}) {
     const methods = {
-      users: 'getListByNames',
+      users: 'getListByIds',
       teamId: 'getListByTeam',
       portalId: 'getListByPortal',
       status: 'getListByStatus'
@@ -39,7 +39,7 @@ const ACTIONS = {
     return dispatch(methods.status, payload);
   },
 
-  async getListByNames({ commit }, { users }) {
+  async getListByIds({ commit }, { users }) {
     const res = await userService.getListByIds(users);
     commit('setList', res.data.items);
   },
