@@ -538,7 +538,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_CREATED
         && eventBody.event.eventPayload.proposalId === response.data.entityId;
-    }, 20000);
+    }, 30000);
 
     return response;
   }
@@ -649,7 +649,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_ACCEPTED
         && eventBody.event.eventPayload.proposalId === lazySellProposalId;
-    }, 20000);
+    }, 30000);
 
     return response;
   }
