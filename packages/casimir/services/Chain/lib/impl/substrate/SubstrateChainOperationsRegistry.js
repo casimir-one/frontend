@@ -4,6 +4,7 @@ import { hexToU8a, stringToHex } from '@polkadot/util';
 import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir/platform-core';
 import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress, isAddress } from './utils';
 import { pascalCase } from 'change-case';
+import BigNumber from 'bignumber.js';
 
 
 const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
@@ -443,14 +444,15 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       to,
       tokenId,
       amount,
+      precision
     }) => {
       const recipientAddress = toAddress(to, chainNodeClient.registry);
-
+      const amountFormatted = new BigNumber(amount).shiftedBy(precision).toString();
       if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
         const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
           chainNodeClient.tx.balances.transfer(
             /* to: */ recipientAddress,
-            /* amount: */ amount
+            /* amount: */ amountFormatted
           )
         );
         return [transferCoreAssetOp];
@@ -459,7 +461,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
           chainNodeClient.tx.assets.transfer(
             /* assetId: */ tokenId,
             /* to: */ recipientAddress,
-            /* amount: */ amount
+            /* amount: */ amountFormatted
           )
         );
         return [transferFtOp];
