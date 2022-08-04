@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.2](https://github.com/DEIPworld/deip-modules/compare/v1.393.1...v1.393.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **@deip/users-module:** rename action to getListByIds ([e6bd991](https://github.com/DEIPworld/deip-modules/commit/e6bd9914bcf58491205375128f2aae83a7fdbc14))
+
+
+
+
+
 # [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
 
 **Note:** Version bump only for package @deip/users-module

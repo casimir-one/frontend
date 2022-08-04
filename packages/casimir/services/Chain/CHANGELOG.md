@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.2](https://github.com/casimir-ai/frontend/compare/v1.393.1...v1.393.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** CAS-181 fix amount in transfer FT ([57b669b](https://github.com/casimir-ai/frontend/commit/57b669b60bb15ad0676c54fe19d10ca7ddf99327))
+
+
+
+
+
 # [1.392.0](https://github.com/casimir-ai/frontend/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 

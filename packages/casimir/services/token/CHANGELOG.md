@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.2](https://github.com/DEIPworld/deip-modules/compare/v1.393.1...v1.393.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **@casimir/token-service:** set bigger waiting time for lazy sell ans lazy buy ([0a6fa3b](https://github.com/DEIPworld/deip-modules/commit/0a6fa3b9da122bb51ac8604e308f0167ca26cd0e))
+
+
+
+
+
 # [1.393.0](https://github.com/DEIPworld/deip-modules/compare/v1.392.0...v1.393.0) (2022-07-29)
 
 

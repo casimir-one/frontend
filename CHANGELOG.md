@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.2](https://github.com/casimir-ai/frontend/compare/v1.393.1...v1.393.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **@casimir/nft-items-module:** fix get authors in infinite scroll ([d0c6807](https://github.com/casimir-ai/frontend/commit/d0c6807d74bc5ffd71f4edfad73a8d5e01b5db4b))
+* **@casimir/token-service:** set bigger waiting time for lazy sell ans lazy buy ([0a6fa3b](https://github.com/casimir-ai/frontend/commit/0a6fa3b9da122bb51ac8604e308f0167ca26cd0e))
+* **@deip/chain-service:** CAS-181 fix amount in transfer FT ([57b669b](https://github.com/casimir-ai/frontend/commit/57b669b60bb15ad0676c54fe19d10ca7ddf99327))
+* **@deip/users-module:** rename action to getListByIds ([e6bd991](https://github.com/casimir-ai/frontend/commit/e6bd9914bcf58491205375128f2aae83a7fdbc14))
+
+
+
+
+
 ## [1.393.1](https://github.com/casimir-ai/frontend/compare/v1.393.0...v1.393.1) (2022-08-01)
 
 

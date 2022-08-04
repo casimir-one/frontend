@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.393.2](https://github.com/DEIPworld/deip-modules/compare/v1.393.1...v1.393.2) (2022-08-04)
+
+
+### Bug Fixes
+
+* **@casimir/nft-items-module:** fix get authors in infinite scroll ([d0c6807](https://github.com/DEIPworld/deip-modules/commit/d0c6807d74bc5ffd71f4edfad73a8d5e01b5db4b))
+
+
+
+
+
 ## [1.393.1](https://github.com/DEIPworld/deip-modules/compare/v1.393.0...v1.393.1) (2022-08-01)
 
 
