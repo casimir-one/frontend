@@ -447,7 +447,7 @@ const SUBSTRATE_OP_CMD_MAP = (chainNodeClient, {
       precision
     }) => {
       const recipientAddress = toAddress(to, chainNodeClient.registry);
-      const amountFormatted = new BigNumber(amount).shiftedBy(precision).toString();
+      const amountFormatted = new BigNumber(amount).shiftedBy(precision).toFixed();
       if (tokenId == coreAsset.id) { // TODO: replace check with ASSET_TYPE.CORE
         const transferCoreAssetOp = chainNodeClient.tx.deipDao.onBehalf(`0x${from}`,
           chainNodeClient.tx.balances.transfer(
