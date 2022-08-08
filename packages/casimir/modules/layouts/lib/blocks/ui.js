@@ -6,7 +6,8 @@ const {
   VCard,
   VexMiniMetaItem,
   VexTooltip,
-  VexTextExpand
+  VexTextExpand,
+  VexScrollableText
 } = defaultLayoutComponents;
 
 export const uiBlocks = {
@@ -34,6 +35,12 @@ export const uiBlocks = {
       component: VexTextExpand,
       blockName: 'Expand',
       icon: 'mdi-text-box-plus-outline',
+      children: []
+    },
+    {
+      component: VexScrollableText,
+      blockName: 'ScrollableText',
+      icon: 'mdi-script-text-outline ',
       children: []
     },
     {
