@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 
+import { proxydi } from '@deip/proxydi';
 import { FungibleTokenService } from '@casimir/token-service';
-
 import { listGetter, setListMutationFactory } from '@deip/platform-util';
 import { AssetType } from '@casimir/platform-core';
 
@@ -41,12 +41,16 @@ const ACTIONS = {
   },
 
   async getBalance({ commit }, address) {
-    const balance = await fungibleTokenService.getAccountDaoBalance(address);
+    const env = proxydi.get('env');
+
+    const balance = await fungibleTokenService.getAccountDaoBalance(address, env.CORE_ASSET.id);
 
     if (balance) {
       commit('setBalance', {
-        symbol: balance.symbol,
-        value: new BigNumber(balance.amount).shiftedBy(-18).toFormat(BigNumber.ROUND_FLOOR)
+        ...balance,
+        amount: new BigNumber(balance.amount)
+          .shiftedBy(-balance.precision)
+          .toFormat(BigNumber.ROUND_FLOOR)
       });
     }
   }
