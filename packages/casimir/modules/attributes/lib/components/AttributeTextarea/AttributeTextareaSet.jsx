@@ -26,8 +26,7 @@ export default defineComponent({
           vModel={this.internalValue}
           label={this.attributeInfo.title}
           errorMessages={errors}
-          rows={10}
-          noResize={false}
+          { ...{ props: this?.proxyProps?.VTextarea || {} }}
         />
       );
     }

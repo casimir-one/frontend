@@ -48,7 +48,42 @@ export const baseAttributes = [
 
     components: {
       read: { component: AttributeTextareaRead },
-      set: { component: AttributeTextareaSet }
+      set: {
+        component: AttributeTextareaSet,
+        proxyProps: {
+          VTextarea: {
+            dense: {
+              type: Boolean
+            },
+            height: {
+              type: [String, Number]
+            },
+            hint: {
+              type: String
+            },
+            noResize: {
+              type: Boolean
+            },
+            placeholder: {
+              type: String
+            },
+            prefix: {
+              type: String
+            },
+            rowHeight: {
+              type: Number,
+              defult: 24
+            },
+            rows: {
+              type: Number,
+              defult: 5
+            },
+            suffix: {
+              type: String
+            }
+          }
+        }
+      }
     }
   },
   {
