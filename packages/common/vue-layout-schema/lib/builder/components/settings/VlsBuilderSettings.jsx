@@ -97,8 +97,8 @@ export default {
      */
     setFieldVal(path, value) {
       const updated = cloneDeep(this.schemaAcc);
-      if (value) {
-        objectPath.set(updated, path, value);
+      if (value === '') {
+        objectPath.set(updated, path, undefined);
       } else {
         objectPath.set(updated, path, value);
       }
