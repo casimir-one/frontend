@@ -206,14 +206,14 @@ export class FungibleTokenService {
    * @param {string} address
    * @return {Promise<object>}
    */
-  async getAccountDaoBalance(address) {
+  async getAccountDaoBalance(address, assetId) {
     const env = this.proxydi.get('env');
 
     const chainService = await ChainService.getInstanceAsync(env);
     const chainRpc = chainService.getChainRpc();
 
     return chainRpc
-      .getFungibleTokenBalanceByOwnerAsync(address, 0);
+      .getFungibleTokenBalanceByOwnerAsync(address, assetId);
   }
 
   /**
