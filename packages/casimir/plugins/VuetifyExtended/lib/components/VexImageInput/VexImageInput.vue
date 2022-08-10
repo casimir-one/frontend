@@ -67,7 +67,7 @@
         <input
           ref="file"
           type="file"
-          accept="image/*"
+          :accept="acceptedFileTypes"
           class="hidden"
           @change="handleImageLoad"
         >
@@ -262,6 +262,10 @@
       /** Is actions buttons disabled */
       isActionsDisabled() {
         return this.disabled || !this.image.src || this.imageLoading;
+      },
+      /** Accepted file types */
+      acceptedFileTypes() {
+        return this.disableCrop ? 'image/*' : 'image/jpeg, image/png, image/webp, image/svg+xml';
       }
     },
 
