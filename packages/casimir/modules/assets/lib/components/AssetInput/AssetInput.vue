@@ -38,7 +38,7 @@
 
 <script>
   import { isEqual } from 'lodash';
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
   const defaultValue = {
     id: null,

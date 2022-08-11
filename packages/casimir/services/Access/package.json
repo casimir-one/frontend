@@ -1,5 +1,5 @@
 {
-  "name": "@deip/access-service",
+  "name": "@casimir/access-service",
   "version": "1.390.0",
   "description": "",
   "main": "index.js",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@casimir/platform-core": "1.390.0",
-    "@deip/toolbox": "1.388.0",
+    "@casimir/toolbox": "1.388.0",
     "jwt-decode": "^3.1.2"
   }
 }

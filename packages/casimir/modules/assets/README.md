@@ -1,4 +1,4 @@
-# `@deip/assets-module`
+# `@casimir/assets-module`
 
 ## Description
 
@@ -11,7 +11,7 @@ were issued. It's kinda description of company's 'bonds' emission in corporate t
 ## Usage
 
 ```
-import { AssetsModule } from '@deip/assets-module';
+import { AssetsModule } from '@casimir/assets-module';
 ```
 then add module to app using `addModule(moduleName)`:
 ```
@@ -27,12 +27,12 @@ testApp
 
 ## Dependencies
 
-* `@deip/env-module`
-* `@deip/validation-plugin`
-* `@deip/vuetify-extended`
-* `@deip/auth-module`
-* `@deip/users-module`
-* `@deip/teams-module`
+* `@casimir/env-module`
+* `@casimir/validation-plugin`
+* `@casimir/vuetify-extended`
+* `@casimir/auth-module`
+* `@casimir/users-module`
+* `@casimir/teams-module`
 
 ## Context modules
 
@@ -40,4 +40,4 @@ Despite layouts-module are able to work without below list of modules, they are 
 portal in general:
 
 * `@casimir/scopes-module`
-* `@deip/users-module` or/and` @deip/teams-module` or/and `@casimir/nft-collections-module`
+* `@casimir/users-module` or/and` @casimir/teams-module` or/and `@casimir/nft-collections-module`

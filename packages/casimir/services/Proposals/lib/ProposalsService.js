@@ -1,8 +1,8 @@
-import { proxydi } from '@deip/proxydi';
-import { AcceptProposalCmd, DeclineProposalCmd } from '@deip/commands';
-import { JsonDataMsg } from '@deip/messages';
-import { ChainService } from '@deip/chain-service';
-import { makeSingletonInstance } from '@deip/toolbox';
+import { proxydi } from '@casimir/proxydi';
+import { AcceptProposalCmd, DeclineProposalCmd } from '@casimir/commands';
+import { JsonDataMsg } from '@casimir/messages';
+import { ChainService } from '@casimir/chain-service';
+import { makeSingletonInstance } from '@casimir/toolbox';
 import { ProtocolChain } from '@casimir/platform-core';
 import { ProposalsHttp } from './ProposalsHttp';
 

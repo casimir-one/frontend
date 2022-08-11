@@ -1,4 +1,4 @@
-import { UserService } from '@deip/user-service';
+import { UserService } from '@casimir/user-service';
 import { USER_PROFILE_STATUS } from '@casimir/platform-core';
 
 import {
@@ -6,9 +6,9 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-util';
+} from '@casimir/platform-util';
 
-import { hasValue } from '@deip/toolbox';
+import { hasValue } from '@casimir/toolbox';
 
 const userService = UserService.getInstance();
 

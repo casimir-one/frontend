@@ -1,11 +1,11 @@
-# `@deip/vue-elements`
+# `@casimir/vue-elements`
 
 > TODO: description
 
 ## Usage
 
 ```
-const vueElements = require('@deip/vue-elements');
+const vueElements = require('@casimir/vue-elements');
 
 // TODO: DEMONSTRATE API
 ```

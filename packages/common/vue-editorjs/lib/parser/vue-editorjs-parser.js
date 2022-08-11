@@ -2,7 +2,7 @@ import './vue-editorjs-parser.scss';
 
 // eslint-disable-next-line import/no-unresolved
 import Vue from 'vue';
-import { TemplateStringParser } from '@deip/toolbox';
+import { TemplateStringParser } from '@casimir/toolbox';
 import EditorjsParser from './editorjs-parser';
 
 const parser = new EditorjsParser();

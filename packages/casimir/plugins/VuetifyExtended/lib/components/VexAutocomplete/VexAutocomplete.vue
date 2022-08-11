@@ -5,7 +5,7 @@
   } from 'vuetify/lib/components';
   import { convertToUnit } from 'vuetify/lib/util/helpers';
   /* eslint-enable */
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
   /**
    * Selector with autocomplete

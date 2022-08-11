@@ -1,4 +1,4 @@
-import { proxydi } from '@deip/proxydi';
+import { proxydi } from '@casimir/proxydi';
 
 const getWindowOptions = () => {
   const left = (window.screen.width - 400) / 2;

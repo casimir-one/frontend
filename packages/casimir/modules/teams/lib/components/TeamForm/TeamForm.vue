@@ -53,10 +53,10 @@
 </template>
 
 <script>
-  import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
+  import { attributedFormFactory, LayoutRenderer } from '@casimir/layouts-module';
   import { ViewMode } from '@casimir/platform-core';
-  import { VeRawDisplay, VeStack } from '@deip/vue-elements';
-  import { defineComponent } from '@deip/platform-util';
+  import { VeRawDisplay, VeStack } from '@casimir/vue-elements';
+  import { defineComponent } from '@casimir/platform-util';
 
   export default defineComponent({
     name: 'TeamForm',

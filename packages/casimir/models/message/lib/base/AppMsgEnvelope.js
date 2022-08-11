@@ -1,5 +1,5 @@
-import { assert } from '@deip/toolbox';
-import { APP_CMD_INFO } from '@deip/commands';
+import { assert } from '@casimir/toolbox';
+import { APP_CMD_INFO } from '@casimir/commands';
 import AppMsg from './AppMsg';
 
 /**

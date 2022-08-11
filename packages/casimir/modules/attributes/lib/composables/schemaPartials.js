@@ -1,5 +1,5 @@
-import { blocksGenerator, normalizeBlocksObject } from '@deip/vue-layout-schema';
-import { VeStack } from '@deip/vue-elements';
+import { blocksGenerator, normalizeBlocksObject } from '@casimir/vue-layout-schema';
+import { VeStack } from '@casimir/vue-elements';
 import {
   VTextField,
   VTextarea,
@@ -11,13 +11,13 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { VexDateInput } from '@deip/vuetify-extended';
+import { VexDateInput } from '@casimir/vuetify-extended';
 
 import { cloneDeep } from 'lodash';
 import {
   pascalCase, isObject, RecursiveIterator, camelCase
-} from '@deip/toolbox';
-import { defaultBreakpoints } from '@deip/vue-elements/lib/util/breakpoint';
+} from '@casimir/toolbox';
+import { defaultBreakpoints } from '@casimir/vue-elements/lib/util/breakpoint';
 
 const contentBlocksData = [
   {

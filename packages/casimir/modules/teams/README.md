@@ -1,16 +1,16 @@
-# `@deip/teams-module`
+# `@casimir/teams-module`
 
 ## Description
 
 The module creates store for two new entities called `teams` and adds new scope
-called `teamScope` by action `scopesRegistry/addScope` related with `@deip/scopes-module`
+called `teamScope` by action `scopesRegistry/addScope` related with `@casimir/scopes-module`
 
 ## Usage
 
 then add module to app using `addModule(moduleName)` in file `main.js`:
 
 ```
-import { TeamsModule } from '@deip/teams-module';
+import { TeamsModule } from '@casimir/teams-module';
 ```
 ```
 const testApp = new CreateApp(Vue, {
@@ -25,12 +25,12 @@ testApp
 
 ## Dependencies
 
-* `@deip/validation-plugin`
-* `@deip/vuetify-extended`
-* `@deip/env-module`
-* `@deip/scopes-module`
-* `@deip/attributes-module`
-* `@deip/layouts-module`
-* `@deip/auth-module`
-* `@deip/users-module`
+* `@casimir/validation-plugin`
+* `@casimir/vuetify-extended`
+* `@casimir/env-module`
+* `@casimir/scopes-module`
+* `@casimir/attributes-module`
+* `@casimir/layouts-module`
+* `@casimir/auth-module`
+* `@casimir/users-module`
 

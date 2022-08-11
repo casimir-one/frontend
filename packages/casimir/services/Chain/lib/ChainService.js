@@ -1,4 +1,4 @@
-import { Singleton } from '@deip/toolbox';
+import { Singleton } from '@casimir/toolbox';
 import { ProtocolChain } from '@casimir/platform-core';
 import SubstrateChainService from './impl/substrate/SubstrateChainService';
 // import GrapheneChainService from './impl/graphene/GrapheneChainService';

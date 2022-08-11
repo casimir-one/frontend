@@ -1,4 +1,4 @@
-import { genRipemd160Hash } from '@deip/toolbox';
+import { genRipemd160Hash } from '@casimir/toolbox';
 
 const convertStringAsset = (asset) => {
   const [amountStr, symbol] = asset.split(' ');

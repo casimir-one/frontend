@@ -1,11 +1,11 @@
-# `@deip/validation-module`
+# `@casimir/validation-module`
 
 > TODO: description
 
 ## Usage
 
 ```
-const validationModule = require('@deip/validation-module');
+const validationModule = require('@casimir/validation-module');
 
 // TODO: DEMONSTRATE API
 ```

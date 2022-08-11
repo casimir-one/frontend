@@ -5,7 +5,7 @@ import {
   isObject,
   isString,
   isNil
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 
 export const assetsMixin = {
   methods: {

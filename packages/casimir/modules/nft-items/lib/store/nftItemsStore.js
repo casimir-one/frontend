@@ -5,7 +5,7 @@ import {
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@deip/platform-util';
+} from '@casimir/platform-util';
 
 const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 

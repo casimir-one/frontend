@@ -1,6 +1,6 @@
-import { AccessService } from '@deip/access-service';
-import { proxydi } from '@deip/proxydi';
-import { makeSingletonInstance } from '@deip/toolbox';
+import { AccessService } from '@casimir/access-service';
+import { proxydi } from '@casimir/proxydi';
+import { makeSingletonInstance } from '@casimir/toolbox';
 
 const WEB_SOCKET_STATE = {
   CONNECTING: 0,

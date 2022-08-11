@@ -7,7 +7,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
   coreAsset
 }) => {
 
-  const crypto = require('@deip/lib-crypto');
+  const crypto = require('@casimir/lib-crypto');
 
   return {
 

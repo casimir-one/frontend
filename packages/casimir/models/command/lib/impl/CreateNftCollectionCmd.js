@@ -1,5 +1,5 @@
 import { APP_CMD } from '@casimir/platform-core';
-import { assert, isNumber, isString } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@casimir/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**

@@ -1,4 +1,4 @@
-import { assert, isNumber, isString } from '@deip/toolbox';
+import { assert, isNumber, isString } from '@casimir/toolbox';
 
 
 class FungibleTokenDto {

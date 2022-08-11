@@ -42,10 +42,10 @@
 <script>
   import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
 
-  import { dateMixin } from '@deip/platform-components';
-  import { VeStack } from '@deip/vue-elements';
-  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
+  import { dateMixin } from '@casimir/platform-components';
+  import { VeStack } from '@casimir/vue-elements';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
   import { NftItemDraftDeclineDialog } from '../NftItemDraftDeclineDialog';
 
   /**

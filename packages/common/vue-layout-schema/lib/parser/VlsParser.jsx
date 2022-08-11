@@ -11,7 +11,7 @@ import {
   objectPath,
 
   TemplateStringParser
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 
 import { cloneDeep, merge } from 'lodash';
 

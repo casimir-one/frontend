@@ -1,5 +1,5 @@
 {
-  "name": "@deip/proxydi",
+  "name": "@casimir/proxydi",
   "version": "1.388.0",
   "description": "",
   "main": "index.js",
@@ -22,6 +22,6 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/toolbox": "1.388.0"
+    "@casimir/toolbox": "1.388.0"
   }
 }

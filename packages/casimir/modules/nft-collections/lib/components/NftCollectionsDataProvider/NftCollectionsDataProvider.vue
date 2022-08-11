@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
   export default defineComponent({
     name: 'NftCollectionsDataProvider',

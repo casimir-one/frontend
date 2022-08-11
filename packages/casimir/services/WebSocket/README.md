@@ -1,11 +1,11 @@
-# `@deip/socket-service`
+# `@casimir/socket-service`
 
 > TODO: description
 
 ## Usage
 
 ```
-const socketService = require('@deip/socket-service');
+const socketService = require('@casimir/socket-service');
 
 // TODO: DEMONSTRATE API
 ```

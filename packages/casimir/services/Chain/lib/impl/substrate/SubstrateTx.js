@@ -4,7 +4,7 @@ import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/types';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
-import { assert, genSha256Hash, isString } from '@deip/toolbox';
+import { assert, genSha256Hash, isString } from '@casimir/toolbox';
 import { 
   pubKeyToAddress, 
   daoIdToAddress, 

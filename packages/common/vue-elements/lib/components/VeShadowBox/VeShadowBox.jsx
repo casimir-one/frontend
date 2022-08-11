@@ -1,6 +1,6 @@
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 
-import { convertToUnit } from '@deip/toolbox';
+import { convertToUnit } from '@casimir/toolbox';
 
 /**
  * Container with shadow

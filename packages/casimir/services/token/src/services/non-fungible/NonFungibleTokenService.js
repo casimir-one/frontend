@@ -2,9 +2,9 @@ import {
   makeSingletonInstance,
   createFormData,
   replaceFileWithName
-} from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg, MultFormDataMsg } from '@deip/messages';
+} from '@casimir/toolbox';
+import { proxydi } from '@casimir/proxydi';
+import { JsonDataMsg, MultFormDataMsg } from '@casimir/messages';
 import {
   TransferNFTCmd,
   TransferFTCmd,
@@ -20,11 +20,11 @@ import {
   UpdateNftItemMetadataDraftModerationMsgCmd,
   AcceptProposalCmd,
   CreateProposalCmd
-} from '@deip/commands';
+} from '@casimir/commands';
 import { APP_PROPOSAL, APP_EVENT } from '@casimir/platform-core';
-import { walletSignTx } from '@deip/platform-util';
-import { ChainService } from '@deip/chain-service';
-import { WebSocketService } from '@deip/web-socket-service';
+import { walletSignTx } from '@casimir/platform-util';
+import { ChainService } from '@casimir/chain-service';
+import { WebSocketService } from '@casimir/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
 
 import { transferToken, updateProposalInfo } from '../../util';

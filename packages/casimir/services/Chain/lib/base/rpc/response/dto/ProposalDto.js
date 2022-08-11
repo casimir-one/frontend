@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import { ProposalStatus } from '@casimir/platform-core';
 import { isValidTimestampFormat } from './../utils';
 

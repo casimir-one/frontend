@@ -5,7 +5,7 @@ import Bootable from 'vuetify/lib/mixins/bootable';
 import ripple from 'vuetify/lib/directives/ripple';
 import { getSlot } from 'vuetify/lib/util/helpers';
 /* eslint-enable */
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 
 /**
  * Component for expand/collapse content on activator click

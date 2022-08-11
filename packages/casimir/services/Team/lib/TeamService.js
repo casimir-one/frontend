@@ -4,10 +4,10 @@ import {
   genSha256Hash,
   makeSingletonInstance,
   isBoolean
-} from '@deip/toolbox';
-import { UserService } from '@deip/user-service';
-import { proxydi } from '@deip/proxydi';
-import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
+} from '@casimir/toolbox';
+import { UserService } from '@casimir/user-service';
+import { proxydi } from '@casimir/proxydi';
+import { MultFormDataMsg, JsonDataMsg } from '@casimir/messages';
 import { APP_EVENT, APP_PROPOSAL } from '@casimir/platform-core';
 import {
   CreateProposalCmd,
@@ -17,9 +17,9 @@ import {
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
   TransferFTCmd
-} from '@deip/commands';
-import { ChainService } from '@deip/chain-service';
-import { WebSocketService } from '@deip/web-socket-service';
+} from '@casimir/commands';
+import { ChainService } from '@casimir/chain-service';
+import { WebSocketService } from '@casimir/web-socket-service';
 
 import { TeamHttp } from './TeamHttp';
 

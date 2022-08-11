@@ -1,5 +1,5 @@
-import { HttpService, serializeParams } from '@deip/http-service';
-import { makeSingletonInstance } from '@deip/toolbox';
+import { HttpService, serializeParams } from '@casimir/http-service';
+import { makeSingletonInstance } from '@casimir/toolbox';
 
 export class UserHttp {
   http = HttpService.getInstance();

@@ -42,7 +42,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
   import { userHelpersMixin } from '../../mixins';
   import { UserAvatar } from '../UserAvatar';

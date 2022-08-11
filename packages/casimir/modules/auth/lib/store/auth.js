@@ -1,9 +1,9 @@
-import { AuthService } from '@deip/auth-service';
-import { UserService } from '@deip/user-service';
-import { AccessService } from '@deip/access-service';
-import { WebSocketService } from '@deip/web-socket-service';
+import { AuthService } from '@casimir/auth-service';
+import { UserService } from '@casimir/user-service';
+import { AccessService } from '@casimir/access-service';
+import { WebSocketService } from '@casimir/web-socket-service';
 
-import { wrapInArray, genRipemd160Hash } from '@deip/toolbox';
+import { wrapInArray, genRipemd160Hash } from '@casimir/toolbox';
 
 const accessService = AccessService.getInstance();
 const authService = AuthService.getInstance();

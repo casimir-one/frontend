@@ -1,11 +1,11 @@
-# `@deip/env-module`
+# `@casimir/env-module`
 
 > TODO: description
 
 ## Usage
 
 ```
-const envModule = require('@deip/env-module');
+const envModule = require('@casimir/env-module');
 
 // TODO: DEMONSTRATE API
 ```

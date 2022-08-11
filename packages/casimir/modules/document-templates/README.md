@@ -1,14 +1,14 @@
-# `@deip/document-templates-module`
+# `@casimir/document-templates-module`
 
 ## Description
 
-The module provides infrastructure for creating templates for `@deip/contract-agreements-module`
+The module provides infrastructure for creating templates for `@casimir/contract-agreements-module`
 It creates store section called `documentTemplates` for keeping such templates.
 
 
 ## Usage
 ```
-import { DocumentTemplatesModule } from '@deip/document-templates-module';
+import { DocumentTemplatesModule } from '@casimir/document-templates-module';
 ```
 ```
 const testApp = new CreateApp(Vue, {
@@ -23,6 +23,6 @@ testApp
 
 ## Dependencies
 
-* `@deip/validation-plugin`
-* `@deip/vuetify-extended`
-* `@deip/env-module`
+* `@casimir/validation-plugin`
+* `@casimir/vuetify-extended`
+* `@casimir/env-module`

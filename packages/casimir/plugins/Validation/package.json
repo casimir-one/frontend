@@ -1,5 +1,5 @@
 {
-  "name": "@deip/validation-plugin",
+  "name": "@casimir/validation-plugin",
   "version": "1.388.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
@@ -20,8 +20,8 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/proxydi": "1.388.0",
-    "@deip/toolbox": "1.388.0",
+    "@casimir/proxydi": "1.388.0",
+    "@casimir/toolbox": "1.388.0",
     "vee-validate": "^3.4.9"
   },
   "peerDependencies": {

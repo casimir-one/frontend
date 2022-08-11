@@ -62,12 +62,12 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
-  import { VexMessage } from '@deip/vuetify-extended';
-  import { VeStack } from '@deip/vue-elements';
-  import { VueEditorjs, PlaceholderTool } from '@deip/vue-editorjs';
-  import { formFactory } from '@deip/platform-components';
+  import { VexMessage } from '@casimir/vuetify-extended';
+  import { VeStack } from '@casimir/vue-elements';
+  import { VueEditorjs, PlaceholderTool } from '@casimir/vue-editorjs';
+  import { formFactory } from '@casimir/platform-components';
 
   export default defineComponent({
     name: 'DocumentTemplateForm',

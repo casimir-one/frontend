@@ -1,6 +1,6 @@
-import { VexImage } from '@deip/vuetify-extended';
+import { VexImage } from '@casimir/vuetify-extended';
 
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

@@ -6,9 +6,9 @@ import {
 } from 'vuetify/lib/components';
 /* eslint-enable */
 
-import { defineComponent } from '@deip/platform-util';
-import { isFunction, pascalCase } from '@deip/toolbox';
-import { VexSection, VexSectionTitle } from '@deip/vuetify-extended';
+import { defineComponent } from '@casimir/platform-util';
+import { isFunction, pascalCase } from '@casimir/toolbox';
+import { VexSection, VexSectionTitle } from '@casimir/vuetify-extended';
 
 /**
  * Generate default list item actions

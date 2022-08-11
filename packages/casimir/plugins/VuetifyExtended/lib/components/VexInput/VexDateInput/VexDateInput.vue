@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   import { isFuture, isToday, parseISO } from 'date-fns';
 
   /* eslint-disable */
@@ -37,7 +37,7 @@
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   /* eslint-enable */
 
-  import { isArray } from '@deip/toolbox';
+  import { isArray } from '@casimir/toolbox';
   /**
    * Date input with datepicker
    */

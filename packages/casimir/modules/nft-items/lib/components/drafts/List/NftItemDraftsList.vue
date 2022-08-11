@@ -66,9 +66,9 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
-  import { getBindableProps } from '@deip/vuetify-extended/lib/composables/props';
-  import { VexTooltip } from '@deip/vuetify-extended';
+  import { defineComponent } from '@casimir/platform-util';
+  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
+  import { VexTooltip } from '@casimir/vuetify-extended';
   import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
   import NftItemDraftsDataProvider from '../DataProvider';
 

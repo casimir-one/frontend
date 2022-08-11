@@ -6,8 +6,8 @@
   import { Resize } from 'vuetify/lib/directives';
   /* eslint-enable import/extensions, import/no-unresolved */
 
-  import { defineComponent } from '@deip/platform-util';
-  import { VueEditorjs } from '@deip/vue-editorjs';
+  import { defineComponent } from '@casimir/platform-util';
+  import { VueEditorjs } from '@casimir/vue-editorjs';
   import { isEqual } from 'lodash';
 
   import { getBindableProps } from '../../composables';

@@ -1,4 +1,4 @@
-import { createEnum } from '@deip/toolbox';
+import { createEnum } from '@casimir/toolbox';
 
 export const APP_CMD = createEnum({
   CREATE_DAO: 1,

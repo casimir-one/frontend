@@ -5,7 +5,7 @@ import {
   oneGetterFactory,
   setListMutation,
   setOneMutation
-} from '@deip/platform-util';
+} from '@casimir/platform-util';
 
 const fungibleTokenService = FungibleTokenService.getInstance();
 

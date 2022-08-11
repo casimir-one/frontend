@@ -20,7 +20,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "test:update": "cross-env NODE_ENV=test jest -u",
     "types:check": "tsc --noEmit",
-    "updateDeipDeps": "node ./scripts/updateDeipDeps.js",
+    "updateCasimirDeps": "node ./scripts/updateCasimirDeps.js",
     "watch:dev": "npm run build:lib && babel-node ./scripts/watchDev.js"
   },
   "keywords": [],

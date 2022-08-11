@@ -1,4 +1,4 @@
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 
 /**
  * Display raw data toggled by a button

@@ -1,4 +1,4 @@
-# `@deip/portals-module`
+# `@casimir/portals-module`
 
 ## Description
 The module creates store for two new entities called `portals` and `currentPortal`.
@@ -10,7 +10,7 @@ and also portal profile.
 ## Usage
 
 ```
-import { PortalsModule } from '@deip/portals-module';
+import { PortalsModule } from '@casimir/portals-module';
 ```
 ```
 const testApp = new CreateApp(Vue, {
@@ -25,4 +25,4 @@ testApp
 
 ## Dependencies
 
-* `@deip/env-module`
+* `@casimir/env-module`

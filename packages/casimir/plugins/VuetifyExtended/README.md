@@ -1,11 +1,11 @@
-# `@deip/vuetify-extended`
+# `@casimir/vuetify-extended`
 
 > TODO: description
 
 ## Usage
 
 ```
-const vuetifyExtended = require('@deip/vuetify-extended');
+const vuetifyExtended = require('@casimir/vuetify-extended');
 
 // TODO: DEMONSTRATE API
 ```

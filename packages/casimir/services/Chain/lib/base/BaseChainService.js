@@ -1,5 +1,5 @@
-import { isNumber, Singleton } from '@deip/toolbox';
-import { assert } from '@deip/toolbox';
+import { isNumber, Singleton } from '@casimir/toolbox';
+import { assert } from '@casimir/toolbox';
 import fetch from 'cross-fetch';
 
 

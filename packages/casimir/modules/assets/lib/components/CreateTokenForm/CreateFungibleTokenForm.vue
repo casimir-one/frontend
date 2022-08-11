@@ -247,16 +247,16 @@
   import currency from 'currency.js';
   import { sentenceCase } from 'change-case';
 
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   import {
     VexBlock,
     VexTimeline,
     VexTimelineItem,
     VexTimelineAdd
-  } from '@deip/vuetify-extended';
-  import { VeStack } from '@deip/vue-elements';
-  import { UsersSelector } from '@deip/users-module';
-  import { TeamAvatar, teamHelpersMixin } from '@deip/teams-module';
+  } from '@casimir/vuetify-extended';
+  import { VeStack } from '@casimir/vue-elements';
+  import { UsersSelector } from '@casimir/users-module';
+  import { TeamAvatar, teamHelpersMixin } from '@casimir/teams-module';
 
   const shareholderModel = () => ({
     account: undefined,

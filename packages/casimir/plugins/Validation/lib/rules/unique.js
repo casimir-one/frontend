@@ -1,4 +1,4 @@
-import { proxydi } from '@deip/proxydi';
+import { proxydi } from '@casimir/proxydi';
 
 export const unique = {
   params: ['list', 'caseSensitive'],

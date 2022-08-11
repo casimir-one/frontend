@@ -29,7 +29,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/platform-util": "1.392.0",
-    "@deip/toolbox": "1.388.0"
+    "@casimir/platform-util": "1.392.0",
+    "@casimir/toolbox": "1.388.0"
   }
 }

@@ -19,9 +19,9 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { VeRawDisplay, VeStack } from '@deip/vue-elements';
-import { VlsBuilder } from '@deip/vue-layout-schema';
-import { isObject, RecursiveIterator, camelCase } from '@deip/toolbox';
+import { VeRawDisplay, VeStack } from '@casimir/vue-elements';
+import { VlsBuilder } from '@casimir/vue-layout-schema';
+import { isObject, RecursiveIterator, camelCase } from '@casimir/toolbox';
 import { isEqual, cloneDeep } from 'lodash';
 import draggable from 'vuedraggable';
 
