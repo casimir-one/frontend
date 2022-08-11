@@ -1,6 +1,6 @@
 {
   "name": "@casimir/vue-editorjs",
-  "version": "1.388.0",
+  "version": "1.394.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,7 +20,7 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/toolbox": "1.388.0",
+    "@casimir/toolbox": "1.394.0",
     "@editorjs/delimiter": "^1.2.0",
     "@editorjs/editorjs": "^2.22.2",
     "@editorjs/header": "^2.6.1",

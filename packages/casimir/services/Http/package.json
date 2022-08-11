@@ -1,6 +1,6 @@
 {
   "name": "@casimir/http-service",
-  "version": "1.390.0",
+  "version": "1.394.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -23,9 +23,9 @@
     "@casimir/proxydi": "1.371.0"
   },
   "dependencies": {
-    "@casimir/access-service": "1.390.0",
-    "@casimir/proxydi": "1.388.0",
-    "@casimir/toolbox": "1.388.0",
+    "@casimir/access-service": "1.394.0",
+    "@casimir/proxydi": "1.394.0",
+    "@casimir/toolbox": "1.394.0",
     "axios": "^0.21.1",
     "qs": "^6.10.1"
   }

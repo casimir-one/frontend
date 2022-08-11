@@ -1,6 +1,6 @@
 {
   "name": "@casimir/layout-service",
-  "version": "1.393.3",
+  "version": "1.394.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,10 +22,10 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir/commands": "1.390.0",
-    "@casimir/http-service": "1.390.0",
-    "@casimir/messages": "1.393.3",
-    "@casimir/proxydi": "1.388.0",
-    "@casimir/toolbox": "1.388.0"
+    "@casimir/commands": "1.394.0",
+    "@casimir/http-service": "1.394.0",
+    "@casimir/messages": "1.394.0",
+    "@casimir/proxydi": "1.394.0",
+    "@casimir/toolbox": "1.394.0"
   }
 }

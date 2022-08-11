@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/casimir-ai/frontend/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/casimir-ai/frontend/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+
+
+
+
+
 # [1.390.0](https://github.com/casimir-ai/frontend/compare/v1.389.3...v1.390.0) (2022-07-22)
 
 **Note:** Version bump only for package @deip/access-service

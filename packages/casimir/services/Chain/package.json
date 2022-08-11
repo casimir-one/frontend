@@ -1,6 +1,6 @@
 {
   "name": "@casimir/chain-service",
-  "version": "1.393.3",
+  "version": "1.394.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -22,10 +22,10 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.390.0",
-    "@casimir/lib-crypto": "1.375.1",
-    "@casimir/proxydi": "1.388.0",
-    "@casimir/toolbox": "1.388.0",
+    "@casimir/lib-crypto": "1.394.0",
+    "@casimir/platform-core": "1.394.0",
+    "@casimir/proxydi": "1.394.0",
+    "@casimir/toolbox": "1.394.0",
     "@polkadot/api": "8.6.2",
     "@polkadot/rpc-provider": "8.6.2",
     "@polkadot/types": "8.6.2",

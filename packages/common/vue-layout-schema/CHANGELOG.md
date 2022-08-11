@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/DEIPworld/deip-modules/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Bug Fixes
+
+* **@deip/vue-layout-schema:** CAS-186 fix saving empty string as proxy prop value ([d015c29](https://github.com/DEIPworld/deip-modules/commit/d015c29e4eb142917da47d3e9aaf783d6456e242))
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/DEIPworld/deip-modules/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 **Note:** Version bump only for package @deip/vue-layout-schema

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/DEIPworld/deip-modules/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Bug Fixes
+
+* **@deip/platform-util:** fix wallet decline transaction message ([8dc23ec](https://github.com/DEIPworld/deip-modules/commit/8dc23ece4480e94e365374910ecf2cad740b077c))
+* **@deip/platform-util:** open wallet sign transaction window as popup ([27a4a28](https://github.com/DEIPworld/deip-modules/commit/27a4a28a0c437d955b17a708ed85c38340daf7e7))
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/DEIPworld/deip-modules/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/DEIPworld/deip-modules/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Bug Fixes
+
+* **@deip/vuetify-extended:** restrict gifs in image input when cropper is enabled ([8af0bd4](https://github.com/DEIPworld/deip-modules/commit/8af0bd42a698bf60a98a5ce2596d0a6c498eaf27))
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/DEIPworld/deip-modules/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+* **@deip/vuetify-extended:** add VexScrollableText component ([1a192ab](https://github.com/DEIPworld/deip-modules/commit/1a192ab7399e54079bdeb862a4cd0bec9006b0e6))
+
+
+
+
+
 # [1.392.0](https://github.com/DEIPworld/deip-modules/compare/v1.391.1...v1.392.0) (2022-07-27)
 
 **Note:** Version bump only for package @deip/vuetify-extended

@@ -1,6 +1,6 @@
 {
   "name": "@casimir/env-module",
-  "version": "1.393.3",
+  "version": "1.394.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -26,11 +26,11 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/chain-service": "1.393.3",
-    "@casimir/platform-util": "1.392.0",
-    "@casimir/proxydi": "1.388.0",
-    "@casimir/toolbox": "1.388.0",
-    "@casimir/vuetify-extended": "1.392.0",
+    "@casimir/chain-service": "1.394.0",
+    "@casimir/platform-util": "1.394.0",
+    "@casimir/proxydi": "1.394.0",
+    "@casimir/toolbox": "1.394.0",
+    "@casimir/vuetify-extended": "1.394.0",
     "axios": "^0.21.1",
     "v-clipboard": "^2.2.3",
     "vue-deepset": "^0.6.3"

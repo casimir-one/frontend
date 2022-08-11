@@ -1,6 +1,6 @@
 {
   "name": "@casimir/teams-module",
-  "version": "1.393.3",
+  "version": "1.394.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,18 +20,18 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.390.0",
-    "@casimir/attributes-module": "1.393.3",
-    "@casimir/layouts-module": "1.393.3",
-    "@casimir/platform-components": "1.393.0",
-    "@casimir/platform-util": "1.392.0",
-    "@casimir/team-service": "1.393.3",
-    "@casimir/toolbox": "1.388.0",
-    "@casimir/users-module": "1.393.3",
-    "@casimir/validation-plugin": "1.388.0",
-    "@casimir/vue-elements": "1.392.0",
-    "@casimir/vue-layout-schema": "1.392.0",
-    "@casimir/vuetify-extended": "1.392.0"
+    "@casimir/attributes-module": "1.394.0",
+    "@casimir/layouts-module": "1.394.0",
+    "@casimir/platform-components": "1.394.0",
+    "@casimir/platform-core": "1.394.0",
+    "@casimir/platform-util": "1.394.0",
+    "@casimir/team-service": "1.394.0",
+    "@casimir/toolbox": "1.394.0",
+    "@casimir/users-module": "1.394.0",
+    "@casimir/validation-plugin": "1.394.0",
+    "@casimir/vue-elements": "1.394.0",
+    "@casimir/vue-layout-schema": "1.394.0",
+    "@casimir/vuetify-extended": "1.394.0"
   },
   "peerDependencies": {
     "@casimir/auth-module": "^1.374.0",

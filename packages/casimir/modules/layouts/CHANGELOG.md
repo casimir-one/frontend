@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/DEIPworld/deip-modules/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/DEIPworld/deip-modules/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+* **@deip/vuetify-extended:** add VexScrollableText component ([1a192ab](https://github.com/DEIPworld/deip-modules/commit/1a192ab7399e54079bdeb862a4cd0bec9006b0e6))
+
+
+
+
+
 ## [1.393.3](https://github.com/DEIPworld/deip-modules/compare/v1.393.2...v1.393.3) (2022-08-08)
 
 **Note:** Version bump only for package @deip/layouts-module

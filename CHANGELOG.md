@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.394.0](https://github.com/casimir-ai/frontend/compare/v1.393.3...v1.394.0) (2022-08-11)
+
+
+### Bug Fixes
+
+* **@deip/attributes-module:** CAS-186 add VTextarea props to AttributeTextareaSet settings ([864e2c5](https://github.com/casimir-ai/frontend/commit/864e2c5c1cddb84bb334d5150fb301648716c298))
+* **@deip/platform-util:** fix wallet decline transaction message ([8dc23ec](https://github.com/casimir-ai/frontend/commit/8dc23ece4480e94e365374910ecf2cad740b077c))
+* **@deip/platform-util:** open wallet sign transaction window as popup ([27a4a28](https://github.com/casimir-ai/frontend/commit/27a4a28a0c437d955b17a708ed85c38340daf7e7))
+* **@deip/vue-layout-schema:** CAS-186 fix saving empty string as proxy prop value ([d015c29](https://github.com/casimir-ai/frontend/commit/d015c29e4eb142917da47d3e9aaf783d6456e242))
+* **@deip/vuetify-extended:** restrict gifs in image input when cropper is enabled ([8af0bd4](https://github.com/casimir-ai/frontend/commit/8af0bd42a698bf60a98a5ce2596d0a6c498eaf27))
+
+
+### Features
+
+* rename packages ([cea1a4b](https://github.com/casimir-ai/frontend/commit/cea1a4b052eb0df165f70ece5c15616305d63394))
+* **@deip/vuetify-extended:** add VexScrollableText component ([1a192ab](https://github.com/casimir-ai/frontend/commit/1a192ab7399e54079bdeb862a4cd0bec9006b0e6))
+
+
+
+
+
 ## [1.393.3](https://github.com/casimir-ai/frontend/compare/v1.393.2...v1.393.3) (2022-08-08)
 
 

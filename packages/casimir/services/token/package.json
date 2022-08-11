@@ -1,6 +1,6 @@
 {
   "name": "@casimir/token-service",
-  "version": "1.393.3",
+  "version": "1.394.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,15 +23,15 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.390.0",
-    "@casimir/access-service": "1.390.0",
-    "@casimir/chain-service": "1.393.3",
-    "@casimir/commands": "1.390.0",
-    "@casimir/http-service": "1.390.0",
-    "@casimir/messages": "1.393.3",
-    "@casimir/platform-util": "1.392.0",
-    "@casimir/proxydi": "1.388.0",
-    "@casimir/toolbox": "1.388.0",
-    "@casimir/web-socket-service": "1.390.0"
+    "@casimir/access-service": "1.394.0",
+    "@casimir/chain-service": "1.394.0",
+    "@casimir/commands": "1.394.0",
+    "@casimir/http-service": "1.394.0",
+    "@casimir/messages": "1.394.0",
+    "@casimir/platform-core": "1.394.0",
+    "@casimir/platform-util": "1.394.0",
+    "@casimir/proxydi": "1.394.0",
+    "@casimir/toolbox": "1.394.0",
+    "@casimir/web-socket-service": "1.394.0"
   }
 }

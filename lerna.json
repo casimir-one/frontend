@@ -3,7 +3,7 @@
     "packages/common/*",
     "packages/casimir/*/*"
   ],
-  "version": "1.393.3",
+  "version": "1.394.0",
   "npmClient": "npm",
   "command": {
     "version": {
