@@ -43,14 +43,14 @@ export const walletSignTx = async (packedTx, chainInfo) => {
 
           resolve(packedTx);
         } else {
-          reject();
+          reject(new Error('close'));
         }
       }
 
       if (data?.channel === 'Deip.Wallet.Transaction.Close') {
         window.removeEventListener('message', handleSignTx);
 
-        reject();
+        reject(new Error('close'));
       }
     };
 
