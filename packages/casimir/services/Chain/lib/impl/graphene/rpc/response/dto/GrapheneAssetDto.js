@@ -1,5 +1,5 @@
 import FungibleTokenDto from './../../../../../base/rpc/response/dto/FungibleTokenDto';
-import { genRipemd160Hash } from '@deip/toolbox';
+import { genRipemd160Hash } from '@casimir/toolbox';
 
 
 class GrapheneAssetDto extends FungibleTokenDto {

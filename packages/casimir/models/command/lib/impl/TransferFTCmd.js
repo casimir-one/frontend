@@ -4,7 +4,7 @@ import {
   isNumber,
   isString,
   isNumeric
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**

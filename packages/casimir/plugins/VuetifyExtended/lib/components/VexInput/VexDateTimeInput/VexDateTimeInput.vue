@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   /* eslint-disable */
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
   /* eslint-enable */

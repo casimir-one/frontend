@@ -1,4 +1,4 @@
-import { setLocalesMessages } from '@deip/toolbox';
+import { setLocalesMessages } from '@casimir/toolbox';
 import { AttributeScope } from '@casimir/platform-core';
 import { nftItemsStore, nftItemDraftsStore } from './store';
 import { nftItemScope } from './config';

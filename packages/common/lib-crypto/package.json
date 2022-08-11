@@ -1,5 +1,5 @@
 {
-    "name": "@deip/lib-crypto",
+    "name": "@casimir/lib-crypto",
     "version": "1.375.1",
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",

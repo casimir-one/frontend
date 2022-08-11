@@ -1,5 +1,5 @@
 import { APP_CMD } from '@casimir/platform-core';
-import { assert, isArray } from '@deip/toolbox';
+import { assert, isArray } from '@casimir/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**

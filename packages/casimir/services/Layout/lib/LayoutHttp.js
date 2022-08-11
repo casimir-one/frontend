@@ -1,5 +1,5 @@
-import { HttpService } from '@deip/http-service';
-import { makeSingletonInstance } from '@deip/toolbox';
+import { HttpService } from '@casimir/http-service';
+import { makeSingletonInstance } from '@casimir/toolbox';
 
 /**
  * Layouts HTTP transport

@@ -1,4 +1,4 @@
-import { UserService } from '@deip/user-service';
+import { UserService } from '@casimir/user-service';
 
 const userService = UserService.getInstance();
 

@@ -1,5 +1,5 @@
 {
-  "name": "@deip/auth-service",
+  "name": "@casimir/auth-service",
   "version": "1.393.3",
   "description": "",
   "main": "index.js",
@@ -22,12 +22,12 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@deip/chain-service": "1.393.3",
-    "@deip/commands": "1.390.0",
-    "@deip/http-service": "1.390.0",
-    "@deip/lib-crypto": "1.375.1",
-    "@deip/messages": "1.393.3",
-    "@deip/proxydi": "1.388.0",
-    "@deip/toolbox": "1.388.0"
+    "@casimir/chain-service": "1.393.3",
+    "@casimir/commands": "1.390.0",
+    "@casimir/http-service": "1.390.0",
+    "@casimir/lib-crypto": "1.375.1",
+    "@casimir/messages": "1.393.3",
+    "@casimir/proxydi": "1.388.0",
+    "@casimir/toolbox": "1.388.0"
   }
 }

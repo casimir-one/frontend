@@ -1,4 +1,4 @@
-import { proxydi } from '@deip/proxydi';
+import { proxydi } from '@casimir/proxydi';
 
 import { normalizeDates } from '../helpers';
 

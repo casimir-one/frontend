@@ -1,4 +1,4 @@
-import { Interface } from '@deip/toolbox';
+import { Interface } from '@casimir/toolbox';
 
 /* Keep args in functions to validate interface */
 

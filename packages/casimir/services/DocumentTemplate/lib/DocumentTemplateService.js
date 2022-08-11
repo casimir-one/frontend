@@ -2,10 +2,10 @@ import {
   CreateDocumentTemplateCmd,
   UpdateDocumentTemplateCmd,
   DeleteDocumentTemplateCmd
-} from '@deip/commands';
-import { JsonDataMsg } from '@deip/messages';
-import { makeSingletonInstance } from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
+} from '@casimir/commands';
+import { JsonDataMsg } from '@casimir/messages';
+import { makeSingletonInstance } from '@casimir/toolbox';
+import { proxydi } from '@casimir/proxydi';
 import { DocumentTemplateHttp } from './DocumentTemplateHttp';
 
 export class DocumentTemplateService {

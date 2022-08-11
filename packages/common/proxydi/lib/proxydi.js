@@ -1,4 +1,4 @@
-import { makeSingletonInstance } from '@deip/toolbox';
+import { makeSingletonInstance } from '@casimir/toolbox';
 
 export class Proxydi {
   _registry = {};

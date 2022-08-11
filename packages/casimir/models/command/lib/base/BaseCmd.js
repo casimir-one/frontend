@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import { APP_CMD } from '@casimir/platform-core';
 
 /**

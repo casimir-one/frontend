@@ -1,5 +1,5 @@
-import { VeLineClamp } from '@deip/vue-elements';
-import { defineComponent } from '@deip/platform-util';
+import { VeLineClamp } from '@casimir/vue-elements';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

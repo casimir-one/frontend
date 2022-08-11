@@ -69,9 +69,9 @@
 </template>
 
 <script>
-  import { formMixin } from '@deip/platform-components';
-  import { VeStack } from '@deip/vue-elements';
-  import { collectionMerge } from '@deip/toolbox';
+  import { formMixin } from '@casimir/platform-components';
+  import { VeStack } from '@casimir/vue-elements';
+  import { collectionMerge } from '@casimir/toolbox';
 
   /**
    * Component for attributes setup

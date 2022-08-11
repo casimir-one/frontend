@@ -1,5 +1,5 @@
 {
-  "name": "@deip/messages",
+  "name": "@casimir/messages",
   "version": "1.393.3",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
@@ -23,9 +23,9 @@
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
   "dependencies": {
-    "@deip/chain-service": "1.393.3",
-    "@deip/commands": "1.390.0",
-    "@deip/toolbox": "1.388.0"
+    "@casimir/chain-service": "1.393.3",
+    "@casimir/commands": "1.390.0",
+    "@casimir/toolbox": "1.388.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

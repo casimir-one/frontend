@@ -6,8 +6,8 @@ The module
 based on such a model. The entities, on which attributes could be applied are: `User`, `Team` or
 `Project` so despite the module is able to work, it doesn't make sense without one (or several)
 of the list:
-  * `@deip/users-module`
-  * `@deip/teams-module`
+  * `@casimir/users-module`
+  * `@casimir/teams-module`
   * `@casimir/nft-collections-module`
 * using standard defineProperty method adds attributes object to prototype of vue instance
   and creates store getters, which gets data about certain collection
@@ -16,7 +16,7 @@ of the list:
 ## Usage
 for using this module in new portal, you need to set up it in `main.js` file
 ```
-import { AttributesModule } from '@deip/attributes-module';
+import { AttributesModule } from '@casimir/attributes-module';
 ```
 then add module to app using addModule(moduleName):
 ```
@@ -32,10 +32,10 @@ testApp
 
 ## Dependencies
 there is a minimum set of modules, without them this module won't work:
-* @deip/env-module
-* @deip/validation-plugin
-* @deip/layouts-module
+* @casimir/env-module
+* @casimir/validation-plugin
+* @casimir/layouts-module
 * @casimir/scopes-module
-* @deip/auth-module
-* @deip/vuetify-extended
+* @casimir/auth-module
+* @casimir/vuetify-extended
 

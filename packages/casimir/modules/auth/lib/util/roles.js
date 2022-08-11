@@ -1,4 +1,4 @@
-import { wrapInArray } from '@deip/toolbox';
+import { wrapInArray } from '@casimir/toolbox';
 import { intersectionWith } from 'lodash';
 
 export const hasRoles = (userRoles, roles) => {

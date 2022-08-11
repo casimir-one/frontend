@@ -1,4 +1,4 @@
-import { collectionMerge } from '@deip/toolbox';
+import { collectionMerge } from '@casimir/toolbox';
 
 /**
  * Factory for generating mutation for merging list of items into store

@@ -78,8 +78,8 @@
 </template>
 
 <script>
-  import { VexPasswordRepeatInput } from '@deip/vuetify-extended';
-  import { VeStack } from '@deip/vue-elements';
+  import { VexPasswordRepeatInput } from '@casimir/vuetify-extended';
+  import { VeStack } from '@casimir/vue-elements';
 
   /**
   * Component for user registration and login to the application

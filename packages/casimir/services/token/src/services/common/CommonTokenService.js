@@ -1,6 +1,6 @@
 import { AssetType, APP_PROPOSAL } from '@casimir/platform-core';
-import { TransferFTCmd, TransferNFTCmd } from '@deip/commands';
-import { makeSingletonInstance } from '@deip/toolbox';
+import { TransferFTCmd, TransferNFTCmd } from '@casimir/commands';
+import { makeSingletonInstance } from '@casimir/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 

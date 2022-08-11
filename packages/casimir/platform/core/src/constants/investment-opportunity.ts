@@ -1,4 +1,4 @@
-import { createEnum } from '@deip/toolbox';
+import { createEnum } from '@casimir/toolbox';
 
 export const INVESTMENT_OPPORTUNITY_STATUS = createEnum({
   ACTIVE: 1,

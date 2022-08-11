@@ -2,8 +2,8 @@ import {
   listGetterFactory,
   oneGetterFactory,
   setOneMutationFactory
-} from '@deip/platform-util';
-import { collectionMerge, collectionOne } from '@deip/toolbox';
+} from '@casimir/platform-util';
+import { collectionMerge, collectionOne } from '@casimir/toolbox';
 
 const STATE = {
   data: []
@@ -35,7 +35,9 @@ const MUTATIONS = {
     const targetScope = collectionOne(state.data, { type: scope });
 
     if (!targetScope) {
-      throw new Error(`[ScopesRegistry]: can't set mapped keys for "${scope}" scope. Scope doesn't exist.`);
+      throw new Error(
+        `[ScopesRegistry]: can't set mapped keys for "${scope}" scope. Scope doesn't exist.`
+      );
     }
 
     targetScope.mappedKeys[target] = collectionMerge(

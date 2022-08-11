@@ -1,19 +1,19 @@
-import { proxydi } from '@deip/proxydi';
-import { MultFormDataMsg, JsonDataMsg } from '@deip/messages';
+import { proxydi } from '@casimir/proxydi';
+import { MultFormDataMsg, JsonDataMsg } from '@casimir/messages';
 import {
   UpdateDaoCmd,
   AlterDaoAuthorityCmd
-} from '@deip/commands';
-import { ChainService } from '@deip/chain-service';
-import { WebSocketService } from '@deip/web-socket-service';
+} from '@casimir/commands';
+import { ChainService } from '@casimir/chain-service';
+import { WebSocketService } from '@casimir/web-socket-service';
 import {
   replaceFileWithName,
   createFormData,
   genSha256Hash,
   makeSingletonInstance
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 import { APP_EVENT } from '@casimir/platform-core';
-import { walletSignTx } from '@deip/platform-util';
+import { walletSignTx } from '@casimir/platform-util';
 import { UserHttp } from './UserHttp';
 
 export class UserService {

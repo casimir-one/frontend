@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import { isValidTimestampFormat } from './../utils';
 
 

@@ -9,7 +9,7 @@ import {
   paramCase,
 
   RecursiveIterator, objectPath, isFunction, assert
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 
 import { cloneDeep } from 'lodash';
 

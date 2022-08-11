@@ -15,13 +15,13 @@ is excluded from your builds.
 
 Otherwise, just
 ```
-$ npm install @deip/libcrypto
+$ npm install @casimir/lib-crypto
 ```
 
 ## API
 
 ```
-> crypto = require('@deip/libcrypto');
+> crypto = require('@casimir/lib-crypto');
 ```
 
 ### crypto.sha256(data)

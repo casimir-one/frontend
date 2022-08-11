@@ -1,5 +1,5 @@
 {
-  "name": "@deip/platform-components",
+  "name": "@casimir/platform-components",
   "version": "1.393.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@casimir/platform-core": "1.390.0",
-    "@deip/platform-util": "1.392.0",
-    "@deip/toolbox": "1.388.0",
-    "@deip/vuetify-extended": "1.392.0",
+    "@casimir/platform-util": "1.392.0",
+    "@casimir/toolbox": "1.388.0",
+    "@casimir/vuetify-extended": "1.392.0",
     "change-case": "^4.1.2",
     "date-fns": "^2.22.1",
     "lodash": "^4.17.21",

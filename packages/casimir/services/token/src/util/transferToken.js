@@ -1,8 +1,8 @@
-import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg } from '@deip/messages';
-import { AcceptProposalCmd, CreateProposalCmd } from '@deip/commands';
-import { ChainService } from '@deip/chain-service';
-import { wrapInArray } from '@deip/toolbox';
+import { proxydi } from '@casimir/proxydi';
+import { JsonDataMsg } from '@casimir/messages';
+import { AcceptProposalCmd, CreateProposalCmd } from '@casimir/commands';
+import { ChainService } from '@casimir/chain-service';
+import { wrapInArray } from '@casimir/toolbox';
 
 /**
  * @typedef {import('@casimir/platform-core').FungibleTokenTransferPayload} FungibleTokenTransferPayload

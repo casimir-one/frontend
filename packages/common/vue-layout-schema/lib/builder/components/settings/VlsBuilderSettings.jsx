@@ -3,11 +3,11 @@ import {
   kindOf,
   objectPath,
   capitalCase, deepFindParentByValue, hasOwnProperty, sentenceCase
-} from '@deip/toolbox';
+} from '@casimir/toolbox';
 
 import { cloneDeep } from 'lodash';
 
-import { VeStack } from '@deip/vue-elements';
+import { VeStack } from '@casimir/vue-elements';
 
 /* eslint-disable */
 import {

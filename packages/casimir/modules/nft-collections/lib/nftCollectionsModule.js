@@ -1,4 +1,4 @@
-import { assert, setLocalesMessages } from '@deip/toolbox';
+import { assert, setLocalesMessages } from '@casimir/toolbox';
 
 import { nftCollectionsStore } from './store';
 import { nftCollectionsScope } from './config';

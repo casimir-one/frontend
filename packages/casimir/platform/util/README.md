@@ -1,11 +1,11 @@
-# `@deip/platform-util`
+# `@casimir/platform-util`
 
 > TODO: description
 
 ## Usage
 
 ```
-const platformUtil = require('@deip/platform-util');
+const platformUtil = require('@casimir/platform-util');
 
 // TODO: DEMONSTRATE API
 ```

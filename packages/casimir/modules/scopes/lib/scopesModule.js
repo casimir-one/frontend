@@ -1,4 +1,4 @@
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import { scopesRegistry } from './store';
 
 const moduleName = 'ScopesModule';

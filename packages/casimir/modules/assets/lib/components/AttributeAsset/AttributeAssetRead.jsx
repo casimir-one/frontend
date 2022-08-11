@@ -1,5 +1,5 @@
-import { defineComponent } from '@deip/platform-util';
-import { AttributeReadMixin } from '@deip/attributes-module';
+import { defineComponent } from '@casimir/platform-util';
+import { AttributeReadMixin } from '@casimir/attributes-module';
 
 /**
  * Component for read asset attribute

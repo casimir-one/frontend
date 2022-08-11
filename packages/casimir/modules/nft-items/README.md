@@ -24,7 +24,7 @@ testApp
 
 ## Dependencies
 
-* `@deip/auth-module`
-* `@deip/env-module`
-* `@deip/users-module`
+* `@casimir/auth-module`
+* `@casimir/env-module`
+* `@casimir/users-module`
 * `@casimir/nft-collections-module`

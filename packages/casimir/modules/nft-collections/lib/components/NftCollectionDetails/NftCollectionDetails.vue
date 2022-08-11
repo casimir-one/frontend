@@ -7,9 +7,9 @@
 </template>
 
 <script>
-  import { attributedDetailsFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@deip/attributes-module';
-  import { defineComponent } from '@deip/platform-util';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
+  import { defineComponent } from '@casimir/platform-util';
 
   export default defineComponent({
     name: 'NftCollectionDetails',

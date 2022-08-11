@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 
-import { proxydi } from '@deip/proxydi';
+import { proxydi } from '@casimir/proxydi';
 import { FungibleTokenService } from '@casimir/token-service';
-import { listGetter, setListMutationFactory } from '@deip/platform-util';
+import { listGetter, setListMutationFactory } from '@casimir/platform-util';
 import { AssetType } from '@casimir/platform-core';
 
 const fungibleTokenService = FungibleTokenService.getInstance();

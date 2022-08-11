@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   import VexAutocomplete from '../VexAutocomplete/VexAutocomplete';
   import { getBindableProps } from '../../composables';
 

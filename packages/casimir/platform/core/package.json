@@ -27,6 +27,6 @@
     "vue": "^2.6.14"
   },
   "dependencies": {
-    "@deip/toolbox": "1.388.0"
+    "@casimir/toolbox": "1.388.0"
   }
 }

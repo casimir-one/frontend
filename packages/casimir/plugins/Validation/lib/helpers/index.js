@@ -1,4 +1,4 @@
-import { wrapInArray } from '@deip/toolbox';
+import { wrapInArray } from '@casimir/toolbox';
 
 export const normalizeDates = (curr, prev, next) => ({
   currentDate: new Date(curr),

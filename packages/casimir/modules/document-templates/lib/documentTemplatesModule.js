@@ -1,4 +1,4 @@
-import { setLocalesMessages } from '@deip/toolbox';
+import { setLocalesMessages } from '@casimir/toolbox';
 import { documentTemplatesStore } from './store';
 
 const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.js$/i);

@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   import { contextMixin } from '../../composables';
   /**
    * Timeline list item component

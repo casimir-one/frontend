@@ -128,12 +128,12 @@
 </template>
 
 <script>
-  import { genColorsPalette } from '@deip/toolbox';
+  import { genColorsPalette } from '@casimir/toolbox';
 
   import {
     VexTooltip
-  } from '@deip/vuetify-extended';
-  import { VeStack } from '@deip/vue-elements';
+  } from '@casimir/vuetify-extended';
+  import { VeStack } from '@casimir/vue-elements';
 
   /**
    * Component for creating list of attributes

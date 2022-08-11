@@ -1,4 +1,4 @@
-import { AttributesService } from '@deip/attributes-service';
+import { AttributesService } from '@casimir/attributes-service';
 
 import {
   listGetter,
@@ -6,8 +6,8 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@deip/platform-util';
-import { collectionOne } from '@deip/toolbox';
+} from '@casimir/platform-util';
+import { collectionOne } from '@casimir/toolbox';
 
 const attributesService = AttributesService.getInstance();
 

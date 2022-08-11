@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
 
   /**
    * NFT item data provider

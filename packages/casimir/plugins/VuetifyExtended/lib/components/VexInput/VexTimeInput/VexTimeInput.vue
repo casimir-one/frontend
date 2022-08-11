@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@deip/platform-util';
+  import { defineComponent } from '@casimir/platform-util';
   import {
     isToday, getHours, getMinutes, parseISO
   } from 'date-fns';

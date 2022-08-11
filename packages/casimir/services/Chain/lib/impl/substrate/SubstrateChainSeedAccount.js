@@ -1,6 +1,6 @@
 import BaseChainSeedAccount from './../../base/BaseChainSeedAccount';
 import { u8aToHex } from '@polkadot/util';
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import { keccakAsHex } from '@polkadot/util-crypto';
 import { getSeedAccount } from './utils';
 

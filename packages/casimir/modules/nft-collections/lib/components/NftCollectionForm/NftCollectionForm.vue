@@ -45,9 +45,9 @@
 </template>
 
 <script>
-  import { attributedFormFactory, LayoutRenderer } from '@deip/layouts-module';
-  import { VeStack } from '@deip/vue-elements';
-  import { defineComponent } from '@deip/platform-util';
+  import { attributedFormFactory, LayoutRenderer } from '@casimir/layouts-module';
+  import { VeStack } from '@casimir/vue-elements';
+  import { defineComponent } from '@casimir/platform-util';
 
   import { ViewMode } from '@casimir/platform-core';
 

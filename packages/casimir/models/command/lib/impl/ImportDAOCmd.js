@@ -1,5 +1,5 @@
 import { APP_CMD } from '@casimir/platform-core';
-import { assert, isBoolean } from '@deip/toolbox';
+import { assert, isBoolean } from '@casimir/toolbox';
 import AppEntityCmd from '../base/AppEntityCmd';
 
 /**

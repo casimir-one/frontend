@@ -1,4 +1,4 @@
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeModelMixin, AttributeRootComponentMixinFactory } from '../mixins';
 
 const AttributeSet = defineComponent({

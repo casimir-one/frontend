@@ -1,4 +1,4 @@
-import { assert, genMd5Hash } from '@deip/toolbox';
+import { assert, genMd5Hash } from '@casimir/toolbox';
 import BaseChainService from './../../base/BaseChainService';
 import GrapheneChainOperationsRegistry from './GrapheneChainOperationsRegistry';
 import GrapheneTxBuilder from './GrapheneTxBuilder';

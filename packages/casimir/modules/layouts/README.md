@@ -1,4 +1,4 @@
-# `@deip/layouts-module`
+# `@casimir/layouts-module`
 
 ## Description
 
@@ -9,7 +9,7 @@ created layouts based on such a model.
 
 ## Usage
 ```
-import { LayoutsModule } from '@deip/layouts-module';
+import { LayoutsModule } from '@casimir/layouts-module';
 ```
 then add module to app using `addModule(moduleName)`:
 ```
@@ -24,15 +24,15 @@ testApp
 ```
 
 ## Dependencies
-* `@deip/env-module`
+* `@casimir/env-module`
 
 ## Context modules
 
 Despite layouts-module are able to work without below list of modules, they are necessary for
 portal in general:
 
-* `@deip/validation-plugin`
-* `@deip/attributes-module`
+* `@casimir/validation-plugin`
+* `@casimir/attributes-module`
 * `@casimir/scopes-module`
-* `@deip/auth-module`
-* `@deip/users-module` or/and` @deip/teams-module` or/and `@casimir/nft-collections-module`
+* `@casimir/auth-module`
+* `@casimir/users-module` or/and` @casimir/teams-module` or/and `@casimir/nft-collections-module`

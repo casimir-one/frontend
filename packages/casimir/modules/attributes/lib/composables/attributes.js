@@ -1,6 +1,6 @@
 import qs from 'qs';
-import { hasValue, wrapInArray, isObject } from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
+import { hasValue, wrapInArray, isObject } from '@casimir/toolbox';
+import { proxydi } from '@casimir/proxydi';
 
 /**
  * Convert array attributes from model to object

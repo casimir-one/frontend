@@ -3,8 +3,8 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { VeStack } from '@deip/vue-elements';
-import { defineComponent } from '@deip/platform-util';
+import { VeStack } from '@casimir/vue-elements';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeMultipleModelMixin, AttributeSetMixin } from '../../mixins';
 
 /**

@@ -32,8 +32,8 @@
 </template>
 
 <script>
-  import { UsersSelector } from '@deip/users-module';
-  import { defineComponent } from '@deip/platform-util';
+  import { UsersSelector } from '@casimir/users-module';
+  import { defineComponent } from '@casimir/platform-util';
 
   export default defineComponent({
     name: 'TeamAddMemberModal',

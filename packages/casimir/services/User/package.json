@@ -1,5 +1,5 @@
 {
-  "name": "@deip/user-service",
+  "name": "@casimir/user-service",
   "version": "1.393.3",
   "description": "",
   "main": "index.js",
@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@casimir/platform-core": "1.390.0",
-    "@deip/chain-service": "1.393.3",
-    "@deip/commands": "1.390.0",
-    "@deip/http-service": "1.390.0",
-    "@deip/messages": "1.393.3",
-    "@deip/platform-util": "^1.392.0",
-    "@deip/proxydi": "1.388.0",
-    "@deip/toolbox": "1.388.0",
-    "@deip/web-socket-service": "1.390.0"
+    "@casimir/chain-service": "1.393.3",
+    "@casimir/commands": "1.390.0",
+    "@casimir/http-service": "1.390.0",
+    "@casimir/messages": "1.393.3",
+    "@casimir/platform-util": "^1.392.0",
+    "@casimir/proxydi": "1.388.0",
+    "@casimir/toolbox": "1.388.0",
+    "@casimir/web-socket-service": "1.390.0"
   }
 }

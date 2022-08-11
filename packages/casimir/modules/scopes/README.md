@@ -23,9 +23,9 @@ testApp
 ```
 ## Notice
 there is a minimum set of modules, without them this module won't work:
-* @deip/env-module
-* @deip/validation-plugin
-* @deip/attributes-module
-* @deip/layouts-module
+* @casimir/env-module
+* @casimir/validation-plugin
+* @casimir/attributes-module
+* @casimir/layouts-module
 * @casimir/scopes-module
-* @deip/auth-module
+* @casimir/auth-module

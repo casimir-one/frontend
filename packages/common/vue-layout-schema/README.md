@@ -1,11 +1,11 @@
-# `@deip/vue-layout-schema`
+# `@casimir/vue-layout-schema`
 
 > TODO: description
 
 ## Usage
 
 ```
-const vueLayoutSchema = require('@deip/vue-layout-schema');
+const vueLayoutSchema = require('@casimir/vue-layout-schema');
 
 // TODO: DEMONSTRATE API
 ```

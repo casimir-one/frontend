@@ -1,9 +1,9 @@
-import { VeStack } from '@deip/vue-elements';
+import { VeStack } from '@casimir/vue-elements';
 import {
   VIcon
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

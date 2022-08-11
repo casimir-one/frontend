@@ -42,30 +42,29 @@ Add needed Casimir modules:
 ```
 npm install -S vuetify vue-i18n vuex vue-router
 ```
-* @deip/scopes-module
-* @deip/validation-plugin
-* @deip/vuetify-extended
-* @deip/env-module — is a module of environment variables and transport instance libraries
-* @deip/attributes-module — is a module of entities attributes (e.g. to add the user’s avatar)
-* @deip/layouts-module — is a layout module for the application
-* @deip/auth-module — is an authentication and access rights module
-* @deip/users-module — is an user module
-* @deip—- additional utilities.
+* @casimir/scopes-module
+* @casimir/validation-plugin
+* @casimir/vuetify-extended
+* @casimir/env-module — is a module of environment variables and transport instance libraries
+* @casimir/attributes-module — is a module of entities attributes (e.g. to add the user’s avatar)
+* @casimir/layouts-module — is a layout module for the application
+* @casimir/auth-module — is an authentication and access rights module
+* @casimir/users-module — is an user module
 
 ```
-npm install -S @deip/env-module @deip/attributes-module @deip/layouts-module @deip/auth-module @deip/users-module
+npm install -S @casimir/env-module @casimir/attributes-module @casimir/layouts-module @casimir/auth-module @casimir/users-module
 ```
 
 Edit the main file of the application:
 
 ```
 import Vue from 'vue';
-import { CreateApp } from '@deip/platform-util'; // the class, needed to prepare the application
-import { EnvModule } from '@deip/env-module';
-import { AttributesModule } from '@deip/attributes-module';
-import { LayoutsModule } from '@deip/layouts-module';
-import { AuthModule } from '@deip/auth-module';
-import { UsersModule } from '@deip/users-module';
+import { CreateApp } from '@casimir/platform-util'; // the class, needed to prepare the application
+import { EnvModule } from '@casimir/env-module';
+import { AttributesModule } from '@casimir/attributes-module';
+import { LayoutsModule } from '@casimir/layouts-module';
+import { AuthModule } from '@casimir/auth-module';
+import { UsersModule } from '@casimir/users-module';
 
 import App from './App';
 import router from './router';
@@ -193,8 +192,8 @@ The DEIP-Modules repository uses the [Conventional commits](https://www.conventi
 Strongly recommend making changes in one commit that will specify the type of change and scope to which the changes apply.
 
 ```
-feat(@deip/auth-module): add translation support
-fix(@deip/vue-elements): wrong gutter property
+feat(@casimir/auth-module): add translation support
+fix(@casimir/vue-elements): wrong gutter property
 ...etc
 ```
 
@@ -228,7 +227,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
 //TODO: develop admin module as a npm package
 ```
 * #### add auth module (while we don't have certain npm package):
-  * install npm package `@deip/auth-module` (is required)
+  * install npm package `@casimir/auth-module` (is required)
   * create folder `/src/modules` (if it's not created)
   * copy to this folder the folder from `/casimir-sandbox-portal/src/modules/auth` with the all content
   * import this module as a `TestAppAuthModule` into `main.js` of created portal:
@@ -243,9 +242,9 @@ user creates a portal, using manual from casimir-frontend app from above descrip
        .addModule(TestAppAuthModule)
       ```
 * #### add admin module
-  * install npm packages: `@deip/attributes-module`, `@casimir/nft-collections-module`,
-  `@deip/users-module`, `@deip/teams-module` `@deip/toolbox`
-  и `@deip/layouts-module` (all these are required)
+  * install npm packages: `@casimir/attributes-module`, `@casimir/nft-collections-module`,
+  `@casimir/users-module`, `@casimir/teams-module` `@casimir/toolbox`
+  и `@casimir/layouts-module` (all these are required)
   * copy `/casimir-sandbox-portal/src/modules/adimn` with the all content into `/src/modules`
     there are layouts and attributes which portal admin is able to set in admin panel
   * import this module as a `TestAppAdminModule` into `main.js` of created portal
@@ -271,7 +270,7 @@ user creates a portal, using manual from casimir-frontend app from above descrip
     import { AdminLayoutsForm } from '@/modules/admin/components/layouts/AdminLayoutsForm';
     import { AdminLayoutsSettings } from '@/modules/admin/components/layouts/AdminLayoutsSettings';
 
-    import { routerView } from '@deip/platform-util';
+    import { routerView } from '@casimir/platform-util';
     const formViewMeta = (auth = [SYSTEM_ROLE.ANY]) => ({
       auth,
       viewSetup: {

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions,import/no-unresolved
 import { createRange } from 'vuetify/lib/util/helpers';
-import { normalizeBlocksObject } from '@deip/vue-layout-schema';
+import { normalizeBlocksObject } from '@casimir/vue-layout-schema';
 
 export const typographyBlocks = {
   title: 'Typography',

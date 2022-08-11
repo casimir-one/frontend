@@ -1,7 +1,7 @@
 import './VeStack.scss';
 
-import { defineComponent } from '@deip/platform-util';
-import { convertToUnit } from '@deip/toolbox';
+import { defineComponent } from '@casimir/platform-util';
+import { convertToUnit } from '@casimir/toolbox';
 import { genBreakpointCssVarsStyles, genBreakpointProps } from '../../util/breakpoint';
 
 /**

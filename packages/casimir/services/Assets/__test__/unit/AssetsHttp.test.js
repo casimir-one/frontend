@@ -2,7 +2,7 @@ import { AssetsHttp } from '../../lib/AssetsHttp';
 
 const mockGet = jest.fn();
 const mockPost = jest.fn();
-jest.mock('@deip/http-service', () => ({
+jest.mock('@casimir/http-service', () => ({
   HttpService: {
     getInstance: () => ({
       get: mockGet,

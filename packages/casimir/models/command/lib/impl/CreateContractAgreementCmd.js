@@ -1,5 +1,5 @@
 import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir/platform-core';
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**

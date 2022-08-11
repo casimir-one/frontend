@@ -1,6 +1,6 @@
 import './VeLineClamp.scss';
 
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 
 /**
  * Truncates text at a specific number of lines

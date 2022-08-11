@@ -8,7 +8,7 @@ class BaseHttpMsg {
   /**
    * Create base HTTP message
    * @param {Object} message
-   * @param {import("@deip/chain-service").BaseTx} message.tx transaction
+   * @param {import("@casimir/chain-service").BaseTx} message.tx transaction
    * @param {Array} message.appCmds commands
    * @param {Object} [headers={}]
    */

@@ -9,11 +9,11 @@ import {
   // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { defineComponent } from '@deip/platform-util';
-import { formMixin } from '@deip/platform-components';
+import { defineComponent } from '@casimir/platform-util';
+import { formMixin } from '@casimir/platform-components';
 
-import { VeStack } from '@deip/vue-elements';
-import { collectionMerge } from '@deip/toolbox';
+import { VeStack } from '@casimir/vue-elements';
+import { collectionMerge } from '@casimir/toolbox';
 
 /**
  * Component for layouts settings

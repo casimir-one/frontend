@@ -1,5 +1,5 @@
 import { APP_CMD, NftItemMetadataDraftStatus } from '@casimir/platform-core';
-import { assert } from '@deip/toolbox';
+import { assert } from '@casimir/toolbox';
 import AppCmd from '../base/AppCmd';
 
 /**

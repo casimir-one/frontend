@@ -1,9 +1,9 @@
-import { makeSingletonInstance } from '@deip/toolbox';
-import { JsonDataMsg } from '@deip/messages';
+import { makeSingletonInstance } from '@casimir/toolbox';
+import { JsonDataMsg } from '@casimir/messages';
 import {
   CreateLayoutCmd, UpdateLayoutCmd, DeleteLayoutCmd, UpdateLayoutSettingsCmd
-} from '@deip/commands';
-import { proxydi } from '@deip/proxydi';
+} from '@casimir/commands';
+import { proxydi } from '@casimir/proxydi';
 import { LayoutHttp } from './LayoutHttp';
 
 /**

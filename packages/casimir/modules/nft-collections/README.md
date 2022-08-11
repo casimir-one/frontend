@@ -4,7 +4,7 @@
 ## Description
 
 The module creates store for a new entity called `NFT collection` and also adds new scope
-called `nftCollection` by action `scopesRegistry/addScope` related with `@deip/scopes-module`
+called `nftCollection` by action `scopesRegistry/addScope` related with `@casimir/scopes-module`
 
 ## Usage
 
@@ -23,11 +23,11 @@ testApp.addModule(NftCollectionsModule)
 ```
 
 ## Dependencies
-* `@deip/validation-plugin`
-* `@deip/vuetify-extended`
-* `@deip/env-module`
-* `@deip/scopes-module`
-* `@deip/attributes-module`
-* `@deip/layouts-module`
-* `@deip/auth-module`
-* `@deip/user-module`
+* `@casimir/validation-plugin`
+* `@casimir/vuetify-extended`
+* `@casimir/env-module`
+* `@casimir/scopes-module`
+* `@casimir/attributes-module`
+* `@casimir/layouts-module`
+* `@casimir/auth-module`
+* `@casimir/user-module`

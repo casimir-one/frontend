@@ -1,13 +1,13 @@
-import { makeSingletonInstance } from '@deip/toolbox';
-import { proxydi } from '@deip/proxydi';
-import { JsonDataMsg } from '@deip/messages';
+import { makeSingletonInstance } from '@casimir/toolbox';
+import { proxydi } from '@casimir/proxydi';
+import { JsonDataMsg } from '@casimir/messages';
 import {
   TransferFTCmd,
   CreateFTClassCmd,
   IssueFTCmd
-} from '@deip/commands';
+} from '@casimir/commands';
 import { APP_PROPOSAL } from '@casimir/platform-core';
-import { ChainService } from '@deip/chain-service';
+import { ChainService } from '@casimir/chain-service';
 import { FungibleTokenHttp } from './FungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 

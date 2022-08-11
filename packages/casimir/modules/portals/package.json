@@ -1,5 +1,5 @@
 {
-  "name": "@deip/portals-module",
+  "name": "@casimir/portals-module",
   "version": "1.393.3",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@casimir/platform-core": "1.390.0",
-    "@deip/platform-util": "1.392.0",
-    "@deip/portal-service": "1.393.3",
-    "@deip/proxydi": "1.388.0"
+    "@casimir/platform-util": "1.392.0",
+    "@casimir/portal-service": "1.393.3",
+    "@casimir/proxydi": "1.388.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

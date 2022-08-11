@@ -1,6 +1,6 @@
-import { VexRichedit } from '@deip/vuetify-extended';
+import { VexRichedit } from '@casimir/vuetify-extended';
 
-import { defineComponent } from '@deip/platform-util';
+import { defineComponent } from '@casimir/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
 /**
