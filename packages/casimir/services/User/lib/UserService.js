@@ -55,6 +55,7 @@ export class UserService {
     const chainTxBuilder = chainService.getChainTxBuilder();
 
     const txBuilder = await chainTxBuilder.begin();
+
     const updateDaoCmd = new UpdateDaoCmd({
       isTeamAccount: false,
       entityId: updater,
@@ -118,33 +119,38 @@ export class UserService {
       authority
     } = payload;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainNodeClient = chainService.getChainNodeClient();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const alterDaoAuthorityCmd = new AlterDaoAuthorityCmd({
-              entityId: username,
-              isTeamAccount: false,
-              authority
-            });
+    const txBuilder = await chainTxBuilder.begin();
 
-            txBuilder.addCmd(alterDaoAuthorityCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': username });
+    const alterDaoAuthorityCmd = new AlterDaoAuthorityCmd({
+      entityId: username,
+      isTeamAccount: false,
+      authority
+    });
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    txBuilder.addCmd(alterDaoAuthorityCmd);
 
-            return this.userHttp.changePassword(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload(), { 'entity-id': username });
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.userHttp.changePassword(msg);
   }
 
   /**
