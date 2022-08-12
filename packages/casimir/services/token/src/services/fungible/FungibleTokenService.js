@@ -8,6 +8,7 @@ import {
 } from '@casimir/commands';
 import { APP_PROPOSAL } from '@casimir/platform-core';
 import { ChainService } from '@casimir/chain-service';
+import { walletSignTx } from '@casimir/platform-util';
 import { FungibleTokenHttp } from './FungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
@@ -40,55 +41,60 @@ export class FungibleTokenService {
     } = payload;
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainRpc = chainService.getChainRpc();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainRpc = chainService.getChainRpc();
 
-        return chainTxBuilder.begin()
-          .then(async (txBuilder) => {
-            const entityId = await chainRpc.getNextAvailableFtId();
+    const txBuilder = await chainTxBuilder.begin();
 
-            const createFTClassCmd = new CreateFTClassCmd({
-              entityId,
-              issuer,
-              symbol,
-              precision,
-              maxSupply,
-              minBalance,
-              description,
-              metadata
-            });
-            txBuilder.addCmd(createFTClassCmd);
-            const tokenId = createFTClassCmd.getProtocolEntityId();
+    const entityId = await chainRpc.getNextAvailableFtId();
 
-            if (holders && holders.length) {
-              for (let i = 0; i < holders.length; i++) {
-                const { account, asset } = holders[i];
-                const issueFTCmd = new IssueFTCmd({
-                  tokenId,
-                  amount: asset.amount,
-                  issuer,
-                  recipient: account
-                });
-                txBuilder.addCmd(issueFTCmd);
-              }
-            }
+    const createFTClassCmd = new CreateFTClassCmd({
+      entityId,
+      issuer,
+      symbol,
+      precision,
+      maxSupply,
+      minBalance,
+      description,
+      metadata
+    });
 
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    txBuilder.addCmd(createFTClassCmd);
+    const tokenId = createFTClassCmd.getProtocolEntityId();
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    if (holders && holders.length) {
+      for (let i = 0; i < holders.length; i++) {
+        const { account, asset } = holders[i];
+        const issueFTCmd = new IssueFTCmd({
+          tokenId,
+          amount: asset.amount,
+          issuer,
+          recipient: account
+        });
+        txBuilder.addCmd(issueFTCmd);
+      }
+    }
 
-            return this.fungibleTokenHttp.create(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.fungibleTokenHttp.create(msg);
   }
 
   /**
@@ -108,33 +114,39 @@ export class FungibleTokenService {
     } = payload;
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const issueFTCmd = new IssueFTCmd({
-              issuer,
-              tokenId,
-              amount,
-              recipient
-            });
-            txBuilder.addCmd(issueFTCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload());
+    const txBuilder = await chainTxBuilder.begin();
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const issueFTCmd = new IssueFTCmd({
+      issuer,
+      tokenId,
+      amount,
+      recipient
+    });
 
-            return this.fungibleTokenHttp.issue(msg);
-          });
-      });
+    txBuilder.addCmd(issueFTCmd);
+
+    const packedTx = await txBuilder.end();
+
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.fungibleTokenHttp.issue(msg);
   }
 
   /**
