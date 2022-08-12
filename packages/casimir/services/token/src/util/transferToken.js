@@ -3,6 +3,102 @@ import { JsonDataMsg } from '@casimir/messages';
 import { AcceptProposalCmd, CreateProposalCmd } from '@casimir/commands';
 import { ChainService } from '@casimir/chain-service';
 import { wrapInArray } from '@casimir/toolbox';
+import { walletSignTx } from '@casimir/platform-util';
+
+/**
+ * Build transaction with proposal
+ * @param {Array} commandsBatch
+ * @param {BaseTxBuilder} chainTxBuilder
+ * @param {boolean} isProposal
+ * @param {boolean} isProposalApproved
+ * @param {number} proposalLifetime
+ * @param {string} proposalType
+ * @param {string} username
+ * @returns {FinalizedTx}
+ */
+const buildCommandsProposalTx = async (
+  commandsBatch,
+  chainTxBuilder,
+  isProposal,
+  isProposalApproved,
+  proposalLifetime,
+  proposalType,
+  username
+) => {
+  const txBuilder = await chainTxBuilder.begin();
+  const batchWeight = await chainTxBuilder.getBatchWeight(commandsBatch);
+  const createProposalCmd = new CreateProposalCmd({
+    type: proposalType,
+    creator: username,
+    expirationTime: proposalLifetime,
+    proposedCmds: commandsBatch,
+    batchWeight
+  });
+
+  txBuilder.addCmd(createProposalCmd);
+
+  if (isProposalApproved) {
+    const updateProposalId = createProposalCmd.getProtocolEntityId();
+    const updateProposalCmd = new AcceptProposalCmd({
+      entityId: updateProposalId,
+      account: username,
+      batchWeight
+    });
+    txBuilder.addCmd(updateProposalCmd);
+  }
+
+  return txBuilder.end();
+};
+
+/**
+ * Build transaction
+ * @param {Array} commandsBatch
+ * @param {BaseTxBuilder} chainTxBuilder
+ * @returns {FinalizedTx}
+ */
+const buildCommandsTx = async (commandsBatch, chainTxBuilder) => {
+  const txBuilder = await chainTxBuilder.begin();
+
+  for (const cmd of commandsBatch) {
+    txBuilder.addCmd(cmd);
+  }
+  return txBuilder.end();
+};
+
+/**
+ * Pack transaction
+ * @param {Array} commandsBatch
+ * @param {BaseTxBuilder} chainTxBuilder
+ * @param {boolean} isProposal
+ * @param {boolean} isProposalApproved
+ * @param {number} proposalLifetime
+ * @param {string} proposalType
+ * @param {string} username
+ * @returns {FinalizedTx}
+ */
+const packTx = async (
+  commandsBatch,
+  chainTxBuilder,
+  isProposal,
+  isProposalApproved,
+  proposalLifetime,
+  proposalType,
+  username
+) => {
+  if (isProposal) {
+    return buildCommandsProposalTx(
+      commandsBatch,
+      chainTxBuilder,
+      isProposal,
+      isProposalApproved,
+      proposalLifetime,
+      proposalType,
+      username
+    );
+  }
+
+  return buildCommandsTx(commandsBatch, chainTxBuilder);
+};
 
 /**
  * @typedef {import('@casimir/platform-core').FungibleTokenTransferPayload} FungibleTokenTransferPayload
@@ -14,7 +110,7 @@ import { wrapInArray } from '@casimir/toolbox';
  * @param {Function} transferFn
  * @return {Promise<Object>}
  */
-export function transferToken(
+export async function transferToken(
   payload,
   transferTokenCmd,
   proposalType,
@@ -34,57 +130,35 @@ export function transferToken(
 
   const env = proxydi.get('env');
 
-  return ChainService.getInstanceAsync(env)
-    .then((chainService) => {
-      const chainNodeClient = chainService.getChainNodeClient();
-      const chainTxBuilder = chainService.getChainTxBuilder();
-      return chainTxBuilder.begin()
-        .then((txBuilder) => {
-          const commandsBatch = wrapInArray(transferTokenCmd);
+  const chainService = await ChainService.getInstanceAsync(env);
+  const chainTxBuilder = chainService.getChainTxBuilder();
 
-          const buildProposal = () => chainTxBuilder.getBatchWeight(commandsBatch)
-            .then((batchWeight) => {
-              const createProposalCmd = new CreateProposalCmd({
-                type: proposalType,
-                creator: username,
-                expirationTime: proposalLifetime,
-                proposedCmds: commandsBatch,
-                batchWeight
-              });
-              txBuilder.addCmd(createProposalCmd);
+  const commandsBatch = wrapInArray(transferTokenCmd);
 
-              if (isProposalApproved) {
-                const updateProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: updateProposalId,
-                  account: username,
-                  batchWeight
-                });
-                txBuilder.addCmd(updateProposalCmd);
-              }
+  const packedTx = await packTx(
+    commandsBatch,
+    chainTxBuilder,
+    isProposal,
+    isProposalApproved,
+    proposalLifetime,
+    proposalType,
+    username
+  );
 
-              return txBuilder.end();
-            });
+  const chainNodeClient = chainService.getChainNodeClient();
+  const chainInfo = chainService.getChainInfo();
+  let signedTx;
 
-          if (isProposal) {
-            return buildProposal();
-          }
+  if (env.WALLET_URL) {
+    signedTx = await walletSignTx(packedTx, chainInfo);
+  } else {
+    signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+  }
+  const msg = new JsonDataMsg(signedTx.getPayload());
 
-          for (const cmd of commandsBatch) {
-            txBuilder.addCmd(cmd);
-          }
+  if (env.RETURN_MSG === true) {
+    return msg;
+  }
 
-          return txBuilder.end();
-        })
-        .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-        .then((packedTx) => {
-          const msg = new JsonDataMsg(packedTx.getPayload());
-
-          if (env.RETURN_MSG === true) {
-            return msg;
-          }
-
-          return transferFn(msg);
-        });
-    });
+  return transferFn(msg);
 }
