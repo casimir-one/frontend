@@ -137,41 +137,36 @@ export class PortalService {
       RETURN_MSG
     } = env;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createDaoCmd = new CreateDaoCmd({
-              isTeamAccount: false,
-              fee: { ...CORE_ASSET, amount: 0 },
-              creator: creator || FAUCET_ACCOUNT_USERNAME,
-              authority: {
-                owner: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
-                }
-              },
-              description: genSha256Hash(JSON.stringify(attributes)),
-              attributes,
-              email,
-              roles,
-              entityId: username
-            });
-            txBuilder.addCmd(createDaoCmd);
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-            return txBuilder.end();
-          })
-          .then((packedTx) => {
-            // const chainNodeClient = chainService.getChainNodeClient();
-            // return txEnvelop.signAsync(privKey, chainNodeClient);
-            const msg = new JsonDataMsg(packedTx.getPayload());
-            if (RETURN_MSG && RETURN_MSG === true) {
-              return msg;
-            }
-            return this.portalHttp.postSignUp(msg);
-          });
-      });
+    const txBuilder = await chainTxBuilder.begin();
+
+    const createDaoCmd = new CreateDaoCmd({
+      isTeamAccount: false,
+      fee: { ...CORE_ASSET, amount: 0 },
+      creator: creator || FAUCET_ACCOUNT_USERNAME,
+      authority: {
+        owner: {
+          auths: [{ key: pubKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      description: genSha256Hash(JSON.stringify(attributes)),
+      attributes,
+      email,
+      roles,
+      entityId: username
+    });
+    txBuilder.addCmd(createDaoCmd);
+
+    const packedTx = await txBuilder.end();
+
+    const msg = new JsonDataMsg(packedTx.getPayload());
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+    return this.portalHttp.postSignUp(msg);
   }
 
   /**
@@ -189,52 +184,46 @@ export class PortalService {
    */
   async approveSignUpRequest(username) {
     // TODO: replace with a specific command
-    return this.getSignUpRequests()
-      .then((signupRequests) => {
-        const signupRequest = signupRequests.find((r) => r._id === username);
+    const signupRequests = await this.getSignUpRequests();
 
-        const env = this.proxydi.get('env');
-        const {
-          FAUCET_ACCOUNT_USERNAME,
-          CORE_ASSET,
-          RETURN_MSG
-        } = env;
+    const signupRequest = signupRequests.find((r) => r._id === username);
 
-        return ChainService.getInstanceAsync(env)
-          .then((chainService) => {
-            const chainTxBuilder = chainService.getChainTxBuilder();
-            return chainTxBuilder.begin()
-              .then((txBuilder) => {
-                const createDaoCmd = new CreateDaoCmd({
-                  isTeamAccount: false,
-                  fee: { ...CORE_ASSET, amount: 0 },
-                  creator: FAUCET_ACCOUNT_USERNAME,
-                  authority: {
-                    owner: {
-                      auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
-                      weight: 1
-                    }
-                  },
-                  description: genSha256Hash(JSON.stringify(signupRequest.attributes)),
-                  attributes: signupRequest.attributes,
-                  email: signupRequest.email,
-                  roles: signupRequest.roles,
-                  entityId: username
-                });
-                txBuilder.addCmd(createDaoCmd);
-                return txBuilder.end();
-              })
-              .then((packedTx) => {
-                // const chainNodeClient = chainService.getChainNodeClient();
-                // return txEnvelop.signAsync(privKey, chainNodeClient);
-                const msg = new JsonDataMsg(packedTx.getPayload());
-                if (RETURN_MSG && RETURN_MSG === true) {
-                  return msg;
-                }
-                return this.portalHttp.approveSignUpRequest(msg);
-              });
-          });
-      });
+    const env = this.proxydi.get('env');
+    const {
+      FAUCET_ACCOUNT_USERNAME,
+      CORE_ASSET,
+      RETURN_MSG
+    } = env;
+
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainTxBuilder = chainService.getChainTxBuilder();
+
+    const txBuilder = await chainTxBuilder.begin();
+
+    const createDaoCmd = new CreateDaoCmd({
+      isTeamAccount: false,
+      fee: { ...CORE_ASSET, amount: 0 },
+      creator: FAUCET_ACCOUNT_USERNAME,
+      authority: {
+        owner: {
+          auths: [{ key: signupRequest.signUpPubKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      description: genSha256Hash(JSON.stringify(signupRequest.attributes)),
+      attributes: signupRequest.attributes,
+      email: signupRequest.email,
+      roles: signupRequest.roles,
+      entityId: username
+    });
+    txBuilder.addCmd(createDaoCmd);
+    const packedTx = await txBuilder.end();
+
+    const msg = new JsonDataMsg(packedTx.getPayload());
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+    return this.portalHttp.approveSignUpRequest(msg);
   }
 
   /**
