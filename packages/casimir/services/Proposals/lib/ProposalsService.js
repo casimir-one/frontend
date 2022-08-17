@@ -4,6 +4,7 @@ import { JsonDataMsg } from '@casimir/messages';
 import { ChainService } from '@casimir/chain-service';
 import { makeSingletonInstance } from '@casimir/toolbox';
 import { ProtocolChain } from '@casimir/platform-core';
+import { walletSignTx } from '@casimir/platform-util';
 import { ProposalsHttp } from './ProposalsHttp';
 
 /**
@@ -35,34 +36,38 @@ export class ProposalsService {
     } = payload;
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainRpc = chainService.getChainRpc();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainNodeClient = chainService.getChainNodeClient();
 
-        return chainRpc.getProposalAsync(proposalId)
-          .then((proposal) => chainTxBuilder.begin()
-            .then((txBuilder) => {
-              const updateProposalCmd = new AcceptProposalCmd({
-                entityId: proposalId,
-                account,
-                batchWeight: proposal.batchWeight
-              });
-              txBuilder.addCmd(updateProposalCmd);
-              return txBuilder.end();
-            })
-            .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-            .then((packedTx) => {
-              const msg = new JsonDataMsg(packedTx.getPayload());
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainRpc = chainService.getChainRpc();
+    const proposal = await chainRpc.getProposalAsync(proposalId);
+    const txBuilder = await chainTxBuilder.begin();
 
-              if (env.RETURN_MSG === true) {
-                return msg;
-              }
+    const updateProposalCmd = new AcceptProposalCmd({
+      entityId: proposalId,
+      account,
+      batchWeight: proposal.batchWeight
+    });
+    txBuilder.addCmd(updateProposalCmd);
+    const packedTx = await txBuilder.end();
 
-              return this.proposalsHttp.accept(msg);
-            }));
-      });
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.proposalsHttp.accept(msg);
   }
 
   /**
@@ -85,35 +90,39 @@ export class ProposalsService {
     } = payload;
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        const chainRpc = chainService.getChainRpc();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainNodeClient = chainService.getChainNodeClient();
 
-        return chainRpc.getProposalAsync(proposalId)
-          .then((proposal) => chainTxBuilder.begin()
-            .then((txBuilder) => {
-              const declineProposalCmd = new DeclineProposalCmd({
-                entityId: proposalId,
-                account,
-                batchWeight: proposal.batchWeight
-              });
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const chainRpc = chainService.getChainRpc();
+    const proposal = await chainRpc.getProposalAsync(proposalId);
+    const txBuilder = await chainTxBuilder.begin();
 
-              txBuilder.addCmd(declineProposalCmd);
-              return txBuilder.end();
-            })
-            .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-            .then((packedTx) => {
-              const msg = new JsonDataMsg(packedTx.getPayload());
+    const declineProposalCmd = new DeclineProposalCmd({
+      entityId: proposalId,
+      account,
+      batchWeight: proposal.batchWeight
+    });
 
-              if (env.RETURN_MSG === true) {
-                return msg;
-              }
+    txBuilder.addCmd(declineProposalCmd);
+    const packedTx = await txBuilder.end();
 
-              return this.proposalsHttp.decline(msg);
-            }));
-      });
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.proposalsHttp.decline(msg);
   }
 
   /**
@@ -125,25 +134,22 @@ export class ProposalsService {
   async getListByCreator(account) {
     const env = this.proxydi.get('env');
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainRpc = chainService.getChainRpc();
+    const chainService = await ChainService.getInstanceAsync(env);
+    const chainRpc = chainService.getChainRpc();
 
-        return chainRpc.getProposalsByCreatorAsync(account)
-          .then((result) => {
-            // TODO: move all mappings outside service
-            if (env.PROTOCOL === ProtocolChain.GRAPHENE) {
-              const deipRpc = chainService.getChainNodeClient();
-              const proposals = result.map((proposal) => {
-                const { operations: [[opName, opPayload]] } = proposal.serializedProposedTx;
-                const opTag = deipRpc.operations.getOperationTag(opName);
-                return { ...proposal, action: opTag, payload: opPayload };
-              });
-              return proposals;
-            }
-            return result;
-          });
+    const result = await chainRpc.getProposalsByCreatorAsync(account);
+
+    if (env.PROTOCOL === ProtocolChain.GRAPHENE) {
+      const deipRpc = chainService.getChainNodeClient();
+      const proposals = result.map((proposal) => {
+        const { operations: [[opName, opPayload]] } = proposal.serializedProposedTx;
+        const opTag = deipRpc.operations.getOperationTag(opName);
+        return { ...proposal, action: opTag, payload: opPayload };
       });
+      return proposals;
+    }
+
+    return result;
   }
 
   /**
