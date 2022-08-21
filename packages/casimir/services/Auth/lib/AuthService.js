@@ -104,45 +104,39 @@ export class AuthService {
       confirmationCode
     } = userData;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const { chainTxBuilder, chainNodeClient } = AuthService.#getChainActions(chainService);
-        const userAttributes = attributes || [];
+    const chainService = await ChainService.getInstanceAsync(env);
+    const { chainTxBuilder, chainNodeClient } = AuthService.#getChainActions(chainService);
+    const userAttributes = attributes || [];
+    const txBuilder = await chainTxBuilder.begin();
 
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createDaoCmd = new CreateDaoCmd({
-              entityId: username,
-              isTeamAccount: false,
-              fee: { ...CORE_ASSET, amount: 0 },
-              creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
-              authority: {
-                owner: {
-                  auths: [{ key: pubKey, weight: 1 }],
-                  weight: 1
-                }
-              },
-              description: genSha256Hash(JSON.stringify(userAttributes)),
-              attributes: userAttributes,
-              email,
-              roles,
-              confirmationCode
-            });
+    const createDaoCmd = new CreateDaoCmd({
+      entityId: username,
+      isTeamAccount: false,
+      fee: { ...CORE_ASSET, amount: 0 },
+      creator: isAuthorizedCreatorRequired ? FAUCET_ACCOUNT_USERNAME : username,
+      authority: {
+        owner: {
+          auths: [{ key: pubKey, weight: 1 }],
+          weight: 1
+        }
+      },
+      description: genSha256Hash(JSON.stringify(userAttributes)),
+      attributes: userAttributes,
+      email,
+      roles,
+      confirmationCode
+    });
 
-            txBuilder.addCmd(createDaoCmd);
-            return txBuilder.end();
-          })
-          .then((finalizedTx) => (isAuthorizedCreatorRequired
-            ? Promise.resolve(finalizedTx)
-            : finalizedTx.signAsync(privKey, chainNodeClient)))
-          .then((finalizedTx) => {
-            const msg = new JsonDataMsg(finalizedTx.getPayload());
-            if (RETURN_MSG && RETURN_MSG === true) {
-              return msg;
-            }
-            return this.http.signUp(msg);
-          });
-      });
+    txBuilder.addCmd(createDaoCmd);
+    const finalizedTx = await txBuilder.end();
+    const signedTx = isAuthorizedCreatorRequired ? finalizedTx
+      : finalizedTx.signAsync(privKey, chainNodeClient);
+
+    const msg = new JsonDataMsg(signedTx.getPayload());
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+    return this.http.signUp(msg);
   }
 
   /**
@@ -152,17 +146,13 @@ export class AuthService {
    */
   async generateSeedAccount(username, passwordOrPrivKey) {
     const env = this.proxydi.get('env');
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        // TODO: There is no way to define programmatically what user provides exactly -
-        // Password or Private Key, we have to resolve it via UI control (e.g. switch/checkbox)
-        const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
-        return chainService.generateChainSeedAccount({
-          username,
-          password: isValidPrivKey ? null : passwordOrPrivKey,
-          privateKey: isValidPrivKey ? passwordOrPrivKey : null
-        });
-      });
+    const chainService = await ChainService.getInstanceAsync(env);
+    const isValidPrivKey = chainService.isValidPrivKey(passwordOrPrivKey);
+    return chainService.generateChainSeedAccount({
+      username,
+      password: isValidPrivKey ? null : passwordOrPrivKey,
+      privateKey: isValidPrivKey ? passwordOrPrivKey : null
+    });
   }
 
   /** @type {() => AuthService} */
