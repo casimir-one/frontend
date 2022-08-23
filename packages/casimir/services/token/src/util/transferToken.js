@@ -9,7 +9,6 @@ import { walletSignTx } from '@casimir/platform-util';
  * Build transaction with proposal
  * @param {Array} commandsBatch
  * @param {BaseTxBuilder} chainTxBuilder
- * @param {boolean} isProposal
  * @param {boolean} isProposalApproved
  * @param {number} proposalLifetime
  * @param {string} proposalType
@@ -19,7 +18,6 @@ import { walletSignTx } from '@casimir/platform-util';
 const buildCommandsProposalTx = async (
   commandsBatch,
   chainTxBuilder,
-  isProposal,
   isProposalApproved,
   proposalLifetime,
   proposalType,
@@ -89,7 +87,6 @@ const packTx = async (
     return buildCommandsProposalTx(
       commandsBatch,
       chainTxBuilder,
-      isProposal,
       isProposalApproved,
       proposalLifetime,
       proposalType,
