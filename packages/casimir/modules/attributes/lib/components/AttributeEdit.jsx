@@ -127,11 +127,11 @@ const AttributeEdit = {
      */
     availableFlags() {
       const flags = [
-        { key: 'isRequired', label: 'isRequired' }
+        { key: 'isRequired', label: 'Required' }
       ];
 
       if (this.canBeMultiple) {
-        flags.push({ key: 'isMultiple', label: 'isMultiple', disabled: this.isEditMode });
+        flags.push({ key: 'isMultiple', label: 'Multiple', disabled: this.isEditMode });
       }
 
       return flags;
