@@ -10,10 +10,6 @@
         />
       </template>
 
-      <template #no-more>
-        {{ $t('module.nftItems.nftItemsInfiniteScroll.noMore') }}
-      </template>
-
       <template #no-results class="my-8">
         {{ $t('module.nftItems.nftItemsInfiniteScroll.noResults') }}
       </template>
