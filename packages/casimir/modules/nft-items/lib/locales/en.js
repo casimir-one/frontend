@@ -45,7 +45,6 @@ export default {
         download: 'Download'
       },
       nftItemsInfiniteScroll: {
-        noMore: 'No more data',
         noResults: 'No results found'
       },
       moderation: {
