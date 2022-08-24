@@ -198,7 +198,7 @@ export default {
         <VCheckbox
           {...{ props }}
           class="ma-0 pa-0"
-          value={initVal}
+          input-value={initVal}
           onChange={(v) => this.setFieldVal(path, v)}
         />
       );
