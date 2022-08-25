@@ -28,6 +28,7 @@
     "@casimir/lib-crypto": "1.394.0",
     "@casimir/messages": "1.394.0",
     "@casimir/platform-core": "1.394.0",
+    "@casimir/platform-util": "^1.394.0",
     "@casimir/proxydi": "1.394.0",
     "@casimir/toolbox": "1.394.0",
     "@casimir/user-service": "1.394.0",
