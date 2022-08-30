@@ -87,8 +87,6 @@ const packTxForCreation = async (
     txBuilder.addCmd(transferFTCmd);
   }
 
-  let updatedTxBuilder;
-
   const members = data.members.filter((m) => m !== creator);
   if (members.length > 0) {
     const invites = members.map((invitee) => {
@@ -101,18 +99,17 @@ const packTxForCreation = async (
       return addTeamMemberCmd;
     });
 
-    const proposalBatch = [
-      ...invites
-    ];
+    const proposalBatch = invites;
     const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
-    updatedTxBuilder = await addProposalCommandsForAddingMembers(
+    const updatedTxBuilder = await addProposalCommandsForAddingMembers(
       txBuilder,
       batchWeight,
       proposalBatch,
       creator
     );
+    return updatedTxBuilder.end();
   }
-  return updatedTxBuilder ? updatedTxBuilder.end() : txBuilder.end();
+  return txBuilder.end();
 };
 
 /**
@@ -187,8 +184,6 @@ const packTxForUpdate = async (
     description
   });
 
-  let updatedTxBuilder;
-
   if (isProposal) {
     const proposalBatch = [
       updateDaoCmd
@@ -196,7 +191,7 @@ const packTxForUpdate = async (
 
     const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
 
-    updatedTxBuilder = await addProposalCommandsForTeamUpdate(
+    const updatedTxBuilder = await addProposalCommandsForTeamUpdate(
       txBuilder,
       batchWeight,
       proposalBatch,
@@ -204,9 +199,11 @@ const packTxForUpdate = async (
       proposalLifetime,
       isProposalApproved
     );
+
+    return updatedTxBuilder.end();
   }
   txBuilder.addCmd(updateDaoCmd);
-  return (updatedTxBuilder) ? updatedTxBuilder.end() : txBuilder.end();
+  return txBuilder.end();
 };
 export class TeamService {
   proxydi = proxydi;
