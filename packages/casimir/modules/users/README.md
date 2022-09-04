@@ -3,7 +3,7 @@
 ## Description
 
 The module creates store for a new entity called `users` and also adds new scope
-called `usersScope` by action `scopesRegistry/addScope` related with `@casimir/scopes-module`
+called `user` by action `scopesRegistry/addScope` related with `@casimir/scopes-module`
 The module also adds (if there are any) special user's attributes as a model to `attributeRegistry`
 
 ## Usage
