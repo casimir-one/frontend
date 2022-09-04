@@ -104,13 +104,13 @@
 
     computed: {
       /**
-       * Get computed registry attributes list
+       * Get attributes list from registry
        */
       registryAttrList() {
         return this.$store.getters['attributesRegistry/list']();
       },
       /**
-       * Get computed registry scopes list
+       * Get scopes list from registry
        */
       registryScopesList() {
         return this.$store.getters['scopesRegistry/list']();
@@ -123,7 +123,7 @@
           .map((scope) => ({ text: scope.label, value: scope.type }));
       },
       /**
-       * Get computed filtered blocks for builder
+       * Get blocks for builder filtered for selected scope and layout type
        */
       blocks() {
         const normalBlocks = this.$store.getters['layoutsRegistry/blocks'];
@@ -171,7 +171,7 @@
 
     methods: {
       /**
-       * Reset value
+       * Reset form value
        */
       reset() {
         this.formData.value = [];
