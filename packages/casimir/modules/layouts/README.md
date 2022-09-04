@@ -25,6 +25,7 @@ testApp
 
 ## Dependencies
 * `@casimir/env-module`
+* `@casimir/attributes-module`
 
 ## Context modules
 
@@ -32,7 +33,6 @@ Despite layouts-module are able to work without below list of modules, they are 
 portal in general:
 
 * `@casimir/validation-plugin`
-* `@casimir/attributes-module`
 * `@casimir/scopes-module`
 * `@casimir/auth-module`
-* `@casimir/users-module` or/and` @casimir/teams-module` or/and `@casimir/nft-collections-module`
+* `@casimir/users-module` or/and` @casimir/teams-module` or/and `@casimir/nft-collections-module` or/and `@casimir/nft-items-module`
