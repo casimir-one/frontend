@@ -16,7 +16,7 @@ import { VeStack } from '@casimir.one/vue-elements';
 import { collectionMerge } from '@casimir.one/toolbox';
 
 /**
- * Component for layouts settings
+ * Component for layouts settings. For easy access to layouts thay can be mapped to strings in format `{scope}.{layoutName}` (e.g. user.form)
  */
 export default defineComponent({
   name: 'LayoutsSettings',

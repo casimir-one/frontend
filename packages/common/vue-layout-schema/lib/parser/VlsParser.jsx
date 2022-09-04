@@ -27,7 +27,7 @@ import { cloneDeep, merge } from 'lodash';
  */
 
 /**
- * Schema parser
+ * Layout schema parser
  */
 export default {
   name: 'VlsParser',
@@ -119,6 +119,7 @@ export default {
   },
 
   beforeCreate() {
+    /** Register all used in schema Vue components */
     this.$options.methods.registerComponents.call(this, this.$options.propsData.components);
   },
 
@@ -157,7 +158,7 @@ export default {
     },
 
     /**
-     * Generate node childred
+     * Generate node children
      * @param {Array.<SchemaNode>|SchemaNode|string} children
      * @returns {Array.<VNode>|VNode|string}
      */

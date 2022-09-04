@@ -3,7 +3,8 @@ import { AdminListPage } from '@casimir.one/platform-components';
 import { LayoutsDataProvider } from '../LayoutsDataProvider';
 
 /**
- * Component for managing layouts
+ * Component for layouts management.
+ * Consists of Create, Settings buttons and a table with a list of layouts and Edit, Delete buttons for each layout
  */
 export default defineComponent({
   name: 'LayoutsManagement',
