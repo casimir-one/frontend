@@ -30,14 +30,14 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   /* eslint-disable */
   import Proxyable from 'vuetify/lib/mixins/proxyable';
   import BindsAttrs from 'vuetify/lib/mixins/binds-attrs';
   import { wrapInArray } from 'vuetify/lib/util/helpers';
   /* eslint-enable */
 
-  import { VeStack } from '@casimir/vue-elements';
+  import { VeStack } from '@casimir.one/vue-elements';
   import { VexFileInput } from '../VexFileInput';
 
   const iconsMap = [

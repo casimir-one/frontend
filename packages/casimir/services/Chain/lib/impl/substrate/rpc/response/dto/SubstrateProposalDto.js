@@ -1,6 +1,6 @@
 import ProposalDto from './../../../../../base/rpc/response/dto/ProposalDto';
 import { fromHexFormat } from './../../../utils';
-import { ProposalStatus } from '@casimir/platform-core';
+import { ProposalStatus } from '@casimir.one/platform-core';
 
 
 class SubstrateProposalDto extends ProposalDto {

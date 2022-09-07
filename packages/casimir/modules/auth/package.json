@@ -1,14 +1,11 @@
 {
-  "name": "@casimir/auth-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/auth-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
@@ -19,23 +16,26 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/access-service": "1.394.0",
-    "@casimir/auth-service": "1.394.0",
-    "@casimir/lib-crypto": "1.394.0",
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/user-service": "1.394.0",
-    "@casimir/validation-plugin": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
-    "@casimir/vuetify-extended": "1.394.0",
-    "@casimir/web-socket-service": "1.394.0",
+    "@casimir.one/access-service": "0.0.0",
+    "@casimir.one/auth-service": "0.0.0",
+    "@casimir.one/lib-crypto": "0.0.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/user-service": "0.0.0",
+    "@casimir.one/validation-plugin": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
+    "@casimir.one/vuetify-extended": "0.0.0",
+    "@casimir.one/web-socket-service": "0.0.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@casimir/users-module": "^1.374.0",
+    "@casimir.one/users-module": "^1.374.0",
     "vue-i18n": "^8.24.4",
     "vuetify": "^2.5.3",
     "vuex": "^3.6.2"

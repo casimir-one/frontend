@@ -1,4 +1,4 @@
-import { collectionMerge, collectionOne, hasOwnProperty } from '@casimir/toolbox';
+import { collectionMerge, collectionOne, hasOwnProperty } from '@casimir.one/toolbox';
 
 const STATE = {
   blocks: [],

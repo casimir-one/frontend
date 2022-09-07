@@ -1,10 +1,10 @@
 import BaseTx from './../../base/BaseTx';
-import { ProtocolChain } from '@casimir/platform-core';
+import { ProtocolChain } from '@casimir.one/platform-core';
 import ChainTypes from './ChainTypes';
 import { Metadata } from '@polkadot/types';
 import { TypeRegistry } from '@polkadot/types';
 import { hexToU8a, u8aToHex, isHex } from '@polkadot/util';
-import { assert, genSha256Hash, isString } from '@casimir/toolbox';
+import { assert, genSha256Hash, isString } from '@casimir.one/toolbox';
 import { 
   pubKeyToAddress, 
   daoIdToAddress, 

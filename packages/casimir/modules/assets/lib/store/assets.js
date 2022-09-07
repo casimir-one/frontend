@@ -1,11 +1,11 @@
-import { FungibleTokenService } from '@casimir/token-service';
+import { FungibleTokenService } from '@casimir.one/token-service';
 
 import {
   listGetter,
   oneGetterFactory,
   setListMutation,
   setOneMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
 const fungibleTokenService = FungibleTokenService.getInstance();
 

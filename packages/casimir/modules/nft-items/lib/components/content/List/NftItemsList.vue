@@ -22,8 +22,8 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { getBindableProps } from '@casimir.one/vuetify-extended/lib/composables/props';
 
   import NftItemsDataProvider from '../DataProvider';
 

@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/portals-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/portals-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -19,11 +19,14 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/portal-service": "1.394.0",
-    "@casimir/proxydi": "1.394.0"
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/portal-service": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

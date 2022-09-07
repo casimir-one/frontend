@@ -1,6 +1,6 @@
 import BaseTxBuilder from './../../base/BaseTxBuilder';
 import SubstrateTx from './SubstrateTx';
-import { assert } from '@casimir/toolbox';
+import { assert } from '@casimir.one/toolbox';
 import { daoIdToAddress } from './utils';
 
 

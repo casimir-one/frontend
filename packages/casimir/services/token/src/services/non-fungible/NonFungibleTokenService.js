@@ -2,9 +2,9 @@ import {
   makeSingletonInstance,
   createFormData,
   replaceFileWithName
-} from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
-import { JsonDataMsg, MultFormDataMsg } from '@casimir/messages';
+} from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
+import { JsonDataMsg, MultFormDataMsg } from '@casimir.one/messages';
 import {
   TransferNFTCmd,
   TransferFTCmd,
@@ -20,11 +20,11 @@ import {
   UpdateNftItemMetadataDraftModerationMsgCmd,
   AcceptProposalCmd,
   CreateProposalCmd
-} from '@casimir/commands';
-import { APP_PROPOSAL, APP_EVENT } from '@casimir/platform-core';
-import { walletSignTx } from '@casimir/platform-util';
-import { ChainService } from '@casimir/chain-service';
-import { WebSocketService } from '@casimir/web-socket-service';
+} from '@casimir.one/commands';
+import { APP_PROPOSAL, APP_EVENT } from '@casimir.one/platform-core';
+import { walletSignTx } from '@casimir.one/platform-util';
+import { ChainService } from '@casimir.one/chain-service';
+import { WebSocketService } from '@casimir.one/web-socket-service';
 import { NonFungibleTokenHttp } from './NonFungibleTokenHttp';
 
 import { transferToken, updateProposalInfo } from '../../util';
@@ -58,7 +58,7 @@ export class NonFungibleTokenService {
 
   /**
    * Create new nft collection and nft collection metadata
-   * @param {import('@casimir/platform-core').NonFungibleTokenCreatePayload} payload
+   * @param {import('@casimir.one/platform-core').NonFungibleTokenCreatePayload} payload
    * @param signTxCallback
    * @return {Promise<Object>}
    */
@@ -174,7 +174,7 @@ export class NonFungibleTokenService {
 
   /**
    * Create nft item and nft item metadata
-   * @param {import('@casimir/platform-core').NonFungibleTokenIssuePayload} payload
+   * @param {import('@casimir.one/platform-core').NonFungibleTokenIssuePayload} payload
    * @return {Promise<Object>}
    */
   async createNftItem(payload) {
@@ -418,7 +418,7 @@ export class NonFungibleTokenService {
 
   /**
    * Transfer non-fungible token
-   * @param{import('@casimir/platform-core').NonFungibleTokenTransferPayload} payload
+   * @param{import('@casimir.one/platform-core').NonFungibleTokenTransferPayload} payload
    * @return {Promise<Object>}
    */
   async transfer(payload) {
@@ -445,7 +445,7 @@ export class NonFungibleTokenService {
 
   /**
   * Create lazy mint proposal for selling nft instance on behalf creator
-  * @param {import('@casimir/platform-core').NonFungibleTokenLazySellPayload} payload
+  * @param {import('@casimir.one/platform-core').NonFungibleTokenLazySellPayload} payload
   * @return {Promise<Object>}
   */
   async sellLazy(payload) {
@@ -545,7 +545,7 @@ export class NonFungibleTokenService {
 
   /**
    * Create lazy mint proposal for buying nft instance on behalf buyer
-   * @param {import('@casimir/platform-core').NonFungibleTokenLazyBuyPayload} payload
+   * @param {import('@casimir.one/platform-core').NonFungibleTokenLazyBuyPayload} payload
    * @return {Promise<Object>}
    */
   async buyLazy(payload) {

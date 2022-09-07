@@ -1,5 +1,5 @@
-import { PortalService } from '@casimir/portal-service';
-import { proxydi } from '@casimir/proxydi';
+import { PortalService } from '@casimir.one/portal-service';
+import { proxydi } from '@casimir.one/proxydi';
 
 const portalService = PortalService.getInstance();
 

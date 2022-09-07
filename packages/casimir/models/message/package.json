@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/messages",
-  "version": "1.394.0",
+  "name": "@casimir.one/messages",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -22,10 +22,13 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/chain-service": "1.394.0",
-    "@casimir/commands": "1.394.0",
-    "@casimir/toolbox": "1.394.0"
+    "@casimir.one/chain-service": "0.0.0",
+    "@casimir.one/commands": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

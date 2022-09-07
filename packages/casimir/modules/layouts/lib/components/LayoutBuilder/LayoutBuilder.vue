@@ -62,14 +62,14 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { formFactory } from '@casimir/platform-components';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { formFactory } from '@casimir.one/platform-components';
 
-  import { VlsBuilder } from '@casimir/vue-layout-schema';
+  import { VlsBuilder } from '@casimir.one/vue-layout-schema';
 
-  import { ViewMode } from '@casimir/platform-core';
+  import { ViewMode } from '@casimir.one/platform-core';
 
-  import { wrapInArray } from '@casimir/toolbox';
+  import { wrapInArray } from '@casimir.one/toolbox';
   import { attributesBlocksFactory } from '../../blocks';
 
   /**

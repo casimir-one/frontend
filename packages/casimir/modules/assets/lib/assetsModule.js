@@ -1,5 +1,5 @@
 import Maska from 'maska';
-import { setLocalesMessages } from '@casimir/toolbox';
+import { setLocalesMessages } from '@casimir.one/toolbox';
 
 import { assetAttributes, components } from './config';
 

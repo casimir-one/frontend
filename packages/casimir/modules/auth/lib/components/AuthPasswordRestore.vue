@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  import { VeStack } from '@casimir/vue-elements';
+  import { VeStack } from '@casimir.one/vue-elements';
 
   /**
   * Component for restore user password

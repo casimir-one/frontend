@@ -1,14 +1,14 @@
-import { APP_CMD } from '@casimir/platform-core';
+import { APP_CMD } from '@casimir.one/platform-core';
 import {
   assert,
   isNumber,
   isString,
   isNumeric
-} from '@casimir/toolbox';
+} from '@casimir.one/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 
 /**
- * @typedef {import('@casimir/platform-core').FungibleTokenIssueData} FungibleTokenIssueCmdPayload
+ * @typedef {import('@casimir.one/platform-core').FungibleTokenIssueData} FungibleTokenIssueCmdPayload
  */
 
 /**

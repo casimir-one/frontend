@@ -68,8 +68,8 @@
   </validation-observer>
 </template>
 <script>
-  import { VexPasswordInput, VexPasswordRepeatInput } from '@casimir/vuetify-extended';
-  import { VeStack } from '@casimir/vue-elements';
+  import { VexPasswordInput, VexPasswordRepeatInput } from '@casimir.one/vuetify-extended';
+  import { VeStack } from '@casimir.one/vue-elements';
 
   /**
   * Component for change user password

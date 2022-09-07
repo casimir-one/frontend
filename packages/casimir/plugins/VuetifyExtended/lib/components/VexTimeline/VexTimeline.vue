@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   /**
    * Component for display a vertical timeline.
    * Should contain at least one vex-timeline-item

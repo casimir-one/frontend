@@ -4,11 +4,11 @@ import {
   genSha256Hash,
   makeSingletonInstance,
   isBoolean
-} from '@casimir/toolbox';
-import { UserService } from '@casimir/user-service';
-import { proxydi } from '@casimir/proxydi';
-import { MultFormDataMsg, JsonDataMsg } from '@casimir/messages';
-import { APP_EVENT, APP_PROPOSAL } from '@casimir/platform-core';
+} from '@casimir.one/toolbox';
+import { UserService } from '@casimir.one/user-service';
+import { proxydi } from '@casimir.one/proxydi';
+import { MultFormDataMsg, JsonDataMsg } from '@casimir.one/messages';
+import { APP_EVENT, APP_PROPOSAL } from '@casimir.one/platform-core';
 import {
   CreateProposalCmd,
   CreateDaoCmd,
@@ -17,9 +17,9 @@ import {
   AddDaoMemberCmd,
   RemoveDaoMemberCmd,
   TransferFTCmd
-} from '@casimir/commands';
-import { ChainService } from '@casimir/chain-service';
-import { WebSocketService } from '@casimir/web-socket-service';
+} from '@casimir.one/commands';
+import { ChainService } from '@casimir.one/chain-service';
+import { WebSocketService } from '@casimir.one/web-socket-service';
 
 import { TeamHttp } from './TeamHttp';
 

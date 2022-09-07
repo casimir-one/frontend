@@ -8,7 +8,7 @@ module allows extending portal store with based on model (scopesRegistry) specia
 ## Usage
 for using this module in new portal, you need to set up it in `main.js` file
 ```
-import { ScopesModule } from '@casimir/scopes-module';
+import { ScopesModule } from '@casimir.one/scopes-module';
 ```
 then add module to app using addModule(moduleName):
 ```
@@ -23,9 +23,9 @@ testApp
 ```
 ## Notice
 there is a minimum set of modules, without them this module won't work:
-* @casimir/env-module
-* @casimir/validation-plugin
-* @casimir/attributes-module
-* @casimir/layouts-module
-* @casimir/scopes-module
-* @casimir/auth-module
+* @casimir.one/env-module
+* @casimir.one/validation-plugin
+* @casimir.one/attributes-module
+* @casimir.one/layouts-module
+* @casimir.one/scopes-module
+* @casimir.one/auth-module

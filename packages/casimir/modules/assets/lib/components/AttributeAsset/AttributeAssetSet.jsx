@@ -1,5 +1,5 @@
-import { defineComponent } from '@casimir/platform-util';
-import { AttributeSetMixin } from '@casimir/attributes-module';
+import { defineComponent } from '@casimir.one/platform-util';
+import { AttributeSetMixin } from '@casimir.one/attributes-module';
 import { AssetInput } from '../AssetInput';
 
 /**

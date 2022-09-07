@@ -1,5 +1,5 @@
-import { defineComponent } from '@casimir/platform-util';
-import { AdminListPage } from '@casimir/platform-components';
+import { defineComponent } from '@casimir.one/platform-util';
+import { AdminListPage } from '@casimir.one/platform-components';
 import { LayoutsDataProvider } from '../LayoutsDataProvider';
 
 /**

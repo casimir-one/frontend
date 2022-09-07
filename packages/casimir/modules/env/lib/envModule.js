@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { proxydi } from '@casimir/proxydi';
-import { ChainService } from '@casimir/chain-service';
+import { proxydi } from '@casimir.one/proxydi';
+import { ChainService } from '@casimir.one/chain-service';
 
 import Clipboard from 'v-clipboard';
-import { assert } from '@casimir/toolbox';
+import { assert } from '@casimir.one/toolbox';
 
 const moduleName = 'EnvModule';
 

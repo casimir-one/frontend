@@ -1,14 +1,11 @@
 {
-  "name": "@casimir/validation-plugin",
-  "version": "1.394.0",
+  "name": "@casimir.one/validation-plugin",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
@@ -19,9 +16,12 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
     "vee-validate": "^3.4.9"
   },
   "peerDependencies": {

@@ -20,7 +20,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm config set '//npm-registry.deip.world/:_authToken' "${CASIMIR_NPM_TOKEN}"
+    # - run: npm config set '//npm-registry.deip.world/:_authToken' "${CASIMIR_NPM_TOKEN}"
     - run: npm i && npm run bootstrap
       env:
         CASIMIR_NPM_TOKEN: ${{ secrets.CASIMIR_NPM_TOKEN }}

@@ -1,5 +1,5 @@
-import { HttpService, serializeParams } from '@casimir/http-service';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { HttpService, serializeParams } from '@casimir.one/http-service';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 
 /**
  * Non-fungible token http transport

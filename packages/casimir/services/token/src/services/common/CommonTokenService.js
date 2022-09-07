@@ -1,6 +1,6 @@
-import { AssetType, APP_PROPOSAL } from '@casimir/platform-core';
-import { TransferFTCmd, TransferNFTCmd } from '@casimir/commands';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { AssetType, APP_PROPOSAL } from '@casimir.one/platform-core';
+import { TransferFTCmd, TransferNFTCmd } from '@casimir.one/commands';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 import { CommonTokenHttp } from './CommonTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
@@ -12,7 +12,7 @@ export class CommonTokenService {
 
   /**
    * Create proposal for asset exchange
-   * @param {import('@casimir/platform-core').TokenSwapProposalPayload} payload
+   * @param {import('@casimir.one/platform-core').TokenSwapProposalPayload} payload
    * @return {Promise}
    */
   createTokensSwapProposal(payload) {

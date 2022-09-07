@@ -1,6 +1,6 @@
-import { blocksGenerator } from '@casimir/vue-layout-schema';
-import { defaultBreakpoints } from '@casimir/vue-elements/lib/util/breakpoint';
-import { camelCase } from '@casimir/toolbox';
+import { blocksGenerator } from '@casimir.one/vue-layout-schema';
+import { defaultBreakpoints } from '@casimir.one/vue-elements/lib/util/breakpoint';
+import { camelCase } from '@casimir.one/toolbox';
 import { defaultLayoutComponents } from '../helpers/defaultLayoutsComponents';
 
 const {

@@ -1,5 +1,5 @@
-import { VexAvatar } from '@casimir/vuetify-extended';
-import { defineComponent } from '@casimir/platform-util';
+import { VexAvatar } from '@casimir.one/vuetify-extended';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

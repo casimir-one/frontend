@@ -1,4 +1,4 @@
-import { assert } from '@casimir/toolbox';
+import { assert } from '@casimir.one/toolbox';
 
 
 class PortalDto {

@@ -1,4 +1,4 @@
-import { blocksGenerator } from '@casimir/vue-layout-schema';
+import { blocksGenerator } from '@casimir.one/vue-layout-schema';
 import { defaultLayoutComponents } from '../helpers/defaultLayoutsComponents';
 
 const {

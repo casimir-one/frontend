@@ -5,13 +5,13 @@ import {
   parseISO
 } from 'date-fns';
 import { enGB } from 'date-fns/locale';
-import { isString } from '@casimir/toolbox';
+import { isString } from '@casimir.one/toolbox';
 
 const languages = {
   en: enGB
 };
 
-// TODO: move to @casimir/platform-util composables
+// TODO: move to @casimir.one/platform-util composables
 export const dateMixin = {
   methods: {
     /**

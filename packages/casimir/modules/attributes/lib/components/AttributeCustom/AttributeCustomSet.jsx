@@ -6,9 +6,9 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { defineComponent } from '@casimir/platform-util';
-import { VlsParser } from '@casimir/vue-layout-schema';
-import { VeStack } from '@casimir/vue-elements';
+import { defineComponent } from '@casimir.one/platform-util';
+import { VlsParser } from '@casimir.one/vue-layout-schema';
+import { VeStack } from '@casimir.one/vue-elements';
 import { AttributeSetMixin, AttributeMultipleModelMixin, AttributeSchemaMixin } from '../../mixins';
 import {
   schemaLayoutComponents,

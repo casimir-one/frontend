@@ -1,5 +1,5 @@
 import BaseChainSeedAccount from './../../base/BaseChainSeedAccount';
-import { assert, genMd5Hash } from '@casimir/toolbox';
+import { assert, genMd5Hash } from '@casimir.one/toolbox';
 import { TextEncoder } from "web-encoding"
 
 
@@ -28,7 +28,7 @@ class GrapheneChainSeedAccount extends BaseChainSeedAccount {
   }
 
   signString(msg) {
-    const crypto = require('@casimir/lib-crypto');
+    const crypto = require('@casimir.one/lib-crypto');
     const PrivKey = crypto.PrivateKey.from(this.getPrivKey());
     const sig = PrivKey.sign(new TextEncoder('utf-8').encode(genMd5Hash(msg)).buffer);
     return crypto.hexify(sig);

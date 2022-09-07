@@ -15,7 +15,7 @@ const isValidPrivKey = (privKey) => {
 }
 
 const verifySignature = (pubKey, msg, sig) => {
-  const crypto = require('@casimir/lib-crypto');
+  const crypto = require('@casimir.one/lib-crypto');
 
   const publicKey = crypto.PublicKey.from(pubKey);
   let isValid;

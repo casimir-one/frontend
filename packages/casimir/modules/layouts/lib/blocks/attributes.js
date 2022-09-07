@@ -1,5 +1,5 @@
-import { blocksGenerator } from '@casimir/vue-layout-schema';
-import { AttributeSet, AttributeRead } from '@casimir/attributes-module';
+import { blocksGenerator } from '@casimir.one/vue-layout-schema';
+import { AttributeSet, AttributeRead } from '@casimir.one/attributes-module';
 
 /**
  * Attributes blocks factory

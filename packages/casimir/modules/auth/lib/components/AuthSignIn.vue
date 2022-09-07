@@ -80,8 +80,8 @@
 </template>
 
 <script>
-  import { VexPasswordInput } from '@casimir/vuetify-extended';
-  import { VeStack } from '@casimir/vue-elements';
+  import { VexPasswordInput } from '@casimir.one/vuetify-extended';
+  import { VeStack } from '@casimir.one/vue-elements';
 
   /**
    * Component for user authorization and login to the application

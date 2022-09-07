@@ -4,10 +4,10 @@ import {
   attributeMethodsFactory,
   compactAttributes,
   expandAttributes, mapAttributesToModel, mapModelToAttributes
-} from '@casimir/attributes-module';
+} from '@casimir.one/attributes-module';
 
-import { defineComponent } from '@casimir/platform-util';
-import { formFactory } from '@casimir/platform-components';
+import { defineComponent } from '@casimir.one/platform-util';
+import { formFactory } from '@casimir.one/platform-components';
 
 export const attributedFormFactory = (
   scope,

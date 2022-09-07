@@ -1,5 +1,5 @@
-import { APP_CMD, APP_PROPOSAL } from '@casimir/platform-core';
-import { assert } from '@casimir/toolbox';
+import { APP_CMD, APP_PROPOSAL } from '@casimir.one/platform-core';
+import { assert } from '@casimir.one/toolbox';
 import ProtocolCmd from '../base/ProtocolCmd';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 

@@ -1,5 +1,5 @@
-import { VlsParser } from '@casimir/vue-layout-schema';
-import { defineComponent } from '@casimir/platform-util';
+import { VlsParser } from '@casimir.one/vue-layout-schema';
+import { defineComponent } from '@casimir.one/platform-util';
 import { defaultLayoutComponents } from '../../helpers/defaultLayoutsComponents';
 
 /**

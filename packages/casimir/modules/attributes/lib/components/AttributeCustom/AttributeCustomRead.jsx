@@ -1,6 +1,6 @@
-import { VlsParser } from '@casimir/vue-layout-schema';
-import { VeStack } from '@casimir/vue-elements';
-import { defineComponent } from '@casimir/platform-util';
+import { VlsParser } from '@casimir.one/vue-layout-schema';
+import { VeStack } from '@casimir.one/vue-elements';
+import { defineComponent } from '@casimir.one/platform-util';
 import { schemaLayoutComponents } from '../../composables/schemaPartials';
 
 import { AttributeReadMixin, AttributeSchemaMixin } from '../../mixins';

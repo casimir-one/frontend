@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/access-service",
-  "version": "1.394.0",
+  "name": "@casimir.one/access-service",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -22,8 +25,8 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
     "jwt-decode": "^3.1.2"
   }
 }

@@ -2,10 +2,10 @@ import {
   collectionList,
   isFile,
   wrapInArray
-} from '@casimir/toolbox';
+} from '@casimir.one/toolbox';
 import { isEqual, cloneDeep } from 'lodash';
-import { ValidationProvider } from '@casimir/validation-plugin';
-import { VeStack } from '@casimir/vue-elements';
+import { ValidationProvider } from '@casimir.one/validation-plugin';
+import { VeStack } from '@casimir.one/vue-elements';
 
 /**
  * @param {string} fnName

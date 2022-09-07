@@ -1,14 +1,14 @@
-import { UserService } from '@casimir/user-service';
-import { USER_PROFILE_STATUS } from '@casimir/platform-core';
+import { UserService } from '@casimir.one/user-service';
+import { USER_PROFILE_STATUS } from '@casimir.one/platform-core';
 
 import {
   listGetter,
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
-import { hasValue } from '@casimir/toolbox';
+import { hasValue } from '@casimir.one/toolbox';
 
 const userService = UserService.getInstance();
 

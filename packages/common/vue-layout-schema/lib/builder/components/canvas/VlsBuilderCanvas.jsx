@@ -8,9 +8,9 @@ import { ClickOutside } from 'vuetify/lib/directives';
 
 /* eslint-enable */
 
-import { VeRawDisplay } from '@casimir/vue-elements';
+import { VeRawDisplay } from '@casimir.one/vue-elements';
 
-import { deepFindParentByValue, paramCase } from '@casimir/toolbox';
+import { deepFindParentByValue, paramCase } from '@casimir.one/toolbox';
 import { merge } from 'lodash';
 import draggable from 'vuedraggable';
 import { BuilderMixin } from '../../mixins';

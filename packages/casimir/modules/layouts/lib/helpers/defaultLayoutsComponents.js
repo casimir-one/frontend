@@ -1,4 +1,4 @@
-import { AttributeSet, AttributeRead } from '@casimir/attributes-module';
+import { AttributeSet, AttributeRead } from '@casimir.one/attributes-module';
 
 import {
   VexHeader,
@@ -12,10 +12,10 @@ import {
   VexTextExpand,
   VexScrollableText
 // eslint-disable-next-line import/extensions,import/no-unresolved
-} from '@casimir/vuetify-extended';
+} from '@casimir.one/vuetify-extended';
 
 // eslint-disable-next-line import/no-unresolved
-import { VeStack, VeLineClamp } from '@casimir/vue-elements';
+import { VeStack, VeLineClamp } from '@casimir.one/vue-elements';
 
 import {
   VRow,
@@ -29,7 +29,7 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { VueEditorjs } from '@casimir/vue-editorjs';
+import { VueEditorjs } from '@casimir.one/vue-editorjs';
 
 export const defaultLayoutComponents = {
   // attributes

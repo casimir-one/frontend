@@ -56,18 +56,18 @@
 
 | Entity | Onchain Read model | Has a module | Can be (example) |
 | :--- | :--- | :---: | :--- |
-| User | Account | @casimir/users-module | user, student, investor, author |
-| Team | Account | @casimir/teams-module | abstract team, research group, bootcamp |
-| Tenant | Account | @casimir/tenants-module | portal, web3Application, network gateway |
-| Project | Project | @casimir/projects-module | research, technology, music album, library |
+| User | Account | @casimir.one/users-module | user, student, investor, author |
+| Team | Account | @casimir.one/teams-module | abstract team, research group, bootcamp |
+| Tenant | Account | @casimir.one/tenants-module | portal, web3Application, network gateway |
+| Project | Project | @casimir.one/projects-module | research, technology, music album, library |
 | ProjectContent | ProjectContent | ❌ | research/technology content, library item |
 | Domain | Domain | ❌ | domain, discipline, global category, department |
 | Review | Review | ❌ | project/content/research/technology review |
 | ReviewUpvote | ReviewUpvote | ❌ | vote for review |
-| Asset | Asset | @casimir/assets-module | asset, token, FNFT, Coin |
-| InvestmentOpportunity | InvestmentOpportunity | @casimir/investment-module | project/research/technology token sale |
-| InvestmentOpportunityParticipation | InvestmentOpportunityParticipation | @casimir/investment-module | investment, contribution |
-| ContractAgreement | ContractAgreement | @casimir/contract-agreements-module | technology license, income share agreement, general agreement |
+| Asset | Asset | @casimir.one/assets-module | asset, token, FNFT, Coin |
+| InvestmentOpportunity | InvestmentOpportunity | @casimir.one/investment-module | project/research/technology token sale |
+| InvestmentOpportunityParticipation | InvestmentOpportunityParticipation | @casimir.one/investment-module | investment, contribution |
+| ContractAgreement | ContractAgreement | @casimir.one/contract-agreements-module | technology license, income share agreement, general agreement |
 | NonDisclosureAgreement | NonDisclosureAgreement | ❌ | non disclosure agreement |
 | Proposal | Proposal | ❌ | proposal, onchain contract, smart contract |
 

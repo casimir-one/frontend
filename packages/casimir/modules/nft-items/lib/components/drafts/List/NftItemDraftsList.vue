@@ -66,10 +66,10 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
-  import { VexTooltip } from '@casimir/vuetify-extended';
-  import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { getBindableProps } from '@casimir.one/vuetify-extended/lib/composables/props';
+  import { VexTooltip } from '@casimir.one/vuetify-extended';
+  import { NftItemMetadataDraftStatus } from '@casimir.one/platform-core';
   import NftItemDraftsDataProvider from '../DataProvider';
 
   /**

@@ -3,10 +3,10 @@ import {
   UpdateAttributeCmd,
   DeleteAttributeCmd,
   UpdateAttributeSettingsCmd
-} from '@casimir/commands';
-import { JsonDataMsg } from '@casimir/messages';
-import { makeSingletonInstance } from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
+} from '@casimir.one/commands';
+import { JsonDataMsg } from '@casimir.one/messages';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
 import { AttributesHttp } from './AttributesHttp';
 
 /**

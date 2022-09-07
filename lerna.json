@@ -3,7 +3,7 @@
     "packages/common/*",
     "packages/casimir/*/*"
   ],
-  "version": "1.394.0",
+  "version": "0.0.0",
   "npmClient": "npm",
   "command": {
     "version": {
@@ -16,7 +16,8 @@
       ],
       "includeMergedTags": true,
       "allowBranch": [
-        "master"
+        "master",
+        "main"
       ]
     },
     "publish": {},

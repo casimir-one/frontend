@@ -1,4 +1,4 @@
-import { proxydi } from '@casimir/proxydi';
+import { proxydi } from '@casimir.one/proxydi';
 import { AttributesService } from '../../lib/AttributesService';
 
 const mockGetList = jest.fn();
@@ -31,14 +31,14 @@ jest.mock('../../lib/AttributesHttp.js', () => ({
   }
 }));
 
-jest.mock('@casimir/commands', () => ({
+jest.mock('@casimir.one/commands', () => ({
   CreateAttributeCmd: jest.fn(),
   UpdateAttributeCmd: jest.fn(),
   DeleteAttributeCmd: jest.fn(),
   UpdateAttributeSettingsCmd: jest.fn()
 }));
 
-jest.mock('@casimir/messages', () => ({
+jest.mock('@casimir.one/messages', () => ({
   // eslint-disable-next-line object-shorthand,func-names
   JsonDataMsg: function () {
     return { message: 'testMessage' };

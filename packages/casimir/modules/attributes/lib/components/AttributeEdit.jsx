@@ -19,13 +19,13 @@ import {
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
 
-import { VeRawDisplay, VeStack } from '@casimir/vue-elements';
-import { VlsBuilder } from '@casimir/vue-layout-schema';
-import { isObject, RecursiveIterator, camelCase } from '@casimir/toolbox';
+import { VeRawDisplay, VeStack } from '@casimir.one/vue-elements';
+import { VlsBuilder } from '@casimir.one/vue-layout-schema';
+import { isObject, RecursiveIterator, camelCase } from '@casimir.one/toolbox';
 import { isEqual, cloneDeep } from 'lodash';
 import draggable from 'vuedraggable';
 
-import { ViewMode } from '@casimir/platform-core';
+import { ViewMode } from '@casimir.one/platform-core';
 
 import {
   contentBlocks,

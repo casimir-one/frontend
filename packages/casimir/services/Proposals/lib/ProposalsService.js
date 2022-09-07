@@ -1,10 +1,10 @@
-import { proxydi } from '@casimir/proxydi';
-import { AcceptProposalCmd, DeclineProposalCmd } from '@casimir/commands';
-import { JsonDataMsg } from '@casimir/messages';
-import { ChainService } from '@casimir/chain-service';
-import { makeSingletonInstance } from '@casimir/toolbox';
-import { ProtocolChain } from '@casimir/platform-core';
-import { walletSignTx } from '@casimir/platform-util';
+import { proxydi } from '@casimir.one/proxydi';
+import { AcceptProposalCmd, DeclineProposalCmd } from '@casimir.one/commands';
+import { JsonDataMsg } from '@casimir.one/messages';
+import { ChainService } from '@casimir.one/chain-service';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
+import { ProtocolChain } from '@casimir.one/platform-core';
+import { walletSignTx } from '@casimir.one/platform-util';
 import { ProposalsHttp } from './ProposalsHttp';
 
 /**

@@ -66,7 +66,7 @@
 
 <script>
   /* eslint-disable import/extensions, import/no-unresolved */
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   import Toggleable from 'vuetify/lib/mixins/toggleable';
   import {
     VDialog,

@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/toolbox",
-  "version": "1.394.0",
+  "name": "@casimir.one/toolbox",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "",
   "license": "ISC",
@@ -19,6 +19,9 @@
   },
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@array-utils/chunk-it": "^3.0.1",

@@ -11,7 +11,7 @@ import {
   objectPath,
 
   TemplateStringParser
-} from '@casimir/toolbox';
+} from '@casimir.one/toolbox';
 
 import { cloneDeep, merge } from 'lodash';
 

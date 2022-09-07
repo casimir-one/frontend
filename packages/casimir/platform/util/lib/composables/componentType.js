@@ -1,4 +1,4 @@
-import { pascalCase } from '@casimir/toolbox';
+import { pascalCase } from '@casimir.one/toolbox';
 
 /**
  * Generate component name by this.viewType

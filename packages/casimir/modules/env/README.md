@@ -1,11 +1,11 @@
-# `@casimir/env-module`
+# `@casimir.one/env-module`
 
 > TODO: description
 
 ## Usage
 
 ```
-const envModule = require('@casimir/env-module');
+const envModule = require('@casimir.one/env-module');
 
 // TODO: DEMONSTRATE API
 ```

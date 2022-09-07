@@ -1,4 +1,4 @@
-# `@casimir/auth-module`
+# `@casimir.one/auth-module`
 
 ##Description
 
@@ -11,7 +11,7 @@ Module does :
 
 ## Usage
 ```
-import { AuthModlue } from '@casimir/auth-module';
+import { AuthModlue } from '@casimir.one/auth-module';
 ```
 then add module to app using addModule(moduleName):
 ```
@@ -27,7 +27,7 @@ testApp
 
 ## Dependencies:
 
-* `@casimir/validation-plugin`,
-* `@casimir/vuetify-extended`,
-* `@casimir/env-module`,
-* `@casimir/users-module`
+* `@casimir.one/validation-plugin`,
+* `@casimir.one/vuetify-extended`,
+* `@casimir.one/env-module`,
+* `@casimir.one/users-module`

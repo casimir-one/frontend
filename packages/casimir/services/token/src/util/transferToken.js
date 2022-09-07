@@ -1,9 +1,9 @@
-import { proxydi } from '@casimir/proxydi';
-import { JsonDataMsg } from '@casimir/messages';
-import { AcceptProposalCmd, CreateProposalCmd } from '@casimir/commands';
-import { ChainService } from '@casimir/chain-service';
-import { wrapInArray } from '@casimir/toolbox';
-import { walletSignTx } from '@casimir/platform-util';
+import { proxydi } from '@casimir.one/proxydi';
+import { JsonDataMsg } from '@casimir.one/messages';
+import { AcceptProposalCmd, CreateProposalCmd } from '@casimir.one/commands';
+import { ChainService } from '@casimir.one/chain-service';
+import { wrapInArray } from '@casimir.one/toolbox';
+import { walletSignTx } from '@casimir.one/platform-util';
 
 /**
  * Build transaction with proposal
@@ -98,8 +98,8 @@ const packTx = async (
 };
 
 /**
- * @typedef {import('@casimir/platform-core').FungibleTokenTransferPayload} FungibleTokenTransferPayload
- * @typedef {import('@casimir/platform-core').NonFungibleTokenTransferPayload} NonFungibleTokenTransferPayload
+ * @typedef {import('@casimir.one/platform-core').FungibleTokenTransferPayload} FungibleTokenTransferPayload
+ * @typedef {import('@casimir.one/platform-core').NonFungibleTokenTransferPayload} NonFungibleTokenTransferPayload
  *
  * @param {FungibleTokenTransferPayload | NonFungibleTokenTransferPayload} payload
  * @param {*} transferTokenCmd

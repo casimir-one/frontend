@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
-import { APP_CMD } from '@casimir/platform-core';
-import { assert, isNumber, isString } from '@casimir/toolbox';
+import { APP_CMD } from '@casimir.one/platform-core';
+import { assert, isNumber, isString } from '@casimir.one/toolbox';
 import ProtocolEntityCmd from '../base/ProtocolEntityCmd';
 
 /**
- * @typedef {{entityId: string} & import('@casimir/platform-core').FungibleTokenCreateData} FungibleTokenCreateCmdPayload
+ * @typedef {{entityId: string} & import('@casimir.one/platform-core').FungibleTokenCreateData} FungibleTokenCreateCmdPayload
  */
 
 /**

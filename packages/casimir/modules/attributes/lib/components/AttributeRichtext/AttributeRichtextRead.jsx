@@ -1,5 +1,5 @@
-import { VueEditorjsParser } from '@casimir/vue-editorjs';
-import { defineComponent } from '@casimir/platform-util';
+import { VueEditorjsParser } from '@casimir.one/vue-editorjs';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

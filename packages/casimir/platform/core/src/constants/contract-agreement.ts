@@ -1,4 +1,4 @@
-import { createEnum } from '@casimir/toolbox';
+import { createEnum } from '@casimir.one/toolbox';
 
 export const CONTRACT_AGREEMENT_TYPE = createEnum({
   PROJECT_LICENSE: 1,

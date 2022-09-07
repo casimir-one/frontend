@@ -1,7 +1,7 @@
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
 
-  import { AdminListPage, dateMixin } from '@casimir/platform-components';
+  import { AdminListPage, dateMixin } from '@casimir.one/platform-components';
   import DocumentTemplatesDataProvider from '../DataProvider/DocumentTemplatesDataProvider';
 
   export default defineComponent({

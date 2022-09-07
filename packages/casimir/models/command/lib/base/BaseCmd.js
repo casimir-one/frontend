@@ -1,5 +1,5 @@
-import { assert } from '@casimir/toolbox';
-import { APP_CMD } from '@casimir/platform-core';
+import { assert } from '@casimir.one/toolbox';
+import { APP_CMD } from '@casimir.one/platform-core';
 
 /**
  * Class for base command

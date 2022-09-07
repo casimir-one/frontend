@@ -2,8 +2,8 @@ import {
   VIcon
 // eslint-disable-next-line import/extensions,import/no-unresolved
 } from 'vuetify/lib/components';
-import { VeStack } from '@casimir/vue-elements';
-import { defineComponent } from '@casimir/platform-util';
+import { VeStack } from '@casimir.one/vue-elements';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 // TODO: move to toolbox?

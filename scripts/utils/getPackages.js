@@ -32,7 +32,7 @@ const getPackages = (forBuild = true) => lernaConf.packages
 
     if (dependencies) {
       platformDependencies = Object.keys(dependencies)
-        .filter((key) => key.includes('@deip') || key.includes('@casimir'));
+        .filter((key) => key.includes('@deip') || key.includes('@casimir.one'));
     }
 
     return {

@@ -1,5 +1,5 @@
-import { assert } from '@casimir/toolbox';
-import { ProposalStatus } from '@casimir/platform-core';
+import { assert } from '@casimir.one/toolbox';
+import { ProposalStatus } from '@casimir.one/platform-core';
 import { isValidTimestampFormat } from './../utils';
 
 

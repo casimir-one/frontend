@@ -1,5 +1,5 @@
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   import marked from 'marked';
   import DOMPurify from 'dompurify';
 

@@ -1,4 +1,4 @@
-# `@casimir/assets-module`
+# `@casimir.one/assets-module`
 
 ## Description
 
@@ -11,7 +11,7 @@ were issued. It's kinda description of company's 'bonds' emission in corporate t
 ## Usage
 
 ```
-import { AssetsModule } from '@casimir/assets-module';
+import { AssetsModule } from '@casimir.one/assets-module';
 ```
 then add module to app using `addModule(moduleName)`:
 ```
@@ -27,17 +27,17 @@ testApp
 
 ## Dependencies
 
-* `@casimir/env-module`
-* `@casimir/validation-plugin`
-* `@casimir/vuetify-extended`
-* `@casimir/auth-module`
-* `@casimir/users-module`
-* `@casimir/teams-module`
+* `@casimir.one/env-module`
+* `@casimir.one/validation-plugin`
+* `@casimir.one/vuetify-extended`
+* `@casimir.one/auth-module`
+* `@casimir.one/users-module`
+* `@casimir.one/teams-module`
 
 ## Context modules
 
 Despite layouts-module are able to work without below list of modules, they are necessary for
 portal in general:
 
-* `@casimir/scopes-module`
-* `@casimir/users-module` or/and` @casimir/teams-module` or/and `@casimir/nft-collections-module`
+* `@casimir.one/scopes-module`
+* `@casimir.one/users-module` or/and` @casimir.one/teams-module` or/and `@casimir.one/nft-collections-module`

@@ -1,4 +1,4 @@
-import { Interface } from '@casimir/toolbox';
+import { Interface } from '@casimir.one/toolbox';
 
 /* Keep args in functions to validate interface */
 

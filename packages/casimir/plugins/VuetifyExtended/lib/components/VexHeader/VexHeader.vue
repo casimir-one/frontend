@@ -20,8 +20,8 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { getDominantColor, isDarkColor } from '@casimir/toolbox';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { getDominantColor, isDarkColor } from '@casimir.one/toolbox';
   import { VexSection } from '../VexSection';
 
   /** Page header with background */

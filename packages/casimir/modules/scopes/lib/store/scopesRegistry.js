@@ -2,8 +2,8 @@ import {
   listGetterFactory,
   oneGetterFactory,
   setOneMutationFactory
-} from '@casimir/platform-util';
-import { collectionMerge, collectionOne } from '@casimir/toolbox';
+} from '@casimir.one/platform-util';
+import { collectionMerge, collectionOne } from '@casimir.one/toolbox';
 
 const STATE = {
   data: []

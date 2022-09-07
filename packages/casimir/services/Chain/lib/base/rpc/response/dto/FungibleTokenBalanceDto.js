@@ -1,4 +1,4 @@
-import { assert, isNumber, isString } from '@casimir/toolbox';
+import { assert, isNumber, isString } from '@casimir.one/toolbox';
 
 
 class FungibleTokenBalanceDto {

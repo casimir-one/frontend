@@ -7,9 +7,9 @@
 </template>
 
 <script>
-  import { VexAvatar } from '@casimir/vuetify-extended';
-  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
-  import { defineComponent } from '@casimir/platform-util';
+  import { VexAvatar } from '@casimir.one/vuetify-extended';
+  import { getBindableProps } from '@casimir.one/vuetify-extended/lib/composables/props';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   import { userHelpersMixin } from '../../mixins';
 

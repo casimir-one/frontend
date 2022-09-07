@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   /* eslint-disable */
   import Toggleable from 'vuetify/lib/mixins/toggleable';
   import {

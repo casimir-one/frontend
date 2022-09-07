@@ -1,14 +1,14 @@
-import { makeSingletonInstance } from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
-import { JsonDataMsg } from '@casimir/messages';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
+import { JsonDataMsg } from '@casimir.one/messages';
 import {
   TransferFTCmd,
   CreateFTClassCmd,
   IssueFTCmd
-} from '@casimir/commands';
-import { APP_PROPOSAL } from '@casimir/platform-core';
-import { ChainService } from '@casimir/chain-service';
-import { walletSignTx } from '@casimir/platform-util';
+} from '@casimir.one/commands';
+import { APP_PROPOSAL } from '@casimir.one/platform-core';
+import { ChainService } from '@casimir.one/chain-service';
+import { walletSignTx } from '@casimir.one/platform-util';
 import { FungibleTokenHttp } from './FungibleTokenHttp';
 import { transferToken, updateProposalInfo } from '../../util';
 
@@ -22,7 +22,7 @@ export class FungibleTokenService {
 
   /**
    * Create new fungible token
-   * @param {import('@casimir/platform-core').FungibleTokenCreatePayload} payload
+   * @param {import('@casimir.one/platform-core').FungibleTokenCreatePayload} payload
    * @return {Promise<Object>}
    */
   async create(payload) {
@@ -99,7 +99,7 @@ export class FungibleTokenService {
 
   /**
    * Issue fungible token
-   * @param {import('@casimir/platform-core').FungibleTokenIssuePayload} payload
+   * @param {import('@casimir.one/platform-core').FungibleTokenIssuePayload} payload
    * @return {Promise<Object>}
    */
   async issue(payload) {
@@ -151,7 +151,7 @@ export class FungibleTokenService {
 
   /**
    * Transfer fungible token
-   * @param {import('@casimir/platform-core').FungibleTokenTransferPayload} payload
+   * @param {import('@casimir.one/platform-core').FungibleTokenTransferPayload} payload
    * @return {Promise<Object>}
    */
   async transfer(payload) {

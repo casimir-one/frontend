@@ -1,5 +1,5 @@
-import { isNumber, Singleton } from '@casimir/toolbox';
-import { assert } from '@casimir/toolbox';
+import { isNumber, Singleton } from '@casimir.one/toolbox';
+import { assert } from '@casimir.one/toolbox';
 import fetch from 'cross-fetch';
 
 

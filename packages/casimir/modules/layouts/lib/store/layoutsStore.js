@@ -1,4 +1,4 @@
-import { LayoutService } from '@casimir/layout-service';
+import { LayoutService } from '@casimir.one/layout-service';
 
 import {
   listGetterFactory,
@@ -7,8 +7,8 @@ import {
   setOneMutationFactory,
   removeFromListMutationFactory,
   clearMutationFactory
-} from '@casimir/platform-util';
-import { collectionOne } from '@casimir/toolbox';
+} from '@casimir.one/platform-util';
+import { collectionOne } from '@casimir.one/toolbox';
 
 const layoutService = LayoutService.getInstance();
 

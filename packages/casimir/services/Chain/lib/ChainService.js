@@ -1,5 +1,5 @@
-import { Singleton } from '@casimir/toolbox';
-import { ProtocolChain } from '@casimir/platform-core';
+import { Singleton } from '@casimir.one/toolbox';
+import { ProtocolChain } from '@casimir.one/platform-core';
 import SubstrateChainService from './impl/substrate/SubstrateChainService';
 // import GrapheneChainService from './impl/graphene/GrapheneChainService';
 

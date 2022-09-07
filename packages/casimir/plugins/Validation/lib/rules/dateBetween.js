@@ -1,5 +1,5 @@
-import { proxydi } from '@casimir/proxydi';
-import { wrapInArray } from '@casimir/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
+import { wrapInArray } from '@casimir.one/toolbox';
 
 import { normalizeDates } from '../helpers';
 

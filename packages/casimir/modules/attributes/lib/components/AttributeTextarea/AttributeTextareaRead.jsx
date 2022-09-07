@@ -1,5 +1,5 @@
-import { VexMarkdown } from '@casimir/vuetify-extended';
-import { defineComponent } from '@casimir/platform-util';
+import { VexMarkdown } from '@casimir.one/vuetify-extended';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

@@ -1,4 +1,4 @@
-import { NonFungibleTokenService } from '@casimir/token-service';
+import { NonFungibleTokenService } from '@casimir.one/token-service';
 
 import {
   listGetter,
@@ -6,7 +6,7 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
 const nonFungibleTokenService = NonFungibleTokenService.getInstance();
 

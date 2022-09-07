@@ -1,11 +1,11 @@
-import { PortalService } from '@casimir/portal-service';
+import { PortalService } from '@casimir.one/portal-service';
 
 import {
   listGetter,
   oneGetter,
   setListMutation,
   setOneMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
 const portalService = PortalService.getInstance();
 

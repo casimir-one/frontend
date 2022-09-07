@@ -14,13 +14,13 @@ jest.mock('../../lib/AssetsHttp', () => ({
   }
 }));
 
-jest.mock('@casimir/proxydi', () => ({
+jest.mock('@casimir.one/proxydi', () => ({
   proxydi: {
     get: () => 'testEnv'
   }
 }));
 
-jest.mock('@casimir/chain-service', () => ({
+jest.mock('@casimir.one/chain-service', () => ({
   ChainService: {
     getInstanceAsync: () => new Promise((resolve) => {
       resolve({

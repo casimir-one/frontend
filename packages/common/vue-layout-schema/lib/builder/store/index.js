@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import Vue from 'vue';
-import { deepFindParentByValue, objectPath } from '@casimir/toolbox';
+import { deepFindParentByValue, objectPath } from '@casimir.one/toolbox';
 
 export const state = Vue.observable({});
 

@@ -2,7 +2,7 @@ import {
   listGetterFactory,
   oneGetterFactory,
   setOneMutationFactory
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 import { baseAttributes } from '../config';
 
 const STATE = {

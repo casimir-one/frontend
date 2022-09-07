@@ -1,4 +1,4 @@
-import { INVESTMENT_OPPORTUNITY_STATUS } from '@casimir/platform-core';
+import { INVESTMENT_OPPORTUNITY_STATUS } from '@casimir.one/platform-core';
 import InvestmentOpportunityDto from '../../../../../base/rpc/response/dto/InvestmentOpportunityDto';
 import { fromHexFormat } from '../../../utils';
 

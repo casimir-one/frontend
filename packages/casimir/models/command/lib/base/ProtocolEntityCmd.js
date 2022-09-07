@@ -1,4 +1,4 @@
-import { genRipemd160Hash } from '@casimir/toolbox';
+import { genRipemd160Hash } from '@casimir.one/toolbox';
 import ProtocolCmd from './ProtocolCmd';
 
 /**

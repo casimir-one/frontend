@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { VeStack } from '@casimir/vue-elements';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { VeStack } from '@casimir.one/vue-elements';
   import VexMiniMetaItem from './VexMiniMetaItem';
 
   import { getBindableProps } from '../../composables';

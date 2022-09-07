@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/scopes-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/scopes-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -28,8 +28,11 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/toolbox": "1.394.0"
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0"
   }
 }

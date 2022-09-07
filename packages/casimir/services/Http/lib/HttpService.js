@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
-import { AccessService } from '@casimir/access-service';
-import { proxydi } from '@casimir/proxydi';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { AccessService } from '@casimir.one/access-service';
+import { proxydi } from '@casimir.one/proxydi';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 import { handleHttpError } from './HttpError';
 
 /**

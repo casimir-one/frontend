@@ -1,4 +1,4 @@
-# @casimir/nft-items-module
+# @casimir.one/nft-items-module
 
 ## Description
 
@@ -9,7 +9,7 @@ content stored in nftItems section.
 ## Usage
 
 ```
-import { NftItemsModule } from '@casimir/nft-items-module';
+import { NftItemsModule } from '@casimir.one/nft-items-module';
 ```
 ```
 const testApp = new CreateApp(Vue, {
@@ -24,7 +24,7 @@ testApp
 
 ## Dependencies
 
-* `@casimir/auth-module`
-* `@casimir/env-module`
-* `@casimir/users-module`
-* `@casimir/nft-collections-module`
+* `@casimir.one/auth-module`
+* `@casimir.one/env-module`
+* `@casimir.one/users-module`
+* `@casimir.one/nft-collections-module`

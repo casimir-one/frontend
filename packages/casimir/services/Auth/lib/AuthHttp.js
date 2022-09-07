@@ -1,5 +1,5 @@
-import { HttpService } from '@casimir/http-service';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { HttpService } from '@casimir.one/http-service';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 
 /**
  * Auth HTTP transport

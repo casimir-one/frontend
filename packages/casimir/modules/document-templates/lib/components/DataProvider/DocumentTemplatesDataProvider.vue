@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   export default defineComponent({
     name: 'DocumentTemplatesDataProvider',

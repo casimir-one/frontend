@@ -4,7 +4,7 @@ const mockGet = jest.fn();
 const mockPost = jest.fn();
 const mockPut = jest.fn();
 
-jest.mock('@casimir/http-service', () => ({
+jest.mock('@casimir.one/http-service', () => ({
   HttpService: {
     getInstance: () => ({
       get: mockGet,

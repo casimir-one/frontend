@@ -1,14 +1,14 @@
-import { createFormData, makeSingletonInstance, genSha256Hash } from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
+import { createFormData, makeSingletonInstance, genSha256Hash } from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
 import {
   CreateDaoCmd,
   DeleteUserProfileCmd,
   UpdateNetworkSettingsCmd,
   UpdatePortalProfileCmd,
   UpdatePortalSettingsCmd
-} from '@casimir/commands';
-import { ChainService } from '@casimir/chain-service';
-import { MultFormDataMsg, JsonDataMsg } from '@casimir/messages';
+} from '@casimir.one/commands';
+import { ChainService } from '@casimir.one/chain-service';
+import { MultFormDataMsg, JsonDataMsg } from '@casimir.one/messages';
 import { PortalHttp } from './PortalHttp';
 
 /**

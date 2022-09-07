@@ -1,7 +1,7 @@
 import {
   collectionList,
   collectionOne
-} from '@casimir/toolbox';
+} from '@casimir.one/toolbox';
 
 /**
  * Factory for generating list getter

@@ -1,11 +1,11 @@
-import { TeamService } from '@casimir/team-service';
+import { TeamService } from '@casimir.one/team-service';
 
 import {
   listGetterFactory,
   oneGetterFactory,
   setListMutation,
   setOneMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
 const teamService = TeamService.getInstance();
 

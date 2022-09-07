@@ -1,11 +1,11 @@
-# `@casimir/platform-util`
+# `@casimir.one/platform-util`
 
 > TODO: description
 
 ## Usage
 
 ```
-const platformUtil = require('@casimir/platform-util');
+const platformUtil = require('@casimir.one/platform-util');
 
 // TODO: DEMONSTRATE API
 ```

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import { convertToUnit } from '@casimir/toolbox';
+  import { convertToUnit } from '@casimir.one/toolbox';
   import { contextMixin } from '../../composables';
   /**
    * Сomponent allows you to hide part of long text

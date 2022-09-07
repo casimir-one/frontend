@@ -1,6 +1,6 @@
 import BaseTx from './../../base/BaseTx';
-import { assert } from '@casimir/toolbox';
-import { ProtocolChain } from '@casimir/platform-core';
+import { assert } from '@casimir.one/toolbox';
+import { ProtocolChain } from '@casimir.one/platform-core';
 
 class GrapheneTx extends BaseTx {
 

@@ -1,5 +1,5 @@
-import { assert, setLocalesMessages } from '@casimir/toolbox';
-import { callForCurrentUser } from '@casimir/platform-util';
+import { assert, setLocalesMessages } from '@casimir.one/toolbox';
+import { callForCurrentUser } from '@casimir.one/platform-util';
 import { teamsStore } from './store';
 import { teamScope } from './config';
 

@@ -1,14 +1,11 @@
 {
-  "name": "@casimir/vue-editorjs",
-  "version": "1.394.0",
+  "name": "@casimir.one/vue-editorjs",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DEIPworld/deip-modules.git"
@@ -19,8 +16,11 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/toolbox": "1.394.0",
+    "@casimir.one/toolbox": "0.0.0",
     "@editorjs/delimiter": "^1.2.0",
     "@editorjs/editorjs": "^2.22.2",
     "@editorjs/header": "^2.6.1",

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
-  import { defineComponent, componentViewType } from '@casimir/platform-util';
+  import { getBindableProps } from '@casimir.one/vuetify-extended/lib/composables/props';
+  import { defineComponent, componentViewType } from '@casimir.one/platform-util';
 
   import { UsersDataProvider } from '../UsersDataProvider';
   import { UsersListStack } from '../UsersListStack';

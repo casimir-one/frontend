@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/http-service",
-  "version": "1.394.0",
+  "name": "@casimir.one/http-service",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -12,6 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -20,12 +23,12 @@
     "@babel/plugin-proposal-optional-chaining": "^7.14.2",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/preset-env": "^7.14.4",
-    "@casimir/proxydi": "1.371.0"
+    "@casimir.one/proxydi": "1.371.0"
   },
   "dependencies": {
-    "@casimir/access-service": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
+    "@casimir.one/access-service": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
     "axios": "^0.21.1",
     "qs": "^6.10.1"
   }

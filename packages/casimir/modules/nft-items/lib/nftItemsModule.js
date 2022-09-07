@@ -1,5 +1,5 @@
-import { setLocalesMessages } from '@casimir/toolbox';
-import { AttributeScope } from '@casimir/platform-core';
+import { setLocalesMessages } from '@casimir.one/toolbox';
+import { AttributeScope } from '@casimir.one/platform-core';
 import { nftItemsStore, nftItemDraftsStore } from './store';
 import { nftItemScope } from './config';
 

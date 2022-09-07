@@ -1,4 +1,4 @@
-import { createEnum } from '@casimir/toolbox';
+import { createEnum } from '@casimir.one/toolbox';
 
 export const APP_EVENT = createEnum({
   NFT_COLLECTION_METADATA_CREATED: 1,

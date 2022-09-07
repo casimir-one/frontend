@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/web-socket-service",
-  "version": "1.394.0",
+  "name": "@casimir.one/web-socket-service",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/casimir-frontend#readme",
@@ -16,9 +16,12 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/casimir-frontend/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/access-service": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0"
+    "@casimir.one/access-service": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0"
   }
 }

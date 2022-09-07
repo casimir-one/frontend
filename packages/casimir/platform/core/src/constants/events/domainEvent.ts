@@ -1,4 +1,4 @@
-import { createEnum } from '@casimir/toolbox';
+import { createEnum } from '@casimir.one/toolbox';
 
 export const DOMAIN_EVENT = createEnum({
   BLOCK_CREATED: 1000,

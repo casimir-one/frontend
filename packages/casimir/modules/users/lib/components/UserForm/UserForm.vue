@@ -44,10 +44,10 @@
 </template>
 
 <script>
-  import { attributedFormFactory, LayoutRenderer } from '@casimir/layouts-module';
-  import { VeStack, VeRawDisplay } from '@casimir/vue-elements';
-  import { ViewMode } from '@casimir/platform-core';
-  import { defineComponent } from '@casimir/platform-util';
+  import { attributedFormFactory, LayoutRenderer } from '@casimir.one/layouts-module';
+  import { VeStack, VeRawDisplay } from '@casimir.one/vue-elements';
+  import { ViewMode } from '@casimir.one/platform-core';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   export default defineComponent({
     name: 'UserForm',

@@ -1,4 +1,4 @@
-import { assert, setLocalesMessages } from '@casimir/toolbox';
+import { assert, setLocalesMessages } from '@casimir.one/toolbox';
 import { usersStore } from './store';
 
 import { userScope, userAttributes } from './config';

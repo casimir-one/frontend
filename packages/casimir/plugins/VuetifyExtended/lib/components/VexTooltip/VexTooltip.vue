@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   /* eslint-disable */
   import { VTooltip } from 'vuetify/lib/components';
   /* eslint-enable */

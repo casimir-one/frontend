@@ -1,4 +1,4 @@
-import { AttributeScope } from '@casimir/platform-core';
+import { AttributeScope } from '@casimir.one/platform-core';
 import { AttributeAssetSet, AttributeAssetRead } from '../components/AttributeAsset';
 
 export const assetAttributes = [

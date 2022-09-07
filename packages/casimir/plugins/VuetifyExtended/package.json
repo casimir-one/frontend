@@ -1,14 +1,11 @@
 {
-  "name": "@casimir/vuetify-extended",
-  "version": "1.394.0",
+  "name": "@casimir.one/vuetify-extended",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com:DEIPworld/deip-modules.git"
@@ -22,11 +19,14 @@
   "peerDependencies": {
     "vuetify": "^2.5.3"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/vue-editorjs": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/vue-editorjs": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
     "date-fns": "^2.22.1",
     "dompurify": "^2.3.0",
     "find-keypath": "^1.0.0",

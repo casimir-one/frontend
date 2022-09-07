@@ -1,8 +1,8 @@
 import { isEmpty } from 'lodash';
-import { SYSTEM_ROLE } from '@casimir/platform-core';
-import { AccessService } from '@casimir/access-service';
-import { setLocalesMessages, hasValue, isNil } from '@casimir/toolbox';
-import { awaitForStore, callForCurrentUser } from '@casimir/platform-util';
+import { SYSTEM_ROLE } from '@casimir.one/platform-core';
+import { AccessService } from '@casimir.one/access-service';
+import { setLocalesMessages, hasValue, isNil } from '@casimir.one/toolbox';
+import { awaitForStore, callForCurrentUser } from '@casimir.one/platform-util';
 
 import { hasRoles } from './util/roles';
 import { authStore, currentUserStore } from './store';

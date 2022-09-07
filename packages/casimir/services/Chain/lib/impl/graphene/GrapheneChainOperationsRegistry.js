@@ -1,5 +1,5 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { APP_CMD } from '@casimir/platform-core';
+import { APP_CMD } from '@casimir.one/platform-core';
 import { toAssetUnits, millisecToIso } from './utils';
 
 
@@ -7,7 +7,7 @@ const GRAPHENE_OP_CMD_MAP = (chainNodeClient, {
   coreAsset
 }) => {
 
-  const crypto = require('@casimir/lib-crypto');
+  const crypto = require('@casimir.one/lib-crypto');
 
   return {
 

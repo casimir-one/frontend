@@ -1,6 +1,6 @@
 import decode from 'jwt-decode';
-import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@casimir/platform-core';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { ACCESS_TOKEN_KEY, OWNER_PRIVATE_KEY, OWNER_PUBLIC_KEY } from '@casimir.one/platform-core';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 
 /**
  * Manage JWT tokens

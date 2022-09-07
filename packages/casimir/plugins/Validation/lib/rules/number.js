@@ -1,5 +1,5 @@
 import { integer, double } from 'vee-validate/dist/rules';
-import { proxydi } from '@casimir/proxydi';
+import { proxydi } from '@casimir.one/proxydi';
 
 export const number = {
   /**

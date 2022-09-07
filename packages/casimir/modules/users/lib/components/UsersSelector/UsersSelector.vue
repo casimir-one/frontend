@@ -87,9 +87,9 @@
   import { VAutocomplete } from 'vuetify/lib/components';
   /* eslint-enable import/extensions, import/no-unresolved */
 
-  import { getBindableProps } from '@casimir/vuetify-extended/lib/composables/props';
-  import { VexAutocomplete } from '@casimir/vuetify-extended';
-  import { defineComponent } from '@casimir/platform-util';
+  import { getBindableProps } from '@casimir.one/vuetify-extended/lib/composables/props';
+  import { VexAutocomplete } from '@casimir.one/vuetify-extended';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   import { UsersDataProvider } from '../UsersDataProvider';
   import { UserAvatar } from '../UserAvatar';

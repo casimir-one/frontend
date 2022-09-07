@@ -1,4 +1,4 @@
-import { camelCase, paramCase } from '@casimir/toolbox';
+import { camelCase, paramCase } from '@casimir.one/toolbox';
 
 /**
  * Default screen breakpoints

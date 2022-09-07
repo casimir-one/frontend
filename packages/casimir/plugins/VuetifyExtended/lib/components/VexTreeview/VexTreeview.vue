@@ -13,7 +13,7 @@
   />
 </template>
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
   import { find as deepFind } from 'find-keypath';
   /* eslint-disable */
   import { VTreeview } from 'vuetify/lib';

@@ -38,9 +38,9 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { VeAutoGrid } from '@casimir/vue-elements';
-  import { UserAvatar, userHelpersMixin } from '@casimir/users-module';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { VeAutoGrid } from '@casimir.one/vue-elements';
+  import { UserAvatar, userHelpersMixin } from '@casimir.one/users-module';
 
   export default defineComponent({
     name: 'TeamMemberCards',

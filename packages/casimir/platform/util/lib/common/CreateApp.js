@@ -1,4 +1,4 @@
-import { WebSocketService } from '@casimir/web-socket-service';
+import { WebSocketService } from '@casimir.one/web-socket-service';
 
 /**
  * Class for bootstrapping app with Casimir

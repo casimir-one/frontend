@@ -1,7 +1,7 @@
 import './VeAutoGrid.scss';
 
-import { defineComponent } from '@casimir/platform-util';
-import { convertToUnit } from '@casimir/toolbox';
+import { defineComponent } from '@casimir.one/platform-util';
+import { convertToUnit } from '@casimir.one/toolbox';
 import { genBreakpointCssVarsStyles, genBreakpointProps } from '../../util/breakpoint';
 
 const gapProps = genBreakpointProps('gap', [Number, String]);

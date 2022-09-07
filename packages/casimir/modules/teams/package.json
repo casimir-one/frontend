@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/teams-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/teams-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -19,22 +19,25 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/attributes-module": "1.394.0",
-    "@casimir/layouts-module": "1.394.0",
-    "@casimir/platform-components": "1.394.0",
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/team-service": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/users-module": "1.394.0",
-    "@casimir/validation-plugin": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
-    "@casimir/vue-layout-schema": "1.394.0",
-    "@casimir/vuetify-extended": "1.394.0"
+    "@casimir.one/attributes-module": "0.0.0",
+    "@casimir.one/layouts-module": "0.0.0",
+    "@casimir.one/platform-components": "0.0.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/team-service": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/users-module": "0.0.0",
+    "@casimir.one/validation-plugin": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
+    "@casimir.one/vue-layout-schema": "0.0.0",
+    "@casimir.one/vuetify-extended": "0.0.0"
   },
   "peerDependencies": {
-    "@casimir/auth-module": "^1.374.0",
+    "@casimir.one/auth-module": "^1.374.0",
     "vue": "^2.6.14",
     "vuetify": "^2.5.3"
   },

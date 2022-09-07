@@ -4,9 +4,9 @@ import {
   setListMutation,
   setOneMutation,
   removeFromListMutation
-} from '@casimir/platform-util';
+} from '@casimir.one/platform-util';
 
-import { DocumentTemplateService } from '@casimir/document-template-service';
+import { DocumentTemplateService } from '@casimir.one/document-template-service';
 
 const documentTemplateService = DocumentTemplateService.getInstance();
 

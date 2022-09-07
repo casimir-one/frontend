@@ -7,9 +7,9 @@
 </template>
 
 <script>
-  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
-  import { defineComponent } from '@casimir/platform-util';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir.one/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir.one/attributes-module';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   export default defineComponent({
     name: 'NftCollectionDetails',

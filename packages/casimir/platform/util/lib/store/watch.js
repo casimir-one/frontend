@@ -1,4 +1,4 @@
-import { isNil } from '@casimir/toolbox';
+import { isNil } from '@casimir.one/toolbox';
 
 /**
  * Wait until some value appears in getter

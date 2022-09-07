@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/commands",
-  "version": "1.394.0",
+  "name": "@casimir.one/commands",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Yahor Tsaryk <yahor.tsaryk@deip.world>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -22,9 +22,12 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/toolbox": "1.394.0"
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",

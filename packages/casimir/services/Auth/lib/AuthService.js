@@ -1,8 +1,8 @@
-import { genSha256Hash, makeSingletonInstance } from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
-import { CreateDaoCmd, ImportDAOCmd } from '@casimir/commands';
-import { ChainService } from '@casimir/chain-service';
-import { JsonDataMsg } from '@casimir/messages';
+import { genSha256Hash, makeSingletonInstance } from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
+import { CreateDaoCmd, ImportDAOCmd } from '@casimir.one/commands';
+import { ChainService } from '@casimir.one/chain-service';
+import { JsonDataMsg } from '@casimir.one/messages';
 import { AuthHttp } from './AuthHttp';
 
 /**

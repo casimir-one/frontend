@@ -1,6 +1,6 @@
 {
-    "name": "@casimir/lib-crypto",
-    "version": "1.394.0",
+    "name": "@casimir.one/lib-crypto",
+    "version": "0.0.0",
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {
@@ -10,6 +10,9 @@
         "build": "node ./scripts/build.js",
         "sjcl-test": "node ./scripts/test.js",
         "test": "node ./scripts/build.js && node ./scripts/test.js && tape 'test/*.test.js'"
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "devDependencies": {
         "@babel/core": "^7.14.3",

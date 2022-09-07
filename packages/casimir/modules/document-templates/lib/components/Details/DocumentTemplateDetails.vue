@@ -8,10 +8,10 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
+  import { defineComponent } from '@casimir.one/platform-util';
 
-  import { VeStack } from '@casimir/vue-elements';
-  import { VueEditorjsParser } from '@casimir/vue-editorjs';
+  import { VeStack } from '@casimir.one/vue-elements';
+  import { VueEditorjsParser } from '@casimir.one/vue-editorjs';
 
   export default defineComponent({
     name: 'DocumentTemplateDetails',

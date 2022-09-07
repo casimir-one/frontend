@@ -1,4 +1,4 @@
-import { assert } from '@casimir/toolbox';
+import { assert } from '@casimir.one/toolbox';
 
 /**
  * App message
@@ -7,7 +7,7 @@ class AppMsg {
   /**
    * Create app message
    * @param {Object} message
-   * @param {import("@casimir/chain-service").BaseTx} message.tx transaction
+   * @param {import("@casimir.one/chain-service").BaseTx} message.tx transaction
    * @param {Array} message.appCmds commands
    */
   constructor(message) {

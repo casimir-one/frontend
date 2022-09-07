@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/token-service",
-  "version": "1.394.0",
+  "name": "@casimir.one/token-service",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -22,16 +22,19 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/access-service": "1.394.0",
-    "@casimir/chain-service": "1.394.0",
-    "@casimir/commands": "1.394.0",
-    "@casimir/http-service": "1.394.0",
-    "@casimir/messages": "1.394.0",
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/web-socket-service": "1.394.0"
+    "@casimir.one/access-service": "0.0.0",
+    "@casimir.one/chain-service": "0.0.0",
+    "@casimir.one/commands": "0.0.0",
+    "@casimir.one/http-service": "0.0.0",
+    "@casimir.one/messages": "0.0.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/web-socket-service": "0.0.0"
   }
 }

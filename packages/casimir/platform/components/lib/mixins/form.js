@@ -1,5 +1,5 @@
 import { cloneDeep, isEqual } from 'lodash';
-import { ViewMode } from '@casimir/platform-core';
+import { ViewMode } from '@casimir.one/platform-core';
 
 /**
  * Create form mixin

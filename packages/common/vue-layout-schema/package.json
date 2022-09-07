@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/vue-layout-schema",
-  "version": "1.394.0",
+  "name": "@casimir.one/vue-layout-schema",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -13,9 +13,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DEIPworld/deip-modules.git"
@@ -26,15 +23,18 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
     "lodash": "^4.17.21",
     "vuedraggable": "^2.24.3"
   },
   "peerDependencies": {
-    "@casimir/vuetify-extended": "^1.373.0",
+    "@casimir.one/vuetify-extended": "^1.373.0",
     "@mdi/font": "^6.5.95",
     "@mdi/svg": "^6.5.95",
     "vue": "^2.6.14",

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import { wrapInArray } from '@casimir/toolbox';
-  import { defineComponent } from '@casimir/platform-util';
+  import { wrapInArray } from '@casimir.one/toolbox';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   export default defineComponent({
     name: 'TeamsDataProvider',

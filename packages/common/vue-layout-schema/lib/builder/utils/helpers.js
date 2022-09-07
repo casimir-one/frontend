@@ -9,14 +9,14 @@ import {
   paramCase,
 
   RecursiveIterator, objectPath, isFunction, assert
-} from '@casimir/toolbox';
+} from '@casimir.one/toolbox';
 
 import { cloneDeep } from 'lodash';
 
 import {
   RENDERER_SCHEMA_BLOCK_KEYS,
   RENDERER_BLOCK_KEYS
-} from '@casimir/platform-core';
+} from '@casimir.one/platform-core';
 
 /**
  * @typedef {Object} InitialBlock

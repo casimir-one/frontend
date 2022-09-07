@@ -1,11 +1,11 @@
-# `@casimir/vue-editorjs`
+# `@casimir.one/vue-editorjs`
 
 > TODO: description
 
 ## Usage
 
 ```
-const vueEditorjs = require('@casimir/vue-editorjs');
+const vueEditorjs = require('@casimir.one/vue-editorjs');
 
 // TODO: DEMONSTRATE API
 ```

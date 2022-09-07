@@ -1,6 +1,6 @@
-import { AccessService } from '@casimir/access-service';
-import { proxydi } from '@casimir/proxydi';
-import { makeSingletonInstance } from '@casimir/toolbox';
+import { AccessService } from '@casimir.one/access-service';
+import { proxydi } from '@casimir.one/proxydi';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
 
 const WEB_SOCKET_STATE = {
   CONNECTING: 0,

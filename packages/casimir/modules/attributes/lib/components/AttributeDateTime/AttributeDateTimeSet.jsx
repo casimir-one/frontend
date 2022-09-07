@@ -1,6 +1,6 @@
-import { VexDateTimeInput } from '@casimir/vuetify-extended';
+import { VexDateTimeInput } from '@casimir.one/vuetify-extended';
 
-import { defineComponent } from '@casimir/platform-util';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeSetMixin } from '../../mixins';
 
 /**

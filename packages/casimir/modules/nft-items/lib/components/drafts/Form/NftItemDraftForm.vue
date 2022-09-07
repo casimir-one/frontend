@@ -41,15 +41,15 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { formFactory } from '@casimir/platform-components';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { formFactory } from '@casimir.one/platform-components';
 
-  import { VeStack } from '@casimir/vue-elements';
-  import { AttributeScope, NFT_ITEM_METADATA_FORMAT } from '@casimir/platform-core';
-  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
+  import { VeStack } from '@casimir.one/vue-elements';
+  import { AttributeScope, NFT_ITEM_METADATA_FORMAT } from '@casimir.one/platform-core';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir.one/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir.one/attributes-module';
 
-  import { AccessService } from '@casimir/access-service';
+  import { AccessService } from '@casimir.one/access-service';
 
   const accessService = AccessService.getInstance();
 

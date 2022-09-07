@@ -1,15 +1,15 @@
-# `@casimir/nft-collections-module`
+# `@casimir.one/nft-collections-module`
 
 
 ## Description
 
 The module creates store for a new entity called `NFT collection` and also adds new scope
-called `nftCollection` by action `scopesRegistry/addScope` related with `@casimir/scopes-module`
+called `nftCollection` by action `scopesRegistry/addScope` related with `@casimir.one/scopes-module`
 
 ## Usage
 
 ```
-import { NftCollectionsModule } from '@casimir/nft-collections-module';
+import { NftCollectionsModule } from '@casimir.one/nft-collections-module';
 ```
 then add module to app using `addModule(moduleName)`:
 ```
@@ -23,11 +23,11 @@ testApp.addModule(NftCollectionsModule)
 ```
 
 ## Dependencies
-* `@casimir/validation-plugin`
-* `@casimir/vuetify-extended`
-* `@casimir/env-module`
-* `@casimir/scopes-module`
-* `@casimir/attributes-module`
-* `@casimir/layouts-module`
-* `@casimir/auth-module`
-* `@casimir/user-module`
+* `@casimir.one/validation-plugin`
+* `@casimir.one/vuetify-extended`
+* `@casimir.one/env-module`
+* `@casimir.one/scopes-module`
+* `@casimir.one/attributes-module`
+* `@casimir.one/layouts-module`
+* `@casimir.one/auth-module`
+* `@casimir.one/user-module`

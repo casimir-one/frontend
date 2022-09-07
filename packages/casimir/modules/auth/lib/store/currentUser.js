@@ -1,4 +1,4 @@
-import { UserService } from '@casimir/user-service';
+import { UserService } from '@casimir.one/user-service';
 
 const userService = UserService.getInstance();
 

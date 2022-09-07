@@ -1,4 +1,4 @@
-import { createEnum } from '@casimir/toolbox';
+import { createEnum } from '@casimir.one/toolbox';
 
 export const enum NftItemMetadataDraftStatus {
   IN_PROGRESS = 1,

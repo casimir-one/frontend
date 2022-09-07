@@ -1,5 +1,5 @@
-import { makeSingletonInstance } from '@casimir/toolbox';
-import { proxydi } from '@casimir/proxydi';
+import { makeSingletonInstance } from '@casimir.one/toolbox';
+import { proxydi } from '@casimir.one/proxydi';
 import { AssetsHttp } from './AssetsHttp';
 
 /**

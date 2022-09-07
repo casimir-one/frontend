@@ -9,11 +9,11 @@
 </template>
 
 <script>
-  import { defineComponent } from '@casimir/platform-util';
-  import { AttributeScope } from '@casimir/platform-core';
-  import { VexBlock } from '@casimir/vuetify-extended';
-  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
+  import { defineComponent } from '@casimir.one/platform-util';
+  import { AttributeScope } from '@casimir.one/platform-core';
+  import { VexBlock } from '@casimir.one/vuetify-extended';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir.one/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir.one/attributes-module';
 
   /**
    * Component for NFT item details

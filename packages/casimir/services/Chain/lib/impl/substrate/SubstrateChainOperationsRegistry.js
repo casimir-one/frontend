@@ -1,7 +1,7 @@
 import BaseOperationsRegistry from './../../base/BaseOperationsRegistry';
-import { assert } from '@casimir/toolbox';
+import { assert } from '@casimir.one/toolbox';
 import { hexToU8a, stringToHex } from '@polkadot/util';
-import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir/platform-core';
+import { APP_CMD, CONTRACT_AGREEMENT_TYPE } from '@casimir.one/platform-core';
 import { daoIdToAddress, pubKeyToAddress, getMultiAddress, toAddress, isAddress } from './utils';
 import { pascalCase } from 'change-case';
 import BigNumber from 'bignumber.js';

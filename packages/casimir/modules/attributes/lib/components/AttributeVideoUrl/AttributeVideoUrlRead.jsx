@@ -1,5 +1,5 @@
-import { VexVideoEmbed } from '@casimir/vuetify-extended';
-import { defineComponent } from '@casimir/platform-util';
+import { VexVideoEmbed } from '@casimir.one/vuetify-extended';
+import { defineComponent } from '@casimir.one/platform-util';
 import { AttributeReadMixin } from '../../mixins';
 
 /**

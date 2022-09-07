@@ -32,8 +32,8 @@
 </template>
 
 <script>
-  import { UsersSelector } from '@casimir/users-module';
-  import { defineComponent } from '@casimir/platform-util';
+  import { UsersSelector } from '@casimir.one/users-module';
+  import { defineComponent } from '@casimir.one/platform-util';
 
   export default defineComponent({
     name: 'TeamAddMemberModal',

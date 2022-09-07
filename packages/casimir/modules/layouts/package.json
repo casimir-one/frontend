@@ -1,6 +1,6 @@
 {
-  "name": "@casimir/layouts-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/layouts-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -16,18 +16,21 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/attributes-module": "1.394.0",
-    "@casimir/attributes-service": "1.394.0",
-    "@casimir/layout-service": "1.394.0",
-    "@casimir/platform-components": "1.394.0",
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/vue-editorjs": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
-    "@casimir/vue-layout-schema": "1.394.0",
+    "@casimir.one/attributes-module": "0.0.0",
+    "@casimir.one/attributes-service": "0.0.0",
+    "@casimir.one/layout-service": "0.0.0",
+    "@casimir.one/platform-components": "0.0.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/vue-editorjs": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
+    "@casimir.one/vue-layout-schema": "0.0.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -39,7 +42,7 @@
     "@babel/plugin-proposal-private-methods": "^7.14.5"
   },
   "peerDependencies": {
-    "@casimir/vuetify-extended": "^1.373.0",
+    "@casimir.one/vuetify-extended": "^1.373.0",
     "vuetify": "^2.5.5"
   }
 }

@@ -14,7 +14,7 @@ import {
 
 } from 'vee-validate/dist/rules';
 import en from 'vee-validate/dist/locale/en.json';
-import { setLocalesMessages } from '@casimir/toolbox';
+import { setLocalesMessages } from '@casimir.one/toolbox';
 import {
   email,
   number,

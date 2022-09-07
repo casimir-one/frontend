@@ -40,12 +40,12 @@
 </template>
 
 <script>
-  import { NftItemMetadataDraftStatus } from '@casimir/platform-core';
+  import { NftItemMetadataDraftStatus } from '@casimir.one/platform-core';
 
-  import { dateMixin } from '@casimir/platform-components';
-  import { VeStack } from '@casimir/vue-elements';
-  import { attributedDetailsFactory, LayoutRenderer } from '@casimir/layouts-module';
-  import { attributeMethodsFactory, expandAttributes } from '@casimir/attributes-module';
+  import { dateMixin } from '@casimir.one/platform-components';
+  import { VeStack } from '@casimir.one/vue-elements';
+  import { attributedDetailsFactory, LayoutRenderer } from '@casimir.one/layouts-module';
+  import { attributeMethodsFactory, expandAttributes } from '@casimir.one/attributes-module';
   import { NftItemDraftDeclineDialog } from '../NftItemDraftDeclineDialog';
 
   /**

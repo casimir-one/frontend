@@ -1,4 +1,4 @@
-import { uuidv4 } from '@casimir/toolbox';
+import { uuidv4 } from '@casimir.one/toolbox';
 import { isEqual } from 'lodash';
 
 import { mutations, getters } from '../../store';

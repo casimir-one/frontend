@@ -1,19 +1,19 @@
-import { proxydi } from '@casimir/proxydi';
-import { MultFormDataMsg, JsonDataMsg } from '@casimir/messages';
+import { proxydi } from '@casimir.one/proxydi';
+import { MultFormDataMsg, JsonDataMsg } from '@casimir.one/messages';
 import {
   UpdateDaoCmd,
   AlterDaoAuthorityCmd
-} from '@casimir/commands';
-import { ChainService } from '@casimir/chain-service';
-import { WebSocketService } from '@casimir/web-socket-service';
+} from '@casimir.one/commands';
+import { ChainService } from '@casimir.one/chain-service';
+import { WebSocketService } from '@casimir.one/web-socket-service';
 import {
   replaceFileWithName,
   createFormData,
   genSha256Hash,
   makeSingletonInstance
-} from '@casimir/toolbox';
-import { APP_EVENT } from '@casimir/platform-core';
-import { walletSignTx } from '@casimir/platform-util';
+} from '@casimir.one/toolbox';
+import { APP_EVENT } from '@casimir.one/platform-core';
+import { walletSignTx } from '@casimir.one/platform-util';
 import { UserHttp } from './UserHttp';
 
 export class UserService {

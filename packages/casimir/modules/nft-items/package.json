@@ -1,14 +1,11 @@
 {
-  "name": "@casimir/nft-items-module",
-  "version": "1.394.0",
+  "name": "@casimir.one/nft-items-module",
+  "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
   "license": "ISC",
   "main": "index.js",
-  "publishConfig": {
-    "registry": "https://npm-registry.deip.world/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DEIPworld/deip-modules.git"
@@ -19,20 +16,23 @@
   "bugs": {
     "url": "https://github.com/DEIPworld/deip-modules/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
-    "@casimir/access-service": "1.394.0",
-    "@casimir/attributes-module": "1.394.0",
-    "@casimir/layouts-module": "1.394.0",
-    "@casimir/nft-collections-module": "1.394.0",
-    "@casimir/platform-components": "1.394.0",
-    "@casimir/platform-core": "1.394.0",
-    "@casimir/platform-util": "1.394.0",
-    "@casimir/proxydi": "1.394.0",
-    "@casimir/token-service": "1.394.0",
-    "@casimir/toolbox": "1.394.0",
-    "@casimir/users-module": "1.394.0",
-    "@casimir/vue-elements": "1.394.0",
-    "@casimir/vuetify-extended": "1.394.0",
+    "@casimir.one/access-service": "0.0.0",
+    "@casimir.one/attributes-module": "0.0.0",
+    "@casimir.one/layouts-module": "0.0.0",
+    "@casimir.one/nft-collections-module": "0.0.0",
+    "@casimir.one/platform-components": "0.0.0",
+    "@casimir.one/platform-core": "0.0.0",
+    "@casimir.one/platform-util": "0.0.0",
+    "@casimir.one/proxydi": "0.0.0",
+    "@casimir.one/token-service": "0.0.0",
+    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/users-module": "0.0.0",
+    "@casimir.one/vue-elements": "0.0.0",
+    "@casimir.one/vuetify-extended": "0.0.0",
     "vue-infinite-loading": "^2.4.5"
   },
   "devDependencies": {
