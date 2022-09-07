@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/validation-plugin",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,8 +20,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@casimir.one/proxydi": "0.0.0",
-    "@casimir.one/toolbox": "0.0.0",
+    "@casimir.one/proxydi": "0.0.1",
+    "@casimir.one/toolbox": "0.0.1",
     "vee-validate": "^3.4.9"
   },
   "peerDependencies": {
