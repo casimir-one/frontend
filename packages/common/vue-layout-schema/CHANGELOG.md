@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.2](https://github.com/DEIPworld/deip-modules/compare/v1.394.0...v0.0.2) (2022-09-07)
+
+
+### Bug Fixes
+
+* **@casimir/vue-layout-schema:** fix checkbox setting display ([9cbe85f](https://github.com/DEIPworld/deip-modules/commit/9cbe85fd2a154191757746b757e44d818a0ef696))
+
+
+
+
+
 ## [0.0.1](https://github.com/DEIPworld/deip-modules/compare/v1.394.0...v0.0.1) (2022-09-07)
 
 

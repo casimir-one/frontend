@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/vuetify-extended",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -23,10 +23,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@casimir.one/platform-util": "0.0.1",
-    "@casimir.one/toolbox": "0.0.1",
-    "@casimir.one/vue-editorjs": "0.0.1",
-    "@casimir.one/vue-elements": "0.0.1",
+    "@casimir.one/platform-util": "0.0.2",
+    "@casimir.one/toolbox": "0.0.2",
+    "@casimir.one/vue-editorjs": "0.0.2",
+    "@casimir.one/vue-elements": "0.0.2",
     "date-fns": "^2.22.1",
     "dompurify": "^2.3.0",
     "find-keypath": "^1.0.0",

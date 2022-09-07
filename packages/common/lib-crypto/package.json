@@ -1,6 +1,6 @@
 {
     "name": "@casimir.one/lib-crypto",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Common javascript cryptographic utilities. Based on sjcl.",
     "main": "lib/crypto.js",
     "scripts": {
