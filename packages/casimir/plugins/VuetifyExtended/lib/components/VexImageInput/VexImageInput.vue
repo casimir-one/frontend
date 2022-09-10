@@ -326,6 +326,11 @@
         this.$refs.cropper.reset();
       },
 
+      /** Refresh cropper */
+      refreshCropper() {
+        this.$refs.cropper.refresh();
+      },
+
       /**
        * Calculate cropper default size
        * @params {Object} payload
@@ -468,7 +473,7 @@
           reader.readAsArrayBuffer(loadedFile);
 
           this.setChosenFileName(loadedFile.name);
-          this.resetCropper();
+          this.refreshCropper();
         }
       },
 
