@@ -78,7 +78,12 @@ export class WebSocketService {
    * @param {number} timeout
    * @returns {Promise}
    */
-  async waitForMessage(predicate, timeout = 10000) {
+  async waitForMessage(predicate, customTimeout) {
+    const env = this.#proxydi.get('env');
+    const { DEIP_WEB_SOCKET_TIMEOUT } = env;
+
+    const timeout = customTimeout || DEIP_WEB_SOCKET_TIMEOUT || 30000;
+
     if (!this.isOpen()) {
       return Promise.resolve();
     }
