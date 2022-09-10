@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/platform-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -30,6 +30,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@casimir.one/toolbox": "0.0.2"
+    "@casimir.one/toolbox": "0.0.3"
   }
 }
