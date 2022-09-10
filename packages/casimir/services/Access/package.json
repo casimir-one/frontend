@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/access-service",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,8 +25,8 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir.one/platform-core": "0.0.4",
-    "@casimir.one/toolbox": "0.0.4",
+    "@casimir.one/platform-core": "0.0.5",
+    "@casimir.one/toolbox": "0.0.5",
     "jwt-decode": "^3.1.2"
   }
 }

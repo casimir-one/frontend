@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/document-template-service",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,10 +25,10 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir.one/commands": "0.0.4",
-    "@casimir.one/http-service": "0.0.4",
-    "@casimir.one/messages": "0.0.4",
-    "@casimir.one/proxydi": "0.0.4",
-    "@casimir.one/toolbox": "0.0.4"
+    "@casimir.one/commands": "0.0.5",
+    "@casimir.one/http-service": "0.0.5",
+    "@casimir.one/messages": "0.0.5",
+    "@casimir.one/proxydi": "0.0.5",
+    "@casimir.one/toolbox": "0.0.5"
   }
 }

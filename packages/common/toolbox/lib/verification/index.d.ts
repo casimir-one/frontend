@@ -1,0 +1,13 @@
+export function isArray(val: any): boolean;
+export function isObject(val: any): boolean;
+export function isFile(val: any): boolean;
+export function isFunction(val: any): boolean;
+export function isBoolean(val: any): boolean;
+export function isString(val: any): boolean;
+export function isNumber(val: any): boolean;
+export function isNil(val: any): boolean;
+export function isNumeric(val: any): boolean;
+export function isSimpleVal(val: any): boolean;
+export function isJsonString(str: any): boolean;
+export function hasValue(value: any): boolean;
+export function hasOwnProperty(prop: string, obj: any): boolean;
