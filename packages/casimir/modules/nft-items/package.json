@@ -28,7 +28,7 @@
     "@casimir.one/platform-core": "0.0.4",
     "@casimir.one/platform-util": "0.0.4",
     "@casimir.one/proxydi": "0.0.4",
-    "@casimir.one/token-service": "0.0.3",
+    "@casimir.one/token-service": "0.0.4",
     "@casimir.one/toolbox": "0.0.4",
     "@casimir.one/users-module": "0.0.4",
     "@casimir.one/vue-elements": "0.0.4",
