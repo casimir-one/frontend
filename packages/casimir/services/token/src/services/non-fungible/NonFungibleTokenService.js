@@ -125,7 +125,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_COLLECTION_METADATA_CREATED
         && eventBody.event.eventPayload.entityId === response.data._id;
-    }, 20000);
+    });
 
     return response;
   }
@@ -251,7 +251,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_CREATED
         && eventBody.event.eventPayload.entityId === response.data._id;
-    }, 10000);
+    });
 
     return response;
   }
@@ -300,7 +300,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_ITEM_METADATA_DRAFT_CREATED
         && eventBody.event.eventPayload.entityId === response.data._id;
-    }, 20000);
+    });
 
     return response;
   }
@@ -411,7 +411,7 @@ export class NonFungibleTokenService {
 
       const lazyProposalDeclined = eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_DECLINED;
       return statusUpdated || lazyProposalDeclined;
-    }, 20000);
+    });
 
     return response;
   }
@@ -538,7 +538,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_CREATED
         && eventBody.event.eventPayload.proposalId === response.data.entityId;
-    }, 30000);
+    });
 
     return response;
   }
@@ -649,7 +649,7 @@ export class NonFungibleTokenService {
       const [, eventBody] = message;
       return eventBody.event.eventNum === APP_EVENT.NFT_LAZY_SELL_PROPOSAL_ACCEPTED
         && eventBody.event.eventPayload.proposalId === lazySellProposalId;
-    }, 30000);
+    });
 
     return response;
   }
