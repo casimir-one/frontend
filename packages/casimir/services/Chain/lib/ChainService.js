@@ -24,13 +24,7 @@ class ChainService extends Singleton {
         //   chainId: CHAIN_ID,
         //   portalId: PORTAL_ID
         // });
-        console.warn("GRAPHENE WILL BE IMPLEMENTED LATER, USING SUBSTRATE FOR NOW");
-        impl = SubstrateChainService.getInstance({
-          connectionString: DEIP_FULL_NODE_URL,
-          coreAsset: CORE_ASSET,
-          portalId: PORTAL_ID
-        });
-        break;
+        throw new Error(`Graphene is not supported at the moment`);
       }
       default: {
         throw new Error(`Unknown Protocol Chain ${CHAIN_PROTOCOL}`);
