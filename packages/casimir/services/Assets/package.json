@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/assets-service",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,14 +25,14 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir.one/access-service": "0.0.7",
-    "@casimir.one/chain-service": "0.0.7",
-    "@casimir.one/commands": "0.0.7",
-    "@casimir.one/http-service": "0.0.7",
-    "@casimir.one/lib-crypto": "0.0.7",
-    "@casimir.one/messages": "0.0.7",
-    "@casimir.one/platform-core": "0.0.7",
-    "@casimir.one/proxydi": "0.0.7",
-    "@casimir.one/toolbox": "0.0.7"
+    "@casimir.one/access-service": "0.0.8",
+    "@casimir.one/chain-service": "0.0.8",
+    "@casimir.one/commands": "0.0.8",
+    "@casimir.one/http-service": "0.0.8",
+    "@casimir.one/lib-crypto": "0.0.8",
+    "@casimir.one/messages": "0.0.8",
+    "@casimir.one/platform-core": "0.0.8",
+    "@casimir.one/proxydi": "0.0.8",
+    "@casimir.one/toolbox": "0.0.8"
   }
 }

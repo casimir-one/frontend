@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/document-templates-module",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "> TODO: description",
   "author": "Elena Vlasova <e.vlasova@paralect.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -20,16 +20,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@casimir.one/document-template-service": "0.0.7",
-    "@casimir.one/platform-components": "0.0.7",
-    "@casimir.one/platform-core": "0.0.7",
-    "@casimir.one/platform-util": "0.0.7",
-    "@casimir.one/proxydi": "0.0.7",
-    "@casimir.one/toolbox": "0.0.7",
-    "@casimir.one/validation-plugin": "0.0.7",
-    "@casimir.one/vue-editorjs": "0.0.7",
-    "@casimir.one/vue-elements": "0.0.7",
-    "@casimir.one/vuetify-extended": "0.0.7"
+    "@casimir.one/document-template-service": "0.0.8",
+    "@casimir.one/platform-components": "0.0.8",
+    "@casimir.one/platform-core": "0.0.8",
+    "@casimir.one/platform-util": "0.0.8",
+    "@casimir.one/proxydi": "0.0.8",
+    "@casimir.one/toolbox": "0.0.8",
+    "@casimir.one/validation-plugin": "0.0.8",
+    "@casimir.one/vue-editorjs": "0.0.8",
+    "@casimir.one/vue-elements": "0.0.8",
+    "@casimir.one/vuetify-extended": "0.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
