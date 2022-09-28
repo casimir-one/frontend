@@ -1,11 +1,11 @@
 # Casimir
 
-**Casimir** — is a low-code constructor (framework) for building Portals in the DEIP ecosystem.
-With Casimir, you can quickly build a front-end application to connect to the server-side of the DEIP infrastructure. The modular structure formed the basis of Casimir’s development. This implementation allows connecting to the portal only required functionality without redundant code.
+**Casimir** — is a low-code constructor (framework) for building Portals in the Casimir ecosystem.
+With Casimir, you can quickly build a front-end application to connect to the server-side of the Casimir infrastructure. The modular structure formed the basis of Casimir’s development. This implementation allows connecting to the portal only required functionality without redundant code.
 
-#### The DEIP Modules repository consists of 2 main areas:
+#### The Casimir Modules repository consists of 2 main areas
 * Common — a set of self-sufficient and independent packages, utilities, plugins, components that can be used outside the Casimir ecosystem
-* Casimir — a low-code constructor for building Portals in the DEIP ecosystem
+* Casimir — a low-code constructor for building Portals in the Casimir ecosystem
 
 #### Casimir, in turn, consists of several types of entities:
 * platform — a set of self-sufficient and independent utilities and components that can be used in different areas of the low-code constructor
@@ -21,7 +21,7 @@ all kind of content) and layouts for displaying such attributes for such a
 portal.
 
 ## Create Portal
-The DEIP-modules repository consists of Java Script packages designed to build front-end applications and Portals. Modules allow you to connect to services to interact with DEIP infrastructure and are implemented using the Vue framework and Vuetify components library.
+The Casimir-modules repository consists of Java Script packages designed to build front-end applications and Portals. Modules allow you to connect to services to interact with Casimir infrastructure and are implemented using the Vue framework and Vuetify components library.
 
 ```
 # install vue services global
@@ -86,7 +86,7 @@ deipApp
     }
   })
 
-  // register DEIP modules - used as dependency in DEIP/VEDAI modules
+  // register Casimir modules - used as dependency in Casimir modules
   .addModule(AuthModule)
   .addModule(UsersModule)
   .addModule(AttributesModule)
@@ -122,9 +122,9 @@ deipApp
 Following this instruction, you can build an application with the specified functionality.
 Explore another example of a Casimir-based application by the [link](https://youtu.be/C5VwmWefSbI).
 
-## DEIP-Modules
+## Casimir-Modules
 
-The DEIP Modules is a monorepository implemented based on [Lerna](https://github.com/lerna/lerna) with many npm packages used as a building material for the portal. The repository already contains all the necessary tools for development. Install some modules globally, if you want to manage some processes more subtly.
+The Casimir Modules is a monorepository implemented based on [Lerna](https://github.com/lerna/lerna) with many npm packages used as a building material for the portal. The repository already contains all the necessary tools for development. Install some modules globally, if you want to manage some processes more subtly.
 
 ```
 npm install -g npm-check-updates lerna
@@ -188,7 +188,7 @@ npm register keeps stable versions of modules to install them with the command `
 
 #### Additional information
 
-The DEIP-Modules repository uses the [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) agreement.
+The Casimir-Modules repository uses the [Conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) agreement.
 Strongly recommend making changes in one commit that will specify the type of change and scope to which the changes apply.
 
 ```

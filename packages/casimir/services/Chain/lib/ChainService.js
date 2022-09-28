@@ -24,7 +24,7 @@ class ChainService extends Singleton {
         //   chainId: CHAIN_ID,
         //   portalId: PORTAL_ID
         // });
-        throw new Error(`Graphene is not supported at the moment`);
+        throw new Error(`Graphene is not supported at the moment, use Substrate`);
       }
       default: {
         throw new Error(`Unknown Protocol Chain ${CHAIN_PROTOCOL}`);
