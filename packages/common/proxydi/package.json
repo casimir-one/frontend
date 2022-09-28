@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/proxydi",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -25,6 +25,6 @@
     "@babel/preset-env": "^7.14.4"
   },
   "dependencies": {
-    "@casimir.one/toolbox": "0.0.6"
+    "@casimir.one/toolbox": "0.0.7"
   }
 }

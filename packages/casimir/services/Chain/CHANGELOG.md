@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/casimir-ai/frontend/compare/v0.0.6...v0.0.7) (2022-09-28)
+
+
+### Bug Fixes
+
+* **@deip/chain-service:** graphene is disabled ([6cdb02b](https://github.com/casimir-ai/frontend/commit/6cdb02b43cb7fdcf14d60a0fa6e93e2940ce9a41))
+
+
+
+
+
 ## [0.0.6](https://github.com/DEIPworld/deip-modules/compare/v0.0.4...v0.0.6) (2022-09-10)
 
 
