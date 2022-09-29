@@ -1,6 +1,6 @@
 {
   "name": "@casimir.one/vue-layout-schema",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "> TODO: description",
   "author": "Euheny Bondarovich <euheny@gmail.com>",
   "homepage": "https://github.com/DEIPworld/deip-modules#readme",
@@ -27,9 +27,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@casimir.one/platform-core": "0.0.7",
-    "@casimir.one/toolbox": "0.0.7",
-    "@casimir.one/vue-elements": "0.0.7",
+    "@casimir.one/platform-core": "0.0.9",
+    "@casimir.one/toolbox": "0.0.9",
+    "@casimir.one/vue-elements": "0.0.9",
     "lodash": "^4.17.21",
     "vuedraggable": "^2.24.3"
   },
