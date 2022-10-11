@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/casimir-ai/frontend/compare/v0.0.9...v0.0.10) (2022-10-11)
+
+**Note:** Version bump only for package @casimir.one/proxydi
+
+
+
+
+
 ## [0.0.9](https://github.com/casimir-ai/frontend/compare/v0.0.7...v0.0.9) (2022-09-29)
 
 **Note:** Version bump only for package @casimir.one/proxydi

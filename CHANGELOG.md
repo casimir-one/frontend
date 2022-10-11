@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/casimir-ai/frontend/compare/v0.0.9...v0.0.10) (2022-10-11)
+
+
+### Bug Fixes
+
+* **@casimir/token-service:** src folder removed ([685ac61](https://github.com/casimir-ai/frontend/commit/685ac61f5fedf836b76c5ab1e81331e574f913a4))
+* **@casimir/token-service:** version fix ([b619994](https://github.com/casimir-ai/frontend/commit/b61999486ba472d82a6a7892229adfc774d97583))
+
+
+
+
+
 ## [0.0.9](https://github.com/casimir-ai/frontend/compare/v0.0.7...v0.0.9) (2022-09-29)
 
 
