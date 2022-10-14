@@ -9,6 +9,8 @@ of the list:
   * `@casimir.one/users-module`
   * `@casimir.one/teams-module`
   * `@casimir.one/nft-collections-module`
+  * `@casimir.one/nft-items-module`
+
 * using standard defineProperty method adds attributes object to prototype of vue instance
   and creates store getters, which gets data about certain collection
   or certain item (`one`, `list`, `listByScopes`, `settings`)
