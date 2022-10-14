@@ -3,8 +3,8 @@
 The module
 * creates model of attributes (named `attributesRegistry`) in the store of new portal.
 * creates special section (named `attributes`) in store for keeping these created attributes
-based on such a model. The entities, on which attributes could be applied are: `User`, `Team` or
-`NFT collection` so despite the module is able to work, it doesn't make sense without one (or several)
+based on such a model. The entities, on which attributes could be applied are: `User`, `Team`,
+`NFT collection` or `NFT item` so despite the module is able to work, it doesn't make sense without one (or several)
 of the list:
   * `@casimir.one/users-module`
   * `@casimir.one/teams-module`
