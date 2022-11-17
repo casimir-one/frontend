@@ -20,11 +20,191 @@ import {
 } from '@casimir/commands';
 import { ChainService } from '@casimir/chain-service';
 import { WebSocketService } from '@casimir/web-socket-service';
+import { walletSignTx } from '@casimir/platform-util';
 
 import { TeamHttp } from './TeamHttp';
 
 const proposalDefaultLifetime = new Date(new Date().getTime() + 86400000 * 365 * 3).getTime();
 
+/**
+ * Add proposal commands for adding members
+ * @param {BaseTxBuilder} txBuilder
+ * @param {string} batchWeight
+ * @param {Array} proposalBatch
+ * @param {string} creator
+ * @returns {BaseTxBuilder}
+ */
+const addProposalCommandsForAddingMembers = async (
+  txBuilder,
+  batchWeight,
+  proposalBatch,
+  creator
+) => {
+  const createProposalCmd = new CreateProposalCmd({
+    creator,
+    type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
+    expirationTime: proposalDefaultLifetime,
+    proposedCmds: proposalBatch,
+    batchWeight
+  });
+
+  txBuilder.addCmd(createProposalCmd);
+
+  const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+  const updateProposalCmd = new AcceptProposalCmd({
+    entityId: joinTeamProposalId,
+    account: creator,
+    batchWeight
+  });
+
+  txBuilder.addCmd(updateProposalCmd);
+  return txBuilder;
+};
+
+/**
+ * Pack transaction for creation
+ * @param {BaseTxBuilder} chainTxBuilder
+ * @param {string} creator
+ * @param {Object} data
+ * @param {CreateDaoCmd} createDaoCmd
+ * @param {TransferFTCmd} transferFTCmd
+ * @param {string} entityId
+ * @returns {FinalizedTx}
+ */
+const packTxForCreation = async (
+  chainTxBuilder,
+  creator,
+  data,
+  createDaoCmd,
+  transferFTCmd,
+  entityId
+) => {
+  const txBuilder = await chainTxBuilder.begin();
+
+  txBuilder.addCmd(createDaoCmd);
+
+  if (transferFTCmd) {
+    txBuilder.addCmd(transferFTCmd);
+  }
+
+  const members = data.members.filter((m) => m !== creator);
+  if (members.length > 0) {
+    const invites = members.map((invitee) => {
+      const addTeamMemberCmd = new AddDaoMemberCmd({
+        member: invitee,
+        teamId: entityId,
+        isThresholdPreserved: true
+      });
+
+      return addTeamMemberCmd;
+    });
+
+    const proposalBatch = invites;
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
+    const updatedTxBuilder = await addProposalCommandsForAddingMembers(
+      txBuilder,
+      batchWeight,
+      proposalBatch,
+      creator
+    );
+    return updatedTxBuilder.end();
+  }
+  return txBuilder.end();
+};
+
+/**
+ * Add proposal commands for team update
+ * @param {BaseTxBuilder} txBuilder
+ * @param {string} batchWeight
+ * @param {Array} proposalBatch
+ * @param {string} creator
+ * @param {number} proposalLifetime
+ * @param {boolean} isProposalApproved
+ * @returns {BaseTxBuilder}
+ */
+const addProposalCommandsForTeamUpdate = async (
+  txBuilder,
+  batchWeight,
+  proposalBatch,
+  creator,
+  proposalLifetime,
+  isProposalApproved
+) => {
+  const createProposalCmd = new CreateProposalCmd({
+    creator,
+    type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
+    expirationTime: proposalLifetime,
+    proposedCmds: proposalBatch,
+    batchWeight
+  });
+
+  txBuilder.addCmd(createProposalCmd);
+
+  if (isProposalApproved) {
+    const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
+    const updateProposalCmd = new AcceptProposalCmd({
+      entityId: teamUpdateProposalId,
+      account: creator,
+      batchWeight
+    });
+
+    txBuilder.addCmd(updateProposalCmd);
+  }
+  return txBuilder;
+};
+
+/**
+ * Pack transaction for team update
+ * @param {BaseTxBuilder} chainTxBuilder
+ * @param {Array} attributes
+ * @param {string} description
+ * @param {string} entityId
+ * @param {boolean} isProposal
+ * @param {string} creator
+ * @param {number} proposalLifetime
+ * @param {boolean} isProposalApproved
+ * @returns {FinalizedTx}
+ */
+const packTxForUpdate = async (
+  chainTxBuilder,
+  attributes,
+  description,
+  entityId,
+  isProposal,
+  creator,
+  proposalLifetime,
+  isProposalApproved
+) => {
+  const txBuilder = await chainTxBuilder.begin();
+
+  const updateDaoCmd = new UpdateDaoCmd({
+    entityId,
+    isTeamAccount: true,
+    attributes, // need clarification
+    description
+  });
+
+  if (isProposal) {
+    const proposalBatch = [
+      updateDaoCmd
+    ];
+
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
+
+    const updatedTxBuilder = await addProposalCommandsForTeamUpdate(
+      txBuilder,
+      batchWeight,
+      proposalBatch,
+      creator,
+      proposalLifetime,
+      isProposalApproved
+    );
+
+    return updatedTxBuilder.end();
+  }
+  txBuilder.addCmd(updateDaoCmd);
+  return txBuilder.end();
+};
 export class TeamService {
   proxydi = proxydi;
   teamHttp = TeamHttp.getInstance();
@@ -65,88 +245,58 @@ export class TeamService {
     const attributes = replaceFileWithName(data.attributes);
     const description = genSha256Hash(attributes);
 
-    const response = await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        let entityId;
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const createDaoCmd = new CreateDaoCmd({
-              isTeamAccount: true,
-              fee: { ...CORE_ASSET, amount: 0 },
-              authority: {
-                owner: authority
-              },
-              creator,
-              description,
-              attributes
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
 
-            txBuilder.addCmd(createDaoCmd);
-            entityId = createDaoCmd.getProtocolEntityId();
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-            if (ACCOUNT_DEFAULT_FUNDING_AMOUNT) {
-              const transferFTCmd = new TransferFTCmd({
-                from: creator,
-                to: entityId,
-                tokenId: CORE_ASSET.id,
-                amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
-              });
-              txBuilder.addCmd(transferFTCmd);
-            }
+    const createDaoCmd = new CreateDaoCmd({
+      isTeamAccount: true,
+      fee: { ...CORE_ASSET, amount: 0 },
+      authority: {
+        owner: authority
+      },
+      creator,
+      description,
+      attributes
+    });
 
-            const members = data.members.filter((m) => m !== creator);
-            if (members.length > 0) {
-              const invites = members.map((invitee) => {
-                const addTeamMemberCmd = new AddDaoMemberCmd({
-                  member: invitee,
-                  teamId: entityId,
-                  isThresholdPreserved: true
-                });
+    const entityId = createDaoCmd.getProtocolEntityId();
+    let transferFTCmd;
 
-                return addTeamMemberCmd;
-              });
-
-              const proposalBatch = [
-                ...invites
-              ];
-
-              return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((batchWeight) => {
-                  const createProposalCmd = new CreateProposalCmd({
-                    creator,
-                    type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
-                    expirationTime: proposalDefaultLifetime,
-                    proposedCmds: proposalBatch,
-                    batchWeight
-                  });
-
-                  txBuilder.addCmd(createProposalCmd);
-
-                  const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-                  const updateProposalCmd = new AcceptProposalCmd({
-                    entityId: joinTeamProposalId,
-                    account: creator,
-                    batchWeight
-                  });
-
-                  txBuilder.addCmd(updateProposalCmd);
-                  return txBuilder.end();
-                });
-            }
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            // eslint-disable-next-line max-len
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
-            if (RETURN_MSG && RETURN_MSG === true) {
-              return msg;
-            }
-            return this.teamHttp.create(msg);
-          });
+    if (ACCOUNT_DEFAULT_FUNDING_AMOUNT) {
+      transferFTCmd = new TransferFTCmd({
+        from: creator,
+        to: entityId,
+        tokenId: CORE_ASSET.id,
+        amount: ACCOUNT_DEFAULT_FUNDING_AMOUNT
       });
+    }
+
+    const packedTx = await packTxForCreation(
+      chainTxBuilder,
+      creator,
+      data,
+      createDaoCmd,
+      transferFTCmd,
+      entityId
+    );
+
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new MultFormDataMsg(formData, signedTx.getPayload(), { 'entity-id': entityId });
+    if (RETURN_MSG && RETURN_MSG === true) {
+      return msg;
+    }
+
+    const response = await this.teamHttp.create(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
@@ -192,70 +342,45 @@ export class TeamService {
     const attributes = replaceFileWithName(data.attributes);
     const description = genSha256Hash(attributes);
 
-    const response = await ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const updateDaoCmd = new UpdateDaoCmd({
-              entityId,
-              isTeamAccount: true,
-              attributes, // need clarification
-              description
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
 
-            if (isProposal) {
-              const proposalBatch = [
-                updateDaoCmd
-              ];
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
 
-              return chainTxBuilder.getBatchWeight(proposalBatch)
-                .then((batchWeight) => {
-                  const createProposalCmd = new CreateProposalCmd({
-                    creator,
-                    type: APP_PROPOSAL.TEAM_UPDATE_PROPOSAL,
-                    expirationTime: proposalLifetime,
-                    proposedCmds: proposalBatch,
-                    batchWeight
-                  });
+    const packedTx = await packTxForUpdate(
+      chainTxBuilder,
+      attributes,
+      description,
+      entityId,
+      isProposal,
+      creator,
+      proposalLifetime,
+      isProposalApproved
+    );
 
-                  txBuilder.addCmd(createProposalCmd);
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
 
-                  if (isProposalApproved) {
-                    const teamUpdateProposalId = createProposalCmd.getProtocolEntityId();
-                    const updateProposalCmd = new AcceptProposalCmd({
-                      entityId: teamUpdateProposalId,
-                      account: creator,
-                      batchWeight
-                    });
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
 
-                    txBuilder.addCmd(updateProposalCmd);
-                  }
-                  return txBuilder.end();
-                });
-            }
-            txBuilder.addCmd(updateDaoCmd);
-            return txBuilder.end();
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            // eslint-disable-next-line max-len
-            const msg = new MultFormDataMsg(formData, packedTx.getPayload(), { 'entity-id': entityId });
+    // eslint-disable-next-line max-len
+    const msg = new MultFormDataMsg(formData, signedTx.getPayload(), { 'entity-id': entityId });
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
 
-            return this.teamHttp.update(msg);
-          });
-      });
+    const response = await this.teamHttp.update(msg);
 
     await this.webSocketService.waitForMessage((message) => {
       const [, eventBody] = message;
 
       return eventBody.event.eventNum === APP_EVENT.DAO_UPDATED
-                    && eventBody.event.eventPayload.daoId === response.data._id;
+                      && eventBody.event.eventPayload.daoId === response.data._id;
     });
 
     return response;
@@ -284,55 +409,58 @@ export class TeamService {
       isThresholdPreserved
     } = payload;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const addTeamMemberCmd = new AddDaoMemberCmd({
-              member,
-              teamId,
-              isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
 
-            const proposalBatch = [
-              addTeamMemberCmd
-            ];
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const txBuilder = await chainTxBuilder.begin();
 
-            return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((batchWeight) => {
-                const createProposalCmd = new CreateProposalCmd({
-                  creator,
-                  type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
-                  expirationTime: proposalDefaultLifetime,
-                  proposedCmds: proposalBatch,
-                  batchWeight
-                });
-                txBuilder.addCmd(createProposalCmd);
+    const addTeamMemberCmd = new AddDaoMemberCmd({
+      member,
+      teamId,
+      isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
+    });
 
-                const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: joinTeamProposalId,
-                  account: creator,
-                  batchWeight
-                });
-                txBuilder.addCmd(updateProposalCmd);
+    const proposalBatch = [
+      addTeamMemberCmd
+    ];
 
-                return txBuilder.end();
-              });
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
+    const createProposalCmd = new CreateProposalCmd({
+      creator,
+      type: APP_PROPOSAL.ADD_DAO_MEMBER_PROPOSAL,
+      expirationTime: proposalDefaultLifetime,
+      proposedCmds: proposalBatch,
+      batchWeight
+    });
+    txBuilder.addCmd(createProposalCmd);
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    const joinTeamProposalId = createProposalCmd.getProtocolEntityId();
+    const updateProposalCmd = new AcceptProposalCmd({
+      entityId: joinTeamProposalId,
+      account: creator,
+      batchWeight
+    });
+    txBuilder.addCmd(updateProposalCmd);
 
-            return this.teamHttp.addTeamMember(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload(), { 'entity-id': teamId });
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.teamHttp.addTeamMember(msg);
   }
 
   /**
@@ -358,57 +486,60 @@ export class TeamService {
       isThresholdPreserved
     } = payload;
 
-    return ChainService.getInstanceAsync(env)
-      .then((chainService) => {
-        const chainNodeClient = chainService.getChainNodeClient();
-        const chainTxBuilder = chainService.getChainTxBuilder();
-        return chainTxBuilder.begin()
-          .then((txBuilder) => {
-            const removeDaoMemberCmd = new RemoveDaoMemberCmd({
-              member,
-              teamId,
-              isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
-            });
+    const chainService = await ChainService.getInstanceAsync(env);
 
-            const proposalBatch = [
-              removeDaoMemberCmd
-            ];
+    const chainNodeClient = chainService.getChainNodeClient();
+    const chainTxBuilder = chainService.getChainTxBuilder();
+    const txBuilder = await chainTxBuilder.begin();
 
-            return chainTxBuilder.getBatchWeight(proposalBatch)
-              .then((batchWeight) => {
-                const createProposalCmd = new CreateProposalCmd({
-                  creator,
-                  type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
-                  expirationTime: proposalDefaultLifetime,
-                  proposedCmds: proposalBatch,
-                  batchWeight
-                });
+    const removeDaoMemberCmd = new RemoveDaoMemberCmd({
+      member,
+      teamId,
+      isThresholdPreserved: isBoolean(isThresholdPreserved) ? isThresholdPreserved : true
+    });
 
-                txBuilder.addCmd(createProposalCmd);
+    const proposalBatch = [
+      removeDaoMemberCmd
+    ];
 
-                const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
-                const updateProposalCmd = new AcceptProposalCmd({
-                  entityId: leaveTeamProposalId,
-                  account: creator,
-                  batchWeight
-                });
+    const batchWeight = await chainTxBuilder.getBatchWeight(proposalBatch);
+    const createProposalCmd = new CreateProposalCmd({
+      creator,
+      type: APP_PROPOSAL.REMOVE_DAO_MEMBER_PROPOSAL,
+      expirationTime: proposalDefaultLifetime,
+      proposedCmds: proposalBatch,
+      batchWeight
+    });
 
-                txBuilder.addCmd(updateProposalCmd);
+    txBuilder.addCmd(createProposalCmd);
 
-                return txBuilder.end();
-              });
-          })
-          .then((packedTx) => packedTx.signAsync(privKey, chainNodeClient))
-          .then((packedTx) => {
-            const msg = new JsonDataMsg(packedTx.getPayload(), { 'entity-id': teamId });
+    const leaveTeamProposalId = createProposalCmd.getProtocolEntityId();
+    const updateProposalCmd = new AcceptProposalCmd({
+      entityId: leaveTeamProposalId,
+      account: creator,
+      batchWeight
+    });
 
-            if (env.RETURN_MSG === true) {
-              return msg;
-            }
+    txBuilder.addCmd(updateProposalCmd);
 
-            return this.teamHttp.removeTeamMember(msg);
-          });
-      });
+    const packedTx = await txBuilder.end();
+
+    const chainInfo = chainService.getChainInfo();
+    let signedTx;
+
+    if (env.WALLET_URL) {
+      signedTx = await walletSignTx(packedTx, chainInfo);
+    } else {
+      signedTx = await packedTx.signAsync(privKey, chainNodeClient);
+    }
+
+    const msg = new JsonDataMsg(signedTx.getPayload(), { 'entity-id': teamId });
+
+    if (env.RETURN_MSG === true) {
+      return msg;
+    }
+
+    return this.teamHttp.removeTeamMember(msg);
   }
 
   /**
